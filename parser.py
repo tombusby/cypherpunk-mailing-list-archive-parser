@@ -1,25 +1,58 @@
 #!/usr/bin/env python
 from email.parser import Parser
-from glob import glob
 import re
 import pprint
+import sqlite3
+import dateutil.parser
 
 
-def main():
+def get_messages():
     stringbuffer = ""
-    emails = []
     for n in range(2, 9):
         with open("cryptome/cyp-199{}.txt".format(n)) as f:
             i = 0
             for line in f:
                 if re.match("From cypherpunks\@MHonArc.venona", line):
-                    emails.append(Parser().parsestr(stringbuffer))
+                    if stringbuffer:
+                        yield Parser().parsestr(stringbuffer)
                     stringbuffer = ""
                     i += 1
                 else:
                     stringbuffer += line
-    for message in emails:
-        pprint.pprint(message.items())
+
+
+def insert_into_db(conn, message):
+    sql = """
+        INSERT INTO messages (
+            `message_id`,
+            `date`,
+            `from`,
+            `to`,
+            `subject`,
+            `reply_to`
+        ) VALUES (
+            ?, ?, ?, ?, ?, ?
+        )
+    """
+    conn.cursor().execute(sql, (
+        message['Message-ID'],
+        1526932747,
+        message['From'],
+        message['To'],
+        message['Subject'],
+        message['In-Reply-To']
+    ))
+    conn.commit()
+
+
+def main():
+    # conn = sqlite3.connect('database.db')
+    for message in get_messages():
+        # pprint.pprint(message.items())
+        # insert_into_db(conn, message)
+        parsed_date = dateutil.parser.parse(message['Date'])
+        pprint.pprint(parsed_date.tzname())
+    # conn.close()
 
 
 if __name__ == "__main__":
