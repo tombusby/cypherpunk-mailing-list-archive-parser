@@ -4,6 +4,21 @@ import re
 import pprint
 import sqlite3
 import dateutil.parser
+import warnings
+warnings.filterwarnings("error")
+
+
+timezone_info = {
+    'EST': -18000,
+    'EDT': -14400,
+    'CST': -21600,
+    'CDT': -18000,
+    'MST': -25200,
+    'MDT': -21600,
+    'PST': -28800,
+    'PDT': -25200,
+    'PPE': -25200,
+}
 
 
 def get_messages():
@@ -47,11 +62,27 @@ def insert_into_db(conn, message):
 
 def main():
     # conn = sqlite3.connect('database.db')
+    errors = []
+    warnings = []
+    timezones = []
     for message in get_messages():
         # pprint.pprint(message.items())
         # insert_into_db(conn, message)
-        parsed_date = dateutil.parser.parse(message['Date'])
-        pprint.pprint(parsed_date.tzname())
+        try:
+            parsed_date = dateutil.parser.parse(message['Date'], tzinfos=timezone_info)
+            if not parsed_date.tzinfo:
+                pprint.pprint((message['Date'], parsed_date))
+        except ValueError:
+            errors.append(message['Date'])
+        except dateutil.parser.UnknownTimezoneWarning as e:
+            timezone = re.match("tzname (\w+) identified", str(e)).group(1)
+            if timezone not in timezones:
+                timezones.append(timezone)
+            warnings.append(message['Date'])
+            # pprint.pprint((message['Date'], parsed_date))
+    print warnings
+    print errors
+    print timezones
     # conn.close()
 
 
