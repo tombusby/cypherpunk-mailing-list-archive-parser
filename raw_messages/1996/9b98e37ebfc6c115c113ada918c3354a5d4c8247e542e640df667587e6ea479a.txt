@@ -1,0 +1,75 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Thu, 28 Mar 1996 19:26:03 +0800
+To: cypherpunks@toad.com
+Subject: Re: WSJ on Big Java Flaw
+In-Reply-To: <31591D05.5998@unix.asb.com>
+Message-ID: <199603271731.JAA07252@netcom8.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mutant Rob <wlkngowl@unix.asb.com> writes:
+
+ > The generalized halting problem comes to mind...
+
+While it can be demonstrated that no algorithm exists to
+determine whether an arbitrary Turing machine will halt, good
+programs generally belong to a class somewhat less expansive than
+the totality of possible Turing machines.  By imposing perfectly
+reasonable constraints on program structure, it is trivial to
+guarantee program termination with almost no loss in the
+functionality of the typical programming language.
+
+Indeed, any computer program which executes only forward
+branches, and in which the iteration counts of all loops are
+known at the time they are entered, is guaranteed to terminate.
+Many people would even consider such things to be good
+programming practice.
+
+In general, the types of computer program characteristics which
+make determination of halting impossible are precisely the
+characteristics one does not want in trusted code, because they
+make understanding the code and debugging the code intractable.
+
+ > Since it can be proved that there's no complete set of
+ > heuristics to tell if a given program has a characteristic
+ > (such as "secureness") then sooner or later someone will
+ > discover another security flaw.
+
+Again, a statement which applies to Turing machines, but not to
+Java.  Java has been carefully restricted to ensure that a
+complete analysis of proper program behavior is possible with a
+combination of runtime checks and pre-execution scanning of
+imported bytecode files.  This was designed into Java from the
+start.
+
+While the abstract Java machine is provably secure, real world
+implementations may suffer from the usual plethora of ills, such
+as creeping damage from overflowed buffers on the stack.  This in
+no way implies any faults with Java itself, and such bugs in Java
+implementations will be corrected in the usual way with the
+passage of time.
+
+ > A question is whether a simple patch is made or if the set
+ > of heuristics is widened (ie, learn from mistakes) so that
+ > similar flaws can be found based on knowledge of that one
+ > flaw.
+
+Again, there are no known security flaws in the abstract Java
+machine.  Once all bugs and oversights in existing Java
+interpreters are corrected, all Java programs will be rendered
+incapable of causing damage to the platforms they are run on,
+unless explicitly permitted to do so by an authorized person.
+
+Some patience while the Java support in packages like Netscape
+Navigator undergoes the normal process of evolution is to be
+encouraged.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

@@ -1,0 +1,67 @@
+From: John Pettitt <jpp@software.net>
+Date: Tue, 5 Mar 1996 16:31:20 +0800
+To: abostick@netcom.com (Alan Bostick)
+Subject: Re: Looking for code to run an encrypted mailing list
+Message-ID: <2.2.32.19960305071708.00b98a10@mail.software.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I wrote :
+>> 
+>> Poster crypts mail with pgp using list exploder key. List exploder decrypts
+>> mail and recrypts with keys for all current list members and then sends the
+>> mail.
+>> 
+>> [I don't want all the list members to need to know every other list members
+>> public key]
+>
+
+At 09:24 PM 3/4/96 -0800, Alan Bostick replied:
+>Is this the right way to go about doing this?
+>
+>If the mailing list has N members, then, for each message posted to the
+>list, the list processor must decrypt the message and then reencrypt it
+>N times.  
+>
+
+Hmm thats not what I meant - I just envisioned giving all the recipient
+public keys to pgp and saying letting it do the rest.  This does result in
+all recipients gettingthe key fingerprints of all other recipients which is
+not a problem in my application.
+
+Alan goes on to suggest sumthing very similar except that he does not
+decrypt the body first - which apart from meaning I'd have to hack pgp
+acheives the same effect.
+
+The overal intent was to have a message go from one list member to all
+others with a) a signature to provide strong attribution and a measure of
+non repudiation b) low probability of interception c) only the gateway has
+to have all the public keys.  
+
+Inbound the process looks like this:
+        decrypt and validate signature (leaving original signature)
+        add gateway info (sender signature validation, date received etc)
+        sign the whole thing with the gateway key.
+        crypt with all list member keys (i.e. one message readable by any
+member)
+        send to members.
+
+Several people have pointed me at PGPdomo which I now have a copy of and
+will be looking at as a basic for this (assuming it's not an exact fit
+already).\
+
+[thanks to all those who responded]
+
+John
+--
+John Pettitt
+email:         jpettitt@well.sf.ca.us (home)
+               jpp@software.net       (work)    
+
+
+
+
+
+

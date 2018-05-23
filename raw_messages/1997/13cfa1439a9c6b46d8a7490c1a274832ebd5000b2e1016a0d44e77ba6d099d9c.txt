@@ -1,0 +1,93 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 19 Jun 1997 01:09:08 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Recycling your unwanted junk email
+Message-ID: <3.0.2.32.19970619010448.00771b34@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Got any SPAM you're not using?  Want to find a good home for it?
+A friend of mine passed along this request for spam,
+which can be beneficially recycled...
+			Bill
+--------------
+please forward your spam to junk@thehouse.org
+(or subscribe junk@thehouse.org to spam lists)
+
+
+
+------- Forwarded Message
+
+Return-Path: dc-stuff
+Message-Id: <3.0.32.19970618085725.008b69d0@mail.ctp.com>
+X-Sender: ybenja@mail.ctp.com
+X-Mailer: Windows Eudora Pro Version 3.0 (32)
+Date: Wed, 18 Jun 1997 08:57:28 -0700
+To: dc-stuff@merde.dis.org
+From: Yobie Benjamin <ybenja@ctp.com>
+Subject: Spaminator II
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Sender: owner-dc-stuff
+Precedence: bulk
+X-forward-loop: dc-stuff
+Reply-To: Yobie Benjamin <ybenja@ctp.com>
+X-Comment:   TO UNSUBSCRIBE: email "unsubscribe dc-stuff" to majordomo@dis.org
+X-Comment:   Lonely? Need a friend and lover? email dtangent@defcon.org
+X-Comment:   tired of typing? call the Defcon Voice Bridge	801-855-3326
+X-Copyright: This message is Copyright all rights reserved unless expressly
+limited
+Status: O
+
+A few of you have been kind enough to send some spam to
+junk@thehouse.org.  Unfortunately, much of it has been significantly
+altered, which makes it less useful.  If you send any junkmail, please
+leave the headers and body as intact as possible.   
+
+IMPORTANT!!!
+
+That means you shouldn't make a new message and include the junk mail in
+it, you
+shouldn't send the junk as an attachment, you shouldn't send more than
+one piece of junk in a single message, and you shouldn't quote the
+message text by insterting characters at the beginning of each line. 
+Most of these things aren't that hard to undo, but everyone does them
+a bit differently and we'd rather not have to go through and fix them
+all.
+
+The best way to do it:
+
+ sendmail junk@thehouse.org < onemessage
+
+or
+
+ formail -ds  sendmail junk@thehouse.org < manymessages
+
+
+If you use Emacs and VM, the following code will bind J in the summary
+window to do the Right Thing.
+
+(defvar flan-junkmail-address "junk@thehouse.org"
+  "The address to forward all junkmail to.")
+
+(defun flan-junk-junkmail (prefix-arg)
+  "Send all junkmail to 'flan-junkmail-address and delete it."
+  (interactive "p")
+  (if (interactive-p)
+      (vm-follow-summary-cursor))
+  (vm-delete-message 1)
+  (vm-pipe-message-to-command (concat "/usr/lib/sendmail "
+                                      flan-junkmail-address)
+                              prefix-arg))
+
+(define-key vm-mode-map "J" 'flan-junk-junkmail)
+
+------- End of Forwarded Message
+
+
+
+
+
+
+

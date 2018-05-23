@@ -1,0 +1,68 @@
+From: zinc <zinc@zifi.genetics.utah.edu>
+Date: Thu, 24 Aug 95 01:13:09 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Re: Brute SSL Challenge
+In-Reply-To: <"swan.cl.cam.:169220:950824070545"@cl.cam.ac.uk>
+Message-ID: <Pine.LNX.3.91.950824020947.452B-100000@zifi.genetics.utah.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Thu, 24 Aug 1995, Piete Brooks wrote:
+
+> Date: Thu, 24 Aug 1995 08:05:33 +0100
+> From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+> To: David Neal <dneal@usis.com>
+> Cc: cypherpunks@toad.com
+> Subject: Re: Brute SSL Challenge
+> 
+> > Hopefully everyone on here is accomplished enough to know
+> > optimizing the brutessl code helps immensely.  If not, well I used
+> > 
+> > gcc -O6 -funroll-loops -fomit-frame-pointer -finline-functions -c search.c
+> > gcc -O6 -funroll-loops -fomit-frame-pointer -finline-functions -o brutessl \
+> >                      brutessl.c search.o
+> > 
+> > To go from 5,000 keys per second to 10,100 keys per second.
+> 
+> If people could send me timings for various compilers / flags I'll collate a
+> table of speeds [see brutessl.h 1.02 for an example -- I tried using different
+> sizes for the RC4 info and it appears that only ALPHAs really gain by using int]
+> 
+> I recommend that you do not blindly use the above flags -- I just tried it on
+> our fastest machines (SGIs) and it *REDUCED* the speed from 35200 to 28400.
+
+this resulted in a fairly significant increase on my machine (486
+DX4-100 running Linux 1.2.11)
+
+stats:
+
+w/o optimizations: 
+17 minutes and 45 seconds per segment, 15800 keys per second .
+
+w/ opts:
+16 minutes and 56 seconds per segment, 16500 keys per second.
+
+- -pjf
+
+patrick finerty = zinc@zifi.genetics.utah.edu = pfinerty@nyx.cs.du.edu
+U of Utah biochem grad student in the Bass lab - zinc fingers + dsRNA!
+** FINGER zinc-pgp@zifi.genetics.utah.edu for pgp public key - CRYPTO!
+zifi runs LINUX 1.2.11 -=-=-=WEB=-=-=->  http://zifi.genetics.utah.edu 
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMDw0ZU3Qo/lG0AH5AQHuPAP/ZVR6Vec6vSj5uR5pgUiuFii1lEjT/6Xi
+exPlRugI8bR5ClRZbGf+55ARRF63UXUFj9yaX4gGSE86K3guy/1o09r06VqcgIgv
+i2QwhSE+kGfYNYhy7sm7u7pI+esSaa1OBOX0s2Gh9uz/TKUxJy+C/RJx3y3KKwQF
+9UBkYocFEWY=
+=MiL5
+-----END PGP SIGNATURE-----
+
+
+
+

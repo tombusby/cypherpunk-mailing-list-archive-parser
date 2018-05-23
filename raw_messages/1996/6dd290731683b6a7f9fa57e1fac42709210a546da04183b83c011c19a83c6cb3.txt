@@ -1,0 +1,63 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 20 Oct 1996 02:25:54 -0700 (PDT)
+To: William Davidheiser <wgd@netcom.com>
+Subject: Re: Writing A Remailer
+Message-ID: <199610200949.CAA15111@dfw-ix5.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:06 AM 10/20/96 -0700, William Davidheiser <wgd@netcom.com> wrote:
+>Hi all. I want to try to write a re-mailer that will run on my ISP's UNIX
+>shell account. I am familiar with Windows socket programming (C/C++) but
+>have never done anything in the UNIX environment.
+>
+>Any pointers on where I should start?
+
+I'd start by looking at the existing remailers, and thinking about the
+problems they're trying to solve and the service objectives they have.
+Mixmaster code is easy to find, and I've got my own modified ghio2 somewhere
+under my web page (idiom.com/~wcs/remailer, probably).  Freedom remailer is 
+another Type 1.  Nymservers are trying to solve a different, and harder,
+problem.
+
+Writing a remailer that solves a slightly different problem than the others
+is a good thing to do.  For instance, a remailer that's useful at work,
+such as one that decrypts PGP mail and forwards it inside the domain,
+or one that only sends mail to the suggestion box account,
+could gain acceptance and help add respectability for remailers.
+
+I don't remember if code for the Winsock remailer is available, but it
+works by fetching mail from a POP3 server and remailing it out SMTP servers.
+
+Also, you could benefit from feedback from people who used to run remailers
+and have switched to other code or quit.  The usual problem is abuse,
+whether it's spam posted to the net, mailbombing victims, or forging
+mail/postings
+from victims to lists/newsgroups that will generate flames in response.
+
+Any blocking code you can write is good - you definitely need to be able
+to block by source, destination, and Subject:, and grepping message bodies
+may help.
+Limiting source and destination to pre-approved lists is also a good feature.
+Good code for auto-detecting attacks would help, e.g. shutting down
+or blocking if you get more than N messages for a given source or 
+destination in a given time period, with a tolerable user interface
+for the administrator.
+
+You also need to integrate with encryption - PGP is the obvious choice
+(it'll be _so_ much easier when PGP 3.0 comes out, as we've been saying
+for the last couple of years :-) but S/MIME or SSL may also be good.
+I'd recommend having the default behaviour be to refuse non-encrypted mail -
+otherwise, any eavesdropper can compromise your system.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk
+  Imagine if three million people voted for somebody they _knew_,
+  and the politicians had to count them all.
+
+
+
+
+

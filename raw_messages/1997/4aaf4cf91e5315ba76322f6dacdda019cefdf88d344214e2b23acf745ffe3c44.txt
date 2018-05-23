@@ -1,0 +1,67 @@
+From: "Peter Trei" <trei@process.com>
+Date: Fri, 17 Jan 1997 12:07:38 -0800 (PST)
+To: cryptography@c2.net
+Subject: DES Key Recovery Project, Progress Report #6.
+Message-ID: <199701172006.MAA20293@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+DES Key Recovery Project, Progress Report #6.
+
+Well, RSA now has put up the official rules, and some
+test data, for the DES Key Recovery Project. See
+http://www.rsa.com/rsalabs/97challenge/ if you haven't
+already. The actual challenge will be posted 28 Jan, and
+the prize will be $10,000. 
+
+I've had some nibbles of interest from the FPGA community,
+but not too much yet. If you know anyone with FPGA or ASIC
+hardware handy, tell them about the project, and point them
+at Wiener's paper (it can be found at 
+http://www.aist-nara.ac.jp/Security/doc/ among locations.
+
+My software is complete, except for one thing: I have not
+incorporated Svend Olaf Mikkelsen's new Pentium code
+(see http://inet.uni-c.dk/~svolaf/des.htm). This is about
+25% faster than mine, and well worth the extra effort. The
+conversion turns out to be non-trivial; it uses a different
+initial and final perm, the key schedules look different, and
+the rounds seem to carry a lot of context from one round to the
+next in the registers. All but the final problem is not too
+important - the data are all different by simple permutations,
+and the conversion is not too hard.
+
+The final problem is more interesting, since I do the first
+DES round only part of the time. This means that I'll have to
+do more context setup for those times when I'm starting at 
+the second round (most of the time), and preserve that extra
+context after the times I *do* run the first round.
+
+The other problem is that the 'half-matches' and penultimate
+round half-matches will be different for the two systems. This
+complicates results checking.
+
+Anyway, come Monday, I want to email to a few people the 
+generic 'C' code, along with my assembler version. If you're
+interested in doing a serious critique and/or porting of the 
+code, and are a US/Canadian citizen living in the US/Canada, 
+then email me with a statement to that effect. I'm only sending
+out a few copies - this is a slow beta, after all.
+
+If I don't get the Mikkelsen code in there by Monday, it 
+should follow soon thereafter.
+
+After the DES Challenge is underway, I may try looking at
+the RC5 Challenges.
+
+Who else will be attending Verisign Partner Days or the 
+RSA Data Security Conference at the end of the month? I'd
+like to meet some of the other participants on this list.
+
+Peter Trei
+trei@process.com
+
+
+
+

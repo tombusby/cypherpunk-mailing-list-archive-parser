@@ -1,0 +1,54 @@
+From: thug@phantom.com (Murdering Thug)
+Date: Tue, 26 Jan 93 20:14:48 PST
+To: cypherpunks@toad.com
+Subject: Re: Computerized OTP (was 5th AMENDMENT & DECRYPTION)
+In-Reply-To: <m0nGyAP-000jpDC@phantom.com>
+Message-ID: <m0nH47J-000jpKC@phantom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Timothy Newsham wries:
+> Murdering Thug writes:
+> > The only way to thwart the NSA is to use an encryption scheme which has
+> > been _proven_ uncrackable.  The only one I know of is the One Time Pad.
+> 
+> didnt shannon prove that the only "unbreakable" encryptions (or
+> encryptions with "zero knowledge") have to have a key at least
+> as long as the message?
+
+The key stream for a OTP system is infinitely long, and if a real
+random source is used (e.g. RF noise/static) no bit in the key stream
+has any relationship to any other bit in the key stream, unlike
+a pseudo-random-gen key stream where there is a relationship and this
+relationship can be found and the seed for the PRNG extracted and
+thus the key is broken.  Since TV static on unused channels is
+basically amplified RF garbage coming in from outer space radio
+sources and is in fact "white noise", it makes the perfect encoding
+stream for a one time pad system, it's infinitely long, never repeats,
+and is never reused.
+
+Yes I do think the idea of making a "more random than random" stream
+by filtering out long runs of 0's or 1's weakens the the key stream
+in theory, but in practical use it strengthens it, because if the stream
+is left alone, runs of 500 bits of 0's or 1's can come through, and any
+fool can then extract plain text using XOR in this area of the cyphertext.
+LZW compression of the plaintext helps, but I feel that it is far better
+to reduce the possibility of a key stream containing long runs of 0's or
+1's, than to leave it alone.
+
+The other possibility is to find a truly random RF source that has all
+the properties you want, the more important being that the >average<
+length of a homogenous bit run (0's or 1's) is around 4 or 5 bits. Of
+course you should let run lengths of 12 bits come through to screw
+the stat guys, but the >average< run length should be below 8 bits. Such
+a highly variable stream of white noise makes the perfect key stream in my
+opinion.
+
+
+Thug
+
+
+
+
+

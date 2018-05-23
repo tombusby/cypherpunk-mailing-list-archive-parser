@@ -1,0 +1,67 @@
+From: Jim Pinson <jpinson@fcdarwin.org.ec>
+Date: Tue, 22 Nov 94 12:48:49 PST
+To: cypherpunks@toad.com
+Subject: New remailer concept.
+Message-ID: <Pine.3.89.9411221309.A1007-0100000@fcdarwin.org.ec>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It occurs to me that most people have more to fear from their 
+neighbors, than they do from the powerful TLA's.    Knowing that 
+you are hunting for a new job is not important to the world at 
+large, but could be embarrassing if your current employer found 
+out.   Likewise, the people most interested in knowing about that 
+sex list you subscribe to are your coworkers.
+
+The answer of course is encryption, but that is a problem when 
+you are writing to your, well... , "crypto challenged" 
+friends.   Also, two way encrypted messages to most discussion 
+lists is not possible (to my knowledge).
+
+To address these problems I suggest the creation of "crypto 
+remailers".    They would work like this:
+
+You subscribe to the remailer by sending a request including the 
+account name you wish.  This could be either a real name 
+(jpinson) or a pseudonym (lizard).   You would also include in 
+the subscription request a copy of your public key.
+
+Assuming there are no name collisions with existing users, you 
+would get back a message of acceptance, and a copy of the 
+remailers public key.
+
+To use the remailer, you would create a message containing as the 
+first line a "request remail to: USERNAME" , followed by your message.
+You then encrypt the message with the remailers public key and 
+send it to the "remail" account at the remailer.
+
+The remailer then decodes the message you sent, and sends it to 
+its destination as plain text.   It sets the "from" field to your 
+account name on the remailer.
+
+The recipient of your message can then reply to your remail 
+account in plain text, with no need for any "remail to " commands 
+or special processing.
+
+A .forward pipe on your remailer account would run a Perl script 
+to encode the message to you with your public key, and send it to 
+your real address.  (for security it could set the "from" field 
+to something other than your remail account name)
+
+The advantage is that you have total protection at your end.
+All mail to and from the remail account is encrypted.
+
+You could now subscribe to lists, and receive mail from lists, 
+without your local administrator knowing anything about them.  
+This last feature could be useful for students at universities 
+that limit access.
+
+Is there anything like this out there already?
+
+
+Jim Pinson     Charles Darwin Research Station, Galapagos
+
+
+
+

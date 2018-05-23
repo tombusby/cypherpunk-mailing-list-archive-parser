@@ -1,0 +1,75 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Mon, 14 Aug 95 05:23:19 PDT
+To: samman@cs.yale.edu
+Subject: Re: Q's on Number Theory/Quadriatic Residues
+Message-ID: <9508141212.AA01243@elysion.iaks.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> >Bzzt!  Try Again.  If you use bc, you will notice that 9^2 mod 35 == 11
+> >and 8^2 mod 35 == 29...  You should go take your number theory class!
+> 
+> Definitely. Is there an easy way to get from the 29 to the 8?  I can see how
+> it goes
+> the other way, but what I didnt' see was how, if given 29, I could get the
+> 8? (Euclid's?)
+
+
+You can get the square root mod p (p prime) easily, if p+1 is divisible by 4.
+
+
+You (should) know that  x ^ (p-1) equals to 1 mod p for every given x > 0.
+
+Therefore  x ^ ( (p-1)/2 ) is either +1 or -1  mod p.
+
+
+Now you have a given  x^2 and want to find x (one of both, there are two..)
+
+ 
+ ( x^2 ) ^ ((p+1)/4)  =   x ^ (  (p+1)/2 )  =  x * x ^( (p-1)/2 ) = +/- x .
+
+If p+1 is not divisible by 4, it's a little bit more difficult...
+
+
+
+
+In your example, 35+1 is luckily divisible by 4.  But this doesn't help,
+because 35 is not a prime.  35 = 5*7 , you can use the chinese remainder and
+find the root mod 5 and the root mod 7. 7+1 is divisible by 4, you can use the trick:
+
+( 8 ^ 2 ) ^ 2 mod 7 =  +/- 1.   (which is correct since 8 = 1 mod 7);
+
+     +1 and -1 are the roots of (8^2) modulo 7.
+
+
+
+
+Modulo 5 we can't use the trick, but we guess the roots of (8^2) = 4 mod 5 as
+  2 and 3.
+
+
+
+
+Back to the main problem: You want to have the root of (8^2) mod 35. 
+
+We found the roots  1 and 6 as roots of  (8^2) mod 7
+and      the roots  2 and 3 as roots of  (8^2) mod 5.
+
+
+
+Now solve the Chinese remainder for each possible pair (1,2), (1,3), (6,2), (6,3),
+and you get the _four_ roots of (8^2) mod 35. Two of them will be 8 and -8, and there
+are another two.
+
+BTW: This is one way to do a mental coin flipping.  
+
+ 
+
+
+Hadmut :-)
+
+
+
+

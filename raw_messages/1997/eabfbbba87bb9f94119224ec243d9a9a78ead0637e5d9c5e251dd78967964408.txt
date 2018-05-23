@@ -1,0 +1,146 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 8 Dec 1997 07:51:57 +0800
+To: info@galttech.com
+Subject: Re: Security of Encrypted Magic Folders
+In-Reply-To: <3.0.32.19691231160000.007076c4@shell15.ba.best.com>
+Message-ID: <3.0.3.32.19971207145749.02f64da8@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+TUCOWS lists the product with 5 cows.
+www.pc-magic.com says ZD Net awarded it 5 stars,
+but http://www6.zdnet.com/cgi-bin/texis/swlib/hotfiles/info.html?fcode=000IBY
+says it's "Not Rated" as of 10/15/97.
+
+> Sounds like a crock.  See the Snake-Oil FAQ.
+
+Precisely - it looks like they've probably got a friendly user interface,
+but doesn't have adequate security.  I'm disappointed that they'd get
+a 5-whatevers rating without that quality behind it.
+
+>From the MF.TXT documentation:
+>~> CHKDSK won't run with Encrypted Magic Folders installed.  
+>~> We disable ChkDsk because it can delete all your invisible files, 
+>~> including the file containing your password data.
+
+Sounds like it's playing some game using lost chains or equivalent.
+No thanks :-)  But it's actually not a bad place to hide stuff,
+if you expect amateurs to break into your system.
+
+>>    EMF's encryption offers good protection and excellent speed.  It
+>>    hasn't been broken yet.  It is, as far as we know, exportable. 
+
+"As far as we know" means "We haven't applied for export permission",
+which means "so we don't have a clue".  If it _did_ have export permission,
+that would imply they'd either had some serious discussion with the Feds,
+allowing export of a strong product for limited applications/customers,
+or else that it was too wimpy for the Feds to care so they said OK.
+
+>>    Quite a few people ask us how big EMF's key size is.  They've learned
+>>    from other encryption programs that the bigger the key the stronger
+>>    the encryption.  This really doesn't apply to EMF.
+
+"Yow!  I'm using rot1313131313 with an 8192-bit key!"
+With cryptographically strong algorithms, the key length determines
+the amount of work required to crack them.  With weak algorithms,
+adding longer and longer keys doesn't help any.
+
+>>    We developed our own encryption instead of using a standard because
+>>    we wanted EMF to be able to decrypt at the byte level.  In this way
+>>    we only need to decrypt/encrypt the data your programs require and
+>>    not the entire file.
+
+Not a bad goal, for some applications, like communications.
+For encrypting disk files, where you'll typically be grabbing
+clusters of 512-8192 bytes at a time, it's unnecessary, and
+weakening your encryption just to provide it is a big lose.
+For some database applications, it may make sense, but generally
+the amount of time required to decrypt a block of disk is
+faster than the disk's seek time anyway, and I wouldn't trust a
+serious database to a system that won't let you run chkdsk
+and requires thought before using scandisk and defragmenters.
+
+>>    In theory, because we decrypt at the byte level, the biggest key we
+>>    could use would be 8 bits - which is a joke.  So instead of
+>>    decrypting every hunk of data using the same key, as most other
+>>    encryption programs do, we developed an algorithm to vary the key
+>>    based on the data's location within the file.  In this way we get
+>>    both high security and high speed.  We are trying to patent EMF's
+>>    encryption method.
+
+Many other algorithms actually provide this capability, typically by
+using block chaining algorithms like CBC.  Varying the key based on
+location in the file reduces the success of dictionary searches,
+if done carefully, but if you're using an algorithm that
+has a maximum keysize of the blocksize, anybody who figures out
+the way you vary the 8-bit key by location can crack it trivially.
+Furthermore, you *didn't* say that the key really was more than
+8 bits...
+
+Patenting requires revealing the algorithm, losing any supposed 
+security you had by keeping it secret.  So you might as well reveal it now,
+and let professional cryptographers take a look at it.
+
+Patenting an algorithm doesn't mean the Patent Office thinks it's any good;
+that's beyond their expertise.  It means they believe you when you say
+it's new and unique, but with cryptography, there's a large amount of
+prior art that's outside the expertise of a typical patent examiner.
+
+>>    Having said all that, truth is, most encryption isn't "cracked" by
+>>    breaking the algorithm, it's done by guessing the password.  Brute
+>>    guessing of passwords tends to level the playing field tremendously.
+>>    We actually have an advantage because we aren't an established
+>>    standard.  Because we're small and relatively obscure chances are no
+>>    one will take the effort to write a password guessing program (which
+>>    incidentally would violate copyright and intellectual property laws.)
+
+Being obscure doesn't help - anybody who's trying to guess the password
+already knows the victim is using your program, and can disassemble it.
+
+Anybody who's trying to crack somebody's disk drive without their permission
+isn't going to be bothered by violating your clickwrap license,
+especially if they're police engaged in legitimate crime fighting
+or illegitimate warrantless searches.
+
+>>    Even if someone were to go thru all this effort we could easily
+>>    change the encryption method for the next update.
+Doesn't help someone whose disk is already encrypted with your product.
+
+>>    If we used an established encryption method like DES or Blowfish then
+>>    your files would probably have to be fully decrypted when opened,
+>>    would exist on disk as unencrypted while you're using them, and then
+>>    would need to be encrypted when closed.  
+
+That's not dependent on the algorithm, it's dependent on the interface
+used to get the material off the disk.  Some encryption systems
+encrypt the whole file on opening, or at system boot,
+while others are file system or disk drivers that
+encrypt/decrypt a block at a time and never leave the material unencrypted
+on disk.  Surely you'd know that if you wrote such a program yourself.
+
+>>    If you still think you'd like to see us use a standard encryption
+>>    method like DES or Blowfish, or have any other suggestions, let us
+>>    know and we will consider your input in future updates
+
+If you don't use a standard algorithm, you need to publish the one you use
+so people will know if it's any good.  There are a few people who can get
+away without doing this, based on their reputation in the field,
+but _you're_ not Ron Rivest, and even _he_ got much flak from the community
+for keeping RC2 and RC4 trade secret for a while.  If you had the 
+academic credentials to get away with it, you'd also know not to make
+statements like the ones you make about export and obscurity.
+
+So do the right thing - use algorithms that there's a good reason
+to trust, and do the user interface stuff you do well.
+
+				Thanks! 
+					Bill
+Bill Stewart, stewarts@ix.netcom.com
+Regular Key PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

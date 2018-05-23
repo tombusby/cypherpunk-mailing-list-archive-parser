@@ -1,0 +1,53 @@
+From: Dimitris Tsapakidis <dimitrt@dcs.rhbnc.ac.uk>
+Date: Wed, 28 Feb 1996 20:52:22 +0800
+To: cypherpunks@toad.com
+Subject: Diffie-Hellman for Matchmaking?
+Message-ID: <313395CB.4343@dcs.rhbnc.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+sci.crypters and cypherpunks:
+
+This is a followup to my "Dating Problem" question I posted on
+sci.crypt, some months ago. I am trying to find or design some
+matchmaking protocols (and implement one of them, eventually)
+that have all the nice properties, like privacy and fairness.
+
+I came up with two or three candidate protocols, but they all
+rely on the Diffie-Hellman "common key" for mutual authentication.
+I haven't seen it used for such purposes in the literature, and I
+am suspicious.
+
+The setup is the same as in Diffie-Hellman key exchange.
+Assume global: prime n and primitive element g mod n. All the
+participants have a pair of (secret, public) keys, where
+public=g^secret mod n. By common key I mean
+g^(secret_a*secret_b)mod n.
+
+Person A is interested to match person B, so he computes
+g^(AB)mod n. B is interested in X, where X may or may not
+be A, and calculates g^(BX)mod n. Now, they compare these
+two "common keys" either using some Zero Knowledge scheme
+that ensures fairness (at no point one party has significantly
+more information than the other) or through a Trusted Third Party.
+If they are the same, then this means X=A, so A and B
+have a match (e.g. a date). The common keys must remain
+secret (hence the ZK above): if g^(BX)mod n "escaped"
+to the public, then the real X would find out that
+B is interested in him.
+
+Is anything wrong with this, specificaly with the use
+of the "common key"?
+
+  Dimitris
+
+-- 
+Dimitris Tsapakidis               PGP keyID: 735590D5
+dimitrt@dcs.rhbnc.ac.uk           MSc in Information Security,
+This space reserved               Royal Holloway, University of London
+for future use.                   Origin: Thessaloniki, Macedonia, Hellas
+
+
+
+

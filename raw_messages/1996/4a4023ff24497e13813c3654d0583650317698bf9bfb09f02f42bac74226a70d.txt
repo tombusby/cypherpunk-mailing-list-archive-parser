@@ -1,0 +1,38 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 20 Sep 1996 17:27:50 +0800
+To: Bodo_Moeller@public.uni-hamburg.de (Bodo Moeller)
+Subject: Re: stealthy key exchange
+Message-ID: <199609200649.XAA13400@dfw-ix1.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:37 AM 9/19/96 DST, Bodo_Moeller@public.uni-hamburg.de (Bodo Moeller)
+wrote:
+>If both have public keys, what is the point of using Diffie-Hellman?
+>The two channels (Alice -> Bob and Bob -> Alice) are independent, so
+>they can use different session keys.  Alice creates a random key K_A
+>and sends it to Bob (encrypted with Bob's public key).  Alice uses K_A
+
+Diffie-Hellman gives you forward security - if an eavesdropper copies
+your message and later steals your secret keys, he can't decrypt it,
+because there's no encrypted session key to recover.  To prevent 
+man-in-the-middle attacks, sign your half-keys with your public key.
+
+There are some problems with this method - it requires several 
+exchanges, so it's awkward to use for email (though you can do it.)
+Also, it does expose the signed keyparts, which reveals the public
+key used for signing, though you can play games to prevent this
+(e.g. negotiate the key, and send the signed keyparts encrypted
+with the public key, though if there _is_ a man-in-the-middle,
+the MITM can see this, and your connection will fail.)
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	
+# You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+
+
+
+
+

@@ -1,0 +1,52 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 7 Dec 95 10:03:05 PST
+To: support@marktwain.com
+Subject: Re: Still more on the Digicash protocol
+Message-ID: <199512071803.KAA18623@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Mark Twain Ecash Support <support@marktwain.com>
+> Let us contemplate in which type of situation the payee will send such a
+> wildcard coin. To pay a shop via TCP? No. The payment request comes in with
+> the shop ID. The resulting payment won't be done with a wildcard coin.
+> 
+> So when will the user pay with a wildcard coin? To make a payment to a party
+> that is (pseudo-) anonymous to the payor. That is, if the payor sends the
+> payment via anonymous remailer, in which case the messages should be
+> encrypted anyway.
+
+There might be some situations where it is useful to send a wildcard
+coin even via a TCP connection.  For example, a pseudonymous server
+might pop up at some internet address different from its real one, make
+some transactions, and then go away.  Or someone might set up an
+anonymous account at some public server (like c2.org) and conduct
+business anonymously on an ongoing basis.  In either case the payee
+would be anonymous to the payor even though they communicated via TCP.
+The shop would have to send its payment request using "@" as the
+shop_accID field (I have heard of an undocumented "-X <payee>" switch
+in the Unix ecash program which allows the shop software to control
+this field in the payment request).
+
+We have also discussed the "pipe-net" which would allow anonymous TCP
+connections.  This does not look like it can be as secure as the remailer
+net but for occasional or short-term use it can provide considerable
+privacy protection.
+
+I am glad that DigiCash supports this type of cash which anyone can
+deposit.  Actually, I am surprised and puzzled that it does, given
+Chaum's apparent reluctance to endorse schemes to allow payee anonymity
+(due to political problems, apparently).  It would be interesting to hear
+how DigiCash envisions this feature being used, and whether they plan to
+continue to allow it.  Since it is not well documented (if at all) it's
+possible that they don't plan to keep it.
+
+But if they do, I think it would be good to adapt the protocols so this
+feature is usable over TCP connections.
+
+Hal
+
+
+
+

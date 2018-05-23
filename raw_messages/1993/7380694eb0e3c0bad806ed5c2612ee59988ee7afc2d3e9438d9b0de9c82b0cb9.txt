@@ -1,0 +1,40 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Mon, 4 Oct 93 11:39:08 PDT
+To: cdodhner@indirect.com
+Subject: Re: POISON PILL
+Message-ID: <9310041835.AA15292@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> Something else you can do is use a cipher which takes two input streams
+>> and merges them into the one file, with one key extracting the 'harmless'
+>> information and another extracting the 'harmfull' information. 
+>> 
+>> Matthew.
+>> --
+>> Matthew Gream, M.Gream@uts.edu.au. "... encryption is the ultimate means of
+>> Consent Technologies, 02-821-2043.  protection against an Orwellian state."
+>
+>Has anybody writen one? Can we try for this as a feature in the next pgp?
+>Should I write it myself? Of course I should... silly question... Ok does
+>anybody have any suggestions or wishlists? Lemme know.
+>
+
+AFAIK, the only way to do this is with a Vernam OTP.  You have a key file (A)
+the same length as your real data (B) -- encrypt the data by XOR to get (C).
+Then you take an innocent text (D) and XOR with (C) to get an alleged key
+file (E).  You hide (A) someplace, destroy (B) and (D).  Leave (C) around
+and put up just enough resistence in letting folks have (E).
+
+Does anyone know a simpler way?  I'm willing to bet that it can be proved that
+the key would have to be at least 1/8 the length of the message in order for
+this to work but I don't know of any schemes using less than the message
+length to do it.
+
+ - Carl
+
+
+
+

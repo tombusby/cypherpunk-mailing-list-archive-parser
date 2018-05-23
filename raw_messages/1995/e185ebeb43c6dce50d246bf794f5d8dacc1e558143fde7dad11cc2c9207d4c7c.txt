@@ -1,0 +1,34 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 21 Dec 95 10:29:06 PST
+To: cypherpunks@toad.com
+Subject: Re: Bit Commitment Query
+Message-ID: <199512211827.KAA16701@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+For Robbie Gates, I agree that the bit commitment he describes seems
+more complicated than necessary.  The simpler one, where you just hash
+(R,b), is the one I have seen used.  I suggest asking on sci.crypt.
+Bruce Schneier and many other good cryptographers read that group.
+
+For Futplex, the idea of using a block encryption algorithm in a 
+similar way, encrypting (R,b) with a secret key K, and later revealing
+K, is a little questionable because block encryption algorithms are not
+designed to avoid collisions in the same way hashes are.  Futplex
+suggests that it should be hard to find two keys K_1 and K_2 such that
+E_K_1(R, b1) = E_K_2(R, b2) where b1<>b2.  But this is not necessarily
+true.  A cryptosystem might have the property, say, that complementing
+the key is equivalent to complementing bit 0 of the plaintext.  DES has
+some simple complementation properties (although not this one).  Unless
+you can show that a cipher with this property is inherently weak then
+it is not a valid assumption that a cipher won't have this property.
+
+There is some literature on creating hash functions out of block ciphers.
+The two are really not interchangeable.
+
+Hal
+
+
+
+

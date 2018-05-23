@@ -1,0 +1,54 @@
+From: Brian Durham <bdurham@metronet.com>
+Date: Tue, 17 Sep 1996 16:56:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: Redundancy in XOR encryption
+In-Reply-To: <842896374.27768.0@fatmans.demon.co.uk>
+Message-ID: <323E2C6A.7423@metronet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+paul@fatmans.demon.co.uk wrote:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> I have a question I hope someone here might be able to answer:
+> 
+> As the method of cryptanalysis of XOR (Ie. index of coincidence)
+> relies on redundancy in the plaintext, would the following be strong:
+> 
+> Compress P to get perfect compression (ie. 0 redundancy)
+> Encrypt F (the compressed text) using a repeated key XOR
+> 
+> of course this is all rather theoretical as there is no such thing as
+> perfect compression, but I just thought it might be interesting to
+> see if this is indeed strong, superficially it appears so to me...
+> 
+
+Paul:
+   I think that if the cryptanalyst knows that F has zero redundancy
+that he can run searches from 0 to n bits for the key and have
+the computer flag solutions that have zero redundancy.  
+
+   I also think that a perfectly compressed file would have a relative
+entropy value close to one also, hence the computer could flag possibles 
+that have both characteristics.
+
+   Hence, instead of searching for plaintext by counting coincidences,
+we are searching the decrypts for solutions that have zero redundancy
+and a relative entropy value close to one.  How many solutions will
+have both these qualities?  I don't know.  But if the compression method 
+is known, brute force will be tried, and only having to try to 
+decompress (read) data that has the resultant characteristics
+of compressed information will speed things up by quite a bit.
+
+   Others may disagree with my thought-experiment and my approach,
+but I think this is quite possible ... even to persons with limited
+computing resources.
+
+   Brian Durham
+   bdurham@metronet.com
+
+
+
+

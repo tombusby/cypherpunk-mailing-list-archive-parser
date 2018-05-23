@@ -1,0 +1,83 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Tue, 25 May 93 09:18:20 PDT
+To: CYPHERPUNKS <CYPHERPUNKS@toad.com>
+Subject: Steganography...
+Message-ID: <930525161307_74076.1041_FHD47-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Kevin Brown makes some interesting points about steganography and
+steganalysis.  The issue of recognizing whether a message has or might
+have a hidden message has two sides.  One is for the desired recipient
+to be clued that he should try desteganizing and decrypting the message,
+and the other is for a possible attacker to discover illegal uses of
+cryptography.
+
+Steganography should be used with a "stealthy" cryptosystem (secret key
+or public key), one in which the cyphertext is indistinguishable from a
+random bit string.  You would not want it to have any headers which could
+be used to confirm that a desteganized message was other than random noise.
+
+This would allow some public standard to be used for steganizing messages.
+Ideally, the standard would be chosen so that typical real messages, when
+desteganized by the standard technique, would produce close to a random
+bit pattern.  Maybe Kevin's idea about taking the parity of each (four-
+letter or greater?) word in the message would work.
+
+With stealthy cryptography and a "random" standard steganographic technique
+people could use steganography without much fear that their messages will
+attract attention, or that they could be proven to be using this technology
+just by analysis of their messages.  Only the desired recipient would discover
+the hidden message by achieving success in decrypting the random bit string
+that comes from the desteganography.  He would have to try this on all messages
+and it would only work on those fraction with hidden messages aimed at him.
+
+A big problem right now is that none of Kevin's proposed approaches seem to
+be capable of being fully automated.  I don't think that word substitution
+can be done safely, at least not by some simplistic algorithm.  Words have
+many meanings and it is not easy for software to choose an appropriate
+synonym.  This is a similar problem to machine translation, and I think those
+systems still require a lot of human supervision.
+
+In the olden days, spies used the "window" method of steganography.  They
+had a piece of paper with randomly-scattered holes in it.  They would put it
+on top of another piece of paper and write their secret message in the holes.
+Removing the "window" paper left a sheet of paper with some widely scattered
+letters.  The spy then wrote a cover message among the letters, choosing his
+words so that the letters fit in.  The recipient then had a paper with the
+same window positions so that he could read the message.
+
+We could do a similar thing - position the letters of a hidden (and encrypted)
+message at every 5th (or 10th, or whatever) position, and have a special word
+processor that let you compose a message but allowed you to see the forthcoming
+stega letters so that you could try to make your words fit around them.  This
+might be harder than for the paper case because we have no ability to change
+the spacing of our letters in order to fit around the fixed letters more easily.
+
+Steganography will be more labor-intensive than ordinary encryption.  You
+have to write two messages: the encrypted one you want to send, and a cover
+message that is five to ten times longer.  Plus you may need to massage the
+cover message to one degree or another depending on how automatic the stego
+insertion is.  This might be reasonable if crypto is outlawed and you are
+part of an underground group fighting the government, but for ordinary use
+I don't see how to make it both easy and safe.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.2
+
+iQCVAgUBLAIau6gTA69YIUw3AQFW6wQAk5r3TVkn3VI4LS+9103J/yQMNs1kypkt
+qkdX3FRHll7O9KeIipYdDvJUGeIfFzQobyBy6pGvSQZKV0tdb+ZM+3BG9LlpUFZZ
+Y1wGX0aJChvY+/L2RugxxLGROYOdZJzeijBj5L6swgmtsschHnsfo7j7A3md6gDq
+rJyFvOaU5ms=
+=g99M
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,44 @@
+From: b44729@achilles.ctd.anl.gov (Samuel Pigg)
+Date: Tue, 27 Jul 93 00:31:05 PDT
+To: jpp@markv.com
+Subject: Alpha testers wanted: GNU Emacs, RMAIL, and PGP
+In-Reply-To: <9307262328.aa17686@hermix.markv.com>
+Message-ID: <9307270728.AA06762@achilles.ctd.anl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Date: Mon, 26 Jul 93 23:28:36 PDT
+   From: jpp@markv.com
+   Sender: jpp@markv.com
+
+     I have just finished writing a fancy new package for GNU Emacs
+   (pgpmail).  It requires PGP, RMAIL, and sendmail.  You must be able to
+   run a program from within Emacs.  Pgpmail automaticaly checks message
+   signatures and decrypts messages, it helps automate signing outgoing
+   messages (and strips the signatures a bit too!).  Pgpmail also helps
+   fix a known security hole -- it doesn't send you passphrase on the
+   command line, but uses the environment instead.
+
+I may be missing something, but isn't this less secure than using the
+command line? Anyone on the system can do a "ps -e" whilst you are
+encrypting to get the environment of the pgp process.
+
+If you use the -z option to pass the passphrase to pgp, that argument
+gets cleared by pgp immedaitely when it executes, so it is not
+available for very long.
+
+An even better way would be to use the file descriptor method of
+giving the passphrase to pgp.
+
+Not sure how you would do this in elisp, but that's how I did it in
+NXPGP (pgp front end for NeXT). Well, the newest version anyway, which
+is still being beta tested (anyone want to help?).
+
+
+-Sam
+
+
+
+
+

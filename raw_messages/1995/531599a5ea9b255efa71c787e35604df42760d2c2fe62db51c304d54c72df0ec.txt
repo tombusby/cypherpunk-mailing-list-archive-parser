@@ -1,0 +1,69 @@
+From: anonymous-remailer@shell.portal.com
+Date: Thu, 9 Nov 1995 09:56:45 +0800
+To: cypherpunks@toad.com
+Subject: Re: PGP Comment feature weakens remailer security
+Message-ID: <199511090020.QAA12479@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 8 Nov 1995, Raph Levien wrote:
+
+>    On an unrelated topic... cypherpunks like to count bits, right?
+
+Mmmm, sometimes we do ... <g>
+
+Sometimes we even think, if I were a lil wa'bbit, where would I go hide
+... especially when we do a bad Elmer Fudd impression of Bugs Bunny. <p>
+
+> What is the correct number of pseudorandom bits to use in a MIME
+> multipart separator? If the data has a line which matches the
+> separator, the message is corrupted.  Of course, if you can take
+> multiple passes through the data, you can simply verify that it does
+> not contain a line which matches the separator. But if you're
+> restricted to a single pass, then the only way to do it is to use a
+> randomly generated separator.
+
+An interesting problem.  
+
+If you are going to take multiple passes, and do top-down and bottom up
+analysis, then you can't really parse on the fly. It pretty much has to be
+a batch job, I think.  You have to get your data, and then check it.  You
+can't simply *trust* that there is not any corruption, and pass all of
+your data through. 
+
+And if you're going to parse in a single pass, then we're back to the 
+problem of monkeys sitting at typewriters and Shakespeare's sonnets.
+
+>    I figure that 128 bits should _definitely_ be enough (that's what
+> is in the new premail code now). Even 64 bits should ensure that it is
+> unlikely that anyone will ever experience message corruption over the
+> expected lifetime of premail. However, it makes me nervous. What do
+> people think?
+
+Unfortunately, it's not quite that simple.  
+
+The likelyhood of corruption is not based on each past run.  It's just 
+like rolling dice.  The odds of rolling boxcars is 1 in 36 (I think) no 
+matter how many prior times, you've rolled boxcars.
+
+Twenty passes doesn't influence whether you crap out or not on a single
+roll.  Nothing *remembers* past performance to ensure that something
+doesn't happen (or happens) many, many times in a row.  I guess, this is
+why Atlantic City, Baden Baden, and Las Vegas generally do as well as they
+do. 
+
+
+
+Alice de 'nonymous ...
+
+                                  ...just another one of those...
+
+
+P.S.  This post is in the public domain.
+                  C.  S.  U.  M.  O.  C.  L.  U.  N.  E.
+
+
+
+
+

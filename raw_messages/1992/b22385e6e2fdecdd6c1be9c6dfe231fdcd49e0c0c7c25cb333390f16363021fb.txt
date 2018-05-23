@@ -1,0 +1,42 @@
+From: jim@tadpole.com (Jim Thompson)
+Date: Mon, 21 Dec 92 10:08:34 PST
+To: cypherpunks@toad.com
+Subject: Re: Destroying Data
+Message-ID: <9212211807.AA25690@tadpole.tadpole.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 	Consider also the technique used in the Norton Utilities
+> 	program "Diskwipe" which takes a /g switch which "Follows
+> 	certain government rules for wiping". I can't find the manual
+> 	but I think it specifies how many repetitions are used and
+> 	different values to write in each. 
+
+SunOS 4.X 'format/analyze/purge', (which was done at the request
+of SunFed, for some Fed contract) uses 4 repetitions with patterns:
+
+	0xaaaaaaaa	(10101010)
+	0x55555555      (01010101)
+	0xaaaaaaaa      (10101010)
+	0xaaaaaaaa      (10101010)
+
+Followed by a final pass with:
+
+	0x40404040	(10000000)
+
+Consider this secure if you want.  :-)  For Unix variants, one
+might consider a 'patch' to libc that scribbled on the file passed
+to the 'unlink()' system call before actually performing the syscall.
+
+This will, of course, break Unix semantics because there is no way
+to tell from userland that no other process is holding the file open,
+so you'll scribble on the file prematurely.  I guess itrunc() is what
+really need changing.
+
+Jim
+
+
+
+
+

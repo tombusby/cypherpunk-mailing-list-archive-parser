@@ -1,0 +1,43 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 22 Jul 94 22:46:23 PDT
+To: cypherpunks@toad.com
+Subject: Re: Double DES calculations
+In-Reply-To: <01HF0WQ4C8DK95NB4U@delphi.com>
+Message-ID: <199407230547.WAA21262@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+DAVESPARKS@delphi.com writes:
+
+>The thread was concerning the vulnerability of Double-DES with an
+>intermediate layer of IDEA in the middle.  It was proposed that if IDEA
+>could ultimately be TRIVIALLy cracked, then DES-IDEA-DES was no stronger
+>than Double-DES.  At that point I did some "back of the envelope"
+>calculations on the cost of breaking Double-DES using a MITM attack.
+
+>I'm not sure how "cycles" fit into DES.  The brute-force technique I was
+>hypothesizing involved trying all possible keys on the encrypt and decrypt
+>sides, storing them the resultant 64 bit blocks (all 2^60 bytes of them),
+>then comparing them.  How would Pollard rho speed that up?
+
+I don't know how to speed this up.  Pollard rho was a cautionary tale of
+how sometimes time/space tradeoffs exist.  If the main cost of double-DES
+is in space but the time cost isn't that bad, then if there were such a
+tradeoff it could be dangerous to use it.
+
+Most of the time-space tradeoffs that I can think of for a basic MITM
+attack like this are pretty costly.  For example, instead of trying all
+the keys on both sides you could try just half the keys each time.  This
+would take only half as much space but up to four times the time.  You
+could also do some hashing to save space at the cost of false positives and
+more time.  Again, the point is not so much that double DES is weak, but
+more that if its strength is solely due to space costs that gives much
+less of a good feeling than if you had an algorithm that was strong both
+in space and in time.
+
+Hal
+
+
+
+

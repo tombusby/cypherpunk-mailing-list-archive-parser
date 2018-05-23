@@ -1,0 +1,55 @@
+From: "E. Allen Smith" <EALLENSMITH@ocelot.Rutgers.EDU>
+Date: Tue, 1 Oct 1996 08:02:25 +0800
+To: scs@lokkur.dexter.mi.us
+Subject: Re: Encrypted lists and ease of use
+Message-ID: <01IA3FDVFUWO8Y57AQ@mbcl.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	Where was the information on PGPdomo? That would seem appropriate
+for the input end, at least.
+	-Allen
+
+From:	IN%"scs@lokkur.dexter.mi.us" 26-SEP-1996 17:26:10.69
+Subj:	Encrypted lists and ease of use
+
+I'm considering sending someone off to work on a project, but wanted to
+sanity-check the idea and see if someone already has something similar.
+
+Recently I've been involved in a number of small (30 people or less)
+mailing lists which occasionally use PGP for encrypted mail.
+
+The hassle comes when one is encrypting a message to the list.  With
+people coming and going, remembering who is on what list is impossible.
+We're always having to go back and re-send to someone who was left off
+of the encryption list.
+
+What I propose to do is have a second list, list-encrypted@host, for
+every list@host.  Any mail sent to the list simply goes out in plaintext.
+List-encrypted is encrypted for everyone on list, then sent to the list
+with appropriate additional headers.
+
+To secure the mail as it travels from the sender to list-encrypted, we
+want to establish a public key for list-encrypted.  All mail to the list
+*must* travel with the public key or be rejected.  When mail arrives at
+list-encrypted, a deamon will process it.  The daemon knows the secret
+key for -encrypted, and has a list of who is on what list.  The daemon
+strips the -encrypted address, encrypts the message for all on the list.
+If there are other people on the To: or Cc: fields, the deamon will
+encrypt for them as well.  If any of this fails, the message is sent to
+as many as possible and notification failure goes back to the original
+sender indicating who the failures were.  The daemon then forwards it
+to the list real list.  It preserves the From: field, but changs `To:
+list-encrypted' into simply `To: list.'
+
+Comments?  Generally useful?  Beta volunteers?  :-)
+-- 
+  "Yea, the heavens shall open and the NP-complete solution given forth.
+ATT executives shall give birth to two-headed operating systems, and 
+copyrights shall be expunged.  The voice of the GNU shall be heard, but
+the faithless will be without transceivers."   -- me
+
+
+
+

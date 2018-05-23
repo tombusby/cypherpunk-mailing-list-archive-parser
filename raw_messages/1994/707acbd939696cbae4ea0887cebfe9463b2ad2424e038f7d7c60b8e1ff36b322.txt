@@ -1,0 +1,87 @@
+From: Ben.Goren@asu.edu
+Date: Sun, 17 Jul 94 13:31:07 PDT
+To: cypherpunks@toad.com
+Subject: Re: Hashed hash (and Kent's games)
+Message-ID: <aa4f36980002101ef083@[129.219.97.131]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:19 AM 7/17/94, Kent Borg wrote:
+>Ben.Goren@asu.edu foolishly says:
+>>I'm planning on implementing the "cryptographic protection of databases"
+>
+>And wonders about the hash being too fast to compute, that a
+>brute-force traversal of the database would be too easy.  The idea is
+>then to hash a bunch of times to burn CPU cycles, but what if the hash
+>is a group, extra hashing could be reversed quickly.  (Did I get that
+>right?)
+
+On the nose.
+
+>Well, as the LOUD proponent of making secret keys s-l-o-w-e-r to
+>decrypt, I have thought about this a bit, and have a suggestion:
+>
+>Hash once, then do a zillion encryptions of the hash with a non-group
+>cypher like DES.
+
+I'll probably do just that. First thought, subject to revision: hash the
+name, feed it to DES with the output of a deterministic RNG (need not be
+secure, but the slower the better--BBS? (not that BBS is incesure)) as the
+key; repeat as needed. Hmmm...perhaps I'll adapt an earlier idea of mine:
+split the hash into two parts, a and b, and compute (a^(1/b))-1, and use
+some or all bits after the leading zeros.
+
+>Another idea (something I have thought less about): send every legit
+>user of the database a custom version with the parts encrypted with
+>that user's public key--and do the trick mailing list companies use,
+>scatter some dummy info in the list.  When a dummy (not just me) gets
+>a junk mailing, go beat up on the user who's copy had to have supplied
+>the junk [. . . .]
+
+Nice idea, but there's neither the available resources to do that, nor, I
+think, the desire to beat up on careless users. Berzerk suggests a 0.1 S/N
+ratio (and in an earlier note a couple useable algorithms for the multiple
+encryption process); that would not be practical for any decent sized
+database, and I might have 100K or so people to deal with. But I almost
+certainly will mix in at least some random padding. I imagine that the
+database will always be the same length, even as people are added and/or
+removed with time. And the records, of course, will be premuted randomly.
+
+>-kb, the Kent who doesn't want to be thought of as only a card player
+
+Then here's a suggestion for you: develop some other primitives, like
+rolling dice, and you could implement just about any other game you like.
+Monopoly would need (aside from licensing issues) the dice, two decks of
+special cards, and some ecash. (Surely MM used as Monopoly Money isn't
+subversive? After all, it's teaching our young 'uns to be good
+capitalists.) Scrabble would need a deck of cards, each of which contains
+only a letter, with many duplicates. Trivial Pursiut is just a huge deck of
+cards; they'd probably be index positions to the database of questions, so
+special editions are just a file switch away.
+
+These are among the most popular games in the US, and probalby abroad.
+Build your primitives right, and these games are as simple as specifing
+paramaters (how many sides to the dice, what info the cards contain, etc.).
+And maybe you could license the stuff, each and every independent game, to
+the current owners of the games that aren't PD.
+
+So how about becomming "kb, the Kent who digitized the American family evening"?
+
+Go for it! And drop me a line when you want beta testers (sometime Thursday?).
+
+>Kent Borg                                                  +1 (617) 776-6899
+
+b&
+
+--
+Ben.Goren@asu.edu, Arizona State University School of Music
+ net.proselytizing (write for info): Protect your privacy; oppose Clipper.
+ Voice concern over proposed Internet pricing schemes. Stamp out spamming.
+ Finger ben@tux.music.asu.edu for PGP 2.3a public key.
+
+
+
+
+
+

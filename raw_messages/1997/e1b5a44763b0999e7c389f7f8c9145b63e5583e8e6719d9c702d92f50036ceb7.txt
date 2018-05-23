@@ -1,0 +1,47 @@
+From: uk1o@rz.uni-karlsruhe.de
+Date: Wed, 15 Oct 1997 10:55:26 -0700 (PDT)
+To: imp@harmony.village.org (Warner Losh)
+Subject: Re: CVS: cvs.openbsd.org: ports
+In-Reply-To: <199709181910.NAA20539@harmony.village.org>
+Message-ID: <199710151308.HAA03190@mroe.cs.colorado.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello!
+
+[older mail]
+
+According to Warner Losh:
+> In message <199709160731.JAA11130@waldorf.appli.se> Niklas Hallqvist writes:
+> : To people with commit access: committing to ports won't work, it's a
+> : sup mirror where files will get overwritten.  Instead discuss changes
+> : on ports@ and when good, mail to imp@ with explanations for
+> : consideration of including into FreeBSD.
+
+> This particular patch was committed to the FreeBSD tree last night.
+
+> I do think that there will come a time when OpenBSD needs to have its
+> own ports tree.  95% of this tree could be a mirror of the FreeBSD,
+> but there are some interesting issues that need to be resolved that
+> haven't been (like the libcrypt issues).
+
+How about suggesting a make variable HAS_LIBCRYPT to the FreeBSD people?
+We could set it in <bsd.own.mk> or something like this (to a value
+meaning "we don't have it and we don't need it either), and FreeBSD could
+do similar.
+
+Another way were patching the third party program's Makefile accordingly.
+We should introduce a patches-${OPSYS} directory having precedence before
+the patches directory of a port. Thus we could maintain our special patches
+for ports which need them while continuing to use the FreeBSD ports where
+they work out of the box. I see now that this is already implemented in
+<bsd.port.mk>, so we could just USE that.
+
+> Warner
+
+Regards, Felix.
+
+
+
+

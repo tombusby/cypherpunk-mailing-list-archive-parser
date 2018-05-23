@@ -1,0 +1,56 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 5 Mar 94 13:20:23 PST
+To: cypherpunks@toad.com
+Subject: Re: Truly Stealthy PGP
+Message-ID: <199403052121.NAA19624@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: hughes@ah.com (Eric Hughes)
+> What I suggest is making the exponent (the encrypted session key)
+> completely random over the length assigned to it, since that's
+> visible, and just live with a slightly non-flat distribution of
+> exponents mod n.  It turns out that this can be made to work just
+> fine.
+> 
+> n is the modulus.  Divide L by n to get L = t * n + s, s in [0,n).
+> Assume x is random in [0,L).  The entropy of x mod n is
+>    E = log L/t - s(t+1)/L log( 1 + 1/t )
+> 
+> What is the smallest value of E?  In other words, what's the upper
+> bound of the randomness we can lose?  It happens when when t = 1 and
+> when n = L/2+1.  This maximize the expression in t and maximizes s at
+> n-2.  This minimum value of E is
+> 
+>    E_min = log L - ( ln 2 - 2/L ln 2 )
+> 
+> In other words, the most entropy we can lose is two bits.  That's
+> right, only two bits.  Since the entropy of the session key is the
+> length of the modulus, for a 1000 bit key the entropy loss is
+> negligible.
+
+I'm not sure the point of this entropy calculation.  For the case n =
+L/2+1, t=1, it seems to me that the RSA-encrypted session key (sk^e mod n)
+is never going to have the high bit set, so with K such messages it should
+be possible to tell that something is going on with probability 1 - 2^-K.
+
+> Therefore, my recommendation is that the session key representation be
+> chosen randomly over [0,2^k) and to use as an actual session key this
+> value mod n.  The effective entropy loss is small enough not to worry
+> about.
+> 
+> Eric
+> 
+
+If the session key is chosen from [0,L), still the encrypted session
+key m = sd^e mod n will be uniform in [0,n).  I don't quite follow here
+how exactly we go from something uniform in [0,n) to something uniform in
+[0,L), if that is what Eric is proposing.
+
+Hal
+
+
+
+
+

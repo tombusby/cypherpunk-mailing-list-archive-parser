@@ -1,0 +1,65 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Fri, 19 Jul 1996 03:02:08 +0800
+To: cypherpunks@toad.com
+Subject: Re: DES & IDEA built right into the Linux kernel...
+In-Reply-To: <4se8do$dlp@abraham.cs.berkeley.edu>
+Message-ID: <4slk11$9oi@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <Pine.LNX.3.94.960716192252.5644C-100000@switch.sp.org>,
+The Deviant  <deviant@pooh-corner.com> wrote:
+>On 15 Jul 1996, Ian Goldberg wrote:
+>
+>> Date: 15 Jul 1996 13:07:20 -0700
+>> From: Ian Goldberg <iang@cs.berkeley.edu>
+>> To: cypherpunks@toad.com
+>> Newsgroups: isaac.lists.cypherpunks
+>> Subject: Re: DES & IDEA built right into the Linux kernel...
+>> 
+>> In article <199607130507.WAA25103@myriad>,
+>> Anonymous <nobody@mockingbird.alias.net> wrote:
+>> >> Nicholas Leon <nicholas@binary9.net> has created tools that allow DES
+>> >> and IDEA encryption at the device level for the Linux kernel.  Some of
+>> >> the patches are in the 2.0.4 kernel, and the rest can be found at
+>> >>
+>> >>     http://www.binary9.net/nicholas/linuxkernel/patches/
+>> >
+>> >
+>> >Yep, you can mount encrypted files or partitions as filesystems. (sorta
+>> >like securedrive/securedevice for messydos.)  Nifty stuff...
+>> 
+>> Except that last I checked (2.0.6) it was completely insecure.  The
+>> DES-encrypted filesystem ignored your password and always used a key of
+>> all 0's (which is a weak key in DES, to boot).  I've been touching it up
+>> to do DES and IDEA _right_ (CBC mode within each block, IV based on block
+>> number), and plan to put in some simple stego as well.
+>> 
+>>    - Ian
+>
+>Hrmm.. Sounds interesting... how long till your patch is done?
+>
+> --Deviant
+>
+
+Well, it seems encryption now works, and stego works, but stego'ing an
+encrypted filesystem doesn't. :-(   I'll keep looking at it...
+
+   - Ian
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMe5TWkZRiTErSPb1AQHpUgP+MnrTrgPoGLL8WHugMsvhBZfQ45mj5mdj
+ZpSO/bjtn/YUtsmzmGOr2EjWWHesIZ+Xm30g16qLD/TAxnYpShZrvQH5YoYwZzLh
+y0T937Q+ZjOMDKJLFsVghA4jB2iBbwbp7EAMIQLZHsxZYj+pbnE9SUZuwgQlcmAC
+OyMfK0ZBs9g=
+=T3ID
+-----END PGP SIGNATURE-----
+
+
+
+

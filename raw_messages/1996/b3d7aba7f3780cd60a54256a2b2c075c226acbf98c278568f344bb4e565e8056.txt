@@ -1,0 +1,62 @@
+From: Laurence Lundblade <lgl@qualcomm.com>
+Date: Fri, 1 Mar 1996 06:41:31 +0800
+To: cme@cybercash.com (Carl Ellison)
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <v02140b15ad5b14e9fad1@[204.254.34.231]>
+Message-ID: <v03005202ad5b8b0930e7@[129.46.110.231]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 3:43 AM 2/29/96, Carl Ellison wrote:
+
+>>The Certificate format
+>>----------------------
+>>It seems possible to pick a certificate format independent of the other
+>>issues.  Doing so would allow us to leverage components like we do with
+>>other data objects like MIME.  There probably only two major contenders:
+>>  * X.509 v3
+>>     + broadly supported by standard bodies
+>>     + supported by several industries (e.g., banking)
+>>     + very rich and flexible
+>>     + ASN.1
+>>     - ASN.1 (tough for a student to get an ASN.1 compiler)
+>>     - complicated
+>>  * PGP keys
+>>     + widely deployed
+>>     + simple to write code for
+>>     - difficult to lookup (linear search on key id required)
+>>     - too simple to support many trust models and distribution systems
+>
+>We're proposing a third certificate format.  X.509 is an identity
+>certificate, unless one bends it severely.  Signed PGP keys are also
+>a kind of identity certificate.  Our proposal is an attribute certificate,
+>not an identity certificate.  It is simple to lookup these certs.
+>Like X.509, my certs have an Issuing-name and a Subject-name -- but
+>they're both cryptographic hashes of public keys.  You can take a portion
+>of those hashes [e.g., low order 12 bits] and use it to index a hash table
+>of certificates or keys.  The cert is more general than X.509 -- that is,
+>it includes all of X.509 and then some [because we don't require some
+>binding to a human identity, don't require a Certificate Authority, ...].
+>Our first format is RFC822-like -- so it's easy to parse and generate and
+>read and use.  It's very rich and flexible.  We're working to make it
+>an IETF standard.  It does not use ASN.1 and has none of the baroqueness
+>of X.509.
+>
+>In fact, these certs can be formed as PGP clear-signed messages.
+
+Isn't using a hash as the identifier replicating the key distribution
+problem that PGP has or are you including some other data that can be used
+to look up the cert?  I think a problem occurs when you have 20 billion of
+these certs (two for every person in the year 2010 or such).  A simple hash
+into a table isn't going to cut it because you a single database (with
+replication?) isn't going to be possible.  Some hierarchical lookup like
+DNS is going to be needed. The look ups are needed to check for revocation.
+
+LL
+
+
+
+
+
+

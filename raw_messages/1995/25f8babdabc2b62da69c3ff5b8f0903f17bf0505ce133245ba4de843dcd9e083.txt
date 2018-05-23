@@ -1,0 +1,45 @@
+From: Yih-Chun Hu <yihchun@u.washington.edu>
+Date: Thu, 21 Sep 95 21:38:47 PDT
+To: Joe Block <jpb@miamisci.org>
+Subject: /dev/audio RNG
+In-Reply-To: <v01520c05ac87bbe891da@[199.227.2.142]>
+Message-ID: <Pine.OSF.3.91j.950921212806.29336B-100000@saul1.u.washington.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've been working on a Linux RNG. I'm sure you could port this, but it 
+might take some work for Microsoft based programs...
+
+--- CLIP HERE ---
+#!/usr/bin/perl   
+($b,$s)=@ARGV;$b/=16;open(A,"/dev/audio");while($b--){$t=time;$t+=
+$s||die"Syntax: $0 bytes security\n";open(O,"|./md5");while(time<$t){
+read(A,$x,500);print O $x;}close O;}close A;print"\n";
+
+# USAGE: rng <bytes> <security level>. One external command is used:
+# ./md5 which I created using 
+#   gcc -O3 -mpentium -o md5 md5.c md5drivr.c 
+# where md5drivr.c is modified so that MDFilter()'s line printf("\n")
+# is commented out.
+--- CLIP HERE ---
+
+Runtime = security * (bytes/16) assuming your machine is fast enough.
+Each set of 16 bytes uses $s seconds of /dev/audio input to create.
+I guess you could replace /dev/audio with /dev/mouse. Of course, if you
+get nothing but d41d8cd98f00b204e9800998ecf8427e you may want to use
+some other source. :)
+
++---- Yih-Chun Hu (finger:yihchun@cs.washington.edu) ----------------------+
+| http://www.cs.washington.edu/homes/yihchun     yihchun@cs.washington.edu |
+| http://weber.u.washington.edu/~yihchun         yihchun@u.washington.edu  |
++---- PGP Key Fingerprints (Keys by FINGER or on WWW) ---------------------+
+| 1024/E50EC641        B2 A0 DE 9E 36 C0 EB A6  F9 3E D2 DD 2F 27 74 79    |
+| 2047/DF0403F9        18 EB 62 C8 7F 06 04 67  42 76 24 E2 99 D1 07 DC    |
++--------------------------------------------------------------------------+
+
+
+
+
+

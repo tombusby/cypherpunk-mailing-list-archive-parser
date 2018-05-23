@@ -1,0 +1,51 @@
+From: koontzd@lrcs.loral.com (David Koontz )
+Date: Thu, 25 Aug 94 20:55:53 PDT
+To: cypherpunks@toad.com
+Subject: You can hide from the Chip, but not from the Man.
+Message-ID: <9408260355.AA06500@io.lrcs.loral.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+After reviewing the NIST rebuttal to Matt Blaze's Paper, 'Protocol Failure
+in the Escrowed Encryption Standard', referring to how the Unit ID (UID)
+was expanded from 24 bits to 32 bits, I e-mailed the following question to
+Dorthy Denning, informing her that I wanted to share the answer.
+
+The question arises, does the unit ID indeed contain a field registered to
+the equipment manufacturer?
+
+Professor Denning replied:
+
+"Yes, the UID contains bits that identify the manufacturer."
+
+(I didn't think to ask how many)
+
+The implication is that a counterfeit LEAF is detectible.  As per FIPS Pub
+185, The Escrowed Encryption Standard, a transmission or stream of data is 
+preceded by the Cryptographic Protocol Field (CPF) which is registered to a 
+particular application (Clipper phone - AT&T, for example).  The CPF is used
+to determine where to find the LEAF, the LEAF Creation Method (LCM) and the
+Family Key (KF).  Thus the CPF also identifies the manufacturer, or group of 
+manufacturers for a theoretically second sourced product, by identifying the
+data protocols of the encrypted data (RCELP in the case of AT&T). 
+
+A Bogus LEAF tested against the Escrow Authenticator (EA)  must still match
+the manufacturer information found in the Unit ID.  I would expect that
+there is between 10 and 12 bits of the UID specifying manufacturer.
+
+The bad news is that to escape detection by the Law Enforcement/National
+Security monitoring activity, you need to produce a LEAF that not only
+produces an acceptable Escrow Authenticator used by the recipient EES
+chip, but also produces a UID falling with some number of bits that matches
+LE expectations as a result of examing the CPF.
+
+The problem is that without knowledge of the Family Key and the LEAF
+creation method, there is no possiblity of checking for a match in the
+UID's manufacturers identifier.
+
+
+
+
+

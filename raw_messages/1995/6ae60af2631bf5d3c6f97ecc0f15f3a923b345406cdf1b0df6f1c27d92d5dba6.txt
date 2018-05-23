@@ -1,0 +1,72 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 1 Sep 95 12:15:26 PDT
+To: "baldwin" <baldwin@RSA.COM (Robert W. Baldwin)>
+Subject: Re: Some details on RSA Secure
+Message-ID: <199509011912.MAA29501@ix8.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:48 AM 8/31/95 PST, "baldwin" <baldwin@RSA.COM (Robert W. Baldwin)> wrote:
+>Here are my biased comments on RSA Secure.  They are biased by
+>the fact that I an a techie who works for RSA Data Security.
+>Neatest Features:
+>- It is integrated with the File Manager on Windows and the
+>  Finder on Mac System 7.
+
+It's an interesting approach - simpler than installing as a file system
+(I'm not using SecDrv because it needs a separate partition),
+but so far it seems relatively useable.  On the other hand,
+since there are file types it refuses to encrypt, like DLLs,
+there are some things it can't protect (like DLLs with passwords
+embedded in them.)
+
+>- A settable list of files can be automatically decrypted (or
+>  encrypted) on system startup (or shutdown).
+
+I've got mixed feelings about this - since my password has normally
+timed out by the time I shut down, it demands a password before
+shutting down, and if I had any large amount of data there,
+I assume it would take a while to reencrypt on my 386-box.
+(Laptops are generally slower than similar-age desktops,
+and you often want to shut them down quickly, even when
+they aren't shutting themselves down to save power.)
+I haven't tried powering it off during this process, but I assume
+that at best the files would be unencrypted and at worst there'd
+be one half-decrypted and sitting in limbo to be trashed the
+next time the system starts up?
+
+>Technical Features:
+>- The user's passphrase unlocks a master key that is used to unlock
+>  the file encryption key for each file.
+
+Since the documentation mentions 512-bit and 1024-bit RSA keys,
+I'd guess that each file has a separate random RC4 key which is
+stored in the file header, encrypted with the user and escrow
+RSA keys plus the MD5 hash, plus the encrypted real filename?
+
+(The alternative would be that the userpref.!!! file contains an
+RC4 key encrypted with RSA, which is used to encrypt the file keys,
+but that would lead to much shorter headers, and cracking that master
+RC4 key would then allow cracking of all documents on the system,
+so I'm guessing that's not the approach used.)
+
+>Request for Improvements:
+
+1) The "Emergency" menu item in the File Manager is annoying.
+Could it be combined with the RSA menu item, eliminated, or
+at least have the option of abbreviating the name?
+
+2) Can keys and files be shared between multiple machines,
+i.e. the same user keys on a desktop and laptop, so that
+individual encrypted files can easily be moved back and forth?
+#---
+#                                Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

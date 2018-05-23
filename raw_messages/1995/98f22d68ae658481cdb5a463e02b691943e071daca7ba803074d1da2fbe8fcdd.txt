@@ -1,0 +1,134 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sun, 5 Feb 95 21:35:07 PST
+To: cypherpunks@toad.com
+Subject: Re: Remailer encryption module
+Message-ID: <199502060534.VAA26941@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: eric@remailer.net (Eric Hughes)
+> -- The RSA-encrypted session key does not have a flat representation
+> over its multiword container.  This yields a statistical traffic
+> analysis hole.  (This point is irrelevant without fixing 4.)  Hal and
+> I completely solved this problem last year.
+
+For reference, here is that old message with an algorithm that produces an
+encrypted session key with a flat distribution over a specified number of
+bytes, along with a proof that it works.  The purpose of this is you
+could strip off the PGP header stuff and have a file which looked for all
+intents and purposes like totally random bytes, but if you knew the
+secret key then you could decrypt it just fine.
+
+(I recently took my CP archives and indexed them using Mark Zimmermann's
+(no relation to Phil, apparently) FreeText browser which lets me do
+keyword searches.  Pretty nice.)
+
+> Date: Mon, 7 Mar 94 08:34:04 -0800
+> From: hughes@ah.com (Eric Hughes)
+> Message-Id: <9403071634.AA10351@ah.com>
+> To: cypherpunks@toad.com
+> In-Reply-To: Hal's message of Sun, 6 Mar 1994 11:22:17 -0800 <199403061922.LAA26901@jobe.shell.portal.com>
+> Subject: Truly Stealthy PGP (algorithm)
+> Sender: owner-cypherpunks@toad.com
+> Precedence: bulk
+> Status: RO
+> 
+> >If I understand Eric's general idea, we would keep trying session keys
+> >under a set of rules which would lead to the desired statistical
+> >distribution of the encrypted key.  
+>  
+> I actually said nothing about how to get the particular distribution
+> of keys specified, since that was another issue.  I was more concerned
+> with just getting the one result across.
+>  
+> >Here is an algorithm which would work.
+>  
+> It does work, and I'll put down a proof sketch below.
+>  
+> Notation alert:
+> >Let L be the next power of 256 above the modulus n.  Let t be the integer
+> >part of L/n, so that L = n*t + s with s in [0,n).  Call the PGP IDEA session
+> >key SK, and the encrypted version of that m = SK^e.  Now do these steps:
+> 
+> >1) Pick a random SK in [0,n).
+> 
+> This random number in [0,n) is the wrong distribution, but that's OK,
+> since we'll be throwing some numbers away.
+>  
+> >2) RSA-encrypt it to form m = SK^e mod n.
+>  
+> RSA encryption is a bijection (an 1-1 map).  If it were not, there
+> would be two or more possible decryptions for a given ciphertext.
+> Therefore RSA encryption is a permutation, and a permutation of
+> probabilities preserves expected values of functions of the
+> probability, such as entropy.  Since we assume the entropy of the SK
+> is maximal (probabilistic entropy), therefore the entropy of the m's
+> is maximal.  So the m's have a flat distribution.
+>  
+> (As always, the above statements about bijection hold only if SK is
+> multiple of one of the divisors of the modulus.  But then if you do
+> find one of those, you've also factored the modulus and thus broken
+> the key.  We assume this doesn't happen, since if it does little of
+> this matters anyway.)
+> 
+> >3) Choose a random k in [0,t].
+> >4) Calculate the "stegged" encrypted key as M = m + k*n.  
+>  
+> Hal now observes that M is uniformly distributed.  This is correct,
+> and happens because m is in [0,n) and we are adding a multiple of n to
+> m.  This means that each M has a unique represenative as some pair
+> <m,k>.  Since both m and k are independently random (max entropy, flat
+> distribution), so is M.
+> 
+> >5) if M is not in [0,L) (i.e. if M >= L) then go back to step 1.
+> >The idea is that once we get M uniform in [0,(t+1)*n) we can make it
+> >uniform in [0,L) simply by rejecting those candidates which were too high.
+>  
+> What we have here is a Markov chain.  We have accepting states and
+> rejecting/retrying states.  Since the probabilities in the chain are
+> independent of each other and are also time-invariant, the
+> distribution of final probabilities is the same as the distribution of
+> normalized accepting probabilities.
+> 
+> In simple terms, you can just retry until you get it right.  Since the
+> probabilities are all the same before, they will all be the same
+> after, only larger to account for the fact that some possibilities
+> didn't work.
+>  
+> [re: rejection and retry]
+> >This will only happen if k=t and m>=s.
+> 
+> That's right, and that means that for m < s you have valid k in
+> [0,t+1) and for m >= s only for [0,t).  If you go back an look at the
+> entropy expression, you'll see exactly this difference in relative
+> probability for the two parts of [0,n).
+>  
+> >Now, it seems to me that the worst case for rejection is when n=L-1, in
+> >which case t=1, s=1, and almost one-half of all initial SK choices will
+> >be rejected.  
+> 
+> Right, but the worst case for rejection is not the same as the worst
+> case for entropy loss, which occurs at n=L/2+1 and s=t-1, i.e. at the
+> other end of the spectrum entirely.
+>  
+> >Following Eric's reasoning, this would be an effective loss
+> >of one bit of key length, from say 1024 to 1023, which is tolerable.
+> 
+> Actually not.  The loss of effective key length happens based on the
+> posterior distribution of the session keys, not on the number of
+> rejections that happen in the process.
+>  
+> >Using this algorithm with the current Stealth PGP would produce a
+> >"truly stealthy" version which I think would be indistinguishable from
+> >random bytes without access to the receiver's private key.
+> 
+> Indeed.  Observe, though, that as far as deployment went, this would
+> require modification to PGP itself for it to be anything like
+> widespread.
+>  
+> Eric
+
+
+
+

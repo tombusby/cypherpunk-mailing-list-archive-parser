@@ -1,0 +1,36 @@
+From: willer@carolian.com (Steve Willer)
+Date: Tue, 13 Feb 1996 00:18:12 +0800
+To: cypherpunks@toad.com
+Subject: Free end-to-end encryption code?
+Message-ID: <311f5807.109332@saturn>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+As a side project, to support remote mail and news pickup through the
+Internet to my company's servers (through a firewall), I've been
+slowly writing an end-to-end encryption program. Essentially, the idea
+is that the client program (say, a mail program) connects to a client
+"reflector", which lives on the same person's machine. The client
+reflector connects to a server reflector, which perhaps lives on the
+firewall. The client and server talk to each other, the client is
+authenticated, and the session key is agreed upon. Then the server
+reflector connects to the server process (say, smtpd, probably on some
+machine inside the company's net), and an encypted session is
+obtained. This doesn't protect against the machine's memory being
+watched or anything like that, but it does provide a good amount of
+security for packets over the Internet, just like the end-to-end type
+of encryption software described in Applied Cryptography.
+
+Now, this is my first code with any real encryption in it, and I'm
+trying to tackle key negotiation protocols and so on, while at the
+same time utilizing RSA, IDEA and MD5. In my research, I found that a
+number of firewall vendors have such a system available, either
+implemented in hardware or software. What I want to know is: Is there
+any code like this available somewhere on the net that does this
+stuff? I would hate to have to reinvent the wheel if I don't have to,
+given my limited amount of spare time.
+
+
+
+

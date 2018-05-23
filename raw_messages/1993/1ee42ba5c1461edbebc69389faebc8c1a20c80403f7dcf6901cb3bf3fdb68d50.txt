@@ -1,0 +1,76 @@
+From: "Haywood J. Blowme" <psionic@wam.umd.edu>
+Date: Sun, 18 Apr 93 19:50:39 PDT
+To: cypherpunks@toad.com
+Subject: Amiga Crypto
+Message-ID: <199304190250.AA12313@rac3.wam.umd.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ 
+Return-Path: <newsham@wiliki.eng.hawaii.edu>
+ 
+>> The basic idea I think would need the following:
+>> 
+>> - A sound digitizer
+>> - High speed modem
+>> - 68020 or above processor (for speed purposes)
+>> - Good encryption algorithm (IDEA for example)
+>> 
+>> Implementing the system would involve using the digitizer to digitize the
+>> voice. Then processing the sample (in real time) through the encryption
+>> algorithm and sending the output to the modem for transmission. The process
+>> would be repeated on the other end.
+>> 
+>> The problems I see occurring are the following
+>> 
+>> - Speed of the computer affecting real time encryption
+>> - Synchronizing the data packets for accurate decryption on the other side.
+>> - simultaneous I/O on the serial and parallel ports(for modem and digitizer)
+>> - outputing to speakers on receiving end.
+>> - having the whole process operate in a full duplex mode (ie. both people
+>>   can talk at the same time).
+>> 
+>> 
+>> I think the majority of functions can be handled by the system libraries and
+>> outside sources (such as xpkidea.library for encryption).
+>> 
+>> Does this sound feasible??
+ 
+ 
+ 
+newsham@wiliki.eng.hawaii.edu Writes:
+ 
+>From what I gather CELP takes about 10 to 15 MIPS and LPC takes
+>somewhere under 5 MIPS on DSP chips.  Instructions including
+>fixed point multiplies and accumulations (not counting divisions).
+>Thats quite a load for a 68020 to bear and still do encryption
+>and communications isnt it?
+ 
+[Stuff deleted]
+ 
+ 
+This is true. But if a sampling rate of about 9000-10,000 samples per second
+are used this will allow for good voice quality and the encryption algorithm 
+should be able to handle it. The IDEA implementations I have seen for the
+Amiga run about 30-50K per second on my Amiga 1200 with 68020. This should
+be fast enough. If you then can send that data directly to the serial port
+with a fast modem 14.4K it should work. But it might sound choppy (haven't
+done the figures yet on how much data would be going to the modem while
+the person speaks, but it may be substantial enough to make the use of
+a high speed modem not feasible. Also I have to consider that data compression
+in the form of LAP/M or MNP will be ineffective against the encrypted data
+as it will appear as white noise and will be largely uncompressable..
+ 
+ 
+=============================================================================
+      ///    | psionic@wam.umd.edu | Q: How did the govt. decide to use an 80
+ __  /// C=  | Craig H. Rowland    |    bit key for the new clipper chip?
+ \\\/// Amiga| PGP Key Available   | A: They combined Bill and Hillary
+  \///  1200 | by finger.          |    Clintons' IQ's.
+=============================================================================
+ 
+
+
+
+

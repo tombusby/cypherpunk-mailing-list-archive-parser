@@ -1,0 +1,43 @@
+From: grmorgan@freenet.vcu.edu (Greg Morgan)
+Date: Thu, 12 Jan 95 14:46:08 PST
+To: cypherpunks@toad.com
+Subject: Re: Multiple symetric cyphers
+Message-ID: <9501122245.AA18097@freenet.vcu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+>
+>> But selecting a single cipher is just as much a fixed policy as a
+>> randomly selected one is.  Far better to let the user pick a policy,
+>> both about sent and accepted ciphers.
+>
+>If you do give the user control, what is an acceptable mechanical
+>implementation? Let's say I have a file encryptor which allows the
+>user to choose between DES, 3DES, IDEA, Diamond, and RC5. Must I
+>require the user to tell that program what cypher was used to encrypt
+>the file she wishes to decrypt?
+>
+>Is storing the cypher type as part of the encrypted file a weakness?
+
+Perhaps an MD5 of the password could be encrypted along with the
+plaintext using the method(s) of choice.  At the decryption
+phase, the password would be MD5 hashed again and the block of
+bytes the size of an MD5 hash would be "decrypted" with each of
+the methods... which ever one matches the original MD5 hash
+would be used to decrypt the rest of the cyphertext.
+
+This method wouldn't leave a known plaintext in the file to
+attack.
+
+--
+-----------------------------------------------------------------------------
+
+Greg Morgan <grmorgan@freenet.vcu.edu> | "I dunno Brain, me and
+Pipi
+
+
+
+

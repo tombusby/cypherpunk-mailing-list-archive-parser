@@ -1,0 +1,59 @@
+From: Jim Burnes <jim.burnes@ssds.com>
+Date: Fri, 23 Jan 1998 08:02:46 +0800
+To: cypherpunks@toad.com
+Subject: Premail/PERL 5.004 fix
+Message-ID: <34C7DCF4.CFB97BFA@ssds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Punks:
+
+I've needed to upgrade PERL recently to 5.004 because
+some new software wouldn't work without it.  I didn't
+want to do it because I heard it would break premail.
+
+I decided to DL the old perl-5.003 RPM from sunsite
+just in case 5.004 really screwed premail up.  The
+actual truth of the matter is that 5.004 just warns
+you that premail re-declares several variable.  Apparently
+this has no effect on the program, but those warnings
+are pretty annoying.  Here is now you fix it:
+
+Define a WARN trap that checks a variable (DOWARN)
+to see whether it should warn or not.  Since the
+re-declarations occurr in three different places
+you just have to set DOWARN to 0 before the line
+and then DOWARN to 1 after the line.  Crude, but
+effective.  Most of this code can be found by
+doing a man page on 'perlfunc', but I thought I'd
+save someone the time.
+
+Here is the diff for premail version .449.
+
+100a101,102
+> BEGIN { $SIG{'__WARN__'} = sub { warn $_[0] if $DOWARN } }
+> $DOWARN = 0;
+1274a1277
+>     $DOWARN = 0;
+1275a1279
+>     $DOWARN = 1;
+1356a1361
+>     $DOWARN = 0;
+1357a1363
+>     $DOWARN = 1;
+6319a6326
+>     $DOWARN = 0;
+6320a6328
+>     $DOWARN  = 1;
+
+Your milelage may vary...
+
+Jim Burnes
+jim.burnes@ssds.com
+
+
+
+
+

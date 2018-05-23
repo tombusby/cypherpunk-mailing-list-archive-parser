@@ -1,0 +1,48 @@
+From: yanek@novavax.nova.edu (Yanek Martinson)
+Date: Tue, 22 Dec 92 07:11:12 PST
+To: honey@citi.umich.edu (peter honeyman)
+Subject: Encrypting Remailer Logs
+In-Reply-To: <9212221344.AA03085@toad.com>
+Message-ID: <9212221510.AA26463@novavax.nova.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> that the best way to secure the remailer logs is to encrypt them.
+> 
+> which raises a sticky point, since i don't see an easy way to do that
+[...] 
+> see is to enter a password at boot time (or when the remailer is started).
+
+There is an easier way.  Just generate a public/private key pair.  Store
+the public key on the machine, and have the remailer encrypt its logs
+with the public key.  Someone seizing the machine could not find anything,
+since they do not have the private key.
+
+Store the private key on another machine, or on a floppy.  When there's
+a problem, you can transfer the encrypted log to the machine with the
+private key, and then you can decrypt the log to see what went wrong.
+
+Generate a new key pair weekly, and destroy the old private key.  You
+should never need logs older than a week for troubleshooting.
+
+p.s.
+
+> > Unix weenies of old will recall "clri" to clear an inode. ...
+> 
+> > -- so why not just write a little C program ...
+> 
+> u.w.o.o. often go to great lengths to avoid writing a few lines of c,
+
+So how about a few lines of perl?  
+
+ 
+--
+Yanek Martinson    mthvax.cs.miami.edu!safe0!yanek     uunet!medexam!yanek
+this address preferred -->> yanek@novavax.nova.edu <<-- this address preferred
+Phone (305) 765-6300 daytime   FAX: (305) 765-6708  1321 N 65 Way/Hollywood
+      (305) 963-1931 evenings       (305) 981-9812  Florida, 33024-5819
+
+
+
+

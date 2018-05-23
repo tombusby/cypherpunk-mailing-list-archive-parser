@@ -1,0 +1,97 @@
+From: "Deranged Mutant" <WlkngOwl@unix.asb.com>
+Date: Sun, 7 Jul 1996 05:15:29 +0800
+To: pgut001@cs.auckland.ac.nz
+Subject: Re: Transforming variable- to fixed-length keys
+Message-ID: <199607061837.OAA19848@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On  7 Jul 96 at 1:47, pgut001@cs.auckland.ac.nz wrote:
+[..]
+> I've run into a problem in writing a general-purpose n-byte input to m-byte
+> output transformation function.  What this does is take an arbitrary-length
+> user key and transform it to a fixed-length encryption key (for example an
+> entered passphrase into a 112-bit triple-DES key).  The constraints on memory
+> usage are:
+>  
+> - The input (user) key can't be altered (you can't change data passed in by the
+>   caller)
+> - The user key can't be copied to an internal buffer (it can be of arbitrary
+>   length, and is sensitive material so shouldn't be copied elsewhere)
+>  
+> In other words there's no temporary storage available apart from what's
+> provided in the output key.  This is almost always a different length from the
+> input key.
+>  
+> Some other constraints are:
+>  
+> - The transformation must be algorithm-independant (it shouldn't, for example,
+[..]
+> - The transformation must be able to be iterated to make a password-guessing
+>   attack harder to perform.
+
+Hmm. What about the following:
+
+  Use a constant (non-weak) key for a cipher (perhaps the hash of 
+  the passphrase under certain circumstances?)
+
+  For iteration-0, CFB (or some other feedback mode)-encrypt the
+  passphrase from the input buffer   to the output buffer (assuming the
+  library doesn't require that the plaintext and ciphertext be in the same
+  buffer)
+
+  For following iterations, repeatedly CFB-encrypt the buffer,
+  using a counter in data bytes.
+
+This method could use hash algorithms in MDC or Luby-Rackoff forms
+as well as block ciphers (and perhaps some stream ciphers).
+
+Another method might be to seed a PRNG similar to that used in PGP 
+2.x with the passphrase, have it stir the bytes a number of times, 
+and then use the output as the key:
+
+  randPoolAddBytes(passphrase, passlen);
+  for(i=0;i<iterationCount;i++) randPoolStir();
+  randPoolGetBytes(key, keylen);
+
+> Here's my initial approach, if anyone has any comments to make on this or knows
+> of a better way to do it, please let me know.
+[..]
+> The first stage in the key hashing prepends the length of the string as a
+> big-endian 16-bit count to the user key:
+>  
+>     +------+-------------------------------------------------------+
+>     |Length|                      User Key                         |
+>     +------+-------------------------------------------------------+
+>  
+> The aim of the hashing is to reduce this variable-length input string to a
+> fixed-length key appropriate to the encryption algorithm being used.  This is
+> done by treating the user encryption keys as circular buffers and repeatedly
+> hashing chunks of the user key and xoring the result into the output buffer.
+[..]
+> Since the input to the hash function is much larger than its output, a
+> significant amount of the user key affects each chunk of the encryption key.
+> The size of each "chunk" is determined by the hash function being used.  For
+> example with the MD4 hash function, 64 bytes of user key affect each 16 bytes
+> of encryption key.
+[..]
+
+Questions: Are you using the previous chaining-variables/hash for 
+each successive chunk?  How do you pad passphrases that are smaller 
+than the minimum input for a hash function?
+
+
+
+Rob.
+ 
+---
+No-frills sig.
+Befriend my mail filter by sending a message with the subject "send help"
+Key-ID: 5D3F2E99 1996/04/22 wlkngowl@unix.asb.com (root@magneto)
+        AB1F4831 1993/05/10 Deranged Mutant <wlkngowl@unix.asb.com>
+Send a message with the subject "send pgp-key" for a copy of my key.
+
+
+
+

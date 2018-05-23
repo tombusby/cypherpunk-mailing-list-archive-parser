@@ -1,0 +1,62 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Tue, 19 Sep 95 10:39:18 PDT
+To: aba@dcs.exeter.ac.uk
+Subject: Re: NYT on Netscape Crack
+Message-ID: <9509191738.AA00941@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Back writes:
+>  Posting the code for the random number generator would be an
+>  excellent start.
+
+Ian posted the code for the PRNG on August 30th and Stephen Kapp noted that  
+it was similar to one in RSAREF.  The PRNG is probably fine.  The big flaw  
+here was the collection of seed material.  The bottom line is the WHOLE  
+security subsystem should be published for analysis.
+
+>  Or if that doesn't sit well with copyright interests, how about
+>  writing up an open spec about how the random number generator works?
+>  Then we can critique it.
+
+Netscape did this with SSL and what happened was the rest of the industry  
+jumped on it before any analysis was done.  Now we are likely stuck with a  
+poor protocol.
+
+>  An algorithm should be something to be proud of, "it's secure, and
+>  see:  this is how it works, here are the design criteria, here is
+>  how you would attempt to break it, and here is the best predicted
+>  attack's cost."
+
+The design may be great, but if the implementation is flawed then you aren't  
+much better off.  To attempt to evaluate the security of a system you need to  
+be able to inspect the implementation.  Period.
+
+>  is netscape still a progressive startup company with hot programmers
+>  running the show, or has it slipped into stuffy corporate realms
+>  already?
+
+Netscape may have hot programmers but so far I believe it has become  
+self-evident that they know little about crypto and implementing  
+cryptosystems.
+
+To Netscape's credit, Jeff Weinstein claims that the team implementing the  
+security for Navigator 2.0 is completely new and of course Netscape has hired  
+Tahir ElGamal, who certainly knows what he is doing.  Additionally I would  
+suspect that with all the bad publicity they are receiving they would take up  
+Bidzos on RSADSI's offer to analyze the source.  So it is entirely possible  
+that Navigator 2.0 will be much better.  However, I am not holding my breath.
+
+
+Strong crypto is _hard_ to implement properly.  Even if a product is using a  
+well-known algorithm there could be any number of subtle flaws that can  
+destroy any security offered by such algorithm.  You can't just toss in RSA,  
+IDEA, RC-4, DES, etc... and claim the thing is secure.
+
+
+andrew
+
+
+
+

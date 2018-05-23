@@ -1,0 +1,81 @@
+From: nobody@rosebud.ee.uh.edu
+Date: Thu, 30 Sep 93 12:31:56 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: digicash
+Message-ID: <9309301926.AA20380@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Cypherpunks,
+
+I've been experimenting with a primitive digital cash system for
+remailers.  Originally I had hoped to combine the remailing and
+banking functions of the elee7h5@rosebud remailer, but for now I have
+an even more primitive cash system implemented at elee6ue@rosebud.  It
+seems to be performing as expected.
+
+A digital cash accepting remailer, along with a good positive
+reputation system, is the "crypto-anarchist" answer to labeling
+anonymous mail with subjects and/or usernames.  (Of course, a subject
+that enables anonymous mail to blend in is great - such as "Re: your
+mail").  (Incidentally, since running pgp to get the signature from a
+pgp-signed message is expensive, I patched the script I use for
+positive reputation to give the option of checking signatures or not,
+if anybody is interested.)  Currently, the only objection I've heard
+to anonymous mail is "somebody can abuse it"; future remailers will
+require payments, helping to address this concern.
+
+Basically, the remailer recognizes a Digicash pasting token, and for
+now the cash is a string of letters and numbers.  Before remailing,
+the digicash is extracted and looked up in a cash list (which I
+create).  If the cash is in the list, it is assumed to be valid, and
+the list is rewritten minus the cash string just used.  If the cash
+isn't present, it is assumed to be invalid, and an insufficient funds
+message is remailed instead.  The remailer does not keep a list of
+"spent" cash strings, so there is the possibility of duplication (once
+in every 36^60 times).  As far as correlating the cash used to
+individual and a message, I can only assure you I could care less
+about the required bookkeeping.
+
+The pasting token looks like the others, and you use it in a similar
+way -
+
+- ----------8< cut here >8----------
+::
+Digicash: <here is the string>
+
+- ----------8< cut here >8----------
+
+For example, I "paid" for the remailing of this message with
+
+- ----------8< cut here >8----------
+::
+Digicash: BcKjSoUEQaTam9xPs0oso2j0UVVb1M6OyxTn8QSX0rdT3eUIH4Vq1rXEpYH1D
+
+- ----------8< cut here >8----------
+
+(Now, the above cash string should be invalid! :-)
+
+The way I'm distributing valid cash for the remailer is by email -
+mail me and I'll send you some valid cash strings.  No charge :-)
+
+Karl L. Barrus
+<klbarrus@owlnet.rice.edu>
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLKsyGYOA7OpLWtYzAQG/QAQAwNbDbKOdnWJ4g/tt8+0AdtR+5TzETfaU
+DaodN1LDs7+w46/KlyIoI/B9+C710U1f46dnd81MxMm6eTGcbwnkrTBhz7QlO7NH
+1joVaoe8TVljk2RZnCYmpYbzXjuogZcAuuZKVWY3ES2iElKZLr24oCZbHWljPV4o
+griHzfbmHYI=
+=54L7
+-----END PGP SIGNATURE-----
+
+
+
+

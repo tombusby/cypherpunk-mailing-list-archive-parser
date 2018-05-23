@@ -1,0 +1,34 @@
+From: Phil Karn <karn@qualcomm.com> (Phil Karn)
+Date: Wed, 10 Feb 93 21:14:12 PST
+To: sdw@sdwsys.lig.net (Stephen D. Williams)
+Subject: Re: Compressed/Encrypted Voice using Modems
+Message-ID: <9302110512.AA09668@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At  0:19 2/10/93 -0500, Stephen D. Williams wrote:
+
+>Also, from a previous note, you wouldn't want to turn off V.42/V.42bis
+>since that is where the error correction is.  Also, even on compressed
+>data, you get some additional bandwidth because it does packetized 
+>synchronous data.  This gets close to 8bits/byte instead of 10 (start,
+>stop).
+
+As somebody else mentioned, you do want to turn off LAPM/V.42bis when
+running a speech application, because speech is a real-time application
+and LAPM retransmissions introduce delay. Compression is not likely
+to add much but delay either, since the vocoder itself is already
+compressing the speech much more effectively than V.42bis, which is
+designed specifically for textual information.
+
+Almost all modern modems support synchronous terminals, although the
+feature is rarely used. This is how you get around wasting 2 bits out
+of every 10 on start and stop bits.
+
+Phil
+
+
+
+
+

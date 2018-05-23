@@ -1,0 +1,42 @@
+From: hfinney@shell.portal.com
+Date: Sat, 21 May 94 09:28:38 PDT
+To: cypherpunks@toad.com
+Subject: Re:  Is my DH exchange secure?
+Message-ID: <199405211629.JAA13647@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+With a strong prime, there is no need to use generators, as Eric implied.
+Looking at Phil's list, we see 2's and 5's being chosen as generators.  Even
+for those cases where 2 is not a generator, it has period (n-1)/2.  This
+is just as good, from what I understand.  Finding the discrete log depends
+on the size of the modulus, not on the size of the group, unless the size
+of the group is drastically less than the size of the modulus.  That is why
+the DSA uses a modulus of 512 bits and a group of size 160 bits.  Even a
+group this small provides all the security associated with a 512 bit modulus.
+(Caveat: I haven't been able to find my reference to this, but I read it a
+few weeks ago in a crypto paper, and I am confident it is standard number
+theory/cryptography.)  In the case of a 1024 bit strong prime, non-generators
+(other than 1 and -1) have period of size 1023 bits, just as good for all prac-
+tical purposes.
+
+For what I was calling "strongish" primes, which are about 100 times easier to
+find (primes of the form kq+1, where q is prime and k is around 100),  I
+think it is also unnecessary to check for generator-hood.  Non-generators are
+overwhelmingly likely to have periods greater than 1000 bits in size, which
+provides all the security of the 1024 bit modulus.
+
+Putting this together, secure Diffie-Hellman is much easier to do than the
+more careful implementations require.  Picking a strongish prime need not
+take much longer than choosing an RSA key of twice the size (e.g. it takes
+about as long to choose a strongish 1024 bit prime as to create a 2048 bit
+RSA key).  Then pick a random element as the base for the DH exponentiation,
+choose your x's and y's at random, and go.  Adding the extra checks really
+doesn't increase the security.
+
+Hal
+
+
+
+

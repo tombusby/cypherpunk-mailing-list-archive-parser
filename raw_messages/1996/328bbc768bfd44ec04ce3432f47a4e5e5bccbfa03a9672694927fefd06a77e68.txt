@@ -1,0 +1,49 @@
+From: Raph Levien <raph@cs.berkeley.edu>
+Date: Sun, 19 May 1996 16:50:37 +0800
+To: Bruce Baugh <bruce@aracnet.com>
+Subject: Re: Remailers vs Nyms - conflicting assumptions?
+In-Reply-To: <2.2.32.19960518184824.006cded8@mail.aracnet.com>
+Message-ID: <319E9122.287B3BEF@cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bruce Baugh wrote:
+> 
+> I've been enjoying the discussion of "disposable" remailers, but I note a
+> problem. If this has been addressed before, well, now it's being noted again.
+> 
+> In my (admittedly limited) experience with nym servers, the reply path is
+> fixed - it goes through specified hops. This creates A Problem when any one
+> of the remailers involved goes down. There's no way for the mail to get
+> through. There's not even a way for the nym holder to verify that there is a
+> site down, as opposed to some more transitory problem, without information
+> from an external source.
+> 
+> This seems to me a fairly serious weakness, given prevailing governmental
+> attitudes.
+> 
+> What would it take to create a nym server that could route around the death
+> or disability of any given mailer?
+
+Well, that would be a serious problem. The big question is: who decides
+the routing? With the existing nym setup, the client decides the entire
+route. The nymserver knows only the first hop. For the nymserver to be
+able to route around damage, it would have to know that there is damage,
+and that implies knowing the route.
+
+One fix for the problem is just to refresh your nym regularly. If you
+are lucky enough to be using premail, then just run "premail -makenym
+nym@alpha". I'm considering adding code that automatically figures out
+which nyms need to be refreshed when a remailer drops in the reliability
+ratings and automatically does it, but that probably won't make it into
+the next release of premail.
+
+The fact that you can refresh nyms makes the problem you bring up much
+less severe.
+
+Raph
+
+
+
+

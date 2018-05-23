@@ -1,0 +1,41 @@
+From: wcs@anchor.ho.att.com (Bill_Stewart(HOY002)1305)
+Date: Fri, 16 Jul 93 19:59:33 PDT
+To: cypherpunks@toad.com
+Subject: Re: steganography
+Message-ID: <9307170258.AA00984@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+I think Kragen's definition of "Steganographically Strong" is a bit overstrong.
+He suggests that the cyphertext should not be recognizeable by its own program,
+with no checksums or program-specific delimiters, headers, etc.
+If checksums become widely used in other data formats (e.g. MIME or whatever),
+having them used in "innocent-looking-format" is ok.  
+And having a checksum that only checks out if you have the correct key
+for decrypting the file is relatively ok, assuming you use strong encryption;
+it's really no more of a giveaway than having the correctly-decrypted
+plaintext have other recognizeable format, such as all-ascii or MIME or GIF.
+
+The request for a feature that corrupted files decrypt to total garbage and
+not just partial garbage can be implemented using some variant on doubly
+encrypting the file, e.g. descbc file | reverse-the-file | descbc.
+Most encryption systems can be used in modes that only trash the corrupted 
+block, modes that trash the corrupted block and all following blocks,
+or modes that trash the corrupted block and some stuff after it,
+but eventually resync.  The latter are useful for on-line continuous encryption
+systems like ethernet or T1 encryptors, where you don't want to send out
+guys with briefcases handcuffed to their arms any time there's a noise burst :-)
+
+One wimpy steganography approach I've thought of recently is to use uuencode.
+Each line starts with an indicator of how many characters are on the line,
+normally "M" for 64, followed by the characters; you could use variable-length
+lines with the length encoding your real (cyphertext) data at 6 bits/line.
+It'd be ugly, and probably noticeable, but you could always demonstrate that it 
+outputs normal genuinely-innocent stuff by running it through uudecode.
+And it's only a factor of 10 less efficient than hiding it in a GIF!
+
+		Bill Stewart
+
+
+

@@ -1,0 +1,50 @@
+From: Alan Olsen <alano@teleport.com>
+Date: Tue, 12 Mar 1996 15:12:50 +0800
+To: savron@world-net.sct.fr
+Subject: Re: PGP : what to do when a user ID has multiple RSA keys
+Message-ID: <2.2.32.19960311235939.008915b4@mail.teleport.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 07:25 AM 3/11/96 +0000, you wrote:
+>My DOS version of PGP 2.6.2 came with a built in PUBRING.PGP 
+>containing two keys ( 1024 and 512 size ) with the same user ID .
+>For testing  purposes I wanted to encrypt a message with the 512 
+>length key , but only the 1024 size key could be used .
+>
+>How can I select the right key , apart from making a clone 
+>PUBRING.PGP with only the key I want to use ?
+
+You need to use the hex id of the key.  (I have this problem as well.)
+
+To get the hex id of the key, try "pgp -kv <yournamehere>".  That will give
+you the hex id (right after the key size). 
+
+For example, if -kv returned:
+
+2048/F7D02799
+
+you would use "0xF7D02799" instead of your name.  (No quotes and case does
+not matter.)
+
+This does have some Cypherpunks relevence...  Many of the PGP front-ends I
+have seen do not use the key ID, and thus, do not pick the correct keys in
+this curcumstance.  (And some use it for some, but not all, operations.)
+
+But then, I would like to see key management handled alot differently than
+it is now.  (For example, I would like to see PGP use multiple keyrings with
+an order of precidence.  Search the most used keyring first and then check
+the mega-keyring if nothing is found in the first one.  I expect that kind
+of feature is a ways off...)
+---
+Alan Olsen -- alano@teleport.com -- Contract Web Design & Instruction
+        `finger -l alano@teleport.com` for PGP 2.6.2 key 
+                http://www.teleport.com/~alano/ 
+  "We had to destroy the Internet in order to save it." - Sen. Exon
+
+
+
+
+
+

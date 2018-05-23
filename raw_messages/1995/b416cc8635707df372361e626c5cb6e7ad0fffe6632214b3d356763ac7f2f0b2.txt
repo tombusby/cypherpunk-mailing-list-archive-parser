@@ -1,0 +1,63 @@
+From: hallam@w3.org
+Date: Wed, 1 Nov 1995 08:27:05 +0800
+To: rsalz@osf.org>
+Subject: Re: Keyed-MD5, ITAR, and HTTP-NG
+In-Reply-To: <9510310430.AA08480@sulphur.osf.org>
+Message-ID: <9510311650.AA32634@zorch.w3.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>How are you going to handle mechanism negotiation?
+
+This is a must do item, Simon is haviung to do >lots< of this.
+
+One way of looking at HTTP is as a huge negotiation mechanism. Another way to
+look at HTTP is as a large dougnut with sugar frosting, the first is more widely 
+accepted.
+
+
+There has to be more than one crypto mechanism so don't chose. In fact I forgot to 
+add our favourite algorithms, such as Skipjack in OFB mode to the list :-)
+
+
+What DES modes should be bothered with? I always feel that the lumping in of every 
+cipher mode under the sun is an irritation. We need a transparent cipher, looking 
+very much like a stream cipher (hence the probable reason for Simon hankering after 
+RC4). We could use CFB or OFB. 
+
+I don't like OFB myself, it seems to be a bit lame to only XOR a stream of pseudo 
+random stuff with the plaintext. CFB also has the stream cipher like property that 
+incomplete blocks can be decoded provided that the stride is set right, this means 
+that for a 64 bit block cipher one is 8 time slower :-(
+
+
+Anyone any ideas on the following ?
+
+SEQ
+    x = IV
+    SEQ
+    	c[i] = E(x,K) XOR p[i]
+    	x = c[i] 
+
+This is essentially OFB mode but instead of having an XOR with an alledged random 
+number generator (which I find disturbing), there is a mix in of the output.
+
+Other mixes to try ?
+
+	x = c[i] XOR E(x,K)
+
+OFB is the following BTW :-
+
+	x = E(x,K)
+
+
+Note that there may be value in keeping the IV secret in this case. There is probably 
+some hack that means that the IV can be finessed but it looks like work.
+
+		Phill
+
+
+
+

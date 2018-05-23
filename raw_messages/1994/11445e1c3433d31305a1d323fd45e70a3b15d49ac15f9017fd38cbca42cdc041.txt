@@ -1,0 +1,48 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Sun, 17 Jul 94 22:10:15 PDT
+To: cypherpunks@toad.com
+Subject: Re: Key length security (calculations!)
+Message-ID: <9407180508.AA20968@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> solman@mit.edu writes (quoting someone else initially):
+> >What about Shamir's triple pass key exchange protocol (explained briefly
+> >below). Its the perfect key exchange algorithm. 
+> >It obsoletes Public key systems entirely as long as you only need to 
+> >exchange keys and not authenticate.
+
+[ A: Ea(K)   B: Eb(Ea(K))  A: Da(Eb(Ea(K))) == Da(Ea(Eb(K))) == Eb(K) ]
+
+Some problems - commutative symmetric encryption algorithms aren't very 
+common; the most obvious one ( M xor K ) doesn't work here,
+since you have known plaintext, making it trivial to find Ka and Kb,
+while the usable M**K mod p looks suspiciously close to Diffie-Hellman
+from a patent perspective, though Diffie-Hellman makes useful simplifications,
+as Hal points out.
+
+Also, an active eavesdropper can break it (maybe at the cost of reencrypting the
+entire conversation), which is the main weakness of Diffie-Hellman;
+authentication is still necessary in environments where this matters.
+
+Hal writes:
+> Also, this does not obsolete PK since it requires several exchanges 
+> before communication can occur, making it inappropriate for high-latency
+> communications, such as for most email.
+
+Lots of email these days flows over SMTP connections, where
+a couple of extra messages at handshake time isn't a major problem,
+though it's really more applicable for link encryption than end-to-end,
+given the amount of mail that really goes through MX records or
+other mail gateways.  It wouldn't be that hard, now that RSAREF includes
+Diffie-Hellman, to do a DH-SMTP and DH-POP, though the <censored> export
+regulations make it a bit annoying to use internationally,
+and you could just as well use Shamir's 3-way handshake if there's no 
+patent problem.
+
+				Bill Stewart
+
+
+
+

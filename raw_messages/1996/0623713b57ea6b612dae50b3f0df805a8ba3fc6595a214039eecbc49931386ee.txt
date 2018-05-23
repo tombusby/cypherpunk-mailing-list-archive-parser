@@ -1,0 +1,46 @@
+From: "E. ALLEN SMITH" <EALLENSMITH@ocelot.Rutgers.EDU>
+Date: Wed, 22 May 1996 16:49:03 +0800
+To: raph@cs.berkeley.edu
+Subject: Re: Remailers vs Nyms - conflicting assumptions?
+Message-ID: <01I4ZI1ZZULS8Y5IL9@mbcl.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From:	IN%"raph@cs.berkeley.edu"  "Raph Levien" 19-MAY-1996 05:46:40.03
+
+>Bruce Baugh wrote:
+ 
+>> What would it take to create a nym server that could route around the death
+>> or disability of any given mailer?
+
+>Well, that would be a serious problem. The big question is: who decides
+>the routing? With the existing nym setup, the client decides the entire
+>route. The nymserver knows only the first hop. For the nymserver to be
+>able to route around damage, it would have to know that there is damage,
+>and that implies knowing the route.
+
+	Could a reply block be restructured so as to have a series of
+binary/trinary/whatever decisions embedded in it, in encrypted form? In other
+words, the remailer doing the remailing knows (transiently, hopefully) to
+whom it's sending. It would have a choice of two remailers to use for this,
+and would wipe the other reply block (replacing it with random gibberish). If
+two were down, it could do a random choice; if one was down, it would send it
+via that one; if both were down, you get the same situation as currently.
+	Now, one problem that I can see is increasing the length of the reply
+block-perhaps greatly if it was done enough. Given the need for fixed lengths
+(e.g., Mixmaster) to really get around traffic analysis, this could be a
+problem.
+	There's also the question (to be left up to the user) of whether you
+should try any remailers again in the chain if the choice had earlier said no.
+If the answer was yes, then you'd have a greater chance of it hitting a
+remailer that didn't realize another remailer was down. If the answer was no,
+traffic analysis would be helped by knowing - if a remailer was subverted -
+that it was less likely that a particular remailer was going to be used.
+Indeed, with subversion you could choose the easier-to-trace remailer to send
+messages through when you had a choice.
+	-Allen
+
+
+
+

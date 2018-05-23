@@ -1,0 +1,27 @@
+From: nobody@jarthur.Claremont.EDU
+Date: Sat, 12 Feb 94 18:51:09 PST
+To: cypherpunks@toad.com
+Subject: Patches for magicmny
+Message-ID: <9402130245.AA13146@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I had to make a few patches for pgptools and magic money to compile on
+a dos system with microsoft c 6.0.
+
+#include <mem.h>
+and
+#include <io.h>
+
+do not work with this compiler.  I added #ifdef __TURBOC__ around
+these includes in mm.c, s.c, c.c, and ptd.c.
+
+In pgpmem.c, this system has malloc.h but not alloc.h.  Change the #ifdef MSDOS
+to #ifdef __TURBOC__.
+
+With these changes it worked.
+
+
+
+

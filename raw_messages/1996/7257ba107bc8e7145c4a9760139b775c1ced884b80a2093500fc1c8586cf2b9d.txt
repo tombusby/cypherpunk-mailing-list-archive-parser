@@ -1,0 +1,53 @@
+From: Roger Williams <roger@coelacanth.com>
+Date: Tue, 1 Oct 1996 12:10:34 +0800
+To: "E. Allen Smith" <EALLENSMITH@ocelot.Rutgers.EDU>
+Subject: Re: Encrypted lists and ease of use
+In-Reply-To: <01IA3FDVFUWO8Y57AQ@mbcl.rutgers.edu>
+Message-ID: <roger20fjbiwk.fsf@sturgeon.coelacanth.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+<scs@lokkur.dexter.mi.us> wrote:
+
+  > Recently I've been involved in a number of small (30 people or
+  > less) mailing lists which occasionally use PGP for encrypted mail.
+
+  > The hassle comes when one is encrypting a message to the list...
+
+Well, let the list server keep track of who is subscribed.
+
+  > What I propose to do is have a second list, list-encrypted@host,
+  > for every list@host...
+
+Why do you need two lists?  My server currently hosts a few such lists
+(for non-profit international technical projects, extended family
+news, etc.):
+
+Subscribers send mail to the list server, PGP-encrypted with the
+list's public key.  The list server decrypts each inbound message with
+its private key (passphrase entered at reboot).  The message may be a
+message to the list, or a command to the list server.
+
+The list server maintains a list of subscribers' public keys and
+encrypts each list message (or digest, for higher-volume lists) for
+each subscriber (our lists are small, so we prefer to encrypt mail for
+one subscriber at a time).
+
+Although messages exist temporarily as plain text arrays in the list
+server, it doesn't maintain an archive of messages.  And as with any
+(semi-)secure server, physical security is an issue.
+
+As Allen mentioned, I think PGPdomo handles this, but majordomo is
+pretty easy to hack up for any variation on this theme...
+
+-- 
+Roger Williams                         finger me for my PGP public key
+Coelacanth Engineering        consulting & turnkey product development
+Middleborough, MA           wireless * DSP-based instrumentation * ATE
+tel +1 508 947-8049 * fax +1 508 947-9118 * http://www.coelacanth.com/
+
+
+
+
+

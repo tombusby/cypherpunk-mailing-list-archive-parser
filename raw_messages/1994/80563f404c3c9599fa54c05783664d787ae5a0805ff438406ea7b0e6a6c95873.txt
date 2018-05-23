@@ -1,0 +1,46 @@
+From: rparratt@london.micrognosis.com (Richard Parratt)
+Date: Mon, 19 Sep 94 02:40:49 PDT
+To: cactus@bb.com
+Subject: Re: (fwd) "Will You Be a Terrorist?"
+Message-ID: <9409190939.AA17364@pero>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+cactus@bb.com wrote:
+
+> In any case, perhaps a way around this can be found: what we may
+> need is "stealth remailers," software that will behave as a remailer
+> through non-obvious "security holes" with correct cooperation from
+> software the original user runs.  
+> 
+> For example, hack sendmail so that it never wants to reverse-lookup DNS
+> and given a particular set of commands (saying "EHDR" for 'enhanced
+> headers') will operate as an anonymous remailer.  Such sendmail-hackage
+> could be distributed with other changes that give enhanced security
+> (for example, that turn off EXPN and VRFY) so that people could claim
+> that they had no idea that they were operating an anonymous remailer.
+
+When Sendmail gets a mail to an unknown user (e.g. nobody@grunt.com),
+it will reject the mail. The relaying mailer is then supposed to bounce the
+mail back to the author.
+
+So if we forge the From: line, the mail should bounce back to the bogus
+target. If I forge a mail as follows:
+ From: cypherpunks@toad.com
+ To: nobody_at_all@bb.com
+ ------blah blah blah-----
+
+It should bounce and thus appear on the cypherpunks list, without a sender.
+Of course, it will have paths, etc, which give the game away. What is 
+needed to give 'Stealth' remailing is a mailer that when seeing a header
+such as 'X-Bounce-Strip: 1' removes headers and sends body text only back.
+This is a useful feature to reduce network bandwidth when bouncing mail,
+and should be included in all sendmails (grin).
+
+--
+Richard Parratt
+
+
+
+

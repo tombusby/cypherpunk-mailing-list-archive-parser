@@ -1,0 +1,64 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Thu, 23 Jul 1998 01:16:06 -0700 (PDT)
+To: "Ric V. Carvalho" <cypherpunks@toad.com>
+Subject: Re: PGP security?
+In-Reply-To: <l03130302b1dbf4637964@[205.159.233.103]>
+Message-ID: <3.0.5.32.19980723010758.00b9a920@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The message from your friend is a purely fabricated troll;
+don't worry about it.
+
+At 06:41 PM 7/22/98 GMT, Ric V. Carvalho wrote:
+>A friend and I have been going around about the security of PGP.
+>I believe it to be unbreakable at this point in time.  I also recall
+>recently reading an article which stated that to break a PGP encrypted
+>message, using today's technology, unlimited computer core availability,
+>unlimited $$$, it would take the lifetime of 200 Suns.
+
+Is that 200 Sun Microsystems Computers, or 200 of those big yellow things? :-)
+
+Some previous versions of PGP had some weaknesses.
+PGP version 1 had the cool "Bass-O-Matic" algorithm, before
+Phil learned cryptography; read his discussion of Snake Oil in the manuals.
+I think some of the early versions had weaknesses in their random 
+number generators used for session keys, but I may be mixing
+that up with Netscape, which definitely used to have that problem.
+
+One of the current concerns is that the popular version 2.6.2 et al
+use the MD5 hash, which is starting to show some theoretical weaknesses,
+though none of them are known to be exploitable against PGP,
+but the newer versions prefer to use SHA-1 as a hash just in case.
+
+There was also a serious problem which allowed an attacker to
+create a public/private key pair with the same keyID as a target 
+(much shorter key, so quick to create, and who checks key length?),
+so the newer versions use a different method for creating keyIDs
+that's hard to spoof.  Early versions also used shorter KeyIDs,
+so it was possible to get a collision by brute force, so the keyIDs
+were made longer.  Impersonating a KeyID makes it possible to fake
+signatures, and also possible to trick PGP or the user into trusting the 
+wrong key, which is always bad.
+
+The secret key ring file has two current weaknesses,
+which matter if somebody can access your file (so don't let that happen!)
+One is that if you have wimpy passphrases, a dictionary attack can
+crack the record containing your private key, at which point you lose -
+so don't use a wimpy passphrase, AND do protect your secret keyring well.
+Another, less serious is that the file contains the user name in plaintext - 
+so if you're trying to hide your secret identity, someone reading the file 
+will see that you not only have keys for Clark Kent, but also for Superman;
+in some environments, this can be more dangerous than cracking the
+passphrase, because the guys with rubber hoses can get your passphrase
+once they know they want it.
+
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+

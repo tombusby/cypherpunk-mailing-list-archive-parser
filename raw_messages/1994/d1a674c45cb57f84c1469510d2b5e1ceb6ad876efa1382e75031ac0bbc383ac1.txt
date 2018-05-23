@@ -1,0 +1,85 @@
+From: jim@bilbo.suite.com (Jim Miller)
+Date: Sat, 5 Mar 94 17:38:04 PST
+To: cypherpunks@toad.com
+Subject: Re: some technical steganography
+Message-ID: <9403060133.AA22869@bilbo.suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Eric Hughes wrote:
+
+>
+> >What does "appears relatively random" really mean?  How do you  
+
+> >measure the randomness of a sequence of bits?  
+
+> 
+
+> Randomness is the wrong measure.  Suppose I take 2^10
+> random bits and prepend 16 zeros.  How random is this? 
+
+> Almost as random, and this can be made precise.  How
+> compressible is it?  Almost incompressible. Now, what
+> about 2^20 bit?  2^30? 
+
+> 
+
+> It is not randomness but recognizability which is at issue.
+> 
+
+
+One of my assumptions was that the stuff you're trying to hide is not  
+recognizable.   In one of my posts I used the phrase "unremarkable  
+encrypted message".  I should have said "unrecognizable encrypted  
+message".
+
+I assert that an "unrecognizable encrypted message" will be a random  
+sequence of bits.  Is my assertion correct?  Should I be using the  
+phrase "high entropy" instead of "random"?
+
+Assume for the moment that there is a way to produce an  
+unrecognizable encrypted message using public-key encryption.  (I  
+leave it to the experts to figure out the best way do that.)
+
+I still believe that if the reverse stego process frequently produces  
+high entropy bit sequences, even if there is no hidden message, then  
+the steganography system is successful.  If the reverse stego process  
+*always* produces a high entropy bit sequence, then the steganography  
+system is perfect.
+
+Of course, this assumes there is no other way to detect a hidden  
+message besides reversing the stego process and testing the result.
+Obviously, if the forward stego process (inserting the bits) leaves  
+telltale traces, then it doesn't matter what the reverse stego  
+process produces.
+
+To summrise, I believe a successful steganography system will include  
+the following steps and have the following properties:
+
+
+step 1) encrypt you plaintext.
+
+step 2) hide the encrypted message in a public message (duh)
+
+
+property 1) the result of the encryption step should be a random  
+sequence of bits.
+
+property 2) the bit insertion process must not leave telltale traces.
+
+property 3) the reverse stego process should product frequent "false  
+hits".  In other words, the reverse stego process should frequently  
+produce high entropy bit sequences, even if there is no hidden  
+message.
+
+Am I correct?
+
+
+Jim_Miller@suite.com
+
+
+
+
+

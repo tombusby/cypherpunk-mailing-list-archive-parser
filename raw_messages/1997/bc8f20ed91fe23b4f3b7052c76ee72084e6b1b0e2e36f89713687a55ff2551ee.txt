@@ -1,0 +1,198 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Sat, 29 Mar 1997 16:10:29 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: remailer spam throttle
+In-Reply-To: <199703291126.LAA00386@server.test.net>
+Message-ID: <88Lc5D5w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Back <aba@dcs.ex.ac.uk> writes:
+> Dimitri Vulis <dlv@bwalk.dm.com> writes:
+> > Adam Back <aba@dcs.ex.ac.uk> writes:
+> > > [encrypt the message and send the recipient the key, discard the
+> > > key, when they request the message they supply the key]
+> >
+> > That's a good idea, but it'll take up a lot of disk space at the
+> > machine running the remailer.  Right now, remailers that provide
+> > latency don't keep an e-mail for more than about 12 hours. Once
+> > you start keeping them around for a few days (a reasonable grace
+> > period for a first-time user), it's a lot more disk space.
+>
+> "Disk is cheap."  I just bought a 3.8Gb quantum for $300.  That's 4
+> times cheaper Gb/$ ratio than last disk I bought a year ago.
+
+I paid over $700 for a 2GB disk about 18 mos ago. Yes, disk prices
+are falling through floor - giving the lie to the scum that tries to
+control Usenet "spam" - but is it really worth it to have to maintain
+a huge spool space to support a remailer? If you really think you can
+afford a few GB of extra disk storage, start up a Usenet site of virtue.
+
+> 1Gb encrypted message pool?  No problem.
+>
+> Don't have the resources for the 1Gb disk?  Your ISP will be charging
+> you many times that for your leased line.
+>
+> If it's an issue charge postage to cover your storage and transmission
+> costs.
+>
+> However, I suppose if you're using an ISP shell account, and have no
+> leased line, you may have more space restrictions.
+
+It should be possible to run a remailer on an average $19.95/mo shell
+account.  Most of them come with a disk quota of a couple of megabytes.
+I do think that keeping a lot of mail in the queue (more than is kept
+by the remailers that use latency now) would make such accounts
+unsuitable for remailers.
+
+> A better idea, (for both ISP shell account and leased line version)
+> would to send the recipient the encrypted data, you keep the key :-)
+>
+> (View it as a secret split where the parts happen to be different
+> size, you keep the small one).
+>
+> They send you the data and you decrypt, send it back and discard the
+> key.  You could store 16 million keys on your 1Gb remailer spool
+> partition.  That 16 million keys would represent 16 Gb of delivered
+> encrypted email.
+>
+> You could still cope with a fair number of messages in 1Mb remailer
+> key spool in your home file space on an ISP based shell account.
+>
+> I think this solves remailer resource objections.
+
+yes, this sort of solves the storage problem.
+
+Thinking how this might work...
+
+Alice's remailer gets an e-mail for Bob.
+
+Alice's remailer generates 2 pseudo-random numbers, K and L, and uses
+K to encrypt the message with a symmetric cryptoscheme.
+
+Alice's remailer sends the encrypted message and L to Bob with the following
+note: if you want to receive the key to decrypt this message, send back L and
+acknowledge the disclaimer.
+
+Alice's remailer retains the triple (K,L,Bob). Because it's small, it can
+be kept for a long time.
+
+If Bob sends back L, the remailer sends Bob K so he can read his message.
+
+I see a few problems with this. I'm sure it can be improved.
+
+1. What if Bob is another remailer, unknown to Alice?
+
+2. What if Bob doesn't have the program to decode his message? (It's
+fair to assume that everyone can fine PGP. It's not fair to assume that
+everyone can find e.g. triple DES.)
+
+3. What if the LEA's decide that the collection of triples on Alice's
+computer is worth looking at, for instance, for the list of addresses.
+(OK, they could be encrypted probably.)
+
+4. What if the LEA's decide to find out how K, L are generated?
+
+> You still have the problem of saturation of your network bandwidth.
+> You can probably encrypt (it's symmetric key, say IDEA) fast enough
+> for encryption overhead to be less of a problem than the saturation of
+> the bandwidth of your leased line.
+
+I think IDEA or triple DES would be fast enough for this.
+
+> Your other problem is user acceptance -- your average user may still
+> object to receiving Mb's of junk which while the contents don't offend
+> him (he can't read it), the sheer volume may annoy him.
+
+Given how some people react very negatively to what they consider
+"unsolicited e-mail", I think it might be a bad idea to send them
+large encrypted messages w/o confirming that they want them. But
+it's also a bad idea to keep an unknown's e-mail on the remailer.
+The only way out, IMO, is to *discard* an unknown's e-mail and to
+tell him what positive action he can take so future e-mails don't
+get discarded.
+
+And by the way: a remailer should probably keep a list of people
+who have been told about the need for a positive action, so they
+won't get duplicate notices more than every week or so. If X
+sends Y 10 e-mails and the remailer sends Y 10 identical notifications
+with the instructions how to enable receipt, Y might get justifiable
+upset.
+
+When Alice's remailer gets an e-mail for Bob, it should do
+something like:
+
+
+          try to fetch Bob's public key
+          from a well-run key server
+            /                    \
+         success               failure
+           |                      |
+      encrypt the e-mail      discard the
+      with bob's key and      e-mail!
+      pass it to Bob              |
+                              was the form
+                              letter sent to
+                              Bob in the last
+                              7 days?    \
+                             /            no
+                           yes              \
+                          /                exit
+                    send bob the
+                    form letter
+
+
+Wow, isn't that a perry flow chart. :-)
+
+...
+> > Suppose a LEA wants to search the computer hosting the remailer.
+> > They come across a bunch of encrypted files.
+> > The operator has to convince the LEA that they don't have the means
+> > to decrypt the e-mails or even to figure out who they're from.
+>
+> Well you can't can you?
+
+It may be hard to prove a negative to a LEO who doesn't know what
+the hell you're talking about. You have a file in your spool that
+was encrypted with a key that your program generated, but now you
+no longer have the key? Well, tell us how the key was generated.
+
+...
+> I agree with what you're saying that technological aptitude can
+> provide some metric of cluefullness.  And that cluefullness usually
+> correlates with good net citizenly behaviour (eg understanding what a
+> remailer is, and not legally threatening, or setting the Feds on to
+> the human owner of a bot.
+>
+> However there exist quite a few counter examples: cluefull people who
+> do not use PGP, or consider it to be too much hassle (quite a lot of
+> them hang out on cypherpunks, and will actually object if you send
+> them encrypted email, even though spending most of their time on
+> cpunks arguing about the usefulness and essentiality of these tools
+> for privacy).
+
+Well - if generating and publishing a PGP key were a requirement
+to be able to receive anonymous e-mail, I'm sure they'd do it.
+Some people (like Dale) legitimately question certain uses of PGP, but
+I think in this case it's worth encouraging its use.
+
+> Also some journalists are pretty clueful (or useful to be able to send
+> information too, shall we say, journalists as a group having a bad
+> rep), and not many can handle PGP.
+
+Hmm - I'm sure John Markoff and even Declan can handle PGP.
+If, for example, Jon Schwartz can't handle PGP (and I don't know
+whether he can :-), then he doesn't deserve any anonymous tips.
+Free market in action.
+
+Later - thanks a lot for the extensive comments.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

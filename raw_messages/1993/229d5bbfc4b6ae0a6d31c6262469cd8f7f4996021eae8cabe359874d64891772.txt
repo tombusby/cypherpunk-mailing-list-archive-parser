@@ -1,0 +1,50 @@
+From: Peter & <shipley@merde.dis.org>
+Date: Thu, 11 Mar 93 22:17:57 PST
+To: cypherpunks@toad.com
+Subject: Re: HIDE: embedding msgs into snd & graphics
+In-Reply-To: <9303112122.AA00150@netcom.netcom.com>
+Message-ID: <9303120608.AA28356@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/x-pgp
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+>
+>The GIF option I mentioned allows a widely disseminated image file to
+>contain about 32 KB in just the LSBs of a 512 x 512 x 8-bit gray scale
+>image. A color image could easily hold three times more (LSBs in each color
+>channel). And some GIFs are much larger than 512 on a side.
+
+IT should be trival to include date into GIFs (or most any other non-lossy
+formats) using the ppmplus library.
+
+    giftoppm Image.gif | ppmInsertData data.pgp | ppmtogif > Image2.gif
+
+where ppmInsertData is a program that modifies the data stream using
+the file data.pgp as the crypt data source 
+
+to extract just a command simular to:
+
+        ppmExtractData < Image2.gif > data.pgp
+
+for sound file it would just as easy (in fact I am almost tempted to
+write some demo code but I have more email to attend to :-)
+
+                       -Pete
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.2
+
+iQBFAgUBK6Aoxchmn7GUWLLFAQFSRQF+LvzpcW2fx/+FFklWI4RtW27E2GuWbfJn
+nun4KJ1YAzsf/lwxF/KcaGeGq6NwS6AP
+=vcGK
+-----END PGP SIGNATURE-----
+
+
+
+

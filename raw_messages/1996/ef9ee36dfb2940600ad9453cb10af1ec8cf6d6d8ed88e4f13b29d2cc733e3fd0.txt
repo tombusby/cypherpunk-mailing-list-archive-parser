@@ -1,0 +1,76 @@
+From: Raph Levien <s_levien@research.att.com>
+Date: Wed, 24 Jul 1996 02:41:25 +0800
+To: Jeff Weinstein <jsw@netscape.com>
+Subject: Re: Netscape
+In-Reply-To: <31F4C7AB.18C6@netscape.com>
+Message-ID: <Pine.SGI.3.93.3.960723092837.18152A-100000@asparagus.research.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Tue, 23 Jul 1996, Jeff Weinstein wrote:
+
+>   I don't like the fact that your proposal ties the size of the
+> bulk encryption key to the size of the public modulus.  There
+> are legitimate reasons why someone might choose to have a 512
+> bit modulus even though they prefer longer bulk encryption keys.
+> Your heuristic would be a good fallback in the absence of more
+> reliable information.  
+
+   I agree. My proposal certainly has its limitations. In addition to the
+one you cite, it will make it very difficult to change away from
+Triple-DES when the time comes. 
+
+   Of course, your hypothetical user who wants to use a 512-bit key and
+128-bit RC2 is still completely screwed by all currently shipping S/MIME
+products, as well as the S/MIME spec.
+
+>   There is another method that does not require verisign or other
+> CAs to add key size extensions to their certs.  We can define
+> a new authenticated attribute that gets included in Signed-Data
+> and Signed-And-Enveloped-Data messages that indicates the
+> user's key size and algorithm preference.  This has the advantage
+> that the preference is selected and signed by the user.  This
+> method was discussed at the S/MIME meeting in January at the
+> RSA Crypto conference.  I'm a bit surprised that it never
+> got into the Implementation Guide.  I'll make sure that
+> we bring it up on the smime list again.
+
+   I don't like the fact that your proposal leaves clients with absolutely
+no information about symmetric cipher choice until the first round of
+signed messages has been exchanged. In this initial round, the protocol is
+still dependent on the global default.
+
+   I'm not surprised that it didn't make it to the implementation guide.
+Most of the people involved in S/MIME do not have a strong background in
+security and do not understand the importance of this issue. In addition,
+I suspect that there is a lot of resistance based simply on the added
+implementation costs.
+
+   I have no evidence that the protocol weaknesses in S/MIME are being
+deliberately encouraged by the NSA, but on the other hand, I have no
+evidence that they're not. It would certainly be consistent with tactics
+that the organization has been known to use. But on the other hand, "never
+ascribe to malice..."
+
+>   What we finally implement will probably be a combination of
+> the three methods, with the user's selection taking precedence
+> over the CAs selection, which takes precedence over the
+> heuristic based on modulus size.
+
+   This approach is fine. If that's what you implement, you have my
+blessing.
+
+Raph
+
+P.S. Can we agree not to describe 128-bit RC2 as "strong crypto" until
+it's been subject to more serious scrutiny? It's probably a great cypher,
+but most cautious crypto-people would far rather place their trust in
+Triple-DES.
+
+
+
+
+

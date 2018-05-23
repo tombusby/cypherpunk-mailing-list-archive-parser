@@ -1,0 +1,41 @@
+From: hallam@w3.org
+Date: Fri, 19 Jan 96 15:16:13 PST
+To: cypherpunks@toad.com
+Subject: Re: Hack Lotus?
+In-Reply-To: <199601192214.RAA28470@bb.hks.net>
+Message-ID: <9601192315.AA08094@zorch.w3.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've been thinking about how I would do the lotus hack. I certainly would not be 
+wanting to do a public key operation for the benefit of the government on every 
+message. How about the following:
+
+During installation of program:
+
+Select a random key ER, encrypt it under the govt. public key to give Eg(ER).
+
+To start encrypting,
+
+chose a random value R, encrypt under destination public key to give Ek(R)
+
+set 40 bits of R to 0 to produce R'
+
+Encrypt R' under ER to give E-ER(R')
+
+Hash R, E-ER(R') and Eg(ER) with a one way function (MDMF like) to produce the 
+actual key.
+
+Send across Ek(R), E-ER(R'), Eg(ER)
+
+To decrypt the message one needs the information for the escrow authority.
+
+		Phill
+
+
+
+
+
+

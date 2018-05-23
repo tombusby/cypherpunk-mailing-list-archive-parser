@@ -1,0 +1,47 @@
+From: David_A Wagner <daw@CS.Berkeley.EDU>
+Date: Mon, 25 Sep 95 13:32:16 PDT
+To: cwe@Csli.Stanford.EDU
+Subject: Re: Exchange random numbers (was: Re: netscape's response)
+Message-ID: <199509252031.NAA15134@quito.CS.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199509211852.LAA22259@Csli.Stanford.EDU> you write:
+> 
+> | If I only ever give out a hash of my seed, and only ever *add* any received
+> | info to my seed (and stir it in well), how can anyone find out anything?
+> | (Apart from hash weaknesses.)
+> 
+> Giving out contribution: 
+>      MD5(select_bits(my_seed, start_bit, stop_bit)) -> remote
+> Taking in contribution : 
+>      my_seed = my_seed XOR 
+>      ((select_low_bits(remote_contrib, contrib_width) << contrib_area)
+> 
+
+People seem to think this kind of thing is obviously safe.  I'm not yet
+convinced.
+
+By xoring in a quantity *chosen by your adversary*, you're essentially
+allowing related-key attacks on your stream cipher.  (Your PRNG is just
+a stream cipher, keyed with my_seed.)
+
+Noone knows how secure most ciphers are against related-key attacks:
+related-key attacks are known to be very powerful (often more powerful
+than any other type); but very little research on this topic is available.
+You're treading on unknown ground.
+
+
+
+There's the also a small error in your specific algorithm.  Let
+	 n = stop_bit - start_bit;
+presumably n is much less than the length of your seed.  Then a brute-force
+search over n bits will recover n bits of the seed -- this is a much faster
+cryptanalysis than a brute force over all bits of the seed.  This can
+probably be fixed by something like
+	MD5(select_bits(MD5(my_seed))) -> remote,
+but the related-key uncertainties still remain.
+
+
+

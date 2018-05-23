@@ -1,0 +1,128 @@
+From: pfarrell@netcom.com (Pat Farrell)
+Date: Sat, 18 Jun 94 15:54:06 PDT
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <199406182254.PAA22537@netcom3.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+A while ago some folks talked about being willing to pay for
+a hardware random number generator. Not a PRNG, but a real
+one. There are lots of uses listed in TCMay's document that
+can't be named, but generating blinding factors for digital cash 
+is my favorite.
+
+I've got a friend who is a professional electronics engineer that
+is willing to help, but he has some questions on the design.
+
+The Prime Assumption: White noise due to molecular motion is truly random.  
+Noise generated in a carbon resistor or zener diode is white noise.  
+
+Is this true, cryptographically speaking?
+
+The circuit is essentially a "Hiss Generator".  The 
+hiss waveform, after being amplified to the proper
+amplitude, would be sent to a rude, crude, inaccurate analog to digital
+converter. From there we send it to a serial or parallel port. Probably 
+just grab the LSB, but that is an implementation detail...
+
+We have some design options based upon the Prime Assumption:
+
+1.A a device would use a cheap noisy carbon resistor and a
+rude, crude, noisy amplifier to amplify the noise generated 
+by the resistor.  
+
+1.B. A zener diode may make a "louder" noise and require a cheaper 
+amplifier.
+
+1.C How about if we take the hiss that you find between stations on an 
+FM receiver, and digitize them through a PC soundcard? 
+
+1.D Another wonderful source of hiss is the telephone when it is off hook.
+
+Is there any solid justification to pick one over the others?
+(I expect that 1.C limits our audience too much, but maybe not, esp 
+with VoicePGP coming RSN.)
+
+This clearly needs support, such as  a UART or similar chip would 
+convert the signal to RS-232 to to dangle off of your ports.  Some 
+type of clock would be required to sync the UART, providing a more 
+or less constant baud rate, so the computer can read it.  There 
+needs to be a DC power supply to make this thing go.   This is 
+accessable in the power supply of most PCs.  It is my opinion 
+that nobody wants to put 9 volt batteries in this thing and 
+have to remember to turn it off when they are finished using 
+their computers.   
+
+We think that we could  create these beasts for less than $25.00 
+in some quantity.  The first one would probably cost about $50.00 
+to produce plus somebody's time (which isn't typically free or 
+this probably would have been done already).
+
+Seriously,  is there really much market out there for this?  
+Will there be a bigger market in the future as more people 
+get on the "Information Superhighway"?  I get the impression 
+from folks a while ago that real random data is a problem, 
+but nobody wants to spend more than the price of two cases 
+of beer to solve the it. Is the value of random data really 
+that low?
+
+More questions:
+
+2. Do people really want to tie up a serial port with this or 
+should it  contain a switch to cut it in and out as needed and 
+free up the port? This sounds like an A-B switch. 
+
+3. Maybe it should go on the PC bus as an adapter card. This 
+would greatly raise the cost, up to maybe $100, but would 
+preserve "valuable" serial ports. Most PCs only have two, 
+and one is used for the mouse, and the other for the modem. 
+Since DOS can't handle more without help, this is a real limit.
+
+4. How secure should the device itself be? Bruce's wonderful _Applied 
+Cryptography_ talks about OS Virtual Memory managers writing out keys 
+to disk without the user/programmer knowing, which is a serious 
+potential problem. We have that same problem with the random number 
+that this device generates. Wose, it wouldn't be hard for a `bad guy' 
+to write a TSR that constantly reads the random port, and records
+the numbers in parallel with whatever wants to use it for real. 
+
+While I'd like to think that I really control my PC, once you get 
+networking TSRs, smartdrv, APSI drivers, CDROM and Soundcard drivers, 
+HIMEM, etc. loaded, do you really _know_ that they are your friends? 
+Is this a real problem?
+
+I can imagine a design for an internal card that allows only one read 
+of the number, so even if a bad guy were there, they would get 
+alternating (and thus different) numbers. I can't imagine doing 
+this off a parallel or serial port. Is there a need for this level of 
+sophistication (and added expense)?
+
+Any comments are greatly appreciated. And if you are seriously 
+interested, let me know, as that will surely add to my motivation.
+
+Cypherpunks write code (or maybe work on hardware :-) !
+
+Pat
+
+Pat Farrell      Grad Student                 pfarrell@netcom.com
+Department of Computer Science    George Mason University, Fairfax, VA
+Public key availble via finger          #include <standard.disclaimer>
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLgN03rCsmOInW9opAQG0wAP/RNJ8VeZDq5KhVI4JFs0tdXxUkVvSiY06
+lHvjmf8EL3kxn2ruxNYmigvxocvIn5mOSJQbpUl4CyLa++HMBkSDN06PMYVVreTX
+LA1XvHFgzjoC/WILD6LNy9XyUn0W/g2KkbQM/4FYCTa1b82f+vdq/7L6glHJ4cm3
+GKlCaeklSXU=
+=dzwk
+-----END PGP SIGNATURE-----
+
+
+
+

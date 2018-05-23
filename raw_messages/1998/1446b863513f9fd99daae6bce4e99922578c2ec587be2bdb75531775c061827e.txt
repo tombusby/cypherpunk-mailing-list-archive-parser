@@ -1,0 +1,207 @@
+From: Ryan Lackey <rdl@mit.edu>
+Date: Mon, 12 Jan 1998 13:34:43 +0800
+To: Tim May <tcmay@got.net>
+Subject: Re: Eternity Services
+In-Reply-To: <v03102801b0df03d95cd4@[207.167.93.63]>
+Message-ID: <199801120523.AAA12947@the-great-machine.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Tim May wrote:
+> At 3:06 PM -0800 1/11/98, Adam Back wrote:
+
+> News spool services are already showing signs of getting into this "Usenet
+> censorship" business in a bigger way. Some news spool services honor
+> cancellations (and some don't).  Some don't carry the "sensitive"
+> newsgroups. And so on. Nothing in their setup really exempts them from
+> child porn prosecutions--no more so than a bookstore or video store is
+> exempted, as the various busts of bookstores and whatnot show, including
+> the "Tin Drum" video rental case in Oklahoma City.
+
+There is no market-based reason for a general-purpose news server to store a 
+file once it is known it is illegal or even offensive and someone puts any 
+serious
+amount of pressure on them.  You end up needing to steganographically protect
+your data in the usenet stream, yet then you have to resort to security through
+obscurity, which royally sucks if you have published source :)  You could use
+some kind of cryptographically steganographically protected data, such that
+you need a secret key to know stegoed data exists, but then knowing which 
+files to
+extract becomes a pain -- your server needs to try to extract on *everything*. 
+ True,
+this also solves part of the TA problem (while making the other parts far 
+worse) :)
+
+But it really hammers the servers, and makes it unlikely they'll continue to 
+let you access
+them.  You could then foil this by using a bunch of tentacles to pull in data, 
+but this
+increases complexity and security vulnerability.  
+> 
+> 
+> >The solution I am using is to keep reposting articles via remailers.
+> >Have agents which you pay to repost.  This presents the illusion of
+> 
+> This of course doesn't scale at all well. It is semi-OK for a tiny, sparse
+> set of reposted items, but fails utterly for larger database sets. (If and
+> when Adam's reposted volumes begin to get significant, he will be viewed as
+> a spammer. :-) )
+
+Yes.  This (and the URN issue) was one of the initial reasons why I doubted the
+functionality of his Eternity implementation if it ever became popular.  One 
+of MIT's
+news admins was actually vehemently opposed to this "abuse of usenet", and 
+implied he
+would go out of his way to not carry such articles.
+
+E-DDS should scale well because everyone involved is trying to make a profit.
+> 
+> >> - CD-ROMS made of Eternity files and then sold or distributed widely
+> >
+> >This is an interesting suggestion, but surely would open the
+> >distributor up for liability, especially if copyright software were
+> >amongst the documents.  Were you thinking of
+> >
+> 
+> The CD-ROM distribution is just a side aspect, to get some set of data
+> widely dispersed. For example, if the data base is of "abortion" or
+> "euthanasia" information (a la Hemlock Society), which various parties want
+> suppressed, then handing out freebie CD-ROMs is one step.
+> 
+> Many examples of this: Samizdats in Russia, crypto/PGP diskettes handed out
+> at conferences (was Ray Arachelian doing this several years ago?), and
+> various religious and social tracts. Obviously, this is what broadsheets
+> and fliers are designed to do. Self-publishing in general.
+> 
+> If the intent is to collect money for the data base accesses, then of
+> course other considerations come into play.
+> 
+> (Critical to these "Eternity" things is a good model of the customers, the
+> reasons for the data, etc.)
+
+My implementation allows flexibility -- someone pays for every scarce 
+resource, yes, but
+it does not have to always be the same person.  There will hopefully evolve to 
+be people
+willing to speculate in data, storing it for free in exchange for a cut, 
+others willing
+to pay the cost of putting their own data up and making access free up to a 
+certain point,
+etc.
+
+I like CD-ROM distribution.  My discman carried munitions, as well as music, 
+recently,
+on the same disc.
+> 
+> (* I say "working" in the sense that the concept was very easy to
+> demonstrate just by using PGP and remailers. Not much more than what I
+> demonstrated in 1993 would be needed to deploy a real system. Except for
+> one thing: true digital cash. Not the bullshit one-way-traceable stuff that
+> Chaum and others are now pushing, but the original, online-cleared or
+> escrow-cleared form, a la the work of Goldberg et. al. For some of these
+> applications, below, simple token- or coupon-based schemes might work
+> adequately.)
+
+There are currently-under-development systems which will meet the digital cash 
+requirement,
+from people who I consider highly respectable and competent.
+
+Yes, blacknet is a perfect model of a distributed high-latency system.  
+However,
+to get a system which will actually be useful to end users requires quite a 
+bit more than
+just storing data -- services like reporting on the reliability of data, 
+allowing
+easy access to data by third parties, etc. are all pretty essential.  
+Cypherpunks
+may find blacknet highly useful, but most end users want something that works
+like the web, or like a database, which is the primary advantage of the current
+"Eternity" systems.
+> 
+> How these models will work using existing infrastructure (Usenet,
+> remailers, Web proxies, etc.) depends on some factors. It might be useful
+> to consider some benchmark applications, such as:
+> 
+> 1. Anonymous purchase of financially important data. (A good example being
+> the Arbitron ratings for radio markets...subscription to Arbitron is quite
+> expensive, and posting of results on Usenet is prosecuted by Arbitron. A
+> good example of a BlackNet market.)
+> 
+> 2. Anonymous purchase of long articles, e.g., encycopedia results...
+> 
+> (I'm not sure there's still a market for this....)
+> 
+> 3. Anonymous purchase of "term papers." (A thriving market for ghostwritten
+> articles...already migrating to the Web, but lacking adequate anonymizing
+> methods.)
+> 
+> This is an example of a very large data base (all term papers on file)
+> which cannot possibly by distributed feasibly by Usenet.
+> 
+> And so on...lots of various examples.
+> 
+> The whole Eternity thing is interesting, but we haven't made a lot of
+> progress, it seems to me. (I distributed a proposal a bit similar to what
+> Ross Anderson was proposing, a proposal more oriented toward making a
+> _persistent_ Web URL for academics and lawyers to reliably cite, with less
+> of the "404--File Not Found" sorts of messages, the things which make the
+> Web largely unusable for academic and scientific citations.)
+
+Yes, having a persistent URN is highly useful.  Adam's implementation kind of 
+solves
+this, and I have not yet come up with a solution to it -- it would be easy to
+do a pretty simple persistent URL, but having something which would allow
+indexing to be something other than a web-search-engine style kludge is more 
+difficult.
+I've been reading some papers on the topic.
+> 
+> 
+> >> It is also likely in the extreme that a working Eternity service will
+> >> quickly be hit with attackers of various sorts who want to test the limits
+> >> of the service, or who want such services shut down.
+> >
+> >I agree with this prediction.  Remailers have seen this pattern, with
+> >`baiting' of operators, and apparently people posting controversial
+> >materials and reporting the materials to the SPA or others themselves,
+> >etc.
+> 
+> Yep, it's hard to disagree with this. Any centralized "Eternity service"
+> will be hit with various kinds of attacks in quick order.
+> 
+> Building a data base, as Ryan comments seem to indicate he is mostly
+> interested in doing, is the least of the concerns.
+
+I think perhaps this is inaccurate.  I am interested in being able to subsume 
+the
+functionality of a database for some applications, but I'm trying to build 
+something
+more like a distributed active agents system.  A database implies a single 
+central
+design -- this would be more a medium in which people could place databases, 
+agents, etc.
+> 
+> --Tim May
+> 
+> The Feds have shown their hand: they want a ban on domestic cryptography
+> ---------:---------:---------:---------:---------:---------:---------:----
+> Timothy C. May              | Crypto Anarchy: encryption, digital money,
+> ComSec 3DES:   408-728-0152 | anonymous networks, digital pseudonyms, zero
+> W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+> Higher Power: 2^2,976,221   | black markets, collapse of governments.
+> "National borders aren't even speed bumps on the information superhighway."
+> 
+> 
+> 
+
+-- 
+Ryan Lackey
+rdl@mit.edu
+http://mit.edu/rdl/		
+
+
+
+
+
+

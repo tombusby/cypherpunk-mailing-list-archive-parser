@@ -1,0 +1,59 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Sat, 18 May 1996 14:17:26 +0800
+To: jamesd@echeque.com
+Subject: Re:  SEVERE undercapacity, we need more remailer servers FAST
+In-Reply-To: <199605152129.OAA17878@dns2.noc.best.net>
+Message-ID: <Pine.LNX.3.93.960516162320.162A-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Wed, 15 May 1996 jamesd@echeque.com wrote:
+
+> What do I need to do to support a remailer that posts to non binary
+> newsgroups? (I do not have root control on a unix machine other than my
+> employers machine, for which I am unlikely to receive approval to use 
+> in this fashion.)
+
+There are a couple of different ways that a remailer can be used to support
+mail-to-news.  The easy way to block binary posts, is to scan the first few
+lines of the message for "begin xxx pic.jpg" and it could also scan for
+base64.  Also, messages that are sent to a newsgroup could have a maximum
+length.
+
+One way that mail-to-news works, is that the message has newsgroup headers and
+it is directly passed to inews for posting.  In this case, the headers could
+be scanned for any binary newsgroups.  If mail2news software is being used
+which creates a mailing alias for each newsgroup, then the e-mail addresses
+of all the binary newsgroups could be placed on the block list.  Unfortunately,
+you do need root access to set up such an alias.
+
+If you don't have root access, then grepping the newsgroups header for binary
+newsgroups before piping the message to inews is probably the best way.
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xe3bf2169
+http://www.voicenet.com/~markm/ | d61734f2800486ae6f79bfeb70f95348
+((2b) || !(2b))                 | Old key now used only for signatures
+"The concept of normalcy is just a conspiracy of the majority" -me
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMZuQkbZc+sv5siulAQFNoAP+IWzzPLqx8chkfLIWsY53Gesst6m6mReS
+uLYmWE4lCnuKK0T3UqD7PmsS4rNjsz1Vc+fj7/vQIDAI7OV0znZpWT3ZjWJMwckX
+u62DvWXqsve2YWHDQAxdzW/IY+4iEQHXJmVSZbV6sw/ycF20+2yeYjDQlPzOoADJ
+rP+oxEaCCHg=
+=AS4M
+-----END PGP SIGNATURE-----
+
+
+
+
+

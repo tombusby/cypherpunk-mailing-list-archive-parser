@@ -1,0 +1,69 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Wed, 8 Sep 93 11:17:57 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: pasting
+In-Reply-To: <199309071705.AA02648@Menudo.UH.EDU>
+Message-ID: <9309081810.AA00635@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I'm not sure about pasting in reply fields to override behavrior.
+>That dependes on precedence between "From:" and "Reply-To:", etc.
+>Basically, I'm not real familiar with the appropriate RFC :-)
+
+In short, if there's a Reply-To: field present, the mailer is supposed
+to reply to that address.  Some mailers don't, unfortunately.  Some
+reply to the From: line in the mail, and some reply to the out of band
+sender information, usually seen in the "From " line at the top of the
+mail.
+
+Let's face it, header pasting is a hack.  A very nice hack, in certain
+ways, but still a hack.  As currently implemented, header pasting, be
+it incoming (::) or outgoing (##), is a syntactic operator, not a
+semantic one.
+
+The relevant RFC is 822, "STANDARD FOR THE FORMAT OF ARPA INTERNET
+TEXT MESSAGES".  This RFC has several holes in it, however.
+
+The syntactic structure of the header fields indicates that the only
+fields which may appear multiple times are receiver fields (To, cc,
+bcc, and the Resent-* version of these), Received, and the optional
+fields.  (I avoid a too-long discussion of the Resent-* fields, whose
+description seems to contradict this definition.)  Therefore, it is
+possible to make syntactically counter-spec mail using header pasting.
+It is also possible to make such counter-spec mail in emacs mail mode,
+for example, but it doesn't seem to bother anybody much.
+
+Yet RFC-822 is followed as much in the breach as in the observance.
+In particular, 822 seems to specify that the recipient of the mail be
+contained in one of the destination fields.  Yet sendmail takes
+parameters on the command line for the destination and ignores the To:
+field inside the message.  Now there is a flag for sendmail to parse
+the mail and determine addresses, but this is not the default, much
+less required.  I think this behavior of sendmail is good, but it does
+appear to be counter to the semantic interpretation of the destination
+fields as specified in 822.
+
+My own philosophy on this is that one should never flagrantly violate
+822 syntactically, and to take it semantically with a grain of salt.
+
+What are the implications for header pasting?  I think it ought to
+remain only syntactic, since the semantics that would need to be
+defined do not have a solid base in specification, much less in
+implementation.
+
+Yet this pasting does not allow 'overriding' of an existing header
+field.  One could write an operator that removes header fields in the
+context of header pasting.  In the current remailer situation, this
+operator would allow one to remove the "From:" field and substitute
+another--instant in-band forgery.
+
+Whether the operators of remailers want to do this is left for
+discussion.
+
+Eric
+
+
+
+

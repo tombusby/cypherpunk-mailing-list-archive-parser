@@ -1,0 +1,51 @@
+From: Deranged Mutant <rrothenb@ic.sunysb.edu>
+Date: Wed, 6 Sep 95 02:14:01 PDT
+To: cypherpunks@toad.com
+Subject: Re: Secure Device 1.4 Question
+In-Reply-To: <199509060025.CAA05098@utopia.hacktic.nl>
+Message-ID: <199509060915.FAA16064@libws4.ic.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> I just installed Secure Device, v1.4 on a PC at work.  After 
+> installing it, I looked at the encrypted volume and found the string 
+> "SECDEV  " starting at the fourth byte of the file.  I'd prefer that 
+> this file look like some temporary file that got left on the disk by 
+> a program that didn't clean up properly after itself, and not be 
+> identifiable as an encrypted volume.
+
+Problems with that:
+  1. SecDev needs a way to easily ID it's own files. Encrypting a known
+     ID string would be a weakness (known plaintext) so it's better to
+     have a plaintext identifyer.
+
+  2. If someone thinks it's a lost TMP file they will delete it. Not a
+     risk you want.  It's better if they think it's a strange type of
+     swap file or something needed by an application.
+
+
+[..]
+
+Source is available... so you can change the ID string in source to
+something innocuous yet unique and recompile it.
+
+> As you've probably guessed, I'm not supposed to have any personal 
+> files on my work computer, and an entire encrypted volume would 
+> undoubtedly make someone go ballistic if they discovered it.  When I 
+> want to use my encrypted file system, I reboot off of a floppy, and 
+> all Secure Device programs and drivers are kept on the floppy.  The 
+> only thing that has to be left on the hard drive is the encrypted 
+> volume itself.
+
+Well, there's a risk of someone seeing a mysterious file and deleting
+it anyway... assuming they don't go ballistic over it anyhow.
+
+There's also a risk of someone peering over your shoulder and noticing
+that something's afoot as well, is there not?
+
+
+
+
+

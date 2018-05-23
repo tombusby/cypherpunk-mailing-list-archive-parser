@@ -1,0 +1,58 @@
+From: cjl <cjl@welchlink.welch.jhu.edu>
+Date: Wed, 3 Aug 94 13:28:16 PDT
+To: Cypherpunks mailing list <cypherpunks@toad.com>
+Subject: Remailer traffic analysis foiling
+Message-ID: <Pine.3.89.9408031548.A5899-0100000@welchlink.welch.jhu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Remailer hackers,
+
+I've been thinking about the problem of traffic analysis of anonymous 
+remailers and I have a question to pose to those of you whose thoughts on 
+this topic are "more frequent or fully-formed".  
+
+Would there be any advantage to giving remailers a MIRV capability?  
+
+The idea goes like this:
+
+The message arrives, the PGP wrapper is removed, the message is scanned 
+for some specific token imbedded in the text (ala Matt Ghio's Cutmarks 
+function).  That token is a divider between two outbound messages.  
+These messages are sent along their respective ways.  The result is 
+something like a 10K message coming in, and a 7K and a 3K message leaving.
+If one of these goes to the bit bucket, it is like having added padding 
+stripped off.  Alternately they each could be part of the real message, 
+previously split and then sent via different paths to reduce chances of 
+complete message interception.
+
+I guess the issues involved are:
+
+1)  How difficult would this be to code?  [Yeah, yeah "Cypherpunks write 
+    code"(TM), but some of us write genetic code, not computer code :-)]
+
+2)  What is the credible threat of traffic analysis?
+	a)  Does multiplication of messages and their routing schemes create 
+            problems of scale for these alleged eavesdropers?
+        b)  Do you assume that if it's not a compromised server, that 
+	    what goes on inside the machine is hidden? 
+
+Now before the Zippos start flicking, I've followed the the latency vs. 
+reordering argument, and accept that latency *may* acheive reordering, but 
+not necessarily.  In this system though, different latencies after the 
+split would seem to acheive something because without reliable size in/out 
+information it would be harder to correlate message in with messages out.
+
+Comments (incendiary or or otherwise) requested.
+ 
+C. J. Leonard                     (    /      "DNA is groovy"
+                                   \ /                - Watson & Crick
+<cjl@welchlink.welch.jhu.edu>      / \     <--  major groove
+                                  (    \
+Finger for public key               \   )
+Strong-arm for secret key             /    <--  minor groove
+Thumb-screws for pass-phrase        /   )
+
+
+

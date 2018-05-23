@@ -1,0 +1,51 @@
+From: William Stephen Kish <wk0x@ANDREW.CMU.EDU>
+Date: Fri, 23 Apr 93 00:00:26 PDT
+To: cypherpunks@toad.com
+Subject: encrypted telnet
+Message-ID: <IfptDyW00axa40yUsP@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello,
+
+I've created this simple little program that allows for encrypted
+telnet sessions (between unix hosts) without any modification to the
+system telnetd or telnet programs.
+
+The system consists of a pair of programs: 1 running on the target
+machine (Host B) and 1 running on the machine being telneted from
+(Host A).  (These daemons require no special permissions -- they run
+as normal user processes. Also, both daemons are really the same
+program; each is started with a different switch to let it know which
+hat to wear...)
+
+Instead of telneting directly to Host B, the user telnets to a special
+port on his own machine ("telnet HostA 10000").  This connects him to
+the encryption daemon.  Upon makeing this connection, this Host A
+encryption deamon opens a TCP connection to the peer encryption daemon
+on Host B. This Host B deamon then opens a connection to port 23 (the
+normal telnet port) on it's own machine. Thus, all data from the user
+is passed to the encryption daemon on its local machine where it is
+encrypted and sent over the net to the peer daemon on the target
+machine. There the data is decrypted before being passed to the local
+telnetd process.  Data flowing in the reverse direction undergoes a
+similar process. All of this is transparent to the user and telnet
+processes.
+
+What I need now is a strong stream cypher to drop into these daemons.
+Can anyone supply references to apropriate algorithms or code?  A good
+cypher should be resistant to known plaintext attacks, since telnet
+sessions start out with lots of known plaintext (telnet options, login
+banner, motd, user id, etc...).
+
+If there is interest, I'll look into releasing this when it's complete.
+
+Thanks,
+Bill Kish
+kish+@cmu.edu
+
+
+
+
+

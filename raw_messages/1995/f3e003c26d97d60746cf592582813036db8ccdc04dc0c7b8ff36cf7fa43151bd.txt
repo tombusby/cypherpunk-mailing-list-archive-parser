@@ -1,0 +1,65 @@
+From: an402976@anon.penet.fi (RingZero)
+Date: Sun, 8 Oct 95 00:47:25 PDT
+To: cypherpunks@toad.com
+Subject: NEW Netscape RNG hole
+Message-ID: <9510080732.AA14015@anon.penet.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Did anyone else notice a bug in the new, public Netscape
+RNG code? It appears that on Windows builds, during the
+RNG seeding, the function that hashes in file contents
+(EnumSystemFiles) doesn't close a file handle (lFileHandle).
+This doesn't hurt too badly on the client, but on a server,
+leaking these resources is deadly.
+
+I ran some experiments. It took a few thousand calls before
+these open file handles forced not only the file content function
+to fail, but also made OTHER calls quietly fail. With these calls
+quietly failing, the RNG is significantly weakened. In my tests
+on Windows NT, ALL of the following RNG functions failed:
+
+* GetComputerName
+* GetVolumeInformation
+	volume Name,
+	volume Serial Number,
+	Maximum Filename Length
+	Filesystem Flags
+	Filesystem Name
+* GetDiskFreeSpace
+	SectorsPerCluster
+	BytesPerSector
+	Free Clusters
+	Total Clusters
+* subroutine for the inclusion of system files, both number of them & contents
+	ReadSystemFiles()
+* subroutine used for other history file accesses
+	SEC_FileForRNG(*filename)
+
+How did this get past Netscape testers? Does anyone
+know if this was fixed before Netscape shipped? Does
+it rate a shirt, or does this mean  Jeff W. gets to shave his
+head? I seem to remember him promising to shave it if we
+could show a significant weakness in the new RNG code,
+and since this does (IMO)...
+
+
+On another note, has anyone noticed the 73 (!!!) or so
+handles that are leaked by simply opening and closing
+&Options -> &Preferences... ? Looks like somebody had a
+problem coding the tabbed dialog.
+
+
+RingZero
+
+--****ATTENTION****--****ATTENTION****--****ATTENTION****--***ATTENTION***
+Your e-mail reply to this message WILL be *automatically* ANONYMIZED.
+Please, report inappropriate use to                abuse@anon.penet.fi
+For information (incl. non-anon reply) write to    help@anon.penet.fi
+If you have any problems, address them to          admin@anon.penet.fi
+
+
+
+

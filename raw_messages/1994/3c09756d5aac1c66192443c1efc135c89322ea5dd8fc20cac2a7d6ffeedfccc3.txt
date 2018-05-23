@@ -1,0 +1,49 @@
+From: mccoy@io.com (Jim McCoy)
+Date: Sun, 4 Dec 94 17:24:55 PST
+To: M.Gream@uts.EDU.AU (Matthew Gream)
+Subject: Re: gambling machines
+In-Reply-To: <199412050040.AA03362@sequoia.itd.uts.EDU.AU>
+Message-ID: <199412050124.TAA20338@pentagon.io.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: M.Gream@uts.EDU.AU (Matthew Gream)
+> 
+> `Jim McCoy' wrote:
+[regarding online gambling]
+> > For people with beta digicash clients, try http://gamezone.io.com/
+> 
+> To exercise my ecash software I had a few goes at this and found at
+> least one problem; payments not honoured.  [...winning hands not paying
+> out...]  Admittedly, four other small payments
+> succeeded, with values of less than and equal to 2.00 (for two of a
+> kinds and so on).
+
+This is basically caused by the lack of a to-be-implemented-RSN (tm) part
+of the ecash server: the ability to have have a merchant "wallet" maintain
+a set balance of coins in the wallet.  What happens is that every time
+money is given to the merchant to play a game it gets directly deposited
+into the bank, payoffs for winning hands come out of the wallet.
+Eventually the wallet runs out of coins to make the payment but there is no
+automatic way to keep it supplied from the coins that are deposited to
+play.  The DigiCash user clients seem fairly well developed, but they are
+lagging behind on the server-side of things (both merchant servers, and the
+bank server.)
+
+> I assume this is caused by some kind of bug, not any
+> deception on behalf of the operator; but it does illustrate a potental
+> problem as I really don't have any `proof' with which to challenge.
+
+Well, at some point we need to finish up some of the reliability code.  It
+should present you with a "receipt" number during payoff that will be
+linked to the game database, the game is not removed from the database
+until the money exchange clears so if there is a problem the user can
+present the number and we can look up the game results.
+
+jim
+
+
+
+
+

@@ -1,0 +1,58 @@
+From: khijol!erc (Ed Carp [Sysadmin])
+Date: Mon, 28 Nov 94 07:41:47 PST
+To: cdodhner@PrimeNet.Com (Christian Odhner)
+Subject: Re: usenet-to-mail,ftp-to-mail,xxxx-to-mail
+In-Reply-To: <Pine.BSI.3.90.941128080216.7342B-100000@usr3.primenet.com>
+Message-ID: <m0rC89w-0004G1C@khijol.uucp>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> For a long time I've wanted to set up a remailer that instead of just 
+> re-mailing the input mail would telnet to port 25 on a specified machine 
+> and spoof the headers exactly like you tell it to, or that would anon-ftp 
+> upload the "mail" message to a specified site, or that would continualy 
+> check a local (or remote) ftp directory for filenames that match a 
+> certain wildcard, processing them as inbound mail... I can think of a 
+> couple of situations under which having a mailer pick up off a newsgroup 
+> would be very usefull... send a pgp encrypted, nested message through a 
+> chain of four remailers... one is a standard-ish remailer which peels off 
+> the first layer of encryption and posts your message to a certain 
+> newsgroup. The second one, whos address remains a mystery, spoofs or 
+> remails the message it found in the newsgroup to a different newsgroup, 
+> where it is again picked up and decrypted by the third remailer, which 
+> uploads it to an ftp site watched by the fourth, again anonymous 
+> remailer, who picks it up and remails it to the recipient. It may all be 
+> an excercise in futility, I'm not an expert on that kinda thing, but it 
+> sure /seems/ more secure to me...
+
+Here's a script that you might want to use as a base:
+
+(echo helo;echo mail from:\<`logname`@`hostname`.`domainname`\>;echo rcpt to:\<$1\>;echo data
+echo X-Info-1: This message was sent using fastmail 0.1 - contact ecarp@netcom.com
+echo X-Info-2: for more information. Copyright 1994 by Ed Carp.
+cat
+echo .;echo quit)|telnet `echo $1|cut -f2 -d@` 25
+- -- 
+Ed Carp, N7EKG    			Ed.Carp@linux.org, ecarp@netcom.com
+
+Finger ecarp@netcom.com for PGP 2.5 public key		an88744@anon.penet.fi
+                       ** PGP encrypted email preferred! **
+
+"What's the use of distant travel if only to discover - you're homeless in
+your heart."  --Basia, "Yearning"
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLtn5dCS9AwzY9LDxAQELNwP/TeP9GvonQOsDPiKb7dJKtG1Uj3puVEpu
+fXwGYl0g+q+ZfdeBUwE0NfkZMK7L453/3oNevB2JbLFzypF+bAgZJeDlFHZgLs1B
+Dq8SgMAyvtQztlSEZ6tKIWNiIVSmfNFHbyS4/QsLitkRJywWRN8UJE1/3KUNQ3hy
+2vFmIjRLbxA=
+=zA4H
+-----END PGP SIGNATURE-----
+
+
+

@@ -1,0 +1,38 @@
+From: Eric Blossom <eb@comsec.com>
+Date: Tue, 28 Jan 1997 12:42:57 -0800 (PST)
+To: aba@dcs.ex.ac.uk
+Subject: Re: GSM crypto upgrade? (was Re: Newt's phone calls)
+In-Reply-To: <199701201612.IAA12435@toad.com>
+Message-ID: <199701281938.LAA10043@comsec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> It is not clear you need signatures in the secure phone case.  Eric
+>> Blossom's 3DES uses straight DH for key exchange with verbal verification
+>> that both ends are using the same key.  
+>
+>How does Eric's box display the negotiated key to the user?  (I don't
+>recall the pair I saw having displays).
+
+Latest versions have an LCD display that reports the type of crypto
+being used (3DES), as well as 24 bits worth of SHA-1 of the public
+exponentials exchanged.  Alice sends g^x mod p, Bob sends g^y mod p.
+Let m = min(g^x mod p, g^y mod p) and n = max(g^x mod p, g^y mod p).
+compute v = SHA (concat (OCTET_REP (m), OCTET_REP (n))).  Display the
+high 24 bits of v.
+
+>Also I thought it would be kind of cute if there were some way for
+>phones to exchange their signature keys `face to face' as well.
+
+Currently, absent some kind of widely deployed public key
+infrastructure, there are no signature keys used.  This also means
+that the units do *not* contain any long term secrets, just the
+session key which is destroyed at the end of the call.
+
+Eric
+
+
+
+
+

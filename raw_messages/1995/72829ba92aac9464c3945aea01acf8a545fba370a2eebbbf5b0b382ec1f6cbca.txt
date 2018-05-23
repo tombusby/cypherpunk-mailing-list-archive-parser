@@ -1,0 +1,41 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Tue, 12 Dec 95 14:34:43 PST
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Time-based cryptanalysis: How to defeat it?
+In-Reply-To: <199512110854.AAA14652@ix2.ix.netcom.com>
+Message-ID: <199512122233.RAA21952@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart writes:
+> The most interesting detail in the paper, to me, was:
+> 
+> PK> Computing optional Ri+1 calculations regardless of whether the exponent 
+> PK> bit is set does not work and can actually make the attack easier;
+> PK> the computations still diverge but attackers no longer have to identify
+> PK> the lack of a correlation for adjacent zero exponent bits. 
+> 
+> My immediate reaction to the description of the timing attack on 
+> Diffie-Hellman had, of course, been to do precisely that :-)
+
+I don't understand why Kocher's point is correct. For example, why do the
+times diverge with the following modification of the modexp algorithm on
+pg.2 of the abstract ?
+
+	Algorithm to compute R = y^x mod n:
+		Let R_0 = 1.
+		Let y_0 = y.
+		For i = 0 upto (bits_in_x - 1):
+			Let M = (R_i * y_i) mod n.
+			Let R_(i+1) = (bit i of x) * M  +
+					(1 - (bit i of x)) * R_i.
+			Let y_(i+1) = (y_i)^2 mod n.
+		End.
+
+(I suppose I should wait for the full paper....)
+
+-Futplex <futplex@pseudonym.com>
+
+
+

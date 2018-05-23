@@ -1,0 +1,59 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 5 Mar 94 10:27:54 PST
+To: cypherpunks@toad.com
+Subject: Truly Stealthy PGP
+In-Reply-To: <199403051533.HAA07296@jobe.shell.portal.com>
+Message-ID: <9403051818.AA07188@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>This was discussed some time back on the pgp developers' list, and at that
+>time the suggestion was made to add a multiple of n to m so that it covered
+>a fuller range of values.  The recipient would then just take the exponent
+>mod n and try that.
+
+What I suggest is making the exponent (the encrypted session key)
+completely random over the length assigned to it, since that's
+visible, and just live with a slightly non-flat distribution of
+exponents mod n.  It turns out that this can be made to work just
+fine.
+
+>Mathematically, call L the next multiple of 256 above n.
+
+n is the modulus.  Divide L by n to get L = t * n + s, s in [0,n).
+Assume x is random in [0,L).  The entropy of x mod n is
+
+   E = - s (t+1)/L log (t+1)/L - (N-s) t/L log t/L
+
+Rearranging, we get:  (get out some paper, do the algebra)
+
+   E = log L/t - s(t+1)/L log( 1 + 1/t )
+
+This makes sense, since if s is zero, E = log n, which is just the
+entropy of the random distribution of [0,n).
+
+What is the smallest value of E?  In other words, what's the upper
+bound of the randomness we can lose?  It happens when when t = 1 and
+when n = L/2+1.  This maximize the expression in t and maximizes s at
+n-2.  This minimum value of E is
+
+   E_min = log L - ( ln 2 - 2/L ln 2 )
+
+In other words, the most entropy we can lose is two bits.  That's
+right, only two bits.  Since the entropy of the session key is the
+length of the modulus, for a 1000 bit key the entropy loss is
+negligible.
+
+Therefore, my recommendation is that the session key representation be
+chosen randomly over [0,2^k) and to use as an actual session key this
+value mod n.  The effective entropy loss is small enough not to worry
+about.
+
+Eric
+
+
+
+
+
+

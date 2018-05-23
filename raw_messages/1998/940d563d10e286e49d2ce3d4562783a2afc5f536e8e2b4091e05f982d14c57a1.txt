@@ -1,0 +1,65 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Thu, 10 Sep 1998 11:24:12 +0800
+To: raymond@fbn.bc.ca
+Subject: Re: Spot The Fed / ICMP, UDP, and traceroute
+In-Reply-To: <199809100428.VAA17926@leroy.fbn.bc.ca>
+Message-ID: <35F7FC76.44C31F86@brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Raymond D. Mereniuk wrote:
+
+> Traceroute doesn't use DNS, it doesn't need to as it already has the
+> IP numbers.  DNS is a system which provides IP numbers when you
+> give it a domain name.  Reverse DNS provides a host name to an IP
+> address but Traceroute doesn't use it.
+> 
+> Traceroute works at the router level.  Traceroute is like Ping but
+> provides information on every hop including IP number and
+> assigned device name.  With Traceroute if a host name is not
+> received, when requested of course, it is because the equipment
+> was not assigned a host name or it is deliberately suppressed.  I
+> don't use Traceroute a lot but this is the first time I have seen host
+> names suppressed.
+> 
+> A lot of routers have ICM suppressed and will not provide a device
+> name.  If an end user site wants to provide better security they will
+> turn off ICM packets.  At that point Traceroute doesn't work at all.
+
+Not quite true.  traceroute does use DNS.  If you do traceroute www.joe.com
+it will use dns to resolve it to an ip.  If you do traceroute 10.0.0.1, it
+will use dns to resolve it to a name.   At every hop, it will use reverse
+DNS to resolve the ip's to names.  If a hop doesn't have a reverse, you see
+it's ip.
+
+Traceroute under unix uses UDP on some high random port.  Traceroute on NT
+(TRACERT.EXE) uses ICMP.  In both cases, it sets the TTL field to 1, and sends
+a message.  The router dropping the message responds with ICMP telling your
+host, "packet dropped due to ttl" -- this returns that router's ip address to
+you.   (For non TCP heads - each packet has a TTL - time to live field that
+gets decreased as the packet "hops" across a router.  When the TTL reaches
+zero, the next router to receive it drops it and returns an error to the
+sender.  This mechanism is used to prevent router loops from brining down all
+the networks in the loop among other things like tracing a route...)
+
+One can hide routers by making them ignore ICMP or not respond to ICMP.  In
+such cases, you simply get time outs (a line with 3 *'s)...
+
+A good test is to use traceroute from NT/95 and another from unix so you can
+tell what's filtered.
+
+-- 
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    |Prying open my 3rd eye.  So good to see |./|\.
+..\|/..|sunder@sundernet.com|you once again. I thought you were      |/\|/\
+<--*-->| ------------------ |hiding, and you thought that I had run  |\/|\/
+../|\..| "A toast to Odin,  |away chasing the tail of dogma. I opened|.\|/.
+.+.v.+.|God of screwdrivers"|my eye and there we were....            |.....
+======================= http://www.sundernet.com ==========================
+
+
+
+

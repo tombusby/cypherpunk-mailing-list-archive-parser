@@ -1,0 +1,54 @@
+From: koontzd@lrcs.loral.com (David Koontz )
+Date: Fri, 3 Jun 94 10:31:20 PDT
+To: sidney@taurus.apple.com
+Subject: Re: Faster way to deescrow Clipper
+Message-ID: <9406031730.AA19390@io.lrcs.loral.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: sidney@taurus.apple.com (Sidney Markowitz)
+>
+>Could someone please enlighten me on this: It seems from the descriptions
+>of the hack to fake a LEAF that 1) When two Clipper chips are going to
+>communicate, one of them generates the session key and sends a LEAF to the
+>other chip, 2) The second chip recognizes the LEAF as being valid based on
+>the validity of the checksum, but does not determine the session key from
+>the LEAF.
+
+The session key encoded with the unit key in the Law Enforcement Access Field
+is not recoverable.  The unit key is only contained within the orignating
+clipper chip, and within the two escrowed key portions.
+
+>If that's the case, then 1) How does the second chip find out what the
+>session key is?
+
+An external key exchange in performed.  In the case of AT&T TSD 3600s the
+key is negotiated between them blindly.
+
+>                 2) Doesn't the second chip also have to generate and send a
+>LEAF, if for no other reason than to identify itself to the wiretappers,
+>and if so won't that give away the session key if that chip's device is not
+>also hacked?
+
+FIPS Pub 185 requires that clipper phones adhere to a protocol not contained
+within the FIPS, and requires transmission of the LEAF.
+
+>              3) If all that is needed for this hack is a LEAF with a proper
+>checksum, why go through the brute force method of generating random LEAFs?
+>Why not just buy (or steal or whatever) another Clippered device that you
+>never use for real communication so the wiretappers have no record of who
+>has that serial number, and get LEAFs from it? For that matter, why can't
+>you obtain one LEAF from listening to anybody's Clippered transmission and
+>use it over and over again?
+
+Using a constant unit ID even if the session key is not recoverable, still
+leaves you open to traffic flow analysis.  Using a LEAF from another
+clipper chip still identifies you (or serves to flag interest).  It would
+be a wise to assume that the adversary routinely decodes all LEAFs crossing
+their purview, recovering unit IDs.  (Which would at least flag a lot of
+counterfeited LEAFS, were ID ranges or (as in IP) prefixes used.)
+
+
+
+

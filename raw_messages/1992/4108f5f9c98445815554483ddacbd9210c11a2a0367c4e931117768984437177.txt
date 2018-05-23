@@ -1,0 +1,84 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Wed, 25 Nov 92 09:17:58 PST
+Subject: Remailers...
+Message-ID: <921125165126_74076.1041_DHJ12-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think the remailing idea expressed via Tim (from David?) had
+some nice features.  It would be very easy to do replies to someone
+whom you didn't know but from whom you'd received some anonymous mail.
+As I understand it, if I send mail anonymously to David, he won't
+(of course) know who sent it.  If he replies, the mail will bounce
+back to the forwarder.  And the forwarder has remembered my forwarding
+request so that it can send the reply back to me.  After that it
+deletes the remembered forwarding request for security.
+
+I wouldn't object to this that much on security grounds; as David
+pointed out, even a full implementation of Chaum's "mix" remailer
+would fall to infiltration.  Instead, I think there are some issues
+involving usability.
+
+For one thing, it sounds like this system is use-once as far as the
+anonymous return address.  If David replied to me, then thought of
+something he wanted to add, his second message wouldn't get through to
+me.
+
+Another problem is, what if two people send anonymous mail to David
+via the same forwarder.  Then, when he replies, how does the forwarder
+know which of the two to forward the reply to?
+
+It's also asymmetric, in that it will only work if one of the two
+communicants knows the true address of the other.  A lot of the
+interesting features of Tim's "crypto anarchy" only arise if
+people can communicate without either one knowing the other's true
+address.
+
+Let me mention a couple of other ideas which I've heard of for anonymous
+return addresses.  One idea was posted several months ago on the
+Extropians list by Eric Messick.  (Is he on this list?)  It used
+a "pseudonym-based post office box".  You would send a message to
+a remailing server saying, "Please save mail addressed to pseudonym
+XYZ123.  I will pick it up later.  Here is the public key I will
+use to authorize the pick-up, and here is some digital cash to
+pay for your trouble.  Thank you."  Then you send mail anonymously
+giving XYZ123@remailer.com as your return address.  This mail
+stacks up at the remailer which saves it for you.  At some later
+date you send a signed message to the remailer saying, "OK, send XYZ123's
+mail to me@me.com."
+
+Eric Hughes had an idea which was somewhat like this but without
+the delay aspect.  You would just set up an account with a remailer
+whereby all mail to XYZ123 would be forwarded to yourself.  Then
+XYZ123@remailer.com would be your return address.  This could include
+David's idea if you asked the server to delete your pseudonym after
+using it once.
+
+All of these anonymous return address proposals can be enhanced by
+using a cascade or chain of remailers for your A.R.A.
+
+Chaum's "mix" remailer would save up a batch of cryptographically
+protected messages, decrypt them, rearrange their order randomly, then
+send them out.  This way if the remailer itself is secure but the
+network connections to it are being monitored, the correspondance
+between incoming and outgoing messages is lost.  The other ARA
+suggestions could also benefit from this enhancement.
+
+Chaum's idea for an anonymous return address was a somewhat more
+complicated form of the ARA I've implemented for my remailer.  My
+ARA is simply a forwarding instruction, encrypted with the public
+key of the remailer.  The advantage of this system is that you don't
+have to "register" with the remailer(s) in advance.  It's less
+convenient than the other proposals, though, and there is the danger
+that the public key(s) of the remailer(s) involved would be revealed
+at some time in the future, which would then reveal that that old ARA
+really was you.
+
+Hal
+74076.1041@compuserve.com
+
+
+
+
+

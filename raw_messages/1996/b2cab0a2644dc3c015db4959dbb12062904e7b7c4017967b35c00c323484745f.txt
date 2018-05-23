@@ -1,0 +1,35 @@
+From: JonWienke@aol.com
+Date: Sat, 6 Apr 1996 16:59:05 +0800
+To: cypherpunks@toad.com
+Subject: Spinners and compression functions
+Message-ID: <960405210713_185610686@emout10.mail.aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Since there has been a lot of discussion about spinners derived from various
+things (idle loops, video retrace, etc.) used as entropy sources, here is yet
+another idea.  Run the spinner output through a PKZip type compression
+function, and then seed a PRNG with the output from that.  This would provide
+a means of gauging the amount of entropy that has been fed into the PRNG,
+(count the bytes output from the compression function) which will allow the
+program to disallow any output from the PRNG until a sufficient amount of
+entropy has been fed into it.  Even if there are correlations in the spinner
+data, (I know, that is obvious) by the time it has gone through the
+compression function and the PRNG, it should be cryptographically useful,
+especially if entropy from multiple sources (keyboard & mouse events, disk
+access times, network access times, etc.) is used to seed the same PRNG.
+
+Jonathan Wienke
+
+Political Rant:
+Re: e$ Signorage
+>And there I was thinking it was the right for Greenspan to sleep with any 
+>unmarried woman on the eve of her wedding...
+
+Actually, that's "prima nocte" (Latin for 'bimbo eruptions" [:)] ) and the
+principal beneficiary is our beloved President...
+
+
+
+

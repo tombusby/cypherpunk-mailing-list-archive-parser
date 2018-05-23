@@ -1,0 +1,46 @@
+From: peter honeyman <honey@citi.umich.edu>
+Date: Tue, 22 Dec 92 05:44:41 PST
+To: Phiber Optik <phiber@eff.org>
+Subject: Re: Destroying Data (Re: Remailer Policies)
+In-Reply-To: <199212220042.AA27413@eff.org>
+Message-ID: <9212221344.AA03085@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Unix weenies of old will recall "clri" to clear an inode. ...
+
+clri destroys the file "handle" (the inode, thus the owner, mode,
+length, pointers to data blocks, etc.) but not the contents of the
+data blocks.  stringing them together is another story, but not
+impossible if you know what you're looking for.
+
+>                                 -- so why not just write a little C program
+> to open the logfile and overwrite it to the end with NULL's?
+
+u.w.o.o. often go to great lengths to avoid writing a few lines of c,
+which, i suppose, is not so bad. 
+
+but i agree with hkhenson that the best way to secure the remailer logs
+is to encrypt them.
+
+which raises a sticky point, since i don't see an easy way to do that
+on a machine that you can't secure physically.
+
+i'm familiar with the andrew environment (e.g., afs or the andrew
+toolkit), which is more or less a kerberos environment, wherein secure
+service providers run on physically secure machines.  this lets
+sysadmins store cleartext passwords (in essence) on their local disks
+to support reauthentication daemons (to refresh tokens for long-lived
+jobs, since kerberos tickets time out).
+
+this clearly would not achieve the objectives here.  the only option i
+see is to enter a password at boot time (or when the remailer is started).
+
+ick.
+
+	peter
+
+
+
+

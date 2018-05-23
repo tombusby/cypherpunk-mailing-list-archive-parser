@@ -1,0 +1,103 @@
+From: anonymous-remailer@shell.portal.com
+Date: Mon, 6 Feb 95 20:18:10 PST
+To: cypherpunks@toad.com
+Subject: Re: New directions in anonymity (needed)
+In-Reply-To: <199502060743.XAA01417@netcom14.netcom.com>
+Message-ID: <199502070417.UAA18418@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: tcmay@netcom.com (Timothy C. May)
+> Date: Sun, 5 Feb 1995 23:43:39 -0800 (PST)
+> 
+> Mike Ingle wrote:
+> > All of our anonymous systems boil down to only two techniques: indirection
+> > and broadcast. Indirection is sending a message through one or more
+> > intermediate nodes to conceal its point of origin. Broadcast is sending a
+> > message to multiple recipients to conceal the intended recipient.
+> 
+> First, I think it important to clearly distinguish between "sender
+> anonymity," where the physical identity or sending site is hidden, and
+> "receiver anonymity," where the same is true of the receiving site.
+
+  I agree and will call them s anonymity, and r anonymity cause I am
+too lazy to type much.
+
+> Chaumian digital mixes--what you Americans call "remailers"--mainly
+> solves the sender anonymity problem. Message pools, or broadcast to a
+> group or site that includes the receiver, mainly deals with receiver
+> anonymity. The combination of the two deals with both.
+
+  I'll call the combo of "sender -> remail network -> pool ->
+reciever" by the term "repool" in this message.
+
+> Both are solved elegantly with the Dining Cryptographer's Protocol,
+> about which much is written on this list every few months. Messages
+> are "sent" in an Ouija-board fashion and received by the person who
+> can successfully decrypt a public message sent over the system.
+
+  Not so.  Though Chaum's DC protocol does give s/r anonymity, it does
+so at a large cost.  Much larger than the repool protocol.
+
+> > Broadcast is exactly as secure as it is nonscalable. If you
+> > broadcast to 100 people, an attacker's uncertainty is one in
+> > 100. The security grows linearly with the overall bandwidth. For
+> > cryptographic-level security, it would need to grow exponentially
+> > with bandwidth.
+
+  I think this is exactly the right aproach.  So, lets look at the
+cost of ataining anonymity.  For U people to communicate M bits (total
+-- 2 people each sending 2 bits is M==4) s/r anonymously takes O(U*M)
+bits multicast bandwidth for Chaum's DC protocol, but the repool
+protocol uses only O(h*M) bits narowcast bandwidth plus O(M) bits
+multicast bandwidth (Where h is the average number of remailer hops,
+expected to be a constant wrt U and M, smaller than U, and much smaller
+than M).
+
+  Chaum's DC protocol also assumes an _interactive_ speed multicast
+network.  Ouch!  The multicast internet protocol does help addresses
+this problem, but it isn't widely available.  IRC is perhaps a bit
+more expensize, more widely available, but lower bandwidth than
+multicast IP packets.
+
+> [...]
+> > Anonymity needs something fundamentally new, something comparable to public
+> > key for cryptography or blind signatures for digital cash. Suppose a server
+> 
+> I think you ought to carefully look at Chaum's work on Dining
+> Cryptographers. It does all this. (It ain't perfect, and it ain't been
+> implemented in practical terms, a la a "Pretty Good Dining
+> Cryptographers," but it's at least as basic a concept as the other
+> things are....some might say that all are variations on the same theme.)
+
+  Chaum's DC protocol achieves U way s/r anonymity for U times the
+work of sending a message.  Chaum's DC protocol provides s anonymity
+as conditional as the cryptosystem achieves privacy (i.e.
+uncomditional for one time pads, and dependant on 'strong
+cryptosystems' assumption for the 'conventional' DC net).  Like the
+repool protocol, it provides unconditional r anonymity.
+
+  The repool protocol achieves U way s/r anonymity for no more than h
+times the work of sending a message.  The repool protcol (by use of a
+pool) provides unconditional (U-way) r anonymity, but (due to using
+remailers) only provide conditional (U-way) s anonymity (conditional
+on there existing at least one trusted remailer in the chain, and on
+the existance of strong cryptosystems).  The repool protocol also
+suffers from TA attacks like those sugested by Wei (at least as
+currently implemented).
+
+  What we would like is for the work to scale sub-linearly (ideally
+exp(-U)) with the number of users U.  Said another way, we would like
+U to scale faster than linearly as a function of the work (ideally
+exp(W)).  If the effort of a protocol scales linearly (or worse) with
+U, I don't think it will become widely employed.  Even better would be
+a system which provided s/r anonymity without using multicast
+bandwidths at all.  Btw, what is the cost of multicast v.s. narowcast
+(say SMTP bassed) today on the net?
+
+  Noyb
+
+
+
+

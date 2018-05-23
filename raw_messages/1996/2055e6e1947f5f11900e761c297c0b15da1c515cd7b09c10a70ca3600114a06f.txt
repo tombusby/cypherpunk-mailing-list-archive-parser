@@ -1,0 +1,43 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Thu, 18 Apr 1996 15:42:45 +0800
+To: perry@piermont.com
+Subject: Re: why compression doesn't perfectly even out entropy
+In-Reply-To: <199604162134.RAA15579@jekyll.piermont.com>
+Message-ID: <199604172256.SAA09641@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Perry E. Metzger" writes:
+>> In the context of "fair coin flips" the text of Hamlet is NOT compressible.
+>
+>Huh?
+>
+>There is only one context in which things are compressable or not --
+>is there a smaller representation for them.
+
+Then I propose the following compression algorithm to compress your
+"random" one-time pad of 2 million bits with value k.  The algorithm
+will decompress the input bit "1" to k, and decompress the input bit
+"0" to the bit-string "10101010".  Therefore your "random" pad is
+compressible to exactly one bit, and is not "random" as you supposed.
+
+"Smaller representation" indeed.  The decompression *algorithm* must be
+accounted for in the "representation" of the compressed text, otherwise
+an arbitrary amount of information may be stored in the algorithm
+itself.
+
+Hamming codes offer a way to compress any bit stream.  They move
+whatever patterns they can find in independent 8-bit segments into the
+coding alphabet, and replace them with shorter strings.  If you don't
+save the alphabet, you can't decompress the stream, and have lost
+information that was originally in the stream.
+
+If an OTP generator accidentally chooses "Hamlet", big deal.  As long
+as your opponent believes that you have a good OTP generator he has no
+reason to try "Hamlet" before any other pad, so Hamlet's
+compressibility as english text is irrelevant.
+
+
+
+

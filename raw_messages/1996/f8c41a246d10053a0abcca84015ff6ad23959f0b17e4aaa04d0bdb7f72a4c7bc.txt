@@ -1,0 +1,43 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Fri, 9 Aug 1996 06:19:08 +0800
+To: cypherpunks@toad.com
+Subject: An SSL implementation weakness?
+Message-ID: <83952437618205@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The following weakness seems very obvious, I've got a partial writeup of this 
+but before I turn it into a paper or something and arrange a demonstration of 
+how it would work I thought I'd check to make sure (a) someone else hasn't 
+mentioned it before, and (b) it is actually possible (it seems too simple to 
+be true):
+ 
+1. Using DNS spoofing, stage a hostile takeover of an address (for example 
+   using bogus referrals set yourself up as the delegated server for a DNS 
+   subtree).
+2. Get a Verisign certificate for an arbitrary company and set up a bogus site 
+   at the stolen address.
+ 
+Lets say you steal www.megafoobarcorp.com.  People connect to this site (which 
+is actually your bogus site), Netscape (for example) displays the blue line 
+and non-broken key (which is actually for your J.Random certificate rather 
+than the real megafoobarcorp one) to show the connection is secure, and you've 
+just subverted their site.  
+ 
+The problem is that unless the user on the client side checks their 
+certificates (which noone does), all they're told is "A secure link is 
+established", not who the secure link is established to.  Even if browsers did 
+pop up a dialog to tell them who the secured connection was to, after about 
+the third time people would click on the "Never show this incredibly annoying 
+dialog again" option and never look at it again.     
+ 
+This effectively reduces an attack on an SSL-enabled server to an attack on 
+the DNS.  Is this as simple as it seems, and is it worth doing a writeup on?
+ 
+Peter.
+
+
+
+
+

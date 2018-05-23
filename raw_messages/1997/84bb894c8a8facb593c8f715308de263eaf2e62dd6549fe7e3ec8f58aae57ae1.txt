@@ -1,0 +1,29 @@
+From: Matthew Ghio <ghio@temp0108.myriad.ml.org>
+Date: Wed, 13 Aug 1997 04:36:10 +0800
+To: Ray Arachelian <sunder@brainlink.com>
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <199708121945.MAA16770@myriad.alias.net>
+Message-ID: <199708122027.NAA19252@myriad.alias.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> So if I wanted to do this and use RSA, how could it be shielded from
+> attack?  I take it switching to DH or MH won't help.   Would Eliptic
+> Curves have different properties against this attack?
+> 
+> Maybe a random session key in the middle would help?
+
+Using a salt would work.  DH would be okay if you used DH to exchange
+a different key with each recipient and then conventionally encrypted
+the message with that key.
+
+The point is that you need to use different (random) inputs to each P-K
+operation in order to avoid the possibility of ending up with a system
+of equations that could be solved.
+
+
+
+
+

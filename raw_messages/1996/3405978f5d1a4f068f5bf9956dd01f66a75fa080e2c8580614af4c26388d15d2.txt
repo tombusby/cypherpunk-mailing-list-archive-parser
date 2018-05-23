@@ -1,0 +1,39 @@
+From: jim bell <jimbell@pacifier.com>
+Date: Sat, 29 Jun 1996 12:56:06 -0700 (PDT)
+To: "Mark M." <Andrew.Tridgell@anu.edu.au
+Subject: Re: rsync and md4
+Message-ID: <199606291955.MAA11090@mail.pacifier.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:19 PM 6/29/96 -0400, Mark M. wrote:
+
+>> A first guess might be 2^-128 but I know that this sort of thing is
+>> rarely that simple. Is md4 that good?
+>
+>2^-64.
+>> 
+>> Note that I am not interested in "attacks" on md4 as such as the
+>> source of the random data is just another file provided by the same
+>> user, so it won't have been specially designed to defeat md4. 
+>> 
+>> If the probability is within a few orders of magnitude of 2^-128 then
+>> can I also be sure that if I only use the first b bits of a md4
+>> checksum it will be within a few orders of magnitude of 2^-b ? There
+>> is an option in rsync to use a shorter checksum by truncating
+>> md4. This saves some bytes on the link at the risk of lowering the
+>> confidence. 
+>
+>The probability of failure is 2^-(b/2).
+
+I don't think that's correct.  That would be the correct formula if I were 
+looking for two strings that happened to have the same hash value, but 
+that's not what he's asking for.
+
+Jim Bell
+jimbell@pacifier.com
+
+
+
+

@@ -1,0 +1,72 @@
+From: ab411@detroit.freenet.org (David R. Conrad)
+Date: Mon, 28 Aug 95 11:55:00 PDT
+To: cypherpunks@toad.com
+Subject: Re: Pre-allocating key segments
+Message-ID: <199508281854.OAA23029@detroit.freenet.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Piete Brooks <Piete.Brooks@cl.cam.ac.uk> writes:
+>I wrote:
+>> Not only that, but the client ought to allocate some keyspace before it
+>> needs it, as I think one other cpunk suggested.
+>
+>I'd prefer to keep the number of segments "lost" if a brloop ceases.
+
+Keep down, I guess you meant.
+
+Regarding the local farm software:
+>... if any keys were allocated to machines which failed to ask for another
+>segment -- you should assume that that segment was not searched.
+
+I agree that is the best policy -- it fails safe -- but I still think the
+prefetching of some more segments would be useful.  The goal is to suck up
+as many idle cycles as is practical.
+
+>> For instance, if it has
+>> four segments allocated and it's done three of them, it should fork a
+>> process to begin requesting four more segments *while* it is scanning
+>> the last segment, rather than waiting until after it is done and leaving
+>> the machine idle until it can alloc more keys.
+>
+>That means that if it crashes, 8 segments are left unACKed :-(
+
+And if it had grabbed 8 segments to begin with and crashed, it still
+would have been 8 segments left unACKed.
+
+Plus, it's only 8 segments unACKed if it crashes before it finished that
+last segment, since it will start trying to ACK the first four segments
+when it finishes the fourth -- at the same time starting on the next
+four segments.
+
+Would you see it any differently if I had said, "For instance, if it has
+two segments allocated and it is halfway through the second segment, it
+should request two more segments *while* it is scanning the last segment"?
+
+Keeping in mind that it will still ACK the first bunch of segments when
+it finishes them.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMEIOnBEcrOJethBVAQHUfQP+OUA+iC7sTp2CVCZ5YqtM7ouNykhyx7Nm
+agcTHN6FFZUOxDmAogiY/Op/SLBZbgtmACC3RSG0cEHwzCQJZ6jeUrTe9g3qU/Vm
+jHRn8PurOUYE188QnZSGEj0qcZbeoYJoLE4qOcrd7SbizIcZoWk/WVA4STZwEHuH
+wHHusza6Un4=
+=UOqi
+-----END PGP SIGNATURE-----
+
+--
+David R. Conrad, ab411@detroit.freenet.org, http://www.grfn.org/~conrad
+Finger conrad@grfn.org for PGP 2.6 public key; it's also on my home page
+Key fingerprint =  33 12 BC 77 48 81 99 A5  D8 9C 43 16 3C 37 0B 50
+Jerry Garcia, August 1, 1942 - August 9, 1995.  Requiescat in pace.
+
+
+
+

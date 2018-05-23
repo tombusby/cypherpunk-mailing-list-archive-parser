@@ -1,0 +1,42 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Thu, 17 Jun 93 08:32:17 PDT
+To: cypherpunks@toad.com
+Subject: fast des
+In-Reply-To: <19930616211451.5.TK@ROCKY.AI.MIT.EDU>
+Message-ID: <9306171528.AA29921@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Usually the limiting factor is examining the <ostensibly> decrypted data
+>for statistically significant patterns indicating that you have the
+>correct key.  
+
+If you know that your plaintext is 7-bit ASCII, then you can reject if
+you see too many 8th bits set.  Assuming that the size of your
+intercepted ciphertexts is generous, say ten blocks, then the
+likelihood of a false decryption which has all the 8th bits off is
+extremely small.  Hint for implementors: don't allow such easy bit
+correlations in your plaintext.
+
+In any case, the point of a DES cracker is to reduce the size of the
+space of probable decryptions, so that more computationally expensive
+statistical tests of possible plaintexts may be performed on a shorter
+list.  If your cracker can reduce the size of the probable keyspace by
+eight bits, then you can run, in parallel, tests which take 2^8 times
+as long.  For example, you may be able to reject many potential
+plaintexts from a CBC ciphertext stream after the first block; longer
+tests would look at a longer stream.
+
+This is where measures of n-gram distribution really come into their
+own.  These measures can distinguish between text types extremely
+finely, but are often expensive.  Nevertheless, they are highly suited
+to automation, particularly to distinguish between different languages
+and to recognize non-linguistic forms such as protocol encapsulations,
+object code, and compressed text.
+
+Eric
+
+
+
+

@@ -1,0 +1,41 @@
+From: monty.harder@famend.com (MONTY HARDER)
+Date: Mon, 24 Jul 95 01:36:40 PDT
+To: CYPHERPUNKS@toad.com
+Subject: Re: big word listing
+Message-ID: <8ADC4F8.000300024C.uuout@famend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+AS> >  <process-ID.clock@hostname>password
+AS> >
+AS> >and sends it to the server as "APOP username 58349485whatever89583449".
+
+AS> Of course, this requires the user password to be stored unencrypted on the
+AS> server; which you may not want to do.
+
+  Here's a variation, then: Instead of using process-id.clock to
+generate the random stuff for the challenge, have your own (P)RNG make
+up a bunch of them ahead of time, calculate the hashes, and store the
+challenges and hashes on the server.
+
+  The password file is kept encrypted, and only decrypted to run the
+above. You could even do the whole thing by remote access, making up a
+batch of id: pairs of challenge/repsonse on one machine, encrypt the
+thing and send it to the server via remailer chain.
+
+  The reason for the "stealth" bit is because the locus of control is
+moved to the remote machine, which may itself fall prey to attack. So,
+the supervisor needs to login as a Mere User (could have several
+accounts like this, and/or change them frequently) so as to not leave a
+trail of bread crumbs back to the cottage.
+
+
+
+ * Long, long ago, in a tagline far far away...
+---
+ * Monster@FAmend.Com *    
+
+
+
+

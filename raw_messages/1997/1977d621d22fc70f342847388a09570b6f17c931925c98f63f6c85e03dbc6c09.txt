@@ -1,0 +1,75 @@
+From: Hal Finney <hal@rain.org>
+Date: Thu, 2 Jan 1997 11:44:22 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Hardening lists against spam attacks
+Message-ID: <199701021834.KAA07300@crypt.hfinney.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think this is an interesting theoretical discussion, although it's
+not clear whether it is actually a good idea to try implementing this.
+
+From: nobody@replay.com (Anonymous)
+> A very good scheme, but why not give each subscriber a token when s/he
+> subscribes? Something along the lines of:
+>
+> - - - - - - - - - - - - - - - - - - - -
+> Welcome to Cypherpunks.
+>
+> Your unique token is: 0A553FC1771623109504522E31C07F44
+>
+> This token must appear either as the first line of the message body or in an
+> X-Token: header for any mail you send to the list. Any messages sent to the
+> list
+> address without this information will be discarded.
+> [...]
+> Bob wants to post something anonymously. His token isn't associated with his
+> user ID -- the only thing Majordomo knows about it is that it's in the token
+> file and it's flagged as active. He sends the message through the remailer
+> network with his token in it, and Majordomo validates it, strips it out, and
+> passes the message to the subscribers, decrementing the number of messages Bob
+> has remaining for that day.
+
+This requires Bob to trust the server to keep his identity secret.
+Although you _say_ that majordomo didn't associate the token with
+the userid, how does Bob know that?  Certainly majordomo did, when
+Bob subscribed, see the association between the userid and the token.
+Now he has to trust that it has been forgotten.  Even if it has, what
+about eavesdroppers on the list channel?  What about the operator on the
+machine, who is peeking at what majordomo is doing?  This mechanism will
+not provide enough anonymity for most posters.
+
+An alternative similar to what I proposed earlier is for majordomo to
+provide a blinded token, one which it doesn't see.  This would be used
+specifically for anonymous postings.  It does have the problem that it
+allows linking postings by the same pseudonymous nym - all will have the
+same token.  But maybe we want to encourage that.
+
+(The full proposal I made involved use-once tokens, just like online
+digital cash, so that there would be no linkage and it would allow
+real anonymity.)
+
+> Mallory wants to spam the list. He subscribes and gets a token, which he
+> uses to
+> forward commercial announcements to the list. The list manager checks the logs
+> to see which token was used, and reduces its posting limit or invalidates it.
+> Mallory is no longer allowed to post, unless his token is reinstated (or he
+> unsubscribes and resubscribes).
+
+This unsubscribe/resubscribe issue has been mentioned before as a problem.
+I am not too concerned with it, for a few reasons.  First, it may not be
+too difficult to recognize that it is happening.  If the same user name is
+used we can prevent issuing new tokens on an unsubscribe/resubscribe cycle.
+If different user names are used but common domain names (an attack which
+many people could mount) we could recognize that with somewhat more difficulty,
+and mark those domains as special.  Most people would have trouble getting
+lots of different accounts with different domain names.  Eric Hughes maxim,
+"all crypto is economics", applies here.  We can easily make it much more
+difficult for flooding attacks to occur.
+
+Hal
+
+
+
+

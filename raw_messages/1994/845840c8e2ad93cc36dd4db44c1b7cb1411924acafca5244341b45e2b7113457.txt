@@ -1,0 +1,77 @@
+From: nowhere@bsu-cs.bsu.edu (Chael Hall)
+Date: Sat, 2 Apr 94 16:42:12 PST
+To: sameer@soda.berkeley.edu (Sameer)
+Subject: REMAIL: standardized remailer syntax
+In-Reply-To: <no.id>
+Message-ID: <9404030053.AA25824@bsu-cs.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Sameer writes:
+
+>	Here's my suggestion..
+>
+>	Header pasting:
+>	The '::' header pasting syntax should be available-- i.e. when
+>a message comes into a remailer with a body starting with '::' the
+>lines following until a blank line are pasted into the header.
+>
+>	The '##' header pasting syntax-- when a remailer is sending
+>out a message, if the body begins with a '##' line then the lines
+>following that are pasted into the header of the outgoing message.
+>
+>	Header commands:
+>	"Anon-To","Request-Remailing-To": strips headers and sends the 
+>message to the specified recipient.
+
+     Both of my remailers (nowhere@bsu-cs.bsu.edu and
+remailer@chaos.bsu.edu) support all of the above as of 4/2/94.
+
+>	"Encrypted: PGP": The message has a pgp block encrypted with
+>the remailer's key. The remailer will decrypt the pgp block before
+>acting furthur upon the message.
+
+     Neither of my remailers supports encryption.  The bsu-cs one has too 
+small of a quota and I haven't compiled PGP for the chaos one yet.
+
+     I will write more later, but basically what you need to know is this:
+
+	1.  The bsu remailers no longer paste ANYTHING from a "::" header
+	    into the header of the outbound message.
+
+	2.  They both support the "##" header pasting syntax now.  The "##"
+	    block must come after the "::" block if both are being used or
+	    else the "::" block will be considered part of the body of the
+	    message.
+
+	3.  They also support multiple recipients.  You can place as many
+	    "Request-Remailing-To:" lines in the headers as you wish and
+	    it will individually address and send each one.
+
+	4.  Full debug logging has been turned on until I can verify that
+	    both remailers are acting as they should.  This form of logging
+	    includes a mirror of the message as it is received and a
+	    one-line message listing each recipient.
+
+	5.  The C source is available via anonymous FTP at:
+
+	    chaos.bsu.edu:/pub/cypherpunks/remailer/chaels-remailer.tar.gz
+
+	    It should compile as long as you have getopt().  There is no
+	    fancy signal processing in this version.  Note that there is
+	    nil documentation.  This is not a release.
+
+     Apparently my other posting got eaten somewhere between here and 
+toad...  Oh, well!
+
+Chael
+
+--
+Chael Hall
+nowhere@bsu-cs.bsu.edu	00CCHALL@BSUVC.BSU.EDU
+nowhere@chaos.bsu.edu	chall@bsu.edu
+
+
+
+

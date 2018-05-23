@@ -1,0 +1,40 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Tue, 23 Apr 1996 12:49:48 +0800
+To: "Karl A. Siil" <karl@geoplex.com>
+Subject: Re: DES as a stream cipher
+In-Reply-To: <2.2.32.19960422214547.006b636c@geoplex.com>
+Message-ID: <Pine.SOL.3.91.960423093853.1018F-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 22 Apr 1996, Karl A. Siil wrote:
+> As this sounds like a previously solved problem, I wanted to find out about
+> using DES (or any block cipher) as a stream cipher, i.e., in a manner that
+> keeps input and output data length equal. I don't want to use a true stream
+> cipher, as I want to use the same key for multiple messages and stream
+> ciphers tend to place the bulk of their overhead in the re-key. Since stream
+> ciphers have "memory," I would have to "re-key" to the same key for each of
+> my messages. I would rather key something like DES once and run it in CBC
+> mode or use some other form of IV.
+
+Have a look at cipher feed back mode.  I have functions I call cfb64 in 
+my DES library that give a 'single' character interface to cfb mode DES 
+using 64bit feedback.
+
+This should be what you want.  I also have a triple DES version of cfb64.
+In my SSL library also has cfb64 mode for IDEA.
+
+eric
+
+ftp://ftp/pub/Crypto/DES
+ftp://ftp/pub/Crypto/SSL
+http://www.psy.uq.oz.au/~ftp/Crypto
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

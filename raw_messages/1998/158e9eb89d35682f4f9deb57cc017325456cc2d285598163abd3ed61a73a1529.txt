@@ -1,0 +1,53 @@
+From: Jim Thompson <jim@smallworks.com>
+Date: Wed, 13 May 1998 00:48:08 -0700 (PDT)
+To: cryptography@c2.org
+Subject: [rivest@theory.lcs.mit.edu: Chaffing question]
+Message-ID: <199805130747.CAA18984@hosaka.smallworks.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+With all of the discussion of C&W, and potential expansion, along with
+a sideband discussion of same, I decided to ask 'the man' himself.
+
+The '10K email file' used in the example came from the sideband discussion.
+
+Forwarded for your edification.
+
+ ------- Start of forwarded message -------
+ Date: Tue, 12 May 1998 18:24:46 -0400
+ From: Ron Rivest <rivest@theory.lcs.mit.edu>
+ Subject: Chaffing question
+
+ Suppose you can start with a 10KB email file.
+
+ Running a package (all-or-nothing) transform on it adds only a small
+ amount to the length---say 128 bits total, or less (basically the length
+ of a key in your favorite algorithm).
+
+ You can break the result into 128 one-bit blocks and one 10KB block.  MAC
+ each block.
+
+ Add 128 bits of chaff, intermingled with the first 128 blocks from above.
+
+ The final result has 128+128+1 packets, and total length 10KB (the
+ original email) + 257*64 bits (for the 257 64-bit MAC values) plus 128
+ bits (the chaff bits), and assuming that the sequence numbers are
+ implicit rather than explicit, you get a total of around 12.3 KB.  
+
+	 Cheers,
+	 Ron
+
+ ------- End of forwarded message -------
+
+-- 
+Jim Thompson / Smallworks, Inc. / jim@smallworks.com  
+      512 338 0619 phone / 512 338 0625 fax
+Real, cheap Hardware RNG:  http://www.fringeware.com/nscd/
+
+
+
+
+
+

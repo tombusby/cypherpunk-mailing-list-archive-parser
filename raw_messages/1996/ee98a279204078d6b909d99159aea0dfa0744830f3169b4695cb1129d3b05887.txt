@@ -1,0 +1,49 @@
+From: David Mazieres <dm@amsterdam.lcs.mit.edu>
+Date: Mon, 22 Jan 96 10:51:25 PST
+To: "James A. Donald" <jamesd@echeque.com>
+Subject: Re: Why is blowfish so slow?  Other fast algorithms?
+In-Reply-To: <199601221601.IAA14610@mailx.best.com>
+Message-ID: <199601221851.NAA16938@amsterdam.lcs.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199601221601.IAA14610@mailx.best.com> "James A. Donald" <jamesd@echeque.com> writes:
+
+> From: "James A. Donald" <jamesd@echeque.com>
+> Date: Mon, 22 Jan 1996 19:56:43 -0800
+> X-From-Line: jamesd@echeque.com  Mon Jan 22 10:59:02 1996
+> X-Sender: jamesd@best.com
+> X-Mailer: Windows Eudora Version 2.1
+> Mime-Version: 1.0
+> Content-Type: text/plain; charset="us-ascii"
+> Lines: 32
+> 
+> At 02:00 AM 1/22/96 -0500, David Mazieres wrote:
+> >Failing that, can anyone suggest other secure, preferably unpatented,
+> >shared-key encryption algorithms that could encrypt at ethernet speeds
+> >(1 MByte/sec) without using most of the CPU on a fast Pentium or
+> >equivalent processor?
+> 
+> RC4 is of course unpatented and faster than anything else.
+> Of course the name RC4 is trademarked, so you could simply 
+> call it "the well known algorithm" in your documentation 
+> and give the algorithm explicitly.
+
+The problem with RC4 is that it works in OFB only.  If I need data
+integrity in the face of known plaintext, I will need to compute a MAC
+in paralell with the encryption which could significantly slow things
+down.  With a block cypher in CFB, I can just re-encrypt the last
+block of data.
+
+That said, OFB has the advantage that I can overlap computation of the
+RC4 stream with I/O, which might be a win for me.  Are there any MACs
+significantly faster than say ~50 cycles per byte?
+
+Thanks,
+David
+
+
+
+
+

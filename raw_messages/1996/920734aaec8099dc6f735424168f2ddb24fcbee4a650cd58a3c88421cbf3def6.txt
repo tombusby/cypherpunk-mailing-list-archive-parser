@@ -1,0 +1,52 @@
+From: "Frank O'Dwyer" <fod@brd.ie>
+Date: Sun, 7 Jan 1996 07:00:50 +0800
+To: "'cypherpunks@toad.com>
+Subject: RE: Revoking Old Lost Keys
+Message-ID: <01BADC1C.309CFE20@dialup-080.dublin.iol.ie>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Saturday, January 06, 1996 09:18, Timothy C. May[SMTP:tcmay@got.net] wrote:
+>At 7:07 AM 1/6/96, Bruce Baugh wrote:
+>>I'd like to bring up a problem I haven't seen addressed much yet, and which
+>>I think is going to come up with increasing frequency as PGP use spreads.
+>>
+>>The problem is this: how can one spread the word that an old key is no
+>>longer to be used when one no longer has the pass phrase, and cannot
+>>therefore create a revocation certificate?
+>
+>Basically, you are screwed. Any revocation you attempt will not be trusted,
+>as we will suspect the new "you" to be an attacker, perhaps an agent of the
+>NSA or the Illuminati. In the view that "you are your key," the old you no
+>longer exists.
+
+This is true, but the "old you" can be resurrected if you can get enough 
+people to believe your new key using any out-of-band means available
+to you.  You can also put a comment in your new key's uid explaining the
+problem and how to verify the new key. You will find it very hard to use this 
+new key for a while, though, during the transition period. Many people will take 
+the existence of two keys with the same uid as suspicious in itself, since it at 
+least indicates some kind of attack (even if only a denial of service attack).  
+This is really a usability flaw with current PGP.
+
+The PGP formats do allow for a 'revocation' certificate, but PGP doesn't
+implement it (yet, I guess).  In any case, it's not really strong enough, 
+since what it says is "I retract all my previous statements that this key is 
+related to this user".  This'd mean that you'd have to visit everyone who'd ever 
+signed your key and get them to issue this retraction. What would be needed 
+for this problem is either an "anti-certificate" ("This key does not belong to this 
+user"), or else some convention. For example, if two _trusted_ keys are found for the 
+same uid, the most recent one could be chosen, and the earlier one be purged 
+from keyservers, etc.  This may be possible with current PGP.  I haven't tried it, 
+but since I have some keys which have fallen into disuse, I will need to do so 
+sometime.).
+
+Cheers,
+Frank O'Dwyer
+fod@brd.ie                          http://www.iol.ie/~fod
+
+
+
+
+

@@ -1,0 +1,48 @@
+From: hfinney@shell.portal.com
+Date: Fri, 9 Jul 93 09:58:15 PDT
+To: cypherpunks@toad.com
+Subject: Re: Encrypted postings.
+Message-ID: <9307090322.AA03678@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Chris Claborne <claborne@ccgate.sandiegoca.NCR.COM>
+     Could we send our postings to the mailer in encrypted format?  That 
+     is... I would encrypt the message with the public key for the mailer, 
+     the mailer would decrypt and re-post to the clear-text mailer and to 
+     the PGP group.  
+
+You can already do this, in a way.  Just post to the list using one of
+the existing encrypted remailers like the one at extropia (or the one
+at portal, for that matter).
+
+You need to put:
+
+::
+Request-Remailing-To: cypherpunks@toad.com
+Subject: <your subject here>
+
+And a blank line at the top of your message, encrypt the whole thing
+with the public key of the remailer, and add:
+
+::
+Encrypted: PGP
+
+and a blank line to the PGP file just before the "-----BEGIN PGP MESSAGE-----"
+line.
+
+There are some scripts on the cypherpunks ftp site (soda.berkeley.edu,
+/pub/cypherpunks/remailer) to automate this process.
+
+The one disadvantage with this approach is that the source of the message
+(namely, you) gets stripped off.  We might want to think about changing our
+remailers to have a non-anonymous remailing command as well as an anonymous
+one.  This way you could have "local" privacy from any sysop who snoops on
+your mail going out, while still making it easy for people to reply to you.
+
+Hal 
+
+
+
+

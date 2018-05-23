@@ -1,0 +1,177 @@
+From: wichita@cyberstation.net
+Date: Wed, 11 Dec 1996 01:54:03 -0800 (PST)
+To: Eric Murray <ericm@lne.com>
+Subject: Re: IPG algorithim
+In-Reply-To: <199612010021.QAA14426@slack.lne.com>
+Message-ID: <Pine.BSI.3.95.961211035154.11832J-100000@citrine.cyberstation.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Everything is still screwed up. The As, Bs and Cs are selected in much the
+same fashion as LOTTO numbers except that the pools are much larger and
+order is significant. They are not random, that would never work.
+
+
+
+On Sat, 30 Nov 1996, Eric Murray wrote:
+
+> 
+> Igor Chudov @ home writes:
+> > 
+> > [This is an addition to my previous reply to Eric]
+> > 
+> > It bugs me that you are using rand() (a fairly lame pseudo-random
+> > function that was never intended to be used in cryptographic
+> > applications) to seed A, B, C and JV and then test the A(JV) for
+> > randomness. Some may object to that.
+> 
+> Yea, you're right, rand() is lame.
+> 
+> I added /dev/random to my Linux box and changed my small test to use it.
+> I also changed the way that I use JV- I had been setting it to a random
+> value for each trip through the "engine", but since I beleive that
+> its value can't really be random (if you want to be able to have someone
+> decrypt your stuff :-) but must be exchanged in the key, I set it
+> to a random value once and then let it float.  It's also a lot faster
+> that way, /dev/random is pretty slow (because it's looking for real
+> random material).
+> 
+> My results from xnoisesph were wrong- xnoisesph wants random bytes
+> instead of random integers in ascii format as I was producing.
+> Changing it (as I have below) makes the xnoisesph output look
+> much better, but it still isn't all that random.  The random seed generators
+> I have written that get their randomness from repeated calls
+> to high-resolution timers and hashes of system log files do better.
+> I also fixed a minor bug in arg processing.
+> 
+> 
+> 
+> 
+> 
+> 
+> #include <stdio.h>
+> #include <fcntl.h>
+> 
+> /* a C translation of the IPG "EUREKA" algorithim's "engine".
+> ** This is supposed to produce random numbers for the IPG
+> ** "encryptor stream".
+> ** See http://www.netprivacy.com/ for the original description.
+> ** Eric Murray  ericm@lne.com  This code placed under GNU copyleft. 
+> ** V0.2 */
+> 
+> typedef unsigned char byte;
+> typedef unsigned short uint16;
+> 
+> 
+> /* tables: */
+> uint16 A[53];
+> uint16 B[53];
+> uint16 C[53];
+> 
+> 
+> #ifndef NO_DEV_RANDOM
+> uint16 getrand()
+> {
+> 	uint16 ret;
+> 	int fd = open("/dev/random",O_RDONLY);
+> 	if (fd <= 0) {
+> 		perror("/dev/random"); exit(-1);
+> 	}
+> 	read(fd,(unsigned char *)(&ret),sizeof(ret));
+> 	close(fd);
+> 	return(ret);
+> }
+> #else
+> /* do something appropriate for your OS here, rand() is lame. */
+> #define getrand rand
+> #endif
+> 
+> 
+> int init_table(uint16*table, uint16 min, uint16 max)
+> {
+> 	/* IPG specifies no algorithim for producing the "random"
+> 	** initial values in the ABC tables, but it's obvious that
+> 	** it requires a PRNG that's somehow seeded from the "key".
+> 	** I've used /dev/random here, so there's no question that
+> 	** I'm starting out with pretty good random values. */
+> 	int i;
+> 	int count, r;
+> 
+> 	for(i = 0; i < 53; i++) {
+> 		table[i] = min + (getrand() % (max - min));
+> 	}
+> }
+> 
+> main(int argc, char **argv)
+> {
+> 	uint16 jv;
+> 	int argcnt, i, n, count, diehard, nelem;
+> 
+> 	diehard = 0;
+> 	argcnt = 1;
+> 	if (argc >= 2) {
+> 		if (strncmp(argv[argcnt],"-d",2) == 0) {
+> 			diehard++;
+> 			argcnt++;
+> 		}
+> 	}
+> 	if (argc > argcnt - 1 ) {
+> 		n = atoi(argv[argcnt]);
+> 		fprintf(stderr,"Generating %d values\n",n);
+> 	}
+> 	else {
+> 		n = 2000;
+> 	}
+> 
+> 	/* seed tables: */
+> 	fprintf(stderr,"Seeding:  A");  fflush(stderr);
+> 	init_table(A,0,65535);
+> 	fprintf(stderr," B");  fflush(stderr);
+> 	init_table(B,0,12227);
+> 	fprintf(stderr," C");  fflush(stderr);
+> 	init_table(C,16384,20361);
+> 	fprintf(stderr,"\n");  fflush(stderr);
+> 
+> 	/* generate n values: */
+> 	/* jv is "random" (where's it seeded from?) */
+> 	jv = (uint16)(getrand() % 53);
+> 	for(; n > 0; n--) {
+> 
+> 		/* count limits the number of traverses to 53^2 so we don't get stuck */
+> 		/* 2809 is actually too low per Chudov:
+> 		** "For example, if ALL B == 1, A == 16385, and C == 20361, the
+> 		**  loop may need (20361-16385) passes to get to the < 16384 value."
+> 		*/
+> 		for(count = 0; count < 2809; count++) {
+> 			jv++;
+> 			if (jv == 53) jv = 0;
+> 			A[jv] = (A[jv] + B[jv]) % C[jv];
+> 			if (A[jv] < 16384) break;
+> 		}
+> 		if (count == 2809) fprintf(stderr,"Oops.\n");
+> 		else {
+> 			if (!diehard) {
+> 				write(1,(unsigned char *)&A[jv],sizeof(uint16));
+> 			}
+> 			else {
+> 				/* print output in DIEHARD required format:
+> 				** actually since we have 16-bit ints and DIEHARD
+> 				** wants 32-bit ints, we print 20 per line instead of 10 */
+> 				if (nelem++ > 19) {printf("\n"); nelem = 0;}
+> 				printf("%4.4x",(unsigned int)A[jv]);
+> 			}
+> 		}
+> 	}
+> }
+> -- 
+> Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+> PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+> 
+
+
+
+
+

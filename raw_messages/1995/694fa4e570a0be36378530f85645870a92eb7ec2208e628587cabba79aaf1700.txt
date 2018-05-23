@@ -1,0 +1,33 @@
+From: Andy Brown <asb@nexor.co.uk>
+Date: Thu, 27 Jul 95 02:44:49 PDT
+To: cypherpunks@toad.com
+Subject: Re: Encrypting block driver for Linux...need some advice
+In-Reply-To: <Pine.LNX.3.91.950726091131.129A-100000@comet.aeinet.com>
+Message-ID: <Pine.SOL.3.91.950727104038.17605B-100000@eagle.nexor.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 26 Jul 1995, Johnathan Corgan wrote:
+ 
+> Another, more crypto related question--how to deal with IV's?  Right now,
+> I'm using 512 byte sectors with CBC.  For each sector, the IV is the
+> sector number.  This frustrates the known plaintext attack issue, but I'm
+> not sure if such a simple scheme is really effective.  Probably not.
+
+Your scheme should be OK.  If you'd chosen the same IV for each sector 
+then identical sectors would encrypt the same.  If I remember rightly 
+then having a known IV only affects the security of the first block, 
+after that the ciphertext chaining comes into effect.
+
+
+- Andy
+
++-------------------------------------------------------------------------+
+| Andrew Brown  Internet <asb@nexor.co.uk>  Telephone +44 115 952 0585    |
+| PGP (2048/9611055D): 69 AA EF 72 80 7A 63 3A  C0 1F 9F 66 64 02 4C 88   |
++-------------------------------------------------------------------------+
+
+
+
+

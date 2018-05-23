@@ -1,0 +1,83 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 14 Dec 1997 08:32:37 +0800
+To: rfarmer@HiWAAY.net
+Subject: profit from spammers (Re: hashcash spam prevention & firewalls)
+In-Reply-To: <Pine.OSF.3.96.971213120112.17974C-100000@fly.HiWAAY.net>
+Message-ID: <199712132332.XAA03725@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Randall Farmer masquerading as Joe <rfarmer@HiWAAY.net> writes:
+> > What's the difference between this and simply keeping track of how many
+> > messages each user sends in a 24 hour period and blocking people who are
+> > obviously spamming?
+> 
+> Spammers don't have to appear to be the same person every time, nor
+> do their messages have to be identical or even similar, so blocking
+> of that kind can be worked around fairly easily -- at least more
+> easily than hashcash.
+
+I think Phelix was probably viewing it from the point of view if "what
+if all ISPs turned off non subscriber mail forwarding at their SMTP
+hubs"?
+
+Well that would work clearly enough.  However I think there are a
+number of technical problems to acheiving this.  Firstly SMTP does not
+include authentication.
+
+Secondly doing so reduces flexibility and many users use multiple
+ISPs, forward their mail to various places, etc., and this kind of
+stuff gets in the way.
+
+Really we I think should be discouraging the control freak "positive
+identification to use this port" syndrome such as the ident fuck up,
+(Ident is a dumb method of identifying who is on the other end of a
+socket on a unix box.  It opens up a socket to the ident port on the
+originating machine, and asks who is on socket x port y?  The machine
+can determine this from local OS tables, and sends the info back.
+This works if the user does not have root on the machine.  Fortunately
+this snoopy bastardised protocol is not doing so well these days
+because there are more and more people who have root on their own
+machines, and because there are so many windows machines which don't
+know what a protected port number is.  This is good because Ident
+sucks.) and moving instead towards, "who cares you are so long as you
+can't overload my machine".  Moving longer term towards "who cares who
+you are so long as I profit from your connecting to this port" aka
+charge for port access with payer and payee anonymous ecash.  Then
+everyone is welcome to use anywhere as a mail forwarding service --
+spam becomes welcomed, and encouraged, too much custom and too low
+bandwidth discouraging customers, the ISP will use the profits to
+purchase a few more T3s.
+
+Hashcash is the interim solution.
+
+In the interim it is a fact of life that there are many many open SMTP
+forwarding hubs.  The lack of software to configure them otherwise,
+and inertia will ensure things remaing this way for some time.
+
+Hashcash cuts out spam to your site (if you are an ISP), or to your
+mailbox (if you are a user) even in an environment of an almost
+unlimited supply of open SMTP hubs, and disposable ISP accounts,
+because it puts the onus on the sender to consume more resources than
+you.
+
+Authenticated the hell out of your ISP's SMTP as a forwarding hub
+won't prevent your users getting spammed to death, nor will it reduce
+the overall spam problem much because the spammers will just use one
+of the other open SMTP servers.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

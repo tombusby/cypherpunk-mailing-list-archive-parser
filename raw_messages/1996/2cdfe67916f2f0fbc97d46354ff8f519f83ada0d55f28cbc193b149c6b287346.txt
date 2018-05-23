@@ -1,0 +1,35 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Fri, 24 May 1996 08:47:01 +0800
+To: trei@process.com
+Subject: Re: ecash representation
+In-Reply-To: <199605231726.NAA17935@linet02.li.net>
+Message-ID: <199605231858.OAA26827@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"Peter Trei" writes:
+> Back in the mid-80's, I worked for several years at Irving Trust, 
+> a (now-gone) major money center bank. One of the financial 
+> messaging systems I worked with stored currency amounts
+> as 96-bit vectors of a base unit (eg, a penny), and 
+> could have a 'binary point' anywhere in the vector. There were
+> the usual math functions available to handle this data type.
+
+Sounds like the usual fixed point hack used for manipulating and
+storing money. Most systems I've seen use things like this.
+
+Floats have all sorts of defects, like not conveniently indicating to
+you the point at which they start dropping precision. A float doesn't
+care that it just started dropping vast amounts of the precision in
+some calculation where you are unfortunate enough to have done the
+order of operations wrong. At that point, a hack will have kept its
+precision or will indicate overflow, but floats blythely keep on
+going. This leads to very unpleasant problems down the road.
+
+Perry
+
+
+
+

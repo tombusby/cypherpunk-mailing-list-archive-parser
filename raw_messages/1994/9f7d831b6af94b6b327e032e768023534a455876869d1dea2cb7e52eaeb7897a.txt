@@ -1,0 +1,46 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Fri, 3 Jun 94 09:21:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: Black Eye for NSA, NIST, and Denning
+Message-ID: <9406031620.AA23064@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry writes:
+> > However, it can be done in advance, and you can conceivably reuse
+> > forged LEAFs.
+> 
+> I will point out something that I didn't quite understand myself but
+> have since discussed with Matt Blaze in some detail -- LEAF checksums
+> are tied to session keys. You CAN do this in advance but only if your
+> key exchange will permit you to generate your session keys in advance, too
+> Obviously, reusing forged LEAFs requires reusing session keys.
+
+More precisely, as Steve's summary pointed out, it's tied to the IV,
+which is tied to the session key.  (It makes sense - assuming the 
+descriptions of the LEAF contents are true, the only session key
+component in the LEAF itself is encrypted with the chip-unique backdoor key,
+and tying it to the IV accomplishes key-dependence, though they could
+also use the session key externally from the LEAF.)
+
+Unfortunately, most Clipperphones will probably use Diffie-Hellman 
+key exchange, since it reduces or eliminates the need for prearranged
+public-key management (depending on whether they're using radio or
+a medium that can be actively wiretapped), so precomputation will generally
+not be usable.  I suppose some crude Diffie-Hellman implementations
+might always use the same half-key for every conversation,
+rather than generating a random one each time, and you could
+precompute session keys for talking to them.
+
+For email applications, however, most standards will probably use
+sender-generated session keys, so it would be simple enough to
+make secure Tessera mailers if you don't worry about 
+subliminal channels in the hash.
+
+		Bill
+		
+
+
+
+

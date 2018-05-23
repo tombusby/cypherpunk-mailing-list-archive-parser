@@ -1,0 +1,60 @@
+From: hroller Mixmaster <hroller@c2.org>
+Date: Wed, 30 Aug 95 18:47:02 PDT
+To: mix-l@jpunix.com.cypherpunks@toad.com
+Subject: Mixmaster Security Issues
+Message-ID: <199508310117.SAA20828@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Apart from thwarting traffic analysis attacks, how does the security
+of a Mixmaster Type II remailer packet compare to that of a
+PGP-chained Type I message?
+
+For example, is each remailer in the path limited to knowing only
+the next remailer in the path?  Is there any way for a remailer
+(except for the first and last in the chain) to know how many hops
+have already occurred or how many remain?  Is there a session key
+chosen via an RNG?  If so, how random is the RNG?  Is it seeded from
+a pseudo-random source that's at least as secure as measuring
+keystroke latencies, as PGP does?
+
+Lance Cottrell's original "remailer essay" which proposed the Type
+II concept envisioned, if I'm not mistaken, the use of PGP
+technology to do the actual encryptions.  Now it seems that another,
+seemingly proprietary, implementation of RSAREF was used, instead.
+What was the reason for this change?
+
+Would any security be lost if Type I and II technology were combined
+and a PGP-chained Type I packet were initially sent via Mixmaster?
+This would would seem to provide the necessary protection against
+traffic analysis while bypassing any *POSSIBLE* hidden weaknesses in
+Mixmaster.  IOW, if the outer Mixmaster "envelope" were "steamed
+open", perhasps based on some hidden weakness in Mixmaster, the
+inner, nested PGP envelope(s) would remain intact.
+
+BTW, what volume of message traffic is the Mixmaster network of
+remailers currently handling?  Is much cover traffic necessary to
+minimize delays while providing enough reordering to thwart traffic
+analysis?  (IOW, so a remailer with a reordering pool size of five
+messages, and averaging one REAL message a day, wouldn't have to
+keep a message for an average of five days before sending it on its
+next hop, as a worst-case scenario).
+
+Is my math correct in surmising that chaining a message through five
+remailers, each with a reordering pool of five messages, could mean
+that the message eventually leaves the chain as one of 5^5 (3125)
+possible messages?  (My math is a bit weak, so please feel free to
+correct my methodology, if necessary.)  If so, does that work in
+reverse?  Could a given output message that finally surfaced in the
+clear be narrowed down to one of 3125 Mixmaster input messages
+through traffic analysis?  Or would the fact that the attacker
+didn't know the exact number of hops utilized significantly increase
+the odds against identifying the sender?  What effect, if any, would
+increasing the number of available remailers have on traffic
+analysis?
+
+
+
+
+

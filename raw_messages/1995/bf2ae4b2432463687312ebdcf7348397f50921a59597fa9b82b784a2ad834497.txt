@@ -1,0 +1,110 @@
+From: attila <attila@primenet.com>
+Date: Sun, 19 Nov 1995 02:26:35 +0800
+To: cypherpunks@toad.com
+Subject: Re: Design proposal: crypto-capable generic interface
+In-Reply-To: <199511181441.JAA02040@homeport.org>
+Message-ID: <Pine.BSD.3.91.951118163828.463A-100000@usr3.primenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 18 Nov 1995, Adam Shostack wrote:
+
+> Raph Levien wrote:
+> 
+> |    I propose that the new interface lives as a sort of daemon, rather
+	[snip]
+> | 
+> 
+> 	A daemon per user, or per machine?  Either way, I think you
+> run into problems on a big multi-user machine.  (Either its an extra
+> process or two per person, or its a great target for attack &
+> subversion.
+> 
+        _anything_ that has open access on a piece of hardware is a point
+     of intrustion --sendmail for instance, or open password files, etc. 
+     the issue is trading off risks to _maximize_ security and 
+     impenatrable access.
+
+        even assuming we were to post 100% of the source code, a
+     translation daemon is a _translation_ model --even if it is capable
+     of translating pgp, garbage in equals nothing out...
+
+        one of the biggest problems with _any_ crypto system, and pgp is 
+     no exception, is tmp files, followed closely by insecure memory.
+     insecure memory is a separate issue, but some of the temporary file
+     problems can be relegated to reduced risk by passing the daemon the
+     user's preferred location for tmp file --for instance, on any net
+     access machine, I globally specify TMP, TEMP, etc to a local tmp
+     directory which is at least somewhat safer than public tmp files.
+     obviously, you expect the daemon to wipe clean each memory block 
+     before it free()s it --I's sure we all have routines handy for that.
+
+        presuming the daemon is constructed so it can only respond to its
+     current process owner, this leaves the security problem of swapping 
+     in a daemon which also responds to an interloper --and this same risk
+     applies to a libppg or a .dll file (more so to a .dll file) to an 
+     even greater degree.  However, if a daemon is swapped, the system has
+     a more _serious_ problem with the system administrator, not the
+     daemon.
+
+        if the IPC strings are intercepted in the daemon initializtion, 
+     again we have a basic hardware and system security problem.
+
+     Even If Ralph Levian believes daemons are serious risk problems 
+     (which they can be if not properly implemented), I do not agree that 
+     the libppg() or .dll offer anything additional.  I dont presume to 
+     believe that anything is safe anyway, just safer than the alter-
+     native.
+
+        NB:  _nothing_ should ever be assumed secure! 
+
+             assumption is fuckup's mother.  
+
+        one must hope to have considered every possible line of attack, 
+     and a few which have not been conceived, which goes back to our
+     cypherpunk "credo" which says that private standards are not safe
+     --let's all have at it --even if we break it, there probably is a way
+     to block the attack, we just did not block it or consider it the
+     first time,
+     
+        I have been playing with all three approaches, and I keep going 
+     back to the daemon despite the fact it is not portable to the brain
+     dead. 
+
+             I don't know if W95 permits daemons as I have ignored MS
+             for a number of years --if I can not run as many processes
+             as I want without some MickeySoft program blowing away a
+             day's work.... I prsume NT will run 'em, and maybe the 
+             next release of NT will be more useable, more secure, and
+             more stable.
+
+        Since pgp() has been pulled from crypto10, I need to modularize 
+     pgp to a pgp() and include the relevant goodies such as MIME and its 
+     variations.  And, of course, we need all the "we do it here" types to
+     buy into a standard interface.
+
+        And, to add fuel:  the module needs the ability to encode and 
+     place clear text into a MIME format specified by the calling program.
+
+> 	Its an interesting proposal, but let me ask you this--Why is
+> it better than a libpgp (or pgp.dll) that offers a variety of services
+> to programs at multiple levels (ie, offers full one call RSA/IDEA
+> encryption and compression, as well as ascii armoring, or offers each
+> of those as a seperate function.
+> 
+	not necessarily better. but a valid approach IMHO.  I for one 
+     think it would be easy enough to sell IAPs on a daemon.
+
+> 
+> 
+> 
+> -- 
+> "It is seldom that liberty of any kind is lost all at once."
+> 					               -Hume
+> 
+
+
+
+
+

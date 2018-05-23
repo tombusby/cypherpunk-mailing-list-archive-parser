@@ -1,0 +1,54 @@
+From: Johnathan Corgan <jcorgan@scruznet.com>
+Date: Fri, 23 Dec 94 15:03:12 PST
+To: cypherpunks@toad.com
+Subject: Re: GUI: PGP vs novices
+Message-ID: <Chameleon.4.01.941223150330.jcorgan@jcorgan.sj.scruznet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>There is also the problem that a number of applications (such as Internet in 
+>a Box) require there own Winsock to make connections to the Internet. If you 
+>replace the Ibox winsock with another, when you run the programs they will 
+>no longer call the dialer to dial into the Internet. I believe the same 
+>holds true for Trumpet.
+
+I only have familiarity with the commercial Netmanage Chameleon Winsock
+implementation.  Someone else had let me know about this potential 
+difficulty.  Apparently some Winsock stacks only provide a WINSOCK.DLL for
+3rd party compatibility, i.e., their own applications talk to proprietary
+hooks into their stack for performance or other reasons.  Netmanage's products
+do both; they perform their network I/O through WINSOCK.DLL, but also use
+a variety of shared library functions supplied with the rest of the stack.  In
+this case, my WINSOCK.DLL shim works fine.  Remember, I'm not replacing a
+given implementation's DLL, just intercepting and passing through calls to
+it.  So as long as a mail application uses exclusively standards based
+Windows Sockets API calls _to perform network I/O_, my product should work.
+
+YMMV, of course :)
+
+=======================================================================
+Johnathan Corgan       "Violence is the last refuge of the incompetent"
+jcorgan@netcom.com                       -Isaac Asimov
+PGP Public Key:        http://www-swiss.ai.mit.edu/~bal/pks-toplev.html
+Or send email to:      pgp-public-keys@pgp.ai.mit.edu Subj: GET jcorgan
+=======================================================================
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLvtW4k1Diok8GKihAQEjngP7BRUatySeVmJ2SvDLycMYtCTh5obyvAZ4
+nLxhP69VUCs1LprfMVWIsL46WsS/neiVpf3Wor0T/kzLrb0s/0m3a8+GQhdz7te9
+NRQbJGfJG57KR1yCBHMk2/HSDjVR0daCQVQCcJFTqw2aOXfWo6x20ZZqQvR1N2Ju
+U57UIG9BRG4=
+=Xm6z
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

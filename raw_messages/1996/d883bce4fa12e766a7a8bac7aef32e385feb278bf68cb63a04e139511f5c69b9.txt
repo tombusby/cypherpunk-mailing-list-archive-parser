@@ -1,0 +1,42 @@
+From: Derek Atkins <warlord@ATHENA.MIT.EDU>
+Date: Sun, 21 Jan 1996 17:19:12 +0800
+To: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Subject: Re: A weakness in PGP signatures, and a suggested solution
+In-Reply-To: <DFiVHD23w165w@bwalk.dm.com>
+Message-ID: <199601180344.WAA26221@charon.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 2. When PGP verified the signature, it should have an option to look outside
+> the signed portion for RFC 822 headers and compare them to the signed copy
+> of he headers inside. If this is not in PGP, then then function would have to
+> be done by some non-portable wrapper.
+> (Of course, if your headers aren't RFC 822, you're out of luck.)
+
+How?  PGP has no idea what is around the PGP message.  Also, the PGP
+armor is, by definition, not a cryptographic manipulation, rather it
+is just a tool for convenience.  The Armoring done by PGP could just
+as easily be done by MIME or UUEncode; the functionality is just the
+same as far as PGP is concerned.  The only difference is for the user,
+who knows that "BEGIN PGP MESSAGE" means feed this data to PGP rather
+than feeding it to some other program.
+
+PGP really only looks at the contents between the BEGIN and END.  It
+can't do anything else.  In fact, only the PGP Armor code even deals
+with that.  By definition, PGP is a binary protocol and deal with
+binary data objects.  So how can it look at any "RFC 822 Headers"?
+There are no such animals in PGP.  It is perfectly legal to remove all
+data before the BEGIN and all data after then END and feed the result
+to PGP...
+
+As I said, armor is a convenience to the user only.
+
+PGP will not be modified in this way; it is the job of the mailer
+(MUA) to do this sort of thing.  Sorry.
+
+-derek
+
+
+
+

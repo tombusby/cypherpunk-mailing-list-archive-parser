@@ -1,0 +1,53 @@
+From: Bill Sommerfeld <sommerfeld@orchard.medford.ma.us>
+Date: Tue, 13 Sep 94 08:13:32 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: alleged-RC4
+In-Reply-To: <199409130605.XAA24133@jobe.shell.portal.com>
+Message-ID: <199409131449.KAA00544@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Since I haven't seen a statement by anyone who I would believe that
+this is, in fact, RC4, I'm calling it "Alleged-RC4"..
+
+Actually, all the %256 operations in the code are superfluous on
+8-bit-byte platforms since the indices are declared as `unsigned
+char'.
+
+There are two interesting features in this alleged-RC4 which clearly
+put it above the typical xor-based homebrew cypher..
+
+ 1) the "pad" is maintained as a permutation of 0..255, so the output
+should always have a close-to-uniform distribution of output values.
+
+ 2) the operations which stir the "pad" all have two counters: one (x)
+which increments by 1 each time, and one (t) which moves in a way
+dependant on the "pad" values.  The x counter guarantees that all
+bytes in the pad get shuffled with roughly equal frequency, so you're
+less likely to get stuck in a shorter-length cycle.  The y counter
+moves in a "chaotic" data-dependant way, and each slot in the pad
+affects its stepping in turn.
+
+Probably the only potential weakness I can see is that the `x' and `y'
+counters are always initialized to zero when starting off; this means
+that an attacker can almost always know the `x' value used to encrypt
+each byte of cyphertext they find.  I can't see any way to exploit
+this, though.  It would seem that you could (slightly) strengthen the
+cipher by starting with x=state[0] and y=state[1], then cranking the
+key generation loop for two more iterations..
+
+The fact that the NSA allows export of this cipher (albeit with keys
+limited to 40 bits) is interesting.. unlike DES, the alleged-RC4's key
+setup does not appear to be particularly parallelizeable.  A
+fully-pipelined alleged-RC4 key breaker would require 256 stages of
+key setup followed by n stages of "encryption" (with ~2k bits of state
+per stage).  This is significantly more complex than the 16-stage
+pipeline with ~128 bits of state per stage in the pipelined
+DES-breaker.
+
+					- Bill
+
+
+
+

@@ -1,0 +1,41 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Mon, 28 Aug 95 09:55:44 PDT
+To: ab411@detroit.freenet.org
+Subject: Re: Pre-allocating key segments
+In-Reply-To: <199508281410.KAA16345@detroit.freenet.org>
+Message-ID: <"swan.cl.cam.:184040:950828165514"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> If the client is unable to retrieve a block from the server, I suggest
+>> it just picks a random block and starts working on it. I may very
+>> well not be allocated to someone else, and then the client was able
+>> to do something good in the meantime even though it didn't get a
+>> proper key alloc. 
+> Not only that, but the client ought to allocate some keyspace before it
+> needs it, as I think one other cpunk suggested.
+
+I'd prefer to keep the number of segments "lost" if a brloop ceases.
+
+I have written a "local CPU farm" caching server which runs on a robust
+machine and grabs chunks from the root server and farms them out to local
+machines (running as the same "ID").
+This logs all the client transactions so that you can work out if any keys were
+allocated to machines which failed to ask for another segment -- you should
+assume that that segment was not searched.
+
+With the Big Boys using that, and better code, I hope that server congestion
+will not be a problem.
+
+> For instance, if it has
+> four segments allocated and it's done three of them, it should fork a
+> process to begin requesting four more segments *while* it is scanning
+> the last segment, rather than waiting until after it is done and leaving
+> the machine idle until it can alloc more keys.
+
+That means that if it crashes, 8 segments are left unACKed :-(
+
+
+
+

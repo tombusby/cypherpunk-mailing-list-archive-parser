@@ -1,0 +1,34 @@
+From: VaX#n8 <vax@linkdead.paranoia.com>
+Date: Sat, 4 May 1996 23:33:58 +0800
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: encrypted Unix backup software
+In-Reply-To: <199605030425.XAA05924@primus.paranoia.com>
+Message-ID: <199605031253.HAA09103@linkdead.paranoia.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <199605030425.XAA05924@primus.paranoia.com>, Bill Stewart writes:
+>>Although I could probably hack up "catblock" to do the job, and use
+>>a line of the form
+>>dump -0uBf ... | symmetric_cipher | catblock blockfactor > /dev/tape
+
+>Yup [agrees on cmdline]
+>You don't need to write "catblock", though - there's the "dd" command
+>designed for just such applications...
+>Newer versions may handle multiple tapes a bit better.
+
+Hmm, I've got this a few times from people and I just wanted to clear
+up a few points.
+1) BSD dd doesn't treat EOT specially:
+   /* ... If a partial write, and it's a character device, just warn.
+          If a tape device, quit. ... */
+   GNU dd (from what I remember) doesn't, either.
+2) "dd" will only work safely across all tape types and all size pipes
+   using the degenerate form "dd ibs=1 obs=(your_bf_here) conv=sync ...".
+
+I'll hack up catblock today.  Who says we don't code :)
+
+
+
+

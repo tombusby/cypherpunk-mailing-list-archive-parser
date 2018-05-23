@@ -1,0 +1,172 @@
+From: everheul@mail.rijnhaave.nl
+Date: Sun, 13 Oct 1996 03:51:00 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: RE: RE: Binding cryptography - a fraud-detectible alternative to
+Message-ID: <199610131050.LAA28296@mail.rijnhaave.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To  explain the backround of "binding cryptography" once more; with
+respect to (interoperable, worldwide) security in the information
+society socities/governments have to achieve two tasks: 1. 
+stimulating the establishment of a security structure that protects
+their citizens, but which does not aid criminals. 2. Coping with the
+use of encryption by criminals outside of this framework.
+
+An inherent problem with these tasks is that different
+socities/governments have different views on the matter. So to achieve
+the first task you'll need a concept behind the security structure
+that is flexible enough to incorporate *any* crypto policy, i.e. from
+liberal (Japan) to non-liberal (France). We believe that  "binding
+cryptography" is flexible enough to achieve this: a liberal crypto
+policy might use no Trusted Retrieval Parties at all, while a very
+non-liberal country might want one (government controlled) TRP, a
+compliance check on all network traffic and a ban on other crypto.
+With binding cryptography the issue on a crypto policy becomes
+non-technical and politically debatable: which features does a country
+want and what implementation?
+
+Adam Back[SMTP:aba@dcs.ex.ac.uk] wrote:
+> This much is the same as clipper I, just the parties have been
+> renamed (TRP = split escrow key database holders, TTP = US
+> government).  
+No it is not. Among other things: it is a international solution, it
+is based on Pub. Key. Enc. and it is flexible enough to follow
+private-sector developments. It is not a key-escrow solution, as *you*
+have (in principle) a very large choice in who to trust with your
+communication.
+
+Hal Finney[SMTP:hal@rain.org] wrote:
+>Another flaw with schemes of this time (in terms of failing to meet
+>their goals) is that they cannot detect superencryption and other
+>forms of non-standard encryption of the message body proper.  All
+>they can really do is verify from the outside that the same session
+>key is encrypted for the two recipients (the intended recipient and
+>the Government Access to Keys Party - let's not abuse the term by
+>calling him a Trusted Third Party).  But they can't be sure that the
+>session key is sufficient information to decrypt the message.
+We offered a solution for the *first* task not for the *second*; the
+point is that criminals(!) do not gain any real advantage from using
+the system in that way as they - among other things - still face the
+key-management problem. The above dicussions are only relevant in
+countries where the use of crypto outside the structure would be
+prohibited. BTW, it is by such discussions that I believe such a ban
+is ineffective and in fact counterproductive.
+
+Adam Back[SMTP:aba@dcs.ex.ac.uk] wrote:
+> The paper suggests that in one plausible implementation, the
+> checkers referred to could be network service providers:
+>
+> from the summary of the paper posted here:
+>: The idea is that any third party, e.g., a network or service
+>provider,
+>                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>: who has access to components 2, 3 and 4 (but not to any additional
+>: secret information) can: : a. check whether the session keys in
+>components 2 and 3 coincide; : b. not determine any information on
+>the actual session key.
+>
+> This would allow for instance for a software only implementation of
+> a madatory key escrow system.  The government in question could then
+> deputize ISPs to do their mandatory GAK compliance checking for
+> them. (Deputizing companies is a recent trend in law enforcment
+> techniques anyway).
+>
+> This would allow for instance IP level encryption, with
+> non-conforming encrypted packets being dropped by all ISPs in the
+> country in question.  Something the Singaporeans might find useful. 
+> The checking functionality could also be added to a key escrow
+> enabled router.
+>
+> For this kind of application, binding cryptography is spot on.
+Jim bell[SMTP:jimbell@pacifier.com] wrote:
+> I think the biggest problem with allowing "anyone" to check the
+> correctness of a key is that what is a technical possibility today,
+> will become a legally-mandated requirement tomorrow.  What if
+> Internet backbone companies and/or ISP's were told that they had to
+> implement software check these keys, and if they discovered an
+> "incorrect" escrowed key, they were legally obligated to either
+> refuse to forward that message, and/or forward a copy of that
+> message to someone like Spooks@NSA.gov or Thugs@DOJ.gov.    
+
+The information society is international by nature; we want to
+securely communicate with Singapore. If Singapore, a democratic
+country!, has such a crypto policy that they want the above control,
+then so be it. Don't blame "binding cryptography" for making that
+possible, but start a dialogue with your politicians on what features
+of the proposal are acceptable in your country.
+
+Some countries seem to have the philosophy that "law-abiding" citizens
+should have nothing to "hide" from their government, so should not use
+encryption at all. I think that that is not acceptable. The concept
+behind the third-party checking is that no "law-abiding" citizen
+should have any problem that abuse - and only that - of a *voluntary*
+system can be "seen" by     many parties. If and *how* checking is
+done, is a matter of each society. The same concept holds for many
+things in life and is well accepted. For instance that is why cars
+have registration plates: if a car drives through after an accident on
+a *public* road, then by-standers (third parties) can observe that. I
+for one don't the information society to be the wild west, where
+anything goes.
+
+Of course, people are rightfully worried that such a checkable system
+might be abused by a totalitarian regime to control their citizens.
+However, as long as such a system is voluntary I see no problem. Signs
+in the USA indicate (cf. the NRC study & remarks of the president)
+that use of other systems will always be possible. Also, the above
+discussions already showed that if such a system is voluntary, then
+there are lots of way to go around it.
+
+Adam Back[SMTP:aba@dcs.ex.ac.uk] wrote:
+> As your paper describes, your system allows anyone to check the
+> correctness of the escrowed session key.  Have you considered
+> modifying it so that the only person who can check is the owner of a
+> designated private key of a public/private key pair?  This would
+> allow say for the TTP to check correctness, and not the TRP, nor the
+> public. I'm not sure of the usefulness of this, but it allows you to
+> select from the full spectrum according to requirements:
+>
+> a) no one can check, PGP second recipient (Carl Ellison, Bill
+> Stewart) b) recipient only can check (my suggestion) c) holder(s) of
+> designated keys can check d) anyone can check (your proposal)
+>
+> c) should be easy to acheive: restrict d) by having the sender
+> encrypt the escrowed session key a second time to this public key.
+Point a) can be circumvented too easily.
+How do you envision point b? Sending all keys (or a selection) to the
+recipient for checking is: impractical & dangerous (you want the
+distance between the actual communication and the guy that can
+decypher as large as possible). If you don't send keys, then abuse
+will only show up during a warrant. But that abuse will show up
+anyway.. So what is the use? Point c is a nice suggestion. Although I
+for one have no problem that anyone can see that I comply with the
+rules (..unless of course it is a non-voluntary system etc..).
+
+Adam Back[SMTP:aba@dcs.ex.ac.uk] wrote:
+> My assumption was that a TRP is a government front.  (All of the
+> proposed clipper I escrow agents have been major US defense
+> contractors/government agencies, in addition the clipper I documents
+Bring in to action your politicians ("the voice of the people") to let
+the regulation on Trusted Retrieval Parties be as liberal as you find 
+acceptable.
+
+Peter M Allan[SMTP:peter.allan@aeat.co.uk] wrote:
+>  1)  What's in it for the user ?
+>  2)  What happens when the Feds recover meaningless data?
+1) They get *one* system set up by governments that will make it
+possible to securely communicate (and do with business) with the whole
+(democratic) world. Instead of several partial systems set up by
+private companies where responsibilities will be vague. I consider a
+certified public key as a digital passport; setting up the structure
+for passports is a task of governments. 2) Only during a warrant
+policemen will see that; what then happens must every society on his
+own decide. Probably nothing happens, as otherwise the investigation
+will probably be to disturbed.
+
+
+Best regards, Eric
+
+
+
+

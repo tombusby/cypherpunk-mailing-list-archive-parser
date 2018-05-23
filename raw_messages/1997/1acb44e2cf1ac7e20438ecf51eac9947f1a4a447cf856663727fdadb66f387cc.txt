@@ -1,0 +1,71 @@
+From: Hal Finney <hal@rain.org>
+Date: Mon, 7 Apr 1997 22:15:21 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Anonymous cash via intermediaries
+Message-ID: <199704080350.UAA03476@crypt.hfinney.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The paper by Rivest on lottery tickets as micropayments, at:
+
+http://theory.lcs.mit.edu/~rivest/publications.html
+
+is a clever idea, but he mentioned something in passing at the end
+that I thought was very interesting in its own right.  He wrote:
+
+> True anonymity of the user from the vendor is more costly, as it
+> requires an intermediary (the vendor needs to have routing/delivery
+> information for the goods sold).  That third party could also
+> intermediate the payments for the user - the user pays the intermediary,
+> and the intermediary pays the vendor.
+
+Anonymous cash is most useful in the context of anonymous communications.
+If you are achieving anonymity via "mix" technologies, like the remailers
+or Wei Dai's proposed PipeNet, then the same network which hides the
+communications path could hide the payment path.  You pay the first
+mix in the chain, which pays the next, and so on until the person at
+the end receives payment.  Even with a non-anonymous payment system,
+you get the effect of anonymity.
+
+With intermediaries like this, you could use, say, First Virtual's
+credit-card based payments.  If you want to buy some information
+anonymously, you set up a remailer chain to send the request to FV.
+With that you include a payment to that first remailer, requesting
+forwarding.  The remailer accepts the payment, processes the message,
+and when it forwards it, it sends along a payment of its own (from its
+own account) to the next remailer in the chain, again requesting
+forwarding.  This continues until the last remailer forwards the
+message to the final recipient, making a payment of its own in
+response to the forwarding request.
+
+In order to figure out who paid whom, an observer would have to trace
+through the remailer chain.  And if they could do that, they could
+follow the message too, breaking the anonymity.
+
+(I had proposed a similar idea of forwarded non-anonymous payments a
+couple of weeks ago, but that was specifically in the context of
+paying for remailers.  Rivest's idea would extend this to a general
+payment scheme.)
+
+I see some obvious problems, but perhaps they can be patched up.  The
+remailers would have to be honest and trustworthy (not to mention
+brave, clean, and reverent); if the payment somehow got lost en route
+it could be difficult to verify who had pocketed it.  There is some
+anonymity lost by having all the remailers in the chain know how much
+is being paid, even if they don't know who is involved.  If online
+payment schemes were used, they could leave traces which would allow
+after-the-fact tracing of the payment path (and therefore the message
+path).
+
+Despite this, the convenience barriers to the use of anonymous cash
+might make it worth looking into "payment remailers" (or web
+redirectors).  As long as there are at least two forwarders in the
+chain you have a minimal level of anonymity, and your payments should
+be as anonymous as your communications.
+
+Hal
+
+
+
+

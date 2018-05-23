@@ -1,0 +1,56 @@
+From: Tom Weinstein <tomw@netscape.com>
+Date: Sun, 4 Feb 1996 06:00:54 +0800
+To: cypherpunks@toad.com
+Subject: Re: Netscape, CAs, and Verisign
+In-Reply-To: <199602030951.BAA12320@ix2.ix.netcom.com>
+Message-ID: <3113D385.2781@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart wrote:
+> 
+> At 06:50 PM 1/30/96 -0500, Phill wrote:
+> > Question is how can Netscape (or anyone else) _securely_ allow an
+> > arbitrary CA's certificate to be used? Certainly the process cannot
+> > be automatic. Binding the Verisign public key into the browser may
+> > be an undesirable solution, but the problem is to think of a better
+> > one.
+> 
+> It's easy, and I gather Netscape has done it in 2.x - let the _user_
+> decide what CAs to trust.  For convenient verification, you can have
+> the user sign the keys for each of the CAs, and then the
+> chain-following software only needs to compare each certificate's
+> signer with the user's own pubkey, rather than comparing with
+> Verisign's.  If you want to be automatic about it, you _could_ have
+> the user sign Verisign's key when first generating keys, or you could
+> ask the user the first time.
+
+In 2.0, what we do is maintain a database of certificates that have
+various trust attributes.  We ship this database with a number of CAs
+that we feel confident in, but the user can add and delete CAs if he
+wants.
+
+When the Navigator is presented with a certificate that it can't
+verify (the CA isn't in the database), the user is prompted as to
+whether or not to trust the site and whether to trust it permanently, or
+just for this session.
+
+The Navigator can also download certificates as one of the following
+mime types:
+
+application/x-x509-ca-cert
+application/x-x509-server-cert
+application/x-x509-user-cert
+
+When the Navigator sees one of these, it presents the user with a
+series of dialog boxes that take him through the process of approving
+the certificate and adding it to the database.
+
+-- 
+Sure we spend a lot of money, but that doesn't mean | Tom Weinstein
+we *do* anything.  --  Washington DC motto          | tomw@netscape.com
+
+
+
+

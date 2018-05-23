@@ -1,0 +1,46 @@
+From: edgar@spectrx.Saigon.COM (Edgar W. Swank)
+Date: Mon, 4 Jan 93 17:02:47 PST
+To: Cypherpunks          <cypherpunks@toad.com>
+Subject: Re: Return addresses
+Message-ID: <PZDTwB4w165w@spectrx.saigon.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal Finney wrote here on Dec 30:
+ 
+    Chaum's idea was that the message contents would be encrypted at
+    each step, as Eric suggests, but Chaum would have the encryption
+    key be part of the anonymous address, created by the same person
+    who made the anonymous address.  The idea would be, after
+    decrypting the incoming message, the remailer would see something
+    like:
+ 
+        Anon-To: <next destination>
+        Encrypt-With: <some DES or IDEA key>
+ 
+    It would then encrypt the message "contents" (but not the
+    "envelope", as Eric points out) using the specified key.  When the
+    owner of the anonymous address received the message, he would
+    decrypt it using the chain of "Encrypt-With" keys that he put into
+    the anonymous address.
+ 
+I'd like to point out that the "-ca" function of PGP could be used
+to perform this function if Encrypt-With: specified a PGP pass-phrase
+rather than a direct key.  I'd also like to suggest that the message-
+body to be encrypted require heading and trailing delimiters such as:
+ 
+-----BEGIN MESSAGE BODY-----
+-----END MESSAGE BODY-----
+ 
+Note delimiters would not be part of message body and would not
+be encrypted.
+
+--
+edgar@spectrx.saigon.com (Edgar W. Swank)
+SPECTROX SYSTEMS +1.408.252.1005  Silicon Valley, Ca
+
+
+
+
+

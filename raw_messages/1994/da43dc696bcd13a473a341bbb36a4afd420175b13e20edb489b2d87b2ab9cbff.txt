@@ -1,0 +1,37 @@
+From: m5@vail.tivoli.com (Mike McNally)
+Date: Thu, 15 Sep 94 12:21:33 PDT
+To: Carl Ellison <cme@tis.com>
+Subject: Re: thoughts on RC4
+In-Reply-To: <199409151735.KAA14334@comsec.com>
+Message-ID: <9409151921.AA28584@vail.tivoli.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Carl Ellison writes:
+ > >Can anyone see any reason why one could not change RC4 to
+ > >being a word oriented stream cipher, call it "ERC4"?
+ > 
+ > (1) You could conceivably go to an array of 65K short values and retain the
+ > permutation but I wouldn't try to go to an array of longs.  I don't have
+ > 32GB of RAM on my workstation.
+
+Perhaps some improvement on RISC architectures could be achieved by
+using four arrays, 32 bits wide by 256 entries long.  The arrays would
+mirror the single array in the original code, except that the
+"interesting" byte would be at a different position in each.  Then,
+the main encryption loop could be unwound so that you'd do four
+operations to each word, one from each array to hit the four bytes.  
+(You'd do the increment/swap between each one.)  This *might* be
+worthwhile.
+
+(On an Alpha, you'd have 8 arrays...)
+
+| GOOD TIME FOR MOVIE - GOING ||| Mike McNally <m5@tivoli.com>       |
+| TAKE TWA TO CAIRO.          ||| Tivoli Systems, Austin, TX:        |
+|     (actual fortune cookie) ||| "Like A Little Bit of Semi-Heaven" |
+
+
+
+

@@ -1,0 +1,75 @@
+From: rarachel@prism.poly.edu (Arsen Ray Arachelian)
+Date: Sat, 12 Feb 94 20:01:09 PST
+To: mg5n+@andrew.cmu.edu (Matthew J Ghio)
+Subject: Re: Strategies for getting encryption in widespread use QUICKLY
+In-Reply-To: <MhL5tSG00VAx02i0hU@andrew.cmu.edu>
+Message-ID: <9402130341.AA00829@prism.poly.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> probably be solved by packaging the data into manageable packets with an
+> error-correction protocol and then encrypting those.  Error-correction
+> would be vital, as line noise can wreak havok on encrypted data. 
+> (Although you could reduce the impact of the errors by weakening the
+> cipher somewhat.)  I do have several ideas as to how to do this...
+
+Look at the code for Layers and Multisession(??) they both have sources
+for the unix end.  If you base your code on that it should be fairly
+stable as we know the above products work.  (Beware of Layers though,
+on the Unix end, it supposedly leaves opened ports after you log out
+which could be used to hack in, or look like they were used to hack in.
+I got my account pulled one day for running it, because some hackers were
+breaking in and leaving open ports as part of their footprints....)
+
+ 
+> What do you think?  Anyone want to take this on as a project?
+> If I'm going to do it, it would be for MS-DOS systems, tho if there's
+> enuff interest, it might be possible to develop multi-platform support
+> concurrently.
+> Let me know...
+
+If you're going to do this, try to write some VERY generic code. Don't
+assume the size of a char, int, long, etc.  Instead, use stuff like:
+
+#define CHAR char
+#define INT int
+
+etc.  That way, if an int happens to be 32 bits on some weirdo machine,
+it can be redefined on that machine by simply modifying the headers...
+(better yet, use typedef, not #define.)
+
+Another thing, don't use any dos i/o functions to actually send the
+packets across, instead, do everything you can without calling on DOS
+or whatever C language library/compiler calls directly.  Call the DOS
+functions to read/write to the serial port from one single place so
+that they can be easily modified.
+
+You really don't have to do too much for the packets and stuff...
+Basicallly each packet is composed of a header, data, and some
+sort of check.  There are CRC codes out there already.  Pull the
+32 bit version out of some Zmodem program and use that...
+
+Your header should contain some packet id#, the size of the packet
+(no need to send 1024 bytes if the user just pressed one key :-),
+the CRC for the packet, and the packet itself...  A good thing might
+also be to include a couple of special bytes at the begining and end
+of the packet so that the receiver can try to resynch itself if it
+gets hit by line noise...  Say, 0x55,0x55,0xAA,0xAA, packetid#,
+packetsize, packetcrc, packet, 0x00,0x00,0xff,0xff for example.
+(while this is longer, the other side can look for 2 zeroes, followed
+by two 255's, followed by possibly some time before it sends a
+request to resend the packet.
+
+Or if you want to make things simpler, do as Xmodem (yuck!) send
+a small tiny header, the packet, and wait for an ACK from the other
+side before proceeding to send the next packet.  That ACK would be
+after/before a packet that the other side sends of course... :-)
+
+Better yet, maybe you can just hack some source code for SLIP or
+UUCP or something...
+
+
+
+
+

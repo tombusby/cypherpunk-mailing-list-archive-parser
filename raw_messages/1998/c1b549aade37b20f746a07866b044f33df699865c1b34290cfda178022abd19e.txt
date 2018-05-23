@@ -1,0 +1,65 @@
+From: landon dyer <landon@best.com>
+Date: Thu, 8 Oct 1998 07:56:35 +0800
+To: Steve Dunlop <nospam@bitstream.net>
+Subject: Re: NT 5.0 and EFS -- A victory for widespread use of crypto?
+In-Reply-To: <361BF3ED.8111C033@bitstream.net>
+Message-ID: <3.0.3.32.19981007164728.009611c0@shell9.ba.best.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 06:06 PM 10/7/98 -0500, you wrote:
+>
+>Does anyone have any opinions on the encrypting file
+>system (EFS) that is supposed to ship with NT 5.0?
+
+  you're asking the *cypherpunks list* if anyone has
+an opinion?  oh, gad...  :-)
+
+
+>EFS appears to have the architecture to support
+>arbitrarily long keys although this has been crippled
+>in the NT5.0 release, presumably because of
+>export limitations.  It has the key recovery features
+>you would expect in a commercial product of the
+>type; they can be turned off administratively.
+
+
+  excerpted (without permission) from the latest issue of the
+microsoft systems journal, about the new feature of NTFS in
+NT 5.0, specifically regarding encryption:
+
+  "...NTFS has built-in recovery support so that the encrypted
+   data can be accessed.  In fact, NTFS won't allow files to be
+   encrypted unless the system is configured to have at least
+   one recovery key.  For a domain environment, the recovery keys
+   are defined at the domain controller and are enforced on all
+   machines within the domain...."
+
+  i'll definitely have to play with this one -- wh'appens if you add
+a machine to a domain, encrypt some files, then remove the machine
+from the domain?  can the admin of the domain recover all files
+you encrypt from that point on?  and so on...
+
+
+  "...For home users, NTFS automatically generates recovery keys
+   and saves them as machine keys.  You can then use command-line
+   tools to recover data from an administrator's account."
+
+
+  if i were looking for a point of attack, i'd start with the
+low-level key management here...
+
+
+  another interesting thing to try: install NT on a workstation,
+encrypt a removable disk, then reinstall NT on that workstation
+again -- have you defeated key recovery for that disk?  (since the
+machine keys for the first install of NT are presumably gone...)
+
+
+-landon (re-lurking)
+
+
+
+

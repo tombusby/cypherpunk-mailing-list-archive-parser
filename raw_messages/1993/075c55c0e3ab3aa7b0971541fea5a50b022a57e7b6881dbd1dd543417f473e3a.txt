@@ -1,0 +1,67 @@
+From: edgar@spectrx.saigon.com (Edgar W. Swank)
+Date: Sun, 28 Feb 93 16:44:46 PST
+To: Cypherpunks          <cypherpunks@toad.com>
+Subject: Re: anon.penet.fi hacking
+Message-ID: <DR9LZB7w165w@spectrx.saigon.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Feb 23, Hal said:
+
+    Unless Eli's suggestion works - having our remailers put out a
+    random "From:"  line (perhaps just on mail to Penet?)  might cause
+    Penet to issue a new pseudonym for that apparent new user.  This
+    would be kind of wasteful from Penet's perspective - all those
+    pseudonyms are never going to be re-used.  But it might allow this
+    form of chaining, without compromising the pseudonym of the
+    remailer operator.
+
+I would be cautious about a random "From:" line.  I think penet will
+probably reject input that at least has does not have a valid (but not
+necessarily truthful) return address.
+
+For a while, Miron Cuperman's wimsey remailer was generating a bogus
+From address, something like "yeltsy@kremlin.vax.ru".  I tried
+chaining this to penet to post to newsgroups, but my anonymous
+messages never appeared in the newsgroups.  This was because,
+I think, penet sends a confirmation back to the sender. Since
+"kremlin.vax" is not in penet's net tables, this would cause
+the confirmation send to fail; my hypothesis is that this also
+causes the newsgroup post at penet to fail.
+
+One good From address to generate, at least for wimsey, would be
+
+        pool0@extropia.wimsey.com
+
+but you would need to add some boilerplate explaining to the
+recipient that "pool0" is a group address and a return message may
+be seen by up to (number? 10-100?) persons unless it is encrypted.
+
+Wimsey could also establish its own penet password and automatically
+insert it whenever it detected a "to" address ending in penet.fi.
+
+It could also substitute the penet anonxxxx address for "pool0" in the
+above boilerplate. This would allow a penet return to pool0. Note that
+I don't mind too much if people know that they can reach Edgar Swank
+through pool0, because pool0 is also an address for many other people,
+so I can "plausibly deny" that any particular message addressed to
+pool0 is for me.
+
+I'd like to point out that so far the wimsey remailer is the only
+useful remailer from my point of view because it's the only one
+which allows me to delete the automatic sig.  This is because it
+only forwards encrypted text and discards any appended unencrypted
+text.
+
+The other remailers were supposed to add a "kill line" to do the
+same thing, but as far as I know this never happened.
+
+--
+edgar@spectrx.saigon.com (Edgar W. Swank)
+SPECTROX SYSTEMS +1.408.252.1005  Silicon Valley, Ca
+
+
+
+
+

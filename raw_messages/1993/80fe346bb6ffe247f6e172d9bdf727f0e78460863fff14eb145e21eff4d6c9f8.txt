@@ -1,0 +1,80 @@
+From: nowhere@bsu-cs.bsu.edu (Chael Hall)
+Date: Tue, 23 Feb 93 12:48:41 PST
+To: ld231782@longs.lance.colostate.edu (L. Detweiler)
+Subject: Re: dispatches from the front lines of anonymity
+In-Reply-To: <9302232001.AA01786@longs.lance.colostate.edu>
+Message-ID: <9302232045.AA28686@bsu-cs.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Also, note the simple scheme of serially allocating anonymous ID's
+>could be a problem. If the infiltrator knows the rough date that
+>someone was allocated a new ID, he could narrow down the range of IDs.
+>For this reason randomly allocated IDs is a better idea.  The
+>infiltrator could even go around to new accounts all the time (or forge
+>them) to get an idea where the server is in the allocation cycle. It
+>seems to me that there are probably a lot of ID's that are not being
+>used on these servers and the issue of when to get rid of old ID's is a big 
+>problem.
+
+     Here's an idea....  What if I added anonymous ID's to my remailer such
+that the following would occur:
+
+Messages with "Command: Create ID" header field will result in a random ID
+being allocated to that user's account (if one does not already exist) and
+mailed to the account.
+
+Messages with "X-Allow-Reply: yes" header field (for example) will result
+in the user's anonymous ID being sent to the recipient in a header field
+(not From: because I do not have alias capabilities on this system).
+
+Messages with "X-Anon-To: <an anon ID>" will get forwarded to the anon ID's
+actual address.
+
+     This is a sort of on-demand reply mechanism.  I could make flags on the
+anon ID's so that I can disable a user's ID, set send/reply privileges, etc.
+If a user wants to change his ID, he could send "Command: Change ID" or
+"Command: Delete ID" to the remailer.  Then, I could either setup a waiting
+period, make it require manual attention, or make it automatically do as
+requested.  Since the program is written in C, about half of this is
+trivial.  Making it secure is the most difficult part.  By default, of
+course, messages would have no reply ability.  Any user who replies will
+send mail to me.  They would have to specifically place the X-Anon-To header
+line with the person's anon ID into the message.
+
+     On the other hand, I could institute a serial number scheme where each
+message receives a serial number.  Replies to that message for the period
+of a week or a month or whatever I choose will be forwarded to the sender.
+Each one has a different serial number no matter who it came from.  Of
+course, this would require both a self-maintaining cross-reference list
+and an extra header field and/or work on the part of the person who replies.
+
+     I was wondering, what is the opinion on this list (just reply to me,
+so we won't clog up cypherpunks any more than we (my remailer) already have)
+as to whether or not I should append a footer to remailed messages saying
+"Remailed by: nowhere@bsu-cs.bsu.edu" or some such nonesense that will let
+the recipient know that I did not write the message.  My software already
+supports footer files, but I haven't been using them.
+
+>One thing I'd like to see that no one has done is an `unlink' feature
+>for servers that carry address alias tables, so the user can erase all
+>trace of any previous transactions through the server (other than the
+>mail).  But maybe this is too close to the hit-and-run abuse out there.
+>Maybe there is a compromise somewhere, like a waiting period before
+>unlinking, during which complaints can be registered and possibly
+>prohibit future use.
+
+     I tried to incorporate this unlink idea of yours into my above
+proposal.  The above is the way I understand your idea.  Is this correct?
+
+Chael Hall
+
+--
+Chael Hall
+nowhere@bsu-cs.bsu.edu, 00CCHALL@BSUVC.BSU.EDU, CHALL@CLSV.Charon.BSU.Edu
+(317) 285-3648 after 5 pm EST
+
+
+
+

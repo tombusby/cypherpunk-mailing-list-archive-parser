@@ -1,0 +1,65 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Fri, 19 Aug 94 11:55:18 PDT
+To: weidai@eskimo.com (Wei Dai)
+Subject: Re: trusted time stamping
+In-Reply-To: <199408190842.AA06184@eskimo.com>
+Message-ID: <199408191851.LAA08743@netcom4.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Wei Dai wrote:
+
+> I thought my idea about having trusted entities digitally sign a document in
+> order to establish its existence at a particular time was a new idea, but I
+> just read about it in _Applied Cryptography_.  Anyway, I wrote some C code to
+> do automatic time stamping with PGP (source code is in the next e-mail).
+
+Stu Haber (who reads this list, sometimes) and Scott Stornetta of
+Bellcore developed a system which solves the more important problem of
+the time stamper reliability, which I don't think W.D. has addressed.
+
+I've written up a couple of summaries, the last of which got a
+favorable reaction from Stu on. So I'll mail it later today, when I
+fire up my off-line archives and retrieve it.
+
+The hard part is time stamper reliability, i.e., how does the world
+(and the courts) know that the time stamper(s) did not simply reset
+his clock and thus fake the times?
+
+Haber and Stornetta came up with two clever ideas:
+
+1. Publish a one-way hash of the text to be stamped in a very public place,
+e.g., one's latest bestselling novel or the "New York Times." This is
+similar to the crypto methods used by scientists through the ages to
+prove ownership. H & S call this a "widely witnessed event," the idea
+being that millions of copies of archived issued of the NYT (or the
+novel!) would have to be retrieved and reprinted in order to change at
+a later date the text. Economically impractical.
+
+2. But it may also be economically impractical for the NYT to print
+page after page of such hashes...they may choose not to,
+understandably. So H & S developed a "tree"-like way to merge
+customer-provided hashes with many other hashes (and earlier hashes,
+to, thus adding to the difficulty of faking) and so to only have to
+publish a comparatively small number.
+
+These two clevernesses are the crux of time-stamping.
+
+They are trying to build a company to do this; perhaps Stu can update
+us on the status.
+
+--Tim May
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^859433 | Public Key: PGP and MailSafe available.
+"National borders are just speed bumps on the information superhighway."
+
+
+

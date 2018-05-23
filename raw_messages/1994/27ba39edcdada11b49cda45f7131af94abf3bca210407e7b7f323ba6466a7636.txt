@@ -1,0 +1,33 @@
+From: perry@imsi.com (Perry E. Metzger)
+Date: Thu, 15 Sep 94 07:52:27 PDT
+To: cypherpunks@toad.com
+Subject: thoughts on RC4
+Message-ID: <9409151452.AA03618@webster.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've been looking at the RC4 (or alleged RC4) code a bit.
+
+Unlike most ciphers, RC4 doesn't seem to have any particular word
+length dependancies in its principles. That is to say, a cipher like
+IDEA has lots of magic numbers involved, but RC4 does not, which means
+that one could, in principle, extend it from being byte oriented
+stream to being word oriented stream without causing particular
+harm. (It would, of course, become incompatible, but thats not a real
+issue.) Can anyone see any reason why one could not change RC4 to
+being a word oriented stream cipher, call it "ERC4"?
+
+The reason I ask is because this would speed things up by a factor of
+four on 32 bit machines, which would mean modest hardware could
+possibly break 100mbps speeds. The 64 bit extension on 64 bit RISC
+processors could go far, far, faster still.
+
+This is a real consideration in the protection of network traffic,
+where extremely fast encryption in software has been a stumbling block.
+
+Perry
+
+
+
+

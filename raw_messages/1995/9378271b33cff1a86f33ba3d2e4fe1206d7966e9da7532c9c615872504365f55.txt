@@ -1,0 +1,52 @@
+From: Andrew Roos <andrewr@vironix.co.za>
+Date: Tue, 3 Oct 95 08:40:03 PDT
+To: aba@dcs.ex.ac.uk
+Subject: STT Authentication
+Message-ID: <9510031738.aa13031@herman.vironix.co.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hi All
+
+Ramblings from a disturbed mind...
+
+I've had a look at Microsoft's Secure Transaction Technology (STT) protocol.
+The purchase order/authorization/receipt phase is authenticated using the
+card holder's credential ("cred", in MS speak). The credential is similar to
+a certificate except the binding is between a credit card and a public key,
+rather than between an identity and a public key. What interests me is the
+procedure for issuing cred's to cardholders. If I'm reading the spec right,
+this is done in response to a "Cardholder Credential Request" message which
+includes card details and the public keys to be associated with the card.
+This data, along with a SHA hash of the data, is encrypted and sent to the
+issuing bank, which then responds with a "Cardholder Credential Response"
+containing the signature and key-exchange creds, also encrypted. However
+there does not appear to be any authentication whatsoever on the credential
+request message, presumably becuase the cardholder does not have a published
+public key at the time when this message is issued. It may be that
+authentication is out-of-band - e.g. the bank may phone the registered owner
+of the card # before issuing a cred response message - but there is no
+mention of this in the spec. If there isn't OOB authentication, then this is
+a major hole in the protocol, since anyone who knew a credit card no, name
+and expiry date could request a cred for that card, and then go shopping...
+
+If someone will just tell me what I'm missing (because this is too obviously
+f'd up for even Uncle Bill) then I'll go sit on top of my mountain again and
+hum softly to myself.
+
+Andrew
+
+BTW, same apears to be true for Merchant creds.
+________________________________________________________________
+Andrew Roos <andrewr@vironix.co.za>
+
+// C++ programmers have class (but not much inheritance)
+
+PGP Fingerprint: F6 D4 04 6E 4E 16 80 59 3A F2 27 94 8B 9F 40 26
+Full key: ftp.vironix.co.za/PGP-keys/AndrewRoos (or key servers)
+
+
+
+
+

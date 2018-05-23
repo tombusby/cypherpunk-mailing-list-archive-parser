@@ -1,0 +1,41 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Fri, 8 Dec 95 01:46:38 PST
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: digital receipts and cash
+In-Reply-To: <199512010408.UAA04333@quito.CS.Berkeley.EDU>
+Message-ID: <199512080947.EAA06459@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+David Wagner writes:
+> (Later, if the vendor reneges on the transaction, you'd have the digital
+> receipt to prove that you paid & the vendor is cheating you.)
+> 
+> This seems like it would be a really useful feature.  Does anyone know
+> if there are any *practical* protocols to do this?
+[...]
+> ObCrypto relevance: I've looked through _Applied Cryptography_, but the
+> protocols listed there aren't practical -- they require something like
+> 100 rounds of interaction!  Can this be improved?
+
+The Even/Goldreich/Lempel protocol (ACv1, pp.101-103) requires O(k) fairly
+expensive operations (i.e. key generations, encryptions, network 
+transmissions) to guarantee honesty with probability p = 2^k. k = 100 is
+suggested. Perhaps this protocol would be useful in many applications with
+k << 100. It might be argued that k need only be about 
+O(lg(value(transaction))). I think k = 10 or 20 would be suitable for many
+relatively low-value digital cash transactions. Waiting a bit longer to
+arrange the purchase of a car over the net sounds tolerable to me.
+
+I suppose you could precompute heaps of keys for use in unspecified future
+transactions, which helps a bit.
+
+It's hard to imagine circumventing the basic need for incremental increases
+in trust, with a nontrivial cryptographic operation at each end in each
+round. But hey, I certainly don't expect to prove that anytime soon.... :) 
+
+-Futplex <futplex@pseudonym.com>
+
+
+

@@ -1,0 +1,43 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Wed, 9 Oct 1996 08:59:19 +0800
+To: stewarts@ix.netcom.com
+Subject: Re: PGP implements Key Recovery today!
+In-Reply-To: <199610081636.MAA10922@attrh1.attrh.att.com>
+Message-ID: <Pine.SUN.3.91.961008155606.4160C-100000@tipper.oit.unc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I was actually working on a message saying something similar, under the 
+working title of "Trusted First Parties". 
+
+The idea is to generate a separate key pair to be used for recovery
+purposes, and then place the private key in a trusted, off-line location
+(much easier to arrange than if the key is to be kept on-line). 
+
+The key should probably be encrypted using a symmetric algorithm keyed of
+a pass phrase, but since the pass phrase will only ever be used once, it's
+the kind of thing that might end up being forgotten, especially in those
+'what's that tree doing in the middle of my machine room?' key recovery 
+moments.
+
+Because the  TFP key is protected other keys, the key length should be 
+such as to give a work factor equal or greater than that needed to force 
+the keys that will be protected by it. 
+
+TFP can be used to weaken forward secrecy by encrypting the ephemeral
+session key under the TFP key and sending it with the message stream. You 
+don't have real forward secrecy, because  if the TFP key is cracked,all 
+prior session keys will be exposed; however this setup is still somewhat 
+better than straight RSA key exchanges using your regular key, as the 
+private TFP key is less exposed.
+
+Simon 
+ 
+---
+    Huge taxi cabs now! Huge spelling cuts now! Balance the budgie now!
+
+
+
+
+

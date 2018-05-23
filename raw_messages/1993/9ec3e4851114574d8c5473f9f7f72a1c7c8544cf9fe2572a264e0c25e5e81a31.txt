@@ -1,0 +1,72 @@
+From: remail@tamsun.tamu.edu
+Date: Wed, 25 Aug 93 05:32:06 PDT
+To: cypherpunks@toad.com
+Subject: Re: Attacks on remailers
+Message-ID: <9308251148.AA25085@tamsun.tamu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal Finney writes a nice "To Do" list for the cypherpunks
+remailers by enumerating and describing possible attacks.
+Let's priortize these items.  First we should do those
+items that are easy to implement, and those items needed
+to prevent any remaining cheap 'n easy attacks.  We can
+leave expensive attacks for future projects.
+
+> Response: Encrypt the messages.  Use "nesting", so that all that is
+> visible as each message leaves a remailer is the destination of the
+> next remailer.
+
+This should be made smoother.  The learning curve needed to
+get to this stage : install PGP & get it working, learn
+how to use remailers, install remailer nesting script, debug
+all of the above, because something in there is bound to
+break at this stage : quite a lot of work!  Just
+improving things up to here with clearer documentation,
+and better scripts and GUIs, would greatly increase the number
+of remailer users and traffic.
+
+> Response: Run the remailer on a machine which does not keep mail logs,
+> or on a machine to which you can deny the attackers access.
+
+The former is much to be preferred!  The first link in the
+remailer chain, especially, needs to be trusted not to
+maintain logs.  The trustworthy remailer operator goes to 
+great lengths to minimize the temptation to look at messages.
+
+>[Attack 3: timing & ordering of messages in & out]
+>[Attack 4: look at subject line, message size, etc.]
+>[other attacks involving intercepting mail stream]
+
+Batching and random delays only work well if there is large
+message traffic through the remailer.  What in specific
+detail is needed to gain access to the mail stream to
+make these attacks?  If no mail logs are kept, and the remailer
+denies access to a spool file, by hiding it or putting
+random garbage in it or denying access to its host computer,
+an attack looks to me like it requires a sophisticated wiretap.
+Avoiding expensive attacks is low priority at this 
+point.
+
+>[Message pools] have the problem that they expose everyone
+> in some group to all of the messages intended for every group member,
+> hence the number of messages will scale as the square of the number of
+> group members. 
+
+First let's make the problem happen.  Then we can solve it!
+
+Here's another item: faster links!  The delay between
+when I post this and when it arrives on "cypherpunks" can
+be half a day. 
+
+What about that idea of using direct sockets instead of
+SMTP between remailers?  That could kill two birds with one stone:
+delivery speed and cheap attacks against the intermediate
+links via logging or spool files.
+
+
+
+
+
+

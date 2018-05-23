@@ -1,0 +1,64 @@
+From: Eric Murray <ericm@lne.com>
+Date: Thu, 18 Jan 1996 12:54:34 +0800
+To: warlord@ATHENA.MIT.EDU (Derek Atkins)
+Subject: Re: A weakness in PGP signatures, and a suggested solution
+In-Reply-To: <199601180344.WAA26221@charon.MIT.EDU>
+Message-ID: <199601180442.UAA15648@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Derek Atkins writes:
+[Dr Dimitri writes:]
+> 
+> > 2. When PGP verified the signature, it should have an option to look outside
+> > the signed portion for RFC 822 headers and compare them to the signed copy
+> > of he headers inside. If this is not in PGP, then then function would have to
+> > be done by some non-portable wrapper.
+> > (Of course, if your headers aren't RFC 822, you're out of luck.)
+ 
+[..]
+ 
+> PGP really only looks at the contents between the BEGIN and END.  It
+> can't do anything else.  In fact, only the PGP Armor code even deals
+> with that.  By definition, PGP is a binary protocol and deal with
+> binary data objects.  So how can it look at any "RFC 822 Headers"?
+> There are no such animals in PGP.  It is perfectly legal to remove all
+> data before the BEGIN and all data after then END and feed the result
+> to PGP...
+> 
+> As I said, armor is a convenience to the user only.
+> 
+> PGP will not be modified in this way; it is the job of the mailer
+> (MUA) to do this sort of thing.  Sorry.
+
+I agree.
+PGP should be as generic as possible; making it "know" about RFC822
+and mailers makes it less generic.
+
+Your PGP-aware mail agent should add a line to the text to be
+encrypted, consisting of a random number (hopefully very unguessable
+and fairly random) and an RFC822 header:
+
+X-PGP-nonce: b1de70694f5f0824f89cb3f09aece01d
+
+and replicate that in the RFC822 envelope.
+Put just the nonce value and not the header in the block to be
+encrypted if you're concerned about assisting a known-plaintext attack.
+
+The nonce can't be extracted from the PGP ciphertext unless the attacker
+has the ability to crack PGP, in which case merely re-directing
+PGP encrypted messages to different recipients is beneath them. :-)
+It is small and is easily verified by the human looking at the message.
+PGP, or more accurately the MUA, won't need to check it (although
+that would be fairly easy to do).
+
+But like Derek says, PGP shouldn't do it, the MUA should.
+
+-- 
+Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+
+

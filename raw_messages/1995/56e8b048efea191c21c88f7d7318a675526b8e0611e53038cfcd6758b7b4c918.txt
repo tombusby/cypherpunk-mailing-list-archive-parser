@@ -1,0 +1,55 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 9 Feb 95 08:41:47 PST
+To: cypherpunks@toad.com
+Subject: Re: Lucky primes--third time's the charm?
+In-Reply-To: <Pine.3.89.9502090512.B21224-0100000@lia.bga.com>
+Message-ID: <199502091641.IAA12454@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Nathan Zook <nzook@bga.com> writes:
+
+>-----BEGIN PGP SIGNED MESSAGE-----
+> 
+>The algorithm I posted the second time works, (nice improvement, eh?) but
+>is likely to take several thousand years to complete.  And when it does, we
+>can expect weak primes.  The enhancement I propose should fix that.
+> 
+
+I did not realize before that p was an output of your algorithm, rather
+than an input.  That explains better what you were trying to do.  You are
+in effect trying to search for a prime such that e's multiplicative
+inverse has a lot of 0's.
+
+This looks like it will work pretty well, with the caveat as we discussed
+before that going too far with this could make searching for the primes
+easier.  But the only obvious attack would be to try to reproduce your
+prime-finding algorithm to find a p which divides the modulus n, and that
+is basically a sqrt(n) algorithm, which is far from the worst-case attack
+we face.  The search space can be reduced by a considerable factor before
+it becomes competitive with modern algorithms.
+
+I guess another point is that if i is 2 or 4 then p itself will likely be
+0-rich and conceivably there could be some attacks against a modulus
+known to be the product of two 0-rich primes even when the primes are not
+weak in the normal sense.  (p = (ed-1)/i+1, d is 0-rich, and e has only
+2 bits on so ed is likely also to be somewhat 0-rich; dividing by i is
+just a shift right if i is 2 or 4, and adding 1 won't make much
+difference.)
+
+Restricing i to other numbers would still give p a simple arithmetical
+relation to a 0-rich number (i=3 --> p*3 is 0-rich).  Maybe you could
+choose a d such that d itself was 0-rich while ed happens not to be
+0-rich; this might feel safer since p would have less of an
+arithmetical relation to a 0-rich number.
+
+(Admittedly, I don't know of any factoring attacks directly applicable to
+0-rich factors but there is at least a superficial similarity to weak
+primes and that suggests caution.)
+
+Hal
+
+
+
+

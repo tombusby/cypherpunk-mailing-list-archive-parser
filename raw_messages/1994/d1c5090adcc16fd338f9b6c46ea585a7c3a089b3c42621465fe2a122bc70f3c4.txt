@@ -1,0 +1,57 @@
+From: doug@netcom.com (Doug Merritt)
+Date: Mon, 24 Jan 94 22:38:30 PST
+To: cypherpunks@toad.com
+Subject: Re: Randomness of a bit string
+Message-ID: <199401250634.WAA08809@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tim May said:
+>I stand by my point that no number or sequence can be proved to be random.
+
+To expand a bit on Perry's arguments, the bottom line of all this research
+is that a claim regarding randomness can only be made *relative* to
+a particular system for specifying algorithms.
+
+In that sense, Tim's statement can be regarded to be correct, iff one
+assumes that a context (an algorithmic specification system) is not
+given. That is a huge qualifier, though, and not one to be taken for
+granted.
+
+A trivial example of this: pick some constant bitstring of length 32 or less.
+Call it K. Now look at the class of algorithms specifiable by the
+C code fragment printf("%x", K) --- i.e. print K as a hexadecimal number.
+Relative to that particular set of (one) algorithms, that value of K is
+trivially nonrandom, in the sense that the probability of of finding
+that bitstring produced by that class of algorithm is precisely 1.
+
+Next consider a program that computes an output by multiplying some
+input by two. The probability that the output will be K, given any
+possible (but unknown) input, is exactly zero if K happens to be odd.
+If K is not odd, then the probability depends on the distribution
+(randomness) of the inputs.
+
+Proceeding in this fashion, it becomes increasingly clear that the
+randomness of the output of an algorithm can only be measured relative
+to the properties of the class of algorithms being considered. Randomness
+in isolation is meaningless.
+
+The best sources of intuition regarding randomness usually derive from
+systems which shift the burden into an existing intuition on a slightly
+different subject. For instance, flipping a coin can be regarded as a random
+process in an intuitive sense, but only because it appeals to existing
+intuitions about equiprobablistic outcomes.
+
+Therefore one sees confused appeals to intuition about randomness, probability,
+entropy, or related ideas, in cryptography, quantum mechanics, information
+theory, statistical mechanics, philosophy (in regard to free will versus
+determinism versus randomness), etc, etc, but given Chaitin/Kolmogorov/et al,
+no intuition from any such subject should be taken at face value.
+
+There's more, but I'll pause to allow flames. :-)
+	Doug
+
+
+
+

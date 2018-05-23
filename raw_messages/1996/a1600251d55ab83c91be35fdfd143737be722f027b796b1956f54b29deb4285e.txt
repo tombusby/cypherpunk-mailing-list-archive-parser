@@ -1,0 +1,92 @@
+From: daw@cs.berkeley.edu (David Wagner)
+Date: Wed, 31 Jul 1996 18:36:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: Paranoid Musings
+In-Reply-To: <199607310502.WAA09812@netcom7.netcom.com>
+Message-ID: <4tn2q1$mh5@joseph.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199607310502.WAA09812@netcom7.netcom.com>,
+Bill Frantz <frantz@netcom.com> wrote:
+> At  6:48 PM 7/30/96 -0400, Mark M. wrote:
+> >An FPGA can break RC4 in a few hours.
+
+I don't think so.  None of the FPGAs Ian & I looked at could even approach
+the RC4-cracking performance of a fast Intel CPU.
+
+>                                    If we assume that the 30 million net
+> users send one email/day, then that results in about 350/second.  If I
+> assume your "several thousand" is 2000, then we need a machine with 700,000
+> FPGA's.  Given Matt Blaze et. al.'s estimate of $10/chip complete, that is
+> $7 million.  However if you take the NSA's estimate (in their response to
+> Blaze et al) of $1000/chip, then you get $700 million.
+
+Those estimates assume that a single FPGA can break RC4 in hours.  I think
+that is an extremely optimistic assumption, given the available public
+information.  But perhaps NSA is orders of magnitude ahead of us in chip
+design (unlikely) or orders of magnitude ahead of us in RC4 cryptanalysis
+(and we're back to paranoid musings).
+
+> If we assume a machine designed to break *every* message, NSA's response
+> makes more sense.  From their response (reordered):
+> 
+> >The factors not accounted for are:
+> >
+> >  o Memory costs are not included.
+> It needs to store all the messages it is attacking.
+
+Naw, this is orthogonal to the cost of cryptanalysis-- even when all messages
+are sent in the clear, they still need this storage.
+
+I would be willing to believe that message selection & storage is a very
+expensive part of SIGINT.  However, if one has the resources to break all
+encrypted messages in realtime, I don't see why message selection & storage
+costs need to increase so significantly.
+
+> >  o When get [sic] to the very fast processing speed estimates,
+> >    machines can become Input/Output bound; so [sic] it cannot achieve
+> >    the estimated speed.
+> It needs to get all those messages into the machine, the plaintext out, and
+> distribute the data to the FPGAs.
+
+Nope, I don't buy it.  Show me a chip takes longer to load a known plaintext
+and ciphertext pair than it takes to do a 40-bit exhaustive keysearch for that
+pair, and I'll show you a chip that has no I/O pins. :-)
+
+Remember, if you have a million FPGAs to crack a thousand messages, you don't
+have to send the first message to all million FPGAs, then send the second
+message to all million FPGAs, etc.  Instead you should send the first message
+to the first thousand FPGAs, and concurrently send the second message to the
+second thousand FPGAs, etc.
+
+> >  o Assuming every algorithm can be tested in same amount of time and
+> >    key length is the only difference.
+> This is one of Blase et. al.'s simplifying assumptions.  RC4 has a simple
+> key setup and runs faster than DES.  Brute forcing 40 bit Blowfish would be
+> considerably harder.  Probably about equal to 9 additional key bits harder.
+
+I agree that key schedule complexity can have a significant influence on the
+complexity of exhaustive keysearch.
+
+However, DES's key schedule is actually much better suited to exhaustive
+keysearch than RC4's key schedule is.  (I speak with implementation experience.
+However, it's not too hard to see why this should be true-- DES was designed
+for implementation in hardware, and its keyschedule consists merely of some
+bit permutations, which are free in hardware.  RC4 uses RAM heavily, and thus
+can incur large I/O costs, and also is highly serialized, so it is not so
+well-suited to efficient hardware implementation.)
+
+Yup, brute-forcing 40-bit Blowfish will probably be even harder than RC4.
+
+>                                With FPGAs, there is a significant risk that
+> people will change the crypto system and make the investment worthless. 
+
+No, FPGAs are programmable logic, and thus can be easily reprogrammed if the
+Netscape default encryption algorithm changes.  Perhaps you are thinking of
+ASICs, which have their logic burned in, and cannot be changed.
+
+
+
+

@@ -1,0 +1,44 @@
+From: Mike McNally <m5@tivoli.com>
+Date: Sat, 21 Sep 1996 03:21:54 +0800
+To: Dale Thorn <dthorn@gte.net>
+Subject: Re: Stego inside encryption
+In-Reply-To: <n1368993974.6219@mail.ndhm.gtegsc.com>
+Message-ID: <3242C142.4A37@tivoli.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Dale Thorn wrote:
+> 
+> Mullen Patrick wrote:
+> > To take this one step further, has anyone tried to ever use this
+> > method as an encryption method?  You could hide data in a stream of
+> > random bits, using position as the encryption method.
+
+It doesn't matter *what* you do with your bits.  The key thing to
+remember when analyzing your encryption method is that the foundation
+of your security rests on the difficulty of reversing the numeric
+sequence that drives the encryption.
+
+If I know you're using this RNG-driven steganographic message mixer,
+then if I can break your RNG I'm done.  If I know you're scrambling
+bits in a file according to an RNG, if I break your RNG I'm done.
+The key is therefore to make the RNG cryptographically secure.  Once
+you've done that, then there's questionable value in doing anything
+fancier than straight CBC (or something like that) to encrypt your
+plaintext.
+
+Note that simple functional composition of one or more simple insecure
+RNG's does not necessarily give you a stronger RNG (in fact it usually
+doesn't).  Cheap RNG's like what you get from the old UNIX "rand()"
+are simple little linear functions, which when composed give you
+more simple functions.
+
+______c_________________________________________________________________
+Mike M Nally * IBM % Tivoli * Austin TX  * How quickly we forget that
+mailto:m5@tivoli.com mailto:m101@io.com  * "deer processing" and "data
+http://www.io.com/~m101/                 * processing" are different!
+
+
+
+

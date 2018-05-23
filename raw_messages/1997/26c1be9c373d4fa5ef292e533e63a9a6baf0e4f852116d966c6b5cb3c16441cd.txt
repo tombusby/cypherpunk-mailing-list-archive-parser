@@ -1,0 +1,38 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 23 May 1997 01:21:47 +0800
+To: cypherpunks@algebra.com
+Subject: ecash & remailers
+Message-ID: <199705221703.SAA02054@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+It occurs to me that there is a problem with remailers using Chaum's
+ecash as offered by MT bank and others.
+
+The attacker could coerce the sender of an anonymous message into
+revealing his blinding value, and use this to obtain the identity of
+each remailer hop by colluding with the bank.  (The bank keeps a
+database of the blinded coins minted against who they were given to;
+unblinding reveals the coin which can then be compared against those
+deposited by remailers, tallying sender with remailer, all the way to
+the exit remailer.)
+
+To stop this, the sender should discard the blinding values, thereby
+removing his ability to be later coerced, or to later trace the
+recipient of his cash.
+
+Is there a way to purge blinding values from the ecash directory?
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,40 @@
+From: iagoldbe@calum.csclub.uwaterloo.ca (Ian Goldberg)
+Date: Thu, 30 Nov 1995 08:38:24 +0800
+To: cypherpunks@toad.com
+Subject: Re: ecash protocol: Part 1
+In-Reply-To: <199511212146.NAA11456@cory.EECS.Berkeley.EDU>
+Message-ID: <49it0e$r4i@calum.csclub.uwaterloo.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199511212146.NAA11456@cory.EECS.Berkeley.EDU>,
+Ian Goldberg  <iang@cory.EECS.Berkeley.EDU> wrote:
+>I've managed to decipher a useful bit of the first message sent from
+>the shop to the payer.  It's the Payment Request, and contains the following
+>information:
+>
+>o Header identifying packet as Payment Request
+>o The integer 4
+>o The payment amount, in cents
+>o The time (seconds since 1970)
+>o The integer 79
+>o The name of the shop (payee)
+>o A description of the item being paid for
+>o An empty string
+>o The integer 0
+>o End of Record marker
+>
+>I don't know what the 4, 79, empty string, and 0 are for.  I assume one
+>of them (probably the 4) is some indication of currency (US cents).
+
+I now know what the empty string and the 0 are for.  In the event that
+a Payment Request is sent out-of-band (in an application/ecash message,
+for example), the string and integer are the hostname and port (commonly
+1100) to which the payer should connect in order to send a payment.
+
+   - Ian "Wait for it..."
+
+
+
+

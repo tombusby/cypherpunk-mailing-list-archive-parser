@@ -1,0 +1,59 @@
+From: Jay Prime Positive <jpp@jpplap.markv.com>
+Date: Sat, 28 May 94 00:24:19 PDT
+To: ebrandt@jarthur.cs.hmc.edu
+Subject: Re: (fwd) Re: NSA Helped Yeltsin Foil 1991 Coup
+In-Reply-To: <9405280544.AA01300@toad.com>
+Message-ID: <m0q7Gx8-0003paC@jpplap>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Date: Fri, 27 May 94 22:44:29 PDT
+> From: Eli Brandt <ebrandt@jarthur.cs.hmc.edu>
+>
+> Jay said:
+> > It requires computing one extra xor per block.
+>
+> Plus a truckload of good random numbers.  To do it right, a hardware
+> RNG is in order.  A PRNG really makes no sense, because if you
+> have a PRNG that strong, why not just use it as a stream cipher?
+
+  I don't see why.  I assume the PRNG is cryptographic, and concider
+its key (and iv) as part of the key to the system.  And I don't see
+why the PRNG needs to be so tremendously strong.
+
+  Hmmm.  Now I think I get it.  If the PRNG is the weak link, then the
+atacker can solve the easy PRNG crypto system and the hard e1 crypo
+system.  On the other hand if it is the strongest crypto system, the
+atacker will solve the weaker e1 and e2 crypto systems instead.
+
+  Hmmm.  Yeah, you are right.  Although the PRNG threshold scheme has
+E1*E2*E3 permutations, it is really only as hard as either E1*E2, or
+E1*E3.  Yet another example of 'key size is not proportional to
+strength'.
+
+  So my new criteria is if you have bandwidth, and strong random
+numbers, use the threshold scheme.  If not, use the product cypher.
+But perhaps the fenced DES stratagy is better than either.  For
+comparison purposes we would need to know how the fence permutation(s)
+are keyed.
+
+> > that the actual increase in bandwidth for a three cypher system
+> > threshold in a practical encryption package like PGP would not be 2 to
+> > 1 since it likely compresses before encryption.)
+>
+> To be fair, you need to compare compressed-and-split with
+> compressed-only.  This *is* going to be a factor-of-3 size hit.
+
+  Yeah, your are right.  The Cthr/Cpro will be about 2 to 1.  (2 cause
+I used one key for the PRNG, the other two for encrypting the
+thresholded pieces.)  But Cthr/Plain will not be nearly 2 to 1.
+
+  I think this is interesting.  If you, Eli, think it is interesting
+enough for the general list, feel free to forward this.
+
+j'
+
+
+
+

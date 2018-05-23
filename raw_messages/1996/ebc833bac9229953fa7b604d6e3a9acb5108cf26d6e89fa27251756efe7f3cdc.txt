@@ -1,0 +1,63 @@
+From: Sam Quigley <poodge@econ.Berkeley.EDU>
+Date: Fri, 26 Jul 1996 06:29:43 +0800
+To: cypherpunks@toad.com
+Subject: remailer network/winsock remailers
+Message-ID: <Pine.SUN.3.91.960725110229.10878A-100000@quesnay.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hi,
+
+I've been unsubscribed from the list for a while, and only recently 
+rejopined, so this issue may well have been addressed in my absence.  If 
+not, though, here:
+
+It occurs to me that, with the invention of the winsock remailers, we 
+have the potential to establish a very widespread and distributed network 
+of part-time remailers.  Specifically, it seems like there are a lot of 
+users who are only connected to the internet for short periods (PPP/SLIP) 
+or who only have full control over their machines for short periods.  
+These computers could not normally be used to run remailers as mail 
+would bounce when the computer/remailer software is down.
+
+If there were some sort of central registry where winsock (or other 
+non-permanent) remailers could announce their ability/inability to bounce 
+mail, email could be forwarded through these temporary remailers on a 
+dynamic basis.
+
+I imagine the system would be something like this.  User X, a part-time 
+cypherpunk, turns on his PPP connection to get his internet fix.  When he 
+does, his remailer software connects to a central site and registers 
+itself, the software (and capabilities of the software) it's using, and 
+how many email messages (CPU time) X is willing to give up.  The registry 
+sends back a confirmation message, and adds X's computer to its list.  
+Now, when user Y wants to use the remailer network, she sends a message 
+through a series of remailers, one of which is the remailer network host 
+computer.  When the message gets to the host computer, the host looks at 
+its list and bounces the message randomly to one of the winsock 
+remailers.  In this way, people who can't ordinarily run a remailer can 
+still help out with the network, and the message becomes, ultimately, 
+much more untraceable because (ideally) there are tons of temporary 
+remailers that the message could have been sent to.  This could expand 
+the network by a lot...
+
+I imagine precautions would have to be taken to ensure that temp. 
+remailers really are up and running (the host would have to ping remailer 
+computers regularly to ensure that none went down without informing the 
+host).  It would also be good if incoming messages to the host remailer 
+could specify how many hops it should take, whether or not it should be 
+subject to random delays / burst sends, and other options which haven't 
+occurred to me yet.
+
+This can't be a new idea, though.  If something like this already exists, 
+please send me a pointer.  If not, I'd be willing to help develop a 
+protocol for client / server interaction.
+
+-sq
+
+
+
+
+

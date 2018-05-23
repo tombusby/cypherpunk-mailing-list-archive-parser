@@ -1,0 +1,41 @@
+From: sdw@lig.net (Stephen D. Williams)
+Date: Thu, 2 Nov 1995 10:32:40 +0800
+To: Mike_Spreitzer.PARC@xerox.com
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <95Oct31.094528pst."14855(1)"@alpha.xerox.com>
+Message-ID: <m0tAoYD-0009yxC@sdwsys>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Besides non-blocking, it's very useful sometimes to support SIGIO/SIGURG for
+as many devices as possible.
+
+I know only too well that Sybase CT_lib uses this for Async mode.
+(I just tracked down what appears to be an HPUX process group bug preventing
+ the signals from being delivered...)
+
+In any case, using SIGIO is a whole parallel method to using a select loop,
+and although it seemed like a hack when I found out they were using it, it
+has some elegance since they chain to other possible signal handlers in
+case other io descriptors are ready.
+
+> Blocking vs. non-blocking is a standard issue in design of U*X devices.
+> Standard solution: make it block by default, and accept an IOCTL to put it in
+> non-blocking mode.  There's even a POSIX way to do this:
+> 
+> 	flags_or_err = fcntl(fd, F_GETFL, 0);
+> 	{check for error}
+> 	res = fcntl(fd, F_SETFL, flags_or_err | O_NONBLOCK);
+> 	{check for error}
+
+sdw
+-- 
+Stephen D. Williams 25Feb1965 VW,OH (FBI ID) sdw@lig.net http://www.lig.net/sdw
+Consultant, Vienna,VA Mar95- 703-918-1491W 43392 Wayside Cir.,Ashburn, VA 22011
+OO/Unix/Comm/NN       ICBM/GPS: 39 02 37N, 77 29 16W home, 38 54 04N, 77 15 56W
+Pres.:Concinnous Consulting,Inc.;SDW Systems;Local Internet Gateway Co.;28May95
+
+
+
+

@@ -1,0 +1,67 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Wed, 31 Jan 1996 04:09:19 +0800
+To: cypherpunks@toad.com
+Subject: Re: FV Demonstrates Fatal Flaw in Software Encryption of Credit Cards
+In-Reply-To: <ad32cd9601021004af4e@[132.162.233.188]>
+Message-ID: <310E0D83.111A@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Nathaniel Borenstein wrote:
+> This is wrong on two main counts:  the ID's are harder to find than
+> credit cards, and they're not as directly useful as credit cards.  These
+> two facts combine to make the attack more or less irrelevant to FV.
+> 
+> First of all, the Virtual PIN (FV-ID) is much harder to extract from a
+> large data stream because it is arbitrary text, unlike credit card
+> numbers, which are self-identifying.
+> 
+> Second, a Virtual PIN is not a one-way payment instrument, like a credit
+> card.  To use FV to buy something on your credit card, you need to
+> combine the theft of a Virtual PIN with the compromise of the buyer's
+> email account, for confirming transactions.  We all know this can be
+> done -- we actually even spell out how to do it in our paper, "Perils
+> and Pitfalls of Practical CyberCommerce" -- but it is very hard to
+> combine these steps on the large scale that would be needed to mount an
+> automated attack, which is the most serious threat to the credit card
+> system.
+
+  It would not be much harder than the demonstrated keyboard attack
+to create a hacked version of winsock that would implement an
+attack against First Virtual.  If the attacker had a list of web
+pages that accept FV payments it would be very easy to collect
+the ID numbers.  There is no need to attack the large datastream
+of keyboard input when the search can be easily narrowed.  Since
+FV doesn't use encryption the attack could easily be implemented
+in winsock, making it independent of any client software.  A version
+that infected the win95 IP stack could be quite effective.  The list
+of FV accepting sites would be easily obtainable via a query of
+altavista.  Since the infected system is on the internet and has
+to periodically send its results to the attacker, it could download
+an updated list of FV pages at the same time.  
+
+  Attacking the e-mail verification step of the FV system could also
+be accomplished via a hacked winsock.  A bit of POP3 aware code
+in the winsock could intercept the verification messages and keep
+the e-mail client from ever seeing them.  It could automatically
+generate "Yes" responses for all such messages.
+
+  I believe that FV is just as vulnerable to these types of
+attacks as any of the encryption based credit card schemes, if
+not more so.  The thing that really protects FV is that it can
+only be used to buy bit, not real goods, and the bad guys don't
+generally care about stealing bits.  This is also what makes FV
+not generally useful to people who want to shop over the internet.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

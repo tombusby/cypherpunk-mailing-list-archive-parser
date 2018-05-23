@@ -1,0 +1,45 @@
+From: Eric Hollander <hh@soda.berkeley.edu>
+Date: Mon, 16 Nov 92 15:33:38 PST
+To: Hal <74076.1041@compuserve.com>
+Subject: Re: Why remailers...
+In-Reply-To: <921116013001_74076.1041_DHJ41-1@CompuServe.COM>
+Message-ID: <9211162333.AA10951@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Remailers are extremely important, but we also need anonymous IP bouncers.
+
+An IP bouncer might work like this:  there would be a user, a server, and a
+target.  The server and user would each have key pairs (probably a new pair
+for each session), and would trade public keys.  The user would request a
+port from the server, and then would issue (encrypted) commands to the
+server.
+
+These commands might include:
+
+telnet - open a connection to the target.  The target would route its
+packets to the server, and the server would encrypt them and route them to
+the user.
+
+ignore - get ready to recieve lots of random bits and perhaps pass them on to
+other servers.  This is needed to help a user confuse trafic analysis.  A
+side note:  it would be useful to have a standard port on all machines that
+would accept the encrypted ignore command, so that packets could just be
+sent off into the ether.  Users who use bouncers would want to have their
+machines open up connections, issue the ignore command, and send random bits
+at some random interval.
+
+mail - act as an anonymous remailer (like the ones we already have set up).
+
+port - provide a port that other people can telnet in to.
+
+This type of anonymous bouncer would be helpful for everything we do with
+TCP, including perhaps mail.
+
+e
+
+
+
+

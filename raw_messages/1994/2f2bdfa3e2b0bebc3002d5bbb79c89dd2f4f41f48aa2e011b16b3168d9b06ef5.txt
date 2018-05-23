@@ -1,0 +1,61 @@
+From: db@Tadpole.COM (Doug Barnes)
+Date: Mon, 12 Dec 94 21:41:15 PST
+To: bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Subject: Re: Broadcasts - addressing
+In-Reply-To: <9412122353.AA08749@anchor.ho.att.com>
+Message-ID: <9412130540.AA13901@tadpole.tadpole.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bill --
+
+I think this is an interesting approach. I think there is a degree of 
+linkability that is hard to shake, especially in the early, low
+bandwidth days (and in the later, high-bandwidth days, the CPU
+will get exercised in proportion to the extent the messages are
+unlinkable.)
+
+My thoughts on this continue to be in favor of distributing random
+number "tokens" to your correspondents; your sniffer has all your 
+unused but issued tokens and scans for them. I do like your approach 
+for "initial contact", but the keyid size would need to be finely 
+tuned.  It is also not clear if you want the sender to be able to 
+set the keyid size, as this gives them the ability to create more 
+work for you.
+
+The downside to my approach is that it would require some support
+from remailers and in the sniffers (has anyone written such a 
+beast yet?), and a small, very simple program for generating 
+packets of the tokens, accepting them, using them, and exporting
+them to the sniffer.
+
+Your approach could probably be implemented by the last remailer 
+prior to news posting and a change to PGP. Frankly, I would like
+to see a PGP encryption option that had no visible key id and 
+decrypted based on a decryption key id specified on the command 
+line. (But this has been suggested many times.)
+
+All grist for the mill...
+
+> 
+> > I have been contemplating how to mark broadcast messages as being 
+> > 'for' someone. To foil traffic analysis, you don't want to include 
+> > their nym or key-id, for the sake of the your poor CPU, you want to 
+> > avoid the need to attempt decryption on everything that passes through. 
+> 
+> The main problem is how to avoid decrypting _most_ of the traffic,
+> without giving away significant information about the recipient.
+> One approach is to do something some political users have been asking for -
+> implement support for very short keyids (e.g. 4 bits instead of 24-32),
+> so that the keyid isn't a good identifier for the user.
+> Another approach is to include a tag in the Subject: with either a hash
+> of the key (substantially reducing the number of bits),
+> or simply the last hex or two of the keyid - that lets you ignore
+> 15/16th or 255/256th of the traffic, without giving away much.
+> 
+
+
+
+

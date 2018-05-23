@@ -1,0 +1,47 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 11 Jun 93 18:00:51 PDT
+To: newsham@wiliki.eng.hawaii.edu
+Subject: Mail logging
+In-Reply-To: <9306120001.AA09108@toad.com>
+Message-ID: <9306120057.AA09590@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> >It's got complete traffic analysis data, complete with
+>> >to/from pairs, time of day, and message size.
+
+>The goal of this list is not to turn off such "features" but to
+>provide security in the face of these features, in hostile environments,
+>environments not totally under our own control.
+
+Well said.
+
+If you externally observe a remailer, there are three basic items to
+correlate incoming to outgoing with: body content, body length, and
+redelivery latency.  Notice that items two and three are provided by
+the mail logs on my machine.  A remailer which is a mix needs to
+confuse all three.
+
+The first, content, requires an encryption or decryption operation.
+The second, length, requires length quantization and therefore padding
+and packeting.  The last, latency, is only solved by random delays if
+the traffic through the node stays above a certain threshold.  The
+real important characteristic with latency is reordering the incoming
+and outgoing messages.  The simplest way to do this is to accumulate N
+messages, create a random permutation on N elements, and mail the
+messages out in the permuted order.
+
+The single most basic problem with mail development that we have is
+that we don't have enough mail volume through the remailers we have in
+order to be able to experiment with better systems.  In particular, we
+need to examine other reordering algorithms for the case where volume
+is low and delivery latencies would be too high with the simple
+gather-and-permute algorithm.
+
+Eric
+
+
+
+
+

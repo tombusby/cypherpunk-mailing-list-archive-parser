@@ -1,0 +1,76 @@
+From: Arve Kjoelen <akjoele@shiva.ee.siue.edu>
+Date: Wed, 20 Sep 95 08:38:52 PDT
+To: cypherpunks@toad.com
+Subject: drand48() bug
+Message-ID: <199509201538.KAA28316@shiva.ee.siue.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+jws@neon.netscape.com writes:
+> Most of the unix machines do the same thing.  On SGI machines
+> that have the hardware cycle counter, its value is used in place of the
+> srand48(usec), lrand48() sequence.  BSDI the code used srandom and random.
+
+
+Kun Luo, one of our grad students here recently found a bug in Sun's implemen-
+tation of the drand48() function.  We reported it to Sun, and they acknowledged
+the bug exists - it seemed to be the first time they had heard of it, though.  
+The bug affects Sun's ANSI C compiler shipped with 
+SPARCWorks3.0 and consists of the following:  If you're compiling using the
+- -Xc flag (strict ANSI C, no SUN C compatibility extensions), the function
+drand48() is BROKEN.  It ALWAYS returns the number 9.000000, no matter what
+you seeded it with using srand48().
+
+to reproduce, compile the following program under Solaris 2.x using their
+C compiler AND the -Xc flag:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <time.h>
+ 
+void main(){
+   double number;
+   int  num = 1000;
+ 
+   srand48((int)time(NULL));
+   while(num --){
+        number = drand48();
+        printf("%lf\n", number);
+   }
+}
+
+By the way, Cyphepunks mail seems to indicate that Netscape uses lrand48()
+instead of drand48().  lrand48() is NOT broken.  The potential for disaster
+is high, though, for anyone blindly trusting vendor-provided pseudo-
+random number generators.  How many products are out there using drand48()
+as part of their random number generation scheme?
+
+- -Arve
+ 
+- -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.6.2
+ 
+mQCNAzAvqdwAAAEEAKRdBFn7O/h+wz3tOQwHWvaFKS6gi+UezzCXli/QnuCrJcUE
+agvlVVZ/PzKG5i23VdbghyHsVElvKzRW/D1pYor6xSluCftXzSxbCuiEIe2SXUsH
+65AqFN688upXzRKHcq3bU/eKB7xUOGqCDot8AzModnwE+XWCgdqn8CTZCNGhAAUR
+tCJBcnZlIEtqb2VsZW4gPGFram9lbGVAZWUuc2l1ZS5lZHU+
+=csFb
+- -----END PGP PUBLIC KEY BLOCK-----
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCUAwUBMGAusNqn8CTZCNGhAQEYdQP4+UGvLJKoQPWPLFMENDIPY1QSIuQdQxdt
+fTzWRNXsPadE4N40bHgucqZQG8Ze55JsKIrrhL9RZFIVx+ygxsmsSHsocu/kFbSW
+E7RNWMvoaoRAmB4KkWF+ofqRWl9Qo+r00CvgX1brsOdpjySVIkxml8/L7R/RBuQL
+aFNV5OBz2w==
+=saUT
+-----END PGP SIGNATURE-----
+
+
+

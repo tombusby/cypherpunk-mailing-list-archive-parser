@@ -1,0 +1,77 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Thu, 24 Apr 1997 10:31:55 -0700 (PDT)
+To: cypherpunks <cypherpunks@toad.com
+Subject: [NTSEC] NT Displays Plain-Text Netware Passwords (fwd)
+Message-ID: <Pine.SUN.3.91.970424133354.16568D-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    | "If  you're  gonna die,  die  with your|./|\.
+..\|/..|sunder@sundernet.com|boots on;  If you're  gonna  try,  just |/\|/\
+<--*-->| ------------------ |stick around; Gonna cry? Just move along|\/|\/
+../|\..| "A toast to Odin,  |you're gonna die, you're gonna die!"    |.\|/.
+.+.v.+.|God of screwdrivers"|  --Iron Maiden "Die With Your Boots on"|.....
+======================== http://www.sundernet.com =========================
+  For with those which eternal lie, with strange eons even death may die.
+
+
+---------- Forwarded message ----------
+Date: Thu, 24 Apr 1997 01:37:49 -0500
+From: Patrick Hayden <patrick.hayden@ibm.net>
+To: ntsecurity@iss.net
+Subject: [NTSEC] NT Displays Plain-Text Netware Passwords
+
+Windows NT 4.0, with Microsoft's Client Services for Netware, or
+Novell's IntraNetware Client for Windows NT, writes plain-text user-id
+and password information to PAGEFILE.SYS.  The user-id and password
+apply to Netware, however, users commonly use the same logon information
+for both NT and Netware.  It is possible to then recover the plain-text
+information by using a disk editor.
+
+Tests have been performed  (with more pending) on these systems:
+
+Windows NT Workstation 4.0 w/SP1 and IntraNetware Client for NT (970214)
+     Pent. 133 Laptop  24MB RAM  50MB PAGEFILE.SYS
+Windows NT Workstation 4.0 w/SP1 and Microsoft Client Services for
+Netware
+     Dual Pent 166   64MB RAM  80MB PAGEFILE.SYS
+Novell Netware 4.11 Server
+
+1.  Set /MAXMEM=12 in BOOT.INI so as to force swapping.
+2.  Load NT; Authenticate to NT and Netware (I used the same ID and
+Password for both systems.); Verify connection by mapping a drive.
+3.  To ensure that sufficient swapping takes place, run a large program
+(this forces the user-id and password information stored in RAM to be
+placed into PAGEFILE.SYS.)
+4.  Exit NT; Boot to DOS; diskedit PAGEFILE.SYS
+5.  Search for one of the following strings (do NOT include the ""
+items):
+
+ IntraNetware Client:   
+     NWUserName="user-id"
+     WlMprNotifyPassword="password"
+     "UserName"    (if the username is alone, the password will follow
+very closely)
+
+ Client Services for Netware
+     nwcs"password"    (the password is all CAPS and will immediately
+follow nwcs)
+
+In a "real-life" environment, most likely there will be enough swapping
+on the system that setting the /MAXMEM switch will be unnecessary.  The
+switch is only to help confirm that this hole exits.
+
+If anyone has any knowledge of this, please post it to the list.
+
+Patrick Hayden
+Security Consultant - Ernst & Young, LLP
+patrick.hayden@ibm.net
+
+
+
+
+

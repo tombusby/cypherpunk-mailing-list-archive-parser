@@ -1,0 +1,52 @@
+From: cman@communities.com (Douglas Barnes)
+Date: Wed, 27 Sep 95 13:54:53 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Re: WSJ on Netscape Hole 3
+Message-ID: <v02120d06ac8f74e7796e@[199.2.22.120]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Somebody wrote:
+>> With Netscape 1.1 the state of the stack is much more dynamic, in
+>> particular the user can be viewing documents at an arbitary depth in
+>> the "web tree", each recursion will increase the stack pointer (or
+>> decrease with some architectures) There is no way of knowing for
+>> certain where you code will end up and thus no way to reliably alter
+>> the return address on the stack to execute your arbitary code.
+>
+
+I just tested this under Solaris 2.4 and it "turns out not to be
+the case." I approached my "bad" URL from a variety of other places,
+passing through various other pages, and the stack structure was
+still the same when I clicked on the bad guy. The big problem I'm
+having on this platform is the windowing register system on the SPARC
+architecture, which interacts in weird ways with the debugger.
+
+The lack of determinacy about where the stack is loaded in global
+memory _does_ seem to be a much bigger problem on the Mac, which
+is still not anything approaching a multi-tasking OS. Under Unix,
+proceses get their own address space to play in, which is always
+the same; on Macs, with their weird relocatable heaps, you never
+know where stuff is going to get loaded.
+
+I wonder how this is handled in Windows 95....
+
+As for objections about how worthwhile this is, it's pretty clear
+that a patch will be available for this problem before we can finish
+and publicize an exploit. This is not, however, the last piece of
+network software that will contain problems of this sort, and it is
+a good idea to build up expertise in this area. I'd also suggest going
+after some of the other browsers... I know, for instance, that AOL's
+browser dies horribly on these same sort of URLs.
+
+Good luck, all.
+
+Doug
+
+
+
+
+
+

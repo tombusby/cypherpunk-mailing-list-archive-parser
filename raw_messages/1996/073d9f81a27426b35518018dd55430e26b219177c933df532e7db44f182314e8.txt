@@ -1,0 +1,45 @@
+From: Raph Levien <raph@cs.berkeley.edu>
+Date: Sat, 27 Apr 1996 12:06:58 +0800
+To: cypherpunks@toad.com
+Subject: Re: Mixmaster message formats
+In-Reply-To: <Pine.LNX.3.92.960425200950.1060A-100000@gak>
+Message-ID: <318104E5.2779929F@cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mark M. wrote:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> I was thinking about how Mixmaster needs a separate message format so it
+> can make messages a fixed size and add a packet ID.  However, couldn't all
+> this be done with PGP?  With PGP, the length of the file being encrypted is
+> encrypted itself, so it would be possible to append random data to the end
+> of the file to make the message a fixed length like Mixmaster.  Also, the
+> packet-ID could be implemented by putting a line such as the following in the
+> message:
+> 
+> ::
+> Packet-ID: foobar
+> 
+> The only other thing that would have to be taken care of is chaining.  The
+> way I could see this working is to have a header in the encrypted message that
+> tells the remailer whether it should de-armor the message at the next layer,
+> append random data, then re-armor, and pass it to the next remailer.  Am I
+> missing something?
+
+Yes. When an intermediate message is decrypted, the real message becomes
+readable, but the random bytes stay random. Thus, your proposal is
+secure against attacks on the link, but fails to attacks on the nodes
+(i.e. reveals just as information as if padding had not been used).
+
+I was suffering from the same confusion myself until fairly recently. I
+even made a proposal for text-based type-3 remailer formats, which
+contained this flaw.
+
+Raph
+
+
+
+

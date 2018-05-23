@@ -1,0 +1,52 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Sat, 1 Jun 1996 12:33:19 +0800
+To: cypherpunks@toad.com
+Subject: Re: Where does your data want to go today?
+Message-ID: <199606010032.RAA27060@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At  3:25 AM 5/31/96 -0400, David F. Ogren wrote:
+>> > >   What problems does compression before encryption have? It at least
+>> > >seems to work for PGP.
+>> > >
+>> > Most compression schemes put a header/index on the front of the
+>> > compressed data.
+>> > This makes recognizing the correct decryption very simple.
+>> > 
+>> > Call it a limited "known plaintext" situation.
+>> 
+>
+>Using a random IV also limits the effectiveness of using known 
+>headers for "known plaintext" attacks.  Also note that a good block 
+>cipher isn't that vulnerable even to "known plaintext" attacks.
+
+I don't think this is true given a brute force attack.  Let me assume
+DES-CBC as a specific system.  Let us assume that the plaintext is:
+
+  IV || PKZIP2.1 || <compressed data>
+
+Where IV is the 8 byte initialization vector.
+
+The brute force system decrypts the first, and second blocks (8 bytes each)
+of the cyphertext, XORs them, and compares the result with "PKZIP2.1".  If
+the comparison is equal it has the key.
+
+If we eliminated the header and just started with the compressed data, then
+the brute force system would have to decrypt and decompress enough of the
+data to run statistical tests.  The cost of the additional decryptions,
+decompression, and statistical tests substantially raise the cost of the
+brute force attack.
+
+
+------------------------------------------------------------------------
+Bill Frantz       | The CDA means  | Periwinkle  --  Computer Consulting
+(408)356-8506     | lost jobs and  | 16345 Englewood Ave.
+frantz@netcom.com | dead teenagers | Los Gatos, CA 95032, USA
+
+
+
+
+
+

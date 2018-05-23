@@ -1,0 +1,68 @@
+From: Alexander Kjeldaas <astor@guardian.no>
+Date: Sun, 13 Dec 1998 15:12:18 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: cfs' ecb+ofb mode vs. interleaved cbc mode
+Message-ID: <19981214001208.B25332@lucifer.guardian.no>
+MIME-Version: 1.0
+Content-Type: text/plain
+Content-Length: 2761
+Lines: 57
+
+
+For fast file-system crypto, you really want to implement the ciphers
+so that you encrypt several blocks at a time.  CFS does this by using
+a special mode (described as ecb+ofb by schneier).  The CFS
+documentation explains:
+
+
+"At attach time, CFS derives from the passphrase into two DES keys, K1
+and K2.  K1 is used to create two (or three) DES pseudorandom stream
+ciphers, each 128KB long, S1 and S2.  To encrypt a file block, it is
+first XORd against a unique bitstream derived from the inode number of
+the file.  The result is then XORd against S1 based on its offset in
+the file.  This is then DES ECB encrypted with K2, and the result of
+that is XORd against the appropriate position in S2.  The resulting
+ciphertext is what is stored.  The cipher is reversed in the obvious
+manner.  Filenames are similarly encrypted.
+
+There does not appear to be a feasible attack that allows an
+independent search for the two subkeys K1 and K2; in a brute-force
+known-plaintext attack, an attacker would have to try all 2**112 key
+combinations.  Note that in the single DES mode, the two keys may be
+vulnerable to independent exhaustive search under a so-called "linear"
+attack, but this attack appears to require a large number of chosen
+plaintexts encrypted under the same inode number.  Under most
+conditions where the attacker cannot introduce large numbers of chosen
+plaintexts, I believe even the single-DES CFS encryption to be very
+strong in practice.  Note that this is not the same as a "proof".  In
+any event, CFS is always at least as secure as DES or triple DES (as
+selected when the directory is created).  If want high security,
+select triple DES (now the default); for better performance, use the
+hybrid single-DES option."
+
+
+I'd like to know how this method compares to using an interleaved cbc
+mode - for example 8-way interleaved cbc.  The n-way interlaved
+cbc-mode works by chaining each n'th block together instead of each
+block.  This means you get n more messages.  For a 512-byte block and
+a 128-bit block length, this means that each message will be
+512/(8*16) = 4 blocks long.  For a 4k block you get messages that are
+32 blocks long.  This might or might not be a problem.
+
+With CFS you need 2x the key material - something that is really hard
+to get by when you're using 256-bit keys.  It seems to me you'll have
+to type in an extremely long password or each of the keys will in
+practice be weaker than what the theory tells you.  Another point is
+that CFS requires a lot more nonswappable memory than interleaved cbc
+mode. This means that interleaved cbc mode initially seems more
+attractive for file-system use.  Am I missing something?
+
+astor
+
+-- 
+ Alexander Kjeldaas, Guardian Networks AS, Trondheim, Norway
+ http://www.guardian.no/
+
+
+
+

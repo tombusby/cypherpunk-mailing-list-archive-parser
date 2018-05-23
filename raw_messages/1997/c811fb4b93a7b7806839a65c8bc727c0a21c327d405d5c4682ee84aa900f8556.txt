@@ -1,0 +1,58 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Thu, 31 Jul 1997 04:30:22 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Cryptography Question (I hope it's not off-topic on this list)
+In-Reply-To: <199707281537.RAA09388@basement.replay.com>
+Message-ID: <5ro7ru$f5i@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In article <Pine.LNX.3.91.970728211016.884C-100000@fatmans.demon.co.uk>,
+Paul Bradley  <paul@fatmans.demon.co.uk> wrote:
+>
+>
+>>   e.g. - If only 56-bit encryption becomes legal, is there a method
+>> of *chaining* several passes of 48-bit encryption which would make it
+>> just as hard to break as 96/192/384-bit (etc.) encryption?
+>
+>This is a similar idea to implementing, say DES, with independent 
+>subkeys. Layering encryption in this manner makes the plaintext more 
+>difficult to determine providing that:
+>
+>a. The involved cryptosystem is not a group, or does not posess strong 
+>group like properties (eg. There are no large subgroups).
+>
+>b. Independent keys are used for each encryption
+>
+>For a good example of a particular case of your idea see 3DES
+
+Careful, here.  3DES gives us a benefit because we can chain crypto at
+the algorithm level.  Chaining several passes of DES may not give this
+benefit if all we have is an opaque program that block-pads the input
+and does raw DES on that.  For example (the values are imaginary),
+
+DES("foo") = DES_raw("foo\x05\x05\x05\x05\x05") = "f983hgls"
+DES(DES("foo")) = DES("f983hgls") =
+   DES_raw("f983hgls\x08\x08\x08\x08\x08\x08\x08\x08") = "d84koqw78452398f"
+DES(DES(DES("foo"))) = DES("d84koqw78452398f") =
+   DES_raw("d84koqw78452398f\x08\x08\x08\x08\x08\x08\x08\x08") =
+   "ecy34895y34057834985634y";
+
+whereas 3DES("foo") = 3DES_raw("foo\x05\x05\x05\x05\x05") = "ecy34895"
+
+To break DES(DES(DES("foo"))), break the outer DES until you find
+"\x08\x08\x08\x08\x08\x08\x08\x08" at the end of the "plaintext" (actually,
+the padded value of DES(DES("foo"))).  Repeat until you get "foo".
+
+[It is left as an exercise to the reader to determine why you might not
+be able to merely chop the last 8 bytes off the output of the second and
+third DES iterations to get around this problem.]
+
+   - Ian
+
+
+
+
+

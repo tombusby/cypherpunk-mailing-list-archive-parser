@@ -1,0 +1,61 @@
+From: Carl Ellison <cme@ACM.ORG>
+Date: Thu, 17 Oct 1996 10:06:07 -0700 (PDT)
+To: Steve Schear <azur@netcom.com>
+Subject: Anonymous Auth Certificates [was: Re: Blinded Identities]
+In-Reply-To: <v02130503ae865897f409@[10.0.2.15]>
+Message-ID: <v03007802ae8c171fb5bc@[168.143.8.144]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 16:28 -0400 10/13/96, Michael Froomkin - U.Miami School of Law wrote:
+>[cc'd to coderpunks]
+>
+>On Sun, 13 Oct 1996, Steve Schear wrote:
+>
+>> >Steve Shear <azur@netcom.com> writes:
+>
+>[much cut]
+>>
+>> I've been charged with developing an Internet service which needs to assure
+>> its clients of anonymity.  However, we fear some clients may abuse the
+>> service and we wish to prevent the abusers from re-enrollment if
+>> terminated for misbehavior. (In your example, it would be the person(s)
+>> trying to discover the service host via flood).
+>>
+>> My thought was to base enrollment on some sort of 'blinding' of their
+>> certified signature (e.g., from Verisign) which produces a unique result
+>> for each signature but prevents the service from reconstructing the
+>> signature itself (and thereby reveal the client's identity).  I'm calling
+>> this negative authentication.
+>>
+>> Have you come across anyone who has considered this problem or
+>> another one which is mathematically very similar?
+
+The mistake is to think of using ID certificates (like those from Verisign)
+in the first place.  They don't mean anything.
+
+You want an authorization certificate, such as produced by SPKI.  You need
+to know what a key is authorized to do, not what name is associated with
+the key.
+
+Check out
+
+http://www.clark.net/pub/cme/spki.txt
+and
+http://theory.lcs.mit.edu/~rivest/publications.html in the SDSI section.
+
+ - Carl
+
+
++------------------------------------------------------------------------+
+|Carl M. Ellison   cme@acm.org     http://www.clark.net/pub/cme          |
+|PGP: E0414C79B5AF36750217BC1A57386478 & 61E2DE7FCB9D7984E9C8048BA63221A2|
+|  "Officer, officer, arrest that man!  He's whistling a dirty song."    |
++-------------------------------------------- Jean Ellison (aka Mother) -+
+
+
+
+
+
+

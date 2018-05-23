@@ -1,0 +1,40 @@
+From: Paul_Koning/US/3Com%3COM@smtp1.isd.3com.com
+Date: Tue, 23 Apr 1996 01:28:21 +0800
+To: cypherpunks@toad.com
+Subject: Re: Dictionary searching code
+Message-ID: <9604221646.AA0800@>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:02 PM 4/19/96 -0500, Adam wrote:
+> Does anyone have some code that will search a dictionary, and
+>tell me *quickly* if an arbitrary chunk of text is in the dictionary?
+>Pre-indexing steps are fine, as is using big chunks of disk for hash
+>tables.  The point of course, is to check arbitrary possible plaintext
+>that a test decryption produces.
+
+If you want to do string matching (search for an exact match on a string --
+as opposed to checking whether a set of words is in a database) a good
+choice would be the Boyer-Moore algorithm.  It has the nice property
+that worst case it requires O(n) time (n = dictionary byte count) but
+on average it is quite a lot better -- and furthermore, the longer the string
+you're looking for, the faster it gets...
+
+ paul
+
+!-----------------------------------------------------------------------
+! Paul Koning, NI1D, C-24183
+! 3Com Corporation, 1-3A, 118 Turnpike Road, Southborough MA 01772 USA
+! phone: +1 508 229 1695, fax: +1 508 490 5873
+! email: paul_koning@isd.3com.com  or  paul_koning@3mail.3com.com
+! Pgp:   27 81 A9 73 A6 0B B3 BE 18 A3 BF DD 1A 59 51 75
+!-----------------------------------------------------------------------
+! "Be wary of strong drink.  It can make you shoot at tax collectors
+!  -- and miss!"
+!                -- Robert A. Heinlein, "The Notebooks of Lazarus Long"
+!                   in "Time Enough for Love"
+
+
+
+

@@ -1,0 +1,33 @@
+From: pete@stc.com (Pete Wenzel)
+Date: Thu, 25 Jan 1996 14:16:07 +0800
+To: mlist-cypherpunks@stc.com
+Subject: Re: Associating Local Port Number to PID
+In-Reply-To: <mlist.cypherpunks.2.2.32.19960124164913.006a5fa0@cosmos.cosmos.att.com>
+Message-ID: <4e6t2t$h2f@loki.stc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Karl A. Siil" <karl@cosmos.cosmos.att.com> writes:
+
+> I'm working on a program for UNIX (SVR4, Solaris 2.4) systems that needs to
+> associate PID with local TCP/IP port number, so as to pass session keys
+> accordingly to already running processes. This sounds like such an obviously
+> needed association that someone must have done it already.
+
+Take a look at how implementations of identd (RFC 1413) do it.  This daemon
+associates a TCP port with its UID, but I'm sure the PID is very close by
+in the netstat data structures.  It might actually find the PID first, then
+look up its owner's UID.
+
+Anyway, look at the pidentd stuff at ftp://ftp.lysator.liu.se/pub/ident/.
+
+--Pete
+ ======= Pete Wenzel === Senior Member, Technical Staff and DNRC =======
+ == Software Technologies Corp.,  P. O. Box 661090, Arcadia, CA 91066 ==
+ == Phone: 818-445-7000 x311 = http://www.stc.com = FAX: 818-447-0879 ==
+http://PGP.ai.mit.edu/htbin/pks-extract-key.pl?op=get&search=pete@stc.com
+
+
+
+

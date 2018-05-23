@@ -1,0 +1,52 @@
+From: Marc.Ringuette@GS80.SP.CS.CMU.EDU
+Date: Fri, 29 Jan 93 13:19:44 PST
+To: cypherpunks@toad.com
+Subject: Re: OTP Generators
+Message-ID: <9301292119.AA12633@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal> Also, relying on a half-life calculation in which we wait a certain time 
+Hal> interval, and see if there is a decay or not, won't be that accurate.  
+Hal> If your time is off a little, it could bias the results.
+Hal> Tim May posted the best (IMO) fix for this.  You collect bits in pairs; 
+Hal> discard 00 and 11; for each 01 output a 0, for each 10 output a 1.
+
+This is better than nothing, but it doesn't completely fix the biased
+bit stream.  For instance, if your detector typically has some runs of
+zeroes, then after a 10 sequence, a 01 sequence is more likely than
+another 10.
+
+I think that all schemes which rely on _single_ random events from a
+radioactive source are going to be very sensitive to tuning errors
+which will make their random bit streams biased and thus useless.
+
+Better is the following:  select a time interval in which 100-1000
+random events will occur.  Count events in one of these time intervals
+and output the parity of the count.  Repeat.  If you ever detect fewer
+than 10 events in an interval, quit with an error.
+
+This method has the advantage that no "tuning" of the randomness source
+is necessary; you must only ensure that your time interval contains a
+lot of random events, so that there is no chance of a small drift in the
+random number source causing a corresponding failure in randomness.
+
+Another useful technique, if you're willing to trust crypto technology,
+is to compute MD5 hashes or DES encryptions of the bit stream.  This
+will do a lot, actually.  If your bits are already random, then applying
+a pseudo-random permutation can't hurt; but if you've been brain-dead
+somehow, it's a great insurance policy to apply a well-known scrambling
+algorithm to your bits.
+
+I wish we weren't just discussing hacks, though.  I think I'll hunt for
+some theoretical results to make this more solid.
+
+
+-- Marc Ringuette (mnr@cs.cmu.edu)
+
+
+
+
+
+

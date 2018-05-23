@@ -1,0 +1,40 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Fri, 10 Jun 94 17:15:36 PDT
+To: dfloyd@runner.jpl.utsa.edu (Douglas R. Floyd)
+Subject: Re: Time Locks-- Re: Delayed self-encrypting messages
+In-Reply-To: <9406102113.AA07419@runner.utsa.edu>
+Message-ID: <9406110014.AA22981@fnord.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+    Date: Fri, 10 Jun 94 16:13:03 CDT
+    From: dfloyd@runner.jpl.utsa.edu (Douglas R. Floyd)
+    
+    Anyone have any better ideas for a secure crypto way of doing this? ;)
+    
+Create your message.  Using PGP, generate a new key pair.  Use the
+public key to encrypt the message, then throw it away.  Send the
+secret key along with the message.  Have the signature for the secret
+key be the NYT headline for the day on which you want the data to be
+available :-)
+
+Stepping back from the details of various crypto approaches, I think
+that the problem is that you want a locking mechanism to be based on
+data.  Since you want a time lock, the data has to be directly
+associated with time.  For this to work, you need to create data that
+is unknowable until a certain time.  If the data is known to you,
+you've come full circle: you're new goal is your original goal.  If
+the data is not known to you, it needs to be something which the other
+party cannot deduce prior to the expiration of your time lock.  To be
+confident that no one could deduce this information, a prerequisite
+would have to be that you couldn't deduce it, that is, it wouldn't be
+something that you could use as part of an encryption.
+
+I think that this problem ultimately requires a trust based mechanism.
+
+			Rick
+
+
+
+

@@ -1,0 +1,44 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sat, 18 Jan 1997 10:17:01 -0800 (PST)
+To: cypherpunks@toad.com (Cypherpunks)
+Subject: Re: your mail
+In-Reply-To: <32E02BA5.AEE@comet.net>
+Message-ID: <199701181810.MAA10982@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+T. O'Brien wrote:
+> ------------438F2CA70B04
+> Content-Transfer-Encoding: 7bit
+> Content-Type: text/html; charset=us-ascii
+> 
+> <HTML><BODY>
+> 
+> <DT>Unsubscribe&nbsp;</DT>
+> 
+> </BODY>
+> </HTML>
+> ------------438F2CA70B04--
+> 
+
+Here's a shell script that i wrote to help people like Prof. OBrien.
+
+#!/bin/sh
+
+if [ "x$1" = "x" ] ; then
+  echo Usage: $0 email 1>&2
+  exit 1
+fi
+
+/usr/sbin/sendmail -f $1 majordomo@toad.com << __EOB__
+Subject: unsubscribe
+From: $1
+To: majordomo@toad.com
+
+unsubscribe cypherpunks
+__EOB__
+
+
+
+

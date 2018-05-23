@@ -1,0 +1,113 @@
+From: Matthew Ghio <ghio@kaiwan.com>
+Date: Sat, 4 Jun 94 02:05:05 PDT
+To: cypherpunks@toad.com
+Subject: Software upgrades to my anonymous remailer ghio@kaiwan.com
+Message-ID: <ghio26160@kaiwan.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I added PGP support to my remailer.  For those not familiar with the format,
+send mail to ghio@kaiwan.com, and on the first two lines of the message body,
+put:
+
+::
+Encrypted: PGP
+
+Then put the PGP encrypted message here.  Inside the PGP message, put:
+
+::
+Anon-To: <address@site>
+
+##
+Subject: whatever
+Reply-To: or any other headers that you want to add to the message
+
+The message body of the message to be remailed goes here.
+
+
+
+The remailer now also supports a way to truncate the message.  This will
+allow you to remove your signature.  Put a header Cutmarks: in your message
+with what you want to use as a truncate line.  For example:
+
+To: ghio@kaiwan.com
+Subject: Anonymous Mail
+
+::
+Request-Remailing-To: address@site
+Cutmarks: -truncate_here-
+
+this is a message
+all of this text will get remailed.
+
+-truncate_here-
+
+this text will not be included in the remailed message.
+
+
+You can also use the cutmarks feature as a boundry between seperate messages.
+To use it in this manner, you must put a :: and remailing instructions
+immediately following the cutmarks.  For example:
+
+To: ghio@kaiwan.com
+
+::
+X-Anonymously-To: joe@nowhere.edu
+Cutmarks:-+-next-+-
+
+##
+Subject: hi joe
+
+this is some anonymous mail
+
+-+-next-+-
+::
+X-Anon-To: beth@somewhere.edu
+Cutmarks: [END]
+
+##
+Subject: Hi, Beth
+
+look this is anonymous! :)
+
+[END]
+- Here is my .sig which will get removed -
+
+
+
+Additional notes & common problems:
+
+The :: must go on the very first line of the message, or immediately after
+the seperator/cutmarks.
+
+The :: is for commands/headers that you want to give to the remailer
+software.  Anything that can be put following the :: can also be put in the
+regular headers.  The ## is for headers that you want to appear in the output
+message.
+
+When you use PGP, all the original headers get deleted, so you must put the
+Subject inside the PGP message if you want one.
+
+Messages seperated by cutmarks are treated as seperate mail messages.  Each
+must have its own cutmarks header if you want to use cutmarks in the next
+message.
+
+Only one recipient may be specified per message.  This may be inconvienient,
+but it was necessary to prevent Detweiler exponentiation.
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.3a
+
+mQCKAi3vhFUAAAED6KSE5JwFAstBYAUEASfQCEr1wA+1YsWZl7nlNBA8Xq4YSwlg
+eLCy9oiTDisxsxxxcbQdMtBTFcgQ2GVq7NhhjCEQkRzFRzPOG87T+0aUSufqD2RC
+PYnwacPDpiTUe/TobHMs/Ov+yDuji0bIacveflubU8DvHLjHgI58Jgk1AAURtCRB
+bm9ueW1vdXMgUmVtYWlsZXIgPGdoaW9Aa2Fpd2FuLmNvbT4=
+=v5cv
+-----END PGP PUBLIC KEY BLOCK-----
+
+Let me know if you have any questions/problems.
+
+
+
+

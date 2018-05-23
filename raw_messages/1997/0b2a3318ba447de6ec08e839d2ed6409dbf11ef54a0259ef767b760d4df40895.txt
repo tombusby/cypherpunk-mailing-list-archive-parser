@@ -1,0 +1,87 @@
+From: Bruce Schneier <schneier@counterpane.com>
+Date: Wed, 8 Oct 1997 13:10:35 +0800
+To: Jon Callas <minow@apple.com
+Subject: Re: What's really in PGP 5.5?
+In-Reply-To: <v0300780ab0609577728b@[209.98.13.223]>
+Message-ID: <v03007800b060bf8d9c2d@[209.98.13.103]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In the New York Times Cyber Edition I was quoted as saying that PGP 5.5's
+key escrow "sounds like everything the FBI ever dreamed of."  Of course,
+that's an overstatement.  The FBI certainly has bigger dreams, like making
+non-escrowed encryption illegal.
+
+But PGP's system certainly is key escrow.  PGP, Inc. is splitting hairs,
+claiming that their system isn't key escrow because they don't keep copies
+of any keys.  This may be true, but it's a difference that makes no
+difference.
+
+What the PGP system does is automatically encrypt a copy of the message key
+in the public key of the organization.  This is more like the original
+Clipper Chip.  If you remember, the Clipper Chip included a Law Enforcement
+Access Field in the ciphertext field; this field included the session key,
+encrypted in a secret law-enforcement key.  PGP 5.5 essentially does this.
+You can think of the message key, encrypted in the public key of the
+organization, as the CAF (Corporate Access Field).  And just as the Clipper
+Chip checked the validity of the LEAF before going into decrypt mode at the
+remote end, there is software at the SMTP server that check the validity of
+the CAF before allowing the encrypted e-mail to be sent.  This isn't just
+key escrow; it's key escrow done well.
+
+Yes, this is only available in the Business Edition and not in the Personal
+Edition.  Yes, the company has to decide to turn it on.  Yes, the user is
+notified that this feature is turned on.  But once it is turned on, the
+user cannot turn it off.  This is not manditory key escrow (unless you are
+an employee of a company that decided it is manditory), but the FBI is not
+after manditory key escrow right now.  They're willing to settle for
+voluntary.  Then, in a few years, making it manditory can be spun as
+"closing a loophole."
+
+I agree with the 1996 Phil Zimmermann:
+
+>http://simson.vineyard.net/clips/96.SJMN.PGPBusinessEdition.html
+>....
+>                             PRETTY LOOSE PRIVACY
+>   [...]
+>   Published: April 2, 1996
+>   BY SIMSON L. GARFINKEL
+>....
+>   That has not stopped Zimmermann from complaining loudly about the PGP
+>   name being used in a product that allows someone other than the author
+>   or the intended recipient access to information. Viacrypt owns the
+>   licensing rights to sell the commercial versions of PGP.
+>
+>   ''PGP does not stand for back doors,'' said Zimmermann. ''I don't mind
+>   if they sell a program that has a back door in it, but they shouldn't
+>   call it PGP.''
+>   [...]
+>   ''If your employer can read your mail anytime he wants, without your
+>   permission, that goes against the spirit of the PGP trademark,'' said
+>   Zimmermann.
+
+Key escrow = someone other than the author or the intended recipient of the
+message being able to decrypt it.
+
+There are valid reasons for data backup, but they have nothing to do with
+crypto key recovery.  And there are absolutely no business reasons for
+manditory recovery of communications.  We talked about all of this in our
+report on key recovery (http://www.crypto.com/key_study).  Designing a
+system that is slightly different doesn't negate everything we said.
+
+I'm sorry, PGP, if I offended you.  But that does not change the facts.
+
+Bruce
+
+**********************************************************************
+Bruce Schneier, President, Counterpane Systems     Phone: 612-823-1098
+101 E Minnehaha Parkway, Minneapolis,MN  55419       Fax: 612-823-1590
+                                            http://www.counterpane.com
+
+
+
+
+
+

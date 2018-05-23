@@ -1,0 +1,52 @@
+From: solman@MIT.EDU
+Date: Thu, 14 Jul 94 05:22:20 PDT
+To: cypherpunks@toad.com
+Subject: Why triple encryption instead of split+encrypt?
+Message-ID: <9407141221.AA06307@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Why do people do tripple DES and *shudder* tripple IDEA
+instead of doing some form of non-redundant secret splitting
+and then encrypting with multiple keys.
+
+For example, instead of triple DES, why not
+
+A) divide the compressed plaintext into blocks of n*64 (where n=2 in the
+   simple example, higher in the overkill examples)
+
+B) Split each block into n parts such that:
+
+     i)   The splitting can be reversed.
+     ii)  During the inverse of the splitting each bit in the plaintext is
+          dependent on several bits from each of the parts of the splittext.
+     iii) The total number of bits in the splittext is the same as in the
+          plaintext.
+    
+   The last point will make this form of secret spliting relatively
+   insecure, but that's OK for this application (I think, this is
+   really what I'm asking you.)
+
+C) Now, for each n*64 bit block you have n blocks of 64 bits. Hook these
+   together in n chains and encrypt with DES with different keys in CBC,
+   CFB or OFB mode.
+
+D) Unencrypt on the other end.
+
+You can make the key size arbitrarily large and it takes much less time
+than triple DES and its immune to meet in the middle attacks. So why do
+we use triple DES?
+
+If I am wrong about the security of point B-iii, am I correct that by
+switching to a secure secret splitting algorithm and setting n=2, we
+still get faster performance for the same cryptanalytical hardness as
+triple DES?
+
+Cheers,
+
+JWS
+
+
+
+

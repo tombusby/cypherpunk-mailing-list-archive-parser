@@ -1,0 +1,115 @@
+From: "William H. Geiger III" <whgiii@amaranth.com>
+Date: Tue, 7 Jan 1997 01:09:10 -0800 (PST)
+To: ichudov@algebra.com (Igor Chudov @ home)
+Subject: Re: Cypherpunks moderator robot
+In-Reply-To: <199701070549.XAA02730@manifold.algebra.com>
+Message-ID: <199701070911.DAA09527@mailhub.amaranth.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+In <199701070549.XAA02730@manifold.algebra.com>, on 01/05/97 at 01:49 AM,
+   ichudov@algebra.com (Igor Chudov @ home) said:
+
+
+>A good note.
+
+>Checking PGP signatures for all messages from preapproved posters is one
+>of the possible modes of running STUMP (you have to define
+>WHITELIST_MUST_SIGN=YES). This may be appropriate on cypherpunks, but
+>for regular newsgroups it is rarely practical, because the users are dumb
+>and clueless. On Cypherpunks that may work well and even add some cool
+>flavor to the whole process, as well as help popularize PGP.
+
+>Another advantage of robo-verification of signatures is that people
+>reading cpunks will know that PGP signed messages really are signed,
+>without the need to keep PGP keys of everyone. That is, of course, if
+>you trust the robomoderator.
+
+>This is all described at STUMP page. STUMP means Secure Team-based
+>USENET Moderation Program, by the way.
+
+
+I would have to disagree on this. IMHO I see using a 3rd party sig verification defeating
+the purpose of PGP. One really needs to have the keys on ones own
+keyring and verify keys for those he communicates with on a regular basis.
+Other wise the "web of trust" is never built.
+
+I have designed a system that will automate most of the more dificult aspects of managing
+PGP and buliding a "web of trust". It's based on the user obtaining a copy of the keyring
+from one of the pgp servers and uptating it on a regular basis. This is automated by using
+both e-mail request and http request from the pgp servers. The user then uses 3 keyrings:
+
+pubring.pgp -- Small keyring contianing the most used keys mainly key used for
+               encryption.
+
+sigring.pgp -- Medium size keyring containing keys used only for verifying sigs.
+
+master.pgp --  Copy of pubring.pgp from pgp key server.
+
+Logs are kept of all signatures verified. After the same signature has been
+verified X number of times the public key is added to the sigring.pgp. If a
+key has not been used in X number of days it is removed from the sigring.pgp.
+
+A simmilar log can be kept for encryptions & moving keys in and out of the
+pubring.pgp.
+
+If the user not verifying a large number of sigs. the sigring.pgp & the
+pubring.pgp can be combined.
+
+There should also be some type of mechanisim to remind the user to verify keys that he
+frequently uses.
+
+All the above is handled transparently to the user after the inital set-up via a GUI
+install program. Most of the mechanics are handled through a colection of e-mail
+filters/scripts and a few small EXE's that I have written.
+
+I have most of the code written and am in the process of working the kinks out.
+
+The whole ideal of this is to keep the minimum # of keys in the users pubring & sigring
+for usability while still having the master keyring as a backup.
+
+I still need to develop a means of insuring that a key that is "trusted" by
+association on the master keyring retains that trust when transfered to the
+pubring.pgp. I think I can develop somthing along the lines of the 
+ATT PathServer and calculate what keys need to be copyed along with the target key that is
+being copied to the pubring.pgp.
+
+As soon as I have a working model I will write somthing up in greater detail
+and make it available on my web page. 
+     
+
+- --
+- -----------------------------------------------------------
+William H. Geiger III  http://www.amaranth.com/~whgiii
+Geiger Consulting    WebExplorer & Java Enhanced!!!
+Cooking With Warp 4.0
+
+Author of E-Secure - PGP Front End for MR/2 Ice
+
+Look for MR/2 Tips & Rexx Scripts
+Get Work Place Shell for Windows!!
+PGP & MR/2 the only way for secure e-mail.
+                          
+Finger whgiii@amaranth.com for PGP Key and other info
+- -----------------------------------------------------------
+ 
+Tag-O-Matic: This marks Logical End-Of-Message. Physical EOM follows
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMtISZI9Co1n+aLhhAQFAvQQAiakA24txxJ2mZJU/lhb2bqdm1G2nBj50
+b4ONi7y8F4fGrsC+nWwoeh1ta5iu3aOQLr+3mYWtafvEUjxvP4mDvke3ToD9riD8
+dKU9MKxZd6CG0sZA6TX199gOkY0Ep8fSyJMKQSgddFe+LpahJpxs7dm7bP6pWDbF
+oOj+2J61IOc=
+=kgSh
+-----END PGP SIGNATURE-----
+
+
+
+
+

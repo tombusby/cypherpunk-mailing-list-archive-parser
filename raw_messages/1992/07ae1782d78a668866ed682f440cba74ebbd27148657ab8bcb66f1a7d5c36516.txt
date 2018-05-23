@@ -1,0 +1,59 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Thu, 8 Oct 92 23:56:11 PDT
+To: cypherpunks@toad.com
+Subject: New feature of the remailer
+Message-ID: <9210090703.AA26448@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+New!  Just finished.  Fidonet support.  Dumb mailer support.  Incoming
+header line pasting.
+
+Here's what's going on.  There are a lot of mailers, the Fidonet
+gateway in particular, which don't allow you to put arbitrary header
+lines in your outgoing messages.  Previously people using these
+systems couldn't use the remailer because they couldn't put the
+necessary "Request-Remailing-To:" in the header.
+
+Now they can.  Instead of putting header lines into actual header, I
+now support a syntax which allows header lines to be _added_ to the
+header on incoming mail.  These extended header lines are in the body
+of the message proper, but a filter on incoming mail effectively
+adds them to the header.  
+
+This allows anybody who can send me mail with a reasonably unmangled
+body to use any feature of the remailer that should ever get written.
+
+Example:
+
+------- cut here -------
+
+To: hughes@soda.berkeley.edu
+From: Secret_Squirrel@treehouse.com
+Subject: Mrs. Tree's secret recipe for pinole
+
+::
+Request-Remailing-To: Crusader_Rabbit@rocky.moosylvania.org
+
+I just paid $2600 for this recipe [etc. etc.]
+[...]
+
+------- cut here -------
+
+If "::" is on the first body line all by itself, whatever lines follow
+up to the first blank line will be appended to the header when it is
+scanned for special instruction lines.
+
+This new feature is completely modular.  It doesn't (seem to) break
+any of the other existing features.  I'll post the source with an
+explanation tomorrow.
+
+In the meantime, try it out.
+
+Eric
+
+
+
+

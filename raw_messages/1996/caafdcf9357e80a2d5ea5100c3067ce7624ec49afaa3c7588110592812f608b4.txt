@@ -1,0 +1,47 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Sat, 18 May 1996 16:06:07 +0800
+To: cypherpunks@toad.com
+Subject: Re: Any DLL's that handle Public Key Encryption or Key Exchange?
+Message-ID: <199605180202.OAA09277@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Death rays from Mars made Bill Stewart <stewarts@ix.netcom.com> write:
+ 
+>There's an RSAEURO drop-in clone of RSAREF that's on ftp.ox.ac.uk, so you
+>could write a version of your software that lets Yankees and non-Yankees drop
+>in whichever version is appropriate without worrying about patent or copyright
+>problems.
+ 
+I've already got a nice fast RSA implementation, so I think I'll stick with
+that.  Besides, I'm not terribly keen on using a library which has stolen code
+in it.
+ 
+If anyone wants to create an RSAREF version, all you need to do is replace one
+module (lib_rsa.c) with an RSAREF-compatible version (that's why I mentioned
+plug-in encryption modules in the docs - you just unplug the existing code and
+plug in RSAREF instead).  What you need to do is use RSAPublicBlock() and
+RSAPrivateBlock(), the rest is just wrapper code which you can base on the
+existing lib_rsa.c.  My estimate is that it's about an afternoons work.
+ 
+>Any RSAREF system used in the US has the problem that it's limited to the
+>"official" interfaces, which means you can't do fully general RSA without
+>permission.
+ 
+I got permission from RSADSI to bypass the official interface to RSAREF for
+HPACK, my archiver which has PGP-compatible encryption, in 1993.  However I
+suspect getting permission for the same thing in a general-purpose library,
+especially one which has RC2, RC4, and DESX[1] in it, may be difficult since
+parts of the library are essentially a free version of BSAFE (not by design,
+they just ended up that way).
+ 
+[1] Well, it will have DESX once I can get some test vectors to make sure I've
+    got it right.  Does anyone have some I can use?
+ 
+Peter.
+ 
+
+
+
+

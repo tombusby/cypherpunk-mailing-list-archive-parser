@@ -1,0 +1,42 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Sat, 20 Jan 1996 10:58:12 +0800
+To: trei@process.com
+Subject: Re: Hack Lotus?
+In-Reply-To: <9601200158.AA07776@toad.com>
+Message-ID: <199601200222.VAA01246@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"Peter Trei" writes:
+> I suspect that Lotus has not completely reworked it's security
+> system for the international version, and that they are in fact
+> doing a second public key operation on the 3 bytes of GAK'd data.
+
+Likely.
+
+> If they're nasty, they'll check on the receiving side as well, to
+> ensure that the LEAF and/or the espionage-enabling key have not been
+> patched in the sending 'International' version.
+
+Nearly impossible. Why? Because they can only include the public key,
+and not the private key, of the GAK authority in the code. You can
+encrypt the three bytes of key, but it is very hard for a receiver
+other than the govvies to read them. There is no shared secret
+information or private information available, ergo, they can't check
+their LEAF equivalent.
+
+This is likely where the flaw in the scheme is -- it should be trivial
+to drop another public key in place of the government one and foil the
+entire thing with minimal effort. All will look normal until someone
+tries to use the GAK private key.
+
+Of course, I'll point out that 64 bit RC4 keys are still not
+particularly heartwarming...
+
+Perry
+
+
+
+

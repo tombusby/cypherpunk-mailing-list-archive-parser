@@ -1,0 +1,70 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 7 Oct 93 12:59:20 PDT
+To: cypherpunks@toad.com
+Subject: Weak RSA keys?
+Message-ID: <9310071956.AA02596@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>He probably believes, along with most people, that for each
+>encryption exponent there is ONLY ONE decription exponent.
+>In fact there are AT LEAST TWO.  Yes, you have a "spare key".
+
+Yes, it does look like there are two possible decryption exponents,
+but one is derived from the other and information only known to the
+person who can factor n, so it isn't clear to me how this is a big
+weakness.  If you pick good factors of n and the primes are large, the
+problem is just as infeasible as it was before, and you get ONLY two
+decryption exponents.
+
+In fact, if you look on page 92 of "Cryptography; An Introduction to
+Data Security" by Seberry and Pieprzyk, you will see that they make it
+more explicit than some other texts: they give this as the formula
+relating then encryption and decryption exponents:
+
+			 e d = 1 mod gamma(n)
+
+		   where gamma(n) = lcm (p-1, q-1)
+
+So they use the least common multiple of p-1 and q-1.
+
+With good choices of p and q, there will be 2 decryption exponents: d
+and (d + phi(n)/gamma(n)).  If you have more than 2 decryption
+exponents, you have made poor choices of primes.
+
+Again, to calculate the "spare" key you nee need to know how n factors,
+which makes the whole thing moot.
+
+Example with better choices for p and q:
+
+p = 107; q = 167; n = 17869
+phi(n) = 106 * 166 = 17596
+e = 43
+
+d = 43^-1 mod 17596 = 7775
+
+71^43 mod 17869 = 10073 (the encrypted message)
+to decrypt: 10073^7775 mod 17869 = 71.
+
+If you use 
+
+e d = 1 mod gamma(n) 
+
+you get
+
+d = 43^-1 mod 8798 = 7775, which is the same d you got above.  Thus,
+the spare key is 7775 + 8798 = 16573, which does work as a decryption
+exponent.  
+
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

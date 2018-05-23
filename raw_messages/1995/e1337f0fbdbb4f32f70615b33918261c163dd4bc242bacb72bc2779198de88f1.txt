@@ -1,0 +1,45 @@
+From: Andy Brown <a.brown@nexor.co.uk>
+Date: Tue, 5 Dec 95 04:18:22 PST
+To: cypherpunks@toad.com
+Subject: Some info on file/memory erasing on NT
+Message-ID: <30C437D4.3EC0@nexor.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The subject of protecting memory and files from other users in a multi-user
+environment always seems to come up here every few weeks, so the following
+short article culled from the MS Win32 SDK might be of interest.
+
+
+- Andy
+
+[...]
+SUMMARY
+
+File systems under Windows NT currently have virtual secure erasure (when a
+file is deleted, the data is no longer accessible through the operating
+system). Although the bits could still be on disk, Windows NT will not
+allow access to them.
+
+MORE INFORMATION
+
+The NTFS file system does this by keeping a high-water mark, for each file,
+of bytes written to the file. Everything below the line is real data,
+anything above the line is (on disk) random garbage that used to be free
+space, but any attempt to read past this high-water mark returns all zeros.
+
+Other reusable objects are also protected. For example, all the memory
+pages in a process's address space are zeroed when they are touched (unlike
+the file system, a process may directly access its pages, and thus the
+pages must be actually zeroed rather than virtually zeroed).
+
+Note that file system security assumes physical security; in other words,
+if a person has physical access to a machine and can boot an alternative
+operating system and/or add custom device drivers and programs, he/she can
+always get direct access to the bits on disk.
+[...]
+
+
+
+

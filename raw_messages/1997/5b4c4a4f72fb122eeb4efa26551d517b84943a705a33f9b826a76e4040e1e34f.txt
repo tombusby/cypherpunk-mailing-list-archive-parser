@@ -1,0 +1,72 @@
+From: Eric Murray <ericm@lne.com>
+Date: Sun, 20 Apr 1997 19:23:01 -0700 (PDT)
+To: adam@homeport.org
+Subject: Re: SSL weakness affecting links from pa
+In-Reply-To: <199704202032.PAA05999@homeport.org>
+Message-ID: <199704210221.TAA00232@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Shostack writes:
+> 
+> 	Thats true, but can they avoid it?  I'm considering writing a
+> database pollution bot, which runs around, claiming to be Mozilla or
+> IE, and randomly following a link once per minute.  Why?  Database
+> pollution.  If there are a few thousand of these randomly collecing
+> links and creating arbitrary (or perhaps biased) viewing habbits in
+> the databases of the advertisers, then their individual data becomes
+> worth less.  They'll need to actively solicit peoples permission to
+> collect data before doing so, to avoid people polluting their
+> databases.
+
+That's an interesting thought.
+As it happens last week I added a way in Cookie Jar to allow sending HTTP
+User-agent to some sites... the reason is that I ran into a couple that
+absolutely have to know what type of browser you are using, and if given no
+User-agent deliver either meaningless HTML or nothing at all.
+Well Fargo and wIrEd.cOm are the ones I found.
+
+So I added a rule to pass the User-agent line to sites like that.
+However I edit out the part that informs the server what OS etc
+you are running.  The User-agent is usually something of the form
+
+User-Agent: Mozilla/3.0Gold (X11; U; Linux 6.6.6 i386)
+
+and it's the part in the parens that I really object to, the part
+that says what browser you have seems to be what the sites in question
+need to deliver useable HTML.
+
+I briefly had it send:
+
+User-Agent: Mozilla/3.0Gold (why; they; fuck do you care)
+
+but now it sends nothing at all in the parens.
+
+
+In order to maximally fuck up stats, what should be put into
+the windowing system/OS fields?  It has to be something that
+exists and is fairly common, so that its not able to be thrown out
+by the stats-gathers.  I could use "(X11; MVS; IBM MVS some version number)"
+but that'd be easy to throw out, even though ports of X to MVS really did
+exist.
+
+Maybe I'll just make every copy of Cookie Jar look like
+it's running on Linux.
+
+
+BTW, Wells Fargo's on-line banking sucks dead gerbils through a dirty
+garden hose.  The interface is poor, it checks that you're using
+SSL not by actually trying it, but by checking the User-agent
+field to see if you're using a browser that supports SSL, and
+then when I try to transfer money between accounts, it refuses with
+no explanation.  A fine example of how NOT to do things.
+
+
+-- 
+   Eric Murray  ericm@lne.com         Privacy through technology!
+  Network security and encryption consulting.    PGP keyid:E03F65E5 
+
+
+
+

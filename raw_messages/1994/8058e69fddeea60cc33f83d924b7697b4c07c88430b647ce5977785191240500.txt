@@ -1,0 +1,84 @@
+From: cactus@bb.com (L. Todd Masco)
+Date: Sat, 17 Sep 94 22:57:25 PDT
+To: cypherpunks@toad.com
+Subject: Re: (fwd) "Will You Be a Terrorist?"
+In-Reply-To: <9409172331.AA12848@ah.com>
+Message-ID: <35gl4b$qtn@bb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <9409172331.AA12848@ah.com>, Eric Hughes <hughes@ah.com> wrote:
+>   [...] perhaps it's time to start seriously
+>   looking at hacking list software to create mailing lists that are fully
+>   anonymous and encrypted.  Has anybody started on such a project?
+>
+>I'd suggest that a much more productive avenue of approach would be to
+>improve the aliasing facilities of a remailer provider to allow a
+>pseudonym to look like a fully normal name.
+
+I'm not sure that's a good solution.  When the Bad Guys go to the site
+that originated the message and say "we want Alfred E. Neuman at
+your site" (for publication of plans of some sort of machine), the
+remailer operator could get busted for aiding & abetting.  Sure, Alf's
+real life human will be safe, but it'd be nice to protect the remailer
+operator, too.
+
+True, the "identity stripping" can be done by a remailer as well;
+However, it's trivial enough to do at the mailing list software level
+(simply not including information) that it seems like it's not a bad
+thing to do.  
+
+Now, this won't give protection from traffic analysis;  In was suggestion,
+I was really blurring two seperate lines of thought (I'm interested in 
+PGPified mailing list software for content-hiding reasons; I'm trying to
+set up a "distributed business" that I'd like to keep secure). 
+Also, though, I'm not sure I want to count on anonymous remailers being
+available.  If people want to effectively "chain" them, that's fine.
+
+>Ownership of root is not necessary for this.  I know that Matt Ghio's
+>mail delivery set up allows this.  At his site there's this
+>'name+extra' syntax which delivers mail to 'name', but because of a
+>special sendmail version 8 macro in the Received: field both the
+>'name' and the 'extra' can be recovered.  The 'extra' is then an input
+>into a remailer as a pseudonym.
+
+Sure.  I'm familiar with AMS (in fact, one of my business partners is
+one of the current news/postmasters at CMU, and is helping design and
+produce IMAP, its replacement).  Another, better I think, possibility is
+to add headers and let the MUA sort it out: you don't have to depend upon
+non RFC-822 features in the MTA.  Nonstandardness is not a game you want
+to get into for things like e-mail unless you have the sort of clout that
+CMU/Andrew does.
+
+>The aliasing has to happen somewhere.  It can happen at the mailing
+>list exploder or at the remailer.  Since the mapping at the remailer
+>is of much more general use, and since it allows one to leverage _all_
+>forms of mail communication and not just mailing list, it seems like a
+>much better place for that mapping to exist.  Implementation inside a
+>remailer is a duplication of function--almost always a bad thing.
+
+I'm not sure I buy that duplication of function is a bad thing in this
+case: throwing information away more than once can't be worse than
+only throwing it away once, can it?
+  -----
+I do have a couple questions that aren't terribly related:
+
+	- Are there any known PK message formats that commute?  It seems
+	 clear to me that PGP and RIPEM do not, since that makes no
+	 sense for private key ciphers like DES/3DES and IDEA.
+
+	- What I want (for other purposes) is a mailing list that has
+	 its own public key; Material is encrypted to it, it decrypts it,
+	 and then the material is encrypted with each recipient's public
+	 key (I'm assuming a PGP base here).   Probably simply to do,
+	 but has anybody done it?  No pretense of protection from
+	 traffic analysis here: just to keep prying 3rd parties' eyes
+	 off it.
+-- 
+L. Todd Masco  | "A man would simply have to be as mad as a hatter, to try and
+cactus@bb.com  |  change the world with a plastic platter." - Todd Rundgren
+
+
+
+

@@ -1,0 +1,60 @@
+From: paul@fatmans.demon.co.uk
+Date: Thu, 5 Sep 1996 06:10:06 +0800
+To: cypherpunks@toad.com
+Subject: (Fwd) Re: Secure anonymouse server protocol: comments please
+Message-ID: <841849157.2629.0@fatmans.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+------- Forwarded Message Follows -------
+From:          Adamsc@io-online.com (Adamsc)
+To:            "paul@fatmans.demon.co.uk" <paul@fatmans.demon.co.uk>
+
+On Mon, 2 Sep 1996 19:24:23 +0000, paul@fatmans.demon.co.uk wrote:
+
+>This system has 1 huge fault, we can encrypt a uses ID with the 
+>servers public key to see what his ID in the encrypted database is 
+>and therefore identify him, maybe we need two seperate server public 
+>keys, and when IDs come in encrypted with key1 (the one it releases) 
+>it decrypts with secretkey1 then encrypts with publickey2 (the one it 
+>keeps secret)
+
+>or maybe we can just hash and sign the IDs in the database?
+
+>as I said it`s very sketchy, I made most of this up as I wrote it so 
+>if you must tear it to pieces please do so constructively, it could 
+>be the route to a secure system....
+
+How about this:  do the exchange *every* time.  Never reuse a key.  That way at
+most 1 message could be easily snagged (by seeing where it goes).  It'd be
+processor intensive, but it avoids the whole reuse problem - where you store an
+ID to be used to retrieve all messages.  Also, software could be written to do
+the key computation solely on the client - after all, the server doesn't care
+if they pass themselves a dud key, right? Let them crunch it.  Put all those
+Pentiums to work!
+
+...
+
+Better idea, I hadn`t thought of that, anyone else care to comment on 
+a way to solve this? - how did the nymservers do it????
+
+
+  Datacomms Technologies web authoring and data security
+     Paul Bradley, Paul@fatmans.demon.co.uk
+       Http://www.fatmans.demon.co.uk/crypt/
+         "Don`t forget to mount a scratch monkey"
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.6
+
+mQCNAjH9j+cAAAEEAMBvREiQR0ot9dFCO0TiSCSunAYLv2g1Bc6I3bz8FzKXNH53
+6mieJf/W4rD+CxJpT0q9RQaaoRtkHJLwbjfK2il3D7mEahMAyqvF/xRJNqkXfhM3
+sRJM0Jh43l+W0M5vwokbEbk25/bxWWGspTsLD3YHbzKnG6pOcL5OPIRbv66xAAUR
+tCdQYXVsIEJyYWRsZXkgPHBhdWxAZmF0bWFucy5kZW1vbi5jby51az4=
+=riHc
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+
+

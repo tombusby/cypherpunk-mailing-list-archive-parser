@@ -1,0 +1,82 @@
+From: weidai@eskimo.com (Wei Dai)
+Date: Fri, 19 Aug 94 01:43:06 PDT
+To: cypherpunks@toad.com
+Subject: trusted time stamping
+Message-ID: <199408190842.AA06184@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To: cypherpunks@toad.com
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I thought my idea about having trusted entities digitally sign a document in
+order to establish its existence at a particular time was a new idea, but I
+just read about it in _Applied Cryptography_.  Anyway, I wrote some C code to
+do automatic time stamping with PGP (source code is in the next e-mail).
+
+If you just want to try it, simply send an e-mail to weidai@eskimo.com
+with the subject "Time Stamp This Mail".  The body of the mail will
+be signed with a PGP private key (public key is at the end of this message)
+and returned to the sender.  E-mail with any other subject will be piped
+to my regular mailbox.
+
+What's the use of this?  Well, here is an interesting application of
+time stamping that wasn't covered in _Applied Cryptography_.
+
+Let's say Alice would like to publish an article anonymously but retain the
+ability to claim authorship some time later.  She can follow this protocol:
+
+1. Alice signs her article with RSA
+2. She encrypts her signed article with IDEA
+3. She sends the encrypted article to several trusted time stamping servers
+4. She places the signatures she gets back along with the encrypted article
+   in a safe place
+5. She waits a random length of time
+6. She posts the plain article (without encryption or signature) anonymously
+7. When Alice wants to claim authorship, she publishes the encrypted article,
+   the IDEA key, and the signatures she got back from the time servers
+
+Now, people can be reasonably sure that Alice actually wrote the original
+article because the time server signatures prove that she signed the
+article before it was made public.  One problem here is that at
+least one of the time servers she used must have remained secure until step 7.
+
+Comments?
+
+Wei Dai
+PGP Public Key avaliable
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLlRtiTl0sXKgdnV5AQFr+gQAsymOrN/Zd3C94NebWZOVFcl2tCkd/cSW
+EehvHxJMD1qO5fmmsDelhA+YKqqjLz8Dyp94pIqZXtWSu+kx/p5OUjB173PdAyN0
+TSNaVMyZX266B/JIRqHI6+/5F2EWysFTXXH23v0mEH/us82Dvdb8rcqyKwQvjGZf
+mOvhObHf8Fo=
+=w0Q+
+-----END PGP SIGNATURE-----
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.3a
+
+mQBNAi5UWcgAAAECALp+QU9dtN2N4BjVr8OSxRPXtZ6UX4bLGq8PxpXru6WpsBD/
+SJUl6jK4YcnatNJmjkl9oEHC6fjTpwMbZVOWJE0ABRG0MFdlaSdzIFBHUCBUaW1l
+IFN0YW1wIFNlcnZpY2UgPHdlaWRhaUBlc2tpbW8uY29tPokAVQIFEC5UWpenAxtl
+U5YkTQEBzDQB/3+eNgnW22sRaZFpBY3Wfzj4uEVXXcYU4vrdS1fsSRixJSEKta/N
+uyvmkeiB4GyyahhtHTtybywrRzD1y9IlwMmJAJUCBRAuVFmZOXSxcqB2dXkBAYNZ
+A/4/KHOQ1gjPEkdLhdPJ/yaXyQilqWV+MWiHblrqcDOrsFu1dKizJrBdWa5+vuIX
+nCu5DSq9cd3/cGrMOYK3OJGQC8JkPc6LNw7siuRGuVn413JBlM3wnCEXnFsAUhpG
+hDLTPUC2JqmiCwQP6OpxwqlTxPmZk8wKE0Sh/iaGRwZnBg==
+=vpgO
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+PGP Public Key available
+
+                                                                                            
+
+
+
+

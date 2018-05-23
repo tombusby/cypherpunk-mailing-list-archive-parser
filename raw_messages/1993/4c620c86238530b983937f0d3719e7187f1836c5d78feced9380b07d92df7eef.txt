@@ -1,0 +1,47 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Tue, 23 Feb 93 21:20:04 PST
+To: cypherpunks@toad.com
+Subject: Re: anonymous return addresses
+In-Reply-To: <9302240257.AA03919@soda.berkeley.edu>
+Message-ID: <9302240519.AA24254@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> A variant of (1) greatly increases the security.  Have the remailer
+> memorize an anonymous return address of type (2).  The information
+> that is contained in a remailer then, per pseudonym, is
+> 
+>   a.  the pseudonym
+>   b.  the address of the next remailer to use
+>   c.  a block of stuff to be prepended to the outgoing mail.  Presumably
+>         this is forwarding instructions for the next remailer.  It would
+> 	also be encrypted with the public key of the next remailer.
+
+This is an excellent idea!  It would provide decent security without
+forcing J. Random User to figure out how to use the SASE block.
+You'd want to have a list of address/SASE pairs to use, choosing
+randomly from those that have not yet died.
+
+Oh, a complication.  It would probably be necessary to be able to
+add new address/SASEs as they become available, to avoid death of
+your pseudonym through cumulative remailer attrition.  But nobody
+but the owner can be allowed to add destinations, for obvious
+reasons.  The only apparent way to handle this is to require a
+password at the time of pseudonym creation.  One-way-hash it, and
+require it to add and remove destinations.  It should be
+PK-encrypted on its way to the remailer, if possible.  This approach
+does not require an identity to be irrevocably tied to a destination
+address, interestingly -- you can remove chains to your old address,
+and add ones to your new.
+
+Suggestions?  Holes?  Implementations?
+
+> Eric
+
+	 PGP 2 key by finger or e-mail
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

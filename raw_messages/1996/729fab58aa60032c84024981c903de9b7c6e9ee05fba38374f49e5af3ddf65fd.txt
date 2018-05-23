@@ -1,0 +1,62 @@
+From: Victor Boyko <vboykod@eldorado.stern.nyu.edu>
+Date: Sun, 5 May 1996 14:28:33 +0800
+To: EALLENSMITH@ocelot.Rutgers.EDU
+Subject: Re: Why I dislike Java. (was Re: "Scruffies" vs. "Neats")
+In-Reply-To: <01I49T6J284A8Y56P8@mbcl.rutgers.edu>
+Message-ID: <9605050131.AA01873@eldorado.stern.nyu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> "Allen" == "E ALLEN SMITH" <EALLENSMITH@ocelot.Rutgers.EDU> writes:
+
+    Allen> 	Might I suggest setting up another computer with Java
+    Allen> enabled, and _without_ the critical applications? Somehow,
+    Allen> I think they can afford an extra computer for each desk -
+    Allen> it wouldn't have to be a high-capability one. That would
+    Allen> also cure having to have Netscape and other
+    Allen> high-network-access programs on the same computers as the
+    Allen> critical applications. (Of course, some of the critical
+    Allen> applications may also need to access the Internet... but
+    Allen> they probably wouldn't need http capability.) Of course,
+    Allen> feel free to tell me that I don't know what I'm talking
+    Allen> about.
+
+And I suppose the next thing you are going to suggest is to get an
+extra firewall just for the Java-enabled machines. This is just a
+waste of money and resources. I firmly believe that access and
+security control should be left to the operating system: OS's have
+been designed with that task in mind for decades, while 'secure'
+virtual machines, AFAIK, only appeared recently. Also, the OS uses
+hardware (supervisor mode bit) to protect the kernel from unauthorized
+access, while a Java interpreter could only do it in software.
+
+Why not make Netscape SUID root and have it spawn a separate process
+just for running Java as user nobody? Communication between the
+processes could be done through sockets (it is better not to share any
+address space). Then you could at least be sure it could not read or
+write any unprotected files and directories. Most OS's don't restrict
+network access for processes, but this should be easy to add: just
+have additional flags in the process descriptor and have all system
+calls related to the network check those flags.
+
+I understand that the above does not apply to Win95 and Mac. There is
+only one thing I can say to those unfortunate enough to use them:
+install UNIX!!! Linux for PC has been available for a while, and Linux
+for PowerPC should come out this Summer. (And yes, I know that UNIX's
+sometimes have security bugs too, but there are much fewer of them
+than in Netscape's Java interpreter, and they are usually fixed sooner.
+Also, UNIX has been around for 25 years, while Java-enabled Netscape
+for less than a year.)
+
+Any constructive comments or criticism about UNIX and Java security is
+welcome. Send flames to /dev/null.
+
+-- 
+Victor Boyko <vboykod@is-2.nyu.edu>
+http://galt.cs.nyu.edu/students/vb1890/
+To get my PGP key, finger or send e-mail with subject "send pgp key".
+
+
+
+

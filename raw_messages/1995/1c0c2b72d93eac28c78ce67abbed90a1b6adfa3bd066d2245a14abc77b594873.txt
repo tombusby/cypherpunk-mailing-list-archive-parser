@@ -1,0 +1,50 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Fri, 8 Sep 95 10:05:58 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: GAK Hacks
+Message-ID: <9509081705.AA03422@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal writes:
+>  One would be to create a patcher which would let you change the
+>  set of certificate authorities accepted by the browser.  Currently
+>  the browser accepts at least one (an internal Netscape test CA)
+>  which is not needed by end users.  Maybe its public key could be
+>  statically overwritten by the patch program with the public key of
+>  the replacement CA.  This sounds simple and safe.  The patch program
+>  can confirm that the data being changed matches the test CA.
+
+This is an excellent idea, assuming the new CA's key will fit in the same  
+amount of space or less than the test CA.  How big is the test key?
+
+Of course, Netscape could decide to remove the test CA certificate from  
+future versions of the browser.  However, you could probably replace the  
+Verisign certificate with your CA certificate and then have your CA sign the  
+Verisign certificate so the browser can still use both.  :-)
+
+>  This second patch is more advantageous for end users as it allows
+>  them to have strong encryption rather than the weak 40 bits which
+>  we have been breaking.  The first would be a more direct demonstration
+>  of the difficulties of using certificate restrictions to limit
+>  functionality.
+
+I don't think this is necessary as domestic versions of Netscape have already  
+been exported and are available on non-U.S. FTP sites...
+
+>  The criteria.txt paper suggests checksumming the cryptographic
+>  routines to prevent patches like this, but generally I think such
+>  checksums can be defeated pretty easily.  I doubt that Netscape
+>  currently has any such thing, though.
+
+It only makes it harder to patch.  Anyone with a clue knows that there is no  
+such software-only protection that can't be defeated.  Even hardware/software  
+dongle type protection can be defeated by altering the software to not check.
+
+
+andrew
+
+
+
+

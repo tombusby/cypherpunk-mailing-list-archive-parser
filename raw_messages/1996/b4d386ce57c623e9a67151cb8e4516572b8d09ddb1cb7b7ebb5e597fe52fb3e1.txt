@@ -1,0 +1,67 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Tue, 31 Dec 1996 08:14:55 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Hardening lists against spam attacks
+In-Reply-To: <199612310833.CAA03527@manifold.algebra.com>
+Message-ID: <Pine.LNX.3.95.961231105936.422A-100000@eclipse.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Tue, 31 Dec 1996, Igor Chudov @ home wrote:
+
+> Send a number of unique tokens to each subscriber each day.  Enforce a
+> rule that only posts with valid current tokens may be accepted. The
+> number of tokens should initially be very small (say, one per day) and
+> then should be quickly increased to a sufficient number, like 10 or 20,
+> as the subscriber shows a record of using tokens properly (as defined by
+> acceptable content rules).
+> 
+> A database is kept as to who was issued which tokens.
+> 
+> If tokens are used improperly (to post off-topic materials) the 
+> offending subscriber is denied any further tokens.
+> 
+> The problem of this scheme is (besides its cost) that anonymous users
+> will not be truly anonymous.
+
+I think this problem can be solved by blind signing the tokens.  A user
+generates a random number, multiplies it by the blinding factor, then sending
+it to a token server which would append a timestamp and sign the blinded
+token.  All signature requests should be signed with a PGP key.  The server
+response would be encrypted with the user's public key.  A person's PGP key
+would be sent along with the subscription request and then saved by the list
+software.
+
+The token would be included in a user's list submission, removed, and saved by
+the list software to detect any duplicates.  The server would issue a limited
+number of tokens to each public key registered with it.  If two signed requests
+come from the same email address in the same day signed with different keys,
+only the tokens in the first request should be signed.
+
+The only problem with this scheme is the inconvenience of having to register
+a public key with the server before posting.  Someone with many different email
+addresses could generate a public key for each address to get more tokens.  The
+only way to prevent this is to control list subscriptions.
+
+
+Mark
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQEVAwUBMsk8uCzIPc7jvyFpAQHFvAgAoogQTxQH74MbtDUSQgfkbwDRIJ1rXaXQ
+zqf4D+JyRcpFXUv0cKuUoLGFTkTKdhtGrIBfqhZJvC/n/fWOV0DHIO4asNZWqtEa
+NFIsWPyJqrOceCPfTLv4wft9X8aMybu6nOy/B6/NHr+Lw2p5TsfFbms4pHvrE5zt
+daZ7zpPkI8l1qDI1I0XUaF6vBOGl3nJtg4NewCagpB8mZulT6wmetoe5NHmrTYEA
+OI+UhgCWZSUJTJ2kC+liBmCwZ7+Z1JW39rOpLP6Y4Eo/o8mGErePKFK3ZbTVvfV8
+5KyZn7HTxwmoTkEkRt0lOLpqU3afXJVdca9McCBoSklwveMoNwOmEQ==
+=pvLP
+-----END PGP SIGNATURE-----
+
+
+
+
+

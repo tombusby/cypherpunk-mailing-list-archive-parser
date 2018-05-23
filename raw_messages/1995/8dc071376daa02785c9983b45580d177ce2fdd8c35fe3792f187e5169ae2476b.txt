@@ -1,0 +1,47 @@
+From: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Date: Sat, 16 Sep 95 22:18:02 PDT
+To: Laurent Demailly <dl@hplyot.obspm.fr>
+Subject: Re: Anonymous WWW proxies
+In-Reply-To: <9509162347.AA09904@hplyot.obspm.fr>
+Message-ID: <199509170517.WAA16625@Csli.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+|  + Chaining would be a imo good idea (ie cli <-> anonproxy1 <->
+|    anonproxy2 <-> ... <-> server) but how would you manage to tell
+|    your favorite web browser to add in its header something like
+|    Http-Proxy-List: anonproxy2, ...
+|    An alternative would be to have a database of avaibale (running)
+|    proxies and that the proxy itself randomly choose a next route ?
+
+Doesn't most of the browsers support a "firewall-proxy-mode", where
+all queries are sent of to a special daemon, that forwards the query
+on. This would probably be the place to add the header-munging.
+
+How do you plan to get the reverse-path working? Having a
+encrypted/chained return path in the request?
+
+|  + A way to solve previous pb and to add in encryption (but would it
+|    be fast enough for web browsing ?) would be that each user runs a
+|    local proxy (that could be optionnaly used by other folks) that
+|    would do pgp encryption/decryption, 'routing' selection,etc...
+| 
+| Would ppl with mail remailers and/or W3 experience comment ?
+| (or tell me the pointer toward the already solved, already implemented
+| beast that would do the above)
+
+Encryption speed isn't all that an issue always. I'm planning to do an
+Mbone encryption gateway, (RSN). I will precompute a cryptographic
+mask during idle cycles, that can be XORed together with the
+clear-text packet when it arrives. I expect it to reduce the latency
+quite a lot. (This might not work, since it assumes the key distr
+problem is already solved in good time before the packet arrives, to
+be able to amass "precomputational power".)
+
+/Christian
+
+
+
+

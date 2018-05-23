@@ -1,0 +1,35 @@
+From: JonWienke@aol.com
+Date: Fri, 8 Mar 1996 12:45:58 +0800
+To: Cypherpunks@toad.com
+Subject: Re: TCP/IP Stego (was CU-SeeMe)
+Message-ID: <960307191318_240274129@mail04.mail.aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>A tcp header contains quite a bit of useful information.. but most of it 
+>wouldnt be easily manipulated (by me) to get a bit. You cant very well 
+>alternate the port number you are using, or change the packet sequence 
+>numbers. However, the tcp protocol forces each tcp header to contain a 
+>'checksum' field.. which is (more or less) the sum of all the octets in 
+>the packet. This is used as error correction for the protocol. It 
+>shouldn't be too difficult to force TCP to fiddle with the data in the 
+>packet a bit to force the checksum to be a particular sort of thing (i.e. 
+>even or odd number) .. 0 for even and 1 for odd would get us our one 
+>bit of data per packet. 
+
+This is a bad idea, because in addition to the extra processor overhead, it
+is an incredible waste of bandwidth.  For a 512 byte packet, you are only
+getting .02% efficiency, because you wouldn't be able to use the actual data
+in the packet; otherwise someone would probably notice the increased error
+rate if you dink around with the checksum.  This does not provide adequate
+plausible deniability.  Stegoing a 16 bit WAV file gives you 50% efficiency,
+(you can replace the 8 least significant bits with stego data and still keep
+10 bits worth of sound quality) and someone else would be unable to prove
+there was any encrypted info in it if you did it right.
+
+Jonathan Wienke
+
+
+
+

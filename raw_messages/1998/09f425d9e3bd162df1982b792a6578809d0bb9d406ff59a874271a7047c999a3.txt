@@ -1,0 +1,54 @@
+From: Soren <sorens@workmail.com>
+Date: Thu, 17 Sep 1998 07:50:01 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: It's finally over (was Re: Explanation of Harald Fragner and  cypherpunks)
+In-Reply-To: <199809170055.UAA28232@domains.invweb.net>
+Message-ID: <360106B9.A408FF26@workmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+William H. Geiger III wrote:
+
+> ... How does Thwart, Verisign, or the other CA's handle authentication of
+> an
+> e-mail address in there low level certs?
+
+You generate a key pair on your machine (Netscape keygen tag or MS
+CrappyApi.  The public key + other self-referential materiel is sent to
+Thawte/Verisign et al (actually I like Thwart better).  This is via broken
+PKCS#10 for MS, or proprietary SPKAC for Netscape (ever wondered why there
+are multiple buttons for your browser type?).  They then send you a
+reference number via email. You cut and paste the number back onto their
+site.  A PKCS#7 mimetype is downloaded, causing your browser to grab and
+stash your new cert. Netscape stores the key in its own special way, and the
+cert in a PKCS#12 format.  MS stores both in PKCS#12 format, which is rather
+easy to hack.
+
+If I was to request a cert from Thawte (the only really useful global, free,
+full strength one), and specify cyphers@punks.net (a well known interneting
+list) as my email address, then the email would be available to all
+subscribers of the list.  Certs being public, this is not a problem.  The
+crucial part being that the private key I originally generated, matching the
+public key in the cert, remains on my machine. I.e. I am the only one who
+can decrypt stuff encrypted with the cert's public key.  This is an
+interesting way of receiving encrypted mail (pseudo-)anonymously.  Expect to
+see a rash of Thawte "collect your new cert" emails, followed by much
+encrypted mail that only one list subscriber has the wherewithal to
+decrypt.  Another alternative is to distribute the private key to selected
+buddies on the list, to provide a shared cert.
+
+Netscape specific: Migrating use of a cert requires an email to yourself
+that you will receive on your new machine, after copying the key*.db files
+and/or *.p12 files to the netscape/.../users dir, and importing it.
+
+As to how sexdegrees.com could use this technology ... this would require
+some degree of know-how which would probably preclude signing up in the
+first place.
+
+
+
+

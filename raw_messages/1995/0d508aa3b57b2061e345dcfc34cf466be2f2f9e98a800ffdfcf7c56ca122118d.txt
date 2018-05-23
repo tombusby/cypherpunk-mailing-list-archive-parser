@@ -1,0 +1,62 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Sun, 3 Dec 95 10:02:21 PST
+To: cypherpunks@toad.com
+Subject: Code to detect netscape & send a message (was Re: Barring access to Netscape)
+In-Reply-To: <199512010917.DAA28429@snoopy.vetmed.auburn.edu>
+Message-ID: <NAA07447.199512031802@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <199512010917.DAA28429@snoopy.vetmed.auburn.edu>, Frank Stuart write
+s:
+[...client-pull...]
+>After talking to a couple of people, and playing around some, this seems
+>to be a better choice.  That way, you can actually send information (including
+>a list of where to get other browsers) instead of just garbage to netscape
+>users.  Is anyone aware of browsers other than Netscape that do client pulls?
+
+There is at least one.  However if you can have server-side includes, check
+out: http://www.va.pubnix.com/staff/stripes/nstest.shtml
+
+There is sample source for a netscape tester, and an example of it.
+
+If you can't do server side includes, try this (code not written):
+
+Add the client pull META tag to all your documents, have the client
+pull "/cgi-bin/bad-mozilla-no-mozilla-biscut".  That script should
+check the browser type (so it can avoid anoying users of the few
+non-Mozilla browsers that do client-pull).  Remember that a browser
+type of "Mozilla/1.22 (compatible; MSIE 2.0B; Windows 95)" (or similiar)
+is *not* netscape.  If the browser type indicates a browser type you
+don't want to anoy you can just re-send the document that the PATH_TRANSLATED
+env. variable points to.  If the browser type indicates a netscape product,
+then you can take your choice of actions:
+
+ * Prepend 
+   "<A HREF="explain_gaK.html>netscape supports GAK, and that's bad</A>"
+   to the document (you need to do slightly more then that - since you
+   need to emit the normat document up to <BODY>, then your text, then
+   the origanal document again, so you might go for the next option)
+ * Append
+   "<A HREF="explain_gaK.html>netscape supports GAK, and that's bad</A>"
+   to the tail of the document (this works fine unless you have a
+   </HTML> at the end - which almost nobody has).
+ * Only give the "netscape sucks" message.  I don't think this is a good 
+   idea since it it easyer to hammer your point across if people keep
+   seeing the message then if they can't see your page, and decide to go
+   elsewhere.
+
+[...]
+>That's not a bad idea either.  Hopefully, Netscape will post a retraction
+>(soon!) and none of this will be necessary.
+
+Indeed, I hope so.  Even if the retraction is formed internally by people
+going "Jim, this is going to put us at odds with the people who put up
+content, and gennerate bad press.  It might be a better idea to try to
+stand up agenst GAK then go with it.".  (and for the record, yes I do think
+there is a signifigant chance that the whole GAK thing is a mis-interpration).
+
+
+
+

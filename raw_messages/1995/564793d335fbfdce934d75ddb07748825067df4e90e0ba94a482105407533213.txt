@@ -1,0 +1,81 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 24 Oct 95 07:27:12 PDT
+To: cypherpunks@toad.com
+Subject: Re: How can e-cash, even on-line cleared, protect payee identity?
+In-Reply-To: <199510240749.RAA07855@sweeney.cs.monash.edu.au>
+Message-ID: <199510241425.HAA06922@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jiri Baum <jirib@sweeney.cs.monash.edu.au> writes:
+>Hello Hal <hfinney@shell.portal.com>
+>H wrote:
+>> There could be an issue of fraud, though,
+>> where Bob insists that Alice's coin was no good even though it actually
+>> was.
+
+>Cut'n'choose between Alice and Bob? Ie Alice asks Bob for half the blinds
+>to check that the proto-coins are true?
+
+This would work to protect Alice from certain kinds of fraud by Bob, but
+it increases the amount of data considerably, and it still does not
+resolve the main issue that Bob claims that his coin didn't unlind to
+clean data.  Who is at fault in that case?  How can this be resolved?
+
+>Apart from no-good proto-coins, is there any other way the coin
+>could be no good?
+
+Alice could give Bob bogus data, Bob could give Alice bogus data, Bob
+could claim that Alice gave him bogus data (even though it was good).
+
+>As for no-good proto-coins, it's Bob's fault, isn't it? Alice has 
+>a record of what Bob sent, and what she sent back. Anybody can check
+>that the latter is a bank-signed version of the former.
+
+If what she got from Bob was signed by him, she can prove that she gave him
+back a bank-signed version of that.  (He has to sign it, otherwise she
+could just exhibit two bogus numbers, one the cube of the other.)  Given
+that, your idea seems good.  Alice can prove that she did her part OK, so
+if she is able to show such a proof then Bob must be at fault.
+
+>Given this,
+>there's no need (from this) for Alice to know that the proto-coins are
+>good (if they aren't, Bob's an idiot, but there's not much Alice
+>can do about it - I guess given all the blinding factors the bank
+>could replace the coin, seeing that it signed a worthless one).
+
+Yes, I think so, so there is no need for the cut and choose.
+
+>An interesting question is whether Bob and Nick can now collude to
+>expose Alice. Therefore Alice would at least want to verify that the
+>proto-coins are true? Would that suffice? Or is that not necessary?
+
+I don't think they can.  All Bob sees is his own blinded coin, and the
+signed version of that.  The bank sees a separately blinded number which
+it signed.  Alice's blinding factor can be anything, so there is no
+linkage between them.
+
+However, the timing is a problem.  Bob knows _when_ Alice communicated
+with the bank.  So he can collude with the bank afterwards to identify
+those withdrawals which took place at that time, one of which must have
+been Alice.  This could be a problem.
+
+In regular ecash, the timing issue is potentially less serious because
+the payee can in principle have a totally anonymous relationship to the
+bank, and exchange his received coins for fresh ones.  But in this
+system doing that is more difficult.  Alice must withdraw funds rather
+than deposit them.  To do so totally anonymously she would have to
+present coins to the bank at withdrawal time equal in value to the
+amount she wanted to pay Bob.  The bank would replace these coins with
+fresh ones that it signs, which are the doubly-blinded ones which Bob
+has provided to Alice.  So this is a somewhat more roundabout
+approach.  However, if you do this, and Alice communicates with the
+bank anonymously, then both sides seem to be pretty well protected
+against collusion.
+
+Hal
+
+
+
+

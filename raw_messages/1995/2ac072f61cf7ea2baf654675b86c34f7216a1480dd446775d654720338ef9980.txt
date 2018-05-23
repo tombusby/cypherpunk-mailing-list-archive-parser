@@ -1,0 +1,74 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Tue, 7 Feb 95 08:49:48 PST
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: MIME based remailing commands
+In-Reply-To: <199502071636.IAA15674@jobe.shell.portal.com>
+Message-ID: <9502071649.AA08393@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I was actually contemplating going a bit further, and making the core
+message not a "text/plain" but a Message/Rfc822, but without a "From",
+or perhaps with a "From: somethingfictitious". I also wouldn't declare
+the contents to be a multipart -- rather I'd have them be a security
+multiparts container that in turn contained a multipart containing a
+remail commands section and another security multipart...
+
+Hal says:
+> From: "Perry E. Metzger" <perry@imsi.com>
+> > 
+> >     I'd say that it would work far better if things were changed to MIME
+> >     formats. You would send a message by recursively encapsulating your
+> >     message to be remailed inside a MIME message. Simple and clean...
+> 
+> Here is an example of how such a mesage might look.  I created it using
+> the safe-tcl scripting language.  Interestingly, safe-tcl can to a
+> considerable extent be considered a tcl extension to let you work easily
+> with mime messages.  It makes it easy to create and parse them.
+> 
+> The whole message could be encrypted and marked with the "Encrypted: PGP"
+> header as we do now, or when the new PGP/MIME standard is finalized then
+> that could be followed.
+> 
+> I made up two new content types for this, one to hold the composite
+> multipart message, and one to hold the remailer commands themselves.
+> Although these types are not implemented, I think it would be very easy
+> to make a remailer that would use this structure, built out of safe-tcl.
+> (The batching and latency would not be trivial, but the basic remailing
+> would be easy.)
+> 
+> Hal
+> 
+> > To: hfinney@shell.portal.com
+> > Subject: No subject
+> > Mime-Version: 1.0
+> > Content-Type: multipart/remail; boundary="----- =_792174086"
+> > Content-ID: <1471.792173861.3@cryo>
+> >  
+> > ------- =_792174086
+> > Content-Type: application/remail-commands
+> > Content-ID: <1471.792173861.1@cryo>
+> > 
+> > Latency: 2 hours
+> > Minimum-Batch-Size: 5 messages
+> > Anon-Send-To: cypherpunks@toad.com
+> > Subject: Example of remailed message
+> >  
+> > ------- =_792174086
+> > Content-Type: text/plain
+> > Content-ID: <1471.792173861.2@cryo>
+> >  
+> > This is a message which is being sent to the mailing list.
+> > It is being remailed via a MIME-based structure where two new content types
+> > are defined: multipart/remail and application/remail-commands.  The
+> > multipart/remail type is supposed to be composed of two parts, the
+> > application/remail-commands part which has remailer commands, and the
+> > other part which is the "payload" to be remailed.
+> >  
+> > ------- =_792174086--
+
+
+
+

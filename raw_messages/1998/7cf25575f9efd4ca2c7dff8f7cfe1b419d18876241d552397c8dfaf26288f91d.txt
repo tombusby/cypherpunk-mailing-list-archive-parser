@@ -1,0 +1,89 @@
+From: David Honig <honig@otc.net>
+Date: Wed, 11 Feb 1998 03:27:18 +0800
+To: Alan Tu <cypherpunks@toad.com>
+Subject: Re: Algorithms used in PGP 5.x; Relative strength of Blowfish
+In-Reply-To: <199802092337_MC2-32B1-60F5@compuserve.com>
+Message-ID: <3.0.5.32.19980210111529.007b75a0@otc.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 11:36 PM 2/9/98 -0500, Alan Tu wrote:
+>anything besides 3DES and IDEA, what are their relative strengths to 3DES
+>or IDEA? 
+
+Before you can measure something's strength, you have to define
+the stress.  Are you twisting it or bending it?  Compressing or pulling?
+
+Are you trying an exhaustive keyspace search?
+Are you trying to find a weak key?  Or some information leaking through?
+Can you pick the plaintext to put through the system, and twiddle bits?
+Or does your adversary only have access to some plain + cipher pairs?
+
+None of the algorithms has been shot out of the water.  All of them annoy
+statists, since
+they can use more bits than is convenient to search through.  That's why
+40-bit
+anything is laughable.  
+
+>Also, what's the relative strength of Blowfish to 3DES or IDEA?  Its key
+>length is variable, as I recall.  Could someone tell me the range?
+
+3DES uses 3 x 56 bits of user key, 56 bits being the DES keylength, defined
+by the Feds
+by neutering IBM's Lucifer system.  DES uses some fixed tables with unknown
+(but upon investigation, apparently good) properties.
+
+Blowfish uses over 4Kbytes of internal key, derived from a user-key
+of up to 448 bits by mixing the user-key with random digits in a
+computationally
+expensive way that slows keysearch.  
+
+Both Blowfish and DES are based on Feistel networks, ie, iterations
+of rounds containing permutations, substitutions, addition and xors,
+including data-dependant operations (ie, one fraction of the input data
+(as well as the user's key, or derivations thereof) modifies the other
+fraction in each round).  The 'fractions' are usually halves, but
+unbalanced feistel networks have been studied too (e.g., McGuffin
+algorithm).  BF was
+designed with modern 32-bit cpus (and their cache sizes) in mind.
+3-DES is a temporary kludge.
+
+IDEA doesn't use tables, but uses the shift operator which the others
+don't.  This is 
+newer (less historical scrutiny) than DES or BF's structure.  IDEA is
+patented, the
+others aren't.
+
+You should find the papers on these, there's descriptions and code
+on line.
+
+
+
+
+------------------------------------------------------------
+      David Honig                   Orbit Technology
+     honig@otc.net                  Intaanetto Jigyoubu
+
+		Lewinsky for President '2012
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

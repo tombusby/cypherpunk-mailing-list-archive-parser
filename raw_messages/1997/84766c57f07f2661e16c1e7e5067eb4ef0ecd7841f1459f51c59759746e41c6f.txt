@@ -1,0 +1,58 @@
+From: Hal Finney <hal@rain.org>
+Date: Wed, 14 May 1997 05:44:16 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Public Key Break Paper
+Message-ID: <199705132120.OAA30804@crypt.hfinney.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+John Young, <jya@pipeline.com>, writes:
+> In early April we posted a message which referred to
+> William H. Payne's paper "Public Key Cryptography is
+> Easy to Break."
+>
+> Mr. Payne has provided the 1990 5-page draft paper 
+> along with other documents, which we've added to the file
+> at:
+>
+>    http://jya.com/snlhit.htm
+>
+> The paper is part of several attachments supporting
+> Mr. Payne's charge against Sandia National Laboratory. 
+> Other documents in the file help explain why the paper 
+> is sensitive to SNL and perhaps to NSA.
+
+I was curious to see this paper, since it would be an earth-shattering
+result if true, but unsurprisingly it is not as amazing as it sounds.
+
+First, it is not a general attack on public key cryptography, but
+rather it is a specific method for attacking RSA.
+
+Second, I remember seeing this algorithm discussed on sci.crypt in the
+past, probably in 1996.  I don't know if it came from this same guy
+or if somebody else (re)discovered it.  But the discussion there indicated
+that the algorithm was not as efficient as claimed.  The claim is that
+it takes an amount of work proportional to the number of bits in the
+modulus, which would indeed be a breakthrough.  Actually I think it will
+take about (2^n)/n iterations, making it a very poor method (*).
+
+Third, it claims to break RSA without factoring, but actually the algorithm
+could be used to factor n.  The algorithm gives you (p-1)(q-1) or a
+large factor thereof, and as discussed on sci.crypt a few months ago,
+this is enough to let you find p and q (through a tricky method whose
+details I don't remember!).
+
+Hal
+
+(*) The final string of 1's will be as long as the value of the phi(n)
+factor being found, which will be on the order of 2^n, so there will
+be about 2^n 1's in the final string, more than there are atoms in the
+universe for numbers of interest.  (You don't have to store the whole
+string though.)  Each iteration adds at most n bits to the string, so
+the number of iterations must be as above.
+
+
+
+
+

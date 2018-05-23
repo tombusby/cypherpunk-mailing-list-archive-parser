@@ -1,0 +1,44 @@
+From: owner-cypherpunks@toad.com
+Date: Fri, 23 Feb 1996 02:27:00 +0800
+Subject: No Subject
+Message-ID: <QQadzw27787.199602221110@relay3.UU.NET>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > Is there something like a checksum attached to Credit Card
+> > Numbers. Or better: Is there a way to determine for a given
+> > number N if
+> >   -this _might_ be a valid number
+> >   -this can't be a valid number
+
+This was posted by Wayne D. Hoxsie Jr. <hoxsiew@crl.com>:
+
+#include <stdio.h>
+
+v(char *s)
+{
+  int i=0,j=0,k;
+
+  k=!(!s[16]);
+  for(;*s;*s++)
+    i+=(++j%2-k)?(*s-'0')*2>9?((*s-'0')*2)-9:(*s-'0')*2:*s-'0';
+  return (i%10);
+}
+main()
+{
+  char s[160];
+
+  printf("Enter credit card number\n");
+  scanf("%s",s);
+  printf("Credit card number is %svalid\n",v(s)?"in":"");
+}
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

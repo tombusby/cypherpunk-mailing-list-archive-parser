@@ -1,0 +1,59 @@
+From: lmccarth@cs.umass.edu
+Date: Sat, 2 Mar 1996 10:57:19 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Certificate validity issues
+In-Reply-To: <Pine.SUN.3.91.960301102921.15925A-100000@rwd.goucher.edu>
+Message-ID: <199603020030.TAA22084@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+some hairboy ;) writes:
+> I don't see any that there could be any sort of automatic way to 
+> distinguish between the necessity for recipient-signed vs. 
+> recipient-unsigned certificates; One would assume that recipient-unsigned 
+> certificates would be effective only when issued from a high-reputation 
+> source.
+> 
+> Some method should be required to allow user decisions as to this, but 
+> whatever system is designed should definitely allow for both types, and 
+> *require* relevant software to handle both types.
+
+I think this is a policy issue, not a technology issue. In general, key
+owners should be able to sign certificates that say arbitrary things, 
+regardless of whether or not some third party agrees that the statement
+being signed is "true". Unless you believe in libel, slander, etc., which
+raises policy issues of a different sort entirely.
+
+The John Birch Society can sign something claiming that I'm a member. 
+A policy that says that's sufficient information to conclude that I *am* a 
+John Bircher is a broken policy. A policy that requires both the above and
+a signature by me on the same certificate, among other things, is viable.
+
+> There's actually a third sort of important certificate the system should 
+> handle:
+> 
+> (3) I might be a member of a secret society; I might need a membership 
+>     certificate to get access, say, to certain web sites. The system 
+>     should allow a "secret certificate," readable only by the issuer.
+
+Your description is a bit ambiguous. Do you really mean "readable", or
+do you mean "verifiable" ?
+
+If the former, it sounds like this could be handled by distributing 
+signed certificates encrypted with the issuer's public key. 
+
+If the latter, you could distribute signed certificates but not the public key
+needed to verify the signatures on the certs.
+
+It might be handy to use a hybrid approach, such as distributing signed
+certificates that refer to encrypted entity names (suitably padded with
+random bytes to avert trial encryption of plaintext guesses).  
+
+-Lewis	"You're always disappointed, nothing seems to keep you high -- drive 
+	your bargains, push your papers, win your medals, fuck your strangers;
+	don't it leave you on the empty side ?"  (Joni Mitchell, 1972)
+
+
+
+

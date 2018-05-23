@@ -1,0 +1,40 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Mon, 28 Aug 95 14:29:36 PDT
+Subject: Re: SSL trouble
+In-Reply-To: <RAA13233.199508282105@garotte.va.pubnix.com>
+Message-ID: <RAA13413.199508282126@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <RAA13233.199508282105@garotte.va.pubnix.com>, "Josh M. Osborne" wri
+tes:
+[...]
+>sub syswrite {
+[...]
+
+So sorry.  I gave out the wrong code.  Let me try again:
+
+sub sysreadln {
+    local($FH) = @_;
+
+    local($len, $line, $offset) = (0, "", 0);
+    
+    while("\n" ne substr($line, $offset-1, 1)) {
+        $len = sysread($FH, $line, 1, $offset);
+        die "Bad read from $FH: $!" if (!defined($len));
+        $offset += $len;
+    }
+
+    return $line;
+}
+
+There.  That should help.
+
+(yes, this is slow since it asks the OS for a single byte at a time,
+but in practice it isn't too bad - I use it for small tasks and my
+multi-stream state-machine monster for the rest)
+
+
+
+

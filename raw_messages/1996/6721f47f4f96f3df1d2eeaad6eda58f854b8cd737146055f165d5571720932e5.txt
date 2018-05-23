@@ -1,0 +1,105 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Mon, 22 Apr 1996 06:03:01 +0800
+To: Alex Strasheim <alex@crawfish.suba.com>
+Subject: Re: Add-in encryption module to Netscape
+Message-ID: <199604211814.LAA07390@netcom9.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I beleive the distilled wisdom on entropy availability is summed up by Wei
+Dai's post.  On Sat, 20 Apr 1996 17:21 -0700 Wei Dai <weidai@eskimo.com>
+said:
+
+>It appears that a consensus has been established on cypherpunks regarding
+                                            he meant coderpunks [bf]
+>entropy estimation.  Hal summarized it nicely:
+>
+>> The first is whether this mysterious black box, the entropy estimator,
+>> is really possible.  In practice the only way to know how much entropy
+>> you've gotten is to have a model for how the data is being generated,
+>> and to deduce from that an estimate of the entropy rate.  So the entropy
+>> estimator can't be a general-purpose calcluation, but it must be one
+>> which is specifically chosen, developed and tuned for the specific source
+>> of entropy you are dealing with.
+>
+>I believe this whole thread about randomness and entropy started with the
+>search for a portable software RNG and the discussion of how to estimate
+>the entropy of spinners.  If we accept the above paragraph, then we have
+>to reject spinners as a candidate for such a RNG, for two reasons.  First,
+>we have no model of how spinners generate randomness, so we can't estimate
+>their entropy.  Second, even if we developed such a model for a particular
+>spinner on a particular OS, the model itself would not be portable because
+>it would likely rely on nonportable assumptions about the OS.
+>
+>Do we have other candidates for portable software RNGs?
+
+
+At 11:38 AM 4/21/96 -0500, Alex Strasheim wrote:
+>Bill Frantz said:
+>> I have thought about the sources of entropy available to a Java applet, and
+>> there aren't many.  You should design your protocol so entropy is not
+>> needed on the applet side.  Entropy is normally used to pick symmetric
+>> encryption keys, and Initialization vectors
+...
+>Is it feasible to make an input package that stores up entropy from
+>keyboard and mouse events as an applet is used?  Then when entropy is
+>needed, whatever's available is used.  If there's not enough a scribble
+>window or text field could pop up and the user could generate the rest. 
+>(This isn't my idea, I'm inferring it from something Hal wrote.)
+
+I don't think there is a way to get "normal" keyboard/mouse data.  A
+"scribble" window is certainly a possibility.  However, see my comments
+below.
+
+
+>And over the long run, what, if anything, could Sun do to let applets have
+>access to more entropy in Java?  Would it be practical to have an entropy
+>source in the api, that could be combined with other sources in the 
+>applet?
+
+
+Bill Sommerfeld <sommerfeld@apollo.hp.com> posted to coderpunks:
+
+>Subject: Entropy overestimation in Ted Ts'o's /dev/random driver
+>Date: Thu, 18 Apr 1996 17:24:39 -0400
+>
+>I just played around a bit with Ted's /dev/random driver a bit more..
+>
+>It appears that the add_timer_randomness() function may overestimate
+>the amount of entropy in a sequence of timestamps by a factor of five
+>or more.  It attempts to keep track of first- and second-order deltas
+>in order to avoid overestimating the amount of entropy added; however,
+>it seems like this may not be enough.
+>
+>Adding a third-order delta, and doing the 2nd and 3rd-order deltas on
+>the absolute value of the lower deltas seems to make things better..
+
+Note that what Ted is using and Bill Sommerfeld is commenting on is
+basically a spinner.  In looking over the detailed data (which I have not
+copied), it appears to me that even adding the 3rd order deltas may leave
+the actual entropy overestimated.  The source of entropy is basically the
+system scheduler.  It is a deterministic process, which depends slightly on
+the somewhat less deterministic processes of I/O interrupts etc.  I feel
+uncomfortable estimating 1 bit/second from it, and prefer to accept Wai
+Dai's zero bits/second.
+
+One severe problem we seem to have is that all automatic entropy estimation
+techniques tend to over-estimate the amount of entropy present.
+
+Perhaps when the millennium comes, we will have hardware generation and be
+able to sleep at night.
+
+Regards - Bill
+
+
+------------------------------------------------------------------------
+Bill Frantz       | The CDA means  | Periwinkle  --  Computer Consulting
+(408)356-8506     | lost jobs and  | 16345 Englewood Ave.
+frantz@netcom.com | dead teenagers | Los Gatos, CA 95032, USA
+
+
+
+
+
+

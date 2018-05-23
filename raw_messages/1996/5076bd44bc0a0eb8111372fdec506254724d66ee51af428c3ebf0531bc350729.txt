@@ -1,0 +1,40 @@
+From: an5877@anon.penet.fi (deadbeat)
+Date: Wed, 21 Feb 1996 16:42:51 +0800
+To: cypherpunks@toad.com
+Subject: Kerberos vulnerability
+Message-ID: <9602210339.AA22431@anon.penet.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+A Kerberos V4 session key is chosen by calling random() repeatedly.
+THe PRNG is seeded with srandom(time.tv_usec ^ time.tv_sec ^ p ^ n++),
+where p is a static integer set to getpid() ^ gethostid() on the first
+call and n is a static counter.
+
+Is there any entropy here???  Most, if not all, Kerberos servers run one
+time synchronization protocol or another, which reduces the entropy to a
+few bits at most.
+
+DEADBEAT <na5877@anon.penet.fi>
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.4
+
+iQBFAgUBMSnfhvFZTpBW/B35AQFNqgGApyXhHKIstdDvNaCuJY/fWfRZ16BvK60A
+Qde5VxuTsFdZsm69rrTtGxpdyplBxso6
+=jHUm
+-----END PGP SIGNATURE-----
+--****ATTENTION****--****ATTENTION****--****ATTENTION****--***ATTENTION***
+Your e-mail reply to this message WILL be *automatically* ANONYMIZED.
+Please, report inappropriate use to                abuse@anon.penet.fi
+For information (incl. non-anon reply) write to    help@anon.penet.fi
+If you have any problems, address them to          admin@anon.penet.fi
+
+
+
+

@@ -1,0 +1,91 @@
+From: Karl L. Barrus <barrus@tree.egr.uh.edu>
+Date: Tue, 1 Dec 92 19:20:22 PST
+To: cypherpunks@toad.com
+Subject: anonymous remailer
+Message-ID: <9212020319.AA03423@tree.egr.uh.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Fellow cypherpunks:
+
+There is a new anonymous remailer for our use.  Its address is
+elee7h5@rosebud.ee.uh.edu, its name is "remailer03", and here is the
+public key:
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.0
+
+mQCNAiscKOYAAAED/jmrZbh5t5HgEHDGE2zzFZx3sIplEjIFRFsLpCfJYBfN36Rm
+uT8VGIyCcUSmCTqEOJ5HJZF58CUCOsy3B215ptOvbZdGijC3Qs7FbtGHKGA49q0v
+gBgVIcjjyppRI9YjfqlI2gUKDLPceCTw20ODAA7UTKYIa3IBS32zjcrFq/uzAAUR
+tCZyZW1haWxlcjAzIDxlbGVlN2g1QHJvc2VidWQuZWUudWguZWR1Pg==
+=9mBX
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+Also, here is a script I have to use the remailers.  It is the
+ultimate in brute force :-)  Perhaps if more people implemented
+remailers, a general script can be written to bounce mail off them
+all, or a subset of them all, in the style of Bill's scripts which were
+recently posted.  It didn't take long at all to set up: I spent most
+the time installing perl in my account, and tracing down an annoying
+bug that was my fault - I forgot to make the *.pl files executable.  
+
+-----------8<--------->8----------
+if [ $# != 3 ]
+then
+	echo "Usage: anon.mail message destination remailer"
+	exit 1
+fi
+
+anon1=remailing
+mail1=hal@alumni.caltech.edu
+anon2=remailer
+mail2=remailer@rebma.mn.org
+anon3=remailer03
+mail3=elee7h5@rosebud.ee.uh.edu
+
+message=$1
+dest=$2
+
+if [ $3 = remailing -o $3 = hal -o $3 = alumni -o $3 = 1 ]
+then
+  remail=$anon1
+  mailaddr=$mail1
+fi
+
+if [ $3 = remailer -o $3 = rebma -o $3 = 2 ]
+then
+  remail=$anon2
+  mailaddr=$mail2
+fi
+
+if [ $3 = remailer03 -o $3 = elee7h5 -o $3 = rosebud -o $3 = 3 ]
+then
+  remail=$anon3
+  mailaddr=$mail3
+fi
+
+t1=.anon1
+t2=.anon2
+
+echo "::" > $t1
+echo "Request-Remailing-To: $dest" >> $t1
+echo "" >> $t1
+pgp -ea $t1 $remail
+
+echo "::" > $t2
+echo "Encrypted: PGP" >> $t2
+echo "" >> $t2
+cat $t1.asc >> $t2
+cat $message >> $t2
+
+rm -rf $t1 $t1.asc
+mail $mailaddr < $t2
+-----------8<--------->8----------
+
+
+
+

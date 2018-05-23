@@ -1,0 +1,65 @@
+From: shamrock@netcom.com (Lucky Green)
+Date: Sun, 3 Dec 1995 14:14:12 +0800
+To: Michael Froomkin <iang@cory.EECS.Berkeley.EDU>
+Subject: Re: Questions/Comments on ecash protocol
+Message-ID: <v02120d05ace6ea8784af@[192.0.2.1]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 22:40 12/2/95, Michael Froomkin wrote:
+>thank you for the sterling analysis.  I for one am following this with
+>enormous interest, even though some of the details are lost on me right now.
+
+[Well done, Ian!]
+
+[...]
+
+>1) What information about Charlie/customer is encoded onto the coin?
+
+None.
+
+>(There must be some, right, since the serial number is blinded?)  Since the
+>bank doesn't know what serial number it is signing, it needs to put info
+>about Charlie onto the coin so that it can track him down if he double
+>spends.  Lacking such info, the bank can refuse to honor a double-spent
+>coin, but has no way to know who the double-spender is.
+
+Since an online clearing protocol is being used, the bank has no need to
+identify double spenders. The bank will simply refuse to honor a double
+spent coin. In fact, cancelling a payment in this protocol is done by just
+depositing the coin yourself.
+
+>3) Is there a way [how hard is it] for charlie to extract a coin and
+>either
+>   (i) copy it and/or
+>
+>   (ii) send it to David [3rd party] in such a way
+>that David could insert it into David's MTB software and then spend it to
+>Sam without Sam or the Bank noticing that anything was wrong.  If Charlie
+>and David do this, David now has a coin that is from his point of view
+>both payee and payor anonymous, although Charlie has a risk that David
+>will double-spend and expose Charlie to the bank's wrath.
+
+I can't help the feeling that I am missing something whenever you bring up
+this question. Assuming it could be done. What would David gain? He as the
+payor is anonymous to Sam either way. Sam still would have to be worried
+about being identified, since if Charlie gives David access to Charlie's
+wallet, it is safe to assume that Charlie will give David (and the mint)
+access to his blinding factor. Which in turn would reveal Sam as the payee.
+
+The protocol you suggest gives the parties exactly what they would have if
+they just used Ecash "out of the box": full payor anonymity, no payee
+anonymity. So why bother?
+
+<insert standard disclaimer here>
+
+
+-- Lucky Green <mailto:shamrock@netcom.com>
+   PGP encrypted mail preferred.
+
+
+
+
+
+

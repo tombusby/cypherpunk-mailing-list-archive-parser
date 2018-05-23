@@ -1,0 +1,57 @@
+From: hfinney@shell.portal.com
+Date: Thu, 4 Nov 93 21:47:41 PST
+To: cypherpunks@toad.com
+Subject: Signing keys for nyms
+Message-ID: <9311050543.AA26998@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Eric Hughes writes, regarding the problem of determining whether the
+key of a "nym" is valid:
+
+> If a provider of any sort is the sole means of access to a series of
+> communications, there will be the possibility of tampering.  If some
+> public key must issue forth through this channel only, it is possible
+> to alter the pseudonym's public key each time it is passed throught
+> that channel.  Since every protocol which uses communications only
+> through the server won't work, every solution needs another channel.
+
+Eric goes on to describe a solution based on sending the key through
+two different channels, with a return message via the pseudonym server
+channel.  I think this is a good solution, but there is the possibility
+that the evil pseudonym server could corrupt the return message so that
+the nym did not find out that his key was being mangled (although other
+people would find out, which may be good enough).
+
+A more general solution is to use more than one pseudonym server.
+Assuming they aren't both colluding, you can send your nym1 key to nym2,
+and vice versa.  By providing two or more channels back to you as well
+as out from you, you are able to detect corruption of your messages.
+
+Eric suggested that if the pseudonym server signed the user's key, then
+corruption of the key could be proven to third parties.  I'm not sure this
+is the case, because it would seem that a user could falsely incriminate
+a pseudonym server by claiming that he had never created the key which the
+pseudonym server signed, that it was a bogus key.  I suppose reputations
+would have to play a role then, in weighing the credibility of the pseudonym
+server against that of the nym.
+
+Hal
+hfinney@shell.portal.com
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLNm4NagTA69YIUw3AQFGOwQApSwLHzBfQKStZd6g/17dsL3WUtgCvy6D
+OyQjFQ3dRd6VRGrEaQ7aRbnae9If0NqF2qbaxeHAKNP/Uiyo/cGBWvFjAxWeVyY0
+hddLRBygxIyqjkDkxAEBGaYRruly8TC4TEU45ChwSUz2Smh0rDm8S2GINgXe340P
+a1peTNDPSlI=
+=Ywbw
+-----END PGP SIGNATURE-----
+
+
+
+

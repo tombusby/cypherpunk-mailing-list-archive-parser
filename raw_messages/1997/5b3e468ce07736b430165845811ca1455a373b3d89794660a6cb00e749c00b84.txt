@@ -1,0 +1,60 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 5 Jul 1997 01:49:15 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: ISP signatures on outgoing mail
+In-Reply-To: <199707031614.SAA27700@basement.replay.com>
+Message-ID: <3.0.2.32.19970704104000.006ba75c@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 06:14 PM 7/3/97 +0200, Anonymous wrote:
+>Anyone heard of a proposal for ISPs to automatically sign outgoing
+>mail headers?  Problem has been that spammers send email by one
+>path but forge a reply-to or from address at another location.  
+
+Flat-out can't work.  The problem is that you can send
+SMTP directly from your machine to its destination,
+so the ISP only routes the IP packets and doesn't read them.
+It's popular for mail clients like Eudora and Netscape to
+send all their mail to an SMTP forwarder, but the main
+reasons to do that are to move the complicated work
+to a machine that's on line all the time and smart enough
+to deal with problems like retrying mail to systems that
+don't answer, generating meaningful error messages when
+the destination can't accept the mail, forwarding to
+systems off in uucp-space, etc.  So it's perfectly
+reasonable for mail from joeuser@aol.com to originate
+on Joe's PC, with no way for AOL to sign it.
+There's also the problem of misconfigured Win95 machines,
+where either the operating system or the operator
+aren't bright enough to send the correct machine name.
+For instance, this mail comes from ca07b8bl.bns.att.com,
+as any system that records the HELO messages will tell you,
+because when my laptop is at work, that's it's name on the LAN.
+Netcom's SMTP forwarder only identifies it by IP and DNS
+pax-ca8-10.ix.netcom.com(204.30.66.74) address of the
+dialup port it connected to, though other servers I've
+used have also passed along, or at least recorded, the ca07b8bl.
+
+Digital signatures take a lot of calculation,
+and while CPUs keep getting cheaper, mail volume keeps getting larger.
+It's difficult to make server-based signing scale well, especially for the
+bigger ISPs.  Netcom's farm of mail servers is large and slow enough already.
+You could try to force the user to sign the mail, 
+using a signature certified by the ISP, and only forward email 
+that's from or to your subscribers - but checking signatures still
+requires about as much calculation, and the cheaper approach of 
+looking at the signature key without really checking the signature
+is easily forged.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#   (If this is a mailing list or news, please Cc: me on replies.  Thanks.)
+
+
+
+
+

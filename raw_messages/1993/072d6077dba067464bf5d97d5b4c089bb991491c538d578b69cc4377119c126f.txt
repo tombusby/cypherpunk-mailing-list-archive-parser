@@ -1,0 +1,78 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Wed, 1 Sep 93 14:14:27 PDT
+To: Brad Huntting <huntting@glarp.com>
+Subject: PGP suggestions (was Re: anonymous mail)
+In-Reply-To: <199308312052.AA01186@misc.glarp.com>
+Message-ID: <9309012108.AA03677@toxicwaste.MEDIA.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Perhaps it's time we polished the edges, added a few of the features
+> that are lacking, and wrote up up an RFC for the PGP message format.
+
+This is being worked on....
+
+> Some features I'd like to see in PGP are:
+> 
+> 	The ability to send an encrypted message to multiple
+> 	recipients without duplicating the entire message.  The
+> 	most logical way to do this would probably be to encrypt
+> 	the random IDEA key once for each recipient.
+
+This has been in PGP since version 2.2!  Read the docs!  To use this
+feature, you just execute:
+
+	pgp -e filename user1 user2 user3...
+
+And it will encrypt the file to all users, using the same IDEA key and
+RSA-encrypting it to the different recipients.
+
+> 	There needs to be a facility for having multiple signatures
+> 	on a single document without making the signers sign each
+> 	others signatures.  Besides the obvious application of
+> 	removing a signature from a document, this would also
+> 	facilitate things like petitions where many people could
+> 	asynchronously sign a single document, and latter assemble
+> 	all the signatures together.
+
+This has been discussed.  It is possible to do this in the PGP
+protocol, but it has not been implemented.  What this means is that
+you could write the code to generate the proper packets to do this,
+since those packets are legal, but this code has not yet been written.
+It is in the works, but I wouldn't expect to see it in the 2.4
+version.
+
+> 	It should be possible (though certainly not mandatory) to
+> 	hide the recipient's identity entirely.
+
+This, too, is in the works, albeit a little more difficult to
+accomplish.
+
+> 	The message format needs to allow for alternate forms of
+> 	encryption (besides IDEA).  Furthermore, the (shared key)
+> 	algorithm used to encrypt a message should be hidden in
+> 	the RSA encrypted part of the message along with the shared
+> 	key.  Ideally, a list of algorithms could be given which
+> 	would allow the message to be optionally compressed before
+> 	being encrypted, or encrypted two or more times with
+> 	different algorithms.
+
+This is already supported.  There is a byte that represents the
+secret-key algorithm (and there is a byte that represents the
+message-digest algorithm as well).  It would be simple to add, say,
+triple-DES to PGP as an alternative encryption algorithm.  As for
+hiding the encryption algorithm, this is a possibility but I don't see
+it happening.  The data structures, I don't believe, allow for this
+currently.  (I'd have to go back and double check this one).
+
+> If I'm confused and the PGP message format already supports some
+> of these features, please correct me.
+
+Thats why this message was composed.  Enjoy!
+
+-derek
+
+
+
+

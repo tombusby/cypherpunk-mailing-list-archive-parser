@@ -1,0 +1,175 @@
+From: aba@dcs.exeter.ac.uk
+Date: Wed, 23 Aug 95 07:17:57 PDT
+To: ecm@ai.mit.edu
+Subject: Subject: ANNOUNCE: 2nd SSL challenge - we need your compute!
+Message-ID: <6253.9508231416@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+[a copy of final announce, start time 18:00 GMT, tomorrow (Thu), as
+posted to a list of USENET groups]
+
+This is a request for idle compute time for the brute force of Hal's
+second SSL challenge.
+
+You will likely have read about the brute force crack of a netscape
+SSL session by Damien Doligez <Damien.Doligez@inria.fr>, which was
+widely covered in the media, and much discussed in this (and other)
+newsgroups.
+
+Damien has information on his breaking of the 1st challenge at:
+
+	http://pauillac.inria.fr/~doligez/ssl/
+
+Hal Finney <hfinney@shell.portal.com> has now issued a 2nd challenge,
+the aim with this challenge is to demonstrate in how short a time an
+export SSL key can be broken.  ie not how soon, but how *quickly* from
+start to finish (note the distinction), so for this reason we are
+constructing a virtual start line, and the virtual start gun will fire
+at:
+
+	Thu Aug 24 at 18:00 GMT
+
+If you are interested to join in, please obtain the sources / binaries
+for your system in preparation for the start.  (Even if you are after
+the start, join in as it will take a while).
+
+Piete Brooks <pb@cl.cam.ac.uk> wrote and is hosting the socket server,
+and WWW pages, see this URL for the socket client and brute forcing
+software, and WWW forms interface key doler:
+
+	http://www.brute.cl.cam.ac.uk/brute/
+
+ftp archive (software available by both WWW and ftp):
+
+	ftp://ftp.brute.cl.cam.ac.uk/pub/brute/
+
+
+Prize fund - donate c$ for the prize
+======================================================================
+
+I have set up a prize fund in c$ (digicash ecash) to add a bit of fun
+to the proceedings, and stimulate interest in DigiCash (the best ecash
+on the planet IMO).
+
+The prize fund at time of writing is c$ 292.30, and the winner will be
+the person who hits the key.  The person who gets the prize will be
+encouraged to participate in the ecash market to cash the money in, to
+increase cash flow (there is currently a shortage of c$ sellers), and
+to avoid taking the cash out of circluation.
+
+Give your c$ donations for the prize fund here:
+
+	http://dcs.ex.ac.uk/~aba/sslprize.html
+
+(or via email: shop-id: SSL-prize-fund, account-id: aba@dcs.ex.ac.uk)
+
+The (unofficial) digicash exchange:
+
+	http://www.c2.org/~mark/ecash/ecash.html
+
+Sign up for the Digicash trial (get c$ 100 free on opening account):
+
+	http://www.digicash.com/ecash/
+
+A couple of things to note, the ecash exchange is not affiliated with
+digicash, it is an experiment setup by digicash enthousiasts to allow
+a floating exchange mechanism for buying and selling c$.  The other
+thing to note is that exchange rate is currently (from the exchange
+above) about 100 c$ = 5 US $.
+
+
+Compiling for some platforms required
+======================================================================
+
+We are currently lacking a DOS only version of the BRUTESSL.EXE, this
+is complicated by the fact that Andrew Roos <AndrewR@vironix.co.za>
+has 32 bit 80x86 assembly speedups as well as a generic C version in
+his brutessl application which makes it tricky to get a 32 bit
+application.  (Oh for standard flat 32 bit UNIX).  Apparently it is
+possible using the Pharlap DOS extender software, so if anyone is able
+to help with this, please contact Piete or myself (Adam).
+
+Also (an easier task!) could someone compile a 16 bit one, which we
+can use to fall back on if the above doesn't work.  I did this myself,
+but my PC HD has probs of it's own at the moment, all you have to do
+is edit search.c brutessl.h brutessl.c lightly to fix up the macro for
+rotate left (makes a difference if your compiler supports it), and to
+make sure that the typedef (I think in brutessl.h) is set up so that
+word = a long.  Don't use the assembly.c but rather the generic C
+version search.c, that'll make things easier.
+
+Any platforms you would like to see pre-compiled binaries for, send
+them along, the source code is available from the ftp, and http
+addresses above.  A MAC binary would be nice also.
+
+
+More technical things... skip unless you're interested
+======================================================================
+
+The socket server which will be doling out the keys is running on:
+
+	sksp.brute.cl.cam.ac.uk:19957
+
+but you shouldn't need to know that unless you like to know what's
+going on the client software is wired to use this by default.
+
+There is an draft RFC like specification for the SMTP like protocol
+which the client and server use to talk to each other (SKSP = Simple
+Key Searching Protocol):
+
+	http://www.brute.cl.cam.ac.uk/ftp/pub/brute/protocol.txt
+
+
+Who's doing what (who to complain to about things not working :-)
+======================================================================
+
+Hal Finney	Issued challenge 1 and 2
+Piete Brooks	hosting www, and socket server, author of unix socket code
+Andrew Roos	wrote brutessl app
+Andy Brown	wrote windows NT client & protocol spec with Piete
+Adam Back	general software questions, prize fund ecash shop
+
+Damien Doligez	Broke 1st challenge
+Eric Young	\ independently broke 1st challenge also
+David Byers	/
+
+Mark Grant	WWW Ecash exchange
+
+email / www for those poeple:
+
+Hal Finney <hfinney@shell.portal.com> 	  http://www.portal.com/~hfinney/
+Andy Brown <a.brown@nexor.co.uk>
+Piete Brooks <pb@cl.cam.ac.uk> 		  http://www.cl.cam.ac.uk/users/pb/
+Adam Back <aba@dcs.ex.ac.uk> 		  http://dcs.ex.ac.uk/~aba/
+Andrew Roos <AndrewR@vironix.co.za>
+Damien Doligez <Damien.Doligez@inria.fr>  http://pauillac.inria.fr/~doligez/
+Eric Young <eay@mincom.oz.au>
+David Byers <davby@ida.liu.se>
+Mark Grant <Mark.Grant@insignia.co.uk>	  http://www.c2.org/~mark/
+
+(also lots of other people have offered compute time, and / or
+contributed technical advice / bug reports etc)
+
+
+Adam Back <aba@dcs.ex.ac.uk>
+Piete Brooks <pb@cl.cam.ac.uk>
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMDs4MCnIuJ1VakpnAQEG7gQAhQck5IoTQ9/jLcsD903u7yTRKssLJqxx
+Fxk2MpEWkPfIchD7cD7F4ZgO1gs+q6/rMxzEfS5YUZAb9Z4nCF1EUr2Qf2O5sIWV
+fFNjVJMCt4clGOQoG1KdJ9Om93JxIGQl2ep7OLc0RdCUFd8wRWC3yPC+2Tl8069m
+gHRtAJ0My3U=
+=LWFM
+-----END PGP SIGNATURE-----
+
+
+
+
+

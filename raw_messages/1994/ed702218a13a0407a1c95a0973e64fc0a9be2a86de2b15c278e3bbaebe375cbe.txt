@@ -1,0 +1,186 @@
+From: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Date: Tue, 1 Mar 94 01:07:59 PST
+To: Matthew Gream <mgream@acacia.itd.uts.edu.au>
+Subject: Re: standard for stegonography?
+In-Reply-To: <9403010717.AA20839@acacia.itd.uts.EDU.AU>
+Message-ID: <Pine.3.89.9403010249.C12975-0100000@delbruck.pharm.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Tue, 1 Mar 1994, Matthew Gream wrote:
+
+> 
+> Earlier, Sergey Goldgaber wrote:
+> 
+> > Wasted bandwidth does not a poor method make!
+> 
+> No, but in the case of steganography it does make it an impractical
+> requirement.
+
+I dissagree.  You may waste a few bytes, or maybe several Kb, but it would 
+be worth it.
+
+> No, I outlined two reasons. Firstly, an offset method such as you mention
+> wastes a lot of bandwidth. Say you take a conservative 16 bits as offset 
+> (which is already too easy to brute force), there you have up to 64kbit of
+> potentially wasted bandwidth in a transmission medium that needs as much
+> as it can get. See for example pixel 'stegging', you'd need exceeding large
+> pictures just to overcome the offset noise let alone modulate data of any
+> practical length in. The second reason, which yes can be construed as more
+> a personal dislike, did regard the prerequistite for a PKCS. In retrospect,
+> I'll retract that.
+> 
+
+As I said in an earlier post:  you can either sacrifice space for security; or,
+sacrifice security for space!
+
+Now that I think about it, one wouldn't have to sacrifice any bandwidth 
+whatsoever!  As, the stego program could be made to do wrap-around 
+encoding.  Meaning that, as the end of the file is reached, encoding 
+continues from the beginning until the appropriate offset is reached.
+This would loose none of the additional security offered by the original 
+method.
+
+On a related note, someone has mentioned that fractals have a great 
+ammount of potential for stego.  Their noise-threshold is much higher.  
+You may want to look into that if you're concerned with conserving space.
+ 
+> I agree with the first and foremost as well, steganography is there to
+> hide data. But by the same token, if the data is hidden, how do you know 
+> there is any there ? Isn't the idea that _you_ have a quick means to 
+> determine whether something has been hidden there, else it looks like
+> harmless information ?
+
+It _should_ look like harmless information!  It would be _nice_ to be able
+to know which files have been stegg'ed; but, that would either have the 
+potential to tip off one's opponent as well or, it would require secure 
+channels to propagate header keys (see previous message in thread for 
+comments to this effect).
+
+> 
+> With your method, you're leaving it up to whatever particular information
+> has been stegged in to have some inherent integrity check. Ie. this would
+> work if you stegged in PGP data or signed data. 
+
+I do not advocate stego'ing data with telltale headers.  That combination is 
+self defeating.  It must be noted that encrypted headers, as per your 
+advice, would allow one to know that decription was successful, without 
+sacrificing security.
+
+> But what if you stegged
+> in something else, how do you know it was stegged data ? All I was
+> proposing was a method of providing a header encrypted so you _know_ that
+> what follows is stegged information, that was my original intent.
+> 
+
+You would have to decrypt it to find out.  The only problem may lie in 
+figuring out the file-length.  Possible solutions are:
+
+  1 - Put in some kind of EOF marker.  Scatter a some more through the file
+      just in case, as well.  You may thus be required to make several
+      attempts at decryption. 
+
+  2 - Have a standard file length.  Break the original file into standard
+      length packets.  Pad with noise, if neccessary.  Then send it through
+      via multiple successive files.
+ 
+> Those first few bits are decrypted to either
+> reveal a structured header, in which case you can proceed to remove
+> the rest of the data, or to reveal junk, in which case there is nothing
+> there, at least nothing for you.
+> 
+
+This is much clearer, thank you.  However, I'm sure you realize that
+if the key used to encrypt the header is standardized, and it's location 
+of the header is standardized as well, much security is lost.  If its not 
+standardized, secure channels must exist for its propagation (ie: no need 
+for stego).
+ 
+> > So that this question may be asked: if you have secure channels, why do you 
+> > need encryption?
+> 
+> I have seen this point, and yes, I guess it is a problem. You would need to 
+> at some stage in the past agree on a key to use. How about changing that
+> from IDEA to RSA then ?
+> 
+
+hmmmm.....
+
+> > It would be even easier to get the same picture and run it through your 
+> > stego software which would look at your public-key and extract the file 
+> > automatically.  This would be pretty secure, easy to use, and require no 
+> > secure channels!
+> 
+> But then why offset in the first place? What is going to be at the offset
+> that can't be at the front of the file ? If something structured is going
+> to be at an offset, then it's easily susceptible to being brute force
+> searched.
+> 
+
+Yes, stego is all but invalidated if you try and hide patterned information.
+That is why I recommend using "Stealth PGP" and/or a Mimic-function in 
+combination with the standard stego we've been discussing.
+
+> Okay, how about giving up using some form of offset and just RSA encrypt
+> a header with the intended recipients key. 
+
+You need not give up the offset-method to do this.  They should work 
+together for additional security.
+
+> To check, you'd get your stego
+> software to pull out the first 2048 bits and decrypt the first X bits
+> corresponding to whatever your modulus length is with your private key,
+> if the result is "*STEGO FOLLOWS*+other", then theres a file there, else
+> you know nothing exists there (at least not for you ..).
+
+This is a good idea.  It will save you time you would have otherwise used
+to try and decrypt the whole file.  However, this should only be used if 
+the header fits in uniformly with the rest of the file.  Otherwise, the 
+file will stand out as encrypted.  Of course, the data should be 
+uniformly encrypted with Stealth PGP or its equivalent, as well.
+
+> However, this is half hearted because after thinking about it, I've come
+> to the conclusion that it's probably best if all the software does is
+> push the bits in and leave it up to Stealth-PGP (or other software) to
+> provide a means of creating the header and the proceeding data in a way
+> so that no key-ID's or so on exist. 
+
+The function of Stealth PGP, as I understand it, is not only to encrypt 
+without information as to the intended reciever, but to leave no trace of 
+encryption whatsoever.  Thus the need for a seperate, encrypted, header.
+I think your modified proposal should work just fine.
+
+> Then you could just
+> "desteg < art | stealth-pgp > out" and watch Stealth-PGP's exit code.
+
+If the desteg program automatically checks for encrypted, hidden 
+fileheaders via un-stealth-pgp, it may be as simple as you've pointed 
+out, anyway.
+
+> The desteg software shouldn't attempt to put anything in to identify
+> the presence of stegged data tho.
+> 
+
+Your idea will save time at no loss to security, if the header is encrypted.
+I see a problem only if the header is:
+
+   1 - unencrypted
+or
+   2 - encrypted with a non-public key
+or
+   3 - encrypted but anamalous
+
+
+If its encrypted with a public-key and blends in with the rest of the 
+data and the rest of the file it should be fine.
+
+
+Sergey
+
+
+
+
+

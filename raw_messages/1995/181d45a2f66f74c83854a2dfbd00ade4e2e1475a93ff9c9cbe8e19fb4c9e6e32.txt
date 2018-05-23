@@ -1,0 +1,41 @@
+From: Matt Blaze <mab@research.att.com>
+Date: Tue, 19 Dec 95 12:02:14 PST
+To: cypherpunks@toad.com
+Subject: revised time quantization package (Unix & WIN32) available
+Message-ID: <199512192009.PAA17051@nsa.tempo.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A revised version of my simple CPU time quantization package is
+now available for most Unix and, thanks to the efforts of Frank
+O'Dwyer (Rainbow Diamond Ltd), WIN32 platforms.  The package provides
+a simple interface to encapsulate code blocks that must run in a
+multiple of a coarse-grained "quantized" amount of CPU time.  It
+is useful in building various on-line cryptographic protocols in
+which an attacker could otherwise learn key information by observing
+the time the target takes to perform calculations that use the
+secret (c.f., Paul Kocher's recent attacks).
+
+The basic idea is that you can specify a "quantum" such that at
+the end of an encapsulated block the CPU will busy-wait until the
+next quantum multiple.  Fine-grained (below the quantum) timing
+information is thereby denied to the observer (including unprivileged
+processes on the same machine).  The code is quick-and-dirty and
+only runs on Unix-centric and WIN32-based platforms.  Test and use
+at your own risk.
+
+There are (basically) no restrictions on the use or distribution
+of the (very simple) code.
+
+Get it from:
+	ftp://research.att.com/dist/mab/quantize.shar
+
+The quantize package is also part of Jack Lacy's cryptolib package
+(watch this space for details).
+
+-matt
+
+
+
+

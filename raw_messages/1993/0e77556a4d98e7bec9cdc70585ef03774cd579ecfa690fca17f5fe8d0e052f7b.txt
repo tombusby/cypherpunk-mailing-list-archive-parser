@@ -1,0 +1,38 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Wed, 2 Jun 93 06:51:21 PDT
+To: cypherpunks@toad.com
+Subject: Term software development/design
+In-Reply-To: <9306020647.AA20551@hydra.unm.edu>
+Message-ID: <9306021425.AA13721@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>As for the creation of new term programs, I'd have to say making it RELY
+>on a FOSSIL driver is a BAD idea.  
+
+The reason to use FOSSIL, and it is a sufficiently strong reason, is
+that with some layer of abstraction at that low level, you can't do
+end-to-end link encryption transparently.
+
+For example, if you want to do a download over a secure channel, if
+you have to use an external protocol, and if that protocol talks
+directly to the serial port, then you can't use it, because the
+protocol will see only gibberish.  If, on the other had, the protocol
+driver uses FOSSIL, and if your FOSSIL can set up an encrypted
+channel, then the protocol will perform as expected without being
+aware that it's underlying connection is encrypted.
+
+>Almost NO new door software uses FOSSILs, because
+>companies like Compaq are making more-compatible machines with less
+>proprietary garbage in them.  
+
+The reason to use FOSSIL is not compatibility, but abstraction.  It's
+the only abstraction for serial communications the PC has, and we'd
+better take advantage of it.
+
+Eric
+
+
+
+

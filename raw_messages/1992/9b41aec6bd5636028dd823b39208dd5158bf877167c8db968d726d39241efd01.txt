@@ -1,0 +1,50 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Wed, 11 Nov 92 08:24:36 PST
+To: crunch@netcom.com
+Subject: Random number generators
+Message-ID: <9211111624.AA08843@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There seems to be some confusion over this random number device.
+
+Perry Metzger forwarded me some information about Newbridge
+Microsystems and the part number of a chip that made random numbers.
+At the crypto BOF at hackers I mentioned that there was a need for a
+hardware random number generator and that I knew of some chip to do
+it.  John Draper, who was there, expressed a desire to work on such a
+device.  I forwarded him the information about the chip.
+
+What I didn't know was the cost or design of this chip.  It appears to
+use a radioactive source to make random numbers.  This may account for
+the cost.  In any case, it is likely that most applications don't need
+this kind of chip.
+
+What is needed, though, is _some_ kind of chip.  John Draper is eager
+to manufacture such a device, once we have a design.  Would those
+people willing to help on this design please get in touch with him
+directly and start a conversation about it.  The conversation could
+reasonably be discussed on the list, if enough are interested.
+
+FYI, random numbers are used generally to create single-use session
+keys in a wide variety of crypto protocols, including Diffie-Hellman
+key exchange.  Hardware random number sources will be a standard
+component of all computers in the near future.
+
+As far as the design of the device itself goes, the numbers that come
+out of it don't have to be fully random.  Non-randomness can be
+corrected in software.  Two characteristics of the output, though will
+help such correction.  First, the number of ones and zeros should be
+the same.  Not only is this useful for correction, but it is easy to
+do in hardware.  Second, effort should be made to make sure that the
+generator does not pick up cyclic noise from its environment.  This
+means attention to coupling, shielding, and packaging.  No extra
+expense, likely, but definitely to be thought about some.
+
+Eric
+
+
+
+

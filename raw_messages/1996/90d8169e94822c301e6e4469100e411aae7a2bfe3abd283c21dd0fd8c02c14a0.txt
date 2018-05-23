@@ -1,0 +1,69 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Mon, 14 Oct 1996 23:09:59 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: cryptlib 2.00 free encryption library released
+Message-ID: <84535983805268@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Version 2.00 of cryptlib is now available from
+ftp://garbo.uwasa.fi/pc/crypt/crypl200.zip and also from
+ftp://ftp.franken.de/pub/crypt/misc/cryptl200.zip.
+ 
+The library provides an easy-to-use interface which allows even inexperienced
+crypto programmers to easily add strong encryption and authentication services
+to their software.  The library contains DES, triple DES, IDEA, MDC/SHS, RC2,
+RC4, RC5, SAFER, SAFER-SK, Blowfish, and Blowfish-SK conventional encryption,
+MD2, MD4, MD5, RIPEMD-160 and SHA hash algorithms, and Diffie-Hellman, DSA, and
+RSA public-key encryption, as well as a comprehensive high-level interface with
+functions such as cryptCreateSignature() and cryptExportKey().  The library is
+supplied as source code for Unix (shared or static libraries), DOS, Windows
+(16- and 32-bit DLL's), and the Amiga.
+ 
+The library provides a standardised interface to a number of popular encryption
+algorithms, as well as providing a high-level interface which hides most of the
+implementation details and provides an operating-system-independant encoding
+method which makes it easy to transfer encrypted data from one system to
+another.  Although use of the the high-level interface is recommended,
+experienced programmers can directly access the lower-level encryption routines
+for implementing custom encryption protocols or methods not provided by the
+library.
+ 
+The library API serves as an interface to a range of plug-in encryption modules
+which allow encryption algorithms to be added in a fairly transparent manner.
+The standardised API allows any of the algorithms and modes supported by the
+library to be used with a minimum of coding effort.  As such the main function
+of the library is to provide a standard, portable, easy-to-use interface
+between the underlying encryption routines and the user software.  In addition
+the easy-to-use high-level routines allow for the exchange of encrypted session
+keys and the creation and checking of digital signatures with a minimum of
+programming overhead.
+ 
+The library has been written to be as idiot-proof as possible.  On
+initialization it performs extensive self-testing against test data from
+encryption standards documents, and the API's check each parameter and function
+call for errors before any actions are performed, with error reporting down to
+the level of individual parameters.
+ 
+The library implements a security perimeter around the encryption functions,
+with encryption contexts consisting of an arbitrary handle referring to
+(hidden) data held within the library.  No outside access to state variables or
+keying information is possible, provided the underlying OS provides some form
+of memory protection.  If the OS supports it, all sensitive information used by
+the library will be page-locked to ensure it is never swapped to disk.
+ 
+There is one small bug I found about an hour after it was released (sigh), you
+can't use CRYPT_USE_DEFAULT as a parameter to cryptCreateContext() due to
+missing parentheses in crypt.c.
+ 
+Incidentally, if someone in Europe with a high-bandwidth link to the rest of
+the world could provide a permanent site for cryptlib betas that'd be useful,
+since the current beta distribution system is rather ad hoc.
+
+Peter.
+
+
+
+
+

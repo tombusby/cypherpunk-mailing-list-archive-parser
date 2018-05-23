@@ -1,0 +1,58 @@
+From: "Patrick J. LoPresti" <patl@skyclad.lcs.mit.edu>
+Date: Tue, 1 Aug 95 09:55:43 PDT
+To: cypherpunks@toad.com
+Subject: Re: a hole in PGP
+In-Reply-To: <199508011615.MAA19157@clark.net>
+Message-ID: <199508011655.MAA00520@skyclad.lcs.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>>>>> "rjc" == Ray Cromwell <rjc@clark.net> writes:
+
+ rjc>   That's a neat metaphor, but it doesn't always apply. It
+ rjc> shouldn't apply to algorithms which are primitive
+ rjc> recursive. Elementary algorithms like multiprecision add, sub,
+ rjc> multiply, divide, modmult, and modexp (the basis of public key
+ rjc> encryption) are all provably correct and all terminate. (the
+ rjc> basis is polynomial operators over a ring) It is possible to
+ rjc> verify the implementation (assuming the correctness of the
+ rjc> compiler). Now there could be a "factoring" trapdoor in RSA, but
+ rjc> that's a trapdoor not in the implementation of PGP, but in the
+ rjc> algorithm itself. RSA-in-4-lines-perl is probably provably
+ rjc> correct.  To guard against trapdoors in PGP, you should verify
+ rjc> the correctness of the PRNG, Key Generator, and that no private
+ rjc> key bits or session key bits are leaked. I would suspect this
+ rjc> could be difficult, but approximations could be determined to
+ rjc> within a high degree of confidence.
+
+As I suggested, you could 1) only use algorithms which are provably as
+hard to break as known hard problems, and 2) only use implementations
+which are proven correct.  PGP does neither.  In addition, the
+complexity of the source makes #2 difficult even to approximate.
+
+Now, we could certainly take care of #1 fairly easily by using a
+different set of algorithms.  And as you suggest, #2 can be
+approximated if the code is written cleanly.  But this would be a big
+project, and it would not be PGP.
+
+I personally would find such a project pointless, since I trust PGP
+enough for my needs.  The availability of the source is a necessary
+prerequisite for that trust, but it is by no means convincing.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.3beta, an Emacs/PGP interface
+
+iQCVAwUBMB5cZHr7ES8bepftAQFtBwQA2qDiS0BpvkFBj9HRRd/83OxjSczna/jn
+wj5eb+2KMSbj87SuD3ByUFcXQmWIqO6bNq5CkzoxmGvrk/y1futjAF/BeGcVlM1+
+T4ClfmrIFbqwd/j7i1Qaw7ExN6rNjgQUdRYmo8Nlr1JVaAymCtx2f4GqKRuwP3oy
+Tc/W8GXThM0=
+=qdFB
+-----END PGP SIGNATURE-----
+
+
+
+

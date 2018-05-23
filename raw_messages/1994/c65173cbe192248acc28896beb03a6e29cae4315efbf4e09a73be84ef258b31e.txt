@@ -1,0 +1,46 @@
+From: mccoy@io.com (Jim McCoy)
+Date: Tue, 27 Sep 94 15:48:37 PDT
+To: dcwill@ee.unr.edu (Dr. D.C. Williams)
+Subject: Re: Mandatory email verification
+In-Reply-To: <199409272123.OAA09324@python>
+Message-ID: <199409272247.RAA18617@pentagon.io.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: "Dr. D.C. Williams" <dcwill@ee.unr.edu>
+> 
+> Is anyone aware of a way to modify sendmail to require a verified digital
+> signature for all mail sent?
+
+This would be very difficult to do in the short-term because of the
+current problems of few PKCAs and the relatively poor intergration of
+signatures into current mail user agents.
+
+But, rather than providing user-keyed authentication, it should be
+possible for you to set up your sendmail so that you could prove that
+an _outgoing_ message did or did not originate at your site (e.g.
+rather than verify userx sent it you can say with reasonable certainty
+that userx@my.domain sent that message.)  Create a public key pair for
+the mail system.  Messages being sent out are given a signature based
+upon the user who sent the message (the person who invoked
+sendmail...), so if someone tried to forge mail that had the 
+appearance of coming from your site you would be able to at least show
+that it was not actually sent from the @foo.bar mail system.  It is
+not too difficult to push the system a little further and be able to
+show that if the message does have such a signature then either the
+user did send the message or the originating system was hacked.  A
+few more quick hacks would let someone send a mail message to the site
+given on the From line and have it check the signature and report back
+on whether or not the message was obviously forged or if it has the
+right sending signatures.  
+
+Such a system would only take a few hours of hacking to get
+operational, and users would not be significantly inconvenienced by
+it's operation and would only need to query it if they wanted to check
+the validity of a message...
+
+jim
+
+
+

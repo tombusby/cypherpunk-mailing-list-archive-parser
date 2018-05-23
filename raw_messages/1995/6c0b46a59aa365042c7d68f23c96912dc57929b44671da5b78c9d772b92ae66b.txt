@@ -1,0 +1,89 @@
+From: Jonathan Blake <grafolog@netcom.com>
+Date: Tue, 26 Dec 1995 02:00:27 +0800
+To: Eric Murray <ericm@lne.com>
+Subject: Re: Only accepting e-mail from known parties
+In-Reply-To: <199512251710.JAA08899@slack.lne.com>
+Message-ID: <Pine.SUN.3.91.951225091910.27577B-100000@netcom23>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+	Erik:
+
+On Mon, 25 Dec 1995, Eric Murray wrote:
+
+> > On Mon, 25 Dec 1995, Dr. Dimitri Vulis wrote:
+
+> Ok.  If I want to get my email ad for the Ronco turnip-twaddler past a filter
+> like that, all I need to do is to create a PGP key with
+> a user name that's the same as one that the victim already
+> receives.
+> 
+> i.e. if I know that joe@blort.com exchanges email with phred@none.net, then
+> I just create a PGP key with the name "phred@none.net", and sign
+> the turnip-twaddler ad with that.  It'd have a valid signature, and
+> one coming from Joe's friend phred.   Mail accepted.
+
+	But will the signature match that of phred@none.net's PGP
+	key.  I doubt it.
+
+> In addition to checking for a valid signature, the filtering software
+> would have to also check the PGP key id of the key used.  It would
+
+	To check a signature, you need the public key the signature 
+	was created with.  You allready have phred@none.net's public
+	key on your keyring.  If that key does not demonstrate an
+	authentic signature for the messge, then the message is 
+	a fake.  
+
+	Now, if you assume that your keyring has been compromised,
+	then you can also check the signatures of who signed the
+	keys.  At a minimu, your signature should be on the authentic
+	key.  If it is missing, then you can place the message in
+	a "suspected to be forged bin", or just send it to dev/null,
+	unread. 
+
+> also need to make sure that there is ONLY PGP-signed content in the
+> mail.  Otherwise Mallet could grab an innocuous mail message that
+
+	I hadn't thought of that, but here is one solution.
+
+	Run a perl script that automatically deletes everything 
+	that is not signed by pgp, with the exception of the date,
+	the sender, and the subject line.  
+
+> I'm sure there's other caveats, these are just the ones I can think of now.
+
+	Let's figure out some more threat models.  And how to counter
+	them.  
+
+	Man in the middle --- he has your public key, joe@none.net's
+	public key, and access to both your pbulic ring, and 
+	joe@none.net public ring.   I don't know know how to counter
+	this one using filters with perl --- yet.
+
+        xan
+
+        jonathon
+        grafolog@netcom.com
+
+
+****************************************************************
+	
+	Opinions represented are not necessarilly mine.
+
+	OTOH, they are not representations of any organization 
+	I am affiliated with, either.
+
+	WebPage:	ftp://ftp.netcom.com/gr/graphology/home.html
+	
+          For a good prime, call 391581 * 2^216193 - 1
+
+**********************************************************************
+
+
+
+
+
+

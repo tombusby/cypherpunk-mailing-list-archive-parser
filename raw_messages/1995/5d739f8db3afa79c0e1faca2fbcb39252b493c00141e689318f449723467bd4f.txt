@@ -1,0 +1,39 @@
+From: cman@communities.com (Douglas Barnes)
+Date: Fri, 22 Sep 95 12:52:58 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Re: Another Netscape Bug (and possible security hole)
+Message-ID: <v02120d01ac88cf556dd4@[199.2.22.120]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Spent too much time last night playing with the Netscape bug;
+among other things wrote some code to throw various random binary
+URLs at Netscape. Netscape seems prepared to swallow the bait
+as long as the URL does _not_ contain characters screened as
+follows:
+
+ if ((c != '"') && (c!='>') && (c!=0) && (c!='/') ) {
+
+This means you can't plant 0x00, 0x22, 0x3e or 0x2f.
+
+Anything else can be made to show up in various registers
+after things go blooey.  I've only made it segfault in
+different places so far, still working on getting it to do
+something it wouldn't ordinarily do and not crash before
+it does it.
+
+[Working under Solaris 2.4; I may try my luck on Macs, since
+this bug crashes the whole OS... need to load up debug tools
+first though.]
+
+Hope this helps others...
+
+Doug
+
+
+
+
+
+

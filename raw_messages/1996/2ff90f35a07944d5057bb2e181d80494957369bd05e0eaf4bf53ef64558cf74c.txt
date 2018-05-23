@@ -1,0 +1,49 @@
+From: Steve Reid <steve@edmweb.com>
+Date: Mon, 29 Apr 1996 22:34:42 +0800
+To: Rich Graves <llurch@networking.stanford.edu>
+Subject: Re: PGP and pseudonyms
+In-Reply-To: <Pine.GUL.3.93.960428201204.13032R-100000@Networking.Stanford.EDU>
+Message-ID: <Pine.BSF.3.91.960429000141.11364B-100000@kirk.edmweb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > I suppose a temporary fix would be to not use an ordinary PGP passphrase,
+> > but rather encrypt the whole secring.pgp file. Decrypt it when you need
+> > it, and be very careful to properly clean up when you're done.
+> Huh?
+> Just use multiple secring.pgp files, and toggle PGPPATH. What's the
+> problem? 
+
+You don't understand the problem we're concerned about... The problem is,
+the "real" person is in posession of the pseudonym's secret PGP key, and 
+PGP doesn't try to hide that fact.
+
+Suppose John Doe is using the pseudonym "Evil Bastard". Naturally, he has
+a PGP key for his Evil Bastard identity. Now suppose someone gets into his
+computer. This person would be able to find Evil Bastard's secret key. 
+Fortunately, the snoop would not be able to use the key, since it would be
+encrypted with a secure PGP passphrase. However, they would still be able
+to use the command "pgp -kvv secring.pgp", and that shows the key ID of
+each secret key. 
+
+The key ID is the lower 64 bits of the public key, but it's included in
+unencrypted form on the secret keyring as well, to identify the secret
+key. The person who snooped the secret keyring would be able to see that
+John Doe has the secret key with the ID of (for example) 13579BDF. Since
+the ID of Evil Bastard's well-known public key is also 13579BDF, the snoop
+now knows that John Doe is in posession of a secret key that corresponds
+to Evil Bastard's public key, which proves that John Doe *IS* Evil Bastard. 
+
+
+=====================================================================
+| Steve Reid - SysAdmin & Pres, EDM Web (http://www.edmweb.com/)    |
+| Email: steve@edmweb.com   Home Page: http://www.edmweb.com/steve/ |
+| PGP Fingerprint: 11 C8 9D 1C D6 72 87 E6  8C 09 EC 52 44 3F 88 30 |
+|              -- Disclaimer: JMHO, YMMV, IANAL. --                 |
+===================================================================:)
+
+
+
+
+

@@ -1,0 +1,71 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Sun, 21 Jan 1996 17:41:27 +0800
+To: John Lull <lull@acm.org>
+Subject: Re: HAVAL (was Re: crypto benchmarks)
+In-Reply-To: <31017081.19731341@smtp.ix.netcom.com>
+Message-ID: <Pine.SUN.3.91.960121011209.29362E-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 20 Jan 1996, John Lull wrote:
+
+> I didn't see your original post, but did see Deranged's response.  I
+> would be interested to see whatever you come up with.
+
+I ended up doing it like this:
+
+for (i=0; i<4; i++)
+{
+	FF_42(t7, t6, t5, t4, t3, t2, t1, t0, w[wi2[8*i+0]], mc2[8*i+0]);
+	FF_42(t6, t5, t4, t3, t2, t1, t0, t7, w[wi2[8*i+1]], mc2[8*i+1]);
+	FF_42(t5, t4, t3, t2, t1, t0, t7, t6, w[wi2[8*i+2]], mc2[8*i+2]);
+	FF_42(t4, t3, t2, t1, t0, t7, t6, t5, w[wi2[8*i+3]], mc2[8*i+3]);
+	FF_42(t3, t2, t1, t0, t7, t6, t5, t4, w[wi2[8*i+4]], mc2[8*i+4]);
+	FF_42(t2, t1, t0, t7, t6, t5, t4, t3, w[wi2[8*i+5]], mc2[8*i+5]);
+	FF_42(t1, t0, t7, t6, t5, t4, t3, t2, w[wi2[8*i+6]], mc2[8*i+6]);
+	FF_42(t0, t7, t6, t5, t4, t3, t2, t1, w[wi2[8*i+7]], mc2[8*i+7]);
+}
+
+This allows all the transform functions to fit into L1 cache, but at a 
+cost.  Besides the overhead of the for loop, each macro call now does two 
+extra table lookups (in wi2 and mc2). The net result is a ~100% speedup 
+over the reference implementation.
+
+Also, FYI, the boolean functions used in the reference implementation can be 
+optimized.  Thanks to Deranged Mutant for these:
+
+/*
+#define f_2(x6, x5, x4, x3, x2, x1, x0)                         \
+           ((x2) & ((x1) & ~(x3) ^ (x4) & (x5) ^ (x6) ^ (x0)) ^ \
+            (x4) & ((x1) ^ (x5)) ^ (x3) & (x5) ^ (x0)) 
+*/
+
+#define f_2(x6, x5, x4, x3, x2, x1, x0)                         \
+	(((x4&x5)|x2) ^ (x0|x2) ^ x2&(x1&(~x3)^x6) ^ x3&x5 ^ x1&x4)
+
+/*
+#define f_4(x6, x5, x4, x3, x2, x1, x0)                                 \
+           ((x4) & ((x5) & ~(x2) ^ (x3) & ~(x6) ^ (x1) ^ (x6) ^ (x0)) ^ \
+            (x3) & ((x1) & (x2) ^ (x5) ^ (x6)) ^                        \
+            (x2) & (x6) ^ (x0))
+*/
+
+#define f_4(x6, x5, x4, x3, x2, x1, x0)                                 \
+	((((~x2&x5)^(x3|x6)^x1^x0)&x4) ^ ((x1&x2^x5^x6)&x3) ^ (x2&x6) ^ x0)
+
+
+/*
+#define f_5(x6, x5, x4, x3, x2, x1, x0)             \
+           ((x0) & ((x1) & (x2) & (x3) ^ ~(x5)) ^   \
+            (x1) & (x4) ^ (x2) & (x5) ^ (x3) & (x6))
+*/
+
+#define f_5(x6, x5, x4, x3, x2, x1, x0)             \
+	((((x0&x2&x3)^x4)&x1) ^ ((x0^x2)&x5) ^ (x3&x6) ^ x0)
+
+Wei Dai
+
+
+
+

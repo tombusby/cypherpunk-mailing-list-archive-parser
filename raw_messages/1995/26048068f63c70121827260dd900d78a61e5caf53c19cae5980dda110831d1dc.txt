@@ -1,0 +1,94 @@
+From: JMKELSEY@delphi.com
+Date: Thu, 30 Nov 1995 07:49:53 +0800
+To: cypherpunks@toad.com
+Subject: Re: GOST for sale
+Message-ID: <01HY74DKD11A9IFJI3@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>Date: Fri, 24 Nov 1995 03:43:25 +0100 (MET)
+>From: Mats Bergstrom <asgaard@sos.sll.se>
+>Subject: GOST for sale
+
+>According to a short article in a Swedish newspaper (DN)
+>with the title 'Spy Code of KGB can make computers safe',
+>JETICO INC., located in Finland (Tammerfors), introduced
+>a new crypto system on the world market last week. It's
+>based on GOST, the Russian federal standard algorithm.
+>This product, called BestCrypt, is implemented at least
+>partly in hardware. Alledgedly it uses 'GOST 28147-89',
+>whatever that stands for.
+
+Hmmm.
+
+>GOST is probably very secure - a huge keyspace (256 bits) and
+>KGB would not have left a trapdoor for NSA to take advantage
+>of, would they?
+
+If this is the cipher I've seen, it's not overwhelmingly impressive,
+though it may be OK.  I haven't ever made any serious attempt to
+attack it, and I don't know anyone else who has.  Anyone have a
+reference?
+
+Basically, GOST is a balanced Feistel network (like DES), but its
+F-function is much simpler.  Basically,
+F(X,K) = Rotate_Left(S(X+K),11),
+where S(t) denotes parallel application of eight 4:4 S-boxes.
+
+Depending on the implementation, these S-boxes' contents could be
+key-dependent and pseudorandom, or fixed.  Unfortunately small
+random S-boxes are likely to have some weaknesses W.R.T.
+differential cryptanalysis.  This can be true even when the S-boxes
+are secret and key-derived--see Biham and Birkyov's paper in
+Auscrypt '94 on a DES variant with variable S-boxes, for a quick
+discussion of this.  And the security of this scheme is very much
+going to depend upon the S-boxes used.  If the S-boxes are generated
+at (pseudo)random from the key, I'd expect there to be some pretty
+nasty weak key conditions that could occasionally come up.
+
+On the other hand, GOST is defined with 32 rounds, so it may be hard
+to find any useful differential or linear characteristics, even for
+relatively bad S-box choices, that have high enough probability to
+get through 29-31 rounds.  And it has a 256-bit key, so even if
+someone determines some attack which recovers 160 bits of the key,
+there are still 96 bits of key left to provide security.
+
+The GOST key schedule is really simple, though it avoids the most
+obvious kind of related key attack.  I wouldn't be surprised to see
+some interesting related key attacks be possible.  This is
+interesting because there is also a hash function based on GOST--I'd
+be pretty reluctant to use this without a lot of analysis.
+
+>The newspaper article ends:
+>
+>'The Finnish entrepreneurs asseverate that their
+>Russian colleagues have never had anything to do
+>with the KGB.'
+
+I may be mistaken, but wasn't there some other internal organization
+in the USSR that did cryptography?
+
+>Mats
+
+Note:  Please respond via e-mail as well as or instead of posting,
+as I get CP-LITE instead of the whole list.
+
+   --John Kelsey, jmkelsey@delphi.com
+ PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMLv0kkHx57Ag8goBAQFH3AP+JR1sEQCH0ANmNSDFhzpCZb4jn4uqq23v
+PjZfFOrYc9SrD1xn+3azqfHFpiHIubfWzZ8u1aNEf4erAErbQLPAUOLPv17zhn//
+6UEVKX4GhPqoLfou+wO38rF2DwWdeCjuQm2GgxuFpw5b0D4M3V1mv5ocLOoOMq2N
+twdfxiMtO6Y=
+=BOER
+-----END PGP SIGNATURE-----
+
+
+
+

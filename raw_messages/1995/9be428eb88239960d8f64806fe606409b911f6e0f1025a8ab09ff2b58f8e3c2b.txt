@@ -1,0 +1,27 @@
+From: shields@tembel.org (Michael Shields)
+Date: Tue, 19 Sep 95 23:49:33 PDT
+To: sameer@c2.org (sameer)
+Subject: Re: NYT on Netscape Crack
+In-Reply-To: <199509190748.AAA03614@infinity.c2.org>
+Message-ID: <m0svIx0-000DOGC@yage.tembel.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 	The server process itself still needs access to that file
+> though in order to verify passwords, so it can't be totally
+> protected-- a bug in the server might reveal the password file. A
+> relatively minor point..
+
+Actually, it could communicate with a differently-privileged process.
+The security gain probably isn't worth the performance hit, though.
+
+(A possible secure channel: Give the password manager a uid of its own.
+Have it listen on a unix-domain socket.  The server process opens the
+socket, then fstat()s it to make sure it's really owned by the password
+manager.)
+-- 
+Shields.
+
+
+

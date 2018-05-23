@@ -1,0 +1,51 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Fri, 29 Dec 1995 04:16:40 +0800
+To: cypherpunks@toad.com
+Subject: Re: Only accepting e-mail from known parties
+In-Reply-To: <199512251953.OAA01614@homeport.org>
+Message-ID: <qJoRgD2w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think the underlying problem is that the way PGP signatures are used by most
+people, they validate a text, but allow it to be quoted out of context in an
+e-mail or Usenet forgery. E.g., suppose Alice posts a PGP-signed text in
+alt.sex. Bob forges a Usenet article in misc.kids, making it look like it came
+from Alice and quoting her PGP-signed body. Alice will have a tough time
+convincing the public that she didn't post it -- after all, her signature
+verifies. (There are many people on the net who don't comprehend the
+argument that the Path: is clearly bogus). Or: Bob writes Alice a sexually
+explicit letter and forgets to say "Dear Alice" in the signed block. Alice
+forges an e-mail to Carol, making it look like it came from Bob and quoting
+the signed block. Bob would have to realy on the analysis of Received:
+headers to repudiate such a forgery.
+
+I suggest to the kind folks working on PGP 3 that there should be a standard
+protocol to include within the signed portion the information on when and for
+whom this text is written: i.e. the list of e-mail recipients and/or Usenet
+newsgroups, which could be easily compared with the RFC 822/1036 headers of
+an e-mail/Usenet article. Perhaps there could be a new option for PGP to look
+_outside_ the signed block and match the headers with what's inside the
+block. E.g., suppose the signature block says: this text was written by
+alice@zog.org, posted to alt.sex and alt.sex.banal and e-mailed to
+bob@masons.com. Suppose PGP is asked to check the signature in a file that
+purports to be a e-mail or a Usenet article and has some headers before the
+signed portion. If there is a list of To: recipients, and it includes someone
+other than the recipients listed within the signed block; or if there is
+a Newsgroups: header, and it includes newsgroups not listed within the signed
+portion; then the input is bogus. For compatibility with the existing
+software, if the signed block doesn't include this info, then this checking
+should't be done, of course.
+
+(Yes, one could do this with a wrapper to PGP, making the whole thing even
+more user-hostile.)
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

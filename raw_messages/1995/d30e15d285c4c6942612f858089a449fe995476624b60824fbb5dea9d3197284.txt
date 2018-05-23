@@ -1,0 +1,23 @@
+From: Rich Salz <rsalz@osf.org>
+Date: Sun, 24 Sep 95 20:50:11 PDT
+To: rsalz@osf.org
+Subject: Re: Defense against a class of programming bugs
+Message-ID: <9509250349.AA27055@sulphur.osf.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Unfortunately, strdup is not posix compliant.  If you want to use
+>it and maintain portability, you'll have to write your own.
+
+Er, you're kidding, right?  drand48 isn't in Posix either, for example.
+Someone who runs on Motif and Mac has strdup as the least of their
+worries.  But just in case it's stopping anyone:
+	char *strdup(const char *x) { char *p;
+	    return (p = malloc(strlen(x) + 1)) ? strcpy(p, x) : 0;
+	}
+(Deliberately written too-cleverly.  Lame compilers will need to cast to 0)
+
+
+
+

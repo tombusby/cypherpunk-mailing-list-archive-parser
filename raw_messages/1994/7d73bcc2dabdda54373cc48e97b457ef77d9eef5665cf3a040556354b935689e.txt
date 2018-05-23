@@ -1,0 +1,156 @@
+From: Matt Thomlinson <phantom@u.washington.edu>
+Date: Wed, 23 Feb 94 20:54:10 PST
+To: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Subject: Re: STEALTH OCEANS
+In-Reply-To: <Pine.3.89.9402232236.B2157-0100000@delbruck.pharm.sunysb.edu>
+Message-ID: <Pine.3.89.9402232030.A25029-0100000@stein3.u.washington.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 23 Feb 1994, Sergey Goldgaber wrote:
+
+> No, no.  The function of Stealth PGP is, as I understand it, to simply 
+
+correct. I was commenting on the ability of the stealth-pgp to create 
+output not associated with PGP; I didn't mean to imply that s-pgp would 
+be designed to do the deletion on its own. sorry.
+
+
+> > telltale TSR hanging around?
+> 
+> What telltale TSR?  A program that can read and write directly to disk?
+> If I am not mistaken, such programs are common enough not to be
+> evidence of anything.  Having PGP on you is another matter, however.
+
+I'd say having a TSR "hideit.com" loaded into high memory (installed size:
+xxxx bytes) watching INT (whatever) would be a pretty good clues that
+someone trying to determine that you were using a program to protect areas
+of your disk would look for. Perhaps you could try and hide this, too; in 
+any case, you address TSRs later...
+
+> > > Simple.  You would take note of the starting address of the file.  And, 
+> > > the length of the file.
+> > 
+> > how do you control individual writes? 
+> 
+> With a standard direct disk read/write utility.
+
+uh, I don't have one. Do you?
+
+I'm NOT talking about how to recover areas of your disk (you could use 
+something like Norton Utilities to pull the noise file off the disk). 
+What I'm trying to understand is how you plan to keep that area of your 
+disk off limits. 
+
+Like it or not, programs and OSs (if you can call Windows an OS) write to 
+disk. Lots. Everywhere. How do you keep it from fragmenting the disk 
+immediately and overwriting the space (whose address you have written 
+down on that sheet of paper next to your computer?)
+
+Try running windows with a temp swapfile. Run photoshop for windows (it 
+writes its' own tempfile on the drive). Save a file from Word for Windows 
+and try and control where it goes.
+
+
+I'm not saying these problems can't be solved; I _am_ saying that what 
+has been proposed thus far doesn't adequately address this (if you're 
+looking at this as a genuine way to hide your data).
+
+
+> > vs. where your data is kept. Authorize each write by hand? (PROGMAN.EXE 
+> > is attempting to write to cylinder 12, track 14. Authorize (y/N)? ) 
+> 
+> Disable authorization.  Most DOSs allow direct writes without 
+> authorization anyway.
+
+No, no. We _need_ to protect the noise area. 
+
+how? change the FAT? TSR? My example above was an attempt to try and
+understand what a TSR you might build would have to ask, every single time
+a regular write to disk was performed. (to protect your deleted noise
+file).
+
+
+> You need _not_ have a TSR with the location.  If you keep track of the 
+> address/length yourself, the problem is eliminated.  The whole
+
+except for the fact that your computer will overwrite your data (which, 
+in fact, is *deleted* space, waiting to be written over) in the meantime.
+
+> be a more elegant solution.  Otherwise, store your "noise" files 
+> sequentially, on a floppy that you use only for storing encrypted data.  
+
+Ah, a floppy? this makes 10 times more sense. With a floppy you wouldn't 
+have haphazard writes to disk (as you do with your harddrive). 
+
+
+> > Analysis: It seems with the systems I can think of you need to have the
+> > area the noise file stored in either 1) standard (ick) or 2) kept in
+> > memory so you don't overwrite it. If you don't protect it, I wouldn't
+> > expect your noise file to have a very large half-life. :l Keeping the area
+> > in memory (under protection) defeats the system. 
+> > 
+> 
+> I'm sorry, this paragraph just went over my head.  Could you restate it 
+> in another way, so I can attempt to comment?
+
+sure. two choices:
+
+1) We must protect our noise data.
+	Keep it in a location on disk, keep a TSR in memory to protect
+that area from writes. 
+
+2) We don't protect our noise data. 
+	Keep our data in a location on disk, keep the spots on paper, and 
+hope that by the time we need to retreive it, the data hasn't been 
+written over. 
+
+I sure wouldn't want to count on 2), and it seems as if 1) defeats the 
+purpose.
+
+
+> > Aside: By the way, isn't the "noise" in your noise file is going to be
+> > more random looking than other deleted areas of your disk? PGP compresses
+> > and then encrypts; I'll bet that it is possible to distinguish pgp's
+> > output bit frequencies from those of a binary or text file, which is what
+> > the rest of the wiped space would most likely be. 
+> > 
+...
+
+>  1 split the "noise" file into smaller parts which would be interspersed 
+>    randomly among the other deleted grabage.  This would make for a less 
+>    conspicuous disk; as, there are, normally, truely random sections of 
+>    the disk along with the not-so-random sections.  Your bits of noise-file
+>    will fit right in!
+
+not bad. One thing to consider: we've moved all of our data to the end of 
+the disk, anyway; we'd still have most of our important data at the end 
+of the disk, which still might look conspicuous statistically.
+
+>  2 use a steganorgraphy utility to embed the "noise" file in a section
+>    of the other not-so-random garbage (as some people currently use those
+>    same utilities to embed their PGP files in GIFs), and then delete it.
+>    (Owning a stegonagraphy utility would, of course, be as conspicuous
+>     as owning PGP.  So the same precautions would have to be applied.)
+
+not bad. Takes (8 times?) more space, but should work.
+
+
+Do you understand my objection to keeping track of the files' location by 
+hand? It isn't that keeping track of the location/length of the file is 
+hard, or retreiving it is tough; the problem is keeping the OS, etc from 
+overwriting it in the meantime. 
+
+
+mt
+
+Matt Thomlinson                               Say no to the Wiretap Chip!
+University of Washington, Seattle, Washington.
+Internet: phantom@u.washington.edu      	    phone: (206) 548-9804
+PGP 2.2  key available via email or finger phantom@hardy.u.washington.edu
+
+
+
+
+

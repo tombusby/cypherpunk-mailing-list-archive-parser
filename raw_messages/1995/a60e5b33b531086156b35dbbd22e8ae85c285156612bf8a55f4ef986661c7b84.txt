@@ -1,0 +1,43 @@
+From: xpat%vm1.spcs.uma.thurman.edu@vm1.spcs.umn.edu
+Date: Thu, 2 Feb 95 09:23:33 PST
+To: cypherpunks@toad.com
+Subject: Re: Frothing remailers, the advertising and pinging problems
+Message-ID: <9502021723.AA10432@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jrochkin@cs.oberlin.edu (Jonathan Rochkind) wrote:
+
+>        ++Mail ping. Non-IP, simple, slow. ++
+> A mail ping simply consists of sending a message to a remailer with a
+> Request-Resending-To: yourself.  When you get it back, you know the
+> remailer is alive.
+> This has the advantage that it's hard for the remailer
+> to trick you, even if it is an evil NSA remailer that wants you
+> to believe it is alive, even though it really throws messages in
+> in the trash. It can't differentuate between your "ping"
+> (to be returned) and a normal message (to be thrown in the trash).
+
+Sure it can.
+
+   if (message_origin==request-resending-to)
+     forward_message;
+
+To get around this you would have to chain, thereby relying on
+an additional remailer. Of course your origin and resend addresses
+could become are different through net.sorcery, but to rely on
+existing (and most likely transient) security loopholes are
+unsound foundations to construct a persistent reliable remailer net.
+
+Of course, clever Evil Remailer (tm) operatives might have their
+machines work *most* of the time, and have more than one, so that
+the entire network of remailers *seems* unreliable, or subtlely mangle
+encrypted messages so that the ball drops somewhere else.
+
+----------------------------------------------------------------------
+P M Dierking | "Emptiness is consistent with everything" --Nagarjuna
+
+
+
+

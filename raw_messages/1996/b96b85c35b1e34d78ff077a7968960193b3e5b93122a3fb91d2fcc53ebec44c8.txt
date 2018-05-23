@@ -1,0 +1,201 @@
+From: Jay Sulzberger <jays@cloud9.net>
+Date: Fri, 5 Jan 1996 23:27:17 +0800
+To: cypherpunks@toad.com
+Subject: Three recent posts on usenet about getting far hex digits of pi.
+Message-ID: <Pine.BSI.3.91.960105044051.823A-100000@cloud9.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+For Timothy C. May and all the cypherists on this list:
+
+Here are three recent posts to usenet on the beautiful, and partly new 
+results on getting digits far out in pi, without explicitly getting all 
+the nearer to the heximal point digits.
+
+> From sci.math Wed Dec 20 05:16:17 1995
+> Path: panix!news.denver.eti.net!imci3!imci2!newsfeed.internetmci.com!uwm.edu!msunews!netnews.upenn.edu!red.seas.upenn.edu!jimmosk
+> From: jimmosk@red.seas.upenn.edu (Jim J Moskowitz)
+> Newsgroups: sci.math
+> Subject: nth digit of pi calculable?
+> Date: 18 Dec 1995 03:29:08 GMT
+> Organization: University of Pennsylvania
+> Lines: 29
+> Message-ID: <4b2n64$s27@netnews.upenn.edu>
+> NNTP-Posting-Host: red.seas.upenn.edu
+> Status: RO
+> X-Status: 
+> 
+> I've seen the recent reports about the discovery of a formula for pi 
+> of the form 
+>        infinity
+>         -----
+>         \        (- n) /   4         2         1         1   \
+>          )     16     (------- - ------- - ------- - -------  )
+>         /              \8 n + 1  8 n + 4   8 n + 5   8 n + 6 / 
+>         -----
+>         n = 0
+> 
+> which is said to tell you in a simple manner what the nth digit in the
+> hexadecimal expansion of pi is.  I don't see why.  Yes, the ith term of
+> this series does include 16^-i, which is the ith place in said expansion,
+> but the term in parentheses (sorry; they look more like angle brackets)
+> isn't an integer, so it's not giving you the value of the number in that
+> ith place.  Instead, it gives you several digits which are in places further
+> along in pi, with no guarantee that other terms in this sigma won't also
+> include digits in those places, forcing you to calculate and add up many
+> terms....
+> 
+> Taking an incautious plunge into the world of computational math,
+> Jim
+> 
+> 
+> -- 
+> ----------------------------------------------------------------------------- 
+>      Jim Moskowitz (jimmosk@eniac.seas.upenn.edu)
+>                      Visit the Unknown Composers Page:
+>                            http://www.seas.upenn.edu/~jimmosk/TOC.html
+> 
+> >From sci.math.pi Fri Jan  5 04:08:06 1996
+> From sci.math Wed Dec 20 05:16:57 1995
+> Path: panix!cmcl2!oitnews.harvard.edu!purdue!lerc.nasa.gov!magnus.acs.ohio-state.edu!math.ohio-state.edu!howland.reston.ans.net!newsfeed.internetmci.com!EU.net!peer-news.britain.eu.net!lyra.csx.cam.ac.uk!cet1
+> From: cet1@cus.cam.ac.uk (Chris Thompson)
+> Newsgroups: sci.math
+> Subject: Re: nth digit of pi calculable?
+> Date: 18 Dec 1995 15:21:18 GMT
+> Organization: University of Cambridge, England
+> Lines: 46
+> Message-ID: <4b40te$r02@lyra.csx.cam.ac.uk>
+> References: <4b2n64$s27@netnews.upenn.edu>
+> NNTP-Posting-Host: grus.cus.cam.ac.uk
+> Status: RO
+> X-Status: 
+> 
+> In article <4b2n64$s27@netnews.upenn.edu>, jimmosk@red.seas.upenn.edu 
+> (Jim J Moskowitz) writes:
+> |> I've seen the recent reports about the discovery of a formula for pi 
+> |> of the form 
+> |>        infinity
+> |>         -----
+> |>         \        (- n) /   4         2         1         1   \
+> |>          )     16     (------- - ------- - ------- - -------  )
+> |>         /              \8 n + 1  8 n + 4   8 n + 5   8 n + 6 / 
+> |>         -----
+> |>         n = 0
+> |> 
+> |> which is said to tell you in a simple manner what the nth digit in the
+> |> hexadecimal expansion of pi is.  I don't see why.  Yes, the ith term of
+> |> this series does include 16^-i, which is the ith place in said expansion,
+> |> but the term in parentheses (sorry; they look more like angle brackets)
+> |> isn't an integer, so it's not giving you the value of the number in that
+> |> ith place.  Instead, it gives you several digits which are in places further
+> |> along in pi, with no guarantee that other terms in this sigma won't also
+> |> include digits in those places, forcing you to calculate and add up many
+> |> terms....
+> 
+> You certainly have to add up a large number of terms. It is the ease with
+> which these terms can be computed that has attracted interest to this and
+> similar formulae.
+> 
+> Think in terms of trying to find the fractional part of 16^N * pi to reasonable
+> accuracy, which is what is really meant by "finding the (N+1)'th hexadecmal
+> digit" here -- you might always get unlucky and find only that this fractional
+> part was between .2fffff and .300001, say. The terms with n >= N are of
+> absolute value less than 1, and form a rapidly converging series, so their
+> contribution is easy to compute. The term with n < N contribute terms of
+> the form 
+> 
+>    fractional part ( 16^a(i) * b(i) / i )
+> 
+> where i < 8N, a(i) < N, and the b(i) are small integers. So it is sufficient
+> to compute 16^a(i) mod i. If you don't already know, you can find out how to
+> do this in time logarithmic in a(i) in, say, Knuth ACP Vol 2.
+> 
+> This is all explained in detail in the Borwein/Borwein/Plouffe paper, available
+> from http://www.cecm.sfu.ca/~pborwein/PAPERS/P123.ps, which should be pretty
+> comprehensible even by an amateur.
+> 
+> Chris Thompson
+> Email: cet1@cam.ac.uk
+> 
+> >From sci.math.pi Fri Jan  5 04:08:06 1996
+> From sci.math Wed Dec 20 05:17:20 1995
+> Path: panix!bloom-beacon.mit.edu!gatech!psuvax1!news.math.psu.edu!chi-news.cic.net!uwm.edu!lll-winken.llnl.gov!apple.com!apple.com!not-for-mail
+> From: rjohnson@apple.com (Robert Johnson)
+> Newsgroups: sci.math
+> Subject: Re: nth digit of pi calculable?
+> Date: 19 Dec 1995 13:01:28 -0800
+> Organization: Apple Computer, Inc., Cupertino, California
+> Lines: 57
+> Message-ID: <4b7978$cj1@apple.com>
+> References: <4b2n64$s27@netnews.upenn.edu>
+> NNTP-Posting-Host: apple.com
+> Status: RO
+> X-Status: 
+> 
+> 
+> In article <4b2n64$s27@netnews.upenn.edu>,
+> Jim J Moskowitz <jimmosk@red.seas.upenn.edu> wrote:
+> >I've seen the recent reports about the discovery of a formula for pi 
+> >of the form 
+> >       infinity
+> >        -----
+> >        \        (- n) /   4         2         1         1   \
+> >         )     16     (------- - ------- - ------- - -------  )
+> >        /              \8 n + 1  8 n + 4   8 n + 5   8 n + 6 / 
+> >        -----
+> >        n = 0
+> >
+> >which is said to tell you in a simple manner what the nth digit in the
+> >hexadecimal expansion of pi is.  I don't see why.  Yes, the ith term of
+> >this series does include 16^-i, which is the ith place in said expansion,
+> >but the term in parentheses (sorry; they look more like angle brackets)
+> >isn't an integer, so it's not giving you the value of the number in that
+> >ith place.  Instead, it gives you several digits which are in places further
+> >along in pi, with no guarantee that other terms in this sigma won't also
+> >include digits in those places, forcing you to calculate and add up many
+> >terms....
+> 
+> The full article can be found in PostScript form at 
+> 
+>     http://www.cecm.sfu.ca/personal/pborwein/PAPERS/P123.ps
+> 
+> and a text announcement can be found at
+> 
+>     http://www.mathsoft.com/asolve/plouffe/scimath.txt
+> 
+> Yes indeed, you have to add up many terms.  However, the amount of
+> computation to find the n^th digit is on the order of n.  Whereas,
+> to compute n digits would require computation on the order of n^2.
+> 
+> The idea that drastically reduces the work here is that it is very easy
+> to compute the n^th hex digit of 1/k.  This is accomplished by raising
+> 16 to the n-1^st power modulo k.  Dividing the remainder by k gives the
+> hex expansion of 1/k starting at the n^th hex digit.  Raising 16 to the
+> n-1^st power modulo k is done by squaring and multiplying based on the
+> binary expansion of n-1 (the method of repeated squaring).
+> 
+> Thus, to get 16^{-k} 4/(8k+1) starting at the nth hex digit,
+> compute 4*16^(n-1-k) mod 8k+1.  Divide this remainder by 8k+1.
+> For example, take n = 1000000000 and k = 1257894:
+> 
+>     4*16^998742105 mod 10063153 = 4894450
+> 
+> and 4894450/10063153 = .7C82F7B089CCA729... (hex)
+> 
+> It will still entail around billion terms to compute the billionth
+> digit of pi, but that's better than computing a quintillion digits.
+> 
+> Rob Johnson
+> Apple Computer, Inc.
+> rjohnson@apple.com
+> 
+> 
+> 
+
+
+
+
+
+

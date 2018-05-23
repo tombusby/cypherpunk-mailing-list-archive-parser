@@ -1,0 +1,49 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Thu, 3 Mar 94 16:40:56 PST
+To: cypherpunks@toad.com
+Subject: Re: Standard for Stenography?
+Message-ID: <9403040039.AA14605@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal Finney writes:
+> Bill Stewart, Norm Hardy, and other list members who have more experience
+> and who have discussed these issues in the past will I think agree that the
+> correct approach is to separate the function of the steganography program
+> to be a simple and clean insertion, and to have other components be
+> responsible for assuring that what is inserted is statistically indistin-
+> guishable from what is replaced.
+
+It's somewhat of a tradeoff, though, since you really *do* need to have 
+the system be convenient enough to use and standardized enough that
+everybody will use it.  My own programming approaches tend to solve
+this through reasonably clean programs connected by shell scripts
+or C frontends grossly infected with Creeping Featurism;
+the faults of this widely-used approach are well-known (:-).  
+
+The important decisions, in my opinion, are whether to have an
+explicit stego program or something that appears to be more general-purpose,
+and whether to make sure the cyphertext you're hiding looks random.
+If you're going to have an a program that admits to doing stego,
+the main risks in having it do a fancy job are detectability
+and portability, and it sounds like Jef's handling that well.
+And Xenon's ranting has helped encourage someone to release Stealth-PGP:-)
+so that's good.
+
+Carl Ellison's "tran" program takes an interesting approach for data
+scrambling - it takes a simple checksum of the first N bytes of the data, 
+which is order-invariant (I think it was a byte-wise XOR?)
+and uses it as a random-number seed for scrambling blocks of data;
+it's easy to reverse because the checksum is the same after scrambling.
+(I forget if the scrambling is also a self-inverse or not, which lets
+you use one program for both directions; wouldn't be too hard to do.)
+That might be a clean approach if you're still looking for a satisfactory
+scrambling method, though you could also do bitwise things instead of 
+bytesized, since you have to split the text out into bits for stego anyway.
+
+		Bill
+
+
+
+

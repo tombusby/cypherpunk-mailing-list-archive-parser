@@ -1,0 +1,52 @@
+From: das@razor.engr.sgi.com (Anil Das)
+Date: Fri, 28 Mar 1997 18:24:56 -0800 (PST)
+To: aba@dcs.ex.ac.uk>
+Subject: Re: [ANNOUNCE] hash cash postage implementation
+In-Reply-To: <199703281652.QAA03299@server.test.net>
+Message-ID: <9703281824.ZM5275@razor.engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam,
+
+	How does Dr. Bernstein's announcement of finding
+a 56 bit collision in md5 using a few hours on a Pentium
+affect this scheme? It was not clear from his post whether
+he was looking for a collision with a known hash, or just
+two different strings with a collision of the given length.
+
+On Mar 28,  4:52pm, Adam Back wrote:
+>
+> (Also I have not tested my SHA1 implementation on a big endian machine, it
+> auto-detects byte endian-ness, theoretically).
+
+	Works fine here. Big endian Mips R10K.
+
+% ./sha1test
+test 1
+
+SHA1("abc") =
+        a9993e364706816aba3e25717850c26c9cd0d89d test ok
+
+test 2
+
+SHA1("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq") =
+        84983e441c3bd26ebaae4aa1f95129e5e54670f1 test ok
+
+test 3
+
+SHA1("a" x 1,000,000) =
+        34aa973cd4c4daa4f61eeb2bdbad27316534016f test ok
+
+% ./hashcash -t -22
+speed: 70921 hashes per sec
+find: 22 bit partial sha1 collision
+estimate: 30 seconds
+
+--
+Anil Das
+
+
+
+

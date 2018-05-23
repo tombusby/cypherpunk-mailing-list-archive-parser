@@ -1,0 +1,39 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Sat, 23 Oct 93 11:43:06 PDT
+To: hfinney@shell.portal.com (Hal Finney)
+Subject: Re: Warning about exposing anon id
+In-Reply-To: <9310231752.AA11323@jobe.shell.portal.com>
+Message-ID: <9310231826.AA08908@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It seems that an anonymous remailer can operate in one of three ways -
+it can reveal your psuedonym, it can reveal your identity, or it can
+reveal nothing and simply give you a generaic "anonymous" identity.
+Unfortunately each mode of operation is inapproprate as a default behavior:
+
+- If it reveals your psuedonym, you could inadvertently expose map your
+name to your psuedonym if you reply to a remailed message and include your
+real identity.
+
+- If it reveals your real identity, this could lead all sorts of obvious
+problems with people who don't expect this behavior.
+
+- If it simply strips out all identifying information and calls you some
+generic anonymous name, this could lead to problems for people who expect
+a reply to their messages.
+
+I think the best solution is to require any message sent through a remailer
+to include explicit instructions as to how it should be handled.  For example,
+require something like an "X-Identify:" field that would be used to select the
+return address behavior, with options like "real-id", "psuedonym", or
+"anonymous".  Messages that don't include the field should bounce, probably
+with some instructions as to how to fix the message to make it go through
+properly.
+
+-matt
+
+
+
+

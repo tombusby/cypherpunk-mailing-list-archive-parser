@@ -1,0 +1,43 @@
+From: Alexander Kjeldaas <astor@guardian.no>
+Date: Sun, 13 Dec 1998 14:44:11 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: passwords and hashes
+Message-ID: <19981213234401.A25332@lucifer.guardian.no>
+MIME-Version: 1.0
+Content-Type: text/plain
+Content-Length: 1215
+Lines: 32
+
+
+I'm looking into how passwords should be transferred into keys for the
+loopback filesystem in Linux.  Currently, what happens is that you
+take the SHA or RIPEMD-160 hash of the password string and use that as
+a key.  If the cipher only uses a 128-bit key, the last 32 bits of the
+hash is unused.  I have some questions about this scheme:
+
+o In the case of a 128-bit cipher, do I lose any information by not
+  using the last 32 bits of information?  Should the last 32 bits be
+  xored with the first 128 in order to not lose any info?
+
+o Is there any advantage to _not_ using a 256-bit hash function? (i.e
+  - use a 128-bit hash for 128-bit ciphers).  Currently there are lots
+  of AES ciphers that don't get fed a 256-bit key because we only have
+  a 160-bit hash.
+
+o Is there a good 256-bit hash function?  I don't know of any other
+  than snefru.  In this application, speed doesn't matter much.
+  Should I use a 256-bit cipher instead maybe?
+
+o Is it safe to always take the hash of the password, or is it better to
+  use the password directly as the key if it is less than 16
+  characters for 128-bit cipher?
+
+astor
+
+-- 
+ Alexander Kjeldaas, Guardian Networks AS, Trondheim, Norway
+ http://www.guardian.no/
+
+
+
+

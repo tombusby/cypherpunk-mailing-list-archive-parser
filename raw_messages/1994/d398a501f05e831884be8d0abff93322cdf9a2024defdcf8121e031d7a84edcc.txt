@@ -1,0 +1,51 @@
+From: Matt Thomlinson <phantom@u.washington.edu>
+Date: Sun, 24 Apr 94 16:03:51 PDT
+To: cypherpunks@toad.com
+Subject: Re: Today's Dumb Question
+Message-ID: <Pine.3.89.9404241535.A5457-0100000@stein1.u.washington.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+David Merriman <merriman@metronet.com> writes:
+
+What Happens If, instead of using prime numbers or logarithms for the
+basis for a public-key crypto system, we instead generated out public key
+thus:
+
+1> pick an arbitrary bit stream (large [pseudo?]random number, binary
+representation of selected chunk of text or data file, etc).  1024 bits or
+more (in 256 bit chunks?)
+2> enter a passphrase
+3> XOR the bit stream with the binary representation of the passphrase,
+cycling the passphrase as necessary.  This makes the 'large' component of
+our public key.
+4> hash the passphrase to 128 or more (in blocks of 64?) bits.  This makes
+the 'small' component of the public key.
+
+5> We then use these components as in normal public-key algorithms.
+
+----------
+(matt says:)
+
+Okay, you're forgetting one thing. In public key systems, the two 
+numbers you have are related -- the algorithm you use needs a pair of 
+numbers that create a function and inverse function pair.
+
+The pair you suggest above [((random #) xor (passphrase)), hash(passphrase)] 
+have nothing in common. Good, as you point out, since you can't create 
+one from the other, but also bad for a public key system, since you can't 
+use one to decrypt what the other encrypted (they're not inverses)!
+
+mt
+
+Matt Thomlinson                               
+University of Washington, Seattle, Washington.      phone: (206) 548-9804
+Check my home page -- ftp://ftp.u.washington.edu/public/phantom/home.html 
+PGP 2.2 key available via email, or finger phantom@hardy.u.washington.edu
+
+
+
+
+

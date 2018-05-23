@@ -1,0 +1,80 @@
+From: Vincent.Cate@FURMINT.NECTAR.CS.CMU.EDU
+Date: Sat, 21 May 94 18:56:14 PDT
+To: outnews+netnews.alt.security.pgp@andrew.cmu.edu
+Subject: "Email-Firewalls" / Instant Corporate PGP
+Message-ID: <769568028/vac@FURMINT.NECTAR.CS.CMU.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Companies like the idea of firewall machines to protect the security of
+their internal nets.  I bet they would also like something called an
+"email-firewall".  Names are important. :-)  I think of the
+email-firewall as a slightly modified anonymous-remailer.
+
+Outsiders could send encrypted mail to the remailer and it would
+decrypt it and send it on to the right person inside the company over
+internal (more secure) nets.
+
+The email-firewall could also encrypt outgoing mail when it was going
+to a person who either had a listed PGP key or who was working at
+another company with an email-firewall.
+
+Also, this remailer would not make the mail anonymous.  Corporations
+need security, not anonimity.
+
+Each company would only need to buy one copy of ViaCrypt PGP.  For a
+company this cost is, of course, negligible.
+
+With this people inside the company would not need to deal with the
+encryption directly.  They getting encrypted mail would not take
+anything new, and sending might take a slight change.
+
+Of course this is only a step towards true end-to-end encryption, but
+it is easy and far better than what they have now.  Also, it fits with
+the way companies work.  There is a security guard at the entrance to
+the plant, but once inside people generally trust each other and don't
+worry about security.  With this, internal mail is still like
+postcards, but external would have an envelope.  
+
+I thought about this after making a short script (below) so that mail
+to vac+pgp@cs.cmu.edu (the low security envelope) would be decrypted
+automatically.  This also needed the following line in my .maildelivery:
+
+Addr vac+pgp          pipe ? /usr/vac/pgp/incoming
+
+I am not going to make the "email-firewall" at this time, but thought I
+would throw the idea out.  Has anyone done this?   Let me know if you
+do.
+
+One question.  How do I extract 2 public keys into one ASCII 
+keyblock?  Now that I want to make 2 keys FTPable ...
+
+  -- Vince
+
+
+#!/bin/csh -f
+#
+#  Vince Cate
+
+setenv PGPPATH /usr/vac/pgp
+setenv PGPPASS "not really vinces passphrase"
+
+cd $PGPPATH
+
+cat > mailtmp.asc
+
+egrep 'Date:|From:|Subject:|To:' mailtmp.asc >  mailtmp
+echo " "                                     >> mailtmp
+
+pgp -f < mailtmp.asc                         >> mailtmp
+
+/usr/ucb/mail -s "Was encrypted" vac < mailtmp
+
+exit 0
+
+
+
+
+

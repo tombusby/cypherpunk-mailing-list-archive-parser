@@ -1,0 +1,132 @@
+From: usura@vox.hacktic.nl  (Usura)
+Date: Sat, 18 Jun 94 19:21:12 PDT
+To: cypherpunks@toad.com
+Subject: Re: Chaining Help?
+Message-ID: <061994033551Rnf0.78@vox.hacktic.nl >
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+werewolf@io.org (Mark Terka) writes:
+
+>Could someone give me some advice on chaining? I'm thinking of bouncing
+>a message fisrt thru hacktic and then soda (as you can Usenet post from
+>there) but need some tips as i seem to have trouble getting the encryption
+>sequences correct.
+
+ _1  werewolf@io.org             ->  remail@vox.hacktic.nl
+ _2  remail@vox.hacktic.nl       ->  remailer@soda.berkely.edu
+ _3  remailer@soda.berkely.edu   ->  werewolf@io.org
+
+
+First you make the _3rd message,  
+    below means : only 1 blanc line
+                  then the header pasting tokens
+                  then the Anon-Send-To line
+                  then 1 blanc line
+                  then the actual message.
+                  
+---cut here-------------------
+
+::
+Anon-Send-To: werewolf@io.org
+
+This is some anon mail from me :)
+---end here-------------------
+
+You encrypt the lines between the --- with the PGPpubKEY of soda:
+
+Tommy the Tourist <remailer@soda.berkeley.edu>
+512/5E6875 1994/04/25
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.3a
+
+mQBNAi27mNAAAAECAONCUi/9jdl0SXGhOhT4Vvgl9uOYLgbOjU5kMXEkpFQriCYC
+hWfNuhH8zESs9DFTMHCXUsXYrkkm/bHdhGheaHUABRO0LlRvbW15IHRoZSBUb3Vy
+aXN0IDxyZW1haWxlckBzb2RhLmJlcmtlbGV5LmVkdT4=
+=aoJM
+-----END PGP PUBLIC KEY BLOCK-----
+
+You then have an encrypted message that has to leave hacktic
+in such a way that soda know it is encrypted, and it has to be 
+send to hacktic in such a way that it knows it has to remail it
+to soda.
+
+so you put these tokens above it:
+
+---cut here-------------------
+
+::
+X-Anon-To: remailer@soda.berkely.edu
+
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.6
+
+message made in step _3
+-----END PGP MESSAGE-----
+
+---end here-------------------
+
+
+The lines between --- you encrypt with the PGPpubKEY of vox.hacktic.nl
+
+remail@vox.hacktic.nl and anon@vox.hacktic.nl
+512/368B41 1994/04/29
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.3a
+
+mQBNAi3BYrsAAAECALbhXUJWvniV9bGz67lGnXqc3BOjRwVBV9pY9V6cJEfw/UOn
+R9Bi0WWDelp20Z6u+CHijrq7iaRyTL2DNtw2i0EABRG0KlZvWCBSZW1haWwgU2Vy
+dmljZSAgIDxhbm9uQHZveC5oYWNrdGljLm5sPokAlQIFEC3H6O5Z33QUjVaRPQEB
+P0oEAJKp0uOhkx7uAfUQGpYLL3RlBR2xomvYdbf/ES7DMn2eAast+cO0YWkveNO1
+6h+7K1/AFa3G/q2R0alOoFFYd4J/G5hn/NBdvp3KylhEC5OCe40Qb151NpkF++OE
+dtUPu0qd9VlQPNhFzF37sdffkuk5Uaac1/UrPJLaYDQJYIBGtCpWb1ggUmVtYWls
+IFNlcnZpY2UgPHJlbWFpbEB2b3guaGFja3RpYy5ubD6JAJQCBRAtx+lIWd90FI1W
+kT0BAaBGA/ixWSQsCYDAOw8udVKzcqzjkzcvqDXoOTeoCRCW5yKFjLq/O+jydj0+
+Y6sSHgQWeNQMYuLAq3PZWi66POhrXCrQNTdu2+Ni0Zq1UpjDE6D/6bg0ujvJd+Tr
+rycJq8B7T81RR/nlkQNkWRji8b1GJ1QAz/NSWuskOKEgsH5fsdvL
+=RRIj
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+You get [if all goes well :)] another PGP encypted message,
+
+You send this to hacktic:
+
+---cut here-------------------
+
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.6
+
+message made in step _2
+-----END PGP MESSAGE-----
+
+---end here-------------------
+
+It should work that way .. 
+
+FYI, you can also post to usenet from vox, [to approx 2800 newsgroups] 
+
+you can use: X-Anon-To: alt.soccer.world-cup
+        or : X-Anon-To: alt.soccer.world-cup@hacktic.nl
+
+
+>--------------------------------------------------------------------------
+>Mark Terka     | werewolf@io.org             | public key (werewolf) at
+>Toronto,Canada | dg507@cleveland.freenet.edu | pgp-public-keys@demon.co.uk
+>--------------------------------------------------------------------------
+
+BTW: Oranje Wereldkampioen !!
+--
+Exit! Stage Left.
+Alex de Joode                                 <usura@vox.hacktic.nl>
+
+
+
+

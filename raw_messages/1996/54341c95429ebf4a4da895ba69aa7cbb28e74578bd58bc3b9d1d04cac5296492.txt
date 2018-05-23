@@ -1,0 +1,55 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 22 Jun 1996 21:40:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: Federal Key Registration Agency
+Message-ID: <199606220714.AAA25885@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Michael Froomkin writes:
+>> I have seen the text of the speech.  The wire service accounts wildly,
+>> wildly exaggerate.  This is a non-story...except for AG Reno's assertion
+>> that it would take the government a year to break one DES message with a
+>> "supercomputer".  She presumably believes this.  ....
+
+At 07:54 AM 6/21/96 -0400, Perry wrote:
+>The numbers in the Blaze et al paper are very realistic on this. A
+>year is total bull -- not even within several orders of magnitude of
+>accuracy.
+
+Actually, it may even be low - Cray-type supercomputers aren't particularly
+designed for the bit-twiddling you need to do DES well.  An application-
+specific cracking machine can do it several orders of magnitude faster
+for a smaller amount of money.  Wiener's design was two orders of magnitude
+more cost-effective than the two previous designs (Peter Wayner's content-
+addressible-memory design and somebody-from-DEC's GaAs chip design were
+both about $50M for a 1-day crack), and those were substantial breakthroughs
+when they came out.  
+
+But yes, she's giving out very misleading numbers for what cracking DES 
+really costs, and I'd assume she's way too competent to be doing so
+by accident - or at least she should be...
+
+As far as Jim Bell's cracking cost estimates go, a Wiener-style machine
+would cost about $1M for a 3.5-hour crack, or about 7 keys per day
+with known plaintext.  If the on-chip penalty for detecting probable patterns
+instead of specific ones is small (e.g. first cut is to accept keys which
+have all the high-bits zero, which is 1/256 of the total), you should be
+able to do better than three days per crack, especially if it's also not
+too expensive to haul the key-schedule out of the chip on the 1/256 hits.
+Double the cost if you think there's a random initialization vector,
+and do other minor annoying things to the chip design if you're checking
+for several popular known plaintexts and other creeping featurism,
+and you're still close.  You may be willing to feed the hits from the
+first round set of crunching into a more normal computer as well...
+
+#				Thanks;  Bill
+# Bill Stewart +1-415-442-2215 stewarts@ix.netcom.com
+# http://www.idiom.com/~wcs
+#				Dispel Authority!
+
+
+
+
+

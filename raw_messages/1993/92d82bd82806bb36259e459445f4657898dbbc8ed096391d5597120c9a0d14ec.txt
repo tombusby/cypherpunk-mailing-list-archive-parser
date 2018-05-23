@@ -1,0 +1,48 @@
+From: smb@research.att.com
+Date: Sat, 5 Jun 93 16:06:05 PDT
+To: mdiehl@triton.unm.edu
+Subject: Re: Dig. Cash Question.
+Message-ID: <9306052306.AA26846@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 > Anyway -- suppose that in some group, you know that a^n=b, where a
+	 > and b are members of the group, and n is an integer.  a^n indicates
+	 > the group operation iterated n times.  The discrete log problem is
+	 > recovering n, given ``a'' and a^n=b.
+	 > 
+	 > In some groups, this is a very hard problem.  The group most commonl
+	y
+	 > used in cryptography is the field GF(p), i.e., the field of integers
+	 > modulo p, where p is some large number, preferably a prime, and ``a'
+	'
+
+	 If I understand this correctly, if p is not a prime, then n may not be
+	 unique.
+
+Well, n isn't unique even if p is prime.  Consider a=10,p=11.
+10^2=10^4=10^6=10^8=10^10=1 mod 11.  You only get a maximum-length
+cycle if ``a'' is a primitive root, hence the restriction I stated
+in the part I deleted...
+
+It doesn't matter that n isn't unique, though you do want a good
+distribution.  Primitive roots have a maximal distribution, which is
+why they're good.  But a reduction by, say, a factor of 2 doesn't
+matter in practice.  (For p=11, try a=3.)  The implementation of
+secure RPC in SunOS uses Diffie-Hellman (which relies on the
+difficulty of the discrete log problem) with base that's not a
+primitive root.  To be sure, their key exchange was cryptanalyzed,
+but that's because they picked a 192-bit modulus, not because of
+the exponentiation base.
+
+If I recall correctly, if p=kq+1, for q a prime and k a small integer,
+there are (q-1)/k primitive roots in GF(p).  That suggests generating
+p=2q+1, p and q prime, which gives a very good density.  And checking
+if a number is a primitive root is easy (again, to my recollection;
+I'm not a number theorist) if you know the factorization of p-1, which
+of course we do in this case.
+
+
+
+

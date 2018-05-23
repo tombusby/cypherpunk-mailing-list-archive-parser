@@ -1,0 +1,40 @@
+From: "strick (henry strickland)" <strick@versant.com>
+Date: Sun, 7 Jul 1996 09:20:51 +0800
+To: fair@clock.org (Erik E. Fair)
+Subject: shell script (Word lists for passphrases)
+In-Reply-To: <v02140b3bae01b137a1c6@[199.43.99.154]>
+Message-ID: <9607062251.AA17697@vp.versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+# From: "Erik E. Fair" (Time Keeper) <fair@clock.org>
+# 
+# You could just snarf up a week's worth of netnews...
+
+This is trival and, in practice, work great.    
+Feed it mail, news, man pages, etc.  
+You can cascade results to eliminate huge sorts.
+The final grep is my hueristic for english; you can delete or modify it.
+Happy hacking.
+	strick
+
+
+
+cat "$@" |
+	tr A-Z a-z |
+	grep -v "^message-id:" |
+	grep -v "^received:" |
+	tr -c "a-zA-Z" "
+" |
+	grep -v "^$" |
+	sort |
+	uniq |
+	grep -v "[bcdfghjklmnpqrtvwxz][bcdfghjklmnpqrtvwxz][bcdfghjklmnpqrtvwxz][bcdfghjklmnpqrtvwxz]" 
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Sun, 1 Jun 1997 03:57:35 +0800
+To: aba@dcs.ex.ac.uk (Adam Back)
+Subject: Re: legal EAR work-around/Paper based remailers
+In-Reply-To: <199705310853.JAA00659@server.test.net>
+Message-ID: <199705311943.PAA10259@homeport.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Back wrote:
+
+| Technical questions: If this is to include uuencoded or radix-64 mime
+| encoding, we might want to think about redundancy to allow error
+| correction.  Perhaps we want that anyway to ensure that what we have
+| is 100% character-by-character perfect.  Or perhaps not as it may
+| damage the legality aspects.  They may start saying that you can only
+| export human readable stuff on paper, etc.  Then we move on to `texto'
+| apparently human readable steganographically encoded paper based
+| remailer messages.
+
+	The place we really want the redundancy is in the alphabet
+used, not in the data.  Most OCR systems have clever algorithims to
+figure out that that blob after a 'q' is really a 'u'.
+
+	To take advantage of this, you could encode everything in
+RFC1751(?, S/Key style) word lists.  The expansion factor is extreme,
+so use gzip --best.
+
+	Alternately, you could turn off context sensitivity on your
+scanner, and use an alphabet of abcdfgijknopqrstuvxyz (depending on
+your font--in lucida these are all pretty dissimilar, using a
+hueristic of 'more than one led bar' different.)
+
+	With some experimentation, you might be able to expand that a
+bit with punctuation and numbers.
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+
+

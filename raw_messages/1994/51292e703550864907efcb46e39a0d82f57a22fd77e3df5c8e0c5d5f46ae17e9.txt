@@ -1,0 +1,44 @@
+From: "Jon 'Iain' Boone" <boone@psc.edu>
+Date: Tue, 15 Feb 94 11:31:42 PST
+To: cypherpunks@toad.com
+Subject: Re: Detweiler abuse again
+In-Reply-To: <9402151753.AA22610@ah.com>
+Message-ID: <9402151923.AA09052@igi.psc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+hughes@ah.com (Eric Hughes)  writes:
+>
+> >I'm not sure Eric's idea about connecting via sockets would eliminate all
+> >possibilities of logging.  
+> 
+> I did not mean to imply this.  Using daemons would get rid of the
+> _default_ loging that occurs on systems.  Changing logging from
+> opt-out to opt-in would make a large practical difference right now.
+
+  Using a remailer daemon on a well-known port (777, anyone?) would only
+  result in defeating logging that is done via SMTP-agents like sendmail.
+  It is still possible for the sysadmin on the host to do a TCP-wrapper
+  log which logs the connection to the remailer from the originator.
+  Again, this only provides IP address information, which makes it easy
+  to hide if the originator comes from a machine like netcom or the well.
+
+> This was exactly my point in a previous article.  An email address
+> identifies both a machine and a user, where an IP connection (e.g.
+> telnet) only reveals the machine.  Now if the sysadmin of the
+> originating machine logs and shares information with the destination
+> machine, the user can be identified.  But again, this is an opt-in
+> monitoring system.
+
+  Yes... also the remailer daemon could do opt-in monitoring of both ends
+  of it's connections... Full accountability could be possible, but only
+  with the complicity of everyone in the path...
+
+ Jon Boone | PSC Networking | boone@psc.edu | (412) 268-6959 | PGP Key # B75699
+ PGP Public Key fingerprint =  23 59 EC 91 47 A6 E3 92  9E A8 96 6A D9 27 C9 6C
+
+
+
+

@@ -1,0 +1,170 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 18 Oct 1997 01:50:19 +0800
+To: stewarts@ix.netcom.com
+Subject: Re: what can we do about PGP sell out and CMR?
+In-Reply-To: <3.0.3.32.19971016084223.006c0bf0@popd.ix.netcom.com>
+Message-ID: <199710171706.SAA00972@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Stewart <stewarts@ix.netcom.com> writes:
+> At 11:29 PM 10/15/1997 +0100, Adam Back wrote:
+> >From Bill Stewart's report, given the apparent amount of effort PGP
+> >have put into their CMR based enforcement policy functionality, I
+> >predict they won't remove CMR whatever we, or Schneier, or anyone else
+> >says or proves about more secure less GAK-friendly ways of
+> 
+> They've got customers who wanted it; 
+
+Whoa there Bill.  They have customers who wanted data recovery.  Data
+recovery does not require CMR.
+
+Did they admit to customers who wanted human based email screening?
+No on list discussions have suggested this is the case.  I think I saw
+one PGP employee state that it was not the case.
+
+(I have perfectly good, more secure CDR based human screening designs,
+not that I encourage this you understand).
+
+> there's some room for making it less controllable within their
+> current framework (e.g. making the behaviour for (as-yet unused)
+> multiple CMRKs to be session-key-splitting rather than
+> one-copy-per-CMRK, which is be the more obvious implementation and
+> is far more GAK-friendly.)
+
+Small difference I think.
+
+> Also, the SMTP filter stuff won't go away - even if PGP Inc
+> dropped the product and dropped the CMRK from PGP 5.5.1 and
+> all future versions, once there's an API for PGP,
+> it's a piece of cake to write one; 
+
+Nothing against SMTP filters, just against the CMR enforcement they
+put into theirs.
+
+> you just don't get the visibility that some keys are CMRKers, 
+> and you've got the inconvenience of sending more bouncegrams to 
+> senders telling them "to send a copy of PGP-encrypted mail to Bob,
+> you need to also encrypt it to Eve The PostMistress" or, 
+> less honestly, "... to the Exchange Gateway".
+> And at least the PGP SMTP filter only checks for the KeyID and
+> doesn't actually try to deccrypt the message.
+
+You're using "you can hack around it" and "it is visible" arguments,
+these are valid arguments which mitigate the danger, but don't
+actually alter Tim and my points that storage recovery is less of a
+problem than message recovery.
+
+> >I also suspect they won't 
+> >listen to Tim's earlier argument that they do nothing about recovery
+> 
+> I thought Tim's point was directed to OpenPGP; 
+
+He made the same point in both respects.  I agree with his point about
+openPGP.
+
+I fully agree with Tim's points and Bill Frantz's example that old
+email messages come back to haunt people and are a nightmare waiting
+for a discovery process in a messy lawsuit for companies.  I nearly
+got sucked into such a thing myself last year (some one gave back a
+laptop to a company they just quit on bad terms from, tried to wipe it
+but left some messages on it; the messages looked _bad_, the idiot who
+did that sent the _bad_ message to me, my response was to phone him up
+and say `what _are_ you talking about, I can't do that'.).
+
+This to me argues that PGP Inc should make email archives user
+controllable.  So that users decide which emails to archive and which
+to just let naturally disappear, in the same way that phone calls, or
+chats in a restaurant aren't transcibed and digitally signed.  Much
+harder to prove.  I would also argue for "official statement" vs "chit
+chat" distinction on emails -- don't archive, and certainly don't have
+recovery of chit chat, use non-transferable sigs for chit chat, the
+only person who cares about authenticity is the recipient, not the
+legal system.  So I think this aspect belongs in coding in ways which
+are beneficial to companies.
+
+> Jon Callas and others
+> said things like ~~If you've got features you want done, 
+> propose it to OpenPGP and get them to adopt it, and that'll
+> give us a business reason that we ought to adopt it.~~
+> (I think the context of that was discussing Stealth, which they
+> still don't have enough business demand for to take time on,
+> and which by the way puts a major crimp in SMTP filters.)
+
+I guess the smtp filters leave stuff alone if they can't figure out
+who it's to?  ie do default email thang -- which is probably what you
+want if it's some privacy nut who is sending a "chit chat" class
+message to one of your set of sales people.  don't do the explode to
+all feature.
+
+> >This quote should give us clue as to why they will continue with CMR: 
+> >	"we're a real company with accountants"
+> 
+> That wasn't an exact quote, just a paraphrase from my memory of 
+> several conversations.  
+
+Sure.  It's also completely understandable that they do have financial
+restrictions, my main argument was that they could build more GAK
+resistant systems within those restrictions.
+
+> >Similar arguments would presumably present them with "no choice" but
+> >to fulfill the order for 100,000 GAK compliant units from the
+> >government terrorizing the freedom fighters PRZ likes to tell us
+> >about who are already using PGP GAK compliant software: pgp5.0.
+> 
+> Even if they did that, it wouldn't change the power relationships;
+> if the government can compel GAK keys by filtering SMTP or
+> confiscating non-eavesdropping-compatible mail gateways,
+> it doesn't matter if the Cc: Big Brother was added as a PGP5.5 CMRK
+> or as a PGP2.6.2i multiple recipient - you can't tell from
+> the message format (except for DH vs. RSA).
+
+Yes, but you are in the US.  The recipient is in tinpotdictatorsville.
+With pgp5.0 your software will by default honour the military police's
+demand in tinpotdictatorsville.
+
+This is why I am arguing that the system as a whole be considered --
+you are trying to build GAK resistance into the deployed code base you
+have to think long term and you have to think in terms of sabotaging
+the system to make it unuseful to governments.
+
+Consider also that software gets used in it's default configuration
+95% of the time.  Not everyone is a information architect :-)
+
+> >What can we do about this situation?  Well we could build systems
+> >which hack around the CMR system.  Easy enough: just put dud
+> >"recovery" info inside.  We still have deployment problems.
+> 
+> Unless I misunderstood the formats, 
+> CMRKs are just identified by KeyID, not by fingerprint,
+> and it's easy to look through the public keyservers to find CMRKs
+> (though companies may prefer to have their employees mail out
+> keys to people who need them rather than making all their
+> keys constantly visible on the outside servers.)
+> So go find them all, send protest email to the postmasters
+> and corporate officials at the companies that use CMRKs,
+> crank up your deadbeef generator to make your own keys
+> with the same KeyIDs as the CMRKs, and pre-load the public keyservers.
+> A nice touch would be to burn your copies of the private keys
+> for the CMRK imitators, but we'll never know if you did, will we?
+
+OK, well that's some monkeywrenching, but I guess that could be
+prevented with some design reviews.  I won't be helping with those
+design reviews -- any company who wants to improve enforcement of CMR
+type designs can figure them out for themselves.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

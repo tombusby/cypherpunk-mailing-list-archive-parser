@@ -1,0 +1,47 @@
+From: "Johnson, Michael P (Mike)" <JohnsMP@LOUISVILLE.STORTEK.COM>
+Date: Tue, 23 Dec 1997 11:53:07 +0800
+To: "'honig@otc.net>
+Subject: RE: Question on CFB variant with c[i-N]
+Message-ID: <c=US%a=_%p=Stortek%l=LSV-MSG06-971222182205Z-86290@lsv-bridge.stortek.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>David Honig <honig@otc.net> wrote:
+>At 06:46 PM 12/20/97 -0700, Johnson, Michael P (Mike) wrote:
+>>>
+>>>
+>>>>>              cfb    Ciphertext feeback mode
+>>>>>                     c[i] = f1(K, c[i-1]) ^ p[i]
+>>>>>                     p[i] = f1(K, c[i-1]) ^ c[i]
+>>>
+>>
+>>
+>>Suppose instead of c[i-1] you use c[i-N] where N is say 10. 
+>>How would you prove that this has no security implications?
+>>That 10-way interleaved cfb streams are security-equivalent to
+>>a single cfb stream interleaved with the immediately previous block?
+
+That would make it harder to get the process started, since you would
+need 10 initialization vector blocks instead of 1, so it would bloat
+your messages more.
+
+How about this mode:
+    c[i] = e(K1, e(k2, c[i-1]) ^ p[i-1]) ^ p[i]
+    p[i] = e(K1, e(k2, c[i-1]) ^ p[i-1]) ^ p[i]
+
+The feedback possibilities are literally endless. The analysis of the
+effects on security, speed, error propagation, etc., are left as an
+exercise for the reader. <grin>
+
+Some standard modes have been well analyzed and accepted. They also are
+built into specialized cracking hardware. Offering and using multiple
+modes and multiple algorithms raises the cost of building specialized
+cracking hardware.
+
+
+
+
+
+

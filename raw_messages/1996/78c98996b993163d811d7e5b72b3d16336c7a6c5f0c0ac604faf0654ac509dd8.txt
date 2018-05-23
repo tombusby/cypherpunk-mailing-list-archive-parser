@@ -1,0 +1,74 @@
+From: Rich Graves <llurch@networking.stanford.edu>
+Date: Sat, 27 Jan 1996 18:12:19 +0800
+To: Steve Gibbons <steve@aztech.net>
+Subject: Re: Possible Java hack.
+In-Reply-To: <0099CFE5.860A1B00.11@aztech.net>
+Message-ID: <Pine.ULT.3.91.960127013341.19154Q-100000@Networking.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 27 Jan 1996, Steve Gibbons wrote:
+
+> Rich,
+> 
+> [I've CCed this to cypherpunks, as well, I hope that you don't mind.]
+
+Not at all, it was private only because I wasn't totally sure it wasn't a
+stupid question. 
+
+> In Article: <Pine.ULT.3.91.960127010243.19154N-100000@Networking.Stanford.EDU>, Rich Graves <llurch@networking.stanford.edu> wrote:
+> # On Sat, 27 Jan 1996, Stephen P. Gibbons wrote:
+> 
+> # > If this is the case (and I don't have a source license at this point, or
+> # > even a system that will run Java) there is the possiblility that a sytem
+> # > with control of a web server and a DNS server could coerce a Java client
+> # > into initiating TCP connections to clients other than the system that
+> # > provided the applet (which should be a prohibited behavior, as I read the
+> # > specs.)
+> 
+> # If I understand you correctly, this is only true if neither your stack nor
+> # your client caches DNS queries. One or the other almost always does, at 
+> # least for a minute, no matter how low you set TTL. 
+> 
+> Yes, a client that cache's DNS queries can get in the way somewhat.  I've
+> already considered this, and the "devious applet" would take advantage 
+> of Java's capability to use multiple threads (one of which would sleep() 
+> for whatever period of time was necessary to invalidate the cache, and 
+> _then_ initiate the attack.)  Yes, there are are various other specific 
+> cases that need to be considered in order to make the attacking app (if 
+> it's even feasable) work all of (or a good percentage of) the time.
+> 
+> It would be very easy to conceal the "devious" portion of the applet 
+> inside of trojan horse that ran for a length of time greater than the 
+> minimum TTL for DNS caching.
+
+Which I believe you will find is platform- and even application-dependent.
+
+If you're talking about Windows NT or 95, for example, the winsock.dll 
+used by 16-bit applications caches DNS lookups in the TCP/IP stack 
+itself. I think TTL is listened to.
+
+wsock32.dll, on the other hand, doesn't do central DNS caching. So
+applications implement it themselves. I'm not sure that applications even
+have an opportunity to see the TTL information in the DNS response. I
+doubt there's standard behavior; Netscape, HotJava, and other stuff will
+probably time out DNS lookups differently. 
+
+Real operating systems are probably a bit more standard about what they 
+do with DNS lookups, but I'm sure there's variance.
+
+Still a really interesting idea, though. My first reaction was, well who 
+the hell controls a DNS server and a Web server and is likely to have a 
+piece of Java that you are likely to download? And the answer is, just 
+the kind of person you worry about.
+
+This bait & switch thang can really be generalized to any kind of attack. 
+Of course, it's traceable, since not that many people own or can spoof a
+DNS server. 
+
+-rich
+
+
+
+

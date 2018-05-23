@@ -1,0 +1,58 @@
+From: "Ian Farquhar" <ianf@simple.sydney.sgi.com>
+Date: Tue, 26 Jul 94 16:46:47 PDT
+To: Matt Blaze <mab@research.att.com>
+Subject: Re: CYPHERPUNKS TO THE RESCUE
+In-Reply-To: <9407261914.AA24348@big.info.att.com>
+Message-ID: <9407270943.ZM12100@simple.sydney.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Jul 26,  3:23pm, Matt Blaze wrote:
+> Both base and remote need to store a shared key and a counter; the remote
+> needs a transmitter and the base needs a receiver.  To authenticate
+> itself, the remote sends {counter, hash(key,counter)} and then increments
+> its counter.  The base calculates the hash for the received counter value,
+> verifies that it matches the received hash value, verifies that the counter
+> increases the stored counter value, stores the new value,  and opens
+> the door.
+
+You'll need to allow support for multiple transmitters, as many doors need
+such support.  This is a trivial modification:
+
+	{unit_id, counter, hash(key, counter[unit_id])}
+
+The base station will need to keep the current key counter for each transmitter
+it stores, indexed by unit_id.
+
+Of course, one could also argue that the presence of the counter is
+unnecessary,
+as the receiver and transmitter both should KNOW what it's value/acceptable
+range is, and transmitting it in the clear is unnecessary.
+
+I would still argue that some sort of very coarse (~5 minute accuracy would be
+sufficient) timestamp would be very useful here, although clock drift is still
+a
+problem (unless the base station tracked and recorded the drift).
+
+>A practical system system also probably include some mechanism
+>for rekeying and for zeroizing the counters.
+
+Preferably NOT over an air-interface of any kind.
+
+> permit an conventional exhaustive search for key.  If the hash space is
+> too small (say, 16 bits or so), the adversary can select an unused counter
+> value and probe the receiver with random hash values until the door opens.
+
+Bear in mind, folks, that almost all current systems are cleartext-to-air
+passwords, usually 8 or 10 bits in length.  I have pulled apart enough units
+to know, and it's amazing how many of their passwords are set to 0000000000!
+
+							Ian.
+
+
+
+
+
+
+

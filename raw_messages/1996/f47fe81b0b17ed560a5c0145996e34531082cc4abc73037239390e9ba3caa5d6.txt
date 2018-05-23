@@ -1,0 +1,106 @@
+From: "Jon Leonard" <jleonard@divcom.umop-ap.com>
+Date: Sat, 31 Aug 1996 18:35:17 +0800
+To: cypherpunks@toad.com
+Subject: Re: MUD anyone?
+In-Reply-To: <ae4c85ab040210040813@[205.199.118.202]>
+Message-ID: <9608310823.AA00984@divcom.umop-ap.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Tim May wrote:
+>At 4:27 PM 8/30/96, Jon Leonard wrote:
+>>Tim May wrote:
+
+[difficulty of coding crypto, even for a MUD]
+
+>>I don't think it's quite that hard, so I tried to implement asymetric key
+>>cryptography:
+>>
+>>20 minutes, to write and debug:
+>
+>Well, cryptography (per se) is the most basic, and in some sense simplest,
+>part of the whole thing: the "semantics" of crypto are well-understood
+>(even if not to the snake oil salesmen and repeated inventors of one time
+>pads).
+>
+>Consider that PGP was basically a realization (others existed, natch) of
+>ideas that were almost 20 years old.
+>
+>Some much harder (to me) protocols: fair coin tosses, blinded coins,
+>oblivious transfers, digital cash in all its many forms (and issues),
+>DC-Nets, and so on. Sure, bits and pieces are codable--and have been--but a
+>comprehensive package is tough to write. Wei Dai's and Matt Blaze's
+>libraries are excellent, I hear, but are not targetted at creating these
+>building blocks for crypto anarchy.
+
+Thanks for the list of useful protocols to consider.  I'll wind up
+getting the rest from Applied Cryptography and your Cyphernomicon if
+I don't get any more input.
+
+Some of these are fairly easy to fake, though.  Fair coin tosses, for
+example:
+
+Assume a perfectly trustworthy escrow agent.  (A bad assumption in
+real life, but workable on a MUD, where it's the server.)
+Tell the agent to wait until all parties have contributed a bit,
+and then announce the XOR of the bits.  As long as an individual
+has picked a bit randomly, and given it to the escrow agent securely,
+the result is random.
+
+That doesn't answer the questions of integration into a game, or how
+make a crypto anarchy out of it.  I'll just have to try things and
+see what works.
+
+>Your code is admirable. I did the same thing in Mathematica, a few years
+>ago when I was still interested in the innards of RSA. (It took me longer
+>than 20 minutes to write, though...but I also got to play around with big
+>primes, the basic number theory stuff, etc. A useful learning experience.)
+
+My code doesn't do nearly as much as you seem to think it does.
+All of its "security" relies on a mutually trusted interpreter, which
+isn't a bad assumption on a MUD.  I'm cheating on the cryptography,
+but I think I can get away with it for the purposes of a game.
+
+And, of course, I didn't comment it, document it, or integrate it into
+the rest of the game.
+
+>But implementing more recent cryptographic building blocks seems more than
+>an order of magnitude harder. (If you can implement a reasonably robust
+>bank-digicash system in 10 x 20 minutes = 3.5 hours, I'll be impressed.
+>Merely speccing what it should do and how it should behave in various
+>situations would take far, far longer than this. Just my view. Maybe I'm
+>wrong.)
+
+Even if it's more than that much harder, it's still worth doing.  I'll
+see how long it takes, but I'll try for robustness instead of coding
+speed.
+
+>>It is a big project, but the big part is writing the MUD, not adding the
+>>crypto-anarchy stuff to it.  I'm writing a MUD anyway, and have been off
+>>and on for over a year.  Mark Grant's message made me think about what it
+>>would take to add the features I wasn't already planning on.
+>
+>Depends on what you mean by "crypto-anarchy stuff." As I see it, it means
+>building a reasonably robust economic system, a market or agora with
+>various transaction mechanisms built in. Sort of a cross between "SimCity"
+>and Vinge's "True Names."
+
+"True Names" is a better fit than SimCity for what I'm imagining.  In
+the absence of any better ideas, it'll borrow a lot from LPmud too.
+
+I've considered a game-run anonymous market, with bid and asked prices
+akin to the stock market equivalents.  Characters would have the money
+(or whatever) unavailable until the bid or ask was withdrawn, and clearing
+would be automatic in case of a match.
+
+It's more appealing if the market is magically provided by a wizard of
+some reputation, but game-run is simpler to start with.
+
+>--Tim May
+
+Jon Leonard
+
+
+
+

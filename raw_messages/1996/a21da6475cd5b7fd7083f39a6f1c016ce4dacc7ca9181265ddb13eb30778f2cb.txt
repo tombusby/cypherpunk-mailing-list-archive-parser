@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 20 Sep 1996 14:25:02 +0800
+To: csteel@teir.com (Chris Steel)
+Subject: Re: Private key server
+Message-ID: <199609200400.VAA04898@dfw-ix1.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:46 AM 9/18/96 -0400, csteel@teir.com (Chris Steel)
+wrote about the problem of getting his public and private keys to
+various machines around his company, and would like some sort of
+secret-key-ring server to make it easier to download them
+(and presumably to avoid leaving them on the disks of shared machines
+for longer than necessary.)
+
+This is, of course, semi-dangerous, for a couple of reasons
+1) Limiting access to your secret keyring file reduces the probability 
+of a brute-force cracker attack against your keyring - 
+if your password is "foo", then anybody who has your keyring can
+probably find that out quickly if they hack a pgp-keyring-cracker.
+2) Your keyring has, in cleartext, the identities of the different
+keys on it.  If you only use one id, and it's well-known, that doesn't
+expose you particularly, but if you're using multiple nyms,
+anyone who has your file can connect them by just looking at the
+printable parts of the file.
+
+However, assuming you've decided to do it anyway :-), what are your options?
+You could use a networked file system such as NFS or Netware or the
+Evil Microsoft NETBIOS-based filesystems, and take advantage of their
+protections.  Since they don't ship encrypted data, any eavesdropper can
+find them anyway, but they won't be able to just grab the file off the net.
+You'd be better off, however, using a secure web server, like Apache-SSL,
+and only providing https: access to the page plus passwords plus 
+address-based restrictions to try to make it accessible only to you
+and not eavesdroppable.  Also, you can encrypt the copy of the secret
+keyring you distribute using a secret key you can remember.
+
+But don't do it :-)
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	
+# You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+
+
+
+
+

@@ -1,0 +1,55 @@
+From: "Deranged Mutant" <WlkngOwl@UNiX.asb.com>
+Date: Fri, 5 Apr 1996 19:38:57 +0800
+To: Laszlo Vecsey <master@internexus.net>
+Subject: Re: Video retraces as a source of entropy...
+Message-ID: <199604050236.VAA01556@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On  4 Apr 96 at 5:58, Laszlo Vecsey wrote:
+
+[..]
+> > In pseudo-C:
+> > 
+> > int retrace(void) { // test for video retrace
+> > #ifdef __MSDOS__
+> >   return (port[0x3da] & 8); // Some VGA, maybe EGA cards
+> > #else
+> >   // your OS here
+> > #endif
+> > }
+
+> >   [..]
+> >    x = 0;
+> >   while (!retrace()) x++;
+
+> As far as I know, while(retrace()) will loop until vertical retrace 
+> begins, and then you call while(!retrace()) and that will loop until 
+> vertical retrace is over. (Or it may be the other way around).
+
+Sloppy pseudo-C code.  The code I've been experimenting with waits 
+until it's no longer in a vertical retrace (if one is still active 
+since the last sample) and then collects the sample when the next 
+vertical retrace occurs.
+
+[..]
+> What if the screen is filled with different colors, or shapes. On some
+> monitors you can actually see the size of the screen changing, warping out
+> a little.. maybe the time for retrace will be different when painting
+> screens with different data. 
+
+I haven't done a lot of tests yet.... and even then, it's probably 
+very system specific.
+
+
+ 
+Rob. 
+
+---
+Send a blank message with the subject "send pgp-key"
+to <WlkngOwl@unix.asb.com> for a copy of my PGP key.
+
+
+
+

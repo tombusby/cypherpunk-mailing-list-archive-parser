@@ -1,0 +1,93 @@
+From: strick -- henry strickland <strick@versant.com>
+Date: Wed, 22 Sep 93 12:06:56 PDT
+To: pmetzger@lehman.com
+Subject: Re: Public-Key Crypto Toolkit
+In-Reply-To: <9309221511.AA29362@snark.lehman.com>
+Message-ID: <9309221906.AA03782@versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+THUS SPAKE "Perry E. Metzger" <pmetzger@lehman.com>:
+# 
+# Paul Robichaux says:
+# > I'd really like to see the toolkit in plain ol' C. I realize that
+# > other languages and systems have great advantages over C, but C is
+# > portable beyond belief.
+
+It should be at two layers.  TCL (pronounced "tickle") is merely a
+layer on top of C.  
+
+(By the way, GENERIC TCL is Plain Old C, and Portable Beyond Belief.  A
+lot more portable than mediocre C.  GENERIC TCL is an #ifdef that shuts
+off all commands that use any operating system services (besides
+malloc() and free()) -- it's merely a string-based language
+interpreter, with designed with friendly conventions for adding new
+commands that are wrappers of C API.  Supplement GENERIC TCL with
+some stdio.h routine wrappers (fopen, fclose, fgets, fputs), and you'll
+be happy.  Compiled instantly on my macintosh, even.)
+
+# I agree. By having a good toolkit in C, we'd have an easy time not
+# just prototyping applications but building real and portable ones.
+
+Yes, you want a complete C api.    I don't argue against that.
+
+First you assemble your C API at a complete layer.  It'll look a lot
+like the RSAREF API.  In fact, the RSAREF portion of it *will be* the
+RSAREF API.
+
+You see, RSAREF already is a crypto toolkit.  Not as full as you may
+like, but enough to do most basic public-key-cryptosystem stuff.  The
+reference implementations of MD2 and MD5 are also part of the C toolkit
+API.   And the bignumber packages.  We've already got *lots* of these.
+
+But have you tried using RSAREF API to do anything?  C API are a
+notorious pain in the butt to use -- allocating & deallocating memory,
+twiddling bits, writing functions to copy one data format to another,
+etc.  They're the reason we're not writing code!  When you elevate to a
+"scrypting" language, it becomes really easy (even fun) to experiment
+and hack stuff together.
+
+# I'd suggest that a streams mechanism, so you could attach various
+# processes to a bunch of data in sequence the way unix filters work,
+# would also be nice. That way sequences like
+# 
+# compress -- des -- tran -- des -- idea -- radix-64ify
+# 
+# could be really easily built.
+
+Yes, but now you just suggested Shell and Streams rather than C as the
+easy-to-use interface into this kit.
+
+You've rejected then rediscovered the reason for a "scrypting"
+language.  I think you don't yet understand how TCL is used.  You'll be
+much more productive in TCL than hacking weird data flows and futzing
+with temporary files and klutzy syntax and counting your nested escape
+and quote characters in Shell.  (Most shell things are not one simple
+pipe from front to end.)
+
+There's still a time and a place for shell stuff -- fortunately there
+(finally) is a standard "tclsh" unix (or POSIX) main.c that you can use to
+mix your TCL scripts with Unix Shell scripts.  (You could do it before,
+but it was more of a "test" program or homegrown driver than part of a
+standard main.c)
+
+
+
+ANYWAY -- I should quit ranting and Just Start Writing Code.
+
+Unfortunately I'll be out of town till early October....
+Perhaps I can suggest some specs before then.
+
+                                                             _
+                                               menya zavoot cmpuk
+                                               strick@versant.com
+
+
+
+TCL is available via ftp from sprite.berkeley.edu and is freely distributable.
+UNIX is a registered trademark of whomever bought it last.
+
+
+
+

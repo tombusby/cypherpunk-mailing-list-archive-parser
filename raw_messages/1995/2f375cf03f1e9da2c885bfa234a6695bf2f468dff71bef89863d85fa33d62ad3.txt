@@ -1,0 +1,111 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Wed, 18 Jan 95 11:34:29 PST
+To: "James A. Donald" <jamesd@netcom.com>
+Subject: Re: (none)
+In-Reply-To: <Pine.3.89.9501181033.A15911-0100000@netcom10>
+Message-ID: <9501181934.AA02176@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"James A. Donald" says:
+> On Wed, 18 Jan 1995, Perry E. Metzger wrote:
+> > Be that as it may, people HAVE been kicked off for mischief like
+> > forging routing packets -- and if someone started hosing me down with
+> > any one of several really nasty packet based attacks I'm familiar with
+> > I would expect action to be taken against them.
+> 
+> Unix is broken.  Windows and DOS are fragile and under construction.
+
+This has nothing to do with Unix, Mr. Donald. This has to do with the
+nature of internet protocols.
+
+> Servers should have built in limits, that cause them to spit back
+> packets from unknown clients that are unreasonable or strain the
+> system.
+
+Can't be done. Sorry. There are certain flaws in the design of the
+internet protocols down on the transport layer that I'd rather not get
+into because they don't seem to be widely known and I'm not interested
+in making them better known.
+
+> For example an SMTP server should have a default limit on volume
+> per address and per client, with the user being able to vary
+> such limits for particular clients or addresses -- trusted or
+> hostile clients.
+
+Sendmail already has such limits. Unfortunately they ultimately do no
+good. I'd try explaining, but the details get too technical -- if
+people insist I'll get into it. The gist is, however, that in the
+current network its too easy to fake connections. Even with per client
+limits I could still make your machine die a horrible death.
+
+> At present most unix utilities have arbitrary fixed length internal
+> buffers for processing variable length fields.  If you overflow 
+> the buffer by sending pathological data you will crash the system. 
+
+Not usually, actually. The "utilities" have nothing to do with the
+kernel, and the kernel is what can crash the machine.
+
+> If you know machine code, and you overflow the buffer with 
+> carefully chosen data then instead of a random crash you can
+> get the server to do some particular unexpected thing -- for
+> example the internet worm caused the server to execute a
+> file that the mail server had just received.
+
+Those sorts of security problems are not only well known but largely
+gone. The last one, in sendmail's debug flag, could only hurt a
+machine by action of a user on the machine itself, not over the
+network. The sorts of things I'm talking about are *inherent* in the
+design of TCP and cannot be altered at this point.
+
+> > I doubt it. It really hasn't proved to be an actual problem thus
+> > far. If anything, the limiting factor on scalability is the fact that
+> > the net has no locality of reference, which is making routing design
+> > harder and harder. Routing is currently THE big unsolved problem on
+> > the net -- something outsiders to the IETF rarely suspect, because the
+> > engineers have been faking it so well for so long. Unfortunately, all
+> > the good solutions to the routing problem are mathematically
+> > intractable -- and the practical ones are leading to bad potential
+> > long term problems..
+> 
+> This is inaccurate.  Optimal solutions to the routing problem are
+> mathematically intractable.  Tolerable solutions are mathematically
+> tractable.
+
+Name one, Mr. Donald. Name a single one.
+
+> For realistic routing problems, tractable approximations
+> are only worse than an optimal solution by a modest factor.
+
+Sorry, but you just don't know what you are talking about here,
+period. We don't know how to solve the routing problem in the general
+case. Thats one of the reasons for all the arguments in the IETF
+concerning the problems we are getting ourselves into with route
+agregation.
+
+(Just so you are clear here, Mr. Donald, the routing problem is NOT
+the problem of finding an optimal path between all pairs of nodes on a
+network in polynomial time -- thats solved and absolutely useless.)
+
+> Of course I am sure Perry is correct when he says that
+> the tractable approximations that we are currently using 
+> fail to scale, but this is not a fundamental unsolved 
+> problem in mathematics -- it is merely yet another bug.
+
+Nope, not a bug. There are problems that we don't know how to
+solve.
+
+The problem is routing agregation, you understand, and the fact that
+agregated clouds don't really experience locality of reference. This
+means that we end up with nasty and totally artificial network choke
+points as the networks scale. If we transmit full information,
+however, we no longer get agregation and can no longer store the
+tables because they are too big.
+
+Perry
+
+
+
+

@@ -1,0 +1,89 @@
+From: Rich Graves <rcgraves@ix.netcom.com>
+Date: Thu, 7 Nov 1996 12:27:13 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Blocking addresses by default
+Message-ID: <199611072025.PAA22083@spirit.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Mark M. wrote:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> With remailer abuse becoming more popular and remailers going down
+> because of complaints, there seems to be some interest in remailer
+> software that will block all email by default and will only pass
+> along email that is explicitly unblocked.
+
+I think this threatens serious security problems for the remailer 
+network in two ways:
+
+1. You'd create a list of people interested in anonymous information,
+   which could potentially be obtained by police or other armed thugs.
+
+2. The traffic would go down so substantially that traffic analysis     
+   would be trivial.
+
+As a counterproposal, I'd like to see better disclaimers on remailed 
+messages. The reason the people complaining are so pissed off is that 
+the blocklists are neither advertised nor automated enough. I'd like to 
+see disclaimers and block list instructions at the top of the body of 
+every single message. This would be encapsulated in some mark characters 
+so that it could easily be removed by remailer chains. E.g.,
+
+ To: remailer@erehwon.com
+
+ Request-Remailing-To: remailer@nowhere.com
+
+ [message]
+
+remailer@erehwon.com prepends the following to the message before it is 
+sent along:
+
+ $$
+ This message was sent through the anonymous remailer network. Neither
+ the operator of this remailer, remailer-op@erewhon.com, nor the
+ postmaster at this site has any way of determining the source or
+ filtering the content of remailer messages. No logs are kept. If you
+ do not wish to receive such anonymous messages from any link in the
+ remailer network, send an email message to remailer-operators@c2.net
+ with subject line "block." For more information on the remailer
+ network, see [Raph's list] or send email to help@[?].
+ $$
+
+remailer@nowhere.com looks for "$$" as the first line of the message, 
+and strips everything up to the next occurrence of "$$". It then appends 
+its own disclaimer block before sending the message to the hop (remailer 
+or final destination).
+
+A bit annoying, yes, but I think this would go a long way towards 
+improving public relations. I don't see how it compromises security.
+
+What's wrong with this scheme? Other than the fact that all remailers 
+would have to change their software at the exact same moment. :-)
+
+[By the way, someone told me that the Chardos remailer doesn't include 
+Complain-To or block-list instructions anywhere, not even in X-Headers.
+Is this true? I think that would be bad. [tm]]
+
+- -rich
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBFAwUBMoJFnCoZzwIn1bdtAQEZSwF/eurxI6jVBcv4srS8FEE3Rtc5rVCTfyw8
+gNrC5p5ZzBGgFCaM3MOair4gH91zH/HK
+=oqSh
+-----END PGP SIGNATURE-----
+
+
+
+

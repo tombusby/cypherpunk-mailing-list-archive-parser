@@ -1,0 +1,79 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 30 Jun 1997 07:18:16 +0800
+To: whgiii@amaranth.com
+Subject: repudiable signatures (was Re: Digital Signatures & THE LAW???)
+In-Reply-To: <199706291535.KAA05045@mailhub.amaranth.com>
+Message-ID: <199706292306.AAA00260@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+William Geiger <whgii@amaranth.com> writes:
+> Has there been any concideration for the difference between a
+> digital signature that is used only for authentication and one that
+> is legally binding??
+>
+> I would hate for these Digital Signature Laws make every e-mail
+> message I sent a legally binding document. :(
+
+Not a complete solution, but one technical fix, if you're sending
+e-mail to an individual, rather than a post to a group such as this is
+to use repudiable signatures.
+
+These work by ensuring that the recipient and only the recipient can
+forge the signature.  As the recipient can forge the signature it
+falls back to his word against yours, which is the situation without
+signatures.  However he (the recipient) will be convinced that you
+wrote the signed document, or at least as convinced as he is that
+someone else hasn't covertly obtained a copy of his private key.
+
+If you're using a repudiable signature, it won't hold up in court, or
+at least it shouldn't, if you can get the jury to grok that.
+
+Personally I can't see any reason for individuals not to use
+repudiable signatures for email.  Email is generally regarded as
+private, and to give someone a signed email allows them to not only
+post your email which you may not want, but to undeniably prove that
+you wrote it!
+
+
+Mathematically an easy way to create deniable signatures with RSA is:
+
+Alice sending Bob a signed email.  We want:
+
+	( X ^ A_pub ) xor ( Y ^ B_pub ) = hash( message )
+
+Alice chooses random Y, and computes X:
+
+	X = [ ( Y ^ B_pub ) XOR hash( message ) ] ^ A_pri
+
+Now the repudiable digital signature is X and Y.
+
+To verify the signature the recipient checks that:
+
+	X ^ A_pub XOR Y ^ B_pub = hash( message )
+
+Repudation is possible because Bob could also produce that same
+signature with knowledge of B_pri, for Bob X is a random number, and Y
+is calculated:
+
+	Y = [ ( X ^ A_pub ) XOR hash( message ) ] ^ B_pri
+
+(In practice you would have to store X and Y in random order,
+otherwise if the sender always comes first, it's no longer repudiable.
+As a result to check the signature you may have to swap X and Y if the
+signature fails first time).
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

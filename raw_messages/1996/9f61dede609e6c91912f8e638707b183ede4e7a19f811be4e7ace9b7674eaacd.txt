@@ -1,0 +1,54 @@
+From: "Mark O. Aldrich" <maldrich@grci.com>
+Date: Sat, 29 Jun 1996 10:03:29 +0800
+To: harka@nycmetro.com
+Subject: Re: MS-Mail Security
+In-Reply-To: <TCPSMTP.16.6.27.-15.0.46.2780269260.1184837@nycmetro.com>
+Message-ID: <Pine.SCO.3.93.960628171056.19646C-100000@grctechs.va.grci.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 27 Jun 1996 harka@nycmetro.com wrote:
+
+>  In> I would like to gather informations of whether the MS-Mail server
+>  In> is  secure or not, is anyone heard of somebody, say, disguise as other
+>  In> user  or read other user e-mail?
+> 
+> I'd also like to know how secure the MS-Mail files are (*.mmf). They are
+> password protected and should be encrypted but does anybody know how
+> secure? 
+
+We have worked extensively with MS Mail and providing integrated crypto
+features for the product.  The native security on the files is provided in
+two ways:  1)  The usually poor MS "scrambling" (it's not really crypto),
+and 2) The discretionary access controls (DAC) of the OS.  Since only NT
+has decent DAC (which only works at a C2 level of trust when it's not on a
+network), my opinion of the risk level would be "VERY HIGH" against
+threats of repudiation, loss of confidentiality, loss of availability, and
+loss of integrity. 
+
+Further, the I&A mechanisms in everything other than a stand-alone NT
+environment are inadequate for any real proof of identity.  They most
+certainly can't offer anything close to a real non-repudiation solution.
+Forging a "from" header into the database is, I would contend, fairly
+simple.  Reading someone else's mail is a bit harder, but not incredibly
+difficult.  If traditional hacking doesn't work, building a hacking tool
+using MAPI (widely available API to the mail subsystem) would be fairly
+straight-forward (Hmmmmm - Summer vacation programming project???). 
+
+------------------------------------------------------------------------- 
+|Just as the strength of the Internet is  |Mark Aldrich                 |
+|chaos, so the strength of our liberty    |GRCI INFOSEC Engineering     |
+|depends upon the chaos and cacophony of  |maldrich@grci.com            |
+|the unfettered speech the First Amendment|MAldrich@dockmaster.ncsc.mil |
+|Protects  - Federal Judges on the CDA    |                             |
+|_______________________________________________________________________|
+|The author is PGP Empowered.  Public key at:  finger maldrich@grci.com |
+|    The opinions expressed herein are strictly those of the author     |
+|         and my employer gets no credit for them whatsoever.           |
+-------------------------------------------------------------------------
+
+
+
+
+

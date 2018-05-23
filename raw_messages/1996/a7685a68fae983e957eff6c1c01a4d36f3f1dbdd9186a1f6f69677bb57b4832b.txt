@@ -1,0 +1,68 @@
+From: lull@acm.org (John Lull)
+Date: Sun, 21 Jan 96 20:04:42 PST
+To: tcmay@got.net (Timothy C. May)
+Subject: Re: "Trustworthy" PGP Timestamping Service ??
+In-Reply-To: <ad27fbf00302100409e3@[205.199.118.202]>
+Message-ID: <31030b34.44240810@smtp.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sun, 21 Jan 1996 15:42:32 -0800, Timothy C. May wrote:
+
+> At 6:51 PM 1/21/96, Matthew Richardson wrote:
+> >-----BEGIN PGP SIGNED MESSAGE-----
+> >
+> >I have recently setup a free PGP timestamping service which operates
+> >by email.
+> >
+> >The objective of the service is to be able to produce "trustworthy"
+> >timestamps which cannot be backdated without detection.  It achieves
+> >this by:-
+> >
+> >(a)  giving every signature a unique sequential serial number;
+> >
+> >(b)  every day making a ZIP file of that day's detached signatures
+> >and feeding the ZIP file back for signing (and hence the assignment
+> >of another serial number);
+> ...
+> 
+> It sounds like a variant of the Haber and Stornetta work on digital
+> timestamping, about which much has been written on our list (check the
+> archives, and/or sections of my Cyphernomicon).
+> 
+> They have a company, Surety, which is doing this (or was, last time I heard).
+
+They were a month ago, at least.  Their patent was re-issued 5/30/95
+(# R34,954).
+
+> www.surety.com will get you there.
+> 
+> My hunch is that your scheme implements a version of a hash (the idea of
+> hashing the doc and then publishing the hash as a "widely witnessed event,"
+> in Haber and Stornetta terms) that could infringe on their patents
+> (assuming they applied, as I recall hearing they did).
+
+I would be very surprised if it did.  Haber & Stornetta's work is
+based on building a tree of hashes for all documents within a given
+time period (1 second in their commercial service), and then chaining
+the hashes for successive time periods.  Once a week they publish one
+hash from the chain in the New York Times, and have been doing so for
+many years.  The certificate apparently consists of the hashes from
+the root of the tree to your document, plus one hash for each branch
+not taken along that route.  This permits you to verify that the hash
+for the time period was indeed partially derived from the document in
+question.  As I understand it you then have to check the chain of
+hashes for the week, and verify that the ending hash matches the
+published value.
+
+To make this whole process more secure, they use a 288 bit hash
+created by concatenating an MD5 hash and an SHA hash.
+
+There is no digital signature involved and no information which must
+be kept private -- only the hashes.  
+
+
+
+
+

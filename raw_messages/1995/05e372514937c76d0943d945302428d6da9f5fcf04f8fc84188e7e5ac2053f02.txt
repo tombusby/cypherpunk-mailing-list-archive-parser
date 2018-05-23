@@ -1,0 +1,58 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Fri, 10 Feb 95 10:36:41 PST
+To: lethin@ai.mit.edu (Rich Lethin)
+Subject: Re: Global Filesystem Guild
+In-Reply-To: <9502101722.AA04330@grape-nuts>
+Message-ID: <199502101839.NAA24397@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>
+>To reduce the vulnerability of a single user/BBS to having their files
+>confiscated/stolen, could a distributed WAN filesystem be implemented with
+>k-redundancy, e.g. the files wouldn't disappear until k servers (located in
+>various unknown or inaccessible places) failed?  The price of storage would
+>vary with the level of redundancy desired.  For security the servers would
+>only store cyphertext, etc.  Local cacheing to reduce network load.
+>
+
+You've brought up three separate issues - fault-tolerance,  secrecy and
+secret sharing.  They are probably best dealt with separately, for the
+purposes of understanding them as well as implementing them.
+
+There are replicating file systems that provide the kind of fault
+tolerance that you seem to be looking for, although I'm not aware
+of any "production grade" systems that can replicate read-write
+files in any reasonable way.  Done right, such a system would
+probably involve guarantees, implemented partially at the server
+side, that a file has been replicated in some number of places
+prior to any write operation returning.  You could kludge this at
+the client side alone by just modifying your file system interface
+to make an approprate number of replicas each time something is
+written.  There are a whole bunch of issues surrounding failure
+semantics - how do you handle writes when one of the replica servers
+is unavailable, and so on.
+
+Secrecy, on the other hand, is best thought of as a client-side
+issue, and can be handled with existing client file system encryption
+tools that run at the client file system interface level.  For
+example, on Unix clients, CFS can store its underlying data on most
+any remote file system, and requires no changes or special attention
+from the server side.  I have no idea whether the various PC
+encrypting file systems (SFS, etc) that have since come along
+separate their functions from the low-level storage in a way that
+makes it possible to use them with remote file servers, but there's
+probably no reason you couldn't build such a system if one didn't
+already exist.  The main issue in practice is key management.
+Depending on the application, you might want to back up keys under
+some secret sharing scheme that allows keys to be recovered by some
+subset of key holders.  This is especially important for commercial
+applications.
+
+-matt
+
+
+
+

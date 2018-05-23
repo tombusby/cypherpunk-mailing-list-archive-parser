@@ -1,0 +1,64 @@
+From: nobody@Menudo.UH.EDU
+Date: Thu, 9 Sep 93 16:07:27 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: cache
+Message-ID: <199309092301.AA29183@Menudo.UH.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Cypherpunks,
+
+This is a test message of the caching implementation I've added to the
+remailer elee9sf@menudo.uh.edu.  If you are reading this, it should be
+working :-)
+
+I implemented caching with three extra scripts: filer.pl, mailout.at,
+and mailout.pl.
+
+filer.pl accepts incoming messages and files them into a queue
+directory, appending the time in seconds, minutes, hours, and the
+process id number to the file.  Hopefully, this will store the file in
+a random order with respect to the actual order they arrived in.
+
+Instead of piping incoming mail to slocal.pl, which is what the
+typical cypherpunks remailer does, it is piped to filer.pl which just
+files the messages.
+
+mailout.at is a script for the at command.  It invokes the mailout.pl
+command, which mails out the queued messages, and reschedules itself
+for midnight the next day.  Today, I scheduled for 18:00 CDT, so this
+message should leave for cypherpunks@toad.com then.
+
+I forgot to check to see if I'm in cron.allow; if so I'll change from
+the at command to a crontab.
+
+For the time being the remailer "flushes" its queue every night at
+midnight.  After a while I'll make it less often, perhaps every other
+day or every three days.  A week is probably too long :-)
+
+mailout.pl is a script which opens the queue directory and gets a list
+of files.  Every file in the directory is opened, piped to slocal.pl,
+and unlinked.
+
+Well, that's it in a nutshell.
+
+Next up: padding messages, and an smtp package instead of sendmail.
+
+<klbarrus@owlnet.rice.edu>
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLI+wM4OA7OpLWtYzAQGM2wQAulXlIz50z6fVPdWeHstdyFA5GgeCPUaO
+XRWooj0PNPPRrAcfUQqFhhgTZibBDHP6qmOXGU4GWfYL6dqPJhCHTi6iBUOGWQ+2
+K1+YHinz7h6vNTf1R9fCRElvH0tn5iwq3uR4ZWLqJhhxtD6Mv01qidOsUQIUfQ9G
+oN2lT+JrkeU=
+=RdzB
+-----END PGP SIGNATURE-----
+
+
+
+

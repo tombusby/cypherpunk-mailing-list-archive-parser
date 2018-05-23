@@ -1,0 +1,52 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Wed, 10 Jul 1996 00:06:17 +0800
+To: cypherpunks@toad.com
+Subject: Re: Transforming variable- to fixed-length keys
+Message-ID: <199607091229.AAA22215@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>For iteration-0, CFB (or some other feedback mode)-encrypt the passphrase from
+>the input buffer to the output buffer (assuming the library doesn't require
+>that the plaintext and ciphertext be in the same buffer)
+ 
+This doesn't work because the input and output buffer will almost always be of
+different lengths.
+ 
+>Questions: Are you using the previous chaining-variables/hash for each
+>successive chunk?
+ 
+No.  Each chunk is a new hash with <whatever>, where <whatever> defaults to
+SHA1.  Since (for SHA1) 64 bytes of input affect each 20 bytes of output, I
+don't think there's much need for chaining.  I'm trying to keep the
+specification as simple and easy to check as possible (one of the problems with
+the PGP data management was that it was rather complex and hard to follow.  I
+suspect it would be difficult to implement a compatible version going only from
+a written specification).
+ 
+>How do you pad passphrases that are smaller than the minimum input for a hash
+>function?
+ 
+The input wraps, just like the output, so for example the letter "a" would be
+hashed as:
+ 
+ <length>a<length>a<length>a<length>a<length>a<length>a[...]
+ 
+>Hash the user's input, prepended with a 0x00. Use this for the first 0..160
+>bits of key. If more than 160 bits is needed, write over the 0x00 with 0x01.
+>Hash again. This is much like your solution, but no wrapping. Note there is no
+>problem truncating hash output.
+ 
+That's another possibility.  The only thing here is that you're only changing
+one byte for each pass, and I'm not sure if this is healthy.  I'll see what the
+sci.crypt crowd (those who've survived the spamming) has to say about this - it
+may actually be stronger than my increment-by-one method if you're worried
+about related-key cryptanalysis.
+ 
+Peter.
+ 
+
+
+
+

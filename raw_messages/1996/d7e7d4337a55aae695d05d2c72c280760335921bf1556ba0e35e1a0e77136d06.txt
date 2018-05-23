@@ -1,0 +1,72 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Tue, 5 Mar 1996 19:48:46 +0800
+To: ericm@lne.com (Eric Murray)
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <199603011603.IAA16596@slack.lne.com>
+Message-ID: <199603050003.TAA04555@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Eric Murray wrote:
+| > 	key://foo.bar.com/{u,s,h,d}/family/instance
+| While that would be useful in a lot of cases, I would hope that
+| all that path gunk wouldn't be required.... most people would
+| have one key, at least initially, and so a simple
+| 
+| key://foo.bar.com/username/key.asc
+|
+| would be enough for them.  I wouldn't want to prevent people
+| from using your system, in fact it's a good idea.  I just don't think
+| that it should be required, just recommended.
+| Something else to add would be a specifier for the type of key, i.e.
+| 
+| key://slack.lne.com/pgp/ericm/key.asc
+
+I'd either move that later in the structure, or leave it out.  Moving
+it later in the structure so we don't need duplicate heirarchies.
+Leaving it out may be ok because we can define a standard location by
+key type: 
+
+key://slack.lne.com/~ericm/key.asc
+key://slack.lne.com/~ericm/key.x509
+
+key://slack.lne.com/~ericm/x509/key.cert
+key://slack.lne.com/~ericm/pgp/key.asc
+
+I have no objection to defining a shorter URL, but would want some
+indicator that we're in user space, not host/domain/realm space.  A
+~username serves that purpose as well as /u/ and is a more common
+usage.
+
+My last comment is that if we define a URN scheme for keys, we should
+force a dependable structure on it, so that its predictable where to
+find a users PGP key from an email address, without having to check 6
+locations.  Nothing is there now, we should require order to make
+everyones life easier.
+
+| Finally, a question:  should the keyserver be able to serve
+| keys in a way that is secure from a MITM attack, or can it depend
+| on the certificate chain in the key certificate itself to
+| validate the key certificate?  I think it can, but I am not
+| sure, so perhaps someone smarter than I can explain why, or why not.
+|
+| The attraction is obvious, if the key server doesn't have to
+| validate the keys it serves, the whole problem of distributed
+| key servers becomes much easier.
+
+	A key server should serve keys because protecting from MITM is
+hard.  Serving keys is easy, so we should solve that problem today,
+and the other problems as we can.  Some infrastructure is better than
+none.
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

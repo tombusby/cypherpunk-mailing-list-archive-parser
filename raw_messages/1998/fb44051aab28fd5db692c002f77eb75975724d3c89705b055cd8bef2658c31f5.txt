@@ -1,0 +1,56 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 17 Jan 1998 06:33:47 +0800
+To: ravage@ssz.com
+Subject: forward secrecy for mixmaster & email (Re: remailer resistancs to attack)
+In-Reply-To: <199801161527.JAA10183@einstein.ssz.com>
+Message-ID: <199801162154.VAA00662@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jim Choate <ravage@ssz.com> writes:
+> Ryan Lacket <rdl@mit.edu> writes:
+> > Traditional law enforcement takes so long to investigate, the keys
+> > could be canceled and replaced several times.
+> 
+> This is another problem with the entire crypto process as now implimented.
+> Users of keys, either for encryption or signing, tend to think of the keys
+> as long term entities. Considering the increase in computing power, the
+> coming ubiquity of law enforcement monitoring on the network, increased
+> payoff for hackers as the traffic of personal info increases, and general
+> human failure keys should in fact be changed often (say a couple of times a
+> year, annualy at least)
+
+Make that instant key changes for mixmaster remailers by using forward
+secrecy and direct IP delivery to enable the interactive
+communications pattern required for immediate forward secrecy.  Ulf
+Moeller (current mixmaster maintainer) has this on his to do list I
+think.
+
+Even for email, I spent a lot of time arguing with PGP Inc employees
+about how forward secrecy could be obtained within PGP 5.x.  (The
+OpenPGP list seems to have gone dead... wonder what is going on.)
+
+The separate encryption and signature keys provided by PGP 5.x /
+OpenPGP allow you to have short lived encryption keys, and longer
+lived signature keys.  The web of trust is provided by the signature
+keys.  PGP 5.x implements automatic key update.  It is cheap to
+generate new Elgamal keys every week or day or whatever if you share
+the public prime modulus.
+
+You can also opportunistically send use once Elgamal keys in messages
+which allows someone to have even more immediate forward secrecy.
+
+In addition you can use interactive forward secrecy between mail hubs,
+and you can also authenticate this with PGP's web of trust using a
+design I posted to cypherpunks and ietf-open-pgp towards the end of
+last year with a subject of something like "PGP WoT authenticated
+forward secrecy".
+
+Adam
+
+
+
+
+

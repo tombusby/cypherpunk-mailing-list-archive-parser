@@ -1,0 +1,50 @@
+From: Jeff Gostin <jgostin@eternal.pha.pa.us>
+Date: Mon, 8 Aug 94 01:03:01 PDT
+To: cypherpunks@toad.com
+Subject: Anonymous Transport Agents (Was: Latency vs. Reordering)
+Message-ID: <940808023733B6Mjgostin@eternal.pha.pa.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+hughes@ah.com (Eric Hughes) writes:
+
+> Simulating any of the salient features of a link encryptor over the
+> Internet is an interesting exercise, particularly in regard to price
+> negotiation with your service provider.
+
+     I'm about to branch into the limits of my knowledge on this
+particular topic: I run a DOS site under a heavily modified version of
+Waffle (1.65 base), so the Unix-ish transport mechanisms are a tad out of
+my realm of knowledge. With that in mind...
+
+     Suppose an encryption-savvy mail transport agent, say ESMTP, was
+developed. Further suppose that part of handshaking protocol for this
+transport protocol included an ENCRYPTED reverse lookup on IP identities
+to check that the message is actually coming from where it claims it's
+coming from.  Suppose again that the results of this lookup were only
+checked for correctness (boolean), and then discarded WITHOUT LOGGING, or
+at least with minimal logging. If the reverse lookup was TRUE (IE: the
+sending machine was who it said it was), the message was accepted. If it
+failed, the message would be accepted, and then sent to the bit bucket.
+
+     In this model, one could provide anonymous transportation of
+anonymous mail FOR EVERY MACHINE ON INTERNET providing that the original
+message wasn't forged. All that would be required (beyond running ESMTP)
+is an encrypted version of the return address (a la Soda remailer) to be
+placed some predetermined place in the message.
+
+     This seems too easy: What am I missing? Have I actually come up with
+a way to do this?
+
+                                             --Jeff
+--
+======  ======    +----------------jgostin@eternal.pha.pa.us----------------+
+  ==    ==        | The new, improved, environmentally safe, bigger, better,|
+  ==    ==  -=    | faster, hypo-allergenic, AND politically correct .sig.  |
+====    ======    | Now with a new fresh lemon scent!                       |
+PGP Key Available +---------------------------------------------------------+ 
+
+
+
+

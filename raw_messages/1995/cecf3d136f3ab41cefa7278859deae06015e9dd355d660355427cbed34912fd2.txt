@@ -1,0 +1,42 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Fri, 28 Jul 95 10:03:03 PDT
+To: perry@piermont.com
+Subject: Re: Java, Netscape, OpenDoc, and Babel
+In-Reply-To: <9507281636.AA28295@snark.imsi.com>
+Message-ID: <199507281702.NAA22816@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> I suspect that the java-like methodology of downloading small apps to
+> users can be done securely, but the java model doesn't feel like the
+> right way to do it, at least to me.
+> 
+
+  I agree with you. However, I think the only way to get a handle on
+what the security issues are of such a methodology, is to deploy one
+and see what happens. Then you can build a second generation 
+environment based on that knowledge. There's also the issue that
+even if the environment is secure on paper, with an application as
+large as a browser and an execution environment, you can never
+know if it was implemented properly. Sendmail-like bugs could haunt
+the system for years. That's why its good to deploy it early, fix all
+the big holes discovered as fast as possible. At minimum though, I think
+Java should atleast run chroot()ed on Unix systems. Instead, their 
+approach is to define a "writable" directory on disk that apps can write 
+too. This does make me nervous because I can see the potential to send 
+over a program to be compiled and executed. I don't know what you would do
+under the MacOS and Win95 to make it secure. There is also security
+at the meta-applet level. Even if you chroot() Java to some directory
+where applets can write to, one applet can destroy another's data. If
+the data saved by one applet is valuable to you, like hotlist settings
+gathered over months, a rogue applet can trash them. But sometimes
+applets need to be able to read/write each others data so you can't
+just disallow it. So HotJava should have a access protocol for applets
+too. The Java team could learn a lot from the experience LambdaMOO.
+
+-Ray
+
+
+

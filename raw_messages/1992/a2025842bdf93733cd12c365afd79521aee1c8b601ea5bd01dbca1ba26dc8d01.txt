@@ -1,0 +1,100 @@
+From: nobody@rebma.rebma.mn.org
+Date: Sat, 12 Dec 92 14:04:53 PST
+To: cypherpunks@toad.com
+Subject: no subject (file transmission)
+Message-ID: <m0n0efX-0006XfC@rebma.rebma.mn.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Update on the digital cash project
+
+I am having some problems with the port to MSDOS, mostly due to
+implicitly assuming 32-bit integers in a few places.  Probably I won't
+get it working until next weekend.
+
+To recap, the program provides Chaum-style digital cash via two
+executables, one for the "players" and one for the "banker".  The
+banker creates a public key which has a single modulus n and multiple
+exponents, the prime numbers starting with 17.  He sends n to the
+players and all is ready.
+
+Players withdraw money by running their programs and specifying the
+denominations they want to withdraw.  For example, you could withdraw
+a 1, two 5's, a 10 and a 20.  This would create a file with 5 entries
+to be sent to the bank.  PGP should be used to encrypt and
+ascii-encode this file (for privacy) and it should be mailed to the
+banker.
+
+The banker receives this file and runs his program to RSA-sign the
+values in each of the withdrawal-request entries.  This is the
+"blinded cash" that Chaum describes.  Again, PGP should be used for
+mailing this back to the user.
+
+The player then has to "unblind" the file to make it "real" digital
+cash.  This also changes it so that the bank won't recognize it when
+it is deposited.  He uses his version of the program to do this,
+producing an actual digital money file with the five "digital bills"
+in it.
+
+To pay another user, he runs another function to extract the desired
+bills from this file.  Suppose he wants to extract a 1 and a 5.  This
+leaves a 5, a 10 and a 20 in the original file, and creates a new
+digital cash file with a 1 and a 5.  He would then use PGP again to
+encrypt this for safety and mail it to the person he wants to pay.
+
+That person can run a "check" function on the incoming digital money
+to make sure it has a proper bank signature on it and is not a
+forgery.  He would then mail it directly to the bank so that it could
+get credited to his account.
+
+The banker runs his program which checks the signatures on the
+incoming money, looks in a database file to make sure these bills
+haven't been used before, and adds these bills to the database.  (The
+database stores 16 bytes per bill.)  He should then record the deposit
+and perhaps send a confirmation to the depositor (my program doesn't
+get involved with that).
+
+I hope this gives a clearer picture of how the electronic money
+program works.  It is a simple implementation but I think many systems
+would work similarly.
+
+I appreciated the suggestion to use cash as part of the list
+management itself.  Rather than paying people who post, I wonder if it
+would be better to make people pay to post.  Many people have
+complained about the volume.  :)  Unfortunately, I suspect that this
+would involve too much overhead for the mailing list maintainer.
+
+Maybe the thing to do is to just get the software out there and let
+people decide what they want to do with it (if anything).  I'm
+probably going to take a couple more weeks to clean up the user
+interface and get these bugs out, then I'll try sending it someone to
+be put on the cypherpunks ftp archive.
+
+It's nice to be able to finally sign these messages!
+
+- -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.1
+
+mQCNAisiUPkAAAED/i1Pf1DaubveDsgjh360rNJ7kWkhssobaVmmWa70l4lOTwy/
+sGwhJaA+JdScO9g3B66DIAaU0GiNrTS4YEl/b5ohNDZFdqKlxZ7NW9A5JYjUlhGE
+a53cRwqUXs42kbPbMh/uKxXBgbUnKrKZnWAh29irDWb+G8OEPQrkCJ6S8691AAUR
+tAl4UGhhZWRydXM=
+=HVRq
+- -----END PGP PUBLIC KEY BLOCK-----
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBKyZADQrkCJ6S8691AQHneQP8DRdkOFfG9TwjGDJAX4IxymvzAITqYIJC
+aMhytyzqFwP6Dku955ZHEPL1SDpNCU8DwK7eKDOgvHRS3m+kihs1l6VR3Gf0AgGw
+7jjRJlt7hcqfT16fLHVXtn27A16rUhl2hKrD702wjGzX+MN7mS/8MW2kchVfvQYX
+M/McOuwuIjs=
+=/HGX
+-----END PGP SIGNATURE-----
+
+
+
+

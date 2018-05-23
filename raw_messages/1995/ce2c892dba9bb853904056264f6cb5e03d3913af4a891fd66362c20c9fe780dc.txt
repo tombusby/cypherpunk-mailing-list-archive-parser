@@ -1,0 +1,98 @@
+From: cactus@seabsd.hks.net (Todd Masco)
+Date: Wed, 1 Feb 95 17:03:28 PST
+To: cypherpunks@toad.com
+Subject: Re: Frothing remailers - an immodest proposal
+Message-ID: <199502020059.TAA16283@bb.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+- -----BEGIN PGP SIGNED MESSAGE-----
+
+In article <9502020017.AA00895@toad.com>,  <kevin@elvis.wicat.com> wrote:
+>>1.  Broadcasting every couple of minutes isn't necessary and is undesirable
+
+>True, but this has two basic assumptions that I disagree with: first,
+>that we can guarantee delivery of a broadcast message to all interested
+>sites; 
+
+I had the USENET model of propogation in mind when I wrote this.  Delivery
+is considerably better assured with such a store-and-forward over
+
+>and second, that remailers never go down for unexpected reasons.
+
+True, if you append "for extended periods of time."  The key detail is the
+boundary condition: IE, how long does it take a "downed" remailer to come
+off the web.  Since each site has the best idea of their own stability,
+they are in the best position to set the time-out period.  A very flaky
+site might set a time-out to 6 hours.  I'd suggest that a site flakier
+than that shouldn't be running a remailer.
+
+>>2.  This is actually unnecessary for your situation: All you need to do is
+>>advertise your location as a "real" remailer and then have a cron job that
+>>kill sendmail at 5pm on your remailer machine
+
+>But, if my understanding of remailer operation is correct, this has two
+>potential problems: first, I will still receive mail during the day,
+>causing a bandwidth concern (I know, it's probably not a problem right
+>now, particularly since users will probably choose to avoid a remailer
+>with a possible 16 hour delay);
+
+No, not at all.  The attempted connections to your sendmail with fail and
+the mail will attempt redilvery for some period of time (usually 3 days) 
+at a certain interval (usually 30min. - 1 hour).
+
+>And even if I try to be nice
+>when the mailer goes down permanently and tell everyone not to route
+>mail through it any more, that news still has to travel via word of
+>mouth to all users of the web.
+
+Sure.  It's important to note that you've got two seperable problems to
+address here: 1) a recurring limited window of up-time, and 2) handling
+permanent down-times.
+
+My suggestion only covers the first.  The USENET model I'm pushing is
+designed to cover the second.
+
+>[PGP web-of-trust] strikes me as critical;...
+>Given an extended web of trust between remailers, the user can
+>choose to trust one remailer (I have no idea how to make this process
+>more palatable) and immediately gain the security of a large web of
+>remailers. 
+
+Absolutely, that's what I was trying to express.
+
+Best regards,
+- - --
+Todd Masco     | "Let me get this straight.  You're making a crypto toolkit,
+cactus@hks.net |  and you're worried about it being _obscure_?" - Eric Hughes
+Cactus' Homepage
+
+- -----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLy/1gRNhgovrPB7dAQGZCQQA47ADvvuXRvlq5Qw3MSZaUJqqk2KJbUKk
+nV1mnTVIbvBbCt5PczoSFKkO/O6wMfS/4zzkoTqpvpIvwYvZ6ds75yBwhIyxvTvx
+gygKFi5ZwysYGz/49vs0BdJSHMqUA+/HVHE2zfcYP+yvbnbTdryQJXLrOdlGhH3a
+R0LvGJVgCSw=
+=k+vP
+- -----END PGP SIGNATURE-----
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBFAwUBLzAuayoZzwIn1bdtAQFa4gF8Cl9yuHttaTqmcy9Be+9EWa4qp3zHCP5n
+pgWiNvOt7reobq42ZluxFgTlWrFG0SKa
+=oFTV
+-----END PGP SIGNATURE-----
+
+
+
+

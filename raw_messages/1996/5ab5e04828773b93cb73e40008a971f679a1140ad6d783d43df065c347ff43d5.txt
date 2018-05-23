@@ -1,0 +1,37 @@
+From: janke@unixg.ubc.ca
+Date: Wed, 10 Jul 1996 05:41:55 +0800
+To: cypherpunks@toad.com
+Subject: Active Attacks on DC-nets
+Message-ID: <m23f319xhv.fsf@clouds.heaven.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I haven't read the paper on active attacks yet, but here is an easy
+example that I thought of, that others might find illuminating:
+
+When there is a round with no messages the server sends garbage to all 
+but one of the participants so they think collisions occured. The other 
+participant is sent zero so that he or she thinks the channel is open. 
+The participants who think colllisions occured are then likely to back
+off for a number of rounds, so that if a message is sent it is most likely 
+from the participant who wasn't lied to.  
+
+What do people think of the idea of clients signing all input to the
+dcnet and the server signing all output and keeping logs so that it could 
+be verified afterward (after the damage was done! :) ) whether or not
+everything
+was carried out properly or not. With Schnorr signatures and precomputation
+the clients could still be reasonably quick. The server will have to
+do alot of work, but the signature verifications could be done in parallel
+on a multiprocessor computer. Verification of the proceedings would also be
+long, but it could be done off-line.
+
+-- 
+Leonard Janke
+(pgp key id 0xF4118611)
+
+
+
+

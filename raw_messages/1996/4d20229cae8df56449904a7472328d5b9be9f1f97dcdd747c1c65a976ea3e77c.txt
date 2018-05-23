@@ -1,0 +1,44 @@
+From: owner-cypherpunks@toad.com
+Date: Wed, 14 Feb 1996 20:41:33 +0800
+Subject: No Subject
+Message-ID: <QQacwn02602.199602141225@relay3.UU.NET>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> It seems that there a market demand for a stealth-capable product.
+> Many peoples here seems to discuss it.  And for the time being, AFAIK,
+> this type of products are used by a specific class of peoples, most of
+> which knows what 'stealth' means.
+> 
+> So why is it that they design a program that would not permit the use
+> of a feature considered desirable by it's customer base?
+
+The big question I have for you is, what do you mean by "stealth" PGP?
+Do you want a PGP message which doesn't say to whom it is encrypted?
+Or do you want a PGP message which does not even acknowledge that it
+is a PGP message?  If what you want is the former, then that can fit
+under the PGP API fairly well.  If you want the latter, it will not.
+
+The reason is that PGP, by definition, is a self-describing packet
+format.  Without that description there is no general way for the PGP
+library to discover what kind of message it is parsing order to
+perform the proper operation to open the message.  OTOH, if just the
+keyID is missing, the library will happily try all the keys on your
+secret keyring until one succeeds or they all fail (I'm not sure if
+this is implemented, but it fits quite nicely under the API).
+
+The other question I have is: who do you think the "customers" of PGP
+are?  If you think the majority of PGP's customers are the
+crypto-privacy activitst types, you are highly mistaken.  PGP has hit
+the main stream, and is being used by many non-crypto-aware people.
+Probably more of them than there are of us.
+
+If you want to discuss this more, let's take it to private email,
+please.
+
+-derek
+
+
+
+

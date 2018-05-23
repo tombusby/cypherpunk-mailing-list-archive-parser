@@ -1,0 +1,39 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Thu, 10 Feb 94 18:00:25 PST
+To: cypherpunks@toad.com
+Subject: Magic money not working bigendian
+In-Reply-To: <199402110108.RAA06533@math.berkeley.edu>
+Message-ID: <9402110150.AA09132@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Try this:
+
+--------------------------------------------
+#include <stdio.h>
+
+main()
+{
+	long t = 1 ;
+	char *cp = (char *) & t  ;
+
+	printf( "%s-endian\n", ( *cp != 0 ) ? "little" : "big" ) ;
+}
+--------------------------------------------
+
+On a little-endian machine, the least significant byte is stored
+first; on big-endian, the most significant.  The address of a long
+points to the first byte, i.e. the byte with the lowest address.  The
+above program tests to see if the first byte is non-zero, which is
+true iff the length of a char is less than the length of a long
+(usually true) and if the least significant byte is first, i.e.
+little-endian.
+
+Further responses should go only to my mailbox.
+
+Eric
+
+
+
+

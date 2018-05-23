@@ -1,0 +1,88 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Tue, 11 Jun 1996 17:31:31 +0800
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Anonymous return addresses
+In-Reply-To: <199606082329.QAA14538@jobe.shell.portal.com>
+Message-ID: <Pine.LNX.3.93.960608224227.128A-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Sat, 8 Jun 1996, Hal wrote:
+
+> The other one was "Holding Intruders Accountable on the Internet" and it
+> had one strange comment.  Basically it was about a way of trying to track
+> down cracker types who break into systems.  One strategy these people use
+> is to log into a whole series of insecure hosts, one after the other,
+> before attacking their target.  Then tracing back where they came from is
+> very difficult.  Cliff Stoll's "The Cuckoo's Egg" is the classic account
+> of how hard it is to trace these people.  Probably the new books about
+> Mitnick talk about the same thing.
+> 
+> The idea in this article is that you monitor the whole net and track
+> all the rlogin and telnet traffic between pairs of hosts.  Then they
+> describe a statistical technique for determining that two different
+> telnet sessions are chained together by recognizing the same patterns
+> of traffic on them.  Basically they count the frequency of spaces and
+> punctuation marks on minute-long time slices and try to correlate
+> them.  This way you can tell that the intruder attacking here is also
+> using these other hosts over there, and try to track him down that
+> way.
+> 
+> I don't think this is very practical, and I have mixed feelings about the
+> technology - I don't favor breakins, but the kinds of surveillance that
+> would be necessary to implement their technique seem very threatening.
+> Also they do mention the obvious countermeasure of using encryption at
+> each stage, which would be easy with such things as the secure remote
+> shell programs around now.
+
+I don't really understand how such a system would work.  It would either
+require some kind of centralized system to receive information from each host
+being monitored, or each host would have to contact another and relay the
+connection information.  The former would require too much bandwidth and the
+latter would open up hosts to easy eavesdropping attacks.  The only alternative
+is for sysadmins to monitor syslog activity which is (hopefully) done already.
+
+[...]
+> 
+> So apparently in the view of these authors anonymous remailers are
+> maintained by "the intruder community."  It is unfortunate that we have
+> this image among some member of the larger community.  BTW, there are
+> periodic suggestions here to run general-purpose connection redirectors,
+> but people should be aware of the problem that cracker types would seize
+> on these as another shield for their crimes.  These would have to be
+> limited to specific uses, such as port 80 which is the http port and
+> which hopefully can't easily be used for attacks.
+
+Unfortunately, httpd is very insecure.  First of all, cgi scripts are very
+difficult to make secure and can be exploited quite easily.  There may also
+be buffer-overflow problems.  It's about as difficult to make connection
+redirectors safe from cracker use as it is to make anonymous remailers safe
+from child pornographers, terrorists, and other horsemen.
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xe3bf2169
+http://www.voicenet.com/~markm/ | d61734f2800486ae6f79bfeb70f95348
+"In Christianity neither morality nor religion come into contact with
+reality at any point."
+                -- Friedrich Nietzsche
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMbo8bbZc+sv5siulAQFfJAP+K8Fl268+FFZ1NRkqQfndKpGvyhH0DYya
+ADgQSTClURwL5zWss7esRIpPSvBybCp9JPh9O9v53sTcOToiDWfuAJmuqrugycQa
+QyzZW0FI+eNOfZfnMSvNJBs/5LAv2qCLgHDUX4RbT2O9zpaBkp7xAIibc3mQC8ED
+CmDACy3Kt24=
+=b7Ug
+-----END PGP SIGNATURE-----
+
+
+
+

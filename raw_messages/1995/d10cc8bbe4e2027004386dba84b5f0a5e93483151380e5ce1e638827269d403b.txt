@@ -1,0 +1,104 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Sun, 27 Aug 95 12:21:34 PDT
+To: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Subject: Re: SSL trouble
+In-Reply-To: <199508271848.LAA18104@Csli.Stanford.EDU>
+Message-ID: <"swan.cl.cam.:079000:950827192056"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> And there is the third alternative, hierarchical search, which
+> distributes the task of giving out keys. This is admittedly a
+> little bit more involved, of course. The SKSP had provisions for
+> doing it hierarchically, as far as I understood it, although
+> I might be wrong.
+
+Indeed, it does, and we plan to provide a "local CPU farm" server
+which can be used when a number of machine are sharing the same ID.
+
+> What I wonder is wheter the server congestion really showed that
+> the protocol is flawed.
+
+No -- but that the early version of the code were buggy.
+
+As it is, 6 clients which are still running are managing to keep the
+server permanently busy.
+
+I think the protocol itself is OKish ..
+
+> Handing out bigger blocks relieved the  situation.
+
+Not really.
+
+It did however mean that when a chunk was allocated, three times as
+much work was done !
+
+
+> 1. The server knows approximately how many requests per second it 
+> can take, and tells the clients this information.
+
+Hmm -- hard to tell -- the *server* can take lots, but if the
+*clients* have problems, things go wrong.
+
+A select/poll server is not going to be tried on the next one -- that'll only
+be used if that goes slow as well ...
+
+> 2. The client initially does a testrun, and determines how fast it 
+> runs.
+
+The latest version of brloop starts with a call of "brutessl -q -t 1"
+to decide how big the chunks should be ...
+
+> 3. Each client is handed a block that, given the approximate number
+> of currently pending and active blocks out there, together with the
+> calculation time of the client, will give an acceptable number of 
+> requests/time unit to the server.
+
+I suspect that figures would be too crude ...
+The server would have to keep track of clients and how long their
+sessions take ....
+Should a client which takes 20s for a session be given blocks that take
+20 times longer to process than one which manages it in 1s ?
+
+> 4. The server acks (S-ACK) the block-ack to the client.
+
+Sorry -- what does that mean ?
+
+> If the client doesn't get an ack (S-ACK) from the server for its ack (B-ACK),
+> it keeps the ack around til the next block is calculated, and sends this 
+> ack together with the new acks.
+
+Sorry -- I'm lost ...
+
+> 5. The server can hand out allocated blocks to others, for those
+> blocks that has not been acked in three times the estimated
+> calculation time. 
+
+I've split allocation from ACKs.
+One server just doles out keys, the other just collects the ACKs.
+I don't want to add that sort of realtime feedback.
+
+What do you do about WWW clients ?
+
+What if someone grabe a big chunk, farms it out to several machines,
+and they ACK bits back ... ?
+
+
+> 6. If a client is unable to get a key allocation after a number of 
+> tries, it can chose a random block and search that. It can then be
+> acked to the server. This may result in overlapping blocks, but this
+> should not pose such a big problem, since most of the key space is
+> searched in an orderly manner anyway.
+
+Again no realtime fedback from ACKs :-(
+
+> It would be very interesting if detailed statistics or the logfile
+> of the server could be published somewhere. How many machines were
+> involved? etc...
+
+That'll come -- as the WWW pags says. pelase let me know what stats you'd like.
+
+
+
+

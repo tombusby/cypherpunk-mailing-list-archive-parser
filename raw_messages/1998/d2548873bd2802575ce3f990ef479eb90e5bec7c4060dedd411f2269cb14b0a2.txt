@@ -1,0 +1,72 @@
+From: David Honig <honig@m7.sprynet.com>
+Date: Tue, 28 Jul 1998 09:37:57 -0700 (PDT)
+To: Mok-Kong Shen <mok-kong.shen@stud.uni-muenchen.de>
+Subject: Re: encrypted FM radio hiss
+In-Reply-To: <3.0.5.32.19980727110437.007b8100@m7.sprynet.com>
+Message-ID: <3.0.5.32.19980728093729.007deb30@m7.sprynet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:40 AM 7/28/98 +0100, Mok-Kong Shen wrote:
+>David Honig wrote:
+>
+>> The output of a good block cipher in feedback mode will pass Diehard tests,
+>> though it is not crypto-secure.
+>
+>I often see the phrase 'pass Diehard test' though I don't see from
+>the documents of Diehard how to evaluate the volumenous printout
+>of Diehard to say exactly whether the test is passed or not. Furthermore
+>the component asc2bin.exe of Diehard is buggy.
+>
+>M. K. Shen
+>
+
+My rough understanding: the 'P' value is a measure on the hypothesis that
+the test sample is a truly random sample, where truly random is defined by
+the expected 
+statistical properties being measured.  Eg in 100 bits you expect to find
+50 1's; 
+if you count 48, is your 100-bit sample consistant with it being
+unpredictable?
+
+If you get values near 1.0 your sample is not likely taken from a random pool.
+
+
+Try this: generate 10Meg from a block cipher feeding back on itself.  Diehard
+will pass these.  (Diehard needs 10M samples)
+
+Now run FM hiss into your soundcard.  Sample this at 8Khz (to avoid
+temporal correlation)
+and save to a file til you have 10Meg.  Diehard will reject this.  Make a
+larger
+file, and then gzip it down to 10Meg.  (That it shrinks indicates its symbols
+don't carry a full bit.)  Run Diehard on this.  It will pass more tests but
+not all.
+
+
+Take the FM hiss, feed it into a stream cipher, and start burning those OTPs.
+
+
+Do this with a detuned *video* tuner for more bandwidth. 
+
+
+
+
+
+
+
+
+honig@alum.mit.edu
+
+   "Speech is not protected simply because it is written in a language"	
+	Federal Misjudge Gwin on the Bernstein Case
+
+
+
+
+
+
+
+
+

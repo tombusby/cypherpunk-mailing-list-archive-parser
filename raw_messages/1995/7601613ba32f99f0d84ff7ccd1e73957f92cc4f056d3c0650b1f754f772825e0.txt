@@ -1,0 +1,65 @@
+From: "Mark M." <markm@omni.voicenet.com>
+Date: Wed, 13 Dec 1995 11:15:48 +0800
+To: cypherpunks@toad.com
+Subject: Re: IDEA encryption
+In-Reply-To: <Pine.A32.3.91.951212174132.26320B-100000@hopi.gate.net>
+Message-ID: <Pine.LNX.3.91.951212212447.94B-100000@localhost>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Tue, 12 Dec 1995, Ben Holiday wrote:
+
+> 
+> The copy of the source for idea (unix) that I have specify's a user key 
+> length of 8 bytes, but allows this to be increased to something larger. 
+> Will increasing the user keylength improve the overall security? 
+> 
+IDEA uses 128-bit keys.  The program must do some XORing with the user key
+to expand it to 16 bytes.  Therefore, I would guess that it would be more
+secure to use a longer key.
+
+> Also, is it worth hashing the user key first, then using the hashed key 
+> as the key for encryption and decryption? Or am I wasting my time? 
+> 
+It probably isn't going to help with security at all if you plan to use a
+hexadecimal representation of the hash as is the common output of hashing
+programs.  The best key would be one that uses random letters, numbers, and
+symbols.
+
+> Last thing -- how secure is unix "rm"?  If something is rm'd, is it 
+> really really gone? 
+> 
+
+Not very secure.  I have heard that there is a Linux undelete and there might
+be a similar program for other Unices.  If the hard drive is examined using
+special hardware, data will be recoverable.  The data should be overwritten
+at least five times, maybe more depending on the level of security you want,
+before being deleted.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMM46pLZc+sv5siulAQFZgwQAh/TFur/p9yMlTD9qM0/sT6olo6aKGjGb
+OGas4p939mqfPdCu4LFyD6Tcg79YA90a108IEcE+rQB4o40/zDSkvoEUOz7a6nlb
+vqxI6Lv8Qdv40mVmH9Bxd9OhX+Vgsb7pkTHj9ViHlw9X2xjnwOSiKAu7nRupG1Tj
+A3IrqyCGapA=
+=us1o
+-----END PGP SIGNATURE-----
+
+
+finger markm@voicenet.com for Public Key http://www.voicenet.com/~markm/
+Key-ID: 0xF9B22BA5 Fingerprint: bd24d08e3cbb53472054fa56002258d5
+-----BEGIN GEEK CODE BLOCK-----
+Version: 3.1
+GAT d- s:- a? C++++ U+++>$ P+++ L++(+++) E--- W++(--) N+++ o- K
+w--- O- M- V-- PS+++>$ PE-(++) Y++ PGP+(++) t-@ 5? X++ R-- tv+
+b+++ DI+ D++ G+++ e! h* r! y?
+------END GEEK CODE BLOCK------
+
+
+
+

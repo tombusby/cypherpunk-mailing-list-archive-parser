@@ -1,0 +1,66 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 30 Oct 1998 19:22:55 +0800
+To: jamesd@echeque.com
+Subject: discrete log attack on 1st use of Kong signature? (Re: Using a password as a private key.)
+In-Reply-To: <199810291821.TAA03804@replay.com>
+Message-ID: <199810301010.KAA04282@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Anonymous writes:
+> Bill Stewart writes:
+> > Kong takes an interesting approach to key certification and signatures -
+> > it doesn't use the "True Name" model with a Certificate Authority Trusted
+> > Third Party Subject To Many Government Regulations certifying that the
+> > person who has this key has that True Name.  Instead, you sign messages,
+> > and it keeps a database of signed messages from peop le, and you can
+> > compare a message you have with a message you've received previously to
+> > see if it's signed by the same key, and you can send encrypted messages
+> > to the person who sent you a previous message.
+> 
+> What happens if you create another key which signs an existing message,
+> as was illustrated here recently in the case of Toto's key.  Can you
+> convince Kong that you are the same person who sent the earlier message?
+
+Depends if the discrete log attack anonymous used works over elliptic
+curves, or if an analogous attack can be mounted on the elliptic curve
+signature scheme James is using.
+
+Anonymous wrote on his attack:
+
+: N is the product of two primes, but each p-1 has about 16 small
+: prime factors (about 25-35 bits) to allow calculating the discrete
+: log efficiently.  With this choice of primes it took about three
+: hours to run the discrete log.
+
+in otherwords n is 1024 bit, p and q 512 bit, p1..p16, q1..q16 are
+about 25-35 bits each:
+
+	n = p x q
+	p-1 = p1 x p2 x .... x p16
+	q-1 = q1 x q2 x .... x q16
+
+then he can take discrete logs modulo n.  With this given signature s
+on message m with unpublished public key, he can compute a public and
+private exponent e, d which could have signed message m:
+
+	s = m ^ d mod n
+and	m = s ^ e mod n
+
+so compute discrete log of m mod n in base s to compute an e.  Then
+compute a d using the normal: 
+
+	e.d = 1 mod (p-1)(q-1)
+
+If something like this worked on Kong's signatures, you would need two
+signatures, or a signature on a message together with a signed public
+key.  Does Kong use self signed public keys?
+
+Adam
+
+
+
+

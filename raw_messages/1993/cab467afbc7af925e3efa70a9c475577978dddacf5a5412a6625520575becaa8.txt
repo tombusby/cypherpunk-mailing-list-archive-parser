@@ -1,0 +1,94 @@
+From: J. Michael Diehl <mdiehl@triton.unm.edu>
+Date: Wed, 2 Jun 93 00:01:22 PDT
+To: nobody@soda.berkeley.edu
+Subject: Re: Software infrastructure
+In-Reply-To: <9306020704.AA01148@soda.berkeley.edu>
+Message-ID: <9306020738.AA29392@triton.unm.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Subject: Software infrastructure
+
+...other good stuff deleted...I read mail at 2400B.
+
+> The result would be that when you receive an encrypted message, you
+> just list it out to your terminal and then, automatically, PGP fires up
+> and asks you for your pass phrase (unless you SET it ahead of time in
+> the PC's environment).  It then displays the message for you.
+> 
+> This simple model has several deficiencies.  When I log into a Unix system,
+> or Compuserve, or Portal's "Online" service, and read my mail, it is often
+> shown to me a page at a time.  This is so that I can read long messages
+> more easily.  Then after each message I can delete it, save it, reply to
+> it, etc.  If I do reply or if I want to create a new message it will drop
+> me into a text editor to compose the message.
+> 
+> The result is that the mail program you are running on the host computer
+> may do some munging on the PGP message, like inserting "Press RETURN for
+> next page" or perhaps some terminal control characters.  These would have
+> to be filtered out before PGP could run on the file, or you would have to
+> be able to suppress them when you read this message.
+
+If we are talking about an off-line reader, this is solved by a trivial filter
+routine.  If you want to do this on-line, well it might take time.
+
+> Also, assuming we could capture the message and run PGP on it automatically,
+> the resulting decrypted message will have to be saved and given a file
+> name.  Then if the user wants to reply to it he is going to have to leave
+> his terminal and run an editor.  (At least, that's what I have to do now.)
+
+Why save the plaintext?  I keep it in cyphertext and decrypt it on demand.  And
+when I want to reply, then I decrypt it, quote it and have the user edit that 
+file, which will presumably be re-encrypted.
+
+> Plus, this only deals with the message-receiving problem, not the sending
+> problem.
+
+Actually, these are the same problems in different clothes.
+> 
+> I'm not sure what the solution is.  Maybe the PC program needs to be more
+> than a terminal program, and become more of a whole mail-processing
+> program.  Maybe you should just download your mail file en masse from the
+> host to your PC, pre-process it to replace (in place) the incoming encrypted
+> messages with plaintext versions (annotated to show validated signatures),
+> then run a PC program which will display one message at a time, let you
+> reply, save, etc.  This way the decryptions are done before you even look
+> at the mail file and incoming encrypted mail is treated on a first class
+> basis (the same as other mail).
+> 
+> Then for outgoing mail you'd like to be able to drop into a user-defined
+> editor which is run with a command line causing his file to be saved to
+> some temp file name.  Then we can automatically encrypt the outgoing mail
+> for him based on the destination, add a remailer chain if requested, etc.  
+> Then he gives a command and all his replies and new mail are uploaded and
+> sent.
+
+These last 2 paragraphs describe almost exactly what my scripts do!
+
+> This would be pretty tough to do since there are so many different ways
+> of sending and receiving mail on host computers.  This would again have
+> to be a customizable part of the program, where we could provide modules
+> to deal with the common cases of Unix running "mail", elm, mh, etc., and
+> perhaps some of the commercial services.  BBS's would ideally be handled
+> as well.  Hackers could contribute scripts for supporting their favorite
+> mail system.
+
+I find that I need to be a bit more modular with my scripts so that I can call
+a different module depending on which type of system I'm on...Working on it at
+this moment.
+
++-----------------------+-----------------------------+---------+
+| J. Michael Diehl ;-)  | I thought I was wrong once. | PGP KEY |
+| mdiehl@triton.unm.edu |   But, I was mistaken.      |available|
+| mike.diehl@fido.org   |                             | Ask Me! |
+| (505) 299-2282        +-----------------------------+---------+
+|                                                               |
++------"I'm just looking for the opportunity to be -------------+
+|            Politically Incorrect!"   <Me>                     |
++-----If codes are outlawed, only criminals wil have codes.-----+
++----Is Big Brother in your phone?  If you don't know, ask me---+
+
+
+
+

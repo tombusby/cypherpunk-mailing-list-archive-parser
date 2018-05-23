@@ -1,0 +1,31 @@
+From: sameer <sameer@c2.org>
+Date: Tue, 21 Nov 1995 17:28:37 +0800
+To: attila@primenet.com (attila)
+Subject: Re: Export control FTP servers
+In-Reply-To: <Pine.BSD.3.91.951121085819.4906B-100000@usr3.primenet.com>
+Message-ID: <199511210906.BAA04152@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+#!/bin/sh
+umask 022
+DIRNAME=`cat $HOME/.usonlydir`
+NEWDIRNAME=`/usr/local/bin/pseudo-random | /usr/local/bin/md5sum`
+cd /u1/ftp/pub/US-only
+mv I_will_not_export_$DIRNAME I_will_not_export_$NEWDIRNAME
+cd ..
+sed -e "s/$DIRNAME/$NEWDIRNAME/" < README.US-only > README.new
+mv README.new README.US-only
+echo $NEWDIRNAME > $HOME/.usonlydir
+
+
+-- 
+sameer						Voice:   510-601-9777
+Community ConneXion				FAX:     510-601-9734
+The Internet Privacy Provider			Dialin:  510-658-6376
+http://www.c2.org/ (or login as "guest")		sameer@c2.org
+
+
+
+

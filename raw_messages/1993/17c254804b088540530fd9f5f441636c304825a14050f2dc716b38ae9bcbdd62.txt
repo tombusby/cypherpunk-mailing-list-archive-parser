@@ -1,0 +1,38 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Fri, 3 Sep 93 11:30:34 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer Reliability
+Message-ID: <9309031826.AA09137@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If you want reliability, you can take a page from the fault tolerance
+business.  Replicate the remailers.  (There are many papers on this topic.
+See, for example, ISIS from Cornell and Manetho from Rice.)
+
+Example:
+
+I send to r1 and r2.
+
+Each of r1 and r2 sends to r3 and r4.
+
+r3 and r4 each take the first message to arrive and drop the second.
+
+at the end of the chain, you have rm and rn.
+
+rm and rn each get the message (drop the second) and then decide between
+them who gets to post it.  The one who gets to, does and tells the other
+that it's all done -- at which time the other drops its copy.
+
+Death detection is by time-out (but only rn and rm need to delay operation
+until the time-out -- to prevent multiple postings from a split-brain
+network.)
+
+Expensive (4x the message traffic) -- but fault tolerant.
+
+ - Carl
+
+
+
+

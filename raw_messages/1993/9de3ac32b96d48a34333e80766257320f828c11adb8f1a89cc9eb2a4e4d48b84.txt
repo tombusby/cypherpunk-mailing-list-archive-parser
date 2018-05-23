@@ -1,0 +1,43 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Tue, 1 Jun 93 10:46:28 PDT
+To: cypherpunks@toad.com
+Subject: Crypto anarchy in a VW? (not the bug)
+In-Reply-To: <199306011712.AA08151@ccwf.cc.utexas.edu>
+Message-ID: <9306011820.AA21028@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>   The actual file encryption/decryption
+>must be done in hardware if you want to have any sort of speed at all.
+
+Please, everyone who is working on this, remember.  You can't do hard
+disk encryption in software on the host CPU.  Thanks to Jim for
+reminding me to stress this.
+
+>Lacking an available IDEA chip I will have to use
+>DES (multi-pass or some other variant to get around the limits on DES
+>keyspace) in order to get the necessary throughput on the disk.
+
+DES hardware is already available and tested.  Use it.  Use a
+triple-keyed EDE version of DES.  
+
+Is someone selling a raw DES chip on an ISA card?  If so, use that so
+that others don't have to hack together their own hardware.
+
+>Such a system would not be completely secure but would provide some
+>protection for files, which is more than they get now...
+
+The keying material for the disk should not be one key for the whole
+disk.  The keying material could easily be one key per track without
+the keys growing too large.
+
+Ideally this keying material would be held on a removable PCMCIA card
+and would talk directly to the device encryptor hardware with a
+protected channel.  That will have to wait.
+
+Eric
+
+
+
+

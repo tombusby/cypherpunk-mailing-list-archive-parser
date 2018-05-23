@@ -1,0 +1,39 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 2 Jun 94 16:13:12 PDT
+To: koontzd@lrcs.loral.com (David Koontz )
+Subject: Re: Black Eye for NSA, NIST, and Denning
+In-Reply-To: <9406022244.AA18607@io.lrcs.loral.com>
+Message-ID: <9406022313.AA00210@squeamish-ossifrage.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The format of the LEAF block is public knowledge.  Here is how it
+is formed:
+
+
+      [80-bit Session key Ks]   [16-bit # ]   [32-bit chip ID]
+
+      [80-bit Unit Key    Ku]
+
+      [80-bit.  {Ks}Ku      ]   [16b {#}Ks]   [32-bit chip ID]
+
+      [128-bit LEAF:  {{Ks}Ku {#}Ks ID}Kf  (Kf == family key)]
+
+Whether or not known plaintext will work is unclear, since you cannot
+get {#}Ks (you really don't know what it is outside the chip) and you
+also don't know what # is (it is, according to the NSA, a fixed number
+in all the chips).
+
+Hope this helps.
+
+-derek
+
+         Derek Atkins, SB '93 MIT EE, G MIT Media Laboratory
+       Member, MIT Student Information Processing Board (SIPB)
+    Home page: http://www.mit.edu:8001/people/warlord/home_page.html
+       warlord@MIT.EDU    PP-ASEL     N1NWH    PGP key available
+
+
+
+

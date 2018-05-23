@@ -1,0 +1,90 @@
+From: Enzo Michelangeli <enzo@ima.net>
+Date: Fri, 21 Jul 95 05:48:05 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Netscape the Big Win
+In-Reply-To: <199507201453.HAA19510@jobe.shell.portal.com>
+Message-ID: <Pine.LNX.3.91.950721195913.32735G-100000@ima.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 20 Jul 1995, Hal wrote:
+
+> Note though that neither SSL or SHTTP requires that the certificates come
+> from RSA.  However the current versions of Netscape's browser do require this.
+> This has been the source of much complaint and Netscape has promised that
+> they will have some mechanism in the future to allow the user to
+> choose his certificate signers.  I am not sure how far RSA will let them
+> off the leash, though.
+
+We may bypass them altogether (see below).
+
+> Back to Perry:
+> 
+> >Netscape is a closed system. You can't write code for it unless you
+> >work for Netscape.
+> 
+> That is why I am working on the proxy approach.  Any browser should be
+> able to use enhancements supplied in this way.  Netscape is the big name
+> this year, who knows who it will be next year.  As long as IP
+> connectivity is available a proxy can get into the stream and apply
+> enhancements.
+
+I still maintain that an approach based on SOCKS would be more flexible, 
+adaptable to any TCP-based application. Here's what I'm thinking about:
+
+1. Windows apps: a general purpose socksifier, intercepting Winsock API
+calls by *unmodified* applications and opening a single TCP connection to 
+the port 1080 of a sockd server. The good news is: some good folks at NEC 
+are already working at this project, and are looking for beta-testers.
+
+2. A "SOCKS en/decrypting relay": a sockd server that, on a 
+per-site/per-port basis depending on a configuration file, may either 
+ a) open TCP connections on behalf of its clients; 
+ b) relay a plain SOCKS connection to a remote peer;
+ c) open a SSL connection to a remote peer on, say, a port 1180 reserved
+    for "SSL-ized SOCKS" connections)
+Of course, that beast should also listen at the ports 1080 and 1180 and 
+take the same actions a) b) or c) as appropriate.
+
+The SOCKS en/decrypting relay could be written both as MS-Windows DLL and as 
+UNIX daemon. The chain would be:
+
+- From a Windows client machine:
+
+ Standard app -> Socksifier DLL by NEC -> encrypting relay -----> 
+  ---> Internet -----> decrypting relay -> server
+
+- From a Unix client machine:
+
+ Socksified (recompiled) app -> encrypting relay ------>
+  ---> Internet -----> decrypting relay -> server
+
+I'm assuming here that the encrypting relay should live close to machine
+(the same, or, at least on the same network) as the client app, and the
+decrypting relay close to the server. A single daemon could do both jobs, 
+allowing chaining "a` la remailer", but I'm using here two different 
+names for sake of clarity. Besides, the Windows version probably wouldn't 
+need decrypting ability.
+
+Great advantage over Netscape: we could use EAY's free SSL implementation,
+and all the server administrators could generate and sign their own
+certificates. The present trouble with Netscape is that NS-Navigator
+refuses to accept certificates not signed as "Netscape compatible". Our
+en/decrypting relay could be more forgiving :-) As the SSL stuff built in
+Netscape would be unused, we could also improve the protocol (plugging
+security holes) ignoring compatibility issues. The administrators of
+secure servers should just advise the users to configure their local
+encrypting relays to pass through their decrypting relay (that would boil
+down to a line added to the encrypting relay configuration). 
+
+It would all be beautifully modular, relatively simple to code (as someone
+else has done, or is doing, most of the hard work) and independent from
+big-brother certifying authorities. 
+
+Comments?
+
+
+
+
+

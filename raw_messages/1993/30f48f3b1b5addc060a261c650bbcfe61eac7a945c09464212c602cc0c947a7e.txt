@@ -1,0 +1,60 @@
+From: smb@research.att.com
+Date: Sat, 17 Jul 93 15:39:49 PDT
+To: norm@netcom.com (Norman Hardy)
+Subject: Re: Diffie Hellman
+Message-ID: <9307172239.AA02431@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 What is the best reference to the Diffie Hellman key
+	 exchange algorithm? (Preferably on line)
+	 Thanks
+
+Any decent book on cryptography should explain it.  The idea was
+originally proposed in
+
+@article{Diffie76,
+   author = {Whitfield Diffie and Martin E. Hellman},
+   journal = {IEEE Transactions on Information Theory},
+   month = {November},
+   pages = {644--654},
+   title = {New Directions in Cryptography},
+   volume = {IT-11},
+   year = {1976}
+}
+
+The basic idea is simple.  Pick a large number p (probably a prime),
+and a base b that is a generator of the group of integers modulo p.
+Now, it turns out that given a known p, b, and (b^x) mod p, it's
+extremely hard to find out x.  That's known as the discrete log problem.
+
+Here's how to use it.  Let two parties, X and Y, pick random numbers
+x and y, 1 < x,y < p.  They each calculate
+
+	(b^x) mod p
+
+and
+
+	(b^y) mod p
+
+and transmit them to each other.  Now, X knows x and (b^y) mod p, so
+s/he can calculate (b^y)^x mod p = (b^(xy)) mod p.  Y can do the
+same calculation.  Now they both know (b^(xy)) mod p.  But eavesdroppers
+know only (b^x) mod p and (b^y) mod p, and can't use those quantities
+to recover the shared secret.  Typically, of course, X and Y will
+use that shared secret as a key to a conventional cryptosystem.
+
+The biggest problem with the algorithm, as outlined above, is that
+there is no authentication.  An attacker can sit in the middle and
+speak that protocol to each legitimate party.
+
+One last point -- you can treat x as a secret key, and publish
+(b^X) mod p as a public key.  Proof is left as an exercise for
+the reader.
+
+		--Steve Bellovin
+
+
+
+

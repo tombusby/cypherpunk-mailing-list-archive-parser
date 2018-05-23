@@ -1,0 +1,61 @@
+From: Andrew.Spring@ping.be (Andrew Spring)
+Date: Tue, 25 Jul 95 09:59:21 PDT
+To: cypherpunks@toad.com
+Subject: Re: big word listing
+Message-ID: <v01510103ac39a90b698b@[193.74.217.8]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>
+>Instead of that, send H(pid,clock,hostname,H(password)) to the server, for
+>some hash function H().  Then the server only needs to keep H(password)
+>around, rather than the plain password.  This is similar to current
+>systems, except the plain password isn't sent across the network.
+>
+>H() can be whatever you fancy; 25 crypts, MD5, SHA-1, etc.  Of course,
+>I'm sure this is far from being a new idea...
+
+Keeping H(password) on the server and logging in with H(blob,H(password)) is
+no different than keeping the password on the server and logging in with
+H(blob,password).  Anyone who can read the password file on the server can
+authenticate himself.
+
+To protect against packet sniffers monitoring your login stream _and_
+system crackers looking at the password file, you need some form of PKC.
+
+Free-after-1997 example:
+        g is a generator of a prime p.
+
+        password is X (0<X<p);
+
+        password file has g^X mod p.
+
+        login server generates Y, issues challenge g^Y.
+        expected response is g^XY mod p
+
+        login client has X, generates (g^Y)^X = g^XY mod p.
+
+        J. Random SuperHacker can get g^X, and g^Y, but not g^XY.
+
+Free-after-2000 example.
+        Server Has RSA Public Key
+        Client has Private Key.
+
+        Server generates challenge.
+
+        Client signs [Hash of] challenge.
+
+
+
+--
+Thank you VERY much!  You'll be getting a Handsome Simulfax Copy of your
+OWN words in the mail soon (and My Reply).
+<Andrew.Spring@ping.be> PGP Print: 0529 C9AF 613E 9E49  378E 54CD E232 DF96
+   Thank you for question, exit left to Funway.
+
+
+
+
+
+

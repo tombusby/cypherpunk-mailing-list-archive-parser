@@ -1,0 +1,124 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 11 Oct 1997 07:40:56 +0800
+To: eb@comsec.com
+Subject: Re: secure phone on a PCI card? (Re: authentication suggestion for secure phone) computationally infeasible jobs for MITMs)
+In-Reply-To: <199710102057.NAA02969@comsec.com>
+Message-ID: <199710102210.XAA05811@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Eric Blossom <eb@comsec.com> writes:
+> > If it cost a lot extra, that could be a problem, yes.  I am unclear on
+> > how much extra this would cost.  Apart from an EEPROM, it's a protocol
+> > and software update right?
+> 
+> The units currently have 2K bytes of EEPROM and 256K bytes of FLASH.
+> [...]  There's plenty of room for long term storage of a reasonable
+> set of public keys.  Private or symmetric keys present a problem,
+> since then you've got a long term secret to store somewhere.
+
+What's the difference betwen storing public keys and private keys?
+Are you concerned that someone will tamper with the unit and replace
+the keys.  (Borrow the phone while you're out, reset the EEPROM, and
+make a series of calls to put in MITM keys.)  Could be dangerous.
+You could use a pin, but then you need an input device.
+
+However, you could also argue that if someone can borrow your phone
+for a while they can give it free "upgrade", and replace the RNG, or
+whatever anyway, so it doesn't make any difference?  I don't think it
+does.
+
+I kind of liked the persistency authentication idea as a candidate for
+your remote upgrade.  You could do it with symmetric keys or with
+asymmetric keys.  It's just a trade off which depends on how many keys
+you're allowing.  If space is short, you could do something more
+clever, say:
+
+- Exchange (and store in a table) a symmetric key with each new phone
+- Lookup keys by phone number (or unit serial number if you don't have ANI)
+- Authenticate using nonce and stored key.
+
+Overhead: 16 bytes per phone
+
+Allow say 50 callers = 800 bytes.  Perhaps you want a button to push
+(hold go secure down for over 5 seconds, say) to store a caller in
+this table.  (Prevents attacker flushing your table by making a load
+of dud calls).  Or perhaps just wrap around and discard least used
+numbers/serial numbers.
+
+> > [phone on PCI/PCMCIA card]
+> 
+> I can pretty much be done all in software on a laptop.  
+> 
+> The primary thing you lose is the simple integration with the
+> telephone.  A small (cheap) hardware hack can work around this.  Yes,
+> I know you'd prefer not to have any non-standard hardware, but on the
+> other hand, if the system is a pain in the ass to use, nobody is going
+> to use it.
+
+Fancy organising this cheap hardware hack?  I reckon you'd get a few
+buyers.  I'll pledge to buy 3 at a reasonable price.  
+
+Do you have the software for PCs/MACs?  Would this cheap hardware hack
+work with PGPfone as is?  (PGP Inc don't seem to be doing much work on
+PGPfone right now).
+
+btw the hardware hack I presume is impedance matching to allow phone
+to plug into 3.5mm jack audio and mic socket?  Any hardware people
+care to give soldering instructions?
+
+> > I think Eric's phone uses a 14.4k modem chip (or lower?) so it's not
+> > the bit rate as such, but more the lack of higher quality audio
+> > compression codecs which are possible in hardware.  (Right?)  
+> 
+> The unit currently runs at 14.4k.  A 4800 b/s fallback mode is
+> currently under development.
+
+GSM laptop secure phone, here we come :-)
+
+> > Also the fact that with PGPfone you're using PC speakers, and room
+> > microphone probably makes it seem worse than it could be.
+> 
+> Fixable with software and MIPS (you've got those).  Take a look at
+> those nice USR and Polycom full duplex speaker phones.  There's
+> nothing magic in them.  Notice the neat little song they play when you
+> power them up.  It's a training tone used to compute the impulse
+> response of the room.
+
+I'm not sure what PGPfone's problem is, but when I tried it, it
+sounded like an off tune radio station, but worse.  Even turning off
+encryption entirely (to preserve the precious cycles for the audio
+codec) didn't help much.
+
+Perhaps I should retry it now with 166Mhz K5 pentium in place of
+120Mhz AMD 486 at the time.
+
+> > [integrating with GSM phone]
+> 
+> Pretty much everything you need is already there.  It's a question of
+> integration.
+
+It's a damn, damn, shame that no-one is doing this.
+
+We couldn't bribe you to do it next could we?
+
+I was kind of figuring that eventually we'll get there with a bit of
+software because cellular phones and laptops functionality will merge,
+and the bandwidth and processing power will be there.  Still a laptop
+with your hardware hack, would be ok for now.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

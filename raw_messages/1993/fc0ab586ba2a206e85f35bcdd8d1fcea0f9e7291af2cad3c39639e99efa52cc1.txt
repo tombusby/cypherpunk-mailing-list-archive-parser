@@ -1,0 +1,58 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 21 Oct 93 10:27:56 PDT
+To: cypherpunks@toad.com
+Subject: MATH: factoring, # of bits
+Message-ID: <9310211724.AA10107@arcadien.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>First, we need an equation that tell us how difficult it is, in # of
+>operations, to factor a number of N bits.  eg: N_ops(N) = # of
+>operations it will take.
+
+I think the fastest method that anyone admits to, by Odzyklo
+(spelling?), has an order of magnitude defined by:
+
+e^(sqrt(ln(x) ln(ln(x))))
+
+I've been dusting off my Mathematica skills working on the crypto
+techniques Matt posts :-) so it looks like this in Mathematica:
+
+f[x_] := N[Exp[Sqrt[Log[x] Log[Log[x]]]]]
+
+x in bits	difficulty
+
+200		2.27 E11
+384		5.54 E16	<- PGP casual
+512		6.69 E19	<- PGP commercial
+664		1.18 E23
+1000		1.75 E29
+1024		4.42 E29	<- PGP military
+1500		8.11 E36
+2000		3.11 E43
+3000		5.49 E54
+4000		2.44 E64
+6000		7.06 E80
+8000		8.99 E94
+
+I don't know how many seconds until the end of the universe, but I
+think you'll be covered using an 8000 bit key :-)
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLMbFXYOA7OpLWtYzAQEwrwP9G60hCktxcj7MwkOV2H7QPQ1+i+j5ceTK
+DEcj74ZFZdsp1vouMxtsN+zvqkdy1+DTzNUuXusWKhogDLFEPTuASZD3tcFgkoUT
+Uk0B805mJi/gfiBa7+CBWHgjF0T7NSZe1lTjqfru1u+XeU/7iAq+erU0ojydL/xi
+tqBAZZg3gEs=
+=wkBt
+-----END PGP SIGNATURE-----
+
+
+
+

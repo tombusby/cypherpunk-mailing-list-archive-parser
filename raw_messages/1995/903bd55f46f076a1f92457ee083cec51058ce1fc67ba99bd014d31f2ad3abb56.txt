@@ -1,0 +1,130 @@
+From: stig@hackvan.com (Stig)
+Date: Wed, 27 Dec 1995 21:15:33 +0800
+To: otaku@comsat.hackvan.com>
+Subject: Fwd: Re: Fwd: Re: FH radios [Dave Emery]  [Vaughan Pratt]
+Message-ID: <m0tUjjD-0006F1C@hackvan.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+I forwarded a cypherpunks message to technomads, where it got a killer
+response, so I'll bounce it back to Cypherpunks...
+
+    Stig
+    
+
+- ------- start of forwarded message (RFC 934 encapsulation) -------
+From: Vaughan Pratt <pratt@cs.stanford.edu>
+To: technomads@UCSD.EDU
+Subject: Re: Fwd: Re: FH radios [Dave Emery] 
+Sender: pratt@cs.stanford.edu
+Date: Tue, 26 Dec 1995 12:00:43 -0800
+Message-Id: <199512262000.MAA23334@Coraki.Stanford.EDU>
+In-reply-to: Your message of "Tue, 26 Dec 1995 07:07:00 PST."
+             <m0tUayp-0006F0C@hackvan.com> 
+
+
+>>> Thus in a frequency-hopping radio you can push the retuning (read RF
+>>> phase-locked loop) technology to its limit and build transmitters and
+>>> receivers around them. These typically hop in the order of 100 times a
+>>> second. The adversary has to find the uncorrelated signal very quickly
+>>> indeed *and* have PLL technology at least as good as yours to recover
+>>> anything from it. Finding the signal generally means listening to all
+>>> frequencies at once, requiring huge amounts of hardware parallelism and/or
+>>> realtime computing power. Once you throw ten or so radios onto the same
+>>> band, it's no longer any use looking for the strongest signal, making that
+>>> approach useless.
+>> 
+>> This is nowhere near the limit of the technology.  15 years ago, I was
+>> working on PLLs that would stabilize within a couple degrees of final
+>> phase within 3.5 microseconds.  That permits you to do useful work at
+>> 100,000 hops per second.
+>> 
+>	There is also a newer technology called direct digital synthesis
+>or DDS that works by accumulating phase (adding to the previous value) 
+>each tick of a high frequency clock in a register at a rate determined
+>by the contents of another register (the value here sets the frequency)
+>with the upper bits of the accumulated phase being used to address a
+>sine/cosine lookup table rom which in turn feeds digital output values
+>into a D/A converter.  The output of the D/A converter is a sampled 
+>approximation of a sine or cosine wave at a frequency set by the
+>increment register.  The sample rate is set by the high frequency clock
+>rate.
+
+This is all wishful thinking.  A 26-MHz wide channel such as 902-928MHz
+has a channel capacity of 2*26 Mbs or 6.5 megabytes/sec.  So if someone
+can tell *that* you are transmitting somewhere within that channel then
+they simply record *everything* at that data rate in the entire
+channel, your transmission and everyone else's, for the necessary
+time.  A $600 3.5Gb Sequel drive can record a ten-minute transmission;
+then the eavesdropper can use one Pentium or two dozen, budget
+permitting, to extract your message from that data.  If all you are
+doing is frequency hopping or spread spectrum, reconstruction is a very
+undemanding algorithmic task, and one Pentium should be able to
+reconstruct your signal the same day, two dozen the same hour.
+
+>But to get back to the original point of this thread - while
+>such techniques are possible (as is full hard encryption), it is my
+>understanding that actual conusmer 900 mhz digital cordless phones
+>that use frequency hopping use a very limited set of frequencies
+>and a small set of fixed hopping patterns and don't hop very fast. 
+
+Hopping speed is almost completely irrelevant to the computational
+complexity of this problem.
+
+>When the brand of cordless phones that most emphasizes security
+>from eavesdropping in its point of sale advertising display is the one that
+>uses open FM with simple speech inversion you know there is something
+>wrong, particularly when the company that makes it is a pioneer in
+>really secure digital speech over handheld radios (and a big governmeent
+>contractor).
+
+To put it mildly.
+
+You can never overestimate the cost of decryption.  What looks
+expensive enough today to decrypt can plummet by orders of magnitude on
+alarmingly short notice.  We used to think TCP was mildly secure until
+easily installed sniffers became freely available on the internet that
+would reconstruct a telnet connection and print out the first 100
+characters, making it child's play to extract passwords.
+
+If you think that you are secure because the effort of an attack seems
+on the high side, bear in mind that the tasks in a systematic attack can
+by definition of "systematic" be programmed, greatly easing the
+attacker's task.  And once programmed, the program can be distributed to
+all and sundry on the internet.
+
+If a given level of cryptographic strength seems adequate for a message,
+add several orders of magnitude and maybe you'll be lucky.  
+
+I know of only two really satisfactory places to hide information worth
+hiding: combinatorial search space (read: real encryption such as DES
+or RSA, with a hefty key), and the real world, which as a search space
+is approximately the size corresponding to a combinatorial space
+encrypted with a 256-bit key (i.e. the world seems bigger than 128 bits
+and smaller than 512).  The latter is distributed in space-time and
+frequency (momentum-energy); if you consider only space-time or only
+frequency the universe looks like only a 128-bit hiding place in either
+case.  Both together give you 256 bits (very approximately, that's a
+very round binary number).
+
+Vaughan Pratt
+- ------- end -------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.3, an Emacs/PGP interface
+
+iQCVAwUBMOCS5khaKuRiAqcVAQEJEAP/WNqKrjrGk5LpYt5fw70BtFYZEIMqkBzu
+TQscTmoK2sSOeI9yjxmOp8aQhArLpOdN0ZQgfwkuelfV+/n73ms3hMV+JIDOvuFx
+hirE1iBvZDMgEPX1BdyP94Me13a1f8mBKTTG1cPLIYKLSTZ1tmQ/MVI0EYN9H16U
+AETV7FJilvM=
+=l+fI
+-----END PGP SIGNATURE-----
+
+
+
+

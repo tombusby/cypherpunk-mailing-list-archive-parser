@@ -1,0 +1,64 @@
+From: yanek@novavax.nova.edu (Yanek Martinson)
+Date: Thu, 26 Nov 92 07:54:44 PST
+To: cypherpunks@toad.com
+Subject: Re: PGP on a multiuser system
+In-Reply-To: <m0mudhV-0006TAC@rebma.rebma.mn.org>
+Message-ID: <9211261554.AA26688@novavax.nova.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> where pgpcompose is a quick hack that looks like:
+> #!/usr/bin/ksh
+> 
+> rm /tmp/pgpcompose
+> vi /tmp/pgpcompose
+> echo What key?
+> read key
+> pgp -mae /tmp/pgpcompose $key
+> mv /tmp/pgpcompose.asc $1
+> exit 0
+
+
+This is not a very good way of doing this unless this is on a single-user
+linux system where youhave read all the source, and compiled it yourself.
+
+First, if on a multi-user system, what happens if two people run pgpcompose?
+
+At the very least, use code like "vi /tmp/pgpcompose.$$", which will append
+your process ID to the temp file name.
+
+It is NOT a good idea to keep the plain text in a disk file, even for a little
+while.  It would be very easy for someone to set up a crontab entry which 
+looks for files of the name /tmp/pgp*, and copies them to a hidden directory.
+
+You would never even know that it was happening.
+
+If you absolutely MUST do crypto on a multiuser machine, at least try not to
+keep plaintext or private keys in files.  
+
+For example, you could instead rewrite the above script to call vi directly
+on what will become the output cyphertext file.  Then the user types in
+plaintext, and does not save the file.  The file (while still only in memory)
+is piped (!G) through pgp by the user.
+
+This is still not very secure, since it would be not too difficult for someone
+to have a version of vi that saves everything that is piped in a special file.
+
+Or pgp may be modified to do the same.  
+
+Or if you compile pgp yourself every time, the C standard input routines
+may be modified to do the logging. 
+
+You get the picture. There is no security on a multiuser system.
+
+
+--
+Yanek Martinson    mthvax.cs.miami.edu!safe0!yanek     uunet!medexam!yanek
+this address preferred -->> yanek@novavax.nova.edu <<-- this address preferred
+Phone (305) 765-6300 daytime   FAX: (305) 765-6708  1321 N 65 Way/Hollywood
+      (305) 963-1931 evenings       (305) 981-9812  Florida, 33024-5819
+
+
+
+

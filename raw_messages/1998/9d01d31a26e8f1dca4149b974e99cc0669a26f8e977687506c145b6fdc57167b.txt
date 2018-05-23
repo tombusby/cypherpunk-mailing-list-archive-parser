@@ -1,0 +1,42 @@
+From: jim@mentat.com (Jim Gillogly)
+Date: Sat, 31 Jan 1998 02:03:36 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Chaining ciphers
+Message-ID: <9801301752.AA17574@mentat.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Jim Gillogly skribis:
+> > One word of caution (which should be obvious, but can't hurt to repeat it):
+> > if you chain ciphers (e.g. DES | IDEA | 3DES | CAST | Blowfish), be sure to
+> > use separate keys for each of them; otherwise breaking the last one will
+> > give the key to the whole lot.
+> 
+Matthew Ghio rispondis:
+> Only if the cryptanalyst knows that the decryption of the last one was
+> correct, which shouldn't be possible without also decrypting all the other
+> layers.
+
+If the person strapping those systems together writes them from scratch
+and the penultimate cipher gives a flat distribution, then I agree
+100%.  However, many (most?) standalone encryption programs will put a
+magic number or other identification at the beginning (e.g. encrypted
+PKZIP) or will do a sanity check that actually tells you whether you've
+decrypted with the right key, whether you see garbage or not (e.g.
+EAY's stand-alone 'idea', 'des', etc.).  PGP also has distinctive headers,
+I think.
+
+In the world of existing cipher packages it's usually possible to tell what
+you've got.  Assume Kerckhoff's principle, of course: the attacker knows
+which packages you're using and which order you're doing them in.
+
+	Jim Gillogly
+	Hevensday, 9 Solmath S.R. 1998, 17:52
+	12.19.4.15.19, 10 Cauac 17 Muan, Fourth Lord of Night
+
+
+
+
+

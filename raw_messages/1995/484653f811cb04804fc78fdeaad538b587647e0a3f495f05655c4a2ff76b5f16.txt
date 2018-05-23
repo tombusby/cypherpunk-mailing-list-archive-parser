@@ -1,0 +1,50 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Wed, 6 Sep 95 18:58:17 PDT
+To: weidai@eskimo.com (Wei Dai)
+Subject: Re: fast modular reduction
+In-Reply-To: <Pine.SUN.3.91.950906174500.9460B-100000@eskimo.com>
+Message-ID: <199509070157.VAA16973@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> In the following pseudocode, B is the radix in which the numbers are 
+> represented (2^32 for a 32-bit machine), n is the length of modulus in 
+> blocks, U is B^(n+1) mod the modulus, X is the number to be reduced, k+1 
+> is the length of X, and Y is the result.
+> 
+> 1. Y = X
+> 2. For i from k down to n+1, repeat steps 3 and 4
+> 3.	Y = Y - Y[i] * B^i + Y[i] * U * B^(i-n-1)
+> 4.	If Y >= B^i, then Y = Y - B^i + U * B^(i-n-1)
+
+  Is there a proof of correctness available for this algorithm? It
+looks almost like a Radix-B peasant division algorithm with some
+modifications. Is there an algorithmic analysis available? I also
+I think there is a bug in your description. Let k+1 = n+1
+(e.g. the dividend is 1 more "block" than the modulus). Then
+i=n starting out, and we have
+
+3. Y=Y - Y[n] * B^n + Y[n] * U * B^(n-n-1)  [we have B^-1] I'm assuming
+this was unintended.
+
+
+How does this algorithm compare to computing the reciprocal
+via Newton's Formula, and then multiplying by the reciprocal
+using Karatsuba multiplication? While I was at IBM Watson I invented
+a modular reduction algorithm that saves 1/4 the number of 
+multiplications required on average once you have the reciprocal 
+computed.
+
+
+-Ray
+
+
+ 
+ 
+
+ 
+
+
+

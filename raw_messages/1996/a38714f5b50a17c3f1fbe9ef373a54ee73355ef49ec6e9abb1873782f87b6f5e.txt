@@ -1,0 +1,47 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Fri, 8 Mar 1996 10:04:04 +0800
+To: cme@cybercash.com (Carl Ellison)
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <v02140b24ad5bc8a12abb@[204.254.34.231]>
+Message-ID: <199602292135.QAA18937@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Carl Ellison writes:
+> At 15:54 2/29/96, Derek Atkins wrote:
+> >So, there needs to be a compromise, some shorthand method to describe
+> >the hint.  One solution is to provide a "keyserver" type and then some
+> >string that says which "keyserver" to use.  For example, if there is a
+> >DNS-style keyserver deplyed, I could put '1,"mit.edu"' in all my
+> >signatures, if we assume that '1' is the DNS-style keyserver code.
+> >
+> >I'm sure there are other possible solutions as well, and any real
+> >suggestions are welcome.
+> 
+> is a URL just too big?  My sigs are already several lines long.  E.g.,
+> 
+> Key: ftp://ftp.clark.net/pub/cme/cme.asc
+
+URLs are nice, but I'm not quite sure they are sufficient in practice,
+though they are certainly theoretically sufficient. If I get a
+document from someone, and it is signed, I'd like to be able to get
+the key associated with the signature, and the URL is in theory enough
+to do that. However, going in the opposite direction -- retrieving a
+key associated with, say, a remote host's TELNET server, I'd like to
+be able to query a server ask much more flexible questions than an FTP
+URL would let me ask -- I might have a prefered public key system (RSA
+versus DSS or what have you), I might want to be able to distinguish
+between versions of the key, I might want to ask for all keys of a
+certain class, etc.
+
+In the end, we are probably going to need something in the way of key
+servers, which may (or may not) imply either a new type of URL or
+something other than a URL to do retrieval off of.
+
+Perry
+
+
+
+

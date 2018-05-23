@@ -1,0 +1,104 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Thu, 3 Jun 93 08:57:38 PDT
+To: cypherpunks@toad.com
+Subject: CryptoStacker, long term vision
+In-Reply-To: <Pine.3.03.9306030013.A18959-e100000@rtfm>
+Message-ID: <9306031512.AA25490@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>This is tiring drivel concerning the CryptoStacker project.  
+
+If you want help, it is wise not to recklessly insult those who are
+offering it.  By your own admission, you do not have a lot of
+experience here; you seem to be saying "I know exactly what I don't
+know," which, may I add, is a common delusion of the inexperienced.
+
+You seem to have fixed a model of how the encrypted disk would work
+and don't want to debate it.  The model is exactly that which requires
+the most scrutiny, because it has the most far reaching effects.  If
+the model is flawed somehow, that's what you want to know before you
+begin, not six months later.
+
+I take it that you want people to use this software after it is
+written.  if so, then pay close attention to user acceptance issues
+such as performance and key handling.  You neglect them at your own
+risk.
+
+Your model seems to be that of intercepting interrupts to the disk.
+This could be made to work, but is the wrong way to do it.  If you
+insist on that, though, any good PC reference book will tell you what
+the disk interrupt vector in the BIOS is.  Ralf Brown's interrupt list
+also contains the relevant data in schematic form.
+
+The proper way to do this is as a device driver, however.  Grabbing
+interrupts is messy and prone to interference.  Many anti-virus
+programs monitor the disk interrupt to make sure that nobody uses it
+unauthorized.  A device driver is the intended way to create new
+devices, like an encrypted disk.  There are complete books about
+writing device drivers; you will need one of these or some other good
+DOS programming book which explains how to write one.  There are
+lots of subtleties about them.
+
+I would suggest that you first version just be a device driver that
+has no encryption, but only the hook for it.  The device driver
+skeleton for a disk will be difficult enough, as you have to support a
+whole lot of operations just so you can have a place to put the
+encryption.  This is exactly the software infrastructure problem in
+another context.
+
+After you have a device driver skeleton working, you can add both
+hardware and software encryption modules.  There is no need to be
+exclusive about this.  It is clear to me from your comments that you
+haven't timed any DES routines and done a calculation of increased
+latency times, and although I hate to see code development go to
+waste, it's your time, not mine.
+
+As far as picking an encryption algorithm, use DES.  DES is the
+fastest symmetric keyed block cipher that is thought to be reasonably
+secure.  DES is not particularly fast in software; it was designed as
+a hardware standard and does lots of bit manipulations.  DES is fast
+enough for serial communications, but that 1000 times less the
+bandwidth than a hard disk.
+
+Of course, you don't want to run DES in codebook (aka naive) mode.
+(Codebook mode is where you just simply map block to block; the
+problem is that identical blocks map to identical blocks.)  You'll
+want some sort of other mode, like a counter mode, to make sure you
+don't get identical ciphertexts.  It is also a bad idea to encrypt the
+whole disk with one key; it makes brute force searches much easier.
+
+Your keying material should be long.  I earlier suggested one key per
+track.  These keys are going to have to be stored somewhere, and the
+disk is the wrong place for it, clearly.  This implies that the user
+is going to have to have some key-holding device (likely a diskette)
+which will be necessary in order to unlock the partition.  the keying
+material should be password protected.  This device will be have to
+used at boot time if anything necessary to boot is stored on the
+encrypted partition.
+
+Keying material will need to be backed up.  This should be made as
+painless as possible, otherwise there will be plenty of people losing
+whole drives.
+
+Keys in the driver should time out after some specifiable period.
+Files that are open when the time-out occurs and the programs that
+have them open are going to have to be dealt with gracefully.
+
+This model of using a device driver means that there is going to have
+to be at least two partitions on the disk: one to boot from, and one
+to be encrypted.  The device driver itself and the operating system
+can't be on the encrypted disk, because those components must be
+loaded before the encrypted disk is accessible.  Most people are not
+going to go out and buy a new disk to be the encrypted partition.
+Thus, this is going to mean a full backup of the existing disk, an
+operation with FDISK to do the partitioning, then, assuming the driver
+works right the first time, restoring everything else on the encrypted
+partition.  What is the effect of _this_ on user acceptance?
+
+Eric
+
+
+
+

@@ -1,0 +1,45 @@
+From: Alan Ruttenberg <alanr@media.mit.edu>
+Date: Tue, 9 Nov 93 15:03:17 PST
+To: "W. Kinney" <kinney@ucsu.Colorado.EDU>
+Subject: Re: Cyphergurus: Advice needed
+In-Reply-To: <199311091643.AA11260@ucsu.Colorado.EDU>
+Message-ID: <9311092301.AA22739@media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   What I'd like to get opinions on is _should I encrypt this header information_, 
+   since its format will be known to an attacker and, in many cases, its contents 
+   easy to guess? My inclination is to leave it plaintext, since the worst that 
+   can happen if a file type is known is the same type of attack that would 
+   _always_ be possible with an encrypted header.
+   
+   Thanks to all with thoughts on the subject.
+   
+                                     -- Will
+
+I do think that you should encrypt this information.
+
+What if you embed the header at some random point in the file, with
+the last bytes of the file being a pointer to where the header is? You
+can then splice the header information out of the decrypted stream.
+
+Cryptoexperts: Does this make it harder to use the header information
+to decrypt the file? What if you embed a series of pointers: ie.
+Pointer to pointer to pointer to header, all of which get spliced out
+in the end.
+
+Or how about embedding the header in an out of band stream which is
+part of the file - Escape signals an out of band message and
+Escape-Escape the old Escape character. Then you could also place the
+header at a random point in the file. I suppose that you get
+information about the frequency of the escape character (since the
+file grows) but that can be masked by appending a random amount of
+extraneous data in all files).
+
+
+-alan
+
+
+
+

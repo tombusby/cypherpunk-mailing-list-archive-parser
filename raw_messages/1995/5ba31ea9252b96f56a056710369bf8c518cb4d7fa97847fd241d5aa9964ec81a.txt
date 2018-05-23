@@ -1,0 +1,63 @@
+From: "Donald E. Eastlake 3rd" <dee@cybercash.com>
+Date: Sat, 23 Dec 1995 05:05:42 +0800
+To: David Klur <dklur@dttus.com>
+Subject: Re: Cybercash questions...
+In-Reply-To: <9511228196.AA819668788@cc1.dttus.com>
+Message-ID: <Pine.SUN.3.91.951222152659.29664G-100000@cybercash.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 22 Dec 1995, David Klur wrote:
+
+>      
+>      Hello,
+>      
+>      Just a few questions about Cybercash...
+>      
+>      - How is the consumer's credit card # stored on his hard drive?  
+>      Encrypted with the bank's public key? Or does the consumer have a 
+>      private key?
+
+The customer has a private key.  Customer info on their machine is
+encrypted under a password.
+
+>      - How does the merchant know where to ship the goods?  Is the merchant 
+>      required to ship the goods to the billing address on the cardholder's 
+>      credit card account?  If so, does the bank provide the merchant with 
+>      this info?  How is it encrypted?  Or does the customer indicate to the 
+>      merchant where to ship the goods?  Also, what infor does the merhcant 
+>      send to Cybercash, and how is it encrypted?
+
+Billing address establishment is part of shopping.  It need not be
+the card billing address.  But the customer needs to enter an
+addreess when setting up their credit card. see
+	draft-eastlake-cybercash-v08-01.txt
+in any of the IETF shadow directories.
+
+>      The fraud possibility I see is that Bob could steal Alice's encrypted 
+>      credit card number (by sniffing when she buys something at Charlie's 
+>      Internet shop).  Then, without decrypting it, he could use it (still 
+>      encrypted) at Don's Internet shop, and ask Don to ship the goods to 
+>      Bob's address.  Since Don will not decrypt Alice's card number he will 
+>      not know that it is not Bob's card.  Cybercash will validate Alice's 
+>      card, but will not know that it is really Bob who is the customer.  
+>      Don will ship the goods to Bob, and Alice will get a fraudulent charge 
+>      on her bill.
+
+The customer signs the message including the merchant id and order id
+before encrypting a bunch of stuff including the credit card number
+to send to the merchant.  There isn't anything useful to steal from
+the ecnrypted part of that message.
+
+>      Am I missing something?
+
+Donald
+=====================================================================
+Donald E. Eastlake 3rd     +1 508-287-4877(tel)     dee@cybercash.com
+   318 Acton Street        +1 508-371-7148(fax)     dee@world.std.com
+Carlisle, MA 01741 USA     +1 703-620-4200(main office, Reston, VA)
+
+
+
+

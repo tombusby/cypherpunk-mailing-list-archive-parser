@@ -1,0 +1,107 @@
+From: pgpkeys@wasabi.io.com (PGP Slave Key Server)
+Date: Wed, 2 Feb 94 10:45:32 PST
+To: cypherpunks@toad.com
+Subject: New US keyserver now fully operational - pgp-public-keys@io.com
+Message-ID: <199402021313.NAA19622@wasabi.io.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The US-based keyserver  'pgp-public-keys@io.com' is now open to the public.
+
+Come one, come all!
+
+Here is the current file as returned by 'Subject: help'.
+
+This site is a PGP key server SLAVE site.  It behaves
+very similarly to the European PGP master sites, but there
+are a few small differences which will be noted below.
+The most noticable difference is that it answers your
+requests immediately instead of waiting for a daily
+batch job to run :-)
+
+The particular installation at io.com does *not* log the details of
+requests for keys, however the fact that you have sent mail to the
+key server at all is logged in the daily sendmail logs.  These logs
+will be erased automatically after one week.
+
+
+PGP Public Keyservers
+---------------------
+
+There are PGP public key servers which allow one to exchange public
+keys running through the Internet and UUCP mail systems.
+
+This service is NOT supported in any way whatsoever by the schools or
+organizations on which these servers run.  It is here only to help
+transfer keys between PGP users.  It does NOT attempt to guarantee
+that a key is a valid key; use the signators on a key for that kind of
+security.  This service can be discontinued at any time without prior
+notification.
+
+Each keyserver processes requests in the form of mail messages.  The
+commands for the server are entered on the Subject: line.
+
+        To: pgp-public-keys@io.com
+        From: johndoe@some.site.edu
+        Subject: help
+
+Sending your key to ONE server is enough.  After it processes your
+key, it will forward your add request to other servers automagically.
+
+For example, to add your key to the keyserver, or to update your key if it is
+already there, send a message similar to the following to any server:
+
+        To: pgp-public-keys@io.com
+        From: johndoe@some.site.edu
+        Subject: add
+
+        -----BEGIN PGP PUBLIC KEY BLOCK-----
+        Version: 2.2
+
+        <blah blah blah>
+        -----END PGP PUBLIC KEY BLOCK-----
+
+COMPROMISED KEYS:  Create a Key Revocation Certificate (read the PGP
+docs on how to do that) and mail your key to the server once again,
+with the ADD command.
+
+Valid commands are:
+
+Command                Message body contains
+---------------------- -------------------------------------------------
+ADD                    Your PGP public key (key to add is body of msg)
+                       *** Note: your update is forwarded to a master
+                           server and may take a few days to reappear
+INDEX                  List all PGP keys the server knows about (-kv)
+VERBOSE INDEX          List all PGP keys, verbose format (-kvv)
+GET                    Get the whole public key ring
+GET 0xA1B2C3           Get a single key by Key ID
+                       *** Note: the master servers allow you to omit
+                           the 0x in front of the Key ID.  The slave
+                           servers do not.
+GET userid             Get a single key by User ID
+MGET substr            List all keys which match "substr"
+                       *** Note: this is different from the master servers
+                           which return the keys themselves, not just a
+                           listing of their Key IDs.  Also the master
+                           servers accept a wild-card expression; at
+                           the moment we do not.
+LAST days              Get the keys updated in the last `days' days
+                       *** Note: not yet implemented
+------------------------------------------------------------------------
+
+Examples for the MGET command:
+
+        MGET michael         Lists all keys which have "michael" in them
+        MGET @iastate.edu    Lists all keys which contain "@iastate.edu"
+
+
+Check the Usenet newsgroup alt.security.pgp for updates to this system
+and for new sites.
+
+Based on a document originally by Michael <explorer@iastate.edu>
+
+
+
+

@@ -1,0 +1,66 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sun, 30 Jun 1996 07:03:00 +0800
+To: iang@cs.berkeley.edu (Ian Goldberg)
+Subject: Re: anonymous mailing lists
+In-Reply-To: <4r3k8g$8h@abraham.cs.berkeley.edu>
+Message-ID: <199606291921.OAA12444@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Ian Goldberg wrote:
+> 
+> Also, what are the issues for people who aren't on the network?  It will
+> be very hard to prevent people from noticing that they're sending a
+> message to the network, or receiving one from it, so it seems the best we can
+> do is to avoid letting someone be able to link incoming messages to outgoing
+> ones.  A way to help this is to have a (smaller) number of nodes be the
+> only ones which send mail _out_ of the network.  One idea which I'd like to
+> try is having that last remailer charge postage in order to send mail out.
+> After all, he is the one who will take the "heat" for the anon message,
+> probably.  By concentrating the outgoing messages, it should be easier
+> to do the latency and reordering tricks.
+> 
+
+Hm, I wonder what would it take to incorporate encryption straight 
+into sendmail (I am talking about actually encrypting not only message
+bodies, but also MAIL FROM: and RCPT TO: data). The protocol extension
+would for SMTP be something like this:
+
+A server in the welcome message may say "PGP Enhanced". If the client sees 
+this substring, client (after HELO) may send command
+
+SENDKEY
+
+If the server answers "503 Command unrecognized", the exchange goes in the
+normal way. If instead a text with 214 preceding each line gets sent 
+followed by a final ".", this text is considered a PGP key for exchange.
+
+Then usual MAIL FROM: and RCPT TO: follow, following by DATA command.
+The data sent by client will be PGP encrypted. Moreover, the data may
+have MAIL FROM: and RCPT TO: fields preceding any header information 
+and message body. These RCPT TO: and MAIL FROM: override anything that
+was supplied in clear text prior to the DATA command.
+
+This change in protocol is relatively simple to implement and does not
+require the actual sendmail to have any cryptographic subroutines.
+Instead, sendmail simply calls public-key encryption programs with right
+command line parameters when an encrypted message is received.
+
+It is also possible to incorporate Latent-Time: into such messages.
+
+What it gives to us is that a great number of systems can participate
+in the more secure mail exchange. It gives clear advantages to each
+site running it because now they may be exchanging may securely for 
+all users.
+
+Users of remailer network may use such PGP enhanced hosts to conceal
+their usage of remailer network. It is rather obvious that when the 
+number of PGP-enhanced mailers becomes large, it will be hard to tell
+who is and who is not using the remailer network.
+
+	- Igor.
+
+
+
+

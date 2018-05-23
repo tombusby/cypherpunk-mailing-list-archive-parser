@@ -1,0 +1,35 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Fri, 1 Sep 95 08:50:47 PDT
+To: droelke@rdxsunhost.aud.alcatel.com (Daniel R. Oelke)
+Subject: Re: SSL search attack
+In-Reply-To: <9509011325.AA20856@spirit.aud.alcatel.com>
+Message-ID: <"swan.cl.cam.:275380:950901154847"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>> I see nothing wrong with the concept of being allocated an initial chunk
+>>>> and having the scan software attempt to ACK it when 50% of it has been
+>>>> searched. A successful ACK would allow the releasing of a new chunk (in
+>> You NEVER claim to have searched space until you have actually done so. 
+> That is exactly what I was arguing against - but the first sentance of what
+> I quoted was saying was ok.
+
+No -- If you ask for 2 segments, then when you are 50% done, it is OK to ACK 
+the *FIRST* segment.
+
+>> Assuming that you are multi-threaded--- Simply run two "workers" on the
+>> same machine. If there are delays in getting keys assigned, the two will
+>> soon get out of phase and keep the cpu busy.
+> I kind of like that idea...
+
+I thought of that, but:
+1) for the same server load, it doubles the number of unACKed segments
+2) if process A is lagging process B, then when process B finishes and is idle
+   waiting for the server, process A will run faster and thus reduce the lag.
+   This will make the processes drift into phase.
+   I'm not convinced one way or the other.
+
+
+
+

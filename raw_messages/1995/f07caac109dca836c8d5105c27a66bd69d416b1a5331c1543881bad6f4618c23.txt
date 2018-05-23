@@ -1,0 +1,36 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 2 Feb 95 21:15:55 PST
+To: cypherpunks@toad.com
+Subject: Re: Adding padding to PGP files
+Message-ID: <199502030514.VAA24599@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Nobody@eniac.ac.siue.edu (Anonymous)
+> > Date: Thu, 2 Feb 1995 08:48:49 -0800
+> > From: Hal <hfinney@shell.portal.com>
+> > 
+> > It only works on binary ".pgp" public-key encrypted files (not ascii armored
+> > files).  So there would be some work needed to make it a really useful tool.
+> > 
+> > Hal
+> 
+>   I just tried adding random characters at the end of a pgp ascii
+> armoured message.  I had to cut out the checksum, but pgp was able to
+> decrypt the message just fine.  So a very simple program (ideally with
+> a strong source of random numbers) should be able to pad ascii
+> armoured files.
+
+Unfortunately, this approach is easy but doesn't really succeed in adding
+undetectable padding.  The PGP message, once the ascii armor is stripped
+away, has a byte count in it.  Anyone can de-armor the message and see
+that this byte count does not match the size of the file.  So you also
+need to bump this byte count to match the added bytes.  That's all my
+perl script does that I posted.
+
+Hal
+
+
+
+

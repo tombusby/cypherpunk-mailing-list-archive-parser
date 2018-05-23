@@ -1,0 +1,74 @@
+From: hfinney@shell.portal.com (Hal Finney)
+Date: Wed, 10 Aug 94 21:44:40 PDT
+To: cypherpunks@toad.com
+Subject: Re: RemailerNet
+In-Reply-To: <199408110153.SAA15769@ucsd.edu>
+Message-ID: <199408110444.VAA20478@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+lcottrell@popmail.ucsd.edu (Lance Cottrell) writes:
+
+>Say I post a message through remailers to Cypherpunks giving one of these
+>reply blocks. The TLA need only send a flood of known size messages to this
+>address, and look to see where the pop out of the net of remailers. Even if
+>all messages were quantized and only reconstructed by the final recipient, the
+>TLA could send timed bursts of messages which (even with reordering) would 
+>allow a statistical determination of the recipient.
+
+>I think that the solution to this is some sort of hold and forward on demand
+>system. An anon ID would be posted to Cypherpunks, and that account ID with
+>a key, sent to the message holder. One would then request for a certain number
+>of messages or number of kilobytes of messages to be sent to the address
+>specified by the old sort of remailer block. This message would be signed by the
+>key, and could indicate remailing to anywhere, even to another hold and forward
+>location. This prevents the TLA from sending many messages to the final
+>destination in such a way that they could be used for traffic analysis.
+
+This problem has long been recognized with anonymous reply blocks.  Chaum,
+in his original 1981 CACM paper, suggested that anonymous reply blocks
+should be use-once in order to prevent variations on this attack.  Of course,
+a use-once address is of limited usefulness.
+
+A problem with the maildrop idea is that the wiretappers can presumably
+follow the messages to the maildrop.  Then the only question is whether
+they would be able to tell when your message came in and requested further
+forwarding of the collected messages.  Maybe this could be done securely;
+I'm not sure.
+
+Other ideas have been proposed for this problem.  Chaum suggested
+having a public area where messages for a group of people would arrive;
+everyone downloads all of them but can only read the ones for them.
+For  this you would want a "stealthy" encryption envelope which did not
+give away any information about the recipient's ID.  Miron Cuperman has
+been running such a "message pool" for over a year now.
+
+One problem with anonymous return addresses is that the address changes
+deterministicly as each layer is stripped off.  This allows the message
+to be tracked by introducing copies with different bodies but the same
+ARA (which is why Chaum specified use-once).  Eric Messick proposed a
+system in which the message bodies would be changed at each step by the
+remailers involved.  I don't recall the details, but I think that in order
+to read the message the user had to send it back through those same re-
+mailers after receiving it, to undo the transformations which had been
+done on it.  It was a complicated scheme and we really didn't spend enough
+time on it.
+
+I don't think anyone really trusts (or should trust) the ARA's we can
+make now with the remailer network.  An ARA is a sitting duck, a tempting
+target for attacks.  With an ordinary remailed message, by the time it
+arrives and someone is interested in tracking it, most of the needed infor-
+mation is (ideally) gone.  With an ARA you are entrusting your deepest
+secret, your True Name, to a few layers of encryption with other people's
+keys.  That is not a good feeling.
+
+I view easy-to-use, secure ARA's as an unsolved (and perhaps unsolvable)
+problem.
+
+Hal Finney
+hfinney@shell.portal.com
+
+
+
+

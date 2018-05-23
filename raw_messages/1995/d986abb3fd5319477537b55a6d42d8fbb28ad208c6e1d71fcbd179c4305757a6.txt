@@ -1,0 +1,63 @@
+From: m5@dev.tivoli.com (Mike McNally)
+Date: Fri, 1 Sep 95 09:49:10 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSL search attack
+In-Reply-To: <9509011325.AA20856@spirit.aud.alcatel.com>
+Message-ID: <9509011648.AA07795@alpha>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+ > > > ACK ACK
+ > > ACK
+ > > > ACK
+ > ACK
+
+
+I've just kinda been watching this debate for a while, so I may well
+have missed some of the more interesting details; if so, I apologize
+for my noise in advance.
+
+I work on a lot of commercial software under constraints of
+scalability much like the SSL "attack server" being discussed here.
+My instincts tell me that in this situation the whole process would be
+*much* simpler if the basic idea of keeping the central server (or
+the family of distributed servers in those models) completely
+"informed" by all the attacking clients were abandoned.
+
+Tim May's "random attack" idea was extremely attractive, I thought.
+However, I think that it'd be possible to take advantage of the fact
+that the keyspace itself is basically constant (until the keysize is
+increased in the protocol under attack, of course).  I mean, 40 bits
+is 40 bits.  Similarly, the capacity of most clients will be fairly
+consistent.  (I have access (in theory, of course; don't mention this
+to my management) (hi todd) to a hundred or so CPU's here, and that
+doesn't really change too often.)
+
+Rather than apportion the search space out dynamically on each attack,
+why not simply allow attack clients to "subscribe" on a semi-permanent
+basis?  All the server would have to do is make batches of ciphertext
+available for cracking.  When a request comes in from a subscriber for
+a copy of some ciphertext, the server knows (or at least can
+legitimately suspect) that that subscriber's already-known keyspace
+will be searched.
+
+As far as getting acknowledgements of search completion, again the
+server can by inference assume that (based on the prior establishment
+of client capabilities) after a pre-determined period of time the key
+sub-space will have been searched.  It might be appropriate for
+clients to send back NACK messages, in case for example somebody shuts
+down the client's network unexpectedly.  Assuming this goes pretty
+smoothly one would hope that the number of failures would be
+considerably smaller than the number of successs.
+
+Again, ignore me if I'm blind to something obvious.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+| Nobody's going to listen to you if you just | Mike McNally (m5@tivoli.com) |
+| stand there and flap your arms like a fish. | Tivoli Systems, Austin TX    |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+

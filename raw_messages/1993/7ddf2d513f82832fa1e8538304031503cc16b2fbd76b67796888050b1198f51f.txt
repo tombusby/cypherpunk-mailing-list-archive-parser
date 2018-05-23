@@ -1,0 +1,63 @@
+From: Arthur Abraham <a2@well.sf.ca.us>
+Date: Tue, 4 May 93 22:49:48 PDT
+To: cypherpunks@toad.com
+Subject: MYK-78
+Message-ID: <199305050549.AA29765@well.sf.ca.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+4-May-93
+  
+Eric Hughes writes:
+
+>It is possiqK another set of LEEF's; that's not
+clear to
+>me, but Arthur thinks you can.  
+
+Sometimes I have a bit of trouble following Eric's written
+syntax.  This
+passage would make more sense if "can" was replaced by "must")
+
+>If, however, one can just change the
+>CV at will, one could send the LEEF's in the clear and then
+>immediately change the CV (session key).  Now the LEEF has
+been sent
+>but the conversation makes no sense.  My money is that this
+is
+>interlocked with IV generation, though.
+
+To quote myself: 
+>[CV,checkword,L1,L2,IV] is a self-checkin+nit 
+
+which means that these data items must be loaded in this order
+(MSB first) and must all have been properly constructed via
+the Skipjack algorithm, else the MYK-78 will yank on its ERROR
+line.  To build a proper protocol, CV (= session key) and
+checkword would be encrypted, and to be a proper citizen,
+L1,L2,IV would be transmitted in the clear.
+
+The funny thing is, that after loading the "self-checking
+unit", and checking it,  MYK-78 will still accept a different
+CV.  I specifically had this verified.  It will encrypt funny,
+since the CV won't properly match the rest of the loading, but
+it shouldn't be too hard to use this encryption mode. 
+
+There are actually several ways to abuse this chip -- another
+obvious one is tonever power it off,  and run with the first
+LEEF you ever get -- it just seems to cry out in masochism.  A
+real consumer crypto chip wouldn't be this flexible.
+
+I hope to be able to say something about the true protocol for
+law-abiding American citizens in the near future.
+
+-a2.
+
+ps: though I will continue to post to Cypherpunks, if you wish
+me to read something, please send it to me directly.
+
+-a2.
+
+
+
+

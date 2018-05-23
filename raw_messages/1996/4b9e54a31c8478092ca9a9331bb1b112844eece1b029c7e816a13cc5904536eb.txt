@@ -1,0 +1,145 @@
+From: Bill Stewart <billstewart@worldnet.att.net>
+Date: Sat, 31 Aug 1996 19:29:24 +0800
+To: cypherpunks@toad.com
+Subject: IDEA and timing attacks
+In-Reply-To: <RDPyBl2.jmkelsey@delphi.com>
+Message-ID: <3228024F.1C1A@worldnet.att.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+John Kelsey <jmkelsey@delphi.com> wrote in sci.crypt
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> [ To: sci.crypt ## Date: 08/24/96 03:11 am ##
+>   Subject: IDEA and Timing Attacks ]
+> 
+> I'm still kind-of recovering from this year's Crypto conference, but
+> I told several people I would post this.  At the rump session this
+> year, I presented an arguably practical timing attack on many
+> implementations of IDEA.  There are actually two attacks available,
+> but one requires extremely fine timing results.  After I gave the
+> presentation, Willi Meier told me he had independently found the
+> same results, and had implemented the full attack (which I hadn't
+> yet done).
+> 
+> There are two different attacks.  The most practical is an
+> adaptive chosen-plaintext attack, which requires about 5*n*2^{16}
+> chosen plaintexts (read ``five n times two to the sixteenth''),
+> where the parameter n depends on the precision of timings available
+> and the timing variability of the implementation.  The second attack
+> is ciphertext-only, but requires timing measurements precise enough
+> to detect the difference between a single multiply of a zero vs.
+> nonzero value.  It requires about 5*n*2^{16} values, as well.
+> 
+> The basic idea behind the attack is as follows:  in many
+> implementations, a zero input into the multiply operation is handled
+> by an if statement, and so does not cause a multiply instruction to
+> actually be executed.  The result on a 486 is that it is
+> significantly faster to multiply by a zero rather than a nonzero
+> value.  This timing difference gives us a really nice way to learn
+> information about the internal values of the cipher.
+> 
+> This presentation is necessarily not very good, since I can't embed
+> a diagram here.  If you have a copy of _Applied Cryptography_, then
+> turn to the section on IDEA (page 321 in the hardback version of the
+> second edition).  The diagram shows one round of IDEA, and then
+> (after the ellipses) the output transformation.
+> 
+> The chosen plaintext attack works as follows:
+> 
+> 1.   Build a run of n*2^{16} chosen plaintexts, by choosing a
+> single value for X_1, and choosing n of each possible value for X_3,
+> with X_2 and X_4 taking on values at random.  Time the encryption of
+> each batch of n plaintexts with the same X_3 value.
+> 
+> 2.   Choose a new value for X_1, and then build another run of
+> chosen plaintexts exactly as above.
+> 
+> 3.   For each of these two runs, if the value of Z_5 is not zero,
+> there should be a different value for X_3 that gives the lowest
+> encryption time.  (These are the values that force the input to the
+> multiply with Z_5 to be zero.)  Call these X_3 and X_3'.  This gives
+> us two equations in two unknowns, and we can solve for it with a
+> 32-bit brute-force search.  (There may be faster ways, as well.)
+> 
+>      (X_1 (*) Z_1) = (X_3 + Z_3)
+>      (X_1'(*) Z_1) = (X_3'+ Z_3)
+> 
+> We now have recovered Z_1 and Z_3.
+> 
+> 4.   Let's call the input to the multiply with Z_5 A.  We can use
+> knowledge of Z_1 and Z_3 to force A to keep the same value.  We then
+> choose three new runs of chosen plaintexts, each containing 2^{16}
+> batches of n plaintexts apiece.  Each of these ensures that A and
+> X_2 are kept constant, so that we wind up three difference values
+> for A, X_2 and X_4 which correspond to zero inputs into the multiply
+> with Z_6.  This means that we wind up with three equations in three
+> unknowns.
+> 
+>      (A  (*) Z_5) + ((Z_2 + X_2  ) XOR (Z_4 (*) X_4  )) = 0
+>      (A' (*) Z_5) + ((Z_2 + X_2' ) XOR (Z_4 (*) X_4' )) = 0
+>      (A''(*) Z_5) + ((Z_2 + X_2'') XOR (Z_4 (*) X_4'')) = 0.
+> 
+> This can be solved with a 48-bit brute force search (there are
+> probably faster ways).  We now have 80 bits of IDEA's key, and can
+> brute-force search the remaining 48 bits.
+> 
+> Note that this is actually an adaptive chosen-plaintext attack as
+> described.  I'm pretty sure this can be turned into a proper
+> chosen-plaintext attack with some work, and I'll probably be hacking
+> on this in the next few weeks, as time allows.
+> 
+> The ciphertext only attack is simpler in some ways.  The first 32
+> bits are extremely easy to recover--find the average time to encrypt
+> blocks with each value in their first and last 16 bits, and then
+> solve for the subkey values that would be necessary for those
+> multiplies to have zeros as their inputs.  Next, we look for a
+> correlation between low encryption times and the values for Z_3 in
+> the output transformation that would result in zero inputs into the
+> previous round's MA box multiply.  Finally, we attack the second
+> multiply in that MA box, using all four output values.  The
+> approximate computational difficulty is 2^{48}, as before.
+> 
+> There are other timing attacks on IDEA.  We gave one in our paper at
+> Crypto this year (the one on related-key cryptanalysis of several
+> ciphers, by Bruce Schneier, David Wagner, and me), and the
+> related-key timing attack is where I got the idea to try a timing
+> attack on the whole cipher.
+> 
+> All timing attacks are implementation-dependent to some extent.  On
+> a Pentium, I suspect the timing attack will be considerably harder.
+> (One person I discussed the attack with said he thought it would
+> take longer to do the conditional branch for the if statement than
+> to do the multiply, so we might have zero multiplies taking more
+> rather than less time.)
+> 
+> Most applications aren't really susceptible to timing attacks,
+> because of the way they're used.  In addition, chosen-plaintext
+> attacks on block ciphers are pretty nicely thwarted by using CBC or
+> CFB modes.  It is probably also possible to implement IDEA so that
+> it executes in constant time.  I should point out that it is *NOT*
+> enough either to add random delays (which fall out if you add more
+> samples), nor to just get rid of the big timing difference with zero
+> inputs (though that will make timing attacks somewhat more
+> difficult).  As long as internal (secret) information is being
+> leaked by timing, the cipher is probably vulnerable to some kind of
+> timing attack.
+> 
+>    --John Kelsey, jmkelsey@delphi.com / kelsey@counterpane.com
+>  PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: 2.6.2
+> 
+> iQCVAwUBMh7GKEHx57Ag8goBAQEqGQQApXRQUMWz3gpJIwGrLbVhcgcpSMXyrq0g
+> iTi2qjH7dJjmWugpLnbm18XHzOPZMKizdZ/gin1O3Rk89dXfqK4sIICwY3QmkwFR
+> ZQ2My4mTUn27ibjAjZTDuvxLXnqqoOFRrMUTQGIlMTCZdBooSWrif+pTLQbIsoPr
+> saHlDl2bWts=
+> =tWIq
+> -----END PGP SIGNATURE-----
+
+
+
+

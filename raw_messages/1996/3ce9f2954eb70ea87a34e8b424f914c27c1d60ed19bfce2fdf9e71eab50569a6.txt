@@ -1,0 +1,54 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Thu, 21 Nov 1996 18:47:11 -0800 (PST)
+To: gbroiles@netbox.com (Greg Broiles)
+Subject: Re: killfiling aga@dhp.com
+In-Reply-To: <3.0b28.32.19961121105128.006fd704@ricochet.net>
+Message-ID: <199611212322.RAA01823@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Greg Broiles wrote:
+> 
+> At 06:45 AM 11/21/96 -0800, nobody@cypherpunks.ca (John Anonymous
+> MacDonald) wrote:
+> [discussing aga@dhp.com]
+> >I should'a kill-filed this sicko long ago.
+> 
+> Agreed. But if you (and other anonymous posters) are going to continue to
+> reply to him or other unproductive kooks, would you please put their
+> addresses somewhere in the headers of your messages (perhaps in the To: or
+> Cc: or Subject:) headers so that the rest of us who are using killfiles
+> won't have to read your replies? 
+
+If you use procmail, you can use the following entry to support 
+cypherpunks-specific killfile: 
+
+:0
+* ^(Sender|From): owner-cypherpunks@toad.com
+{
+  :0 BHc:
+  * !? fgrep -q -i -f $HOME/.procmail/killfile.cpunks
+  $MAILDIR/crypto.noflames
+
+  .. some more irrelevant recipes ..
+}
+
+Then create ~/.procmail and edit file $HOME/.procmail/killfile.cpunks.
+Put there something like
+
+someone@you.want.to.ignore
+freedom-knights
+someone@else
+
+and so on. This recipe will trash everything with the specified 
+addresses mentioned in headers and bodies of incoming cypherpunks
+articles. I experimented with this recipe at the height of the f-k
+vs. cypherpunks flamewar. It reduced the traffic in half and what 
+remained was much more useful.
+
+	- Igor.
+
+
+
+

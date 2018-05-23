@@ -1,0 +1,68 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Mon, 25 Sep 95 10:10:42 PDT
+To: m5@dev.tivoli.com (Mike McNally)
+Subject: Re: `Random' seed.
+In-Reply-To: <9509251229.AA23816@alpha>
+Message-ID: <9509251300.AA22090@cfdevx1.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+    From: m5@dev.tivoli.com (Mike McNally)
+    Date: Mon, 25 Sep 1995 07:29:01 -0500
+    
+    I also have some doubts as to the randomness of this; I suspect
+    that the kernel is rather deterministic in its scheduling
+    practices.
+
+I don't think that anyone has suggested otherwise.  I believe that
+`clock skew' was the underlying source of randomness that Matt Blaze
+mentioned in the message where I first saw that code.
+
+In any case, a number of people have expressed interest in seeing
+signs of non-random behavior.  As far as I know, no one has said
+anything if they've found such signs.  I've tried to find some, but
+only with very simple tests.  I generated a quarter megabits and found
+that:
+
+ - I can only compress it to about 32Kb, i. e. 256 k bits.  Tim May
+   has suggested that compressibility is getting to be a good metric
+   for entropy.
+
+ - It seems to contain roughly equal numbers of:
+    * 0s and 1s
+    * 00s, 01s, 10s, and 11s
+    * etc. I forget how high I checked.
+
+ - It contains some rather long sequences of 0s and 1s.  I think on
+   the order of 20.
+
+I have no idea how reasonable it would be to use this approach in
+Netscape, however if it were available as an option to generate, say
+300 bits, I'd personally be plenty willing to let it chew up five
+minutes while I get my morning caffeine.  I realize that some people
+would not.  It certainly couldn't hurt to throw a few bits gathered
+this way into the mix.  Also, it may be possible to get more than one
+bit of entropy per second using this approach, I was merely showing
+the code as Matt originally presented it.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMGanppNR+/jb2ZlNAQE2jQQAx1dj/WjMK4XeNr4mZxyW6G9TKL1ZKqOE
+tkePnuEujXQDxoEy5UNGWo36NG1hn564wprdS5e4aCQwZaPhPOuXZTd9uPEWXdqq
+j5WyNmzBqmSIlCU+wlEVnBpYWbgxdPC1Lx8ckkxxX07+F3B+ftibrfB+t7ysDDPC
+LOJ2PCXr/7I=
+=8lGs
+-----END PGP SIGNATURE-----
+--
+Rick Busdiecker                        Please do not send electronic junk mail!
+ net: rfb@lehman.com or rfb@cmu.edu    PGP Public Key: 0xDBD9994D
+ www: http://www.cs.cmu.edu/afs/cs.cmu.edu/user/rfb/http/home.html
+ send mail, subject "send index" for mailbot info, "send pgp key" gets my key
+
+
+
+

@@ -1,0 +1,34 @@
+From: "Mike Johnson" <exabyte!smtplink!mikej@uunet.UU.NET>
+Date: Mon, 4 Oct 93 14:14:46 PDT
+To: cypherpunks@toad.com
+Subject: Re[2]: POISON PILL
+Message-ID: <9309047497.AA749770184@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> Something else you can do is use a cipher which takes two input streams
+>> and merges them into the one file, with one key extracting the 'harmless'
+>> information and another extracting the 'harmfull' information. 
+
+>AFAIK, the only way to do this is with a Vernam OTP.  You have a key file (A)
+>the same length as your real data (B) -- encrypt the data by XOR to get (C).
+>Then you take an innocent text (D) and XOR with (C) to get an alleged key
+>file (E).  You hide (A) someplace, destroy (B) and (D).  Leave (C) around and
+>put up just enough resistence in letting folks have (E).
+
+>Does anyone know a simpler way?  I'm willing to bet that it can be proved
+>that the key would have to be at least 1/8 the length of the message in order
+>for this to work but I don't know of any schemes using less than the message
+>length to do it.
+
+Yes.  Make "noise addition" (really multiplexing) part of the cipher.  You
+could throw away every other bit based on the parity of the key.  The
+ciphertext would be twice as big, but if you compressed both plain text
+streams first, this effect might not be very obvious.  Of course, if your
+encryption program were disassembled, you might be found out...
+
+
+
+

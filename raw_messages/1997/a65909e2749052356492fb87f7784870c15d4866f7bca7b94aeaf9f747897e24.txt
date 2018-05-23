@@ -1,0 +1,129 @@
+From: "Dr.Dimitri Vulis KOTM" <dlv@bwalk.dm.com>
+Date: Sun, 26 Jan 1997 19:57:05 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Fighting the cybercensor
+Message-ID: <199701270357.TAA06744@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ichudov@algebra.com (Igor Chudov @ home) writes:
+>
+> Jim, why don't you stop bullshitting and write a real assassination
+> bot. [as a beta, it can be a mailbombing bot] This bot would:
+
+I think this would be a very good demo project, but mailbombing may not
+be the best choice...
+
+> 1) Accept bets as combinations of
+> 	a) Some amount of cybercash
+
+Be careful about violating Chaumian patents... How about using funny
+money in the prototype? Or, look at some of the micropayment schemes.
+
+> 	b) A string that identifies an event that should happen
+> 	   such as "domain X is mailbombed"
+
+Not a good idea (see below).
+
+> 	c) [optional] date of that event (no date means that you always
+>            lose)
+
+I think the date must always be specified, and the event must occur
+(or not occur) on or before that date.
+
+> 	d) Return address (possibly a nym address) to send
+> 	   all cash from UNSUCCESSSFUL bets for the event in
+> 	   question.
+> 	e) [optional] time limit after which the cash will be refunded.
+>
+> Note that for simplicity, the bot should identify the event as
+> a unique string, without any understanding of any semantics of that
+> string.
+
+I think we should think about the kinds of events that a 'bot can verify.
+
+> 2) Store these bets in a database.
+>
+> 3) Have a trusted party (someone really honest, like myself) report to
+> the bot the signed strings that, in the opinion of the trusted party,
+> are "true".
+
+Why not start with a less destructive event... For example,
+"on or before <date> a Usenet article will appear in newsgroup X
+saying Y".  That's something the 'bot can verify and anyone with
+access to dejanews and the like can confirm. Eliminating the need
+for a trusted human is always desirable.
+
+> 4) Upon receipt of such event notifications, the bot will find all bets
+> and forward them to the better whose date prediction was the closest.
+> If several betters predicted the same date, the money is split between
+> them in proportion to the amount of moneys submitted.
+
+Have you ever dealt with a bookie?
+
+I think there need to be two distinct operations:
+
+1. A user can create a new kind of event. For a fixed fee F, one can enter
+a new event into the table of events that can be bet on. (In a more
+generalized system, the creator might also specify the third party that
+determines whether or not the event took place.)
+
+A human bookie decides which events can be bet on (based mostly on the
+tradition and supply/demand). Here we let users bet on anything they
+want as long as they're willing to may be bookiebot for keeping track
+of who bet how much $ that the event will or will not happen.
+
+In fact, when creating an event, the user must immediately bet an amount
+>$F and the house enters an opposing bet for $F (or slightly less).
+
+2. A user can bet $B that an existing event will/will not happen.
+Bookiebot accepts the $B and promises to pay back an amount that's a
+function of $B and the current amounts bet so far on yes and no
+(or escrows the winning with a 3rd party).
+
+I'll let Jim et al figure out how to compute the odds when there are
+offsetting bets for the same event at two different times.
+E.g. E1:"Saddam Hussen will die before April 1" and E2:"ditto June 1"; if the
+first one occurs, then the second one occurs too. If a lot of money is
+bet on E1, it should somehow affect E2 odds too. Also the bookiebot
+should never lose money no matter what the outcome; all the winnings
+should come from the losers' bets.
+
+> Examples of use: Suppose I do not like The Right Reverend Colin James III,
+> cjames@cec-services.com. I have a lot of money, but do not know how to
+> mailbomb. I set some nym address as my return address (for refunds if
+> CJ3 is not mailbombed within half a year).
+>
+> I place a bet with $1000 worth of money and phrase "domain cec-services.com
+> disabled". The date would be open which means that I will always be the
+> loser. I also post a message (anonymously) saying that anyone who wants
+> to mailbomb TRRCJ3 can be rewarded through your assassination bot.
+
+Here's an improved scenario. Say I pay the bot $10 to create the event
+"a homophobic article will appear in soc.motss by April 1".
+Then I bet $1000 that the event will NOT occur to skew the odds.
+
+> Someone with more knowledge of computers, a T1 link and no money will
+> be lured, submit a bet for, say, Feb 1, and on the 1st will start fierce
+> mailbombing of cec-services.com. The return address will, of course, be
+> a nym.
+
+Someone looking to make a quick buck browses through the list of events
+and odds in the bookiebot and sees the very skewed odds for a homophobic
+article on soc.motss. He bets a small amount that the article will appear,
+so he gets really good odds. Then he posts an article that's recognized
+as the event, and collects a winning much larger than his bet.
+
+But if this doesn't happen, I get almost all of my $1000 investment back.
+In either event the bookiebot made a small profit for its owner.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+
+

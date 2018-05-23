@@ -1,0 +1,212 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Thu, 1 Feb 1996 22:30:38 +0800
+To: Nathaniel Borenstein <nsb@nsb.fv.com>
+Subject: Re: Flaw in Netscape rejoinder (was Re: FV Demonstrates Fatal Flaw in Software Encryption of Credit Cards)
+In-Reply-To: <01BAEF34.AA95ECC0@ploshin.tiac.net>
+Message-ID: <311088AC.2891@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Nathaniel Borenstein wrote:
+> I should also apologize for the fact that I couldn't resist in pointing
+> out lots of little problems with your proposed attack, and that I'm
+> responding to your plan in the order you described it.  This means that
+> we don't get to the really major flaw in your strategy towards the end,
+> so what comes at first will seem like nitpicking.
+
+  No problem.  This is how we find flaws and make systems stronger.
+
+> Excerpts from mail.cypherpunks: 30-Jan-96 Re: FV Demonstrates Fatal F..
+> Jeff Weinstein@netscape. (2739*)
+> 
+> > It would not be much harder than the demonstrated keyboard attack
+> > to create a hacked version of winsock that would implement an
+> > attack against First Virtual.  If the attacker had a list of web
+> > pages that accept FV payments it would be very easy to collect
+> > the ID numbers.
+> 
+> A list of stores?  First of all, this attack is already amazingly
+> focused.  Our DLL to implement the attack on credit cards is 16K, and
+> doesn't need to target any specific buyers, sellers, or programs.  The
+> more complex the attack & the bigger the software, the more likely it is
+> to be noticed.  But this is just a minor nit.  Read on.
+
+  A gigabyte drive has lots of corners to hide stuff.  A list of the
+top 1000 first virtual sites would not be very large.  On a windows
+system it could be hidden in the c:\windows\system directory, where
+a 100k file with an unintelligible name would not seem unusual.
+
+> > There is no need to attack the large datastream
+> > of keyboard input when the search can be easily narrowed.  Since
+> > FV doesn't use encryption the attack could easily be implemented
+> > in winsock, making it independent of any client software.
+> 
+> What's really funny (to me, at least) here and in a lot of other aspects
+> of the cypherpunk reaction to FV is the continuing assumption that the
+> choice of FV vs encryption is an either/or thing.  Combine FV's Virtual
+> PIN mechanism with transport encryption and you've indiputably got
+> something that's a LOT safer than just using credit cards with
+> encryption, and a bit safer than our current system, too.  But I know,
+> the correct focus here is FV's current system.  So read on.
+> 
+> At this point in your attack, you skip a step:  You don't explain how
+> you correlate the FV ID to email address.  This means that your attack
+> will ONLY work for systems where the user is always using the same PC to
+> web browse and read his mail.  In practice, even if this is true 99% of
+> the time, the remaining 1% would probably cause your attack to be
+> detected pretty quickly if deployed on a large, automated scale.  But,
+> for the sake of argument, let's imagine that it's true 100% of the time.
+>  Read on.
+
+  You would not send the FV ID to the "bad guys" until you saw a complete
+FV transaction take place.  You remember the ID when you see it, but
+only send it after seeing the e-mail verification message.
+
+> > A version
+> > that infected the win95 IP stack could be quite effective.  The list
+> > of FV accepting sites would be easily obtainable via a query of
+> > altavista.  Since the infected system is on the internet and has
+> > to periodically send its results to the attacker, it could download
+> > an updated list of FV pages at the same time.
+> 
+> Seems to me your "not much harder" claim is starting to break down here,
+> with an automated virus spreading itself all over the net and
+> downloading lists from altavista weekly.  And the amount of net traffic
+> you're generating may make this attack a lot more quickly detected than
+> ours.  (In fact, I imagine that if the folks at AltaVista or Lycos noted
+> thousands of identical searches focused on merchants accepting First
+> Virtual, they'd probably contact us, more out of concern for their own
+> load management than anything else.)  But still, read on -- we're
+> finally coming to the good part.
+
+  I guess I didn't explain this well enough.  The attacker would do
+a single altavista query, and then broadcast it via some existing
+mechanism over the net.  Weekly postings to some low volume junk
+newsgroup would do the trick.
+
+> > Attacking the e-mail verification step of the FV system could also
+> > be accomplished via a hacked winsock.  A bit of POP3 aware code
+> > in the winsock could intercept the verification messages and keep
+> > the e-mail client from ever seeing them.  It could automatically
+> > generate "Yes" responses for all such messages.
+> 
+> OK, so you're only interested in POP3 mail tools?  That's wonderful, but
+> there's also systems that use IMAP, systems that use raw SMTP to locally
+> resident message stores, and many odder things.  There's also people who
+> get their mail through AOL, Compuserve, Prodigy, etc.  There's people
+> who live on a PC or Mac, but who read mail on a UNIX system (e.g. many
+> Delphi and Netcom users).
+
+  So I only get half or a third of the millions of people conducting
+commerce over the internet.  If this stuff ever really takes off that
+will be plenty.
+
+> You're not going to catch all of them.  Moreover, even if you say
+> "that's fine, we only need some of them", your attack is now dead in the
+> water.  Why?  Because you have no way of telling, in your attack virus,
+> what kind of technology is going to be used to read mail.  This means
+> that your attack will inevitably, and quickly, hit some people who DO
+> receive the mail.  Our fraud department will be quickly notified (when
+> the user answers "fraud" to our query, a human sees it right away) and
+> we'll be off to the races, collecting clues.  It will be work tracking
+> it down, but we'll have a good shot in identifying the attack and
+> producing a program that helps users spot it on their system (the moral
+> equivalent of an anti-viral program) in less time than it would take you
+> to even suspect that the attack FV outlined had taken place in the world
+> of software-encrypted credit cards.
+
+  It should be quite easy to determine what protocol a user uses to read
+their mail from within winsock.  If we want to limit it to pop3 users, we
+could just keep track of connections to port 110.  As noted before, if
+they don't use pop we don't target them.
+
+> Your attack would be caught by us relatively quickly because our model
+> is based not on a single fail-safe piece of security software, but on
+> *process* security.  The overall process is multifaceted, with many
+> checks and balances.  What if, for example, I go to someone else's
+> machine and use their web browser to buy something using MY First
+> Virtual ID?  Your attack will capture my ID and allow you to try to use
+> it, but the email confirmation will go elsewhere, quite possibly to an
+> uninfected machine.  When reproduced on a mass scale, this kind of thing
+> will be noticed pretty fast.  In contrast, credit cards are a one-way
+> payment mechanism -- the number (and sometimes some other info typed in
+> close proximity) is basically all you need.  Just steal that without
+> getting noticed and the crime is done.
+
+  With the explosive growth of internet connected PCs, I think that
+the number of people who "surf" and read e-mail on different machines
+is dwindling rapidly.  I am happy to skip those old guard of the
+internet and concentrate on the newbies who only have one computer
+and one account.
+
+> >   I believe that FV is just as vulnerable to these types of
+> > attacks as any of the encryption based credit card schemes, if
+> > not more so.  The thing that really protects FV is that it can
+> > only be used to buy bit, not real goods, and the bad guys don't
+> > generally care about stealing bits.  This is also what makes FV
+> > not generally useful to people who want to shop over the internet.
+> 
+> Actually, you're a bit behind the times.  We removed that restriction
+> from our system a couple of months ago.  There still aren't many people
+> using our system for physical goods, mostly because of our 91-day fund
+> holding period, but we have gotten the green light from our financial
+> partners to waive that for qualified, established merchants, once we
+> make a few technical changes behind the scenes.
+> 
+> The fact is that our original restriction against physical goods was
+> never designed to protect against fraud.  Rather, it was a conscious
+> attempt to do two things:  1) bound the risk our bank perceived in being
+> the first bank ever to explicitly agree to handle an Internet-based
+> payment system (this was mid-1994, remember), and 2) to focus the
+> attention of our prospective users on the situations that were in fact
+> reasonably well-suited to an economic model in which consumers had the
+> explicit option of refusing payment.  Some of our sellers very quickly
+> realized that no matter what we said, it was straightforward to use our
+> system for physical goods, shipping them only after the consumer said
+> "yes", and we eventually changed our terms and conditions to reflect
+> that reality.  The 91 day hold, on the other hand, WAS designed to
+> protect against fraud -- from the *merchant* side, which is why we have
+> no qualms about waiving it for qualified merchants.
+
+  Well this means that an attack against First Virtual would be more
+interesting.
+
+> Now, actually, I want to commend you.  This is as close as I've ever
+> seen anyone come to constructing a plausible automated attack on FV.
+> The IP stack is a very clever attack vector, and I honestly can't claim
+> to have anticipated it.  However, I do think that the flaw in your
+> approach reinforces my belief in the importance of multi-layered
+> defenses.  In fact, a multi-layered security strategy is the ONLY
+> defense against vulnerabilities you haven't thought of yet.  That's the
+> real reason why ANY scheme based on one-way instruments like credit card
+> numbers is particularly hard to make secure.  -- Nathaniel
+
+  I still think that someone could construct an attack against the
+current FV system using the techniques I've described.  It would be
+more complicated to construct than the keyboard attack but that has
+been proven time and again not to be a barrier.  Someone who could
+construct the Morris worm or the year ago IP spoofing attacks could
+do it. 
+
+  I think that you may have to rethink some of your assumptions that
+were valid back when you designed the system, but are no longer given
+the current growth and changing demographics of the internet.
+
+  I'd really like to see some effort spent on closing some of the more
+gaping holes in the underlying systems.  Why should it be so easy
+for one program to snoop on the keystrokes directed to another?
+Why should it be so easy for a program downloaded from the net
+to patch a part of the operating system?
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

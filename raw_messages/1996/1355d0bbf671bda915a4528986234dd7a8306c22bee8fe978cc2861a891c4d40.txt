@@ -1,0 +1,114 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Fri, 30 Aug 1996 02:55:56 +0800
+To: adam@homeport.org (Adam Shostack)
+Subject: Re: Code Review Guidelines (draft)
+In-Reply-To: <199608291548.KAA07041@homeport.org>
+Message-ID: <199608291458.JAA28369@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Adam,
+
+The decision that have just made is not a technical decision, it is 
+a business decision. You just decided that the needs of security 
+outweight the need to be able to deal with 100% of potential customers.
+
+For example, suppose that you wrote your report for Gizmo International, 
+a company that sells a variety of widgets and gadgets to users in the
+world. Their current setup is that the users can visit www.gizmo.com
+and ask the server to send them notifications about new products.
+
+Based on your report's suggestions, Gizmo will have to cut off
+all users with x.400 mail addresses, all UUCP users with bangs in their
+addresses, all people with funky addresses provided by SPRINT, 
+and so on. For example, my moderation bot received a message
+from the following person:
+
+From: /G=JAMBYL/S=KIWANIS/O=CUSTOMER/ADMD=KAZMAIL/C=KZ/@gateway.sprint.com
+
+(my eyes just popped when I saw such address)
+
+There are a lot of international people using this sprint gateway.
+
+This would potentially represent a loss of s significant number of 
+customers who will be bitching about gizmo.com to all their friends.
+This is a bad decision from the marketing standpoint.
+
+I see this as a compelling reason to allow all possible email addresses
+to be processed correctly, even if it means that there is more work
+for code proofreading. At least the management responsible for
+marketing must understand and approve your email handling guidelines. A
+computer programmer cannot make such decisions himself.
+
+igor
+
+
+Adam Shostack wrote:
+> 
+> Igor, and many others who commented on the fact that many characters
+> are legal in email are correct.  However, with the exception of '-'
+> and '+', I'm not sure if I'll be changing the body of the guidelines.
+> My issue is that dealing with a wide variety of characters that are
+> legitamate, such as "cat ../../../etc/passwd"@foo.com is more
+> dangerous than only accepting the common case of user@host.net.
+> 
+> The number of addresses such as harvard!adam is dropping as the number
+> of 'normal' addresses grows.
+> 
+> 
+> Igor Chudov @ home wrote:
+> | Adam Shostack wrote:
+> | > http://www.homeport.org/~adam/review.html
+> 
+> | In part " V.Code (Security Issues)/3.Data Checking" you say the following:
+> | 
+> | `` Data coming in to Acme Widgets should be checked very carefully for
+> |         appropriateness. This check should be to see if the data is what
+> |         is expected (length, characters). Making a list of bad
+> |         characters is not the way to go; the lists are rarely complete.
+> |         A secure program should know what it expects, and reject other
+> |         input. (For example, if you are looking for an email address,
+> |         don't check to see if it contains a semi-colon or a newline,
+> |         check to see if it contains anything other than a [A-Za-z0-9._]
+> |         followed by an @, followed by a hostname [A-Za-z0-9._].)''
+> | END QUOTE
+> | 
+> | That is not entirely correct. An email address is much more than
+> | that, it can contain "!", several "@" characters (not next to each other
+> | though), "%", and so on. x400 mail addresses (?) can contain "/", "=",
+> | and all emails can have "+" and "-" and "_" in them. 
+> | 
+> | Some of the valid email addresses are
+> | 
+> | user_name@company.com
+> | alex+@pitt.edu
+> | mi%aldan.UUCP@algebra.com
+> | user%host.domain@anon.penet.fi
+> | host1!host2!user
+> | 
+> | Look at your sendmail.cf file for a humongous amount of 
+> | email parsing rules.
+> | 
+> | Thanks for an excellent document though, I put a link to it from my
+> | intranet page.
+> 
+> 	You're welcome.
+> 
+> | 	- Igor "Code Obscurity Creates Job Security" Chudov.
+> | 
+> 
+> Adam
+> 
+> -- 
+> "It is seldom that liberty of any kind is lost all at once."
+> 					               -Hume
+> 
+
+
+
+	- Igor.
+
+
+
+

@@ -1,0 +1,38 @@
+From: jel@sutro.SFSU.EDU (John E. Levine)
+Date: Tue, 30 Nov 93 19:57:52 PST
+To: cypherpunks@toad.com
+Subject: soundfile stego
+Message-ID: <9312010353.AA00175@russian.SFSU.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+You know, you don't have to think of somehow modifying
+a file pointwise in the time domain.  How about this,
+to stego a sound file:
+
+Do an FFT of the *entire* file.  Assuming the file
+is two hours = 7200 seconds, the frequency res of
+the transformed file will be about 140 microhertz.
+Pick a band that humans don't usually pay much
+conscious attention to when they hear music; say 18
+KHz through 19.5 KHz.  Replace the low bit in each
+of these frequency space samples (there are 1500 /
+0.000140 ~= 1E7 such samples) with the stego data.
+Inverse transform the modified, frequency space
+representation of the file back into the time domain,
+and voila! I suspect you would not be able to tell the
+difference from the original with your naked ears.
+But this is not repudiable; I suspect the spectrum
+of the file would look artificial.
+
+xxxxxxxxxxxxxxxxxxxx
+
+Also, I am told that humans have a tough time identifying
+the phase of the frequency components of the sounds they
+identify.  So one could hide date in the phase relationships
+among the frequency components of, say, recorded speech.
+
+
+
+

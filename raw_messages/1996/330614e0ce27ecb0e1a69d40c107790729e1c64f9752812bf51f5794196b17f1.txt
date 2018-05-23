@@ -1,0 +1,71 @@
+From: "David F. Ogren" <ogren@cris.com>
+Date: Sun, 21 Jul 1996 10:04:24 +0800
+To: cypherpunks@toad.com
+Subject: ITAR's 40 bit limit
+Message-ID: <199607202345.TAA01019@darius.cris.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+To: cypherpunks@toad.com
+Date: Sat Jul 20 19:41:41 1996
+
+Another paradox of the US export regulations.
+
+The NSA is allowing 40 bit crypto exports.  So as a hypothetical example 
+assume that I write a crypto program that uses 40 bit RC4 to encode data 
+(licensing from RSA).  I then get an export license using the accelerated 
+process for 40 bit RC4.
+
+I then export my program to Alice who wants to use it to transmit messages 
+to Bob.
+
+If she uses my program to encrypt messages to Bob, any reasonably powerful 
+attacker can decrypt her messages.
+
+However, what if she runs the program three times with three different 
+passwords.  (Ignore the problems of Inner-CBC and Outer-CBC for now.)  Now 
+the file is triple RC4 encoded with the equivalent of 80 bit security.  
+Alice and Bob now have strong crypto.  And if they run the program five 
+times they have 120 bits of effective protection.
+
+The problem of using Inner-CBC is a little tricky, but if we assume that I 
+can export in a DLL format, a Windows program could be written that calls 
+the DLL repeatedly to layer it into triple or pentuple CBC RC4.
+
+The entire above discussion is entirely theoretical.  I realize that it's a 
+moot point since strong crypto is already perfectly accessible outside of 
+the US.  And that strong crypto algorithms can be exported in non-machine 
+readable format (another paradox).  (And that running 5-layer RC4 is a 
+really inefficient block cipher.)
+
+I just wanted to point out yet another reason why ITAR regulations over 
+crypto are not effectively preventing strong crypto.  They are merely 
+making it difficult for American business.
+
+- --
+David F. Ogren                |
+ogren@concentric.net          | "A man without religion is like a fish
+PGP Key ID: 0x6458EB29        |  without a bicycle"
+- ------------------------------|----------------------------------------
+Don't know what PGP is?       | Need my public key?  It's available
+Send a message to me with the | by server or by sending me a message
+subject GETPGPINFO            | with the subject GETPGPKEY
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMfFutuSLhCBkWOspAQFH7gf9GDjh1tcktyx3Lo4iSxDFTFoB7fuuJO0l
+SNlkYH1Akchl02b/CWc6CDSAZ8hxoUfoZpqTD7U0xTs1QqOM7y45r1/RvAet870s
+mkWL7gS5RmiiGN1bgtm844RPAtAhaE0uzT6wJsPQSfAv94CvZGNJEtF2p5lASs2F
+fK50gmlSbjhhHoh85s/7Ugl7XzTmRGoZzdKQCGpkc6yTJu/aKDyWU3HVSEY9F4Y3
+AaHkardJehv/9xqoxks5eqnwjTSJ8+cAptT1iBo6hW+CKv89wQKK/F8RbQb2FWL2
+z4GqFfQHdbxVbnspDNtIRUP5qhJuFRhmuS/ARfTYgTN50Gm5g/Cz2w==
+=2k+F
+-----END PGP SIGNATURE-----
+
+
+
+
+

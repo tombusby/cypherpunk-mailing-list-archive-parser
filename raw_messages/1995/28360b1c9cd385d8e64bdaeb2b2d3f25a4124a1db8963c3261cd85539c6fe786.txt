@@ -1,0 +1,38 @@
+From: "Robert A. Rosenberg" <hal9001@panix.com>
+Date: Sat, 23 Dec 1995 17:57:15 +0800
+To: "David Klur" <dklur@dttus.com>
+Subject: Re: Cybercash questions...
+Message-ID: <v02130503ad013a9c6992@[165.254.158.212]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 13:39 12/22/95, David Klur wrote:
+
+>     The fraud possibility I see is that Bob could steal Alice's encrypted
+>     credit card number (by sniffing when she buys something at Charlie's
+>     Internet shop).  Then, without decrypting it, he could use it (still
+>     encrypted) at Don's Internet shop, and ask Don to ship the goods to
+>     Bob's address.  Since Don will not decrypt Alice's card number he will
+>     not know that it is not Bob's card.  Cybercash will validate Alice's
+>     card, but will not know that it is really Bob who is the customer.
+>     Don will ship the goods to Bob, and Alice will get a fraudulent charge
+>     on her bill.
+>
+>     Am I missing something?
+
+If when Alice sends her encrypted card number to Charlie, it were encrypted
+with Charlie's Public Key, then the version that Bob gets is useless if
+sent to Don (since it will not decrypt with Don's Secret Key into something
+that when sent to Cybercash will yield Ann's CC# when decrypted with
+Cybercash's Secret Key). This still leaves the data as valid for use at
+Charlie unless the actual decrypt by Charlie contains more than just the
+CC#, so as to flag an "replay" attempt (ie: if the sending of the CC# is in
+realtime, there could be a check field in there to validate the response as
+being for the current request) and reject it.
+
+
+
+
+
+

@@ -1,0 +1,106 @@
+From: nobody@soda.berkeley.edu
+Date: Sun, 30 Jan 94 23:29:10 PST
+To: cypherpunks@toad.com
+Subject: Re: Debugged Superping Script!
+Message-ID: <199401310724.XAA02631@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Sorry to post this again. This one works.
+
+-Xenon
+
+#!/usr/bin/perl
+
+# SuperPing: Ping Cyperpunk remailer connections.
+# Brought to you by Xenon <na38138@anon.penet.fi>.
+# Thanks to Alan Barrett for teaching me some perl.
+
+# Replace $Rm[$First] below with YOUR address to test this!
+# Warning: outputs ~40 e-mails at a time. May give "too
+# many processes" error towards the end if you haven't killed
+# all of your stopped jobs. Increase the sleep(sec) time if needed.
+
+# Will also function as a convenient method to shut down all
+# remailers at once by making .PingFile 500K instead of 1K.
+# Not recommended if you value your life ;-).
+
+# List of remailers (not complete).
+# Make any line a comment to remove that line's remailer.
+
+@Rm = (
+"catalyst@netcom.com",
+"hh@cicada.berkeley.edu",
+"remailer@dis.org",
+"ebrandt@jarthur.claremont.edu",
+"remailer@merde.dis.org",
+"hh@pmantis.berkeley.edu",
+"elee7h5@rosebud.ee.uh.edu",
+"hfinney@shell.portal.com",
+"hh@soda.berkeley.edu",
+);
+
+#Nicknames for output and subject lines.
+
+@Nick = (
+"catalyst",
+"cicada",
+"dis.org",
+"jarthur",
+"merde",
+"pmantis",
+"rosebud",
+"shell",
+"soda",
+);
+
+# Strings, since lines got too long below.
+# Add your address as name@site.domain
+
+  $A = "(echo \"::\" ; echo \"Request-Remailing-To: ";
+  $B = "; echo \"\" ; echo \"::\" ; echo \"Request-Remailing-To: ";
+  $C = "name@site.domain\" ; echo \"\"";
+  $D = " ; echo \"\" ; cat .PingFile) | mail -s \"P";
+
+foreach $Sec (0..$#Rm) {
+    foreach $First ($Sec+1..$#Rm) {
+     $Num++;
+     system "$A$Rm[$Sec]\"$B$C$D$Num < $Nick[$First]\" $Rm[$First]";
+     print "P$Num $Nick[$First] > $Nick[$Sec]\n";
+     sleep(1)
+   }
+}
+
+# .PingFile contains this:
+#::
+#Request-Remailing-To: myadress
+#
+#Ping!
+#-----Begin Test-----
+#Test
+#-----End Test-----
+
+
+#Output (first few lines) looks like this:
+#P1 cicada > catalyst
+#P2 dis.org > catalyst
+#P3 jarthur > catalyst
+#P4 merde > catalyst
+#P5 pmantis > catalyst
+#P6 rosebud > catalyst
+#P7 shell > catalyst
+#P9 dis.org > cicada
+#P10 jarthur > cicada
+
+# Sample pings as received later:
+# 1 catalyst-remailer@netcom.com Mon Jan 31 08:10   20/757   P7 < shell
+# 2 catalyst-remailer@netcom.com Mon Jan 31 08:22   20/759   P6 < rosebud
+
+# grep Subject: /usr/spool/mail/n/name | sort -tP +1 -n
+# will give you a list of received mail, in order of Ping numbers,
+# where /n/name is your system's mail folder.
+
+
+
+

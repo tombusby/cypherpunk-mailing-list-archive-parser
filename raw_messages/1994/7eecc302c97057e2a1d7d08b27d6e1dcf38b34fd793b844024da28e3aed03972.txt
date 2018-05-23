@@ -1,0 +1,79 @@
+From: Bill O'Hanlon <wmo@digibd.com>
+Date: Wed, 17 Aug 94 09:21:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: cfs & remailers
+In-Reply-To: <9408171522.AA27902@elvis.tamu.edu>
+Message-ID: <9408171615.AA29053@poe.digibd.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 17 Aug 94 10:22:19 -0500  Allan Bailey wrote:
+--------
+> 
+> Has anyone considered using a CFS directory (or directories) for
+> a remailer's files, spool, etc?
+> 
+> Any thoughts about such security measures?
+> 
+
+I considered it, for the remailer@rebma.mn.org.  I'm already running CFS
+for personal entertainment & education, so it's a possibility.
+
+
+Here's my assumptions about how I'd operate it:
+
+1) CFS file systems are mounted sometime after boot, manually, by me.  The
+   passphrase is entered at mount time.  (Obviously, supplying the passphrase
+   via an /etc/rc script defeats any security that CFS might add.)
+
+2) The file systems remain mounted throughout the uptime of the system, since
+   mail can come in at any arbitrary time, primarily while I sleep.
+
+3) If someone comes knocking loudly at my door to do the raid thing, I'll 
+   have bigger things to worry about than unmounting the CFS file systems.
+   My wife and daughter will be formost on my mind.
+
+I thought of two problems with it.
+
+1) I'd not only have to put the home directory of the remailer user under CFS,
+   but also the uucp and sendmail spool directories.  (Rebma has a UUCP 
+   connection for getting mail.)  Otherwise, security would be pointless, since
+   the messages would be coming in the clear to the spool directories.  Maybe
+   this wouldn't be so bad, but it seems like I'd have to do a lot of 
+   tinkering before I'd trust that sendmail wasn't gonna drop my other mail
+   on the floor.  (I get some consulting-type mail on this machine.  
+   Potentially, I can miss out on financial opportunity if my mail is not 
+   dependable.  Chalk my caution up to pure greed.)
+   
+
+2) I'd have to come up with some kludge to spool the incoming mail files in
+   a directory if the CFS file systems weren't mounted.  (For example, if 
+   power failed on the machine, or it crashed and otherwise rebooted, and I
+   didn't notice and wasn't around to type the passphrase in to remount the
+   CFS system.)  
+
+
+
+Those two thoughts make me question what security I'm buying for my trouble.
+Seems to me what I'm getting is protection from a law enforcement type or other
+computer thief who unplugs my machine and takes it away.  (If they want to
+make a backup before turning the machine off, with the CFS file systems
+mounted, they have to spend some time at it.)
+  
+The people whose security would be helped are those who do a single hop or 
+send unencrypted mail through the remailer.  People who use the remailer
+properly already have encrypted their mail.
+
+I guess that I thought it was too much effort to do, given that the only people
+who would derive added security are those who were too stupid to use the 
+remailer properly in the first place.
+
+Anyone see a flaw in my reasoning?  I actually was considering doing it anyway,
+just for the fun of it, when I had free time.  If there is some valid security 
+reason, it might move up on my to-do list.
+
+
+
+
+

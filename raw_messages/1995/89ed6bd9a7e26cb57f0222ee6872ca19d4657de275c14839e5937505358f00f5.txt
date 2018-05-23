@@ -1,0 +1,68 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 20 Jul 95 07:54:57 PDT
+To: cypherpunks@toad.com
+Subject: Re: Netscape the Big Win
+In-Reply-To: <9507200747.AA15208@snark.imsi.com>
+Message-ID: <199507201453.HAA19510@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Perry E. Metzger" <perry@imsi.com> writes:
+
+>Crypto *is* integrated into Netscape. Unfortunately, the crypto is SSL
+>-- a complete waste of time.
+
+>Among other things, SSL only lets you authenticate to X.509
+>certificate roots that have been issued straight from the hands of Jim
+>Bidzos -- which effectively means that you can secure only connections
+>with Netscape commerce servers, and that you cannot authenticate both
+>ends of the communications link. Its also just plain bad -- there are
+>ugly holes in the security from what I can see. Netscape is, of
+>course, pushing it as a standard. Vomit.
+
+Unfortunately the main alternative to SSL being pushed now, SHTTP, also
+suffers from RSA-itis.  It will support either PEM or PKCS-7 key
+certificates, so I think ends up being pretty much the same as SSL in
+this regard.
+
+Note though that neither SSL or SHTTP requires that the certificates come
+from RSA.  However the current versions of Netscape's browser do require this.
+This has been the source of much complaint and Netscape has promised that
+they will have some mechanism in the future to allow the user to
+choose his certificate signers.  I am not sure how far RSA will let them
+off the leash, though.
+
+The current version of SSL supports client authentication (via X.500
+certificates of course).
+
+rsalz@osf.org writes re SSL:
+
+>I think it
+>was Perry, for example, that pointed out that using one RC4 stream for
+>each comm half was more-or-less obvious and standard practice.
+
+I'm not sure what this is getting at.  SSL does use a separate RC4 stream
+for each comm half.  Is this a suggestion that a single key should be
+used for both directions?  There are two ways that could be done: keep
+separate state info for each direction, in which case you are encrypting
+data twice with the same pseudo-random string, a definite no-no; or try
+to keep a single global state for the cipher, but this is impossible due
+to the (potentially) asynchronous nature of the communications.
+
+Back to Perry:
+
+>Netscape is a closed system. You can't write code for it unless you
+>work for Netscape.
+
+That is why I am working on the proxy approach.  Any browser should be
+able to use enhancements supplied in this way.  Netscape is the big name
+this year, who knows who it will be next year.  As long as IP
+connectivity is available a proxy can get into the stream and apply
+enhancements.
+
+Hal
+
+
+
+

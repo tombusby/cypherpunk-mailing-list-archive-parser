@@ -1,0 +1,149 @@
+From: steve@miranova.com (Steven L. Baur)
+Date: Sun, 31 Dec 1995 08:40:24 +0800
+To: cypherpunks@toad.com
+Subject: Re: easy avoidance of PGP signature forgeries and reuse
+In-Reply-To: <y9HXgD18w165w@bwalk.dm.com>
+Message-ID: <m2n38am8ht.fsf@diana.miranova.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[sample implementation for Gnus is included]
+>>>>> "Dimitri" == Dimitri Vulis <dlv@bwalk.dm.com> writes:
+
+    Dimitri> I propose a format below.
+
+See the PGP header block attached to this message as an example of
+this proposed format.
+
+    atilla> with e-mail, e-letters, direct faxes, etc. it is to easy
+    atilla> to ignore the courtesy header. From a standpoint of
+    atilla> security, you have blown away each of the attacks outline
+    atilla> in your article in so much as the signature will not
+    atilla> compute if the courtesy block is omitted.
+
+    Dimitri> I totally agree; that's why I propose copying that info
+    Dimitri> in the signed portion "by default".
+
+    atilla> personally, I do not think PGP 3 should attempt to solve
+    atilla> the problem. Most of the headers involved are applied
+    atilla> _after_ the message leaves the mail program; and, PGP
+    atilla> interfaces are virtually the same as invoking an alternate
+    atilla> editor, which gets you nothing.
+
+I agree.  Besides, this whole thing can be done with the existing PGP.
+Date: and Message-ID: are two, and they need to be signed.  Date: is a
+further problem with Gnus, since the format of the displayed date is
+user customizable, but that's a separate issue.
+
+    ...
+
+    Dimitri> The "signed headers" portion may contain the following
+    Dimitri> optional fields:
+
+    Dimitri> From: address -- the address associated with the key used
+    Dimitri> to sign this message
+
+It's easier to deal with whatever is being used as the From: in the
+message.
+
+    ...
+
+    Dimitri> (Of course, the poster could lie and claim in the signed
+    Dimitri> portion that the article is being posted to alt.sex.pedo
+    Dimitri> when he himself posts it to misc.kids:)
+
+So you would also include the Message-ID:.
+
+    Dimitri> If a standard like this catches on, and is integrated
+    Dimitri> into PGP-aware news/e-mail programs, then it's a simple
+    Dimitri> exercise to write a little script to look for BEGIN PGP
+    Dimitri> SIGNED HEADERS and compare the information inside it with
+    Dimitri> the RFC 822/1036 headers outside the signed portion of
+    Dimitri> the message. It could be done within PGP too.
+
+This is basically a Good Idea, and can be implemented using existing
+tools.
+
+Here is some to code to implement it for Gnus.  Verification of the
+headers is left (at present) as an exercise for the reader.
+
+;;; Add this to your .gnus and call
+;;; gnus-article-sign-message instead of mc-sign directly.
+;;; Pgp signed messages are vulnerable to various kinds of badness due to
+;;; the separation of header information.  Fix it.
+
+(defconst gnus-pgp-included-headers '("From"
+				      "To"
+				      "Newsgroups"
+				      "Message-ID"
+				      "Date"
+				      "Subject"
+				      "Cc"
+				      "Gcc")
+  "Headers to include in signed portion of PGP signed message.")
+
+(defconst gnus-pgp-signed-headers "----BEGIN PGP SIGNED HEADERS----\n"
+  "String to use for separation in message.")
+
+(defun gnus-article-sign-message (arg)
+  "Sign a message with PGP, including outgoing headers in an included
+block, as per the suggestion of \"Dr. Dimitri Vulis\" <dlv@bwalk.dm.com>."
+  (interactive "p")
+  (save-excursion
+    (save-restriction
+      (gnus-inews-narrow-to-headers)
+      (goto-char (point-max))
+
+      (or (mail-fetch-field "date")
+	  (insert (concat "Date: " (gnus-inews-date) "\n")))
+      (or (mail-fetch-field "message-id")
+	  (insert (concat "Message-ID: " (gnus-inews-message-id) "\n")))))
+
+  (save-excursion
+    (goto-char (point-max))
+    (insert "\n")
+    ;; If there is already a header block (eg. after undoing a signature)
+    ;; remove it entirely, and rebuild from scratch.
+    (if (re-search-backward gnus-pgp-signed-headers nil t)
+	  (kill-region (point) (point-max)))
+    (insert gnus-pgp-signed-headers)
+    (let ((headers gnus-pgp-included-headers)
+	  header header-value)
+      (while (setq header (car headers))
+	(setq headers (cdr headers))
+	(save-excursion
+	  (save-restriction
+	  (gnus-narrow-to-headers)
+	  (setq header-value (mail-fetch-field header))))
+	(if header-value
+	    (insert (concat header ": " header-value "\n"))))
+      (insert "\n")))
+  (mc-sign arg))
+
+- -- 
+steve@miranova.com baur
+
+- ----BEGIN PGP SIGNED HEADERS----
+To: cypherpunks@toad.com
+Message-ID: <m2n38am8ht.fsf@diana.miranova.com>
+Date: 30 Dec 1995 15:34:22 -0800
+Subject: Re: easy avoidance of PGP signature forgeries and reuse
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.4, an Emacs/PGP interface
+
+iQCVAwUBMOXMhKLJZEUiepcNAQGjtgP/ZnC+TL4cbFL3RF+o8fwe2YFciqGkOWX9
+VuPK4btnvfKF/wcdMTfJoUKbSutKcwRkbLe5fAqEV3qrXwM7PgfNMlXfcgNg44It
+UhfLAaFg6ke5ArWr9EZfyFcD93OrS9qVGU7emSenmsqpdJUE6jU0HmKAQkZzP1Ak
+AYQD7ow/tzI=
+=PTV7
+-----END PGP SIGNATURE-----
+
+
+
+

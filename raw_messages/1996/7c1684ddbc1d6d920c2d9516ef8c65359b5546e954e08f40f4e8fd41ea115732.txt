@@ -1,0 +1,64 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Sun, 11 Aug 1996 01:56:17 +0800
+To: pjb@ny.ubs.com (Paul J. Bell)
+Subject: Re: SecurID
+In-Reply-To: <9608091601.AA02324@sherry.ny.ubs.com>
+Message-ID: <199608101711.MAA25776@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Paul J. Bell wrote:
+
+| someone at my firm is about to press the securid system down our collective
+| throats. please point me to the recent thread on this subject, and/or point
+| me to some url's or the like, or to someone who has some firsthand knowledge
+| of the pitfalls and/or vulnerbilities of secirid.
+
+	www.l0pht.com/~mudge/skey_white_paper.html has many attacks
+which will work on securid as well as s/key.
+
+	The software is slow.  The Ace/Server calculates expected
+values of information by running stuff through des & f2.  This is
+slow.  It also encrypts the logs, which can be slow.  I've found that
+a sparc 2 can die under the load of 2 people running sdlogmon, one
+running sdadmin, and 2 or 3 people trying to authenticate.  (This
+seems to be bad design, since the Sparc2 has hardware des in it, which
+they don't take advantage of.
+
+	The software is not the most bug free.  I'll flame at length
+about the fact that you can't get source to fix the bugs yourselves.
+I looked into hacking in a new des library (shared libraries are great
+sometimes) to fix the slowness problem, but without source it turned
+out to be more effort than buying a faster machine.
+
+	You're stuck with their hardware.  With some other systems,
+that use open standards, and you might be able to switch card vendors.
+With SD, you must buy new cards from them every three years.  (SD
+claims that their cards have a much higher failure rate after three
+years, and that this is a feature.)
+
+	You're stuck with their software.  SD libraries must be on every
+machine that they authenticate for.  You can't bugfix those libraries,
+even if you replace things like sdshell (an analouge of skeysh).
+(sdshell, incidentally, munges wtmp on solaris machines because it
+doesn't use the right library calls.)  This also means that you can't
+run on unusual machines, like a BeBox.
+
+	There are of course more fundamental things, like the fixed
+length authentication code, the lack of peer review on the hash
+algorithims, and the lack of ongoing authentication.  Also, I have a
+few cryptographic attacks on the system which I hope to present at
+Crypto's rump session, and I'll put on the web afterwards.
+
+Adam
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

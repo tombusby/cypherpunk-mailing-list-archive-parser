@@ -1,0 +1,48 @@
+From: Mike Rosing <cryptech@Mars.mcs.com>
+Date: Tue, 12 Sep 95 19:19:34 PDT
+To: cypherpunks@toad.com
+Subject: generating hash.curve in eliptic.src
+Message-ID: <Pine.3.89.9509122121.A19360-0100000@Mars.mcs.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Among other comments, it was pointed out that I had not included 
+"hash.curve".  To generate this file I did the following
+
+main()
+{
+	POINT	point;
+	CURVE	curve;
+
+	init_opt_math();
+	init_rand();
+	rand_curv_pnt(point,curve);
+	save_curve("hash.curve",curve,point);
+	close_rand();
+}
+
+This was done during development and I forgot about it.  A simpler patch 
+is to fix an error finding the file with a call to rand_curv_pnt to 
+generate it.
+
+Kind of interesting that way for hashing your secret key.  If everyone 
+uses a different curve to generate their secret key, access to the 
+machine is necessary to even begin to think about cracking any pass phrase.
+Don't know if actually adds any security, but it is an interesting concept.
+
+As for why I didn't put up a tar file, no particular reason.  It's source 
+for a particular machine (MachTen on a Mac) and I figured every C 
+compiler is different so some hacking will be required by anyone interested.
+Once more bugs are fixed such as the one above, I'll put it up in a more
+easily compilable form.
+
+And thanks for the comments so far.  I'll do my best to keep up with them.
+
+Patience, persistence, truth,
+Dr. mike
+
+
+
+
+

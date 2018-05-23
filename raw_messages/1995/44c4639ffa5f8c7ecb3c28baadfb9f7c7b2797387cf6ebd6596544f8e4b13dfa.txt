@@ -1,0 +1,47 @@
+From: Eli Brandt <eli@UX3.SP.CS.CMU.EDU>
+Date: Tue, 19 Sep 95 09:51:00 PDT
+To: cypherpunks@toad.com
+Subject: Re: Explaining Zero Knowledge to your children
+In-Reply-To: <9509181655.AA06115@elysion.iaks.ira.uka.de>
+Message-ID: <9509191650.AA21716@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hadmut Danisch suggested:
+> Alice is caught in a dark room somewhere on the world. She doesn't know
+> where she is, but there is a telephone in the room and she calls Bob to
+> ask him where she is. Bob claims to know it but doesn't want to reveal. 
+> He calls her back. When the phone is ringing, he has proven the knowledge
+
+I don't think this captures the structure of a ZNP.  There's no
+multi-round system, for one thing.
+
+how about this:
+Alice and Bob have a big, complicated maze, preferably non-planar.
+Alice can solve the maze, and wants to prove this to Bob.
+Alice picks a point P on a solution path.
+Bobs asks Alice to
+	(a) exhibit a path from Start to P.
+   or	(b) exhibit a path from P to Finish.
+Alice can easily do either one.
+
+If Alice doesn't know the maze, she can try to cheat, 
+by picking a P by tracing forwards from Start,
+or by tracing backwards from Finish.
+These ploys allow her to sleaze through tests (a) and (b) respectively.
+But if Bob flips a coin to select (a) versus (b), he has a 50-percent
+chance of catching with each round.
+
+This is not really zero-knowledge.  With each round, Alice is giving
+Bob substantial knowledge about the maze.  With sufficient rounds,
+she ends up giving him the whole thing.  But if the maze is hairy
+enough, this captures the idea that Alice can prove (to within epsilon)
+to Bob that she has a solution, without giving it away entirely.
+
+--
+   Eli Brandt
+   eli+@cs.cmu.edu
+
+
+

@@ -1,0 +1,41 @@
+From: "Paul E. Campbell" <pecampbe@mtu.edu>
+Date: Tue, 30 Jan 1996 03:22:32 +0800
+To: cypherpunks@toad.com
+Subject: Revisitting Blum-Macali "digital signatures"
+Message-ID: <199601291842.NAA27974@metlab1.my.mtu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There was some discussion on Usenet a while back about doing "digital
+signatures" with the Blum-Macali public key method.
+
+Briefly, Blum-Macali relies on the BBS generator to generate a "one-time pad".
+And the pad can be reversed by taking repeated square roots on the random
+number seed (assuming you know the factorization) to get back to the starting
+seed.
+
+So, the author suggested that one calculate a digest of the message, call it
+D.
+
+Then the author suggested that one calculate D^(1/2), as per the Blum-Micali
+method.
+
+Then he goes on to do the signature check by checking whether or not
+
+D^2 == X^4
+
+where X is the "signature".
+
+I understand that there is some sign ambiguity involved in calculating square
+roots mod B where B is a Blum integer (that causes 4 possible roots). And
+that's the source of ambiguity problems in Rabin digital signatures, but if
+the Blum-Micali public key method works, then this sign ambiguity shouldn't
+exist (because they define a SPECIFIC root to use), and the method can be
+simplified to simply calculating D^(1/2) and the check is simply D==X^2.
+
+What am I missing here?
+
+
+
+

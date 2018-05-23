@@ -1,0 +1,83 @@
+From: elee9sf@Menudo.UH.EDU
+Date: Fri, 4 Jun 93 21:06:13 PDT
+To: cypherpunks@toad.com
+Subject: INFO: .forward
+Message-ID: <199306050406.AA21108@Menudo.UH.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Would someone explain how to do this.  I need an idiot's
+> description.  I tried to get my mail to go through a filter
+> once....twice actually.  Never did get it to work.
+
+Well, I'll give it a shot.  Sendmail optionally reads a file in your
+home directory named .forward, and follows the instructions there.
+Typically, a .forward contains another address, in which case mail
+sent gets forwards to the address in the .forward file.  For example,
+my .forward file on tree.egr.uh.edu is
+
+elee9sf@menudo.uh.edu
+
+so any mail sent to barrus@tree.egr.uh.edu gets forwarded to
+elee9sf@menudo.uh.edu.
+
+A more interesting application is to forward your mail to a command
+(pipe mail to a command).  In that case, the .forward file reads
+
+"|/path/mycommand options"
+
+and mail gets piped to mycommand for further processing.  For
+instance, the vacation program works by piping incoming mail to
+vacation, which both files and responds for you.  Also, the cypherpunk
+remailers work by using a .forward file to pipe incoming mail to the
+scripts which make up the remailer.  Yet another example is the slocal
+program which is part of the mh mail system; incoming mail gets piped
+to slocal, which in turn relies on a configuration file
+(.maildelivery) which contains instructions for handling the mail.
+
+My idea was to have all mail sent to barrus@tree.egr.uh.edu piped
+through pgp and then mailed to elee9sf@menudo.uh.edu.  The rough idea
+is to do this:
+
+"|/path/pgp -fea barrus | mail elee9sf@menudo.uh.edu"
+
+Here, incoming mail gets piped to 'pgp -fea barrus' which encrypts the
+message with my public key, and the result is piped to 'mail
+elee9sf@menudo.uh.edu' which then mails the encrypted result to me.
+For various reasons I'm still exploring, this didn't work (even with
+PGPPATH set, piping to a script, etc.  I've got more things to try to
+see why it isn't working.) on the NeXT.
+
+So, I tried to do this from the menudo.uh.edu side.  Using the slocal
+program and the associated .maildelivery file, I have mail which comes
+from barrus@tree.egr.uh.edu (remember my mail from tree is forwarded
+to menudo) piped through 'pgp -fea barrus' and then the result is
+piped into an mh command which stores the mail in a folder.
+
+Of course, this isn't a substitute for end-to-end encryption.  Here,
+mail travels all the way to me before getting encrypted, so if
+somebody wanted to snoop me they could just stand between the sender
+and my account and eavesdrop.  A better solution would be to have the
+sender encrypt the message!  But as I mentioned I was trying to set
+this up so that replies to a USENET posting got encrypted before
+finally getting dropped on menudo.  An improvement would be for me to
+get the encryption and remailing working on the NeXT, but again, this
+is inferior to having the sender encrypt in the first place.
+
+You mentioned trying to put your mail through a filter - were you
+trying to use the filter command of elm?  Sometimes you have to watch
+subtle things like file permissions (slocal will not use a
+.maildelivery file that is group or other readable) or pathnames (try
+putting the fill path names when you use commands).
+
+/-----------------------------------\
+| Karl L. Barrus                    |
+| elee9sf@menudo.uh.edu             | <- preferred address
+| barrus@tree.egr.uh.edu (NeXTMail) |
+\-----------------------------------/
+
+
+
+

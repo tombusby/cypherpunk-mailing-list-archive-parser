@@ -1,0 +1,94 @@
+From: b44729@achilles.ctd.anl.gov (Samuel Pigg)
+Date: Thu, 26 Aug 93 00:35:43 PDT
+To: jthomas@mitre.org
+Subject: Attacks on remailers
+In-Reply-To: <199308251542.AA23719@mwunix.mitre.org>
+Message-ID: <9308260733.AA26970@achilles.ctd.anl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> On Wed, 25 Aug 93 11:39:11 EDT, J_G_Thomas%CAASD1@mwmgate1.mitre.org said:
+
+	Joe> Samuel Pigg <b44729@achilles.ctd.anl.gov> wrote:
+
+> Actually what I was proposing was the direct usage of SMTP itself rather
+> than going through the host machine's mail system. As anyone can do it,
+> it would help with the usage of student accounts as remailers.
+> And with direct SMTP (socket connections to port 25 of the receiving machine)
+> you have some control over the header information that is generated.
+
+> The protocol is outlined in RFC821 if anyone wants to look at it.
+
+	Joe> The trouble is, one side (the receiver) is still keeping
+	Joe> logs, since only sendmail (or some other root process
+	Joe> doing the same job) can bind to port 25.  On most
+	Joe> machines, that means logs.  There are plenty of ports
+	Joe> over 1000 that user processes can bind to, and that
+	Joe> cypherpunk remailers can support, if we want to go that
+	Joe> way.  I think it's worth thinking about.  (This is in
+	Joe> addition to receiving mail delivered normally to their
+	Joe> e-mail adresses, probably either by port-25/sendmail or
+	Joe> uucp).
+
+	Joe> We could start by having cypherpunk remailers talk to
+	Joe> _each_other_ on an agreed- upon, unlogged port, using RFC
+	Joe> 821 protocol.  Final hops to non-remailer addresses will
+	Joe> have to be handled on port 25, of course, but within the
+	Joe> remailer web we can avoid sendmail logs entirely.  After
+	Joe> that's implemented, we could talk about using a different
+	Joe> protocol.
+
+	Joe> A new protocol is probably the cleanest way to solve the
+	Joe> problem of traffic analysis of messages addressed with
+	Joe> encrypted address blocks.  The best way to get security
+	Joe> in a remailer chain is to nest your encryption, so only
+	Joe> one layer gets peeled off in each remailer hop.  That
+	Joe> isn't possible with encrypted address blocks, since the
+	Joe> sender will only know the address (and public key) of the
+	Joe> first remailer in the chain.  All hops after the first
+	Joe> one must send the same message out as they got in, with
+	Joe> just a layer off the encrypted address block.  But if
+	Joe> remailers talked to each other by first doing RSA-signed
+	Joe> Diffie- Hellman key exchange, then encrypting the
+	Joe> traffic, a packet snooper wouldn't be able to correlate
+	Joe> incoming and outgoing messages.
+
+	Joe> Thoughts?
+
+I think this is probably the best solution proposed to date.
+
+Does the RSA-signed DH key exchange mentioned above provide security
+against possible spoofing on the remailer machine (someone else using the
+agreed-upon port)? How exactly would such a thing be implemented?
+
+	Joe> Joe (they're trying to pry me away from my NeXT, so don't
+	Joe> reply directly to the From: line; use jthomas@mitre.org)
+
+On the user side, I think a good tool to augment this would be a
+mailer program which kept a list of the functioning remailers with
+keys, and randomly selected a route through them using a random
+(reasonable) number of hops, and performing the necessary nested
+encryptions.  Then it could start the remailer hopping process via
+special socket connection to the first remailer in the chain.
+
+Perhaps a protocol could be worked out for the mailer program to
+request from any one of the remailers a current list of the
+functioning remailers? (in an effort to transparentize the process
+some more, as manually maintaining a list of current remailers would
+be tedious.)
+
+
+We would need to work out the protocol details beforehand, such as how
+to handle busy ports etc.
+(Who wants to work on this project with me?)
+
+
+Can someone supply a reference for DH key exchange? (for me, as I don't
+know the details and so can't implement it. (is it patented?))
+
+-Sam
+
+
+
+

@@ -1,0 +1,45 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Wed, 2 Feb 94 18:35:34 PST
+To: na48138@anon.penet.fi
+Subject: Qwerty Remailer Delays
+Message-ID: <9402030231.AA03865@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It's not very clear how long the delays should be; depends on traffic
+to/from your remailer and to some extent to/from the other sites
+your remailer cooperates with and the machine it runs on.
+
+If the delay is near-zero, relative to the rest of your traffic,
+traffic-analysts can see mail going to your remailer,
+followed quickly by similar-sized mail going to another location,
+and guess that the two are related, especially if they're
+reading the mail itself.  (For instance, if netcom is a bunch of
+machines on an Ethernet, and somebody breaks root on one of them,
+packet-sniffing the net may catch a non-trivial amount of your
+mail going in at least one direction.  It's certainly easier than
+tapping all the phones if you don't have a warrant.)
+
+How much you need also depends on your threat model - do you expect
+monitoring by netcom users only, active monitoring by root,
+logfile examination without ongoing monitoring, etc....?
+
+If there are a bunch of other messages in between,
+especially if you're sending most of them to the same destination
+(e.g. instead of always choosing a random remailer to send through,
+you pick one remailer and send a batch of N messages to it;
+and maybe use a different remailer for the next batch)
+then it's harder to correlate incoming and outgoing messages.
+
+One strategy for batching is to accumulate N messages and send them
+at once, rather than delaying for N minutes.  This may cause rather long
+delays, unless you either get lots of traffic or else give up
+and send the real message and some fake ones after rand{5..N} minutes.
+(If you use  fixed N, it's easy to track when traffic is low.)
+
+Bill
+
+
+
+

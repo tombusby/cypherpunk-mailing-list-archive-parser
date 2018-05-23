@@ -1,0 +1,46 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 13 Apr 1996 17:43:44 +0800
+To: Jack Mott <thecrow@iconn.net>
+Subject: Re: Known Plaintext attacks on symmertric algorithms
+Message-ID: <199604130654.XAA29908@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:09 PM 4/12/96 -0400, you wrote:
+>Now maybe I have this all wrong, but it is my understanding that a known 
+>plaintext attack is when the cracker knows part of the plaintext of an 
+>encrypted file.  Then he/she uses that and runs the inverse of the 
+>algorithm to calculate the key.
+
+Some algorithms have usable inverses, but good ones try not to;
+one class of known plaintext attack is working your way back through
+the algorithm to discover the key bits using the known parts.
+Another kind of attack is just to brute-force the key, assuming the
+algorithm or key length is short enough to do that quickly.
+
+>  Whether or not I am right about what known plaintext means, isn't the 
+>entirely possible on all of the symmetric algorithms out there? If I 
+>grab a file that I know is, say, a standard credit card transaction 
+>form, and I know what the first 256 bytes are because they are always 
+>the same, shouldn I always be able to find the entire key that 
+>corresponds with those 256 bytes? (assuming the key is 2048 bits or 
+>less) And then with that key decrypt the whole file?
+
+Algorithms vary widely on their susceptibility.  Consider a one-time-pad:
+even if you know the first 256 bytes of the transaction, all that does
+is let you recover the first 256 bytes of key, which will never be used again,
+even in the second half of the message.   Pretty useless, usually.
+On the other hand, consider a simple "xor with the key, repeating as often
+as needed";
+if the key's no longer than your known plaintext, xor again, find the key,
+repeat as often as needed, and you've got the whole message.
+
+Using the same technique with DES will be left as an exercise for the reader :-)
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

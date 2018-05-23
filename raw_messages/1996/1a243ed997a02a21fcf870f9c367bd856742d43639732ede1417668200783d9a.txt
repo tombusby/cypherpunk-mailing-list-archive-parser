@@ -1,0 +1,71 @@
+From: mccoy@communities.com (Jim McCoy)
+Date: Fri, 8 Mar 1996 16:27:46 +0800
+To: cypherpunks@toad.com
+Subject: Re: TCP/IP Stego (was CU-SeeMe)
+Message-ID: <v02140b00ad64feb0d70c@[199.2.22.124]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+JonWienke@aol.com writes:
+>>A tcp header contains quite a bit of useful information.. but most of it
+>>wouldnt be easily manipulated (by me) to get a bit. [header checksum
+>>twiddling...]
+>
+>This is a bad idea, because in addition to the extra processor overhead, it
+>is an incredible waste of bandwidth.  For a 512 byte packet, you are only
+>getting .02% efficiency, because you wouldn't be able to use the actual data
+>in the packet; otherwise someone would probably notice the increased error
+>rate if you dink around with the checksum.
+
+I think that the original poster meant twiddling some of the (relatively)
+unused fields of the header which most routers and applications do not
+care about, the type-of-service field or priority would good place to
+start.  This would have no effect on the data in the packet, particularly
+if you fiddle at the IP level instead of TCP.  While it is a low
+bandwidth comm channel, it has a couple of advantages which you seem to
+overlook:
+
+        -It can be applied by two routers which are in the middle
+         of the connection.  The two endpoints of the TCP/IP
+         connection would not even notice.  For example, if I control
+         a router "upstream" of a major connection point and the
+         site I wish to communicate with is in a similar position
+         then I can run the subliminal channel in a "spread spectrum"
+         mode across many connections and the packets can get reset
+         to their original settings by the other site. The user
+         whose stream we fiddled with does not even know that they
+         were used as carrier wave...
+
+        -While the per-packet information rate is low, such a system
+         has a _lot_ of packets to work with and a much larger choice
+         of endpoints.  Your hypothetical .WAV file may pack more
+         information in, but there are a miniscule amount of such files
+         moving on the Internet; just by transmitting such a file you
+         could be suspect (honestly, how many soundfiles do you think
+         you could ship around before people get suspicious...)  By
+         hiding the information in the lower layers of TCP/IP you also
+         make it less likely to be noticed; unless someone hooks up a
+         packet sniffer and filters at the IP level the stream will
+         go unnoticed, while a soundfile is an application-level
+         communication and much easier to watch.  It is, in effect,
+         hiding the channel in the low-order bits of the comm channel
+         used to transmit your soundfile...
+
+        -An application encoding method (pictures,soundfiles, etc.)
+         also needs a "reason" for being sent.  You can legitimately
+         send packets for no reason whatsoever, at least from the users
+         perspective (e.g. DNS lookups, ICMP messages, faked fragments,
+         etc.)  A packet system also has a constant stream of traffic to
+         play with; you could run TCP/IP _on top of such a system_!
+         Passing soundfiles and images back and forth would not work
+         for interactive communication, it is UUCP at best.
+
+jim
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Sat, 30 Sep 95 15:50:27 PDT
+To: "David K. Merriman" <merriman@arn.net>
+Subject: Re: my favorite random-numbers-in-software package (unix)
+In-Reply-To: <199509302103.QAA26651@arnet.arn.net>
+Message-ID: <199509302301.TAA16936@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+David Merriman writes:
+> 
+> Even with the exclusion of processors using single-source clocking for
+> interval and CPU timing, this would *seem* to be somewhat hazardous. Any two
+> clocking mechanisms that are 'mixed' are going to result in a number of
+> harmonics, or beat frequencies. While your system - at any given instant -
+> is quite likely to have a decent amount of randomness in it, I'd hazard a
+> guess that repetitive use would result in a discernible pattern. Even
+> something as 'coarse' as an interrupt timer has a finite range that it can
+> (must) operate in. Even if the CPU oscillator is based on a ceramic
+> resonator (nowhere near as stable/accurate as a crystal), the clock on it is
+> going to stay within +/-1% (worst case, for a *really* cheap oscillator) of
+> frequency, and drift not more than some number of Parts Per Million per
+> Period. Mixing the innate (relative) accuracy of two oscillators, and the
+> necessarily limited amount of drift that they're capable of, would seem to
+> result in an unacceptably low-yield source of 'real' randomness.
+
+I'm the first to agree that, in the absence of some good analysis of
+the exact platform on which it is run, the clock-skew approach is built
+on a very weak foundation.  But informal (and completely ad hoc)
+analysis suggests that it might be more promising than you'd first
+expect.  While the drift between the two clocks is likely only very small,
+we're also not asking for very much; we need less than one bit
+worth of uncertainty in an accumulator that burns processor cycles until
+some (smaller) number of clock intervals have occurred.  (The OS might
+also not give you all those cycles, adding to the uncertainty, although
+you can't really count on this in the case of high-priority processes or
+unloaded machines).
+
+I (and a few others) have run some tests on this on a couple of (bare)
+processors in an effort to find artificats of the clock periods in the
+low-order bits of the counter, with no success.  This, of course, hardly
+constitutes a "proof".
+
+I'd love to see some good analysis of this technique, particularly with
+an eye toward quantifying the quality and bandwidth of the output and
+finding better parameters for the minimum interval rate, etc.
+
+-matt
+
+PS there are other "magic" techniques for getting randomness without special
+hardware that are proposed from time to time but that never really undergo
+enough analysis for my taste.  For example, at CRYPTO '94 (or maybe '93)
+there was an interesting proposal to use software to measure the air flow
+inside the disk drive.
+
+
+
+

@@ -1,0 +1,34 @@
+From: Jef Poskanzer <jef@ee.lbl.gov>
+Date: Thu, 3 Mar 94 17:54:14 PST
+To: Eli Brandt <ebrandt@jarthur.cs.hmc.edu>
+Subject: Re: Standard for Stenography?
+Message-ID: <9403040154.AA16047@hot.ee.lbl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eli makes a reasonable case for leaving out the length field
+altogether.  The desteg program would produce a file of width*height
+bits, and it would be up to the next layer to produce text from that.
+However, I'm not sure it's a *compelling* case.  If adding the length
+doesn't actually hurt security, I'm inclined to keep it.
+
+>Tangentially, why choose bit permutation for your second-level
+>encryption?  There are plenty of schemes that will be a lot faster
+>than doing all that bitmangling.
+
+Slowness is not necessarily bad - it also makes it harder for
+attackers to search through large numbers of images for ones
+with hidden data.  But the main thing that the permutation
+gives you is that it spreads out the data bits among unmodified
+bits, making statistical tests harder.  For a 1000 byte message
+in a 640x480 image, only 2% of the bits will be changed.  If that
+2% was all jammed into the first 80000 pixels of the file, it
+might be detectable; if it's spread evenly throughout the file,
+it's probably safer.
+---
+Jef
+
+
+
+

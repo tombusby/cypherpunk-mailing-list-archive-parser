@@ -1,0 +1,52 @@
+From: Ian Farquhar <ifarqhar@laurel.ocs.mq.edu.au>
+Date: Sat, 2 Jul 94 17:01:34 PDT
+To: cypherpunks@toad.com
+Subject: Re: Dr. Dobbs Dev. Update 1/5 July 94 & Schneier
+In-Reply-To: <m0qJvy4-0002FgC@chinet>
+Message-ID: <199407030001.AA14425@laurel.ocs.mq.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>     Feedback with Carry Shift Registers (FCSRs):  Linear
+>Feedback Shift Registers (LFSRs) have been the workhorse of
+>military cryptography for years.  Goresky and Klapper have
+
+An interesting thought hit me when reading this.  The "classic"
+Cray series (Cray-1, X-MP, Y-MP) all have a rather curious instruction
+generally known as population count.  All it does is to take a register
+and count the number of one bits in it, and return that count.  Originally
+I could never figure out a use for this, but later was told that it was the
+"canonical NSA instruction", and was consistently demanded by almost all
+military SIGINT operations.
+
+On reading this, I realised that one possible use was to implement a
+vectorized version of a LFSR.  Take a vector register (the shift register),
+AND it with a mask of the taps into another vector register, and then
+do a population count to determine the carry in.
+
+Just a thought.  It's the only plausable use that I have yet thought of
+for this instruction.  Has anyone else got any ideas?
+
+As for military ciphers having been "the workhorse of military
+cryptography for years", I am reminded (with some amusement) of the
+structure of A5.  I wonder if all of the fuss about secrecy was not
+about the almost non-existant security of the cipher, but simply it's
+similarity to more sophisticated military ciphers?
+
+						Ian.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3
+
+iQCVAgUBLhX/qtCZASdT8NoBAQF8SAP/V5FKgEaCk1GQXV9rrK+AMry2Bzb9Xlyu
+bYMqjN94mAqqkNOe1r2ChmUF4kleTUMxdx1Krje3xhLDPL31HH4lvJ386sm6Ogrm
+/iu/TgjoSnGbMYtoq+C2ZJacA/NBDzItTeUaZgkWRS62Emo/cFIGarT130clL8/x
+HnNbtdGtSOE=
+=VVZZ
+-----END PGP SIGNATURE-----
+
+
+

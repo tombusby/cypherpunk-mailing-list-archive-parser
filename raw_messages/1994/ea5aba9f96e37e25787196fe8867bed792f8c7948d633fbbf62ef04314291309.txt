@@ -1,0 +1,93 @@
+From: nobody@shell.portal.com
+Date: Sun, 6 Feb 94 00:10:50 PST
+To: cypherpunks@toad.com
+Subject: Magic Money vulnerabilities?
+Message-ID: <199402060810.AAA25213@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+People have mentioned possible attacks against Magic Money.
+
+I don't think it is possible to send the server a value to sign which
+would reveal the server's secret key. The server signs your message x by
+raising x to the power d. If you know x^d and x, finding d would seem to be
+a discrete-logarithm problem, which is just as intractible as factoring.
+Can a small or otherwise rigged x help you to find d? If so, participating
+in any blind signature protocol is very dangerous, but I don't think that
+you can find d this way.
+
+wcs@anchor.ho.att.com wrote: (some deleted) 
+
+(attack 1)
+
+>One security hole in online digicash systems of the Chaum variety is
+>that you _do_ need to make sure the money is only transmitted in
+>encrypted forms not susceptible to playback attacks.
+
+>If Eve can read the cash either before Bob gets it or before Bob's
+>message gets from his fast LAN across the slow part of the net
+>to the bank, then she can occasionally spend it before Bob can.
+
+(attack 2)
+
+>If Eve stomps on the Account-number bits, even though she can't
+>break the encryption to substitute her account number for Bob's,
+>she can substitute a random account number for Bob's.
+>This acts as a denial-of-service attack against Bob.
+
+>As a defense, either the message has to contain signatures or at least
+>MACs for validation, and be rejected if invalid, or the format
+>needs to make it impossible to find the account number field
+>or to modify it without trashing the cash as well.
+
+Magic Money is not susceptible to the first (intercept) attack, because
+the coins are encrypted with the server's public key. The reply is also
+encrypted with a response key sent to the server inside the encrypted
+packet. The server signs its responses, so you couldn't send someone some
+bogus coins and then fake the server's response to fool the person into
+believing that the coins were good.
+
+Magic Money has no account numbers; the server just exchanges old coins 
+for new coins immediately. A version of the second attack is a problem. The
+message from the user to the server has no authentication. It is just an
+encrypted PGP message to the server. There is an RSA packet and an IDEA
+packet, and the data is directly inside the IDEA packet. 
+
+If you were to dearmor the message and garble something near the end, then 
+re-armor it, the server would bounce the garbled coins with a bad signature. 
+Some of the first coins would already have been cancelled, and their value 
+would be lost. To prevent this, the next version will MD5 the data packet 
+before encrypting it, and include the MD5 value. This will be checked, and 
+if it is bad, the message will be thrown out before processing any of the 
+coins. This is not a pressing problem. Who would go to all the trouble to
+make a remailer detect and corrupt certain messages? The person doing the
+corrupting would not have anything to gain.
+
+A while ago I read of a program in alpha-test called Nautilus. This was
+specifically designed to compress speech for modem transmission. The author
+said that the beta, when it was ready, would be Copylefted. PGP Tools, if
+combined with Nautilus, has everything you need to do a secure phone. With
+the Clipper push, we need one badly, and now. It should use PGP keys for
+authentication, but either DH or a one-shot RSA key for key exchange. That
+way they can't record the session and demand your key later, as they could
+if you used your regular PGP key for the key exchange.
+
+                                             Pr0duct Cypher
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLVSdtMGoFIWXVYodAQHC9AQApMjaIF2+h0k6Zb2YSwjkFL1/zAgCXJU+
+Dm+kS0us9kusKMc2wr2pc4cEzQow9apM/Od2CisXAaRtHZNUyE8tN3mYWEPxAdcd
+6qG03ZekvTqQB+do2HBGRAH3KXGscPIDCyjuh9iIKp9bB7/GWLNoAYm7fPjxpIYz
+gnWTuRyBme4=
+=wOox
+-----END PGP SIGNATURE-----
+
+
+
+

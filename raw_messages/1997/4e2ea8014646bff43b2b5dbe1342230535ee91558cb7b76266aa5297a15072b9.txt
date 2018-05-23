@@ -1,0 +1,111 @@
+From: nobody@REPLAY.COM (Anonymous)
+Date: Sun, 2 Nov 1997 16:13:50 +0800
+To: cypherpunks@cyberpass.net
+Subject: No Subject
+Message-ID: <199711020810.JAA29037@basement.replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+##
+In-reply-to: <199711020051.QAA23884@sirius.infonex.com> (message from Mix on
+	Sat, 1 Nov 1997 16:51:19 -0800 (PST))
+Subject: Re: cute.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Monty says
+> What would be really nice is if the mailing list machines time stamped
+> messages.
+
+That would be nice.  I wonder, could one of our list hosts add a
+script to sign outgoing majordomo traffic?
+
+Here's a script to do it:
+
+- --------------------8<--------------------
+#!/usr/local/bin/perl
+$userID="cypherpunks\@algebra.com";
+$pgp="/usr/local/bin/pgp";
+$tmp="/tmp/.sig$$";
+undef($/);
+$post = <STDIN>;
+($headers,@body) = split(/\n\n/,$post);$body = join("\n\n",@body);
+open(PIPE,"|$pgp -satf +batchmode +verbose=0 -u $userID > $tmp");
+print PIPE $body;
+close(PIPE);
+open(SIGNED,"<$tmp");$signed=<SIGNED>;close(SIGNED);
+print "$headers\n\n$signed";
+unlink($tmp);
+- --------------------8<--------------------
+
+It handles one mail only.  If you want to run it on a mail folder, use
+formail.
+
+> This would also prevent an attack where somebody forges mail from a
+> cypherpunks list machine to flush out identities.  If the attacker
+> sends a unique message to every person, he or she will be able to
+> break an identity if the message is replied to on the list.
+
+You could do something similar with independent parties posting hashes
+of messages in the feed they got to the list, or to subscribers to the
+service.
+
+The list bot signing is more convenient to check though with existing
+software.  Also, unfortunately, most MUA pgp software doesn't check
+nested signatures, so a signature from the list would break ability to
+auto check signatures from posters.
+
+Here's another script to check the list added signature on receipt:
+
+- --------------------8<--------------------
+#!/usr/local/bin/perl
+$userID="cypherpunks\@algebra.com";
+$pgp="/usr/local/bin/pgp";
+$tmp="/tmp/.sig$$";$in="/tmp/.in$$";$msg="/tmp/.msg$$";
+undef($/);
+$post = <STDIN>;
+($headers,@body) = split(/\n\n/,$post);$body = join("\n\n",@body);
+open(BODY,">$in");print BODY $body;close(BODY);
+$res = system("$pgp -f +batchmode +verbose=0 -u $userID < $in > $tmp 2> $msg");
+open(SIGNED,"<$tmp");$signed=<SIGNED>;close(SIGNED);
+open(ERR,"<$msg");$err=<ERR>;close(ERR);
+if ($res==0) {
+    ($who) = ($err =~ m/Good signature from user "(.*)"\./);
+    if ($who !~ m/$userID/) { $res=1; }
+}
+$headers =~ s/\[FORGERY\]//g;
+if ($res) {
+    $headers =~ s/(Subject: )([^\n]*)/\1\[FORGERY\] \2/g;
+}
+print "$headers\n";
+print "X-Signature: ", $res ? "forgery" : "ok $who", "\n";
+print "\n\n$signed\n";
+unlink($tmp,$in,$msg);
+- --------------------8<--------------------
+
+> I'm not sure a timestamp matters that much for "authenticating" your
+> key.  After all, you don't own "Amad3us", you own key 0x4D162BBE1.
+
+Yes.  Except for minor nit: 0x4D162BBE1 is susceptible to a 0xdeadbeef
+attack, anyone can generate another key with that keyID.  Even the
+fingerprint is spoofable.  But the combination is truly hard to spoof,
+and this I do own: 0xa11a8a18bf6dbe8362926e9458a3616d/0x4d162bbe1
+(fingerprint/keyID).
+
+Amad3us (0xa11a8a18bf6dbe8362926e9458a3616d/0x4d162bbe1)
+
+-----BEGIN PGP SIGNATURE-----
+iQCVAwUBNFwjxvKMuKFNFivhAQGYnAQA33Ss68TKF+QfDGweQZ7TAkbmlOeqPC/J
+iBoV5zA+skqdgs+PD2afLAhQn5otm7xbx7rBEnBgMOYff9GyKB6Bfs/po7juwqs5
+dACGPZhc5kNf4f18V04jv5sr6PWLWdwsoVegshVsiHmQgWtG9UlnZ0wKe2ORKzxf
+sQkJsIe3/jA=
+=naXX
+-----END PGP SIGNATURE-----
+
+
+
+
+

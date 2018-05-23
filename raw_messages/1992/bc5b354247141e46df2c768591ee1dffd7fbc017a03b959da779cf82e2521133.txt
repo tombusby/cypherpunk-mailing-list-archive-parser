@@ -1,0 +1,61 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Thu, 22 Oct 92 23:02:09 PDT
+To: cypherpunks@toad.com
+Subject: BBS E-mail policy
+In-Reply-To: <9210221623.AA00440@spica.bu.edu>
+Message-ID: <9210230601.AA26160@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Re: distinguishing between encrypted mail, plaintext mail, and
+line-noise.
+
+I'm really glad this question came up.  I passed over it before
+because I was more interested in the social issue, but the technical
+one is important.
+
+The basic technique is the foundation of cryptography: information
+theory.  For this application, you can just measure the entropy; it
+alone should be able to distinguish between the three sources.  The
+entropy measures how well one can statistically predict the output of
+a source.  A random source has eight bits of entropy per byte.  As
+randomness decreases, so does the entropy measure.  (Mail me if you
+want references in order to learn this stuff yourself.)
+
+Now line noise, let's say, will appear random.  So its entropy should
+be right near the maximum, 8 bits.  Text encrypted with PGP using the
+ASCII armor uses only 64 characters out of 256 possible, or one fourth
+of the total available.  Its entropy would be 2 bits per character.
+English text is usually around four and five bits per character, if I
+remember right.
+
+To calculate the entropy, you first make a table (of size 256) of
+character frequencies normalized to the range [0,1].  Call these p_i.
+The entropy is then (TeX here) $ \Sum_{i=0}^{256}n - p_i \log_2 p_i $.
+(The log base 2 give bits instead of natural units).
+
+Now see if this number is in one of the following ranges:
+
+	[1.5 .. 2.5]	encrypted text
+	[3 .. 6]	regular text
+	[7 .. 8]	line noise
+
+This is a very simple measure.  There are other measures to look for
+the deviation from an expected distribution, which give much more
+accurate distinctions.  One can very easily separate languages from
+each other just by looking at such measures.
+
+Note that none of these techniques ever look at the content.  Nor do
+they look at digraph (two-letter combinations) or trigraph statistics.
+In fact, the content is completely destroyed by the scanning process!
+Lots of this stuff is known; this is how the big boys crack codes.
+I'm glad there arose a natural context to explain some of this stuff.
+
+Eric
+
+
+
+
+

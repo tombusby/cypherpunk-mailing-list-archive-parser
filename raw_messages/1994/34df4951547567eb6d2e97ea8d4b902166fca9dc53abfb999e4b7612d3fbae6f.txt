@@ -1,0 +1,63 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 13 Dec 94 12:29:36 PST
+To: cypherpunks@toad.com
+Subject: Re: Authentication vs encryption: CPs on the web
+In-Reply-To: <199412131851.NAA22099@bwnmr5.bwh.harvard.edu>
+Message-ID: <199412132029.MAA22274@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Adam Shostack <adam@bwh.harvard.edu> writes:
+
+>	With all due respect, I disagree with your assessment.
+>Anonymity is a job, and we should build small tools to do jobs.  It is
+>my feeling that building anonymity into the web will make the
+>protocols more complex than they need to be.
+
+I don't think this is necessarily the case.  Anonymity is often a matter
+of _not_ stamping identification onto a packet.  Rather than complicating
+protocols it will often just be a matter of having options not to include
+certain fields.  For example, the current HTTP has an option to send a
+user name when the client makes connections.  I have heard that the
+Netscape client sends this and has no switch to turn it off.  You can put
+in a fake name (or none) but then when you want to send email your reply
+address is wrong.  This is an example where support for privacy should be
+in the client and can't really be added on.
+
+>	There is no anonymity in mail, but we have anonymous mail of
+>varying privacy.  I suspect mixmaster will greatly enhance that.  To
+>get privacy in the web, build a web remailer on top of the CERN or TIS
+>HHTPd proxies.  Encrypt between you & the proxy, let the proxy go out.
+
+I think this is a fine idea if this could work.  The way proxy support
+works now, the client connects to the proxy and then sends it the URL.
+This means that the proxy knows which clients are connecting to which web
+pages and must be trusted to keep this private.  What you need is a way
+of chaining proxies such that no one proxy sees both the client and
+server addresses.  This is what we have with the remailers.  But again
+this would appear to require changes to the clients and corresponding
+protocols.
+
+Perhaps it would work to have a local trusted proxy running right on your
+machine which implements the connection to a chain of web remailers.  You
+can run vanilla clients with their nice UI's and other hot features, and
+all of your net accesses go through your local proxy which cleans them up
+and uses chaining for access.  This sounds like a doable project which
+would be worth exploring.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLu4EARnMLJtOy9MBAQENJwIAvAM5rzAog54rLTmDy8wGBxJsxk4XfIYE
+rGXif7AUrFwx+u1IeDnjQxNs8cul/1S/g02/rsyVKyCdT0dSfUCzoA==
+=ZvjT
+-----END PGP SIGNATURE-----
+
+
+
+

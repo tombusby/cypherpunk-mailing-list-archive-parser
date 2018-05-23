@@ -1,0 +1,46 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 21 May 94 22:26:18 PDT
+To: cypherpunks@toad.com
+Subject: Re:  "Email-Firewalls" / Instant Corporate PGP
+Message-ID: <199405220527.WAA12131@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Vincent.Cate@FURMINT.NECTAR.CS.CMU.EDU
+> #!/bin/csh -f
+> #
+> #  Vince Cate
+> 
+> setenv PGPPATH /usr/vac/pgp
+> setenv PGPPASS "not really vinces passphrase"
+> 
+> cd $PGPPATH
+> 
+> cat > mailtmp.asc
+> 
+> egrep 'Date:|From:|Subject:|To:' mailtmp.asc >  mailtmp
+> echo " "                                     >> mailtmp
+> 
+> pgp -f < mailtmp.asc                         >> mailtmp
+> 
+> /usr/ucb/mail -s "Was encrypted" vac < mailtmp
+> 
+> exit 0
+
+A more secure way is not to setenv PGPPASS but rather:
+setenv PGPPASSFD 1
+and then
+(echo "vinces passphrase" ; cat mailtmp.asc) | pgp -f >> mailtmp
+
+The PGPPASSFD means take the passphrase from file descriptor 1, which is
+the standard input.  This way it never appears in the environment of a
+process.  Many unix systems have a switch to ps to show all processes'
+environments.
+
+Hal
+
+
+
+
+

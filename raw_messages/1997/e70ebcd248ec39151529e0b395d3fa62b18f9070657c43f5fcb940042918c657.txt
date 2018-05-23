@@ -1,0 +1,70 @@
+From: Andy Dustman <andy@CCMSD.chem.uga.edu>
+Date: Fri, 8 Aug 1997 15:57:29 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: disposable remailers (was Re: Eternity Uncensorable?)
+In-Reply-To: <199708071945.UAA04602@server.test.net>
+Message-ID: <Pine.LNX.3.94.970807160614.2843G-100000@neptune.chem.uga.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Thu, 7 Aug 1997, Adam Back wrote:
+
+> You know how middleman operators work...  they always, always send
+> mail via another remailer and never deliver mail to a user.  (I'm not
+> sure if they detect this by looking to see if the address is on the
+> remailer list, or just always add an extra hop?)
+
+I think by definition a middleman always chains through one or more
+additional remailers. When I ran dustbin, it was a "smart middleman",
+i.e., if the recipient was a known remailer, it wouldn't bother to chain
+(remailers rarely complain), otherwise it would chain through a single
+remailer. I have a procmail script which does this as well using mixmaster
+only (some definitions are missing here): 
+
+# Smart middle. If not to another remailer, send it through a random mixmaster.
+# Mixmaster 2.0.3 compatible.
+
+:0 f
+* MIDDLE ?? (on|yes)
+*! ? grep "$TO" $RLIST $TYPE2
+| formail -bf -I"From:" -I"To:" -I"Comments:" -IMessage-ID: \
+        | $MIXPATH/mixmaster -f -to $TO -l 0 
+
+# We made it this far, so send out the mail.
+
+:0
+| $SENDMAIL $SENDMAILFLAGS 
+
+An even smarter middleman would detect PGP messages and deliver those
+directly to end recipients, since those people are unlikely to complain
+about anonymous mail, and chain if the message was plaintext. The risk
+involved with this type of middleman operation should be rather small.
+
+Andy Dustman / Computational Center for Molecular Structure and Design / UGA
+    To get my PGP public key, send me mail with subject "send file key".
+For the ultimate anti-spam procmail recipe, send me mail with subject "spam"
+"Encryption is too important to leave to the government."  -- Bruce Schneier
+http://www.ilinks.net/~dustman    mailto:andy@CCMSD.chem.uga.edu      <}+++<
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3ia
+Charset: noconv
+
+iQEPAwUBM+ouuhOPBZTHLz8dAQFMaQfPYwBpG+f05Oq/gu4nZDacu+0DDg/v/EgI
+IOZa4GCrNlhfbl0mp0XFLbEWLi8SvwWhpo6nhOFDIda7wcmyo032TfbcajNPEcz7
+qeRNBEY2wDwp9B9MaXZlFyThnmnqsfgeU0h/c+txPiV48HsiX2uvG1NEKumqxq+e
+R1nqBS6Ob5uP+1urfqAbrdeTPdRSwlx+C9SlxMLLYpoPq5OM8YZu08UOBVWRE2FD
+ia4DvHCWVBsj2rpgiDrpWyMHAEbkoy9FJm5qUa2FqZq62TrS0rVugdjsE4mvisjM
+ULoalmkRHsByl/qUICRqSpktQQtveq2I3MEIHYSk7tEVJQ==
+=0FkI
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,39 @@
+From: shields@tembel.org (Michael Shields)
+Date: Sun, 15 Oct 95 10:41:54 PDT
+To: fc@all.net (Dr. Frederick B. Cohen)
+Subject: Re: I am looking for a way to create a zombie process
+In-Reply-To: <9510151556.AA26716@all.net>
+Message-ID: <m0t4X3e-000DgnC@yage.tembel.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Is there anyone who can give me a simple program or set of commands that
+> creates a zombie process? Thanks in advance. 
+
+Here, public domain.
+
+#include <stdio.h>
+#include <unistd.h>
+
+int
+main()
+{
+    if (!fork()) {
+	/* Child; die. */
+	exit(0);
+    } else {
+	/* Child dies, is zombie for ten seconds. */
+	sleep(10);
+	/* Reap it. */
+	wait();
+	/* Now no zombie. */
+	sleep(10);
+	exit(0);
+    }
+}
+-- 
+Shields.
+
+
+

@@ -1,0 +1,45 @@
+From: Ian Goldberg <iang@cs.berkeley.edu>
+Date: Sun, 7 Jul 1996 06:15:19 +0800
+To: cypherpunks@toad.com
+Subject: Netscape 3.0b5 can unanonymize Anonymizer
+Message-ID: <199607061933.MAA07654@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+The new netscape has this "feature" where the RHS of KEY=value pairs in tags
+can contain inline Javascript, which is evaluated to get the actual RHS.
+
+For example, the HTML:
+
+Did you really think you could be <a href="&{window.open('noanon.html','',
+'toolbar=1,location=1,directories=1,status=1,menubar=1,scrollbars=1');
+'/'};">anonymous</a>?
+
+will open a new, unanonymized, window (you don't even have to click on the
+link).  The main problem is that the Anonymizer doesn't filter out the
+new way of embedding Javascript:
+
+&{this.is("javascript code")};
+
+So, if you use the Anonymizer with netscape 3.0b5, _disable_ Javascript
+until this is fixed (better yet, disable Javascript and Java entirely,
+but that's another story for another time...).
+
+   - Ian
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMd6/nEZRiTErSPb1AQGEPgQAu9NaxafrQDrqdTLUkzQ7k0D6Pq8FxIx1
+7Mo3j6ACs6Flp2Tq+2szh6Ch+U0r21LL5NuC3zQ/BA9j/UmqU+c5XM7NRFFGEEhY
+f1RakLlaiWp+gnxv3dgWWMUZ30iB01kNbIGcl4X3FPLUpyavK45KoqjRJh13s/K+
+ACWmg1pgmXk=
+=23r4
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,37 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Wed, 13 Mar 1996 04:04:55 +0800
+To: Gary Howland <gary@kampai.euronet.nl>
+Subject: Re: FCC & Internet phones
+In-Reply-To: <199603121049.FAA20806@bb.hks.net>
+Message-ID: <199603121658.LAA01954@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Gary Howland writes:
+> Adam Shostack wrote:
+> > 
+> >         Are you willing to play Mallet?  Drop IP packets, and look for
+> > duplicates.  Those are TCP.  (IPSEC might handle this, but I bet there
+> > will be broken implementations that save time by resending.)
+
+Since the TCP and IP layers are not the same, this won't happen. The
+retransmit occurs at the TCP layer and the IP layer will re-encrypt
+with a new initialization vector.
+
+> Are you saying UDP protocols don't retransmit un-acked packets?
+> If not, then you can't be sure the duplicates are TCP.
+
+Also true. Plus there are IPSEC transforms being talked about that
+will put in replay elimination, so I doubt this is going to be a
+problem.
+
+On the other hand, you can detect TCP packets pretty easily by timing
+them. They will usually follow a nice Van J. algorithm profile.
+
+Perry
+
+
+
+

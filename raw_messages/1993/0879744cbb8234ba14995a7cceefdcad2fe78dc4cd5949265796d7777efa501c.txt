@@ -1,0 +1,47 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Sun, 28 Feb 93 17:14:14 PST
+To: cypherpunks@toad.com
+Subject: anon.penet.fi hacking
+In-Reply-To: <DR9LZB7w165w@spectrx.saigon.com>
+Message-ID: <9303010111.AA12729@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>The other remailers were supposed to add a "kill line" to do the
+>same thing, but as far as I know this never happened.
+
+Your call for this went unacknowledged but nevertheless listened to.
+It was not until a week or two after the sig-kill stuff was over that
+I came up with a solution.
+
+The next revision of the remailer will have something like
+
+	Body-Termination-Regex: <regex>
+
+The first character in the body that matches the regex, and every
+character after it, will be dropped.  This not only makes it a
+one-liner in perl (!), but it means that the user can be as
+arbitrarily complex in recognizing sig blocks as the are able.
+Of course, we'll document the most common of these:
+
+	Body-Termination-Regex: ^--$
+
+For those of you who know nothing about regular expressions, this
+recognizes a line containing two minus signs and nothing else.  If
+your signature adder does it some other way, it's pretty much
+automatically supported.  You could also put more of your signature in
+the regex to ensure that it doesn't interfere unexpectedly with body
+content.
+
+Summary: user-defined, almost every case handled, not automatic.
+
+I hate my sample header field name.  Please, someone think up a better
+one.
+
+Eric
+
+
+
+
+

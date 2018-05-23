@@ -1,0 +1,43 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Tue, 26 Sep 95 06:21:38 PDT
+To: cman@communities.com (Douglas Barnes)
+Subject: Re: Decompiling Netscape
+In-Reply-To: <v02120d02ac8cdee21178@[199.2.22.120]>
+Message-ID: <199509260153.VAA11436@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Doug,
+  I've managed to find a URL which can place an arbitrary value in
+the PC register without disassembly. What I did was make  a URL
+
+abcdefg....ABCDEFG....ZAaBbCcDd.....ZzAAaaBBbbCCcc.....ZZzz
+
+
+then, when Netscape coredumped and the PC gets modified, I look
+at the PC, say 0x54535251 and see that it is QRST, so I place
+the PC register there.  Now all I need is some 386 code under
+BSDI2.0 to do an execve.
+
+I just wrote a simple execve in C, compiled it, and stole the appropriate
+magic kernel library invocation sequence. What I need to do now is 
+1) find out the approximate address of the stack pointer,
+2) generate some code that has a whole lotta NOPs, followed by the
+execve sequence, and finally, preface all that by a PC value that
+will hopefully land somewhere inside that field of NOPs on the stack.
+And all this has to be done without using any characters which will
+stop netscape from reading in more pieces of the domain string.
+
+You might be able to use the same techniques to whip up a quick exploit
+on your systems. By far, the best exploits will be on the Mac and
+Windows (especially), because those make up the majority of people
+using Netscape. Create an exploit on Windows, and stun the world.  ;-)
+
+
+-Ray
+
+
+
+

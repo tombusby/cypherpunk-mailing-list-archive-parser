@@ -1,0 +1,70 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Mon, 23 Oct 95 17:08:45 PDT
+To: tcmay@got.net (Timothy C. May)
+Subject: Re: Don't Kill the Messenger--A New Slant on Remailers
+In-Reply-To: <acac7cd8430210046e54@[205.199.118.202]>
+Message-ID: <199510240008.UAA11781@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Timothy C. May writes:
+>THE ROLE OF THE "MESSENGER"
+>
+>But I think I have a longer term solution, one that involves a change in
+>thinking about the differences between the _originator_ of a message and
+>the mere _messenger_.
+>
+>The notion is to much more explicitly separate the functions of the
+>"messenger" or "deliverer" from the "originator" or "sender." Granted, this
+>is already done in the sense that a piece of e-mail goes through many
+>hands. For example, Hal's message that I am responding to here has this in
+>the header blocks, showing some of the "couriers" or "messengers":
+
+This is an interesting notion, but one I don't think is quite right.
+The anonymous remailer is not merely a courier.  It actively modifies
+the message envelope by removing any indication of its origin.  The
+main issue in Hal's quoted complaints are that the receiver isn't able
+to contact the sender.  This fact is a direct result of the action of
+the remailer.
+
+Consider what would happen if a remailer were set up that *didn't*
+remove the "From:" data.  Anonymizing remailer operators could attempt
+to limit complaints by forwarding everything through the non-anonymizer
+to make it the last link.  Who do you think would get the complaints?
+The last anonymizer.
+
+>A MAIL DELIVERY SERVICE (don't we already have them? yes, but....)
+>
+>So, how would this work?
+>
+>With remailers, even more steps need to be taken to make it absolutely
+>clear that the delivered message is not _from_ the last Internet site that
+>shows up in the "From:" field. More than just disclaimers are needed.
+>
+>One approach is for a _notification-based_ system. To wit:
+>
+>"You have a piece of mail awaiting at our mail delivery service. The
+>originator is unknown. The title of the message is "Tentacles of Medusa
+>Must Die!" You may retrieve this message by replying to this notification
+>with the word "Yes" anywhere in the Subject field. This message will be
+>kept for 60 days and then deleted."
+
+I had a similar idea that I mentioned to Hal in a private message.  How
+about a POP server that authenticates with crypto, and accepts and
+holds email addressed to the keyid of a PGP key?  You send email to
+4466A801@keymail.com it holds them for 30 days (or whatever) and
+discards them.  When I connect to the server to retrieve my mail, it
+asks for my public key, encrypts a random challenge with it, and I tell
+it the decrypted version.  Having proved that I can read messages
+encrypted to the key, it delivers messages addressed to the hash of the
+key.  It might also allow me to configure an address where
+notifications of new messages should be sent.
+
+It's an interesting twist on the anon.penet.fi system, since you
+needn't bother tracking all the nym/email mappings, and *can't* give
+CoS any incriminating information.
+
+
+
+

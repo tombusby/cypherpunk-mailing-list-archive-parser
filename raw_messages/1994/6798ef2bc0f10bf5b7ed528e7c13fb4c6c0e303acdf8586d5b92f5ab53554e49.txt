@@ -1,0 +1,33 @@
+From: mccoy@io.com (Jim McCoy)
+Date: Wed, 28 Sep 94 15:31:29 PDT
+To: psmarie@cbis.com
+Subject: Re: 3DES
+In-Reply-To: <9409282126.AA00174@focis.sda.cbis.COM>
+Message-ID: <199409282231.RAA05505@pentagon.io.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: pstemari@bismark.cbis.com (Paul J. Ste. Marie)
+> 
+> Quick question.  There's a brief mention in Applied Cryptography that
+> triple DES uses:
+> 
+> 	Eabc(x) = Ea(Db(Ec(x)))
+> 
+> as opposed to:
+> 
+> 	Eabc(x) = Ea(Eb(Ec(x)))
+> 
+> in order to preserve some symmetry properties.  Can anyone give a
+> better explanation?
+
+If a=b=c, a=b, or b=c  then the first operation is Ea(Da(Ea(x))) which is
+just Ea(x).  This method allows one to support 56bit (single DES) and
+168bit (triple DES) keys on the same function, basically making the system
+backward compatible with those just using DES.
+
+jim
+
+
+

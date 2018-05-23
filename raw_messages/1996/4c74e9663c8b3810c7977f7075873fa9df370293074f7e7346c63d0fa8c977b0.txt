@@ -1,0 +1,94 @@
+From: jim bell <jimbell@pacifier.com>
+Date: Mon, 1 Apr 1996 23:41:11 +0800
+To: perry@piermont.com
+Subject: Re: [NOISE] Nasty-Quibble-Punks
+Message-ID: <m0u3bwV-0008zJC@pacifier.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 04:06 PM 3/31/96 -0800, Mike Duvos wrote:
+>"Perry E. Metzger" <perry@piermont.com> writes:
+
+>Uh huh.
+>
+> > Incidently, EEPROMs don't work by simply charging a
+> > capacitor or something silly like that. No insulator is
+> > perfect, no dielectric is perfect, and charge would
+> > eventually leak away were that the case. However, if it
+> > were, it would be fairly easy to determine the state of a
+> > cell without having to get particularly close to it. Beyond
+> > that, there is this insane notion you seem to have that a
+> > charged object will lose its charge if the "insulator" is
+> > "stripped off" -- I wasn't under the impression a vacuum,
+> > for instance, was a particularly good charge carrier.
+>
+>Uh huh.
+
+
+Turns out Perry is wrong about this.  I believe that UV EPROMs and probably 
+EEPROMs do indeed work by storing charge on a buried, totally-isolated 
+capacitor.  The capacitor is charged with a system called "Fowler-Nordheim 
+tunneling," which involves placing a relatively high voltage on a nearby 
+electrode and causing the thin interface to temporarily conduct.  (It's odd. 
+ That's why it's called "tunnelling.")   The charge, surprisingly enough, is 
+stable for years, in fact decades, and probably (statistically) centuries at 
+room temperature.  The reason the charge stays around so long is that the 
+insulator, silicon dioxide, is extremely good.  It has to be.  If the 
+capacitor were, say, 1 picofarad, and the resistance was 10E18 ohms (a 
+billion gigohms) the resulting time constant would be 1E6 seconds, or about 
+12 days.  Since EPROMs obviously hold data far longer than this (well over 
+100 times longer, or else our computers wouldn't work!), and since the 
+capacitance is probably not nearly 1 pf, that tells you that the effective 
+resistance is far above 1E20 ohms.
+
+UVEPROMS are erased, naturally enough, by exposing them to UV light, which 
+is usually produced by a mercury vapor lamp.  This UV causes enough 
+electrons to be excited into upper electron shells in the insulator to 
+temporarily turn it into a slight conductor, and the charge dissipates.  I 
+think EEPROMs are erased by, more or less, reversing the voltage on the 
+charging electrode.
+
+As for keeping the charge when that insulator is stripped off, that would be 
+a problem.  It isn't that a vacuum isn't a good enough insulator; it is, but 
+it would be hard to imagine a technique to strip off an SiO2 insulator that 
+doesn't also allow a substantial amount of charge to flow.  You could strip 
+it off with HF (hydrofluoric acid) but that's electrically conductive.  Even 
+a gas-phase process would probably result in enough conductive products to 
+discharge the capacitor.  Ion-beam milling would also remove SiO2, but as 
+the name implies that's applying a current to the system.
+
+Fortunately, all this is moot:  Since the floating gate is inherently part 
+of a transistor, it isn't necessary to expose it to detect its charge state: 
+Just activate the transistor in-circuit
+
+
+BTW, some PLD's have a so-called "security bit" which (when set) is designed 
+to prevent reading of the state of the rest of the programmed bits.  Years 
+ago it occurred to me that if you knew where this particular bit was stored, 
+you could expose this bit location alone to a UV source through a tiny mask 
+to discharge it.  Finding that location wouldn't be all that hard:  Just expose 
+the chip with a series of exposures, moving a linear mask slightly, and 
+eventually the security bit will erase.  Note the location of the mask, and 
+rotate the mask 90 degrees and repeat the process.  At that point, you've 
+located the bit (this may require a few iterations), so you expose the 
+target part through a tiny pinhole (Edmund Scientific sells them in many 
+different sizes, exposing only that security bit location.
+
+
+Jim "Mr. Bell talks about one field" Bell
+
+(Let's see, I covered solid, liquid, and vapor phase chemistry, a bit of 
+particle physics (ion-beam milling), semiconductor physics, minor optics, 
+electronics, some trivial math, and maybe even some detective work!)
+
+jimbell@pacifier.com
+
+
+
+
+
+
+
+
+

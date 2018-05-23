@@ -1,0 +1,48 @@
+From: Thomas Grant Edwards <tedwards@src.umd.edu>
+Date: Mon, 6 Feb 95 20:02:51 PST
+To: Wei Dai <weidai@eskimo.com>
+Subject: Re: a simple explanation of DC-Net
+In-Reply-To: <199502070122.AA01568@mail.eskimo.com>
+Message-ID: <Pine.SUN.3.91.950206224622.21262B-100000@thrash.src.umd.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 6 Feb 1995, Wei Dai wrote:
+
+> P.S.  I realize someone has probably written something like this
+> already, but I hope this explanation helps someone who is still
+> puzzled.
+
+I've written a test-bed IRC client which uses DC Nets to allow multiple 
+people to talk on an IRC channel anonymously.  It operates in a ring, 
+with every participant showing his/her random bit stream with the 
+neighbor to the "left."  Participants compare their bit stream with the 
+one their neighbor shares with them, and broadcasts the differences 
+(with lies indicating xmitted "1" bite) to all participants.  The 
+difference bits for each round are totalled together modulo 2 by each 
+participant, and any anonymous broadcasts can be determined from those 
+totals.
+
+My implementation was a quick project for a class and lacks some really 
+important features:
+
+1)  used built-in PRNG
+2)  does not encrypt private messages for bit stream sharing between 
+neighbors
+3)  no ALOHA or similar protocol for dealing with message collisions
+4)  ring could be expanded to more complex graph to increase number of
+    colluding participants needed to break anonymity.
+
+BTW - There have been a few other papers on DC-Nets since Chaum including 
+detections of DC-Net disrupters, and protection against a group of active 
+attacks.  I include a report with my code now available at 
+ftp://ftp.csua.berkeley.edu/pub/cypherpunks/applications/dc-irc.alpha.tar.gz
+which goes into more details on these matters and has references.
+
+-Thomas
+
+
+
+
+

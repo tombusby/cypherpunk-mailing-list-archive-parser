@@ -1,0 +1,61 @@
+From: Andrew Bromage <bromage@cs.mu.oz.au>
+Date: Sun, 19 Oct 1997 05:32:40 +0800
+To: kent@bywater.songbird.com (Kent Crispin)
+Subject: Re: Is PGP still private?
+In-Reply-To: <19971018092636.45297@bywater.songbird.com>
+Message-ID: <199710182122.HAA24989@mundook.cs.mu.OZ.AU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+G'day all.
+
+Kent Crispin wrote:
+
+> Your reencryption scheme fails because of the management of the short
+> term encryption keys, among other things.  Here's another approach I
+> will toss out, without thinking through:
+> 
+> How about formalizing superencryption, or tunneling? That is, treat
+> CMR traffic as a transport medium for messages that are themselves
+> already encrypted.  The "key" idea here is to allow layering of non
+> CMR traffic over CMR traffic.  All the code for both is obviously
+> already in PGP, with a little glue and perhaps some minor protocol
+> mods...
+
+If we start considering that, could I suggest making the system
+_completely_ flexible?
+
+The sort of things I'm thinking of include:  Allow any object to be
+encrypted using conventional encryption (including conventional
+encryption keys) or signed, allow any conventional encryption key to
+be public-key encrypted or split, conjunction/disjunction of two
+conventional keys, etc.
+
+Disadvantages:
+
+	- Greatly complicates the decryption process.  In particular,
+	  decrypted streams must be fed back into PGP.
+
+	- Difficult for an end-user to specify what combination of
+	  features they want.
+
+	- This working group would be around for years arguing about
+	  details. :-)
+
+Advantages:
+
+	- Allows PGP to be used for lots of things that we haven't
+	  thought of yet.
+
+	- File format could be considerably simplified, if we could
+	  scrap the old format.  (Unrealistic, but what the hell.)
+
+Cheers,
+Andrew Bromage
+
+
+
+
+

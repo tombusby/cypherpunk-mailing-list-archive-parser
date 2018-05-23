@@ -1,0 +1,43 @@
+From: "Perry E. Metzger" <perry@panix.com>
+Date: Thu, 10 Aug 95 08:26:57 PDT
+To: Andy Brown <asb@nexor.co.uk>
+Subject: Re: Why DES in IPSEC ESP?
+In-Reply-To: <Pine.SOL.3.91.950810133448.4480H-100000@eagle.nexor.co.uk>
+Message-ID: <199508101521.LAA05002@panix4.panix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Andy Brown writes:
+> I suppose this is really addressed at Perry:
+> 
+> Why was (single) DES chosen as the algorithm for the ESP part of IPSEC? 
+
+It wasn't. Well, it wasn't *really*.
+
+IPSEC is a framework into which you drop any algorithm you like --
+IDEA, 3DES, Skipjack (:-), or anything else. We picked a baseline
+algorithm to assure interoperability, but it is not our expectation
+that people would want to use DES in practice. Picking DES was largely
+a political, not a technical decision. RFCs describing 3DES and SHA
+modes are in the pipeline right now -- they are going before the IESG
+"real soon now".
+
+> I know other algorithms can optionally be used, but surely it would
+> have been better to have a second, stronger algorithm specified
+> mandatory as well.
+
+Well, lets remember this: algorithms go sour with time, like dairy
+products. People are going to have to get used to regularly switching
+them very soon anyway. Think of this as just a way to get people in
+the habit of building their implementations modularly from the start.
+
+My recommendation is that all implementations include 3DES in their
+initial algorithm set. I'm going to do it with mine.
+
+Perry
+
+
+
+

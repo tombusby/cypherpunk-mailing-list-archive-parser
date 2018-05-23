@@ -1,0 +1,37 @@
+From: nowhere@bsu-cs.bsu.edu (Chael Hall)
+Date: Tue, 15 Jun 93 13:21:12 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: X-TTL functional
+Message-ID: <9306152024.AA14776@bsu-cs.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+     I should know by now that whenever I get an idea and send it to the
+list it ends up getting lots of addons and changes from other list members.
+So....  I added an X-TTL field to the header.  It reads it, decrements it,
+and writes it.  If it's in the message received, it will be decremented and
+passed on.  If it isn't in the message, it will be set to one then later
+decremented (last stop).  If it should be zero when it arrives, it will be
+swallowed up.  Messages that get sent will have a header field of X-TTL with
+a value of zero or greater.
+
+     Note that it shows up as X-Ttl in ELM, but doesn't matter in the
+software because it converts everything to lowercase then checks it
+against its keyword list.  The X-TTL field can be either in the main
+header or in the pasted "::" header block.  I suppose that if the TTL
+is greater than zero when it goes to send, the remailer should throw
+in another remailer's name at random and make up its own "::" header
+block, but that is for later...
+
+Chael
+
+--
+Chael Hall
+nowhere@bsu-cs.bsu.edu, 00CCHALL@BSUVC.BSU.EDU, chall@bsu.edu
+(317) 776-4000 from 8 am - 5 pm CST
+
+
+
+

@@ -1,0 +1,52 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Mon, 16 Dec 1996 09:35:22 -0800 (PST)
+To: ichudov@algebra.com
+Subject: Securing ActiveX.
+In-Reply-To: <199612150049.SAA00282@manifold.algebra.com>
+Message-ID: <Pine.SUN.3.91.961216123313.15110L-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 14 Dec 1996 ichudov@algebra.com wrote:
+
+> Ray Arachelian wrote:
+> > 
+> > Until Microsoft secures ActiveX in it's own sandbox and doesn't allow it 
+> > to access things it shouldn't, it's not cool.
+> > 
+> 
+> I do not understand how one can secure ActiveX.
+
+Simple.  Check out Windows NT, under NT you can write/run programs as 
+services which log in as an account.  When you do this, that service 
+program is limited to the security restrictions of that account.
+
+If you're using the NTFS file system and give that account access only to 
+one directory, it can't access anything but that directory.  (If you're 
+using FAT, this isn't true and the program can read/write/delete anything 
+it wants.)  Works quite well.
+
+It can be done under 95 but Microsoft will have to write a Sandbox 
+Virtual Machine (a Virtual x86 session whose API's are filtered to 
+prevent access to certain things like the file system, and disables 
+direct I/O.)  Not that easy under '95, but it already exists for NT.
+
+The problem is how to deal with DLL's.  You don't know all 
+features/functions of all DLL's.  It may be possible to write a DLL that 
+runs outside the sandbox and can act as a proxy to the file system, so 
+it's iffy unless you limit the DLL's and services that ActiveX apps talk 
+to, and make them all live inside the sandbox.
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    | "If  you're  gonna die,  die  with your|./|\.
+..\|/..|sunder@sundernet.com|boots on;  If you're  gonna  try,  just |/\|/\
+<--*-->| ------------------ |stick around; Gonna cry? Just move along|\/|\/
+../|\..| "A toast to Odin,  |you're gonna die, you're gonna die!"    |.\|/.
+.+.v.+.|God of screwdrivers"|  --Iron Maiden "Die With Your Boots on"|.....
+======================== http://www.sundernet.com =========================
+
+
+
+
+

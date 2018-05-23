@@ -1,0 +1,38 @@
+From: "baldwin" <baldwin@RSA.COM (Robert W. Baldwin)>
+Date: Tue, 31 Oct 1995 10:24:00 +0800
+To: cypherpunks@toad.com
+Subject: Keyed-MD5, and HTTP-NG
+Message-ID: <9509308151.AA815103202@snail.rsa.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Simon,
+        There are a few different ways to add key material to MD5 to
+make it suitable as a shared-secret authenticator function.  Some of these
+are less resistant to attacks than others.  For example, the keyed MD5
+mechanism that is part of the current IPsec specifications can be
+attacked using 2**60 chosen messages.  Fortunately, the IPsec specs
+also require that the shared MD5 key be changed every 2**32 messages,
+so this attack is unlikely to succeed.  Specifically, IPsec uses
+MD5 as follows:  X = MD5(key | keypad | Message), where "|" means
+concatenation and the "keypad" pads out the key to 512 bits.
+Basically, this function is the same as standard MD5 with a
+different initialization vector for the compression operation
+on the first block of the message.
+        RSA Labs recommends that a people use an authenticator like
+X = MD5(key1, MD5(key2, Message)).  This resists the chosen plaintext
+attacks that were published at the crypto conference in Spring 1995.
+        There are also some very fast MAC algorithms being proposed
+these days.  As Phill Hallam mentioned, you may want to look at the
+work of Phil Rogaway.  At a minimum, make sure that your standard
+allows people to migrate from a current solution based on MD5 to a
+future solution based on new functions.  However, I would be relunctant
+to require new functions until they have had a chance to be tested
+by the cryptographic research community.
+                --Bob Baldwin
+
+
+
+
+

@@ -1,0 +1,151 @@
+From: C Matthew Curtin <cmcurtin@research.megasoft.com>
+Date: Wed, 6 Nov 1996 05:23:34 -0800 (PST)
+To: kb4vwa@juno.com (Edward R. Figueroa)
+Subject: Re: Information
+In-Reply-To: <19961105.131710.5207.1.kb4vwa@juno.com>
+Message-ID: <199611061316.IAA03157@goffette.research.megasoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> "Ed" == Edward R Figueroa <kb4vwa@juno.com> writes:
+
+Ed> I'm a new Cyberpunk!  I apologized if this is not the place to
+Ed> post this message request.
+
+It isn't.
+
+This is cypherpunks, not cyberpunks.
+
+Ed> I would like to know where to place my Public Key?  Note, I only
+Ed> have E-mail access at this time, and not the Net access, but could
+Ed> have a friend place the key for me.
+
+http://www-swiss.ai.mit.edu/~bal/pks-toplev.html
+
+Since you're email only, I'll humor you, and put the entire text of
+the instructions to the email interface to the PGP keyserver at the
+bottom of my message.
+
+Ed> Last, I would like to know once and for all, is PGP compromised,
+Ed> is there a back door, and have we been fooled by NSA to believe
+Ed> it's secure?
+
+No.
+
+------------------------- begin instructions -------------------------
+Using the E-mail interface to the keyserver
+
+Using the E-mail interface to the keyserver
+------------------------------------------------------------------------------
+
+[ Norwegian: For aa faa dette dokumentet paa norsk, send "HELP NO" til
+             pgp-public-keys@keys.no.pgp.net
+  German:    Fuer eine deutschsprachige Fassung dieses Textes senden Sie
+             eine Mail mit dem Subject "HELP DE" an die folgende Adresse
+             pgp-public-keys@keys.de.pgp.net
+]
+
+PGP Public Email Keyservers
+---------------------------
+
+There are PGP public email key servers which allow one to exchange public
+keys running using the Internet and UUCP mail systems.
+Those capable of accessing the WWW might prefer to use the WWW interface
+available via http://www.pgp.net/pgp/www-key.html and managers of sites
+which may want to make frequent lookups may care to copy the full keyring
+from the FTP server at ftp.pgp.net:pub/pgp/
+
+This service exists only to help transfer keys between PGP users.
+It does NOT attempt to guarantee that a key is a valid key;
+use the signatures on a key for that kind of security.
+
+Each keyserver processes requests in the form of mail messages.
+The commands for the server are entered on the Subject: line.
+---------------------------------------------- ======== -----
+Note that they should NOT be included in the body of the message.
+--------------------- === ---------------------------------------
+
+        To: pgp-public-keys@keys.pgp.net
+        From: johndoe@some.site.edu
+        Subject: help
+
+Sending your key to ONE server is enough.  After it processes your
+key, it will forward your add request to other servers automagically.
+
+For example, to add your key to the keyserver, or to update your key if it
+is already there, send a message similar to the following to any server:
+
+        To: pgp-public-keys@keys.pgp.net
+        From: johndoe@some.site.edu
+        Subject: add
+
+        -----BEGIN PGP PUBLIC KEY BLOCK-----
+        Version: 2.6
+
+        
+        -----END PGP PUBLIC KEY BLOCK-----
+
+COMPROMISED KEYS:  Create a Key Revocation Certificate (read the PGP
+docs on how to do that) and mail your key to the server once again,
+with the ADD command.
+
+Valid commands are:
+
+Command                Message body contains
+---------------------- -------------------------------------------------
+ADD                    Your PGP public key (key to add is body of msg)
+INDEX                  List all PGP keys the server knows about (-kv)
+VERBOSE INDEX          List all PGP keys, verbose format (-kvv)
+GET                    Get the whole public key ring (split)
+GET userid             Get just that one key
+MGET regexp            Get all keys which match /regexp/
+                       regexp must be at least two characters long
+LAST days              Get the keys updated in the last `days' days
+------------------------------------------------------------------------
+
+Examples for the MGET command:
+
+        MGET michael            Gets all keys which have "michael" in them
+        MGET iastate            All keys which contain "iastate"
+        MGET E8F605A5|5F3E38F5  Those two keyid's
+
+One word about regexps:  These are not the same as the wildcards Unix
+shells and MSDOS uses.  A * isn't ``match anything'' it means ``match
+zero or more of the previous character'' like:
+
+	a.*  matches anything beginning with an a
+	ab*c matches ac, abc, abbc, etc.
+
+Just try not to use ``MGET .*'' -- use ``GET'' instead.
+
+Note on the ``GET'' command: If at all possible, ftp the keyring from a
+server such as ftp.pgp.net:pub/pgp/keys rather than using the ``GET''
+command to return the whole ring.  Currently, this ring comes out to be
+over 50 files of 52k each.  This is a lot of files, and a lot of bother
+to get in the right order to run through PGP.
+
+
+Users should normally use the email address `pgp-public-keys@keys.pgp.net'
+or your national servers using one of:
+	pgp-public-keys@keys.de.pgp.net
+	pgp-public-keys@keys.nl.pgp.net
+	pgp-public-keys@keys.no.pgp.net
+	pgp-public-keys@keys.uk.pgp.net
+	pgp-public-keys@keys.us.pgp.net
+for the email interface, and `ftp.pgp.net:pub/pgp/' for FTP access.
+
+
+Users are recommended to use the "*.pgp.net" addresses above as these
+are stable and reliable.
+
+-------------------------------- end ---------------------------------
+
+-- 
+Matt Curtin  cmcurtin@research.megasoft.com  Megasoft, Inc   Chief Scientist
+http://www.research.megasoft.com/people/cmcurtin/   I speak only for myself.
+Hacker Security Firewall Crypto PGP Privacy Unix Perl Java Internet Intranet
+
+
+
+

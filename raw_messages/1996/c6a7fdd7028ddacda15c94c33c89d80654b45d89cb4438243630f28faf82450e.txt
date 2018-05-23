@@ -1,0 +1,88 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Sat, 2 Mar 1996 14:28:08 +0800
+To: perry@piermont.com
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <199602292135.QAA18937@jekyll.piermont.com>
+Message-ID: <199603010356.WAA10509@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+In suggesting key:// urls, I (without commenting) placed a path of
+/s/telnetd/ in a URL.  I was considering that a telnetd might need
+many keys and associated documents, all of which could be found in a
+directory.
+
+	gateway's master telnetd public key.
+	daily keys
+	policy statements about who may connect, or how
+	etc
+
+I expect that we could extend the syntax in such a way that a URL
+could contain most of the data we need.  Thus, the default document
+might be a 'cert of the day,' with possibly with references within the
+certificate to the master telnetd key, the hosts master key.
+
+	To expand, I was thinking of:
+
+	key://foo.bar.com/{u,s,h,d}/family/instance
+
+	The first two bits, the scheme (key) and host are pretty
+clear.  They're followed by an (arbitrary) grouping, of User, System,
+Host or Domain.
+
+	User is for user space certificates, such as personal
+certs, or possibly currently in use IPv6 keys.  System is for system
+daemons, such as telnetd.  Host is for host certificates, such as
+might be generated for a host to sign its daemon's keys.  Domain could
+be analogous to host, but for an entire domain.
+
+	Family is for natural groupings, such as telnetd or adam, or
+within a domain, certificates by host.  An thus a host's certificates
+would be available under h/main/cert.asc or d/mailhost/cert.asc.  It
+would be possible to extend this by date, to
+d/mailhost/96/march/cert.asc
+
+	Instance would then be the particular certificate, in a
+standardized namespace.
+
+	These are no longer particularly short in the verbose version,
+but they are capable of being optimized (by ommission) for the usual
+cases.
+
+Adam
+
+
+Perry E. Metzger wrote:
+
+| Carl Ellison writes:
+| > Key: ftp://ftp.clark.net/pub/cme/cme.asc
+| 
+| URLs are nice, but I'm not quite sure they are sufficient in practice,
+| though they are certainly theoretically sufficient. If I get a
+| document from someone, and it is signed, I'd like to be able to get
+| the key associated with the signature, and the URL is in theory enough
+| to do that. However, going in the opposite direction -- retrieving a
+| key associated with, say, a remote host's TELNET server, I'd like to
+| be able to query a server ask much more flexible questions than an FTP
+| URL would let me ask -- I might have a prefered public key system (RSA
+| versus DSS or what have you), I might want to be able to distinguish
+| between versions of the key, I might want to ask for all keys of a
+| certain class, etc.
+| 
+| In the end, we are probably going to need something in the way of key
+| servers, which may (or may not) imply either a new type of URL or
+| something other than a URL to do retrieval off of.
+| 
+| Perry
+| 
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

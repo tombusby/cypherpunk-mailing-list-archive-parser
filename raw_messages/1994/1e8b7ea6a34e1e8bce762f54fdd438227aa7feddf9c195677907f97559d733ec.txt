@@ -1,0 +1,48 @@
+From: mgream@acacia.itd.uts.edu.au (Matthew Gream)
+Date: Wed, 22 Jun 94 18:54:30 PDT
+To: B858JT@UTARLVM1.UTA.EDU (John A. Thomas)
+Subject: Re: Hardware RNG's
+In-Reply-To: <9406230104.AA16833@toad.com>
+Message-ID: <9406230156.AA26564@acacia.itd.uts.EDU.AU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"John A. Thomas" wrote:
+
+> Perry Metzger asks if the hardware random-number generator I
+> described in a post just before the list crashed could be
+> modified to use serial output.
+
+You don't even need to build a serial interface, per se, on the RNG
+device. So long as you have output levels consistent with RS-232, you
+can push a clock down DSR and the random bits down CTS.  The PC (or any
+computer for that fact) has no problem looking at these signals, so
+although specific software is required, it doesn't require a special
+async device driver.
+
+Just as with a parallel interface, you take the next sample when an
+inversion of the clock signal is detected. If the computer in question
+is too slow, the only side effect is a loss of bits as clock inversions
+as missed. If the computer is too fast, it just hangs around a while.
+
+If the RNG device has a negative rail (>=5v), no extra components are
+needed, otherwise you'll need to generate it, something like a Maxim
+RS-232 line driver (which only requires +5v/gnd and generates +/-
+RS-232 voltages) will do the trick. Certainly cheaper than a UART
+(which would require line drivers anyway).
+
+I remember a ham friend of mine telling me of a certain syncronous TNC
+that communicates with a PC device driver using CTS/RTS, I thought it
+was a cool hack at the time :-).
+
+cheers,
+Matthew.
+
+-- 
+Matthew Gream <M.Gream@uts.edu.au> -- Consent Technologies, (02) 821-2043
+Disclaimer: I'm only a student at UTS
+
+
+
+

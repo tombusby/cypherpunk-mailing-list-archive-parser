@@ -1,0 +1,53 @@
+From: "L. Todd Masco" <cactus@bb.com>
+Date: Fri, 15 Jul 94 14:11:32 PDT
+To: cypherpunks@toad.com
+Subject: Factoring
+Message-ID: <199407152117.RAA08087@bb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+I'm confused on a point, and I hope someone will clarify.  Factoring
+ keeps being described as a 2^(n/2) problem, yet AFAIK (I wrote the code
+ to do it the other morning before breakfast), it's doable in
+ linear (O(n)) time.
+
+What gives?
+
+(The algorithm I'm thinking of is:
+
+/* Algorithm:  To factor the number n, start with n boxes, each with one
+   "marble."  Remove last box, put it's marble in box #1.  If all boxes
+   have the same number of marbles, the number is factored.  If not,
+   remove last box.  Put marble in box #2.  Compare.  Etc.
+
+   possible optimizations: div by each prime l for a quicker starting
+	point.  (2,3...)
+   */
+
+factor(int target)
+{
+  int place = target;
+  int smallest = 0;
+  int load = 1;
+
+  while (place>1) {
+    place--;       /* N-1 boxes. */
+    smallest+=load;    /* Next box in line gets the marble */
+    if (place <= smallest ) {
+      load++;
+      if (place == smallest) 
+	printf(" Factor: %d by %d\n",place,load);
+      smallest = smallest-place;
+    }
+  }
+}
+--
+L. Todd Masco  | Bibliobytes books on computer, on any UNIX host with e-mail
+cactus@bb.com  | "Information wants to be free, but authors want to be paid."
+
+
+
+

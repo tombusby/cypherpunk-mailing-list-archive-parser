@@ -1,0 +1,67 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 13 May 1997 08:46:02 +0800
+To: Bill Stout <stoutb@pios.com>
+Subject: Re: 64-bit CPU 10x faster in crypto?
+In-Reply-To: <2.2.32.19970509173208.006a8a64@vaxf.pios.com>
+Message-ID: <3.0.1.32.19970512173423.00696768@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:32 AM 5/9/97 -0700, Bill Stout wrote:
+>During a Digital seminar, a statement was made that 64-bit CPUs are about
+>10x faster than a 32-bit CPU in dealing with crypto, and that Alphas are
+>favorites of Crypto-affiliated Gov't agencies.  
+
+They're certainly nice boxes :-)  But are they really more cost-effective
+than piles of cheaper Pentium-Pro-200 boxes?
+
+Crypto mainly falls into three kinds of calculations
+- bignum modular exp/mult/factor - Alphas are great at this
+- bit-twiddling for DES and friends - don't know if Alphas like this or not,
+	but doing multiple operations per very fast clock cycle won't hurt
+- byte- and word-oriented cryto, like RC4 and IDEA - 
+	64-bit words may be no better than 32-bit for this,
+	unless you can find ways to transform the problem
+	and use it for parallelism.
+	
+>I spoke with a reference
+>within Digital and the following logic was presented:
+>  o A 128-bit key is processed in two 64-bit chunks, vs four 32-bit chunks,
+>greatly reducing processing time.
+>  o The Alpha executes four instructions per clock cycle.
+>  o Alpha clock ratings are 600MHz this summer.
+>  o Caveat: The O.S. needs to support 64-bit processing (Digital UNIX or
+>Linux, not NT). 
+
+The _compiler_ needs to support 64-bit processing, 
+but you're not likely to need 64-bit address spaces
+or care too much how fast you can haul data from files into cache,
+since you're mostly going to be bashing bignums in cache anyway.
+If NT will let you run object code with 64-bit longs, you're ok.
+
+>I'm concerned about the strength of personal/corporate crypto in face of
+>large jumps in processing power.
+
+Important topic, but Moore's Law will be with us for a couple more years,
+so a factor of 10 in processing power is just 3-4 years speed increase.
+That means you need about 3 bits more key for your symmetric cypher or
+30 bits more for RSA or Diffie-Hellman public keys.  It's another nail in
+RC4/40 and DES's coffins, and another motivation not to use 512-bit RSA,
+but no problem for IDEA or RC4/128 or Triple-DES or 1024-bit RSA.
+
+A more serious effect of big fast chips is that they can drive
+better data collection machines - how much more pattern-searching 
+and traffic analysis can altavista.nsa.mil and dejanews.nsa.mil do
+with a multi-processor Alpha that they couldn't with their old DEC-20s?
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

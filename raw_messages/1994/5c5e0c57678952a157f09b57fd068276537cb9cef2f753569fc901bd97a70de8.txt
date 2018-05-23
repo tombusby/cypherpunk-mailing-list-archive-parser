@@ -1,0 +1,222 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 5 Mar 94 14:03:00 PST
+To: cypherpunks@toad.com
+Subject: Stealth PGP
+Message-ID: <199403052203.OAA21880@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I never saw the posting below here, only on sci.crypt.  It seems
+relevant to the present discussion.
+
+I did take a look at the source code to stealth pgp; it is quite simple and
+nicely done.  However it doesn't do anything special about disguising the
+encrypted session key.  It just strips off the two length bytes PGP puts
+at the front.  Not only is this revealing, it also doesn't always work.
+Apparently the program can't always reconstruct the original mpi length
+if the encrypted key's size happens to be much less than the modulus.
+It does print a warning in that case that the file won't be able to be
+de-stealth'd successfully.
+
+Stealth PGP is a nice start but it needs to be improved to be truly stealthy.
+
+> >From: qwerty@netcom.com (-=Xenon=-)
+> >Subject: Stealth for PGP Available.
+> >Message-ID: <qwertyCLpztC.4n8@netcom.com>
+> >Organization: PGP Info Clearinghouse.
+> >Date: Thu, 24 Feb 1994 08:34:24 GMT
+> >Lines: 188
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> I have placed Stealth1.0 up for anonymous ftp at netcom.com in
+> /pub/qwerty as stealth.tar.Z. I am not the author of Stealth. "Henry
+> Hastur" is the author. I will gladly forward mail to him if you tell me to
+> do so. My address is qwerty@netcom.com. So far it is only written for
+> Unix, so don't e-mail me asking for a DOS version or whatever. I'm just a
+> cheerleader and propagandist, who finally got some very kind soul to
+> "write me a real encryptor".
+> 
+> Why Stealth? Wired magazine just gave a plug for the Mac program "Stego"
+> (ftp to sumex-aim.stanford.edu in /info-mac/cmp) by Romana Machado, which
+> will, like any steganograph, hide a message in a carrier message. Problem
+> is, anybody can reverse it, and if you are using PGP, immediately tell
+> you are one of those drug dealing, child molesting, cryptography users ;-).
+> Once Stealth is incorporated into such steganographs, then people can't
+> easily tell that what they've extracted out of that picture of Madonna is
+> even a message at all. If they don't have the right secret key to decrypt
+> it, then all they get is garbage. "What message?!"
+> 
+> Questions:
+> 
+> 1) What does Stealth have to do with farming?
+> 2) How do stealth encryptors make the Clipper chip look like a stupid
+>    waste of YOUR tax money?
+> 
+> [Answers: 1) Zip, 2) By demonstrating that even if the Clipper keys are
+>  stolen, without your secret key they can't even tell you are using PGP].
+> 
+>  -=Xenon=-
+> 
+>                 Stealth V1.0 by Henry Hastur
+>                 ----------------------------
+> 
+> Stealth is a simple filter for PGP which strips off all identifying header
+> information to leave only the encrypted data in a format suitable for
+> steganographic use. That is, the data can be hidden in images, audio
+> files, text files, CAD files, and/or any other file type that may contain
+> random data, then sent to another person who can retrieve the data from
+> the file, attach headers, and PGP decrypt it.
+> 
+> Stealth is not intended to replace the standardized methods of using
+> encryption (e.g. ASCII-armoured PGP email) ; in an ideal world we would
+> all be able to send openly encrypted mail or files to each other with no
+> fear of reprisals, however there are often cases when this is not possible,
+> either because the local government does not approve of encrypted
+> communication, or perhaps because you are working for a company that
+> does not allow encrypted email but doesn't care about Mandelbrot
+> GIFs. This is where Stealth and steganography can come into play.
+> 
+> 
+> Compiling
+> - - ---------
+> 
+> Stealth has currently only been tested on BSD and SVR4 Unix (and as
+> such should work with most varieties of Unix), with both non-ANSI
+> compilers and ANSI compilers with 'minimal ANSI' flags. In order to
+> compile the program, you should just be able to extract the files
+> from the tar file provided, then type 'make'. If that fails you may
+> need to change the definition of CC and CFLAGS in the makefile to
+> get it to compile. On machines with gcc, the GNU C compiler, Stealth
+> can be compiled by simply changing the 'CC=cc' line in makefile to
+> 'CC=gcc'.
+> 
+> Stealth has not yet been tested on MS-DOS, but the only likely problems
+> are with 16-bit integers (you may need to change some occurrences of
+> int to long in order to get stealth to work), and you will need to
+> remove the -DUNIX flag from compilations. Hopefully, version 1.1
+> will be released shortly with full DOS compatibility.
+> 
+> 
+> Usage
+> - - -----
+> 
+> Stealth always reads from its standard input and writes to the standard
+> output, though when adding headers to data the data has to be stored in a
+> temporary file (see Security Concerns below).
+> 
+> Command line arguments :
+> 
+>         -c      Conventional encryption used rather than public key
+>         -a      Add headers (defaults to strip headers)
+>         -v      Verbose output.
+> 
+> Stealth needs to be able to find your pubring.pgp file, which it does
+> by first checking in the directory pointed to by $PGPPATH, then the
+> current directory.
+> 
+> 
+> Examples
+> - - --------
+> 
+> To encrypt a file with PGP and store it in the file pgp.stl prior to 
+> sending :
+> 
+> pgp -ef < secrets.dat | stealth > pgp.stl
+> 
+> To encrypt a file with conventional (IDEA) encryption, and pass to a
+> steganography program called steg_program :
+> 
+> pgp -fec < secrets.dat | stealth -c | steg_program
+> 
+> To take the output from a steganographic extraction tool, add headers
+> for key "Your Id", and decrypt :
+> 
+> steg_program | stealth -a "Your Id" | pgp -f > secrets.dat
+> 
+> To take the conventionally encrypted output from a steg program, attach
+> headers and decrypt :
+> 
+> steg_program | stealth -ac | pgp -f > secrets.dat
+> 
+> 
+> Limitations
+> - - -----------
+> 
+> Files can be signed, but can only be encrypted to one recipient - extra
+> RSA headers for all but the first recipient will be stripped from the
+> file. In addition, if you specify conventional encryption but pass an
+> RSA-encrypted file into the filter the RSA-block will be stripped. In
+> either case, stealth will print out warnings to inform you of this.
+> 
+> Stealth provides no support for ASCII-armoured PGP messages - it will
+> only work with the binary output format, and the output will have to
+> be converted to a useable form after processing, either with a
+> steganography program or a standard utility such as uuencode.
+> 
+> Finally, for technical reasons there are potential problems with public
+> keys of size (typically) 2^n + 1 or 2^n + 2 (e.g. 513 or 1026). If you
+> are encrypting to a key of a peculiar size, it's possible that the algorithm
+> used to add headers could fail, but fortunately this can be detected while
+> stripping the headers, and a warning will be printed. If this warning 
+> appears,
+> you will probably want to encrypt the data again until a suitably sized
+> RSA-block is created.
+> 
+> It is NOT neccesary to remove garbage data that the steganography program
+> may have added to the end of the PGP-encrypted data. PGP output contains
+> an encrypted end-of-file mark that allows the program to decrypt correctly
+> and ignore any trailing garbage.
+> 
+> 
+> Security Concerns
+> - - -----------------
+> 
+> After passing through the stealth filter, the PGP-encrypted data is
+> essentially white noise, with no identifying marks, and whilst it may
+> well have enough peculiarities for an expert cryptanalyst to recognize
+> it as encrypted data, the probability is much less than would be the
+> case with a PGP header identifying the recipient attached.
+> 
+> One other concern is that stealth has to create a temporary file when
+> reading in data to attach headers, and depending on the build options
+> chosen the program will store it in either $PGPPATH, the current directory
+> or /tmp. On Unix machines, the file will be deleted as soon as it is opened,
+> making it difficult to capture, but on other operating systems the file
+> will only be deleted when it has been used. (In either case the file will
+> be zeroed before being closed).
+> 
+> In addition, some operating systems will use temporary files on your disk
+> to emulate unix pipes (e.g. MS-DOS) - these files will not be zeroed when
+> finished with !
+> 
+> 
+> Export Restrictions
+> - - -------------------
+> 
+> Stealth is probably not covered by current export restrictions under the
+> US ITAR regs, but I'm not a lawyer, so if in doubt check it out yourself.
+> It was written outside the US and imported, so should soon be available
+> on some European ftp sites as well as US sites.
+> 
+> 
+>                                                 Henry Hastur
+> 
+> 
+> 
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: 2.3
+> 
+> iQCVAgUBLWwfawSzG6zrQn1RAQEjlQP/d85opZ6aMXfFpDu/KQz0DAzFxXNjiSZy
+> 9l56kIUkmAx0aT5qF3UAg2UTDagiJlFNz6UXFhEKBkDV4JLJPq5C8HtsdpCiSLWr
+> vVD2IEdASEd9ALCQMLS/YxVv6GG85n+phyoEV5ALsD1f0y4Nbk2Gfb+rexk5rN3a
+> hFYRUekVuNY=
+> =pkdK
+> -----END PGP SIGNATURE-----
+
+
+
+
+

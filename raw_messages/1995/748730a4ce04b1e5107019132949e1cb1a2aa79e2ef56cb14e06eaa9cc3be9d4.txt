@@ -1,0 +1,38 @@
+From: "Robert A. Rosenberg" <hal9001@panix.com>
+Date: Fri, 1 Sep 95 21:38:32 PDT
+To: Lou Poppler <lwp@mail.msen.com>
+Subject: Re: SSL search attack
+Message-ID: <v02130505ac6d4038dc74@[166.84.254.3]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:15 9/1/95, Lou Poppler wrote:
+>The ACK process and the allocation process are separate, and should
+>remain so.  They run on different servers, and they run as separate
+>processes in the unix version of brloop.  A little tweaking of brloop
+>could allow pre-fetching of the next segment to search, without any
+>effect on the ACK process.  I dislike the idea of a client sending an ACK
+>before it has searched the entire segment.
+
+I was not suggesting that. I was just suggesting that the initial request
+be for twice the amount of segments as you want to process during your
+reporting interval and that except when you are getting ready to shut down,
+you have one allocation ready as a spare in case you can't immediately be
+given another allocation when you ACK one.
+
+Example: I will be running for 8 Hours and I will report back every 30
+minutes. I get an Hours worth of segments (Chunk 1 +2) when I first
+connect. After 30 Minutes, I'm done with half of them. I then ACK that half
+(Chunk1) and request another 30 minutes worth of segments (for scanning at
+1H-1.5H). If I do not get it, I'm still working on the 2nd Chunk. At 1H, I
+ACK Chunk2 and ask for Chunk4 (also I ACK Chunk 1 and/or request Chunk 3 if
+either failed the first time at .5H). This continues until 7.5 when I ACK
+and do not request a Chunk 17 (since I already have or I am requesting
+Chunk 16 for the 7.5H-8H period).
+
+
+
+
+
+

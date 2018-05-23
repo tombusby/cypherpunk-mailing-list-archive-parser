@@ -1,0 +1,34 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Tue, 9 Apr 1996 08:21:32 +0800
+To: cypherpunks@toad.com
+Subject: why compression doesn't perfectly even out entropy
+Message-ID: <199604081756.NAA03659@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jon asked why it is that I contend that a compression algorithm won't
+in the general case even out the entropy of a semi-random stream.
+
+The answer can be obtained by simply trying to run gzip over an image,
+preferably one that hasn't been compressed. The results are, in
+general, very bad, even though images are highly compressable (even
+losslessly). I leave the why up as an exercise to the reader.
+
+I have said before and I will say again that the only reliable way of
+dealing with a stream that has some amount of randomness mixed in with
+it that you wish to distil down into pure random bits is to use solid
+reasoning to figure out how many bits of entropy per unit of input you
+can actually expect to see, add a large fudge factor to cover your
+ass, and then distil down using a cryptographic hash. Anything else
+makes me highly nervous. If you can't estimate the amount of entropy
+in an input stream from first principles, then you are probably in
+trouble and should seek an input stream that you have a better handle
+on.
+
+Perry
+
+
+
+

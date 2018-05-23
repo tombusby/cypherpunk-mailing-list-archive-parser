@@ -1,0 +1,50 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Thu, 24 Aug 95 10:28:40 PDT
+To: Jyri Kaljundi <jk@digit.ee>
+Subject: Re: brloop not working
+In-Reply-To: <Pine.3.89.9508241932.A6525-0100000@digit.ee>
+Message-ID: <"swan.cl.cam.:150900:950824172806"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I just dont seem to get brloop working.
+
+The server is being HAMMERED again ....
+
+There appears to be a failure mode whereby when busy, clients call up,
+say "HELO", then "QUIT" :-((
+
+This adds to the hammering :-((
+
+> It says:
+> Command failed -- brutessl missing ?
+> what seems to be wrong is that it tries to execute command:
+> brutessl -
+
+The code expects brclient to return one line which is the comamnd line flags
+for brutessl, followed by the config data.
+
+As brclient is failing, brutessl is being called without the expected args :-(
+
+> although brutessl does not have a command line option '-'. Why is the '-'
+> there after brutessl ?
+
+The first arg of brutessl is the file from which to read the config info.
+"-" is a unix convention for the file "stdin".
+
+SO: go grab brclient 0.12 which has a more efficient "-L" flag.
+    go read http://www.brute.cl.cam.ac.uk/brute/how2run.html
+	in particular, create .brloop.rc containing
+
+		tailored=true
+		checkcmds=false
+		BRNAME="Jyri Kaljundi"
+		BRID="jk@digit.ee"
+
+	which will stop it checking the commands, set the ID, etc ...
+	[[ NB: Other users should change BRNAME and BRID !! ]]
+
+
+
+

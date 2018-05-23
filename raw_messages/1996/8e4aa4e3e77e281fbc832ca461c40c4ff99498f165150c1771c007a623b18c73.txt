@@ -1,0 +1,74 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Sun, 27 Oct 1996 08:23:28 -0800 (PST)
+To: jk@stallion.ee>
+Subject: Re: some RSA questions
+In-Reply-To: <Pine.GSO.3.93.961027154749.25956C-100000@nebula>
+Message-ID: <Pine.LNX.3.95.961027121320.180A-100000@gak.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Sun, 27 Oct 1996, Jüri Kaljundi wrote:
+
+> The question is easy: how should I sign and encrypt the message?
+> 
+> 1) calculate a digest (MD5, SHA) from the message, sign the digest (or
+> should I sign the message contents + digest) with Bob's private key and
+> encrypt it with Alice's public key?
+
+This is the best way.  The message plus the signature should be encrypted
+using a symmetric algorithm and encrypt the key with Alice's public key.
+All RSA encryption and signing should be done according to the PKCS standard
+to avoid several nasty attacks that are successful if plain RSA is used.
+
+> 2) is there any idea to generate a DES key, encrypt the message with the
+> DES key, calculate a digest on (enc. message + DES key), sign the digest
+> and encrypt it with Alice's public key? The message is small, so the time
+> it takes to encrypt the message is not so important compared to higher
+> speed of DES.
+
+It is generally not a good idea to sign an encrypted message.  The signature
+should be calculated on the plaintext, not ciphertext.
+
+> 3) may be it would be good to encrypt the message with Alice's public key,
+> then generate a digest, sign the digest and then once more encrypt the
+> whole thing with Alice's public key?
+
+This has the same problem as #2.
+
+> Using a DES session key helps in case someone would find out Alice's
+> private key she uses to decrypt the message, but actually in this case it
+> is not so important to hide the message contents (what is important are
+> message integrity and sender authentication).
+> 
+> What are the suggestions what crypto package might I use: RSAref,
+> crypto++, SSLeay or some other? 
+
+SSLeay is pretty fast and does have code to use PKCS.  It probably doesn't make
+that much of a difference.  RSAref isn't necessary; RSA isn't patented outside
+the USA.  The other packages are faster and better than RSAref.
+
+Mark
+- -- 
+finger -l for PGP key
+PGP encrypted mail prefered.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQEVAwUBMnOazizIPc7jvyFpAQEx3Qf+M0BnhAcis6qzcsaVyRYyU13xvZArlx6I
+7zupsL8y/CozpIyvgo23qpEd8ShR0k+I+ZlqbpEuprFXEtC+i5cO8i+EECKY22i6
+R/4aAer0jMKZdovnxI/IHZ6boLengf4AcO9RE6tVm0chMbHyfn+j0e8FjtVKAoQe
+SPS+QHT6225ro62hoWWBcQtoL5ifbOn6lyIZk6lMGZzEnknXejLB/i5Uz5VMLyCh
+rsB4zNkpO5NCyHHscW5CdCV800+J5qRyzWCMxEM8GVtXmhm2vciOgGHhypJW37T9
+PFv9Mft2m+d2QAK9JosHaGEbVJ3zgGsqDrxmgqI+v6Sf8jceWKNw6A==
+=pBlb
+-----END PGP SIGNATURE-----
+
+
+
+
+

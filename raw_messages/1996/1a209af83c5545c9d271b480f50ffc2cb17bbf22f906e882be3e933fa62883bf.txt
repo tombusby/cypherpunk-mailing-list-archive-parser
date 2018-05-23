@@ -1,0 +1,88 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sun, 28 Jul 1996 19:52:19 +0800
+To: cypherpunks@toad.com
+Subject: Re: Twenty Beautiful Women
+In-Reply-To: <ae20465614021004eb6f@[205.199.118.202]>
+Message-ID: <199607280642.XAA08454@netcom5.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+tcmay@got.net (Timothy C. May) writes:
+
+ > You're both reading far too much into this problem. David
+ > S. specified "beauty," the personal judgment of the chooser.
+ > No deep philosophical meaning.
+
+Which means that given two candidates, we can order them with
+regard to beauty.  No other information is implied.
+
+ > Perhaps an equivalent formulation will make this clearer:
+
+ > One is passing through a town with 20 gas stations, with
+ > gas at various prices. The stipulation is that one cannot
+ > turn around. Once a gas station has been passed, there's no
+ > turning back. So, what is the best strategy for finding the
+ > lowest gas price (or shortest lines, or cleanest
+ > appearance, or brightest sign, or whatever one wants to
+ > analyze). Or even by the most beautiful girl standing in
+ > front, to return us to the original statement.
+
+ > So, you see, the problem is well-defined, with an elegant
+ > solution.
+
+Ahem.  I think the sticking point here lies in the translation of
+the phase "lowest gas price" into the appropriate function to be
+minimized.
+
+Suppose we have 20 gas stations with prices p[1] through p[20]
+which we have an equal chance of encountering in any of the 20!
+possible orders while driving through town.  We have a
+deterministic strategy for picking a station to buy gas at which
+tells us whether or not to buy at the current station as a
+function only of the rankings of the prices of gas at stations so
+far encountered, including the current one.
+
+This strategy maps every one of the 20! permutations of the gas
+stations into one of the 20 prices, namely the price at which we
+purchase gas by applying the specified strategy when stations are
+encountered in the given order.
+
+Finding the "best" strategy implies that we have some function
+whose domain is the set of such strategies, and whose output is a
+real number, such that the "best strategy" is one for which this
+number is minimized.  Calling this function the "lowest gas
+price" is somewhat misleading, since there are a variety of
+different notions of "average" we may use to condense the 20! gas
+prices a given strategy generates into a single number.
+
+If we were concerned about our wallets, we would probably want
+the strategy such that the arithmetic mean of gas prices was
+minimized over all orderings of stations, but this is a
+parametric notion, and requires that we know specific numeric
+values of prices, and not simply whether one price is bigger than
+another.
+
+Non-parametrically speaking, the only obvious way of ordering
+strategies is lexographically, where a strategy which yields more
+occurrences of the lowest ranked price is better than one which
+yields less, and if two strategies are equal in their yields of
+the N lowest ranked prices, we then compare them on the price
+ranked N+1.
+
+This is a function only of the relative rankings, but may not
+necessarily choose the strategy which on average results in the
+expenditure of the least amount of money.
+
+So while the solution may be elegant, I would argue that the
+problem, as given, is far from "well-defined", unless some
+explicit metric which admits arithmetic means is introduced.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

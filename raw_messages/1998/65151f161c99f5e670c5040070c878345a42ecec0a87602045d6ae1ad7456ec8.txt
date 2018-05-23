@@ -1,0 +1,107 @@
+From: Jim Choate <ravage@ssz.com>
+Date: Wed, 11 Feb 1998 03:01:58 +0800
+To: cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: Re: TEMPEST (fwd)
+Message-ID: <199802101901.NAA04520@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Forwarded message:
+
+> Subject: Re: TEMPEST
+> Date: Tue, 10 Feb 1998 18:32:28 +0000
+> From: Markus Kuhn <Markus.Kuhn@cl.cam.ac.uk>
+
+> You might want to consider to read van Ecks paper yourself:
+> 
+>   Wim van Eck: Electromagnetic Radiation from Video Display Units: An
+>   Eavesdropping Risk? Computers & Security 4 (1985) 269--286
+> 
+> If you don't have C&S in your library, you might also find a
+> scan on <http://www.eskimo.com/~joelm/tempest.html>
+
+I read the paper when it came out, but that's been a while now..:)
+
+Thanks for the reference, I'll take a look at it over the next few days.
+
+> > As I alluded to with the comment I made about integrating the received
+> > signals. The easiest way to do this sort of stuff with a small budget is
+> > with a flying capacitor integrator.
+> 
+> Please explain! I was more thinking in terms of digitizing everything
+> and solving large per-pixel systems of equations to separate the drifting
+> images, which does not sound much like something equivalent to a
+> single hardware integrator, but more like something that keeps a
+> workstation very busy for a few minutes.
+
+I'll describe how it works in hardware and then how I've done it in
+software.
+
+Hardware:
+
+You have a bank of n capacitors that are hooked to a amplifier via a
+mux. You use a counter that you start with some sort of trigger that
+sequentialy connects each cap in turn to the amplifier. The charge and as
+a consequence the voltage varies depending upon whether the new voltage is
+higher or lower than the last sample. The assumption being that the signal
+itself is time invariant and that the variations in signal strength are
+noise and random in nature. After only 3-4 cycles through the cap bank you
+begin to pull a workable signal out of the noise. The nice thing is that
+this works for signals that are below the noise floor and buried in the
+grass.
+
+In a VanEck monitoring situation you'd need a bank of n capacitors where n
+is the number of horizontal pixels. You will also need to array each bank
+into a m row matrix where m is the number of scan lines. You can get around
+some of the bulk by using a gyrator circuit to synthesize the capacitor and
+some sample-and-holds to synthesize the array.
+
+The advantage here over software is that this signal can be sampled as its
+built in real-time (use instrumentation amps) unless you happen to have
+dual-port ram in your computer (I've never had access to such hardware) and
+fed to whatever equipment you want to process it.
+
+Software:
+
+You take a A/D converter and drive an array with it. You sync it the same
+sort of way as the hardware methods above. Each element in the array
+contains the current estimate for that particular sample of the total
+waveform. Each time you come back to the same array element you compare the
+last value to the new value. You take the value that is half-way between the
+two and store that as the new array value for the next cycle. In short order
+a signal comes out.
+
+Either the hardware or software method will naturaly integrate the signal
+within the sample window because of the capacitor effect. This compensates
+for clock and signal jitter quite nicely.
+
+This method will require a D/A conversion process if you want to feed it
+to any external equipment. Though it should be perfect for Van Eck
+monitoring. Simply use your video frame buffer as your sample storage array.
+
+Enjoy.
+
+
+    ____________________________________________________________________
+   |                                                                    |
+   |                   The obvious is sometimes false;                  |
+   |                   The unexpected sometimes true.                   |
+   |                                                                    |
+   |                                       Anonymous                    |
+   |                                                                    |
+   |                                                                    | 
+   |            _____                             The Armadillo Group   |
+   |         ,::////;::-.                           Austin, Tx. USA     |
+   |        /:'///// ``::>/|/                     http://www.ssz.com/   |
+   |      .',  ||||    `/( e\                                           |
+   |  -====~~mm-'`-```-mm --'-                         Jim Choate       |
+   |                                                 ravage@ssz.com     |
+   |                                                  512-451-7087      |
+   |____________________________________________________________________|
+
+
+
+
+

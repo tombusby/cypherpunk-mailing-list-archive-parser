@@ -1,0 +1,50 @@
+From: "Brian A. LaMacchia" <bal@martigny.ai.mit.edu>
+Date: Wed, 31 Jan 1996 22:38:27 +0800
+To: rsalz@osf.org
+Subject: Re: Lotus Notes
+In-Reply-To: <9601310019.AA18345@sulphur.osf.org>
+Message-ID: <9601310246.AA14482@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: Rich Salz <rsalz@osf.org>
+   Date: Tue, 30 Jan 1996 19:19:13 -0500
+   Cc: cypherpunks@toad.com
+   Sender: owner-cypherpunks@toad.com
+   Precedence: bulk
+
+   >I find this very interesting. RSA prohibits its licencees from using RSA
+   >software with truly secure keylenghts.
+
+   Hunh?  I could find no mention of keylength or keysize in the RSAREF
+   documents I had around.  I'm at home now, but I also recall no mention
+   of keysize or keylength in the license OSF has, either.
+
+In RSAREF 2.0 this is covered by clause 2(d) in the license:
+
+     d.   Prior permission from RSA in writing is required for any
+          modifications that access the Program through ways other
+          than the published Program interface or for modifications
+          to the Program interface. RSA will grant all reasonable
+          requests for permission to make such modifications.
+
+The published interface references the following constants in source/rsaref.h:
+
+/* RSA key lengths.
+ */
+#define MIN_RSA_MODULUS_BITS 508
+#define MAX_RSA_MODULUS_BITS 1024
+#define MAX_RSA_MODULUS_LEN ((MAX_RSA_MODULUS_BITS + 7) / 8)
+#define MAX_RSA_PRIME_BITS ((MAX_RSA_MODULUS_BITS + 1) / 2)
+#define MAX_RSA_PRIME_LEN ((MAX_RSA_PRIME_BITS + 7) / 8)
+
+As part of the agreements leading to the release of MIT PGP 2.6 we
+received explicit permission from RSADSI to increase
+MAX_RSA_MODULUS_BITS to 2048.
+
+					--bal
+
+
+
+

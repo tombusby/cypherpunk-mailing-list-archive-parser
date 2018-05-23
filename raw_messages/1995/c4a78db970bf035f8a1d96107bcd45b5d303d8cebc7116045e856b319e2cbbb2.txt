@@ -1,0 +1,91 @@
+From: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Date: Sun, 27 Aug 95 17:42:04 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Server congestion
+Message-ID: <199508280041.RAA22255@Csli.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I talked about acks of acks in a previous message, and I guess is was
+somewhat vague there.
+
+What happened, according to my uninformed view, during the SSL2
+challenge was that the server got congested, and had problems with
+both answering to key allocation requests and ack replies. I guess 
+that the load of the machine was so high that it lost packets in the
+input queues.
+
+Client -----> UDP/Key allocation req ----> 
+Client -----> UDP/Key allocation req ----> 
+Client -----> UDP/Key allocation req ----> Server ---+
+                                                     | alloc
+Client <------- UDP/allocation reply ----------------+
+  |
+  | working...
+  | 
+Client ------- UDP/ack ------------------> ??
+
+One problem was that the client believed that the ACK had arrived
+at the server if it had sent it off, not counting with the possibility
+of the ACK being lost on the way.
+
+I instead propose that the Server sends a acknowledgement
+back to the client once it has received an ACK from a client.
+
+  | working...
+  | 
+Client ------- UDP/ack ------------------> Server -+
+                                                   |
+Client <------ UDP/Server-ack ------------ Server -+
+
+And then the client knows the server actually received the ACK
+and has incorporated it into its table.
+
+The client has to handle the case that either the Ack or the
+Server-ack is lost. I propose it doesn't retransmit immediately,
+but rather waits until next time it has to ack something, and 
+piggybacks the old ack onto the new one.
+
+Client -----> UDP/Key allocation req ----> 
+Client -----> UDP/Key allocation req ----> 
+Client -----> UDP/Key allocation req ----> Server ---+
+                                                     | alloc
+Client <------- UDP/allocation reply ----------------+
+  |
+  | working...
+  | 
+Client ------- UDP/ack1 ------------------> ??
+  | 
+"oops, oh well, lets try later."
+  |
+Client -----> UDP/Key allocation req ----> Server ---+
+                                                     | alloc
+Client <------- UDP/allocation reply ----------------+
+  |
+  | working...
+  | 
+Client ------- UDP/ack2/ack1 ------------> Server -+
+                                                   |
+Client <------ UDP/Server-ack {1,2} ------ Server -+
+  | 
+
+There are countermeasures if either part doesn't get messages for some
+reason. 
+
+If the server doesn't see the ACK for a block, it might give that
+block out to someone else.
+
+If the client is unable to retrieve a block from the server, I suggest
+it just picks a random block and starts working on it. I may very
+well not be allocated to someone else, and then the client was able
+to do something good in the meantime even though it didn't get a
+proper key alloc. 
+
+/Christian
+
+
+
+
+

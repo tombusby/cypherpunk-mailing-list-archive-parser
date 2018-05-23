@@ -1,0 +1,46 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 15 Nov 1997 05:28:46 +0800
+To: jim@mentat.com
+Subject: Re: smaller f00f.c
+In-Reply-To: <9711141643.AA18973@mentat.com>
+Message-ID: <199711142008.UAA05152@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Jim Gillogly <jim@mentat.com> writes: (Jim Gillogly)
+> Adam says:
+> > (*f)()="\360\017\307\310";main(){f();}       /* 38 chars */
+> > 
+> > Compiled with gcc.
+> 
+> long main=0xc8c70ff0;	/* also gcc; 21 chars, and not my invention */
+> Without the "long" you get a warning, but it compiles anyway... 16 chars.
+
+Wow!  Completely out-classed :-)
+
+I did try this one in my efforts:
+
+main="\360\017\307\310";
+
+which compiles, but obviously doesn't work.
+
+So... I see the light now: you can write var=5; and it'll assume int,
+and so if you do main=5; it will create asm label _main against a
+memory location initialised to that constant ... due to lack of type
+checking, that'll make the linker happy and voila.  Excellent.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

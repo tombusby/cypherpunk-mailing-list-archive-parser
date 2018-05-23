@@ -1,0 +1,50 @@
+From: Alan Barrett <barrett@daisy.ee.und.ac.za>
+Date: Fri, 27 May 94 00:02:19 PDT
+To: Paul Ferguson <paul@hawksbill.sprintmrn.com>
+Subject: Re: Malformed Signatures?
+In-Reply-To: <9405270230.AA05721@hawksbill.sprintmrn.com>
+Message-ID: <Pine.3.89.9405270820.r180-0100000@newdaisy.ee.und.ac.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> a "pgp -kc paul" PGP 2.6 declares my signatories: 
+>             (Malformed or obsolete signature format)
+> and asks if I would like it to:
+>             Remove bad signatures (Y/n)? 
+> Does this mean what I think it means? 
+
+A PGP signature is made like this (I think):
+
+  1.  Decide what to sign.  In the case of a signature on a key, it
+      includes the key and the user-ID to which the signature will
+      attest, the date, and some other stuff.
+
+  2.  Generate a digest of the message to be signed.  This uses MD5.
+
+  3.  Encapsulate the digest in some way.  The old way used some simple
+      padding, and the new way uses slightly more complex padding.
+      PGP versions up to 2.2 always generated the old format, but 2.2
+      could understand both formats.  PGP 2.3 could understand both
+      formats, and could generate either format under control of the
+      "pkcs_compat" option.  PGP 2.5 and 2.6 don't like the old format,
+      and I am not sure how easy it would be to teach them to understand
+      it.
+
+  4.  RSA encrypt the encapsulated digest, using the secret key of the
+      signer.  The results obviously depend on the type of encapsulation
+      chosen in step 3.
+
+  5.  Encapsulate the encrypted digest and some other stuff in a PGP
+      "packet".
+
+If you want PGP 2.5 and 2.6 to understand your signatures, you have to
+use the PKCS encapsulation at step 3 above.  This means that you have to
+ask people who have already signed your key using the old method to sign
+it again using the new method.
+
+--apb (Alan Barrett)
+
+
+
+

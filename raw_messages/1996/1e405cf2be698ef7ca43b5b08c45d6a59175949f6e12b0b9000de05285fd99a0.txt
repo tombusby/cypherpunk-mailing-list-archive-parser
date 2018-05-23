@@ -1,0 +1,214 @@
+From: Raph Levien <raph@c2.org>
+Date: Sat, 24 Feb 1996 10:42:23 +0800
+To: Brad Knowles <brad@his.com>
+Subject: Re: Conference report - resolving security workshop
+In-Reply-To: <v01540a15ad5338323efb@brad.his.com>
+Message-ID: <Pine.SUN.3.91.960223140644.26994A-100000@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(Note: subject line restored - it got chopped because I misspelled it 
+as "subect" and used raw sendmail. Also, the original text, with small 
+corrections, is available at http://www.c2.org/~raph/report.html)
+
+On Fri, 23 Feb 1996, Brad Knowles wrote:
+
+> At 4:55 PM 2/22/96, Raph Levien wrote:
+> >    The biggest problem with S/MIME is that the signed and encrypted
+> > format reveals who made the signatures. Obviously, this has severe
+> > consequences for anonymous mail. Believe it or not, a lot of people
+> > care.
+> 
+>     IMO, this has to be fixed as well.  The good thing is that
+> the folks who have an investment in S/MIME seem to be willing to
+> make changes to the specification to suit the desires of the
+> larger secure Internet email connunity at large.  I hope that
+> companies like VeriSign (that help other comapnies to implement
+> this kind of technology) also agree to follow suit.
+
+   This can be fixed as easily as allowing the protected MIME part to be
+an S/MIME signed message. The S/MIME spec will need to recommend that
+mailers deal gracefully with this case; if not, there will be user
+interface disasters. I'd recommend that mail readers treat recursive
+encrypted and signed S/MIME messages identically to non-recursive (i.e. 
+PKCS #7 native). Even better would be for the RSA's S/MIME toolkit to be 
+able to perform the translation automatically.
+
+   I agree with Brad that it needs to be fixed. If a large installed base 
+of S/MIME clients gets deployed that cannot handle the S/MIME format 
+hiding the signatory, then we will have failed in an important way.
+
+> >    One strength of PGP has traditionally been its unity. PGP means one
+> > message format (the PGP one), one suite of crypto algorithms (the PGP
+> > one), one key format (the PGP one), one application (PGP itself). Most
+> > of the other proposals are modular in some way, especially with
+> > respect to algorithms. PGP is moving in that direction.
+> 
+>     IMO, unity in this case is both a benefit and a deficit.
+> Because it has not historically been separable, it's either all
+> or none of PGP, and that's not an implementory style that's
+> likely to win friends or marketshare.  To that degree, I think
+> PGP has probably been less successful than it could have been.
+> To the degree that this is changing is one indicator of its
+> potential to continue to be a player.
+
+   Agreed. The changes to PGP could be good, bad, or some combination. My 
+real point is that whatever the reasons have been for PGP's success or 
+failure, they won't resemble much the reasons why PGP will succeed or 
+fail in the future.
+
+> >    Earlier, I mentioned that two and a half protocols survived the
+> > day. The remaining one is MSP. It's actually not a bad protocol. It
+> > has two features that none of the others have: the ability to label
+> > classified messages, and a cryptographically strong signed receipt.
+> > Both of these functions are highly important for government users. It
+> > looks like government suppliers are going to go ahead and implement
+> > it, and the government is going to use it.
+> 
+>     Although these benefits are present in the current MSP, I
+> don't see anything inherent in MSP that makes it necessarily
+> superior in these areas.  If you were doing normal MIME-type
+> receipts (whatever that means, since I think there are three
+> different drafts under way currently), and you simply added the
+> ability to cryptographically sign a timestamp in the "proper"
+> MIME receipt type, then MSP would lose this advantage.
+> 
+>     I think labeling could potentially be done by follow-on
+> versions of other packages as well, since I think we all agree
+> that generic labeling which can be used both for standard
+> gov't-style classification levels and compartments, as well as
+> for business-style sensitivity labeling.  In fact, I'd almost be
+> inclined to say that it would likely be as easy (or easier) to
+> create a new general-purpose labeling system for use with any of
+> the competitors than it would be to modify MSP to support
+> business-style labels in addition to the gov't-style labels I'm
+> sure it has today (maybe it already has labels, but I don't
+> think that this is that tough of a problem to solve in any
+> event).
+
+   One of the action items from the conference was for the contenders to
+converge on any pieces that were not gratuitously different. For S/MIME
+and PGP/MIME to simply adopt receipt and labelling standards, even to lift
+them wholesale from MSP, would be well in accordance with this goal, I
+think. 
+
+>     This is where I say that what we need to do is neither cave
+> in to the limitation imposed by the gov't nor do we accept that
+> we have to rip out encryption from our products to be shipped
+> overseas or used in the U.S. on the behalf of overseas
+> customers.  We need to (on a daily basis) wipe the gov't nose in
+> this mess that they've created, until such time as they learn
+> that it stinks and that they shouldn't do that indoors anymore.
+> 
+>     ITAR be damned.
+
+   Hear, hear. My point is that it isn't just cypherpunk advocacy of
+strong crypto. Any company that ships a 40-bit product is going to get
+badly burned by well publicized breaks. Their customers are going to feel
+betrayed. They thought they were buying a "secure" solution, but they
+weren't.
+   Perhaps this is putting it a bit strongly, but using the word "secure" 
+in conjunction with a 40-bit produce borders on fraud. Perhaps it makes 
+more business sense to defend against the ITAR on First Amendment grounds 
+than to defend against fraud charges on ITAR grounds. If not a lawsuit, 
+then a disillusioned customer base, which is just as bad.
+
+> >    If care about offering crypto in the non-US market, form a
+> > partnership with overseas developers to add the crypto.
+> >
+> >    Non-US developers, now is a fabulous opportunity. Get those
+> > implementations underway, the sooner the better.
+> 
+>     And own the crown jewels to every single company in the U.S.
+> all that much faster.  It's not like the NSA is help to protect
+> them from espionage that originates from competitors or from
+> what used to be the political espionage organizations that are
+> now fighting to keep their jobs.  It's not like companies will
+> have a single moments interest in having to deal with two
+> different standards for their U.S. customers and overseas
+> customers, or worse, their U.S. subsidiaries and their overseas
+> subsidiaries.
+> 
+> 
+>     Everybody should buy their encryption technology from a
+> country where this kind of thing isn't under export control, and
+> then ship (or operate) from that country.  When all the
+> companies have moved overseas somewhere (or at least moved the
+> official bits that they have to move in order to make this
+> happen), maybe the U.S. gov't will wake up.  But of course, by
+> then it will be too late.  And the NSA (and other governmental
+> entities) will have succeeded in doing "Very Grave Harm to
+> National Security Interests" because there won't be much of a
+> Nation left behind when all the companies (and therefore
+> workers) are overseas.
+> 
+> 
+> 
+>     Sorry, this has been a *major* sore point with me for years.
+> 
+> >    Most serious email vendors plan to "implement everything that's
+> > real." That means S/MIME for sure, PGP/MIME assuming they can get
+> > their hands on a decent implementation, and MSP if they sell a lot of
+> > stuff to the government.
+> 
+>     I'm hoping that we'll be able to significantly reduce the
+> playing field of "what's real".
+
+   I think we just did. The only other way for the field to reduce any
+more is for PGP to tank (unlikely), for RSA to drop S/MIME (unlikely) or
+for MSP to disappear (won't happen entirely - witness X.400). 
+
+> >                                              Over the next few months,
+> > we will see some very high profile, mass market implementations.
+> 
+>     You may see them from others, but I don't think you're
+> likely to see them from us anytime soon.  See my comments above
+> about ITAR.  We're a world-wide company (and trying to become
+> even moreso) with world-wide customers.  Hell, we could even get
+> completely cut off from certain countries because they deem that
+> we're providing access to "illegal" or "unapproved" encryption
+> technologies.
+
+   I was speaking about others ;-). A lot of people have announced that 
+they're going to implement S/MIME. The remaining question is whether 
+they're really going to do so. Without sticking out my neck and naming 
+individual companies, the impression I got is that they are.
+
+> >    At the end of the meeting, Dave asked the room for consensus on
+> > several points. First, there was strong consensus that the encryption
+> > protocols converge on multipart/security for their signed message
+> > format.
+> 
+>     You mean "multipart/signed", right?
+
+   Yes.
+
+>     There was also strong support for changing the
+> "octet-stream" definition of "multipart/encrypted" to something
+> more meaningful (hopefully simply state that it's one of the
+> standard MIME types, and can presumably be safely converted to
+> and from things like base64 or quoted-printable, or that its
+> canonical form is one of the seven-bit safe formats).  With that
+> change, there was strong support that I heard voiced for
+> supporting "multipart/encrypted" as well.
+
+   There was support, but was there consensus? My brain is just too fuzzy 
+to remember.
+
+> >    I'd say that's quite a remarkable achievement for a such a
+> > difficult area.
+> 
+>     Agreed.  I think Dave Crocker deserves a lot of credit for
+> how well he managed to shepard us "cats" and that he didn't let
+> things get far enough off-track that we turned into "hostile
+> cats".
+
+   Absolutely.
+
+Raph
+
+
+
+
+

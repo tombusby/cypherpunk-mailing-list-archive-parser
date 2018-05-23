@@ -1,0 +1,52 @@
+From: jthomas@kolanut.mitre.org (Joe Thomas)
+Date: Tue, 29 Jun 93 05:26:56 PDT
+To: cypherpunks@toad.com
+Subject: Re: REMAIL: problems
+Message-ID: <9306291227.AA00990@kolanut>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > 	I've been thinking a little bit about the problems with unreliable
+> > remailers.
+> 
+
+> I had another suggestion that might be helpful for people that are
+> chaining through many remailers, but it would require an addition or two
+> to existing remailers.
+. . .
+> If the remailer knows that the message is going to another remailer, it
+> can expect a 'reply' from that remailer once the message has been
+> processed (forwarded), say within 48 hours.  Give each message a serial
+> number and the remailer a memory...  If the message is not acknowledged
+> within the timeout period, it skips a hop and goes to the next remailer
+> (or the destination).
+
+This is a serious misfeature.  An essential goal of remailer design is that  
+they be stateless.  A message is forwarded, then immediately forgotten.  Any  
+historical information about messages that have gone through is a potential  
+weakness.  Message serial numbers are a perfect audit trail.
+
+> The problem with this approach is that the remailer must store messages
+> locally for up 48 hours (well more if all of the hops were down)...  I
+> can't see (as Sameer alluded to) a way to have reliability (which sort of
+> implies, especially with the above approach, storage) and secrecy (which
+> implies quick and dirty 'less safe' message handling).
+
+Consider cryptographic secret-sharing protocols.  If we have 20 remailers,  
+each remailer could split his key into 20 pieces, 15 of which would be  
+necessary to reconstruct the key.  When a remailer goes down, the key could  
+be reconstructed and given to a substitute remailer.  The system can survive  
+the loss of 5 remailers, and would require a collaboration of 15, or 3/4 of  
+the remailer operators to intentionally break the security.
+
+Joe
+(working on my .sig; I don't speak for MITRE)
+--
+Joe Thomas <jthomas@kolanut.mitre.org>          Say no to the Wiretap Chip!
+PGP key available by request, finger, or pgp-public-keys@toxicwaste.mit.edu
+PGP   key   fingerprint:   1E E1 B8 6E 49 67 C4 19  8B F1 E4 9D F0 6D 68 4B
+
+
+
+

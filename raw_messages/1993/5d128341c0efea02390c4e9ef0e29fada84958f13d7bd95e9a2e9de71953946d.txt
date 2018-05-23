@@ -1,0 +1,45 @@
+From: eric@parallax.com (Eric Messick)
+Date: Tue, 5 Jan 93 01:01:56 PST
+To: cypherpunks@toad.com
+Subject: RFC-822 header processing in perl
+Message-ID: <9301050049.AA07963@parallax.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've written a perl script to parse RFC-822 style headers.  It was a
+good deal harder than I had thought it would be.  Since it's over 300
+lines (with comments) I won't post it, but will mail it to anyone who
+wants to play with it.  It has the following features:
+
+Doesn't touch anything unless you ask it to.  Leaves the ordering and
+whitespace/folding of header lines unchanged.
+
+Allows you to replace any header line (which appears only once) with
+an arbitrary value, which is appropriatly folded on output.
+
+Allows you to delete any header line, or add a header line to the end
+of the header.  These are special cases of replacing a header line.
+
+Allows you to access the value (stuff after the :) of any header line.
+
+Given a list of addresses, returns an array of canonicalized addresses.
+
+The last item is the hard part.  It correctly parses the sample
+addresses in the RFC-822 paper, as well as some really gnarly looking
+junk that I threw at it.  It correctly handles the various types of
+quoted strings, and backslash quoting, not splitting addresses at
+quoted commas.  It removes nested comments from addresses.  It deletes
+the group name from a list of addresses without screwing up quoted
+colons.
+
+It should be useful as a first step in alias processing.  That's what
+I'll be adding next, when I figure out exactly how I want to do it.
+
+-- eric messick
+eric@toad.com
+
+
+
+

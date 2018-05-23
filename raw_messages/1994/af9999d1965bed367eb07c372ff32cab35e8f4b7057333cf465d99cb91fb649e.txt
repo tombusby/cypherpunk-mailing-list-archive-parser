@@ -1,0 +1,95 @@
+From: khijol!erc@apple.com (Ed Carp [Sysadmin])
+Date: Sat, 17 Sep 94 00:10:37 PDT
+To: cypherpunks@toad.com
+Subject: PKZIP encryption broken
+Message-ID: <m0qltoG-0004EcC@khijol.uucp>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+- From a recent comp.risks post:
+
+Newsgroups: comp.risks
+Subject: RISKS DIGEST 16.39
+Message-ID: <CMM.0.90.1.778901594.risks@chiron.csl.sri.com>
+Date: 7 Sep 94 01:33:14 GMT
+Sender: usenet
+Reply-To: risks@csl.sri.com
+Distribution: world
+Organization: The Internet Gateway Service
+Approved: risks@csl.sri.com
+Lines: 624
+
+RISKS-LIST: RISKS-FORUM Digest  Tuesday 6 September 1994  Volume 16 : Issue 39
+
+         FORUM ON RISKS TO THE PUBLIC IN COMPUTERS AND RELATED SYSTEMS 
+   ACM Committee on Computers and Public Policy, Peter G. Neumann, moderator
+
+***** See last item for information on RISKS (comp.risks) *****
+
+  Contents:
+PKZIP encryption broken (known plaintext attack) (Paul Carl Kocher)
+- ----------------------------------------------------------------------
+
+Date: Sun, 4 Sep 1994 17:31:28 -0700
+From: Paul Carl Kocher <kocherp@leland.Stanford.EDU>
+Subject: PKZIP encryption broken (known plaintext attack)
+
+I finally found time to take a closer look at the encryption algorithm
+by Roger Schlafly that is used in PKZIP and have developed a practical
+known plaintext attack that can find the entire 96-bit internal state.
+
+The basic encryption algorithm has four steps, two of which are based on
+linear shift registers, one is like a linear congruential, and the final
+converts the contents of an internal state register into an 8-bit value to XOR
+onto a plaintext byte.  A complete description of the algorithm is included in
+the file APPNOTE.TXT, which is included with PKZIP version 1.1 (check Archie
+for "pkz110.exe").
+
+Although the algorithm is substantially better than the toy ciphers used in
+many products, I have developed a practical known plaintext attack that finds
+the 96 bit internal state.  Unlike the ZipCrack program I released a couple
+years ago, this attack finds the internal state registers directly and does
+not involve a brute-force attack on the password.  If adequate known plaintext
+is available, my attack will find the state, regardless of the password's size
+or content.
+
+My attack is an improvement on a known plaintext attack described in a paper
+by Biham (unpublished work) that takes 2^38+ operations.  My improvements
+reduce the amount of work required by approximately a factor of 1500 with 200
+bytes of plaintext.  With less plaintext the attack will take somewhat more
+time, but just 40 bytes should be enough to be practical.  I've written code
+for all steps of the attack; a version written in C with a few optimizations
+in inline assembly runs in less than a day on my '486.  The attack will work
+with versions 1.1 or 2.xx of PKZIP and other programs using the same
+algorithm.
+
+A more in-depth description of the attack will be made available soon, but I
+wanted to let people using PKZIP (and any other programs that use the same
+algorithm) know immediately about the weakness.
+
+Paul C. Kocher  kocherp@leland.stanford.edu  Independent data security 
+  consultant/contractor.  415-323-7634  [Disclaimers removed.  PGN]
+- -- 
+Ed Carp, N7EKG    			Ed.Carp@linux.org, ecarp@netcom.com
+
+Finger ecarp@netcom.com for PGP 2.5 public key		an88744@anon.penet.fi
+                       ** PGP encrypted email preferred! **
+
+"What's the use of distant travel if only to discover - you're homeless in
+your heart."  --Basia, "Yearning"
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLnqUyiS9AwzY9LDxAQECcQP/cYtGpd8882KPmdPN0N1MZf4sjo4Mu8SY
+V9zEcRnU7VXU1WgqJiGSgyOQbYAaRxDSudtYKH5DHY+qvqLE397nkRuv1qjf5d9b
+PZ5Pw4YOEhAxVeq4DDSLYO5Lf2T4qs7IjVMETZjibV0feodbridG9XliEFdhrPWK
+vVhX3ZMWXH8=
+=oH6T
+-----END PGP SIGNATURE-----
+
+
+

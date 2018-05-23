@@ -1,0 +1,44 @@
+From: koontz@MasPar.COM (David G. Koontz)
+Date: Fri, 12 Jan 1996 19:16:52 +0800
+To: cypherpunks@toad.com
+Subject: VHDL des model
+Message-ID: <9601120256.AA24690@argosy.MasPar.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ 
+A mimimal DES chip implementation can be found at:
+ 
+ripem.msu.edu:/pub/crypt/des/vhdl_des.tar.z
+ 
+-rw-r-----  1 mrr      ftpsec      93630 Jan 12 02:01 vhdl_des.tar.z
+ 
+It was written to go with a paper on DES Hardware I'm putting the
+finishing touches on.  Note that this site requires a password to
+belong to group ftpsec to download.
+ 
+It will encrypt in 47 clocks (8 IP, 29 Key Schedule, 8 FP) or
+decrypt in 46 clocks (28 Key Schedule), and will fit in some of
+the larger FPGAs.
+ 
+The paper, when finished, will describe various performance enhancements
+such as double buffered IP and FP (which is covered by an Ultron patent,
+although probably invalid), direct key schedule  (16 clocks), or
+superscalar DES (approaching 1 clock per 64 bit block).
+
+For any hardware wonks, this is done in Synopsys VSS, although the
+README file contains enough information for other VHDL implmentations.
+
+There are also 4 or 5 'C' programs for generating VHDL files of the
+S Boxes in various configurations, and a sample 'C' DES program done
+in 1988 for the original UNIX libdes (source included).  The 'C' program
+can be used to generate equivalent structures for debugging your own
+DES hardware variations.
+
+The test vectors are from NBS Special Pub 500-20 (circa 1978).
+
+
+
+
+

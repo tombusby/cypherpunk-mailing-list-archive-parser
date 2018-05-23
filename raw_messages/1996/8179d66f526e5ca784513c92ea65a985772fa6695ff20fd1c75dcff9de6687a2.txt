@@ -1,0 +1,55 @@
+From: Damien Lucifer <root@HellSpawn>
+Date: Thu, 29 Aug 1996 12:14:02 +0800
+To: stewarts@ix.netcom.com
+Subject: Re: Mimic Function Stego Programs?
+In-Reply-To: <199608282111.RAA17052@cbig1.att.att.com>
+Message-ID: <Pine.LNX.3.91.960828213126.4972A-100000@HellSpawn>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 28 Aug 1996 stewarts@ix.netcom.com wrote:
+
+> Mimic Functions?  I'm looking for something that you can hand a grammar
+> and a set of bits that will produce sentences in the grammar,
+> plus a decoder that can take the sentences and reconstruct the bits.
+
+
+I think Texto is what you are looking for, and it is available from the 
+cypherpunks archive in the steganography directory. If you can't find it, 
+drop me a private note and I'll mail it to you...
+
+A quick outline of its function:
+
+It uses a file full of Mad-Lib type sentence blanks, and a dictionary 
+full of words arranged by type (person, place, thing, verb, etc). 
+There are 64 words of each type which correspond to the 64 ascii symbols 
+used in pgp ascii armor, or alternately, the 64 symbols used by standard 
+uuencode.
+
+The sentence structures look like:
+
+The _THING _VERBs to the _PLACE.
+
+It selects an appropriate word type for the particular blank it needs to 
+fill, and inserts the word corresponding to the symbol in the data to be 
+hidden.
+
+Extracting the data from the resulting text is pretty straightforward:
+All words that don't appear in the dictionary file are discarded. The 
+words that remain are mapped back to their corresponding sybols. 
+
+You can expect your data to grow to 10 times its original size in the 
+process of steg'ing, and you'll have to ascii armor or uuencode the data 
+before it can be stegged by this program, but its clever, and might fool 
+a simple filter-bot or other program, although its doubtful it would ever 
+fool a person. 
+
+
+
+ciao
+
+
+
+
+

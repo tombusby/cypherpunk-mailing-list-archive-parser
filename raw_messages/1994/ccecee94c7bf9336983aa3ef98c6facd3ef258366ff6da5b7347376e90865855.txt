@@ -1,0 +1,54 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Tue, 5 Jul 94 18:49:32 PDT
+To: Roger Bryner <bryner@atlas.chem.utah.edu>
+Subject: Re: MD5 is 1=>1?
+In-Reply-To: <Pine.3.89.9407051714.A13153-0100000@atlas.chem.utah.edu>
+Message-ID: <9407060145.AA10798@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>     Are there 128 bit messages 
+> in MD4 which hash to the same value, and if so, what insight into the 
+> cycle leingth vs string leingth would it give us.
+
+If there are, then you have broken MD4!  This is the definition of
+breaking a Hash: finding two strings (of *any* size) that hash to the
+same value.
+
+Let me comment on something you wrote:
+
+> hash(a,b)=a+b,a-b;
+> now hash^2(a,b)=2a,2b.
+> 
+> so here you have lost 1 bit of information when  you start to itterate 
+> the hash function, and will be left with exactly 1  option after 128 
+> iterations of this function in every case.
+
+If we make a small adjustment to the definition of this hash routine,
+and define the hash to be:
+	hash(a,b) = (a+b)mod 2^64, (a-b)mod 2^64
+
+Then I argue that you will not lose that bit of information, since it
+will just wrap around the 64-bit values instead of just doing a
+bit-shift.
+
+The point here is that if MD5 lost entropy, it would probably make it
+easier to find two strings to hash to the same value, which, by
+definition, breaks that hash.
+
+> I would recomend replacing that option or discarding it, that is unless 
+> hash functions never throw away bits in sizes smaller than their output size.
+> (again, that was my question)
+
+They shouldn't.  I refer back to my last statement, that if they did,
+it would make breaking the hash much easier.
+
+I hope this helps.
+
+-derek
+
+
+
+
+

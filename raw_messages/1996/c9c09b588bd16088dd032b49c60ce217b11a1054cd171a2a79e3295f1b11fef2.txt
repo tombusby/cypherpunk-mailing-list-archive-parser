@@ -1,0 +1,74 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Sun, 30 Jun 1996 03:37:29 +0800
+To: Andrew.Tridgell@anu.edu.au
+Subject: Re: rsync and md4
+In-Reply-To: <96Jun29.135037+1000est.65075-20848+164@arvidsjaur.anu.edu.au>
+Message-ID: <Pine.LNX.3.94.960629131422.197A-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Sat, 29 Jun 1996, Andrew Tridgell wrote:
+
+> I've recently released a package called rsync that uses a checksum
+> search to provide very efficient file update over a slow link.  (see
+> ftp://samba.anu.edu.au/pub/rsync if you are interested)
+> 
+> Now I'd like to calculate some probabilities of failure of the
+> algorithm. The fundamental thing I need to know to do the calculation
+> is the probability of a random piece of data of length n having the
+> same md4 checksum as another given piece of data of the same length.
+
+MD4 is a hashing algorithm, but it can be used for checksuming.
+
+> 
+> A first guess might be 2^-128 but I know that this sort of thing is
+> rarely that simple. Is md4 that good?
+
+2^-64.
+> 
+> Note that I am not interested in "attacks" on md4 as such as the
+> source of the random data is just another file provided by the same
+> user, so it won't have been specially designed to defeat md4. 
+> 
+> If the probability is within a few orders of magnitude of 2^-128 then
+> can I also be sure that if I only use the first b bits of a md4
+> checksum it will be within a few orders of magnitude of 2^-b ? There
+> is an option in rsync to use a shorter checksum by truncating
+> md4. This saves some bytes on the link at the risk of lowering the
+> confidence. 
+
+The probability of failure is 2^-(b/2).
+
+> 
+> Why md4? I chose md4 because it seemed to be the fastest of the
+> reputedly strong, publicly available checksum algorithms. Suggestions
+> for alternative algorithms are welcome.
+
+So far, MD4 is the fastest hashing algorithm.
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xe3bf2169
+http://www.voicenet.com/~markm/ | d61734f2800486ae6f79bfeb70f95348
+"Freedom is the freedom to say that two plus two make four.  If that
+is granted, all else follows."  --George Orwell, _1984_
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMdVlv7Zc+sv5siulAQG0SAP9HyybTTn/ffPLhPgtooxP/abIQYZ2r6sI
+PW90ilTucWMNjFQ87Xl+MUUysklG4G1zx+i3ZnIP5ud3D69kh+E6s2MbvUKcOFUi
+TKAmB5rVSGHOvDROnY5cBGU7iSCxgiM5auq5rSu6/MvwtvSf99VtKh9UdcFp2SuH
+u4ukZmAE1x0=
+=otP1
+-----END PGP SIGNATURE-----
+
+
+
+

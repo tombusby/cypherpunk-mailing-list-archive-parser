@@ -1,0 +1,72 @@
+From: ph@netcom.com (Peter Hendrickson)
+Date: Sun, 15 Dec 1996 13:53:05 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Magic Numbers in MD5
+Message-ID: <v02140b03aed94aedb645@[192.0.2.1]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 2:46 PM 12/14/1996, Mark M. wrote:
+>On Fri, 13 Dec 1996, Peter Hendrickson wrote:
+>> First, we have the four chaining variables, A, B, C, and D which
+>> are initialized with apparently random numbers.
+>
+>Random?
+>
+>A = 0x01234567
+>B = 0x89abcdef
+>C = 0xfedcba98
+>D = 0x76543210
+
+Why yes, those bits are just as likely as any other set.  ;-)
+
+At 11:39 AM 12/14/1996, Norman Hardy wrote:
+>Perhaps random numbers would be stronger but they would not be manifestly
+>random.  MD5's formula for t_i precludes the possibility that the definer
+>of MD5 chose the numbers accoriding to some undisclosed principles that
+>would allow him a trap door.
+
+>The following code computes the magic numbers without requiring trig functions:
+>
+>...[nifty code sample redacted]...
+>
+>An alternative would have been to let t_i be MD4(i) or SHA(i).
+>
+>Using SHA to define MD5 would have required collusion between Rivest
+>and NSA to allow for a trap door. Even then it would have been very difficult.
+
+Still, one prefers to be careful.  Rivest is said to be a clever fellow.
+One or two people at the NSA must know what they are doing.  We wouldn't
+want to bet they aren't smart enough to invent something surprising.
+
+Perhaps we should define MD5-Cypherpunks.  All interested parties submit
+sealed random values for the chaining variables and the t_i constants.  The
+new constants are determined by opening the envelopes and XORing all
+the values.
+
+This probably isn't worth the trouble given MD5's known weaknesses,
+but it might be cool for other algorithms.  Does it seem reasonable
+that this would make cryptanalysis more challenging?  One could
+imagine that brute force attacks exist which are less efficient when
+the same setup cannot be used for every message.  Or, that it is
+expensive to determine weaknesses for particular sets of constants.
+
+It would cause interoperability problems, but one could imagine
+some organizations would prefer to use their own version of
+standard algorithms for internal communications if it really
+did raise the cost of attack.  The changes in software would
+be minimal.
+
+Incidentally, when weaknesses were discovered in MD5, did they depend
+on a particular set of constants, or were the weaknesses general?  (I
+assume the latter, but I would like to know for sure.)
+
+Peter Hendrickson
+ph@netcom.com
+
+
+
+
+
+

@@ -1,0 +1,184 @@
+From: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Date: Wed, 23 Feb 94 20:22:35 PST
+To: Matt Thomlinson <phantom@u.washington.edu>
+Subject: Re: STEALTH OCEANS
+In-Reply-To: <Pine.3.89.9402231824.A3563-0100000@stein3.u.washington.edu>
+Message-ID: <Pine.3.89.9402232236.B2157-0100000@delbruck.pharm.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Wed, 23 Feb 1994, Matt Thomlinson wrote:
+
+> On Wed, 23 Feb 1994, Sergey Goldgaber wrote:
+> 
+> > They would.  But, combined with "Stealth PGP" (ie. encryption without 
+> > telltale headers) searching through all the deleted noise (which could be 
+> > legitimate for all they know) would be futile.
+> 
+> I can see how a stealth-PGP would allow you to hide messages on your disk 
+> in "wiped" filespace 
+
+No, no.  The function of Stealth PGP is, as I understand it, to simply 
+encrypt plaintext into something that is virtually indistinguishable
+from noise.  Deleting those "noise" files is a seperate issue.
+
+>                     -- it'd look like garbage (maybe -- see Aside), if 
+> anyone took a look. What does this buy you, though, if you've got a 
+> telltale TSR hanging around?
+>
+
+What telltale TSR?  A program that can read and write directly to disk?
+If I am not mistaken, such programs are common enough not to be
+evidence of anything.  Having PGP on you is another matter, however.
+
+> 
+> > > Another thing that has bothered me: if you didn't have the sectors marked,
+> > > you'd need to remember where they were (so you could protect them from
+> > > writes). You wouldn't necessarily want to do this on the computer; it'd be
+> > > there for the picking. How to do it?
+> > > 
+> > 
+> > Simple.  You would take note of the starting address of the file.  And, 
+> > the length of the file.
+> 
+> 
+> how do you control individual writes? 
+
+With a standard direct disk read/write utility.
+
+>                                      You've got to know where they are 
+> vs. where your data is kept. Authorize each write by hand? (PROGMAN.EXE 
+> is attempting to write to cylinder 12, track 14. Authorize (y/N)? ) 
+> 
+> Icky. 
+> Do it another way? See below.
+> 
+
+Disable authorization.  Most DOSs allow direct writes without 
+authorization anyway.
+
+> 
+> > everyone keeps hiding their data in the same location it will not remain
+> > hidden for long.
+> 
+> 
+> exactly my point. It seems you've got to have one of two things with your 
+> system: 
+> 
+> 1) a standard place where you hide your noise file (for example, use 
+> norton to defrag and compress your disk, then ALWAYS write your noise 
+> file on the last two cylinders.) 
+> 
+
+This is not necessary.  In fact, as I noted, hiding your files in the 
+same place everytime lessens security.  The alternative is a simple one.
+Hide your files in different places, and keep track of them.  For 
+example, a file that was encrypted on 02-23-94 could be written to disk 
+starting with sector 022394.  All you have to do is remember the date and 
+length of the file to retrieve it successfully.
+
+> Problem: Needs some program to revive the info; this is a tip-off... Also,
+> once your stealth system becomes known, the reason for hiding the noise 
+> file is gone -- the tracks/cyl will be checked if they find the reviving 
+> program. Instant noise file. 
+> 
+
+Again, the program would be a standard utility that can write/read to/from
+the disk.  One has to tell the program what tracks/sectors to 
+read/write.  Having the program without the corresponding file 
+address/length is useless.
+
+> 
+> 
+> 2) a non-standard place/way to hide your noise file (for example, using a 
+> TSR with the areas not to write being protected; using the TSR when you 
+> need to restore the data later). 
+> 
+> Problem: Needs program in memory (or info on disk about where it resides) 
+> to revive the data later. A tip-off that again defeats the purpose of 
+> hiding the noise file.
+> 
+
+You need _not_ have a TSR with the location.  If you keep track of the 
+address/length yourself, the problem is eliminated.  The whole
+automated (TSR) idea is only usefull if you are frequently accessing your 
+disk.  In that case, saving your encrypted files to RAM temporarily might 
+be a more elegant solution.  Otherwise, store your "noise" files 
+sequentially, on a floppy that you use only for storing encrypted data.  
+Guard their respective addresses/lengths as dearly as you would your secret 
+key and it's corresponding password.
+
+> 
+> 
+> Analysis: It seems with the systems I can think of you need to have the
+> area the noise file stored in either 1) standard (ick) or 2) kept in
+> memory so you don't overwrite it. If you don't protect it, I wouldn't
+> expect your noise file to have a very large half-life. :l Keeping the area
+> in memory (under protection) defeats the system. 
+> 
+
+I'm sorry, this paragraph just went over my head.  Could you restate it 
+in another way, so I can attempt to comment?
+
+> 
+> 
+> Aside: By the way, isn't the "noise" in your noise file is going to be
+> more random looking than other deleted areas of your disk? PGP compresses
+> and then encrypts; I'll bet that it is possible to distinguish pgp's
+> output bit frequencies from those of a binary or text file, which is what
+> the rest of the wiped space would most likely be. 
+> 
+
+Absolutely!  I have anticipated this problem; and, have been awaiting an
+opportunity to address it.
+
+Steps must be taken to keep the deleted portion of your disk from looking 
+too random.  In order to implement this additional level of security 
+(through obscurity ;) one could:
+
+ 1 split the "noise" file into smaller parts which would be interspersed 
+   randomly among the other deleted grabage.  This would make for a less 
+   conspicuous disk; as, there are, normally, truely random sections of 
+   the disk along with the not-so-random sections.  Your bits of noise-file
+   will fit right in!
+
+or
+
+ 2 use a steganorgraphy utility to embed the "noise" file in a section
+   of the other not-so-random garbage (as some people currently use those
+   same utilities to embed their PGP files in GIFs), and then delete it.
+   (Owning a stegonagraphy utility would, of course, be as conspicuous
+    as owning PGP.  So the same precautions would have to be applied.)
+
+These options are very similar.  I prefer the former.  Relying on a stego 
+utility seems to be as unreasonable as relying on a TSR to keep track of 
+the location of your deleted "noise" files.  I would split and hide the 
+"noise" file by hand, and keep track of its location by hand as well, to 
+ensure maximum security.
+
+Alternatively, one could use a "Mimic" function with a "DOS garbage" grammar.
+This is effectivaly the same as option 2.
+
+> 
+> mt
+> 
+> Matt Thomlinson                               Say no to the Wiretap Chip!
+> University of Washington, Seattle, Washington.
+> Internet: phantom@u.washington.edu      	    phone: (206) 548-9804
+> PGP 2.2  key available via email or finger phantom@hardy.u.washington.edu
+> 
+> 
+
+Thanks for your input, once again, Matt!
+
+
+Sergey
+
+
+
+
+
+

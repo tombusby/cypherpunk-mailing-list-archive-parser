@@ -1,0 +1,41 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Fri, 3 Jun 94 10:04:50 PDT
+To: cypherpunks@toad.com
+Subject: Re: Faster way to deescrow Clipper
+Message-ID: <9406031703.AA23517@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >   ...not be able to decrypt the communications, but they still get your ID.
+> >"your ID"?  You mean your phone's ID.  Goodness gracious, if you were
+> >a criminal, you wouldn't go out and steal someone else's Clipper
+> >phone, would you?  Let's not get too high tech here, just because we
+> >have the ability.
+> 
+> Or you could just steal someone else's LEAF, by keeping a copy of it, and use
+> that for spoofing.  Then you could have a valid IV too...
+
+The IV is session-dependent, and both ends generate it.
+We don't know where in the LEAF the chipid is, but if they
+use a fixed format and don't do a key-dependent permutation of the LEAF bits,
+
+it shouldn't be hard to figure out (unless the checksum comes first
+and they use a block-chaining encryption, in which case you know you lose.)
+
+That would let you create rogue LEAFs with known users' chipids,
+which would be interesting - does anyone want to make 65536 calls to
+clipperphone@whitehouse.gov :-) ?  (Yeah, it's not quite that simple.)
+(If you do need a lot of data, cellphones are a good source,
+since the cellphone operators' chipids are likely to be wellknown, 
+though rapidly tapped.)
+
+Paranoid-speculation-mode: Of course, if you can forge LEAFs with
+their chipid, they can forge LEAFs with yours, which could be used
+to manufacture interesting evidence....
+
+			Bill
+
+
+
+

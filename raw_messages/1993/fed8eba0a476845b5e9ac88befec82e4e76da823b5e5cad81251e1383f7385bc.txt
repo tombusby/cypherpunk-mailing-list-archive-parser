@@ -1,0 +1,48 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 22 Jan 93 08:11:25 PST
+To: cypherpunks@toad.com
+Subject: PGP on BBS
+In-Reply-To: <9301211702.AA11275@xanadu.xanadu.com>
+Message-ID: <9301221609.AA24776@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I wrote:
+>>The solution is cooperative processing systems, where both the host
+>>and the terminal cooperate to perform some task.  
+
+Dean asks:
+>What would the two systems be cooperating about?  I'm not sure to what
+>you are pointing.
+
+Here are two basic examples:
+
+1. Session key creation.  I regularly log in remotely to my account at
+soda.  I'd like to have that modem link encrypted, with session keys
+generated on the fly.  So I'll want to use some implementation of
+Diffie-Hellman key exchange to make a session key.  The nature of this
+protocol means that both my terminal program and my host have to do
+calculations and exchange data.  Therefore I need software on my PC at
+home and software on the host that work together.
+
+2. Digital signatures.  I read and send my e-mail on the host.  When I
+send PGP-encrypted mail, I have to compose the message on the PC,
+encrypt it with a PGP command line, upload it to the host with zmodem,
+and read it in to my mailer.  I'm certainly not going to put my secret
+key on the host.  
+
+What would be ideal is a cooperative protocol that initiated (in the
+background, away from my main connection) a channel, sent just the
+data to be signed (an IDEA key, for example), have my PC sign the data
+and send it back.  This not only entails software on each end, but
+also a line multiplexer so that the signing can take place on a
+separate channel.  If it doesn't occur on a separate channel, then I
+have to see it, probably move to the shell in order to start it
+properly, and in general make it non-automatic.
+
+Eric
+
+
+
+

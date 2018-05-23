@@ -1,0 +1,35 @@
+From: pgut01@cs.auckland.ac.nz
+Date: Wed, 17 Jan 96 19:15:22 PST
+To: llurch@networking.stanford.edu
+Subject: A WfW security curiosity (possibly another security hole)
+Message-ID: <199601180314.QAA19064@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+When WfW is installed, it creates a file in the Windows directory called
+WFWSYS.CFG.  This is a standard Windows password file and may be decrypted with
+the password "23skidoo" (note that this is lowercase, since it's passed to the
+.PWL-handling code at a level which bypasses the usual password case smashing.
+The mangled 32-bit form which is passed to the RC4 key setup routine is { 0x67,
+0x6F, 0xE3, 0x81 }).
+ 
+WFWSYS.CFG seems to be mostly identical for the few copies I could get to, and
+WfW networking won't work without it.  Decrypting the file doesn't seem to give
+anything useful, the string "SYSTEM" and what looks like a few 8 or 16-numbers. 
+I don't know enough about how WfW networking works, but my (very vague) guess
+is that it contains some sort of cookie to uniquely ID each machine for
+resource sharing over a network.  If it does then it it's (yet another) pretty
+serious security hole, since it's encrypted with a fixed password and seems to
+be mostly identical over multiple machines.  OTOH it may be something to do
+with serial numbers so you can't install the same copy of WfW on multiple
+machines on a LAN.
+ 
+Can anyone shed more light on it?
+ 
+Peter.
+ 
+
+
+
+

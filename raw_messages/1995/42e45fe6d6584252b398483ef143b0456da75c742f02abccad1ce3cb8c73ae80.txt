@@ -1,0 +1,74 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 3 Oct 95 11:37:47 PDT
+To: Carl Ellison <cme@TIS.COM>
+Subject: Re: Certificate proposal
+Message-ID: <199510031838.LAA27571@ix2.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:21 AM 10/3/95 EDT, Carl Ellison <cme@TIS.COM> wrote:
+>The whole issue of CRLs is on shaky ground with me.  I think it's gotten
+>lost in debates about how to distribute them offline (or perhaps via
+>e-mail) and have them work.
+No surprise; it's a tough job.  I don't expect my laptop to be
+continuously on-line when I'm reading mail, and even on-line use
+needs to be more realistic than saying "Everybody must use X.400".
+
+>CRLs are like the old credit card or check stop lists which used to be at
+>every supermarket checkout station.  They aren't there any more.
+>Checkout stations are now on-line.
+>I see nothing wrong with having a "certificate" which says ``certificate
+>available online only at xxx@yyy.zzz''.
+
+Interesting.  Aside from the excessive cost of looking up cards in paper
+booklets,
+which can be avoided by having checkstands validate on the store's backroom
+computer system, on-line verification lets the card company not only
+refuse stolen cards, but also dynamically refuse cards that have reached
+their credit limits, which you can't do on a slow push-based offline system.
+
+However, it's _very_ tough to spoof a credit-card verification system, 
+because the checkout device uses phones or private networks to reach the 
+authorization company, so the response that comes back saying yes/no/stolen
+can be real dumb.  On the internet, the response needs to be signed,
+though I suppose it could say "Key sssss at xxx@yyy.zzz authorized
+key uuuuu today yyyy/mm/dd/hh:mm:ss, valid for up to $500", and you'd then have
+to validate the key that signed it, etc....  On the other hand, you could
+have the cert require multiple confirmations, e.g. both the bank and the
+user have to authorize this use.
+
+>>3) Neither PGP nor X.509 (as documented in the RFC1422 and PKCS#6) have any
+>>	   mechanism for additional information other than cramming it into
+>>	   the username, but supposedly X.509 Version 3 includes something?
+>Yup -- and it's ugly.  It counts on a defined OBJECT ID to define the
+
+OBJECT IDs solve two problems - one is that you need some kind of format (yuk),
+but the other is that fields to have mutually agreed on values to be meaningful,
+and central registration is an easy way to implement it, as long as there's
+a simple way to register things.  I hope it at least supports an OBJECTID
+with parameters, e.g. "CreditLimitUSDollarsBankFoo integer"  rather than needing
+excessively many OBJECTIDs "CreditLimit3700USDollarsBankFoo"?  As you say below,
+there's certainly no need to use ASN.1 formats instead of readable ones...
+
+> What's invalid is the assumption that
+>there must be a relationship (or even a person) in physical space *before*
+>one can have a relationship (or a person) in cyberspace.
+
+Yeah.  I've decided, as an experiment, to start signing keys for pseudonyms,
+though I haven't settled on how to deal with unauthenticated signatures
+for realspace people (in the one case where I've been asked, the person
+didn't have any independent signatures from other people, so so far I've
+declined,
+but I may re-evaluate and just do uniqueness.)
+
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

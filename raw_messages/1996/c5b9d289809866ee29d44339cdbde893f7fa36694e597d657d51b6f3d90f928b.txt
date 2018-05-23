@@ -1,0 +1,52 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 10 Mar 1996 21:55:41 +0800
+To: cypherpunks@toad.com
+Subject: Re: Steganography idea: CU-SeeMe
+Message-ID: <199603070739.XAA23010@ix2.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:28 AM 3/6/96 +0000, Ed Carp <erc@dal1820.computek.net> wrote:
+>On Wed, 6 Mar 1996, Nelson Minar wrote:
+>> So here's one idea I've had as a place to hide a channel: network
+>> video, in particular CU-SeeMe video streams. CU-SeeMe is a lowtech
+>
+>I think it likely that people will be sending GIFs and JPEGs to each 
+>other far more often than video.  Video is far more an "uncommon 
+>communications channel" than is a uuencoded picture.
+
+The Quickcam videocameras are $100; they're the next toy to buy after
+you've got the Soundblaster, CDRom, and 100MB Zip drive.  The Macintosh
+folks will buy them first (:-), but pretty soon they'll be very common,
+especially for business LAN users to have desktop video.
+
+The problem is that, unlike GIFs, CU-SeeMe and other low-bit-rate video 
+compression schemes are _very_ lossy.  You can't just put the stego bits
+in the raw image before running the compression, because they'll get lost,
+and if you try to fit them in to the compressed image, you've got to do it
+very carefully or they'll really drastically affect the image.
+
+I don't know CU-SeeMe's compression algorithm, but imagine putting bits
+into a run-length-encoded file: if you put them in the run-length,
+you'll change the lengths of the runs a lot.  If you put them in the color,
+you'll get lots of streaks of random-looking noise.  Either way,
+it's quite noticeable.  So you've got to work very carefully with the algorithm.
+
+The other problem with CU-SeeMe is dropped frames, which someone mentioned.
+That's easier; any email system, especially a stego type, has to deal
+with lost message.  So try to fit your messages into single CUSM frames,
+and build some tracking or ack messages or maybe message numbering,
+so you can detect lossage and request retransmits.  It can be as complex
+as X.25-over-stego-over-CU-SeeMe, or as simple as "Message 14 of 32, RSVP".
+(If you _do_ implement X.25-over-stego-over-CU-SeeMe, you've got a fine
+April 1 RFC :-)
+#--
+#			Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215 pager 408-787-1281
+#
+
+
+
+
+

@@ -1,0 +1,33 @@
+From: "Dan Bailey" <dan@milliways.org>
+Date: Wed, 24 Jul 1996 20:03:16 +0800
+To: "trei@process.com>
+Subject: Re: DES brute force? (was: Re: Borders *are* transparent)
+Message-ID: <199607240036.UAA22733@perseus.ultra.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If we choose a plaintext/ciphertext pair carefully, we can easily save
+ourselves some work (50%) while still making the attack a credible
+demonstration.  The idea is to use each trial encryption twice.
+	In _Differential Cryptanalysis of the Data Encryption Standard_, Biham and
+Shamir note the following, known as the complementation property of DES:
+
+if T = DES(P, K) where T is ciphertext, P plaintext, and k key, then:
+T' = DES(P', K') where T', P', and K' are the bitwise complement of the above.
+
+Now the interesting part. If two pairs (P1,T1) and (P2,T2) are available with
+P1 = P2' or T1 = T2', then an attacker can restrict his search to only the keys
+with LSB = 0.  The attacker runs through the remaining 2^55 keys (with LSB = 0)
+and tests the results against both T1 and T2'.  Since testing for equality is
+much faster than performing the actual encryption, time savings is on the order
+of 50%.
+
+Just a thought on how to save some cycles.
+					Dan
+
+
+
+
+
+

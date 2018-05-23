@@ -1,0 +1,53 @@
+From: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Date: Mon, 28 Aug 95 09:46:47 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Re: Server congestion
+In-Reply-To: <"swan.cl.cam.:027060:950828094002"@cl.cam.ac.uk>
+Message-ID: <199508281645.JAA12868@Csli.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+| > I talked about acks of acks in a previous message, and I guess is was
+| > somewhat vague there.
+| 
+| ... and maybe based on a false premis ?
+| 
+| > What happened, according to my uninformed view, during the SSL2
+| > challenge was that the server got congested, and had problems with
+| > both answering to key allocation requests and ack replies.
+| 
+| Correct.
+| 
+| > I guess that the load of the machine was so high that it lost packets in 
+the
+| > input queues.
+| 
+| NO.
+| 
+| The load was very *LOW*.
+| The problem was that the single threaded server was spending most of its ti
+me
+| talking to clients which failed to complete their interactions, and timed o
+ut.
+| The earlier client "ACK" code didn't hang around long enough, and gave up.
+| Later code kept trying ....
+| 
+| > Client -----> UDP/Key allocation req ----> 
+| 
+| Nope -- basic fault here !! TCP not UDP !!
+
+Ok, I'll be quiet now. It's funny when you think you know
+what is happening based on an uninformed view, and simply
+shuts out all the other pieces of info that gets to you.
+
+By the way, thanks a lot Piete for the effort you put in!
+You did excellent, and it was real fun! 32 hours with 
+serious performance problems is simply amazing.
+
+/Christian
+
+
+
+

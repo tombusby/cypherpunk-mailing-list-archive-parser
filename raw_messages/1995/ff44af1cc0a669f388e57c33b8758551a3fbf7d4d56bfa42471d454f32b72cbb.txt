@@ -1,0 +1,76 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Thu, 17 Aug 95 18:29:32 PDT
+To: jim@acm.org
+Subject: Re: I need exportable crypto revisited.
+In-Reply-To: <199508180030.RAA04988@mycroft.rand.org>
+Message-ID: <9508180128.AA11668@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> 
+> 
+> > "Perry E. Metzger" <perry@piermont.com> writes:
+> > If you have hooks for arbitrary encryption, you will find it to be
+> > virtually impossible to export the product.
+
+...
+
+> Has anybody who's been impaled on the stinky end of this stick been told the
+> chapter and verse?
+
+I had the experience about 5 years ago - it's not really a big deal.
+
+I submitted a product (Integrity Toolkit - still detecting and limiting
+the spread of all current viruses after 5+ years of not being updated)
+for release in source form to my European distributors (who are now the
+sole global source - I got out of that business).  In order to assure
+that it could detect alteration (as part of its integrity shell), it
+used a pretty strong cryptographic checksum - actually a message digest
+that's faster than MD5 on a PC architecture, combined with an RSA system
+I implemented in MuLisp (pretty fast long arithmetic for a high-level
+language implementation).
+
+To add fuel to the fire, the system came with an encryption capability
+that included the ability to use an external encryption scheme of the
+user's own design.  It even included source for a simplistic encryption
+program that could be replaced with real encryption by simply adding the
+code for the real encryption into the C source provided, recompiling,
+and running.
+
+I submitted it to state who sent it to the NSA who called me a few
+weeks later (pretty fast by government standards to be honest) and
+asked me some questions.  I answered as honestly as I could ...
+
+***	The RSA was built into the system and, although it could be
+extracted and used for encryption, as shipped, it was only used for
+authentication.  It literally throws away one of the keys during key
+generation so that it is truly a one-way trap door.  It would take a
+substantial effort by a knowledgeable programmer to convert it into a
+workable RSA for encrypting large files, and as implemented, it is only
+good for authentication.
+
+***	The inbuilt encryption schemes are relatively easily broken and
+are designed only to prevent automated attack by viruses that try to forge
+checksums and other such things.
+
+***	The message digest facility is pretty good, but it can only be
+used for the authentication process, so it is useless as an encryption
+system.
+
+***	The external encryption hook includes no worthwhile encryption
+scheme, but it can easily be converted for this use if you have your own
+encryption technology.
+
+They responded that as far as they were concerned, I could go ahead and
+ship it oversees, sent me a letter to that effect (which I have in the
+files somewhere just in case), and off it went.  All further development
+of the encryption side was done oversees from that point forward to keep
+me from having to go through ITAR again.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

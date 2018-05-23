@@ -1,0 +1,67 @@
+From: William Ono <wmono@Direct.CA>
+Date: Sat, 17 Aug 1996 19:23:57 +0800
+To: "Carlos L. Mariscal" <al177820@campus.gda.itesm.mx>
+Subject: Re: Unix passwd-cracker online?
+In-Reply-To: <Pine.A32.3.91.960816161112.53362A-100000@campus.gda.itesm.mx>
+Message-ID: <Pine.LNX.3.94.960817000216.1458B-100000@crash.direct.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 16 Aug 1996, Carlos L. Mariscal may have written:
+
+> person has obtained a specific password by entering the desired 
+> adresses'passord on a submnit form in a Web page.
+[deletia]
+> never have it if there really is such, but this came to my mind when i read 
+> the posts  on the plate-numbers-in-Oregon polemica. I would appreciate 
+
+Somehow I have a hard time believing this to be true.  I run crack, a
+password searching program that uses a dictionary as its base, on my
+/etc/passwd regularly to locate any users with easily guessed entries.
+With ultra fast crypt (UFC), the fastest crypt() replacement I can find, I
+can run through about 9700 passwords per second on this P6-150.
+
+Now, this is a back-of-the-envelope calculation:  Assuming that the
+password can be one to eight characters of the following:
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()
+we find that we have a set of 72 characters.  That gives us
+72^8 + 72^7 + 72^6 + 72^5 + 72^4 + 72^3 + 72^2 + 72^1 or
+732376025552520 possible combinations.  At 9700 encryptions per second,
+it would take my system 2401 years to brute force -one- password to 
+completion.  That means that, most likely, if this 'locate password on
+demand' system existed, it would not work in real time, or in any time
+during any person's life.  Moore's Law might shorten this timeframe
+considerably, but still not to any reasonable time frame.
+
+Continuing with my back-of-the-envelope estimate, we have the length of a
+crypt()'d password as being 13 characters.  The password in plaintext has
+to follow, with a length of 8 characters.  At a size of 
+732376025552520 * 21 characters, we would have a database of
+15379896536602920 bytes, or 22565249 650mb CD-ROMs.  That's for the
+passwords of one salt, without any formatting.  Even if we could achieve a
+95% compression rate on this data (it is text, after all) we would end up
+with 237528 CD-ROMs.
+
+Most likely my set of characters will be found to be incorrect, but
+anything that includes even a-z, A-Z, and 0-9 in one to eight character
+combinations most likely will not be a favourable crack target.
+
+Sorry, I don't think this is feasable, or possible.
+
+(Please do correct my calculations if errors are detected, especially if
+the corrected numbers make this possible.. it's getting late at night, and
+my mind is fogging up, so these calculations/estimates/wild guesses may be
+off more than usual. It does sound like an interesting project to
+undertake, if it were possible, but not on my equipment!)
+
+
+--    ** NOTE NEW KEY **  As of 08/28/95!  Old key 0x2902B621 COMPROMISED!
+William Ono <wmono@direct.ca>                                PGP Key: F3F716BD
+ fingerprint = A8 0D B9 0F 40 A7 D6 64  B3 00 04 74 FD A7 12 C9 = fingerprint
+PGP-encrypted mail welcome!           "640k ought to be enough for everybody."
+
+
+
+
+

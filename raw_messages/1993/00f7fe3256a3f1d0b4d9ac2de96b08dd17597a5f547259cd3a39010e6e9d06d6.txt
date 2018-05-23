@@ -1,0 +1,85 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Sun, 18 Apr 93 17:03:28 PDT
+To: psionic@wam.umd.edu (Haywood J. Blowme)
+Subject: Re: Amiga programmers.
+In-Reply-To: <199304182317.AA18599@rac3.wam.umd.edu>
+Message-ID: <9304190003.AA06605@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The basic idea I think would need the following:
+> 
+> - A sound digitizer
+> - High speed modem
+> - 68020 or above processor (for speed purposes)
+> - Good encryption algorithm (IDEA for example)
+> 
+> Implementing the system would involve using the digitizer to digitize the
+> voice. Then processing the sample (in real time) through the encryption
+> algorithm and sending the output to the modem for transmission. The process
+> would be repeated on the other end.
+> 
+> The problems I see occurring are the following
+> 
+> - Speed of the computer affecting real time encryption
+> - Synchronizing the data packets for accurate decryption on the other side.
+> - simultaneous I/O on the serial and parallel ports(for modem and digitizer)
+> - outputing to speakers on receiving end.
+> - having the whole process operate in a full duplex mode (ie. both people
+>   can talk at the same time).
+> 
+> 
+> I think the majority of functions can be handled by the system libraries and
+> outside sources (such as xpkidea.library for encryption).
+> 
+> Does this sound feasible??
+
+From what I gather CELP takes about 10 to 15 MIPS and LPC takes
+somewhere under 5 MIPS on DSP chips.  Instructions including
+fixed point multiplies and accumulations (not counting divisions).
+Thats quite a load for a 68020 to bear and still do encryption
+and communications isnt it?
+
+I have been working on an encrypted link protocol,  I have
+written a unix end (w/ sockets for debugging) as well as
+some prototype amiga ends (nothing nice yet).  It is basically
+a term program with an encrypted mode built in.  I have released
+the unfinished but operational unix end so far (link.tar.Z)
+but have been too pressed for time to work on it lately.
+
+I am also working with a DSP chip and plan to implement LPC
+at bandwidths of about 2000 bps.  This will be low quality
+(less than toll quality, but "good enough" for..  well for
+me :)
+I hope the end product will be reproduceable for under $50.
+(I am using the ADSP 2105 DSP microcontroller which offers
+10 MIPS for about $12)
+
+Someone has mentioned that there is a ZYXEL chip that has
+CELP built in to it,  this might be a faster way to go,
+does anyone have more details?
+
+
+I plan to incorporate the two when I am finished to allow
+encrypted voice between two endpoints,  and hopefully
+also over some networks (were delay time doesnt cause too
+much problems,  long distances over packet switching
+might not work so nicely).
+
+progress:
+  I have developed and implemented the protocol engine of
+the link protocol and written a unix end.
+
+  I have started assembling (but not programming) the DSP
+board,  I plan later to add on-board d/a and a/d but
+for the time being I will be importing samples from the
+amiga, and retrieving LPC coded data.
+
+
+I am encouraging other people to use my protocol engine
+and incorporate it into terminal programs.  
+
+
+
+

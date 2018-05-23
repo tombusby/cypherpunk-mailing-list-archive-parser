@@ -1,0 +1,44 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Tue, 1 Mar 94 12:41:05 PST
+To: Jef Poskanzer <jef@ee.lbl.gov>
+Subject: Re: low-overhead encrypted telnet
+In-Reply-To: <9403011958.AA09178@hot.ee.lbl.gov>
+Message-ID: <9403012040.AA00412@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Couple of comments:
+
+1) Kerberos *does* work between corporate entities.  I can, for
+example, go to Iastate (ISU) and get MIT Kerberos tickets, and then
+rlogin -x to MIT, encrypting the session (I can, and I have).  Also,
+it is possible (and I know someone who is doing it at this moment) for
+someone from ISU, with ISU tickets, to log into an account here at
+MIT.
+
+2) Using your example, a user on host A telnets to host B, and from
+host B they telnet to host C, if the A<->B link is encrypted, then so
+long as the user trusts host B, then A<->C is secure as well (assuming
+B<->C is encrypted).
+
+3) Just encrypting from client->server will not necessarily reduce the
+load on the server.  Also, doing something like DES is really not a
+very high CPU operation, IMHO.  Maybe a better protocol than the one
+done in rlogin -x is in order (this sends 8 characters over the link
+for every successful "read", which means you can be getting anywhere
+from 100% down to 12% throughput of plaintext in the cyphertext!)
+
+4) Charon, which is based upon Kerberos, was developed exactly for
+this type of problem: you want to authenticate securely over links
+which may not otherwise be secure, but you trust the CPU in front of
+you!  The paper describing Charon is available via anonymous ftp:
+	ftp://toxicwaste.mit.edu/pub/charon/thesis.ps.Z
+
+Enjoy!
+
+-derek
+
+
+
+

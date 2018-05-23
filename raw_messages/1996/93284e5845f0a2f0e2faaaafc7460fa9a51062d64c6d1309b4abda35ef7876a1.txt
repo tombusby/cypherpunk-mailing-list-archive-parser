@@ -1,0 +1,76 @@
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+Date: Wed, 3 Jan 1996 20:12:32 +0800
+To: perry@piermont.com
+Subject: Re: Proxy/Representation?
+In-Reply-To: <199512290024.TAA10333@jekyll.piermont.com>
+Message-ID: <199601030633.RAA16556@sweeney.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello "David E. Smith" <dsmith@midwest.net>
+  and cypherpunks@toad.com
+  and "Perry E. Metzger" <perry@piermont.com>
+
+PEM wrote:
+> "David E. Smith" writes:
+...[about power of attorney and PGP, reply-to-reply]...
+> > >standard for "Power of Attorney" documents, and for the entity
+> > >receiving something signed in your key that should be signed in
+> > >another person's key to also see the digitally signed power of
+...
+> > That's more of what I was looking for.  I suppose that (I'm still using
+> > PGP as my example) there could be a shared PGP key, signed by Helen and
+> > myself, where only the two of us know the passphrase,
+
+I don't think that's what was intended. If I understood:
+
+There'd be a document (hereinafter PoA) signed by Helen which would
+say "This is a PoA appointing Dave, PGP key X fingerprint Y, to
+do A, B, C on my behalf #include<lawyerspeak.h>".
+
+Then, when signing, Dave would sign with his own key X, making sure
+that every document has "p.p. Helen" at the end. The recipient checks
+Dave's signature on the document and Helen's signature on the PoA.
+
+> Huh? Why? Why would you need [a separate key]? ...
+
+Many automatic systems will assume that a key can only sign for 
+one person (though each person may have several keys). Therefore,
+it'll confuse "Dave" and "pp. Helen". The RISKS are obvious.
+
+To avoid such confusion, Dave should create a separate key with 
+the key ID "Dave pp. Helen" (or similar). However, Helen doesn't need
+to (shouldn't) know that key! This is Dave's key, created by Dave
+for Dave's use while he is agent for Helen. Helen would probably
+sign this key, but doesn't need to since the PoA has the f'print.
+
+In fact, you don't want Helen to know it, so that if Dave oversteps
+his authority she can prove that it was him not her. Ie if Helen finds
+out the key, Dave should revoke it.
+
+
+Hope that makes sense...
+
+Jiri
+- --
+If you want an answer, please mail to <jirib@cs.monash.edu.au>.
+On sweeney, I may delete without reading!
+PGP 463A14D5 (but it's at home so it'll take a day or two)
+PGP EF0607F9 (but it's at uni so don't rely on it too much)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMOoi4CxV6mvvBgf5AQGUJwP/fUPQgzYrbAuGGC8Q4ha8zNNoiAJVU3Rw
+/mAZbPtG6OQsoFal3xKtsquilXuCsj40btJc2XaTNL7adcKAN+0ZNwYgCHC5C8Yc
+zzgTwCSdnb9t8RY6vcZeIcXixboF1BKGtqSyzICJfd7yHNJWrh0YfUzTSPVD6jXC
+kOl7JNurEFY=
+=a/TW
+-----END PGP SIGNATURE-----
+
+
+
+

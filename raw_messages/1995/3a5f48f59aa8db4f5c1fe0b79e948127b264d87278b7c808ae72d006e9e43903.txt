@@ -1,0 +1,45 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Mon, 30 Jan 95 15:38:48 PST
+To: grendel@netaxs.com (Michael Handler)
+Subject: Better living through better `procmail'
+In-Reply-To: <Pine.SUN.3.91.950130180105.27139A-100000@unix2.netaxs.com>
+Message-ID: <199501302338.SAA08570@bwnmr5.bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	The rule below involve no loss, and it works quicker
+by putting the whole cypherpunks thing inside a set of braces,
+rather than checking each message 6 times to see if its from the
+cypherpunks list.
+
+	Optimizing a bit more, You don't need a lockfiles on
+/dev/null, unless you want to make sure the messages go in as whole
+units.  Also, theres no reason to send the whole message, we save time
+by only sending the header to /dev/null.  Procmail just frees the
+body.
+
+	
+:0
+* (^From owner-cypherpunks@toad.com|^Sender: owner-cypherpunks@toad.com)
+{
+  :0 h
+  * ^From:.*perry@imsi.com
+  * ^(To|cc): jamesd@netcom.com
+  /dev/null
+...
+}
+
+| Apply and modify as necessary. The "kill Perry's replies to James" 
+| recipe is a bit lossy, (i.e. it will kill anything that Perry replies 
+| to from Netcom on the cpunks list) but we can't have everything can 
+| we? 
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+						       -Hume
+
+
+

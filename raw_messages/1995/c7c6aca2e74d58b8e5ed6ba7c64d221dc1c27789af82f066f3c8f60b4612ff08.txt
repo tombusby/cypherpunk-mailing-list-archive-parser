@@ -1,0 +1,45 @@
+From: "W. Kinney" <kinney@bogart.Colorado.EDU>
+Date: Wed, 20 Sep 95 09:48:46 PDT
+To: cypherpunks@toad.com
+Subject: Re: My Day
+In-Reply-To: <199509201411.JAA04860@khijol>
+Message-ID: <199509201648.KAA11790@bogart.Colorado.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Ed Carp writes:
+
+> Also add that many people seem to tend to swirl the mouse in fast circles,
+> where there isn't *any* latency between mouse movements, and you get even
+> less entropy.  I suspect that Colin Plumb's code, while a nice try, would
+> be a bit less useful that might have been otherwise suspected.
+
+Colin's code, independent of implementation, simply uses MD5 as a block
+cipher to "launder" bit-streams that contain non-uniform distributions of
+true random data. See "Truly Random Numbers" in Dr. Dobb's Journal, November 
+1994,  p. 113. How much entropy you get out depends entirely on what you
+feed in. 
+
+I've put my code up on the cypherpunks ftp site, but I'm still waiting to
+hear back from the site maintainers as to its final location. In any case,
+that code uses the mouse _position_ and system timings in microseconds as
+input to the MD5 engine. So swirling the mouse should provide a good source
+of random input, better the faster it's moved. 
+
+However, any code that generates random session keys should properly include
+routines to estimate the amount of entropy collected, and not generate a
+128-bit key until at least 128 bits of entropy have been fed into the pool.
+This is a non-trivial problem, although PGP makes a good stab at it. To my
+knowledge, CryptDisk does not include this feature, and really ought to. For
+my own purposes in Curve Encrypt, this is not necessary, since I don't 
+generate session keys, only salts.
+
+                                   -- Will
+
+ 
+
+
+
+

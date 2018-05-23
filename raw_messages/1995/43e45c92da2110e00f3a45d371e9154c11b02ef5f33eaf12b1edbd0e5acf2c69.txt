@@ -1,0 +1,73 @@
+From: cmcmanis@scndprsn.Eng.Sun.COM (Chuck McManis)
+Date: Mon, 9 Oct 95 17:29:54 PDT
+To: perry@piermont.com
+Subject: Re: java security concerns
+Message-ID: <9510100030.AA29195@pepper.Eng.Sun.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Sendmail is about 29K lines of C code -- not significantly larger by
+>my standards -- and has proven nearly impossible to secure.
+
+Good point.
+
+>Sendmail performs a much simpler task and has not proven secure.
+
+I don't necessarily agree. The core java interpreter is simply:
+	while (1) {
+		get_next_opcode
+		switch(x) {
+		}
+	}
+
+> ... Marcus Ranum has noted that you can't
+>trust a program thats bigger than a couple of pages long, and I
+>believe he's right.
+
+Its a useful metric. But the concept of trust isn't defined. If
+you write in pure Java code (that is no references to any native
+methods) we should be able to do much better than that. 
+
+And since Java doesn't have "programs" it just has "classes" and
+many of those fit on two pages where does that leave us? Would it
+be reasonable to say that if I want to write a Java class I trust
+I should keep it under two pages? If I then write another class 
+that uses that class, that is also under two pages have I met
+the requirement? Can this aggreagate four page Java class be trusted?
+
+>As an aside, have you tried breaking your own program? Spend a week on
+>it some time. Its usually an educational experience and it breaks you
+>out of the mindset you have fixed in for a while.
+
+Many times. 
+
+>As people have found out, it has proven possible to core dump the Java
+>interpreter. That means that your implementation has contained flaws
+>that potentially permitted people to do unplanned things to the state
+>of the interpreter.
+
+I agree.
+
+>By the way, I suggest that Sun should offer a large money prize for
+>the first significant security hole found the Java implementation. Its
+>a tiny price to pay for security.
+
+I don't think the lawyers would let us. 
+
+Would anyone be interested in a Java daemon that one could send arbitrary
+classes to in an attempt to subvert the runtime? I once thought this would
+be a good way to give safe exposure to the system in general. You know sort
+of "here's a program that can feed classes to a Java runtime on a system
+which is known to have a file X on it. Try to return the contents of X."
+
+It probably wouldn't be to useful beyond that, and it would only validate
+the classes you have access to, not necessarily the full set in a release.
+(hence my not doing it given its utility only in testing the core runtime)
+
+--Chuck 
+
+
+
+

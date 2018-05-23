@@ -1,0 +1,214 @@
+From: usura@vox.hacktic.nl (Usura)
+Date: Fri, 10 Jun 94 08:22:57 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer Chaining Security? [LONG]
+Message-ID: <7VPPNc1w165w@vox.hacktic.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+:But how does one go about chaining through the remailers? I tried this 
+:and the message got lost. If indeed you can, does it just involve using 
+:more than one (anon-to) line in the header?
+
+Note-1: [R-R-T: stands for Request-Remailing-To: ]
+Note-2: [You is in this doc abraxas@cyberspace.org, 
+         substitute that adress for own if you want 
+         to receive the test message yourself]
+
+
+First you should test only one remailer:
+
+you > remailer 1 > RRT- you
+
+
+This is what you send:
+--
+    TO: remailer@jpunix.com
+    
+    ::
+    Request-Remailing-To: abraxas@cyberspace.org
+    
+    Test of remailer at jpunix.com
+------------------------------------------------
+        
+
+This is what you receive:
+--
+        You will receive this message from jpunix.com
+        
+        From: remailer@jpunix.com
+        To: abraxas@cyberspace.org
+        
+        Test of remailer at jpunix.com
+--
+
+If this is succesful you add another remailer:
+
+you > remailer 2 > RRT- rem 2 >> RRT you
+
+
+This is what you send:
+---
+    TO: remailer@jpunix.com
+    
+    ::
+    Request-Remailing-To: nobody@kaiwan.com
+    
+    ::
+    Request-Remailing-To: abraxas@cyberspace.org
+    
+    Test of remailer at jpunix.com and RRT kaiwan.com
+-----------------------------------------------------
+
+
+        Remailer nobody@kaiwan.com will receive this message from
+        remailer@jpunix.com
+------    
+        From: remailer@jpunix.com
+        To: nobody@kaiwan.com
+        
+        ::
+        Request-Remailing-To: abraxas@cyberspace.org
+        
+        Test of remailer at jpunix.com and RRT kaiwan.com
+------
+
+    Because the message has the header pasting tokens [::] 
+    the remailer at kaiwan.com knows where to send it to.
+    
+        You will receive this message from kaiwan.com
+        
+        From: nobody@kaiwan.com
+        To: abraxas@cyberspace.org
+        
+        Test of remailer at jpunix.com and RRT kaiwan.com
+---------------------------------------------------------
+You can keep adding remailer this way, everytime you receive
+a test message back you add another remailer: if you stop receiving
+test messages, the last remailer added is most likely "down". You can
+check that by using that remailer directly.
+
+---------------------------------------------------------
+
+The above is simple unencrypted remailing. If you want to have an
+encrypted chained remailing, you first have to "design" the chain.
+
+    1] send to jpunix.com there RRT kaiwan.com
+    2] at kaiwan.com RRT vox.hacktic.nl
+    3] at vox.hacktic.nl RRT abraxas@cyberspace.org
+    
+
+First you make the 3rd stage:
+
+
+--
+    ::
+    Request-Remailing-To: abraxas@cyberspace.org
+    
+    Test of PGP'ed remailing trough jpunix, kaiwan and vox.
+--
+
+The above is encrypted whit the PGPpubKEY of VoX.hacktic.nl and will
+result in this:
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.6 for VoX Labz.
+
+hIwCWd90FI1WkT0BA/9I6ILVhl5ZpsgKgHye+ng9CokwzdW1pMgcd0ecigppAODe
+53LlyVw/hl1ERYIzWW9W4vnuh7sLgu9XjxB515FtT5VSyZLZrhKIF7XtACga2On+
+1NmsecLTrgXYcc4k0Y+l66Hs06z92yhFvjXruDBS2Pame0VDtgZo+4aPntioDaYA
+AABJsVIWRaJkCib+uek9Pr6GqFP7lwaMqq8XFnFxY42h3Wn3c5DikrzmwKGK5xVs
+hmiZnEhJgXvR7jS2cNNOk/geG4SnUqvMTzpq6w==
+=b0bT
+-----END PGP MESSAGE-----
+
+--    
+    
+Then you than proceed to the 2nd stage the message wich has to leave
+kaiwan.com:
+
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.6 for VoX Labz.
+
+hIwCWd90FI1WkT0BA/9I6ILVhl5ZpsgKgHye+ng9CokwzdW1pMgcd0ecigppAODe
+53LlyVw/hl1ERYIzWW9W4vnuh7sLgu9XjxB515FtT5VSyZLZrhKIF7XtACga2On+
+1NmsecLTrgXYcc4k0Y+l66Hs06z92yhFvjXruDBS2Pame0VDtgZo+4aPntioDaYA
+AABJsVIWRaJkCib+uek9Pr6GqFP7lwaMqq8XFnFxY42h3Wn3c5DikrzmwKGK5xVs
+hmiZnEhJgXvR7jS2cNNOk/geG4SnUqvMTzpq6w==
+=b0bT
+-----END PGP MESSAGE-----
+
+
+But kaiwan.com has to know where to send it to, so the 2nd stage msg is:
+
+
+::
+Request-Remailing-To: remail@vox.hacktic.nl
+
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.6 for VoX Labz.
+
+hIwCWd90FI1WkT0BA/9I6ILVhl5ZpsgKgHye+ng9CokwzdW1pMgcd0ecigppAODe
+53LlyVw/hl1ERYIzWW9W4vnuh7sLgu9XjxB515FtT5VSyZLZrhKIF7XtACga2On+
+1NmsecLTrgXYcc4k0Y+l66Hs06z92yhFvjXruDBS2Pame0VDtgZo+4aPntioDaYA
+AABJsVIWRaJkCib+uek9Pr6GqFP7lwaMqq8XFnFxY42h3Wn3c5DikrzmwKGK5xVs
+hmiZnEhJgXvR7jS2cNNOk/geG4SnUqvMTzpq6w==
+=b0bT
+-----END PGP MESSAGE-----
+
+    
+The above is then encrypted whit the PGPpubKEY of kaiwan.com:
+
+--
+Stage 1:
+
+This new encrypted message gets the headers for jpunix to remail:
+
+
+::
+Request-Remailing-To: nobody@kaiwan.com
+
+::
+Encrypted: PGP
+
+-----BEGIN PGG MESSAGE-----
+
+and the PGP encrypted message from stage 2
+
+-----END PGP MESSAGE-----
+
+---
+
+Stage 0: the message you send to jpunix.com
+
+is the encrypted message [with the PGPpubKEY of jpunix.com] of
+stage 1 plus a Encrypted: PGP header.
+
+
+To: remail@jpunix.com
+
+::
+Encrypted: PGP
+
+-----BEGIN PGG MESSAGE-----
+
+and the PGP encrypted message from stage 1
+
+-----END PGP MESSAGE-----
+
+
+--
+Exit! Stage Left.
+Alex de Joode                                 <usura@vox.hacktic.nl>
+
+
+
+

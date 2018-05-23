@@ -1,0 +1,76 @@
+From: Vincent.Cate@FURMINT.NECTAR.CS.CMU.EDU
+Date: Tue, 21 Jun 94 18:25:51 PDT
+To: cypherpunks@toad.com
+Subject: Using "nobody" to camouflage encryption/remailers/commerce
+Message-ID: <772247601/vac@FURMINT.NECTAR.CS.CMU.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If we use "nobody" as an email address we can hide remailers or make it
+seem like there were remailers where there are not, etc.
+
+The convention on the Internet is for mail to "nobody" to go to
+"/dev/null".  This is used as a return address when you don't want bounced
+mail.
+
+Now remailer operators are clearly more interested in privacy than in
+following conventions.  Imagine remailers also had addresses like
+"nobody@vox.hacktic.nl", and "nobody@jpunix.com".  Now if someone doing
+an internet wire-tap sees mail to "nobody@furmint.nectar.cs.cmu.edu" it
+is hard for him to tell if this means:
+
+  a) It will just end up in /dev/null like it does on 99% of the machines
+  b) furmint is another remailer
+  c) someone on furmint gets mail as "nobody"
+  d) furmint acts as a remailer for those with money
+  e) furmint is being used for some email based business
+  f) etc
+
+So now assume that there was a lot of encrypted mail going to
+"nobody@alex.sp.cs.cmu.edu".  That might be because I am also doing
+something funny there, or it might be because someone is just sending a
+lot of encrypted mail to /dev/null.  By the way, anyone is welcome to send
+encrypted mail to this address (via a remailer or not).  Even if there is
+no email going out of that machine, it could just be that with my remailer
+I collect the mail some period into a file, encrypt the file, move it
+off to some other machine (using FTP, NFS, uucp, rcp, http, telnet, etc.),
+and mail it from there.  Could be hard to tell.
+
+Remailers named "nobody" will be harder to stop.  So it would be nice
+if sites with remailers would set the "nobody" alias to point to their
+remailer to start this convention.  Assuming that the remailer will
+drop non-encrypted mail (or at least mail that does not have a good
+format) this should not cause any problems.
+
+On "furmint" I did the following:
+
+   Changed the "nobody:/dev/null" in /usr/misc/.mmdf/table/aliases 
+   to "nobody:vac+pgp@furmint.nectar.cs.cmu.edu". 
+
+   Ran "dbmbuild" to rebuild the "mmdf" database.
+
+I don't know how different this will be on other Unixes.  It may only take
+editing "/usr/lib/aliases" on other systems.
+
+So I did give away the puzzle in the second paragraph, if you send mail to
+"nobody@furmint.nectar.cs.cmu.edu" it is the same as sending mail to
+"vac+pgp@cs.cmu.edu".  So far.  :-)
+
+I doubt that "nobody" was getting a lot of mail, but if so I will modify
+my "pgp-receive" script to drop any mail not encrypted for it.
+
+If they ever outlaw sending mail to "nobody" there will be millions of
+people who are breaking the law.
+
+If some country outlaws encryption, people (or programs) in other
+countries could send encrypted mail to "nobody" at random machines in that
+country to act as a cover for the legitimate encrypted mail.
+
+   -- Vince
+
+
+
+
+
+

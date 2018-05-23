@@ -1,0 +1,64 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Wed, 1 Feb 95 07:27:03 PST
+To: "James A. Donald" <jamesd@netcom.com>
+Subject: Re: The security characteristics of crypto modules with secrets
+In-Reply-To: <Pine.3.89.9501312316.A19818-0100000@netcom4>
+Message-ID: <199502011528.KAA23229@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> The prevalent use of modules further reduces the likelihood of initial
+>> attacks based on spoofing.  Since active IP attacks require the
+>> subversion of routers, and since router software is much more
+>> difficult to subvert than general purpose servers, adding crypto
+>> modules to routers would be a big win.
+>
+>This does not make sense:  The advantage of a tamper resistant module
+>is that if somebody physically gets to the system, he still cannot
+>get the key.  But if he physically gets to the router, he can
+>make it do his will, even if he does not get the key.  So one
+>might as well have the key in software in the router.
+>
+>If the router is hard to subvert, and the attacker cannot 
+>physically get to it, then there is little need for a separate
+>tamper resistant module.  Software will do fine.
+>
+>If the router can be got at, you are stuffed regardless, tamper
+>resistant module or not.
+
+The advantage of a secure crypto module on an insecure server (or
+router or whatever) is in limiting the scope of successful attack. 
+As Eric pointed out, if you can subvert a general purpose machine that
+does all its crypto through a secure module that you can't subvert,
+you can still add a covert "service" to the machine that lets
+a future spoofer use the module remotely.  The main important
+difference between this attack and just learning the server's secret
+is that it only remains useful as long as the attack is undiscovered.
+In the case of software keys, it is sufficient for the attacker to subvert
+the machine that knows the secret ONCE.  He or she can put things back
+to normal on the original machine and still know the secret forever, with
+little chance of future detection.  With a secure module, the attacker has
+to either steal (physically) the hardware (which will be discovered when
+the real server stops working) or set up the kind of future access that
+Eric mentioned (which, once discovered, will likely be turned off or
+investigated).
+
+If you have secure crypto hardware, you only have to worry about and
+detect whether the server is being compromised continuously.  Otherwise,
+without special hardware, you have to worry about and detect whether the
+server was ever compromised since it was last rekeyed.  Personally,
+the former seems like a realistic thing to try to do while the latter
+doesn't, at least in the environments in which I live.
+
+If the server hardware or software is insecure, cryptographic techniques
+can't provide any absolute guarantees, period.   In the real world, though,
+you're not interested in absolute guarantees, you just want to
+reduce risks.   How effective the mechanisms to do this are depends on
+how accurately they reflect the real world threats.
+
+-matt
+
+
+
+

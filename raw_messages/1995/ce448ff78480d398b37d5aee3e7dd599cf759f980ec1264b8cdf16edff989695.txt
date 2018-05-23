@@ -1,0 +1,58 @@
+From: sdw@lig.net (Stephen D. Williams)
+Date: Fri, 11 Aug 95 10:55:30 PDT
+To: perry@piermont.com
+Subject: Re: IPSEC goes to RFC
+In-Reply-To: <199508111327.JAA01106@panix4.panix.com>
+Message-ID: <m0sgyqo-0009ywC@sdwsys>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> Nesta Stubbs writes:
+> > There are some other problems too I believe.  I have worked for a decent 
+> > sized network who did all user authentication at the terminal servers for 
+> > dial-in accounts thru DNS.  This wasn't too bad for just passws and 
+> > stuff, but wouldn't this cause some bloat in the nameservers database?  
+> 
+> HESIOD is an excellent demonstration that it works just fine.
+> 
+> > As well as cause problems security wise when it comes to updates.  Would 
+> > these automatically not be cached in any form by the site making the 
+> > request?  This also causes a problem for smaller time people who perhaps 
+> > have a PPP/SLIP connection 24/7 but have nameserve done by their prvider, 
+> > and I for sure don't want my provider to be in control of those keys. 
+> 
+> Why not? After all, they are signed. You can have them held by your
+> worst enemy and it should be just fine. Thats the idea of public key
+> signatures.
+
+Not only that but it's common now for DNS servers to give short TTL
+for the answers (multiple A recs for load balancing), no big deal
+to have pseudo-subdomains that are pointed at a different server
+(Even over slip/ppp) than normal name service.
+
+I believe the root servers answers for intermediate nodes are cached
+normally, so key.george.bub.com doesn't cause a root hit after
+bub.com has been resolved.
+
+Quite a few domains do run their own name servers, and it's not too tough
+to create auto-update scripts, etc.
+
+There's no reason that DNS has to be the only mechanism.  Default
+to one method then fallback to others, like direct IP port connection
+for query.
+
+> .pm
+> 
+
+sdw
+-- 
+Stephen D. Williams 25Feb1965 VW,OH (FBI ID) sdw@lig.net http://www.lig.net/sdw
+Consultant, Vienna,VA Mar95- 703-918-1491W 43392 Wayside Cir.,Ashburn, VA 22011
+OO/Unix/Comm/NN       ICBM/GPS: 39 02 37N, 77 29 16W home, 38 54 04N, 77 15 56W
+Pres.: Concinnous Consulting,Inc.;SDW Systems;Local Internet Gateway Co.;28May95
+
+
+

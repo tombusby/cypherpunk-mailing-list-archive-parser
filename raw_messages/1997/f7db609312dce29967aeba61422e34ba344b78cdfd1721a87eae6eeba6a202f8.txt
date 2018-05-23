@@ -1,0 +1,51 @@
+From: Marc Horowitz <marc@cygnus.com>
+Date: Tue, 10 Jun 1997 10:20:26 +0800
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: Access to Storage and Communication Keys
+In-Reply-To: <3.0.1.32.19970609000938.00756910@popd.ix.netcom.com>
+Message-ID: <t5367vnxld3.fsf@rover.cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bill Stewart <stewarts@ix.netcom.com> writes:
+
+>> Having argued that point vociferously in the past, I'm now going to
+>> waffle on the issue - while the business need is for access to
+>> stored data, this may often include stored messages received from
+>> a communication system in encrypted form.  Either the User Interface
+>> needs to make it convenient to store the decrypted message,
+>> or else the user will store the message in encrypted form -
+>> which means there may be a business need for Proper Authority Access later.
+
+To me, mail encryption is not communications encryption.  The mail
+message is encrypted, just like a file might be.  Then those encrypted
+bits are sent over the net.  It is precisely because I have access to
+the ciphertext as a separate entity that this is not communications
+encryption.
+
+This is in contrast to ssh, kerberized telnet, IPsec, etc., where once
+the communications has happened, I either have the cleartext bits
+(example: scp), or nothing but a memory in my head (example: telnet).
+In this situation, private escrow of keys is useless, unless I'm also
+escrowing the ciphertext.  Nobody I know archives their cyphertext
+data flows.  Anybody know of a contradiction?
+
+The *only* reason to escrow communications keys is to spy on people;
+there is never an opportunity for data loss here.
+
+Note that this also means that private key recovery (intra-corporate,
+for example) is consistent with perfect forward secrecy, since the
+former is never useful for communications, and the latter only is.
+
+This doesn't fix the potential problems with email, but it does let
+you continue to argue vociferously and with a clear conscience against
+communications key escrow in any form.
+
+		Marc
+
+
+
+
+

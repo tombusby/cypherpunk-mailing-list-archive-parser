@@ -1,0 +1,33 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Wed, 11 Aug 93 16:02:06 PDT
+To: fnerd@smds.com (FutureNerd Steve Witham)
+Subject: Re: Secure voice software issues
+In-Reply-To: <9308112238.AA05820@smds.com>
+Message-ID: <9308112259.AA01362@toxicwaste.MEDIA.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Am I wrong, or is Diffie-Helman only useful when you *don't* have
+> a way of verifying who each other are?
+
+No, DH is useful whenever you want to generate a session key between
+two entities, and its even more useful because it doesn't require any
+prior knowledge.  This means that you don't *need* to verify the
+identity of the other person.  
+
+However, without some way of verifying the key of the other party,
+there is no easy way to detect a monkey-in-the-middle attack.  As was
+put forward, a combination of DH to key exchange and RSA to detect
+monkey-in-the-middle will protect you, but you lose your anonymity at
+that point.
+
+So, to return to your question, DH is useful even when you have a
+method of verification.  So the answer to your question is yes, you
+are wrong.
+
+-derek
+
+
+
+

@@ -1,0 +1,62 @@
+From: daw@cs.berkeley.edu (David Wagner)
+Date: Tue, 2 Jul 1996 16:00:33 +0800
+To: cypherpunks@toad.com
+Subject: Re: Message pools _are_ in use today!
+In-Reply-To: <adfab86806021004c248@[205.199.118.202]>
+Message-ID: <4ra50l$is@joseph.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <adfab86806021004c248@[205.199.118.202]>,
+Timothy C. May <tcmay@got.net> wrote:
+> The newsgroup "alt.anonymous.messages" has existed for a year or two, and
+> serves to be working reasonably well as a message pool. Check it out.
+
+alt.anonymous.messages is not an ideal message pool-- it is a hack.
+(Granted, it *is* a really cool, clever, and practically useful hack.)
+
+Ian and I talked about this at some length.  alt.anonymous.messages
+has certain unfortunate shortcomings.
+
+
+Someone sniffing the Berkeley 'net can tell when I receive an
+alt.anonymous.messages message by when I download an article from
+the NNTP server; they can tell when I send such an article by when
+I upload an article to the NNTP server; they can list all the
+``subversive'' Berkeley folks who have read alt.anonymous.messages
+lately.
+
+The local NNTP server must be trusted.
+
+Furthermore, even if you run a trusted NNTP server on your local
+machine, there are still vulnerabilities.  Someone sniffing on your
+subnet can tell when you inject a new message onto alt.anonymous.messages,
+as can your neighboring NNTP servers.
+
+Then there are all the standard message length and timing threats
+from traffic analysis.  And there is no perfect forward secrecy
+when using alpha nymservers to redirect email to alt.anonymous.messages.
+
+There are also second-order threats, arising from the fact that
+an attacker can selectively and remotely delete messages from some
+spools by using cancel messages, without compromising any NNTP servers.
+
+
+Ian's post detailed a proposal for implementing a message pool with
+better security properties: link encryption, constant size messages,
+randomized flooding, perfect forward secrecy, etc.
+
+This mechanism is intended to provide recipient anonymity.  Sender
+anonymity must still be achieved by standard chaining methods.
+
+
+If folks have better ideas for how to achieve really good recipient
+anonymity, I hope they'll speak up!
+
+Take care,
+-- Dave
+
+
+
+

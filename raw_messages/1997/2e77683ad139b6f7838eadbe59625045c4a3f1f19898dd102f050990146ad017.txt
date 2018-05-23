@@ -1,0 +1,84 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 27 Oct 1997 18:17:01 +0800
+To: tcmay@got.net
+Subject: Re: Orthogonality and Disaster Recovery
+In-Reply-To: <v03102802b078027ffb91@[207.167.93.63]>
+Message-ID: <199710271108.LAA01020@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Tim wrote at length about the usefulness of cleanly separating
+functionality.
+
+As this applies to pgp5.x, one could apply this idea in the following
+way:
+
+- remove pgp file encryption functionality from pgp5.x
+
+- store decrypted emails in the clear in mail folders
+
+- develop PGPdisk for more platforms, and/or market a separate file
+  encryption program which only uses symmetric keys.  Integrate
+  recovery into that if required, or let the users figure out to copy
+  the symmetric storage only "key ring" onto floppies and place in
+  fire proof safe themselves.
+
+
+Problems with this are:
+
+- pgp5.0, pgp5.5 already have this file encryption function built in
+  (they might not want to take it out)
+
+- several people are arguing for the need for the company to be able
+  to read queued emails encrypted to a company use key when recipient
+  is away on holiday, or leaves company, etc.
+
+- some people argue for functionality of having email archives encrypted
+
+
+Once you start trying to tackle those problems, things get unavoidably
+complicated as you attempt to balance the criteria of resistance to
+political abuse, resistance to privacy invasion, security, ergonomics,
+and meeting user requirements.
+
+I think it's useful to attempt to design systems which balance those
+criteria, even though anything which automates any aspect of third
+party access to data is inherently dangerous and more prone to
+government abuse.
+
+Kent Crispin said sometime ago that cypherpunks (he addressed the
+comment to the list readership) should have a go at designing
+commercial data recovery protocols.
+
+Even pgp2.x is not that resistant to government abuse as an email
+transport.  Governments can demand copies of private keys, governments
+can request to be 2nd crypto recipients.  Some governments sooner or
+later may even try that with pgp2.x itself.
+
+So I think it is interesting to encourage use of perfect forward
+secrecy, at the transport layer, and opportunistically in the pgp
+encryption layer.
+
+It is perhaps dangerous, but if people are doing it anyway, it is
+useful to examine politically government resistant company storage
+recovery, and integration of this into pgp implementations, and
+standards even.  Not something cypherpunks would normally consider,
+I'm sure, but the functionality of the deployed base is all important,
+as is the functionality of standards -- and both of these are to a
+large extent influenced by commercial users.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

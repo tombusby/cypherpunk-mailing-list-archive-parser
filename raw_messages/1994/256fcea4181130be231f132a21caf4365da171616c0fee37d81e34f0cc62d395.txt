@@ -1,0 +1,47 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Fri, 20 May 94 07:59:31 PDT
+To: cypherpunks@toad.com
+Subject: D-H key exchange - how does it work?
+In-Reply-To: <199405200401.VAA24444@jobe.shell.portal.com>
+Message-ID: <9405201502.AA10802@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   It takes hours and hours of searching to find
+   a 1024 bit strong prime on a workstation.  Granted, you don't need to change
+   very often perhaps, but some people would like to change every day.  
+
+If they really want to change that often, they can buy a dedicated
+machine.  There's no good cryptographic reason to change that often,
+if the modulus is large enough.  In addition, changing the modulus can
+have unpleasant effects on traffic analysis, if not done properly.
+
+   (The best way I know to find strong primes is to find a prime q and then
+   check 2q+1 for primality.  Finding 1024 bit primes takes a long time, and
+   the chances that 2q+1 is prime is very low.)
+
+Well, there are faster ways.  One can combine the sieve for q with a
+sieve for p.  The biggest problem is that there are just a lot fewer
+primes with the above property.
+
+   The question is, how good are strongish primes?  
+
+Just fine.  The complexity of taking discrete logs is dependent on the
+largest prime factor of the modulus.
+
+   What fraction of elements
+   of the group will have short periods, given that p-1 has a pretty small
+   number of prime factors?
+
+If q is the largest prime factor, then about p/q will have short
+periods, namely, those divisible by q.  When p=2q+1, there is one
+element of order 1 (namely 1), one element of order 2 (namely -1, aka
+2q), and every other element has order 2q or q.  For primes of the
+form p=kq+1, there are about k with short periods.
+
+Eric
+
+
+
+

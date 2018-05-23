@@ -1,0 +1,39 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sun, 1 Dec 1996 11:11:13 -0800 (PST)
+To: ichudov@algebra.com
+Subject: Another problem with IPG algorithm
+In-Reply-To: <no.id>
+Message-ID: <199612011844.MAA03510@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Don and others,
+
+At the heart of IPG algorithm there is a pseudo-random number generator
+which generates values of A(JV). (see http://www.netprivacy.com/algo.html)
+
+       DO
+         JV=JV+1
+         IF JV=53 THEN JV=0
+         A(JV)=(A(JV)+B(JV)) MOD C(JV)
+       UNTIL A(JV)<16384
+
+Note that if B(JV) and C(JV) in a triplet (A(JV), B(JV), C(JV)) are not
+mutually prime, they will generate very few numbers and not a whole set
+0-16383. For example, if C(JV) is 20000, and B(JV) is 10000, and initial
+A is (for example) 57, the only two numbers that this triplet will
+generate will be 57 and 10057.
+
+This refutes Don Wood's claim that the distribution of results
+approaches even. Even if only ONE triplet is such as I described (and it
+is VERY likely to happen statistically), the distribution will be
+skewed.
+
+Don, what do you think about it?
+
+igor
+
+
+
+

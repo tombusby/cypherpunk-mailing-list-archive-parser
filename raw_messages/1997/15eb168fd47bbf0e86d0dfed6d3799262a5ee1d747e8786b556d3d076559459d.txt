@@ -1,0 +1,61 @@
+From: Jon Callas <jon@pgp.com>
+Date: Sat, 18 Oct 1997 02:34:27 +0800
+To: Bill Stewart <cypherpunks@cyberpass.net
+Subject: Re: consensus on pgp? can we consolidate for action?
+In-Reply-To: <19971016.032545.attila@hun.org>
+Message-ID: <3.0.3.32.19971017111721.00b53d40@mail.pgp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 01:18 AM 10/17/97 -0700, Bill Stewart wrote:
+   At 08:40 AM 10/16/1997 +0000, Attila T. Hun wrote:
+   >    I have not seen any further discussion on my suggestion to
+   >    create a sendmail type daemon which implements DH between
+   >    mail clients. this, of course, is on the presumption that DH 
+   >    is a wrapper for an already encrypted packet, 
+   
+   DH between mail clients and servers is a really fine idea if you're
+   starting from scratch, but sendmail is such a wretched hive of
+   crime, corruption, and villainy that nobody in their right mind
+   really wants to mess with it.  You could implement it as a sendmail
+   extension using the EHLO stuff, but you'd have to go get people
+   to adopt it widely once you'd done it; I suppose if you could talk
+   Netscape and Eudora into adding DH exchange to their client code
+   and get it into a few popular servers, you'd have a large fraction 
+   of the Internet's email encrypted, which would be a Good Thing.
+   It'd still have some major traffic analysis issues,
+   and if you want to deal with the Man In The Middle problem,
+   you need a key distribution infrastructure, which is much harder.
+   
+   An alternative approach is to encrypt everything using IPSEC,
+   and you don't have to mess with Sendmail, but there are
+   performance issues, and there's a lot of work getting it deployed also.
+
+There's another solution too -- make your mail servers talk with TLS
+(Transport Level Security, a.k.a. SSL).
+
+This solves some problems and not others. If your SMTP path includes any
+hops, then the message is in plaintext on that machine. Complicating it
+further, you cannot reliably enforce what the hops will be. 
+
+This is one of the reasons that email keys are sometimes considered comm
+keys and sometimes storage keys. 
+
+	Jon
+
+
+
+-----
+Jon Callas                                  jon@pgp.com
+Chief Scientist                             555 Twin Dolphin Drive
+Pretty Good Privacy, Inc.                   Suite 570
+(415) 596-1960                              Redwood Shores, CA 94065
+Fingerprints: D1EC 3C51 FCB1 67F8 4345 4A04 7DF9 C2E6 F129 27A9 (DSS)
+              665B 797F 37D1 C240 53AC 6D87 3A60 4628           (RSA)
+
+
+
+
+

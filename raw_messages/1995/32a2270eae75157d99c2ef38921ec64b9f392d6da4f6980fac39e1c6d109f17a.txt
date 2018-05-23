@@ -1,0 +1,51 @@
+From: Don.Stephenson@Eng.Sun.COM (Don Stephenson)
+Date: Sat, 30 Sep 95 17:15:57 PDT
+To: jbass@dmsd.com
+Subject: Re: NetScape's dependence upon RSA down for the count!
+Message-ID: <9510010003.AA08494@icenine.Eng.Sun.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I haven't read the SSL spec for a while but my understanding was that 
+the server passed it's public key to the client via a certificate 
+signed by a mutually trusted certificate authority (i.e., Verisign).
+
+How would the filter be able to forge such a certificate ?
+
+- Don
+
+
+
+> From jbass@dmsd.com Sat Sep 30 16:47:11 1995
+> Date: Sat, 30 Sep 95 16:39:57 -0600
+> From: jbass@dmsd.com (John L. Bass)
+> To: www-security@ns2.rutgers.edu, cypherpunks@toad.com
+> Subject: Re: NetScape's dependence upon RSA down for the count!
+> 
+> >   jbass@dmsd.com writes:
+> >    > client ->       filter                          Client sends packet with K(c)
+> >                 filter ->       Server          filter forwards packet with K(f)                filter       <- Server          Server sends encrypts with K(f)
+> >    > client       <- filter                          filter re-encrypts with K(c)
+> >    >
+> >    > As the protocol progresses the filter also uses the master key,
+> >    > and follows the renegotiation as the master key expires.
+> > 
+> > Yeah, but in order for this to work, the fake server needs to know
+> > netscape.com's private (secret) key, no?
+> > 
+> > -jon
+> 
+> No ... the public part of any server private key is held by the filter
+> and not returned to the client. The client only encrypts with public
+> keys provided by the filter. The Server only encrypts with public keys
+> provided by the filter. The filter has cleartext of the entire session.
+> 
+> John
+> 
+> 
+
+
+
+

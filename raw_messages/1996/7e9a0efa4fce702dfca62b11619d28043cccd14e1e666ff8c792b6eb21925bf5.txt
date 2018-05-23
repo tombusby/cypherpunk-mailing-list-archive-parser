@@ -1,0 +1,68 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Wed, 5 Jun 1996 13:02:34 +0800
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: Multiple Remailers at a site?
+In-Reply-To: <199606020659.XAA25720@toad.com>
+Message-ID: <199606042040.QAA15977@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart writes:
+>>I don't think multiple remailers at the same site help anything.
+>
+>Assume Alice, Bob, and Carol are on abc.com and Xenu, Yak, and Zut
+>are on xyz.com.  Remailing between Alice, Bob, and Carol doesn't
+>make appear to make much difference, but it does reduce the damage
+>if one of the remailer's keys is compromised.  On the other hand,
+>mail from Alice -> Xenu -> Bob -> Yak -> Carol -> Zut adds traffic
+>to the system, and makes traffic analysis more difficult,
+>even if the Bad Guys are watching site abc.com and have stolen
+>Alice, Bob, and Carol's keys.
+
+Wait a minute.  More traffic should make analysis easier, since traffic
+analysis is mostly statistical work on the source and destination (not
+necessarily "from" and "to").  A bigger sample makes more reliable
+results.
+
+For traffic analysis, I don't know *who* sent the message (it was,
+after all, anonymized), but I do know a site which transmitted it and
+one which received it, the time it was transmitted, and maybe its
+size.  Multiply this times a whole bunch of messages, and I can infer
+information about "common interests" between those sources and
+destinations.
+
+The delays and mixing done by remailers make it harder by
+disassociating the true sender from the true receiver.  If a remailer
+were to ignore this step, the analyst can deduce from the two data
+points
+
+    "message a, source A, destination RemailerX, time t, size s"
+    "message b, source RemailerX, destination B, time t+0.001s, size s"
+
+that there's some connection between A and B.  The more such evidence,
+the stronger the connection.  If the remailer does a good job with
+the delays and shuffling, then it becomes difficult for the analyst
+to match message a with message b, leaving him with what he already
+knew (that A and RemailerX have a common interest, as to B and RemailerX,
+but the interests may be wholly unrelated).
+
+Multiple remailers on the same machine increases the resolution of
+the address information, at best, improving the analysts ability to
+make connections.  The same traffic load going to a single remailer
+at the site makes the analyst's job harder.
+
+>The other threat it helps with is that if XYZ.COM gets complaints
+>about that evil user Zut, she can kick her off (Bad Zut!)
+>and still leave Xenu and Yak alone; if the remailer service
+>were provided by the machine owner herself she might be directly liable.
+
+Hmm.  Nothing really stops the machine owner from creating a personal
+anonymous account to run the remailer.  When someone complains, shut it
+down and create a new one.  There isn't yet a law which requires that
+the owner be able to identify the user.  This affords the same
+protection that multiple users does.
+
+
+
+

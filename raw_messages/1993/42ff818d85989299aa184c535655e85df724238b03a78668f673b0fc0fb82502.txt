@@ -1,0 +1,107 @@
+From: cman@IO.COM (Douglas Barnes)
+Date: Sat, 9 Oct 93 18:30:59 PDT
+To: newsham@wiliki.eng.hawaii.edu (Timothy Newsham)
+Subject: Re: DC-Net proposal,  comments requested
+In-Reply-To: <9310091935.AA17001@toad.com>
+Message-ID: <9310100127.AA23557@illuminati.IO.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> A DC-NET
+>    This net is broadcast in nature (data written by one machine can be
+> seen by all other machines on the network) but with the characteristic 
+> that it is impossible to tell which machine on a particular DC-Net 
+> wrote out the data (except if all other machines are controlled by the 
+> same person?).  The DC-NET itself is bit oriented.  Such a DC-network would
+
+Actually, a single collusion between two processes could isolate a 
+single non-colluding process, if that process was "between" them 
+on the graph. One of the hard problems with DC Nets is how to minimize
+the need for trust among the members, and how to arrange for net
+formation and re-formation in a way that minimizes the ability to
+deliberately or systematically partition all of the processes over
+a period of time as part of a "fishing expedition" to determine the
+source of some perceived-noxious output from the net.
+
+We talked about DC Nets at the Austin cypherpunks meeting, and played
+the "Dining Cryptographers Game" (complete with snazzy pieces provided
+by yours truly). It was fun, but folks were a little nonplussed about 
+the degree of trust required among participants.
+
+> be the underlying layer for the packet network.  The actual DC-Network
+> would be made up of processes on various (or even the same,  for testing 
+> purposes) machines all connected together with TCP.  
+>  
+> 
+> The Packet Net
+>    The Packet Network would be built with the DC-Net as a base.  In order
+> to send useful information across the network a single node would form
+> data into packets.  These packets would be outputted to the network a
+> bit at a time.  Since the DC-Net is bit oriented it is possible for
+
+I've been looking at this problem as well, Tim, and it doesn't seem to 
+me that you have to output a bit at a time. In fact, the DC net machines
+should probably be operating on blocks that fit nicely into single IP
+packets. Just consider the blocks to be the result of N coin tosses.
+
+> another node to send some bits after one node has started to write out
+> its packets.  As a node writes out a packet it should listen to the
+> network for "collisions" and if a collision is detected it would 
+> "give up" on the current transmission and wait for some time to start
+> again.  Packets from one machine to another must have some sort of
+> addressing.  The packet could be encrypted entirely in the public
+> key of the destination if there is only a single DC net.  If there
+> are multiple DC-Nets with packet forwarding between them then there
+> must be some sort of plaintext address information in the packets.
+> The return address should *never* be in plaintext.  Probably the
+> data and return address of a packet would be encrypted in the public
+> key of the destination or in a private key shared with the destination.
+> 
+> Sessions
+>   Virtual connections can be built on top of the packet network in
+> the same way as they are on top of other packet networks.  Some protocol
+> like TCP (or even the TCP protocol) could be used.
+> 
+> 
+> Why should this be built on the internet?
+>     Writting and debugging a network of this sort on top of the internet
+> should be easier than writing it and implementing it from scratch.  Some
+> people have proposed neighborhood networks that would be used to
+> implement untraceable and unstoppable connections.  This is an excellent
+> way to develop and debug such a network.
+> 
+> What needs to be resolved
+>    Alot!  This is just something I threw together.  There are alot of
+>    questions.  In fact most of it is still a question.  The protocol
+>    of the underlying DC-Net needs to be written.  A packet layer must
+>    be written or adapted from current protocols.  The issues of addressing
+>    need to be addressed.  There are also sure to be alot of politically
+>    oriented questions as well.
+> 
+
+One head scratcher I've been considering is whether it would be better
+to simulate a token-passing scheme, or to have comparisons broadcast
+to all participants. Since in a broadcast scheme, the number of packets
+per round generated is n^2, it seems prima facie that token passing would
+be faster (it would certainly consume a much smaller % of the net's total
+bandwidth), but actually for reasonable n, the accumulated latencies from
+a few slow links could very well make the token passing slower. 
+
+Also, I have thought of some ways of dealing with "slacker" processes
+or folks who suddenly drop out that work better with a broadcast approach,
+but there's probably a way to deal with them in the token-based scheme.
+
+Another issue is whether or not your processes need to elect a "lead" process 
+to handle synchronization issues and serve as an arbiter in net formation
+and re-formation.
+
+
+-- 
+----------------                                             /\ 
+Douglas Barnes            cman@illuminati.io.com            /  \ 
+Chief Wizard         (512) 448-8950 (d), 447-7866 (v)      / () \
+Illuminati Online          metaverse.io.com 7777          /______\
+
+
+

@@ -1,0 +1,71 @@
+From: Pallas Anonymous Remailer <athena@cyberpass.net>
+Date: Sat, 24 Oct 1998 16:07:21 +0800
+To: cypherpunks@Algebra.COM
+Subject: Big Brother Netscape
+Message-ID: <2d101d9725ee4f1682a3417e5c703039@anonymous>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Summary:
+Netscape's "what's related" is a backdoor for Netscape to monitor your surfing.
+
+--forwarded text---------------------------------------------------------
+>From "Flemming S. Johansen" <fsj@terma.com> on BUGTRAQ@netspace.org
+
+Starting with version 4.06, the Netscape browser has a new "What's
+Related?" button next to the Location: field. After having tried it
+in the new 4.5, I am more than a little worried by the functionality
+behind it.
+
+Briefly, the user clicks on this button, and is presented with a
+list of sites which are hopefully related to the page currently
+on display, plus some ads for Netscape.
+
+As far as I have been able to deduce (helped by a packet sniffer), this
+works by opening a HTTP connection to www-rl.netscape.com and making a
+query modelled on this template: GET /wtgn?CurrentURL/ HTTP/1.0, where
+CurrentUrl is the URL of the page currently displayed.  The server
+responds with a list of URLs it believe to be related. There are four
+modes for this function, settable through preferences->navigator->smart
+browsing:
+
+    - "Always" The browser always downloads the list of 'related'
+      URLS, beginning while the page in question is loading.
+
+    - "Never" The browser starts downloading the list of 'related'
+      URLS when the user clicks on the 'What's related?' button.
+
+    - "After first use" Automatically fetches the URL list for
+      a page if the user has ever clicked the button for that
+      page.
+
+    - Completely disabled.
+
+The default setting is "Always". So, the unsuspecting user who upgrades
+to the latest Netscape will automatically and unknowingly begin sending
+out a detailed log of pages viewed.
+
+Netscapes privacy statement notwithstanding, I don't like the fact that
+anyone is able to compile a list of every single web page I visit. I
+don't like the fact that someone with a sniffer anywhere on the path
+from here to netscape.com is able to do so either.  And the company I
+work for is not too thrilled about the name of every single document on
+our internal, not-for-public-viewing web server leaking out on the Net,
+once our users begin installing this release on their PCs.
+
+I would like to control this "feature" globally for my LAN, but as far
+as I can see, there are only two ways of doing it: Fascist control of
+Netscape preferences settings on every PC on my LAN, or block
+www-rl.netscape.com in the firewall.
+
+--
+  ----------------------------------------------------------------------
+        Flemming S. Johansen
+        fsj@terma.com
+
+
+
+

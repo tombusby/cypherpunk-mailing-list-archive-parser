@@ -1,0 +1,55 @@
+From: Anonymous User <nobody@c2.org>someone@someplace.not.far.from.you
+Date: Sat, 15 Jun 1996 17:03:55 +0800
+To: cypherpunks@toad.com
+Subject: Hackerpunks and C2
+Message-ID: <199606150405.VAA08966@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Ecafe Mixmaster Remailer wrote:
+> The proposal for a Hackerpunks nym based mailing list is interesting,
+> however, there are some concerns regarding the susceptibility of the list
+> to traffic analysis.
+
+I think that the belief of the owner of hackerpunks that s/he won't
+be discovered is somewhat naive. Even though your traffic analysis
+ideas are right (see below), the most likely way to discover the owner is
+his/her unintentional screwup. I just feel like monitoring traffic of 
+all internet is too expensive.
+
+Still, the secrecy of the location of the hackerpunks-owner is not such
+an important thing (as long as the list is not located in some police
+state not honoring free speech). The knowledge of said localtion is 
+not even really important since the contents of this list may be
+montored anyway by simply subscribing to the list.
+
+> The solution to the two dilemmas seems to be to ask that the C2 re-mailing
+> code be modified so as ensure that each messages is padded to a fixed size
+> before encrypting and being sent through the reply block. On the other
+> hand, this would give away information that anyone receiving messages of
+> this fixed length was likely the owner of some C2 nym.
+
+[maybe I saw it on this list] How about this: that every remailer adds
+a cookie of size X where
+
+      S == size( message )
+      X == 20KB - S + rand( 40KB ) if S < 20KB
+      X == 40KB - S + rand( 80KB ) if 20KB <= S < 40KB
+      X == 80KB - S + rand( 160KB ) if 40KB <= S < 80KB
+
+and so on. This way, only 2-3 bits of information about size will
+be available to traffic analyzers, instead of about 10-12. For the
+most typical situation of messages being about 5KB in size, there
+is no information leaking.
+
+Of course, if an incoming message contained a cookie, it should be 
+dropped by the remailer to be replaced by the new one on the next hop.
+
+Same cookie feature could be added to premail.
+
+Have fun.
+
+
+
+

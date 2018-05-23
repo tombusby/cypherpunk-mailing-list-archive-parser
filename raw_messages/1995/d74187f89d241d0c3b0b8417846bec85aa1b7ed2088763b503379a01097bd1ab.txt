@@ -1,0 +1,69 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 8 Sep 95 09:12:45 PDT
+To: cypherpunks@toad.com
+Subject: Re:  GAK Hacks
+Message-ID: <199509081611.JAA05733@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It is interesting to see that the proposed solutions to avoiding GAK
+hacks (URL:http://www.eskimo.com/~joelm/criteria.txt) largely revolve
+around certificate restrictions.  Only keys signed with certificates from
+accepted escrow agencies can be used, and there is a "root certificate"
+used to authorize new escrow agencies.
+
+This is similar to some of the restrictions in the widely used Netscape
+web browser.  It only accepts certificates from a limited number of
+agencies (actually only one which is public, the RSA spinoff
+VeriSign).  This limitation is not based on escrow approval as in the
+GAK papers, but it ends up with something of the same results:
+interoperability with Netscape is only possible if you go through
+approved channels.  And supposedly VeriSign does not make it too easy to
+get a certificate if you are not a straight-arrow corporate type.
+
+Maybe it would be good practice for a future GAK hack to try fixing these
+problems with Netscape.  I could see two possibilities.
+
+One would be to create a patcher which would let you change the set of
+certificate authorities accepted by the browser.  Currently the browser
+accepts at least one (an internal Netscape test CA) which is not needed
+by end users.  Maybe its public key could be statically overwritten by
+the patch program with the public key of the replacement CA.  This sounds
+simple and safe.  The patch program can confirm that the data being
+changed matches the test CA.
+
+Another idea would be to patch the browser to emit full 128 bit SSL
+rather than the crippled 40 bit SSL it currently creates.  This would be
+trickier as it requires code changes, but they may not be as bad as it
+seems.  The 40 bit SSL is actually calculated as 128 bits internally.
+Then 88 bits are sent in the clear.  We would need to skip sending those
+88 bits, and also change the transmitted bytes which encode which
+encryption is being used.  This shouldn't be too bad as it mostly would
+eliminate code or change some static values.  The one thing I am unsure
+of is whether the 40 bit version sends the entire 128 bit SSL key in the
+RSA encrypted data (88 bits of which would be redundant, also being sent
+in the clear) or whether it sends only the 40 bits RSA encrypted.  If the
+latter it would be somewhat more work to do the patch because now a
+larger value will have to be packed into the RSA record.  If it is sending
+the 128 bits all the time then the patch would be much easier.
+
+This second patch is more advantageous for end users as it allows them to
+have strong encryption rather than the weak 40 bits which we have been
+breaking.  The first would be a more direct demonstration of the
+difficulties of using certificate restrictions to limit functionality.
+
+The criteria.txt paper suggests checksumming the cryptographic routines
+to prevent patches like this, but generally I think such checksums can be
+defeated pretty easily.  I doubt that Netscape currently has any such
+thing, though.
+
+Netscape says they will allow some form of user specification of
+certificates in a future version of the browser, but they have been
+saying this for quite some time and still it is not here.
+
+Hal
+
+
+
+

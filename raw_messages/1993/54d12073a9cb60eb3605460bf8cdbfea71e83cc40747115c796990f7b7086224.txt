@@ -1,0 +1,40 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Fri, 12 Mar 93 22:56:34 PST
+To: <cypherpunks@toad.com>
+Subject: HIDE: embeddin msgs into snd & graphics
+Message-ID: <930313065252_74076.1041_DHJ21-2@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The considerations that Eli mentioned make it clear that embedding data in 
+the low bits of an image is not as trivial as it sounds, with commonly-used 
+image formats.  In the case of GIF, Eli points out that you may have a 256 
+entry color table, with each pixel indexing into that table.  Flipping the 
+low bit of a pixel may lead to a completely different color.
+ 
+What you could do is to renumber the color table so that, to the extent 
+possible, every even-numbered color has some odd-numbered color that is 
+similar (close in color space), and vice versa.  Then rather than just 
+altering the low-order bit of each pixel, you'd change the color of that 
+pixel to be the nearest color of opposite even-odd-ness.  For the decode 
+step, though, you could still just check the low-order bit of the 
+(uncompressed) image.  That renumbering step sounds like the tricky part.
+ 
+I think Eli is right, too, that lossy compression is pretty much out of the 
+question for this application.  It would be too easy to lose the message 
+that is encoded in the low-order bits.
+ 
+Images that would be good candidates for this would be natural, scanned-in 
+pictures.  Hand-drawn artworks and most computer-generated images would not 
+have enough natural randomness to allow the message to be slipped in 
+unnoticeably.  Fortunately, nudes would fall into the useful category, and 
+they make up a large fraction of the images people exchange.
+ 
+Hal
+74076.1041@compuserve.com
+
+
+
+
+

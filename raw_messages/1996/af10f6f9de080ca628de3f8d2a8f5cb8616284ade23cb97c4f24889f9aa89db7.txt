@@ -1,0 +1,205 @@
+From: wichita@cyberstation.net
+Date: Wed, 11 Dec 1996 00:49:45 -0800 (PST)
+To: Eric Murray <ericm@lne.com>
+Subject: Re: IPG algorithim
+In-Reply-To: <199611302118.NAA12825@slack.lne.com>
+Message-ID: <Pine.BSI.3.95.961211020454.11832D-100000@citrine.cyberstation.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+On Sat, 30 Nov 1996, Eric Murray wrote:
+
+
+Eric, unlike all the other forespeakers, I do appreciate the fact that
+you tried to understand the algorithm and implement it. However, you
+have several things wrong, the most important being that the PRNG
+produces ONLY a seed for the main algorithm and over short sequences, 
+for example 53^2, that is only slightly over  an average occurrence
+of 8 each for the 256 ASC II characters, and the seed streams are
+congruent. However, the algorithm uses a 3 dimensional table lookup to
+translate the numbers to the Encryptor stream. 
+
+I suggest that you get a free copy of the operating program, generate your
+own key, and then run the output through any meaningful test that you
+might desire. That would indeed establish whether or not our system does 
+what we claim it will do or not. It does, but neither my words or your
+partial tests prove anything. 
+
+The expected occurrence of an identical repeat, that is a where the same
+seed gives the same result is 1 in 2^36. Of course that does not mean that
+the same resultant encryptor character might not be generate because there
+are only 256 possibilities, so the same character would result from the
+same seed at least 1 in 256 times, and of course statistically more
+frequently than that, but the over sequence of events leading to the
+production of that character is different. 
+
+While I do appreciate your effort to understand and implement the
+algorithm, it would be helpful if you would contact me first and get a
+copy of the keys and everything detailed in the web site. I take it that
+you used the abbreviated version, or failed to read all the information etal.
+If you use the tables and so forth detailed at the web site and use the
+full algorithm, the results will be far different as you will find.
+
+   
+
+
+ > > 
+> I have translated the IPG algorithim's "engine" to C, to generate
+> some random values from it for testing purposes.  It does not
+> look very random in either the xnoisesph program or the DIEHARD
+> test battery.   However I may well have misinterprested Mr. Wood's
+> description (his writing is, as Mr. Chudov points out, difficult to
+> understand) or written my code incorrectly.  Here it is, play
+> with it yourself.  To my untrained eye the lack of randomness
+> in what's essentially a stream cipher would be disturbing.
+> However I am not a cryptoanalysist so I do not know to
+> what extent this weakens the cipher.
+> 
+> 
+> The IPG description does not say (but implies to me) that
+> the various tables that are to be filled in by "random" values must
+> be filled in by PRNGs that are seeded with the same seeds by
+> each of the party that knows the key.  Otherwise the "encryptor
+> streams" that are generated will be unrelated and decryption will not
+> be possible.  To make my test work I have used the simple rand()
+> function to fill in the tables.
+> 
+> 
+> Corrections are welcome.
+> 
+> 
+> 
+> #include <stdio.h>
+> 
+> /* a C translation of the IPG "EUREKA" algorithim's "engine".
+> ** This is supposed to produce random numbers for the IPG
+> ** "encryptor stream".
+> ** See http://www.netprivacy.com/ for the original description.
+> ** Eric Murray  ericm@lne.com  This code placed under GNU copyleft.  */
+> 
+> /* machine-dependent stuff, change to suit different platforms: */
+> typedef unsigned char byte;
+> typedef unsigned short uint16;
+> 
+> 
+> /* tables: */
+> uint16 A[53];
+> uint16 B[53];
+> uint16 C[53];
+> 
+> 
+> int init_table(uint16*table, uint16 min, uint16 max)
+> {
+> 	/* IPG specifies no algorithim for producing the "random"
+> 	** initial values in the ABC tables, but it's obvious that
+> 	** it requires a PRNG that's somehow seeded from the "key".
+> 	** I've just used rand() here.  In UNIX rand() called with no
+> 	** seed is supposed to seed itself with 0. */
+> 	int i;
+> 	int count, r;
+>
+Wrong - the algorithms are specified at the web site - look again. You
+cannot just use rand(). That is patently absurd.
+ 
+> 	for(i = 0; i < 53; i++) {
+> 		table[i] = min + (rand() % (max - min));
+> 	}
+> }
+> 
+> main(int argc, char **argv)
+> {
+> 	uint16 jv;
+> 	int argcnt, i, n, count, diehard, nelem;
+> 
+> 	diehard = 0;
+> 	argcnt = 1;
+> 	if (argc >= 2) {
+> 		if (strncmp(argv[argcnt],"-d") == 0) {
+> 			diehard++;
+> 			argcnt++;
+> 		}
+> 	}
+> 	if (argc > argcnt - 1 ) {
+> 		n = atoi(argv[argcnt]);
+> 		fprintf(stderr,"Generating %d values\n",n);
+> 	}
+> 	else {
+> 		n = 2000;
+> 	}
+> 
+> 	/* seed tables: */
+> 	fprintf(stderr,"Seeding:  A");  fflush(stderr);
+> 	init_table(A,0,65535);
+> 	fprintf(stderr," B");  fflush(stderr);
+> 	init_table(B,0,12227);
+> 	fprintf(stderr," C");  fflush(stderr);
+> 	init_table(C,16384,20361);
+> 	fprintf(stderr,"\n");  fflush(stderr);
+> 
+> 	/* generate n values: */
+> 	for(; n > 0; n--) {
+> 		/* jv is "random" (where's it seeded from?) */
+from the key 
+
+> 		jv = (uint16)(rand() % 53);
+> 
+> 		/* count limits the number of traverses to 53^2 so we don't get stuck */
+> 		for(count = 0; count < 2809; count++) {
+> 			jv++;
+> 			if (jv == 53) jv = 0;
+> 			A[jv] = (A[jv] + B[jv]) % C[jv];
+> 			if (A[jv] < 16384) break;
+> 		}
+> 		if (count == 2809) fprintf(stderr,"Oops.\n");
+> 		else {
+> 			if (!diehard) {
+> 				printf("%d\n",A[jv]);
+> 			}
+> 			else {
+> 				/* print output in DIEHARD required format:
+> 				** actually since we have 16-bit ints and DIEHARD
+> 				** wants 32-bit ints, we print 20 per line instead of 10 */
+> 				if (nelem++ > 19) {printf("\n"); nelem = 0;}
+> 				printf("%4.4x",(unsigned int)A[jv]);
+> 			}
+> 		}
+> 	}
+> }
+> 
+> 
+> 
+> -- 
+But they do not reference the same table entries either as is plain to see.
+Your implementation, while appreciated, is plain flawed in many respects. We do not use any
+special As, Bs and Cs. Any selection will do.  
+
+If you are going to implement that algorithm, please use all of it, not
+just the seed generator. I grant you that with only 53 different
+equations, the resultant seed numbers do not give a random CHI square,
+especially over short frame sizes. Certainly over 53^2, it would give you
+staccato results. Not only that, but they are congruent. Nevertheless,
+this is more of the supercilious half ass crap that writers post. If you
+implement the rest  of the algorithm, you will find that it does always
+meet the Chi Square tests for randomness, not sometimes but always. I have
+posted  over 200 megabytes of data to our web site and it is still there.
+Pick any spot in the data, and run your chi squares tests on it. 
+
+If you are going to try to critiqued the IPG algorithm, please use the
+entire algorithm set out. There are so many things wrong with your
+implementation, that it would take me days to cover everything.
+I suggest that you get a sample copy of our operating program , generate
+your own Keys and then analyze the output data. Then if it does not
+perform as we have stated you can tear us apart. But your meaningless
+jabberwocky means nothing other than you have at least tried to understand
+the algorithm, which to repeat, we appreciate.
+ 
+
+
+
+
+
+

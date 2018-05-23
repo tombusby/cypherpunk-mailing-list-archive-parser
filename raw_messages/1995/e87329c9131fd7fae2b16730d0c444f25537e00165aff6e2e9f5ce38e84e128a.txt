@@ -1,0 +1,64 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 29 Dec 1995 15:37:40 +0800
+To: cypherpunks@toad.com
+Subject: Re:  blind validation
+Message-ID: <199512290144.RAA28654@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Those are very interesting thoughts Alex Strasheim posted about
+blind validations.  The issue of people handing out copies of their
+validations ("credentials" is the term Chaum uses) can be significant.
+
+Chaum's way around it was basically to have some mechanism to give
+each person a unique number of some special form.  There doesn't have
+to be any agency who knows what number each person has (in fact, there
+isn't, in his scheme), but there is a mechanism to assure that one
+person does not get two numbers.  This is sometimes loosely referred to
+as an "is-a-person" credential (although in this specific context it is
+not actually a credential, just an identifier).
+
+One way to achieve the goal would be to make each person give a
+thumbprint, or some other biometric identification, in exchange for
+giving them the is-a-person credential.  Another way would be to use
+conventional ID, making sure their credential is blinded.
+
+Then, the blind validations are mathematically structured to be linked to
+the identity number.  Only someone who has a specific identity number can
+show a specific blind validation.
+
+The idea here is that this addresses the copying-validation problem
+because a person would not only have to give away the specific
+validation, but also his identity number.  This would in effect let the
+other person masquerade as the first, and any bad things he did would
+come back to hurt the person who gave away the data.  You can't just walk
+away as in a totally uncontrolled blind signature system because of the
+linked nature of the credentials, and because you only get one identity
+number.
+
+So the result in effect is to make it difficult to give away just a
+validation, without also giving away the ability to act as you.  Here
+is an idea about another way to achieve the same thing, closer to
+Alex's example:  Alice gets a blind validation as Alex describes based
+on a simple blind signature.  (Alice hands a blinded number to Bob, he
+signs it, Alice unblinds it, and uses the resulting signed number as
+the validation to, say, access Bob's files.)  We add that Alice puts,
+say, $100 into "escrow", encrypting it with the secret number and
+putting it on some public server.  She proves to Bob that she has done
+this using cut and choose.
+
+Now if Alice gives away her secret number, anyone using it will be able
+to access Bob's files, but they can also get the $100.  So now it costs
+something for Alice to give away her secret.
+
+(There are some major problems with this idea, the worst being that Alice
+can extract and spend the $100 right after proving to Bob that she is
+doing what she said, and before publishing her number.  Maybe someone
+could think of some fixes.)
+
+Hal
+
+
+
+

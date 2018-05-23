@@ -1,0 +1,55 @@
+From: mab@vax135.att.com
+Date: Tue, 2 Mar 93 07:30:09 PST
+To: mccoy@ccwf.cc.utexas.edu (Jim McCoy)
+Subject: Re: ideas on an encrypted BSD filesystem (LONG, technical)
+In-Reply-To: <9303020004.AA01774@tramp.cc.utexas.edu>
+Message-ID: <9303021525.AA16574@vax135.UUCP>
+MIME-Version: 1.0
+Content-Type: text
+
+
+I've built something that has a similar flavor; it was presented
+at the works-in-progress session at the January '93 USENIX conference.
+A full paper (and hopefully the released software) will be forthcoming
+("any day now").  Here's the abstract that was at USENIX:
+
+.TL
+A Cryptographic File System
+.AU
+Matt Blaze
+.AI
+AT&T Bell Laboratories
+Holmdel, NJ 07733
+mab@research.att.com
+
+January 14, 1993
+.PP
+As computing systems (especially distributed ones) grow in size,
+issues of data security and privacy become increasingly complex.
+Cryptographic techniques can help ensure that data are not read by
+unauthorized persons, but most encryption software requires either
+that special purpose application software be used or that the user
+manually encipher and decipher files as needed.
+.PP
+The Cryptographic File System (CFS) makes it easier to take
+advantage, in a secure manner, of file system services (storage,
+backup, etc.) on potentially insecure servers and networks.
+.PP
+CFS provides a transparent Unix file system interface to directory
+hierarchies which are automatically DES encrypted with user-specified
+keys.  Users "attach" an encrypted directory by providing a key, the
+name of a directory where the encrypted files are to be stored, and
+the name of a cryptographic "mount point" to be created under /crypt.
+Directories under /crypt are accessible with all standard system calls
+and tools to the users who created them.  The underlying encrypted
+files (with encrypted names) can reside on any accessible file system
+(including remote file systems such as NFS); routine system
+administration tasks, such as file backup and restore, can be
+performed on the encrypted directories in the ordinary manner without
+knowledge of the key.  When run on a client workstation, CFS ensures
+that cleartext is never stored on a disk or transmitted over a
+network.  CFS uses a standard portable NFS client interface and has
+has been implemented for a variety of Unix platforms.
+
+
+

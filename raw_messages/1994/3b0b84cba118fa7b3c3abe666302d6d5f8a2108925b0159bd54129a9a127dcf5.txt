@@ -1,0 +1,36 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 22 Jul 94 09:04:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: Double DES calculations
+Message-ID: <199407221605.JAA03638@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I missed the start of this double-des thread due to system problems and
+being gone, and I've never been able to pick up the main point since.  It
+sounds like some kind of meet-in-the-middle attack is being discussed.
+It is true that with current technology MITM generally seems more costly
+in terms of space than time.  However, I have seen references to techniques
+which shift this tradeoff some, costing more time and less space.  Un-
+fortunately, I can't remember where I saw them!
+
+I'll give you one similar example, though.  I think this is the technique
+used in Pollard "rho" factoring.  You have an iterated series, x=f(x), and
+you want to know if it has any cycles, any values which are eventually
+repeated.  At first glance you might think that to look for a cycle of
+length N you would have to store N values of the series and check each
+value for a match, taking order of N in time and space.  The Pollard tech-
+nique instead runs two copies of the iteration at once, one twice as fast
+as the other: x=f(x) and y=f(f(y)).  Each time you just compare x and y
+for a match.  This takes about twice as long but uses no memory.
+
+The moral is, be cautious about feeling safe against MITM attacks purely
+because of memory limitations.  If you don't have protection on the time
+costs as well there may be a tradeoff which can kill you.
+
+Hal
+
+
+
+

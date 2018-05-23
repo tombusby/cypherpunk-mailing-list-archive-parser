@@ -1,0 +1,54 @@
+From: m5@vail.tivoli.com (Mike McNally)
+Date: Mon, 11 Jul 94 06:05:16 PDT
+To: gtoal@an-teallach.com (Graham Toal)
+Subject: Re: Bit counting
+In-Reply-To: <199407111228.NAA21528@an-teallach.com>
+Message-ID: <9407111305.AA27261@vail.tivoli.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Graham Toal writes:
+ > Ray, you've missed the point of some of the explanations; VERY FAST cpu's
+ > as unbelievably fast as long as they are executing *on-chip* - as soon as
+ > they have to go to RAM for a table lookup, they suffer a performance hit
+ > equivalent to executing large amounts of in-line instructions - one array
+ > lookup might be worth 200 straight opcodes.
+
+I think you might be able to do a lookup scheme more cheaply on CPUs
+that really have such an extreme CPU/memory speed ratio.
+
+You can encode the lookup table as an array of 4-bit values (you
+*could* do 3-bits, but that'd make the table lookup a lot
+messier). You can also add the trick of checking one bit of each byte
+explicitly, and thus you could fit the entire table in 64 bytes.
+That's probably just two-four cache lines, so access to the table
+would become much less bad than 1/200th the register access time.
+
+It'd be something like this:
+
+	bits = 0;
+	For each byte:
+		if (byte != 0)
+			index = byte >> 1;
+			shift = (index & 1) << 2;
+			bits = ((tbl[index] >> shift) & 0x0f) +
+					(byte & 1) +
+					1;
+
+Hmm...  That's probably about a dozen instructions per byte, or about
+50 instructions for a 32-bit word.  The per-bit loops seem to be
+around 100 instructions long.  If we've got a better than 12-1 speed
+ration (CPU vs. memory), which is quite possible on a CPU with a
+decent cache design, then I'd say the table lookup wins.
+
+(Does this count towards my "cypherpunks write code" merit badge?)	
+
+| GOOD TIME FOR MOVIE - GOING ||| Mike McNally <m5@tivoli.com>       |
+| TAKE TWA TO CAIRO.          ||| Tivoli Systems, Austin, TX:        |
+|     (actual fortune cookie) ||| "Like A Little Bit of Semi-Heaven" |
+
+
+
+

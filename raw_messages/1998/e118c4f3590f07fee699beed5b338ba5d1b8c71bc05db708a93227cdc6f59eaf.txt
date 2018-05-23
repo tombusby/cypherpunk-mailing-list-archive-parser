@@ -1,0 +1,43 @@
+From: Eric Cordian <emc@wire.insync.net>
+Date: Fri, 20 Nov 1998 08:43:09 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: simple socket forwarder
+In-Reply-To: <f342ce4916b65f4c34dad0d5ee6326aa@anonymous>
+Message-ID: <199811200013.SAA03517@wire.insync.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Someone expresses a software need: 
+
+> >> Does anyone have a simple packet forwarder to run
+> >> on a unix system? I want to set up a daemon on an
+> >> account to just redirect traffic from a particular port
+> >> to another host for some basic anonymity, but I don't
+> >> have experience doing socket coding, nor a book.
+
+The quick and dirty solution here is to log into localhost
+with ssh and forward the port.  You can screen the ssh, detach
+it, and forget about it.  
+
+For instance, if I want to forward connects on port 9999 on
+unix.com to the NNTP port on news.naughty.net, I simply say
+
+         screen ssh -R 9999:news.naughty.net:119 localhost
+
+Then type the password to the account you are running it on, 
+and detach it.  It will live until the next reboot, happily
+forwarding connects to the appropriate destination.
+
+You can also do this with a bounce, or with some of the Hax0r 
+socket utilities, but this is the quickest solution that's 
+probably already there. 
+
+-- 
+Sponsor the DES Analytic Crack Project
+http://www.cyberspace.org/~enoch/crakfaq.html
+
+
+
+

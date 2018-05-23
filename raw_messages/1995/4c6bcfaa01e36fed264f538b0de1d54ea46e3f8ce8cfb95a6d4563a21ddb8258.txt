@@ -1,0 +1,41 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Thu, 12 Jan 95 07:25:33 PST
+To: weidai@eskimo.com (Wei Dai)
+Subject: Re: time stamping service (again)
+In-Reply-To: <Pine.SUN.3.91.950112062429.3862C-100000@eskimo.com>
+Message-ID: <199501121525.KAA17530@bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+| Anyway, it is now running as the following procmail recipe:
+| 
+| :0 w
+| * ^Subject: Time Stamp This Mail
+| {
+| PGPPASS=whateveryourpassphraseis
+| :0 c w
+| | (lockfile timestamp.lock ; pgp -fast +batchmode +force +verbose=0 \
+| +clearsig=off) > timestamp.out
+|  
+| :0 a h
+| | (formail -r -i 'Subject: Time Stamp Output';cat timestamp.out) | \
+| ($SENDMAIL -t ;rm -f timestamp.lock)
+| }
+| 
+| To use it, just send whatever you need time stamped to me with 
+| the subject "time stamp this mail".
+| 
+| BTW, can a procmail expert explain to me why the locallockfile 
+| mechanism doesn't work with this recipe?  If I use :0 w : as 
+| the first line, procmail will happily ignore the locallockfile 
+| flag and proceed to munge up timestamp.out, so I have to do 
+| the filelocking manually.
+
+	You need a lockfile on the :0 cw line, not on the :0 w .
+
+:0 cw:
+| pgp -fast +batchmode +force +verbose=0 +clearsig=off > timestamp.out
+
+
+

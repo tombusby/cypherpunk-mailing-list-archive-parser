@@ -1,0 +1,44 @@
+From: Mark (Mookie) <mark@zang.com>
+Date: Sun, 14 Jan 1996 04:52:59 +0800
+To: cypherpunks@toad.com
+Subject: tsu's bpf
+Message-ID: <199601122307.NAA09386@zang.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+>>    Shimomura on BPF, NSA and Crypto:
+>>
+>>    One of the tools I modified for my work was a sophisticated
+>>    piece of software called the Berkeley Packet Filter. ...
+>>    Unlike the original BPF, my version was designed to bury
+>	 ^^^^^^^^^^^^^^^^^^^^^^^
+>>    itself inside the operating system of a computer and watch
+>>    for certain information as it flowed through the computer
+>>    from the Internet. When a packet from a certain address, or
+>>    for that matter any other desired piece of information
+>>    designated by the user flashed by, BPF would grab it and
+>>    place it in a file where it could be kept for later
+>>    viewing.
+>
+>This is *exactly* what BPF does, always did and was designed to do. As
+>for writing the packets to a file, everything but opening and closing
+>the file are described in the man page. You could code it in 10 lines.
+
+Get off your high horse Julian, he means it's a modloadable version of bpf,
+much like the modloadable NIT that is also available. There are at least
+two sniffers that can use both the modloadable NIT and bpf packet interfaces,
+maybe more. It certainly is easier than recompiling your kernel to include
+the functionality which is generally the way things were done.
+
+I prefer bpf as it is much more efficient, typically 10% of the impact that
+NIT has on a machine. Some rough figures are a NIT might use one or two
+minutes of CPU a day to monitor a reasonably quiet network, whilst bpf will
+only use several seconds cpu time. (Most of the work is hidden in the kernel
+anyway).
+
+Mark
+
+
+
+

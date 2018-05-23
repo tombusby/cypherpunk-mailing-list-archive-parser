@@ -1,0 +1,155 @@
+From: "William H. Geiger III" <whgiii@invweb.net>
+Date: Thu, 9 Oct 1997 01:35:18 +0800
+To: "Jim Russell" <jrussell@syncrypt.com>
+Subject: Re: What's really in PGP 5.5?
+In-Reply-To: <01bcd407$02595600$2901320a@Polaris.domain>
+Message-ID: <199710081728.NAA19596@users.invweb.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In <01bcd407$02595600$2901320a@Polaris.domain>, on 10/08/97 
+   at 12, "Jim Russell" <jrussell@syncrypt.com> said:
+
+>The swirl of controversy that has arisen since the 2 Oct announcement of
+>the PGP Business Security Suite has been quite amazing.  Yet, all of the
+>focus has been on what's been *added* to PGP v5.5.  Jon Callas said it
+>explicitly:
+
+>>>Corporate Message Recovery is included *only* in PGP for Business
+>Security.
+
+>What sense, then, can I make of the following?
+
+>I have been examining the published source code for PGP v5.0 for Personal
+>Privacy (note that this is *not* a corporate version), and have
+>discovered that this recovery scheme already appears to be in place, in
+>some form at least, in that version.
+
+>The following code appears in the published pgp.c, lines 518-537:
+
+>   /*
+>    * This is our version of "Commercial Key Escrow".
+>    *
+>    * A company can set the CompanyKey in the site-wide
+>    * configuration file and it will be added to the
+>    * recipient list for all encrypted messages.  Then
+>    * again, the user can override the setting in their
+>    * own pgp.cfg or on the command line.
+>    */
+>   companyKey = pgpenvGetString (env, PGPENV_COMPANYKEY,
+>            NULL, NULL);
+>   if (companyKey && *companyKey) {
+>    /* Add the company key to the recipient list */
+>    e = ringSetFilterSpec (ui_arg->arg.ringset,
+>             ringset,
+>             companyKey,
+>             PGP_PKUSE_ENCRYPT);
+>    if (e <= 0)
+>     exitUsage(e);
+>   }
+
+>This certainly *looks* like the implementation that is being discussed in
+>the press release, although I did not find it mentioned in any
+>documentation for PGP for Personal Privacy v5.0. The questions this code
+>brings to my mind are:
+
+>1.  Does this mean that even the Personal Privacy versions of PGP have a
+>message recovery scheme available?  The 2 Oct press release from PGP
+>states that the corporate message recovery "transparently integrates with
+>*any* version of PGP client software".  (Emphasis mine).
+
+I beleive that this statement refers to the policy enforcement at the SMTP
+server. For such a system to work it would have to bounce a message
+(according to the policy settings) that was not encrypted with the
+corporate key regardless of which version of PGP was used to encrypt the
+message.
+
+>2.  If this is implemented via a configuration setting, does it provide
+>an opportunity for an attacker to reset the "CompanyKey" to their own
+>key?  In the Windows environment, it appears that PGP uses the System
+>Registry to hold configuration settings.  Is it possible for me to trick
+>someone into running a .REG script that will set the CompanyKey to a key
+>to which I hold the private component?
+
+That would seem possiable but you would also have to override the policy
+enforcement at the SMTP server. Without examining the product I can't
+comment on what mechinism they have in place.
+
+>3.  This appears to me to be quite contradictory to the descriptions
+>posted by Jon Callas on 7 Oct.  The procedure that Jon describes, using
+>an attribute in the self-signature, would tell an encryptor external to
+>The Corporation to use the "skeleton key" on INCOMING mail.  The 5.0 code
+>seems to imply an automatic extra recipient on OUTGOING mail, and this
+>impression is reinforced by the description of the SMTP server policy
+>enforcement in the 2 Oct product description on PGP's web site.  (Let's
+>not forget that SMTP is a protocol for OUTGOING mail.) Which is it, or is
+>it actually both?
+
+I think that you have a mix of two things here:
+
+1. Encryption of OUTGOING mail using both the Corporate Key and the
+Recipiant Key which can be enforced by SMTP policy agent.
+
+2. A preferance flag in the Public Key to inform the user of a public key
+to also use the corporate public key when encrypting. There was
+disscussion of making use of preferance flags on the Open PGP list for
+things like prefered HASH & Key Use.
+
+>Now, I realize that the long-time PGP users, the computer experts who can
+>take the source code and recompile the application, could simply remove
+>any sections they don't like, or go into the configuration settings and
+>change everything to their liking.  However, isn't encryption supposed to
+>be moving to a new target audience, the people who use a computer as a
+>tool, and don't necessarily know the internals? These are the people who
+>need to feel secure using encryption, and magic, invisible encryption to
+>a third-party is probably not going to give them warm fuzzy feelings.
+
+I would imagine that they are working from a common code base for all 3
+products (shareware, commercial, and business) and merly disable/enable
+the various options at compile time. I personally don't mind the code
+being there as it lets me see what they are doing in the various versions
+(remember Viacrypt never released their source code). I really don't see
+this as a problem as it would be quite obvious if the shareware or
+commercial version of PGP were adding extra recipiants to an encrypted
+message (current PGP format makes this rather hard to hide).
+
+Their seems to be alot of speculation of what PGP 5.5 does or does not do
+without anyone actually examining a copy of the program and finding out.
+Perhaps a few of us could obtain copys of the program and investegate it
+properly. I am willing to boot into NT (shudder) to take a look.
+
+Just as a side note there doesn't seem to be anything PGP 5.5 is doing
+that I couldn't get 2.6.x to do with a weekend of codeing. The hard part,
+being able to encrypt to multiple recipiants, has been in PGP since day
+one.
+
+- -- 
+- ---------------------------------------------------------------
+William H. Geiger III  http://www.amaranth.com/~whgiii
+Geiger Consulting    Cooking With Warp 4.0
+
+Author of E-Secure - PGP Front End for MR/2 Ice
+PGP & MR/2 the only way for secure e-mail.
+OS/2 PGP 2.6.3a at: http://www.amaranth.com/~whgiii/pgpmr2.html                        
+- ---------------------------------------------------------------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3a
+Charset: cp850
+Comment: Registered_User_E-Secure_v1.1b1_ES000000
+
+iQCVAwUBNDvEaY9Co1n+aLhhAQFMyAP/T7o9Orl5hjkOLp4+zK/nrH4JucyXRtSs
+TkW0JqD+GY9sKoNmsiEtWA7LlZmz94pnAzishy68emzPKx/19UGaKr+uV1MkNg0M
+jDF2biHPn89MbPYTw/IhXMZ/khlgf1m5P7p0Y8ts64pvEBwUvySiNnEpwyopNVR8
+9ux6FnJaiGQ=
+=U3xd
+-----END PGP SIGNATURE-----
+
+
+
+
+

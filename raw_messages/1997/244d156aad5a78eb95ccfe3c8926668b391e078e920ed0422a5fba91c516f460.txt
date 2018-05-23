@@ -1,0 +1,54 @@
+From: ghio@temp0126.myriad.ml.org (Matthew Ghio)
+Date: Sat, 4 Oct 1997 09:06:08 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Quor's cipher
+In-Reply-To: <199710022135.WAA02655@notatla.demon.co.uk>
+Message-ID: <199710040102.VAA21655@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Antonomasia <ant@notatla.demon.co.uk> wrote:
+> 
+> > My attack takes a long chunk of known text and looks for repetition.
+> >
+> > ppppppppppppppp.11.pppppppppppppppppppppp
+> > ccccccccccccccc.22.cccccccccccccccccccccc
+> >
+> > When a two neighbouring p-c pairs are the same you can test
+> > whether they have the same value of a and b.
+> > (That is a_n == a_n+1 and b_n == b+n+1,   a != b usually.)
+> >
+> > This involves 16 inputs to each byte - very cheap.
+> > What I really want next is to know "a".
+> 
+> 
+> nobody@REPLAY.COM wrote:
+> 
+> > Wouldn't this only happen (on average) in one out of every 65536 p-c
+> > pairs?
+> 
+> Yes (counting only those we test).
+> 
+> >         Since the state array is changed entirely with every 128 bytes
+> > encrypted, 1 out of 2^16 doesn't seem to help much.
+> 
+> This finding doesn't uncover a great deal, I agree, and what it does
+> uncover is transient.
+
+
+What about this:
+
+If (a+b)^(a0+b0) == 0, then the plaintext is the same as the ciphertext.
+This happens for one out of every 256 bytes.  Ordinarilly this isn't a
+problem, but if the key is reused, and there is no IV, it can leak a byte
+of plaintext.
+
+So it seems that you would need to change the key for each message, or at
+least use a random initialization vector.
+
+
+
+
+

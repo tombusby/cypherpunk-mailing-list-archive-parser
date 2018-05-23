@@ -1,0 +1,38 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 4 Mar 1996 02:06:16 +0800
+To: perry@piermont.com
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <199602292001.PAA18761@jekyll.piermont.com>
+Message-ID: <199602292054.PAA17361@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I think it would be valuable if signature formats specified not only
+> an arbitrary key-id but a DNSable string or URL to retrieve the
+> certificate responsible for the signature. One of the things we've
+> learned from PGP is the difficulty of dealing with random numbers as
+> key ids. In this, I'm not sure we shouldn't be including better lookup
+> mechanisms. This is not to say that meaning should be assigned to a
+> lookup string beyond its saying where to find the key.
+
+This is something that I've spoken to Phil about at length, and I've
+been trying to devise solutions.  The problem is how to offset the
+"hint" and the size of the signature.  You want the signature to
+contain some informatin that hints at the location of the key.  On the
+other hand, you dont want to bloat the signature in doing this.
+
+So, there needs to be a compromise, some shorthand method to describe
+the hint.  One solution is to provide a "keyserver" type and then some
+string that says which "keyserver" to use.  For example, if there is a
+DNS-style keyserver deplyed, I could put '1,"mit.edu"' in all my
+signatures, if we assume that '1' is the DNS-style keyserver code.
+
+I'm sure there are other possible solutions as well, and any real
+suggestions are welcome.
+
+-derek
+
+
+
+

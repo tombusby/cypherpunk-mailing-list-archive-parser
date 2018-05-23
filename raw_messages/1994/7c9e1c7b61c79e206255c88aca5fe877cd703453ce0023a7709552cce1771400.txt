@@ -1,0 +1,35 @@
+From: Jef Poskanzer <jef@ee.lbl.gov>
+Date: Tue, 1 Mar 94 10:39:58 PST
+To: cypherpunks@toad.com
+Subject: Re: standard for stegonography?
+Message-ID: <9403011839.AA08937@hot.ee.lbl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I wrote:
+>offset, wrap-around, bit schedules
+
+Actually, that interface is way too complicated and still not that
+secure.  How about if the user just specifies a seed for a random
+number generator.  Then that generator is used to make a *permutation*
+of the bit locations in the image, and the file's bits are stored in
+the permuted order.  And look, this hides the file-length longword and
+any fixed file header real well, by spreading them through the image.
+
+Now I just have to find a simple but robust RNG that I can include
+in pbmplus, and some code to generate a permutation of a specified
+size.
+
+I'm not going to have ITAR problems with this, am I?  RNGs are still
+legal to export?
+
+Oh, and to answer the original question: no standard.  If this idea works,
+it's clearly better than existing stego systems at hiding the data; that's
+more important than interoperability.
+---
+Jef
+
+
+
+

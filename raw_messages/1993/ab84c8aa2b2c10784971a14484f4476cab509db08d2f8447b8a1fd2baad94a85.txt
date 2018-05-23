@@ -1,0 +1,101 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Wed, 12 May 93 18:36:45 PDT
+To: cypherpunks@toad.com
+Subject: Re: The Halting Problem
+Message-ID: <9305130136.AA09123@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>It occurred to me that determining whether a set of random bytes is
+>actually a crypto message could be reduced to the halting problem.
+>Given this, it would be theoretically impossible to prove that an
+>uncrackable message was indeed a crypto message.  The revelation here
+>(for me, anyway) is that if arbitrary crypto were made illegal, the
+>burden of proof would be on the prosecution which would have to crack
+>the message (at least partially).
+>
+>Paul E. Baclace
+
+Sorry I was out today and missed the halting problem debate!
+
+Paul's intuition (or perhaps proof) is correct, at least according to a
+paper Len Adleman wrote some years back, showing this. (I don't have the
+paper, but I heard Len describe the results at the Crypto '88 Conference.
+As with most such results, the result probably depends on a very careful
+statement of what the terms mean, so take my comments as being only
+indicative of the flavor of the results.)
+
+What follows is not from Adleman's talk or paper, but from information theory.
+
+The Kolmogorov-Chaitin view of "randomness" is very similar in spirit: how
+does one know whether a sequence/string is "effectively random" (short
+definition: effectively random means there is no shorter description of a
+sequence than itself) or is instead describable by some shorter sequence?
+Thus the string "31415926535897932384626433" is recognizable to most agents
+(people, smart programs) as the first 25 digits of pi (however, it *could*
+be something else, but I won't get into that right now). But the string
+"67902371045873651853" is probably not recognizable as anything other than
+this string.
+
+Kolmogorov complexity is defined as the length of the shortest programs
+which can generate (print) the object. Thus, "alternating 1s and Os" is
+very short, "the digits of pi" is slightly longer, and the digit mentioned
+above ("679023...") may not have any shorter program than itself. (The
+famous Berry Paradox enters here: "The shortest not nameable in under ten
+words." Does this number exist? If so, what is it?)
+
+Finding the generating program is very similar to decrypting a message (I
+suspect there's a way to formalize the equivalence of encryption and
+Kolmogorov complexity, beyond this admitted hand-waving, but I don't know
+it offhand). Strings or expressions which "appear" random but which are
+actually very regular, or easy to describe, with the proper "key" are
+called "crypto-regular." Encrypted messages are clearly crypto-regular.
+
+Cover and Thomas, in "Elements of Information Theory," 1991, write: "One of
+the consequences of the non-existence of an algorithm for the halting
+problem is the non-computability of Kolmogorov complexity. The only way to
+find the shortest program in general is to try all short programs and see
+which if them can do the job. However, at any time some of the short
+programs may not have halted and there is no effective (finite mechanical)
+way to tell whether they will halt or not and what they will print out.
+Hence, there is no effective way to find the shortest program to print a
+given string."
+
+(By the way, exhaustive search of a keyspace--as someone suggested--is also
+not enough, as the cryptostring above (""679023...") may result in several
+syntactically valid English expressions, such as "attack at dawn," "whopper
+with fries," "robins migrate peripherally." Knowing when to stop further
+crypanalysis of a message might be called the "crypto halting problem.")
+
+Fascinating stuff!  (To my current thinking, the core of the universe!) I
+recommend Gregory Chaitin's "Algorithmic Information Theory" and
+"Algorithms and Randomness." And the Cover and Thomas book.
+
+
+A (mundane) consequence for cypherpunks is that the sending of any
+random-looking stuff may be banned, someday. (No doubt it is in many
+countries, if they bother to look. Sending unreadable stuff is grounds for
+a visit by the Federales.) 
+
+And clearly even "real messages," like this one, like Peter Wayner's
+baseball scores, like GIF images, etc., can have messages attached. If
+simple cryptanalysis reveals simple English-like messages, Occam's razor
+suggests a decryption has been made. But it can never be known for sure
+whether other messages exist.
+
+--Tim May
+
+
+--
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^756839 | Public Key: by arrangement
+
+
+
+
+
+

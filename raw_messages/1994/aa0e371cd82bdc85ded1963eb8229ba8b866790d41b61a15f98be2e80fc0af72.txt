@@ -1,0 +1,54 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Sat, 24 Sep 94 15:44:35 PDT
+To: cypherpunks@toad.com
+Subject: [John Ioannidis: Alleged RC4 speed and key setup times]
+Message-ID: <9409242244.AA17339@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+John Ioannidis sent me the following interesting message. He's been
+playing a bit with the alleged RC4 code posted anonymously to
+cypherpunks a while back. He gave me permission to forward this to
+cypherpunks.
+
+Perry
+
+------- Forwarded Message
+
+From: John Ioannidis <ji@cs.columbia.edu>
+Subject: Alleged RC4 speed and key setup times
+
+
+The key setup time for the alleged rc4 code is the same as the time to
+encrypt about 1200 bytes of data. Key setup time is independent of key
+length (if you discount possible cache interactions). I haven't tried to
+optimize (other than what the compiler (gcc -O4) can do) the key setup
+time, the way I optimized the cipher, but still...
+
+Anyway, you can do slightly over 4000 key setups per second on a
+S10/51 (the time to en/decrypt a 64-byte block is trivial), so you can
+test 2^12 keys per second on a S10, or 2^12*16 = 2^16 keys/sec on a
+16-processor SparcCenter-1000. That's 2^16 * 2^17 keys per day, so you
+need 2^9 days to exhaustively search a 40-bit keyspace on a fairly
+common machine such as the S1000. Move that back down to 2^13 days for
+a S10; The CS dept easilly has 2^8 machines with the average speed of
+a S10 (some are slower, some are a LOT faster, and tehy have more than
+256 machines anyway). That means that, by dedicating the CS dept's
+resources, we can crack a 40-bit key in 2^7 days (2^6 on the average,
+of course). As another example, Lehman has 2^11 S10 equivalents, so
+that figure would go down to 2^2 days or a 4-day weekend.
+
+Well, the above goes to prove that 40bits isn't all that much (which
+we already knew), but I wanted to get a feel of what it means it terms
+of resources that mere mortals like us have access to.
+
+/ji
+
+------- End of Forwarded Message
+
+
+
+
+

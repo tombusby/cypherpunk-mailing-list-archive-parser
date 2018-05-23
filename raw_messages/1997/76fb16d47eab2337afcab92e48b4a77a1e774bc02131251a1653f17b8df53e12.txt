@@ -1,0 +1,61 @@
+From: "John Kelsey" <kelsey@plnet.net>
+Date: Tue, 23 Dec 1997 14:37:01 +0800
+To: "Johnson, Michael P (Mike)" <honig@otc.net>
+Subject: Re: Question on CFB variant with c[i-N]
+Message-ID: <199712230633.AAA31569@email.plnet.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> From: Johnson, Michael P (Mike) <JohnsMP@LOUISVILLE.STORTEK.COM>
+> To: 'coderpunks@toad.com'; 'cypherpunks@algebra.com'; 'David Honig'
+<honig@otc.net>
+> Subject: RE: Question on CFB variant with c[i-N]
+> Date: Monday, December 22, 1997 12:22 PM
+ 
+> How about this mode:
+>     c[i] = e(K1, e(k2, c[i-1]) ^ p[i-1]) ^ p[i]
+>     p[i] = e(K1, e(k2, c[i-1]) ^ p[i-1]) ^ p[i]
+> 
+> The feedback possibilities are literally endless. The analysis of
+the
+> effects on security, speed, error propagation, etc., are left as an
+> exercise for the reader. <grin>
+ 
+> Some standard modes have been well analyzed and accepted. They also
+are
+> built into specialized cracking hardware. Offering and using
+multiple
+> modes and multiple algorithms raises the cost of building
+specialized
+> cracking hardware.
+
+I'm kind-of skeptical of the big advantages of this.  I mean, if you
+were convinced
+someone with a DES-cracking engine was listening in on an encrypted
+channel, 
+and you really wanted to make sure they wouldn't manage to get any
+plaintext, would
+you rather alter your system to use some weird and not-too-well
+analyzed chaining
+mode, or alter your system to use DESX or Blowfish or something else
+with a 
+key length too big to be vulnerable to such keysearch machines? 
+There clearly *are*
+ways to get more than 56 bits of security out of DES.  However,
+they're not generally
+obvious, and even very bright cryptographers have shot themselves in
+the foot trying
+to design them.  (Remember 3DES with internal CBC-mode chaining,
+Ladder DES, and
+DES-Tran-DES-Tran-DES?)
+
+--John Kelsey, kelsey@counterpane.com / kelsey@plnet.net
+NEW PGP print =  5D91 6F57 2646 83F9 6D7F 9C87 886D 88AF
+   
+
+
+
+
+

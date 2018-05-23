@@ -1,0 +1,76 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 27 Apr 1997 16:33:07 -0700 (PDT)
+To: Bruce Schneier <schneier@counterpane.com>
+Subject: Re: AES Comments
+In-Reply-To: <v03007802af87eb708bce@[206.11.192.175]>
+Message-ID: <3.0.1.32.19970427163220.00667c40@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:27 PM 4/26/97 -0500, Bruce Schneier wrote to NIST about their
+proposals for an Advanced Encryption Standard (AES) FIPS:
+
+>With this in mind, I propose a set of Minimum Acceptability Criteria that
+>pushes the envelope of current encryption algorithms:
+>	A variable key, supporting (at least) a 128- and 256-bit key .
+One of Bruce's comments is that any algorithm picked today will
+probably be around until 2040-50; if computer speeds double every year,
+then the marginally useful strength by then will be about 110-120 bits.
+While it's nice to have an expandable key structure that will let you
+increase the strength by then, 128 bits is really still strong enough,
+and a fixed-keylength algorithm that's still workable in triple-mode 
+should work just fine.
+>		No more than double with a 256-bit key on any platform.
+Allowing triple opens the field a lot, and by the time you need >128-bit keys,
+machines will be so blazingly fast that a 50% difference won't matter much;
+you'll still be able to encrypt that 1Gbps 3D video in real time.
+
+>	Encryption speeds (in clock cycles per byte encrypted):
+>		No more than 64 on an 8-bit smart card with a 128-bit key.
+
+How fast do you really need, in seconds, for typical smart-card apps?
+64 cycles at 1MHz is 16000 bytes/second; 128 cycles is 8000 bytes/second.
+How fast are most smartcards?  1MHz?  2MHz?  500kHz?
+The main uses I can see for 8-bit crypto processing are
+- cheap, large-volume crypto for uncompressed voice (needs 8000 bytes/sec)
+- adding crypto to digital phones ( ~800-1660 bytes/sec )
+- money cards (if you're not using public-key, maybe you need 100 bytes,
+	so 8000 bytes/sec is 1/80 sec transaction?)
+- ATM machines (which typically have 4800-bits/sec data connections,
+	== 600 bytes/sec, and often have 16-bit processors.  Even DES works.)
+
+>		No more than 16 on a Pentium, Pentium Pro, PowerPC, or DEC
+>		Alpha with a 128-bit key.
+Which interestingly knocks out Blowfish (18 cycles), Khufu (20), and RC5 (23),
+and the only things faster are SEAL and RC4 stream-only cyphers.
+It's a tradeoff between forcing the development and testing of
+cutting-edge speed, which may cost you in strength, vs. supporting a
+bunch of existing algorithms we're starting to understand.
+If it takes an extra 2 years to develop new algorithms,
+you've doubled computer speed, so you could use the 17-32-cycle algorithms
+you're rejecting today.....
+
+>These requirements are not easy to meet.  As far as I know, no published
+>block cipher meets them all (although some come close in many areas).  But
+>requirements such as these will challenge the world's cryptographic
+>research organizations to create something useful. 
+>I know you realize that the selection process will take several years to
+>complete.  Therefor, I urge you to approve triple-DES as an interim
+>standard.  This will satisfy users who need a 64-bit block cipher for
+>compatibility reasons, while allowing you the time required to choose and
+>approve the best AES you can.
+
+If this is the ulterior motive for requiring faster-than-current algorithms,
+I'm all for it (:-)  Triple-DES is boring, slow, and just fine for most
+applications.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

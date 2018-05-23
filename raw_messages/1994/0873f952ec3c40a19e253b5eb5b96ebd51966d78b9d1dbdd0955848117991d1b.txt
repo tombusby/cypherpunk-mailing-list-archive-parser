@@ -1,0 +1,58 @@
+From: Nathan Loofbourrow <loofbour@cis.ohio-state.edu>
+Date: Mon, 9 May 94 21:17:37 PDT
+To: cypherpunks@toad.com
+Subject: Re: PGP 2.5
+In-Reply-To: <9405092209.AA21090@nyx10.cs.du.edu>
+Message-ID: <199405100404.AAA06262@styracosaur.cis.ohio-state.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Paul Grange writes:
+ > |> Another RSAREF limitation is that it cannot cope with keys longer than
+ > |> 1024 bits.  PGP now prints a reasonably polite error message in such a
+ > |> case.
+ > 
+[...]
+ > This restrcition comes from RSAREF code, over which the PGP team had no 
+ > control.
+
+Strange -- the RSAREF 2.0 license asserts no such restriction, unless
+I've misread it. Patching it -- say, to allow it to handle >1024 bit
+keys -- would seem to fall under one's license...
+
+[from license.txt]
+     c.   to modify the Program in any manner for porting or
+          performance improvement purposes (subject to Section 2)
+          or to incorporate the Program into other computer programs
+          for your own personal or internal use, provided that you
+          provide RSA with a copy of any such modification or
+          Application Program by electronic mail, and grant RSA a
+          perpetual, royalty-free license to use and distribute such
+          modifications and Application Programs on the terms set
+          forth in this Agreement.
+
+Is the definition of "performance improvement" so limited that
+improving maximum key size is not permitted?
+
+This aside, modifying RSAREF 2.0 (and taking out the guardrails in
+keymgmt.c) *appears* to allow larger key sizes. The only succeeding
+restriction on key sizes is the 1280-bit restriction imposed by the
+assembly code, if the comments are to be believed.
+
+Generating a brand new ~1280 bit key under 2.5 appears to work
+perfectly, although I suppose RSAREF could be happily returning a
+shorter key that claims to be >1024 bits (either by design, or by
+omission). The fact that an older >1024 bit key fails this test does
+raise this suspicion.
+
+This will take some further work. I would be surprised to discover
+that the MIT folk hadn't fiddled with this at all, though -- Any
+comment from the 2.5 folks on the barriers to using RSAREF for longer
+keys?
+
+nathan
+
+
+
+

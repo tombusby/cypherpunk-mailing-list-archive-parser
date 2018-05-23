@@ -1,0 +1,34 @@
+From: Carl Ellison <cme@tis.com>
+Date: Thu, 15 Sep 94 11:55:52 PDT
+To: perry@imsi.com
+Subject: Re: thoughts on RC4
+In-Reply-To: <199409151735.KAA14334@comsec.com>
+Message-ID: <9409151853.AA26875@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Thu, 15 Sep 94 10:52:03 EDT
+>From: perry@imsi.com (Perry E. Metzger)
+
+>Can anyone see any reason why one could not change RC4 to
+>being a word oriented stream cipher, call it "ERC4"?
+
+Alleged-RC4 (1) requires that the table be a permutation and (2) might base
+security on the fact that the table is itself permuted beyond recognition
+after a small number of inputs.
+
+(1) You could conceivably go to an array of 65K short values and retain the
+permutation but I wouldn't try to go to an array of longs.  I don't have
+32GB of RAM on my workstation.
+
+(2) With a longer array, the amount of input until the array is
+indistinguishable from the one with which you started is proportionally
+longer.  I don't know if that means that shorter arrays are more secure,
+but it's worth taking a look at.
+
+ - Carl
+
+
+
+

@@ -1,0 +1,32 @@
+From: lull@acm.org (John Lull)
+Date: Fri, 22 Sep 95 13:52:27 PDT
+To: herbs@interlog.com (Herb Sutter)
+Subject: Re: Another Netscape Bug (and possible security hole)
+In-Reply-To: <199509221341.JAA07664@gold.interlog.com>
+Message-ID: <199509222051.NAA10687@ix.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 22 Sep 1995 09:47:35 -0400, herbs@interlog.com (Herb Sutter)
+wrote:
+ 
+> Don't just look at this bug, though... check ALL your static buffers and
+> include code to check for overflow writes.  For example, if Netscape is
+> written in C or C++ and the above code uses strcpy(), you could change
+> strcpy() to strncpy() everywhere (and then set the last char to null in case
+> strncpy() didn't).  Your programmers will know what I mean.
+
+Better yet, ban both strncpy and strncat.  Replace them with
+differently-named routines (strbcpy and strbcat?) that, given a buffer
+length, are GUARANTEED to always give you a properly terminated string
+that (including the terminator) does not overflow the specified
+buffer.
+
+Even better, use a good string class that does all this automatically
+all the time.
+
+
+
+
+

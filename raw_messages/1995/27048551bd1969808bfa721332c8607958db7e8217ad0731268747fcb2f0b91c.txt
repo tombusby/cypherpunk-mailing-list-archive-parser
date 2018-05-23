@@ -1,0 +1,63 @@
+From: Andrew Kuchling <andrewk@dexotek.ca>
+Date: Thu, 7 Dec 95 13:58:51 PST
+To: cypherpunks@toad.com
+Subject: Python Cryptography Toolkit v1.0.0
+Message-ID: <9512072158.AA15573@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've just uploaded version 1.0.0 of the Python Cryptography Toolkit, a
+collection of cryptographic routines for the Python programming language.
+It's at ftp://ftp.cwi.nl/pub/pct/pycrypt100.tgz.  All my code is public
+domain; some of the algorithm implementations are GPLed.
+
+	The Toolkit now contains various cryptographic algorithms such
+as DES, IDEA, MD5, etc.  I will fix bugs in the software, and may add
+or remove the odd module if some startling new research result comes
+out, but things should be pretty stable from now on.
+
+	The algorithms available are:
+
+Hash functions: Haval, MD2, MD4, MD5, SHA.
+Private-key encryption: 
+	Blowfish, DES, DES3 (Triple DES), Diamond, IDEA, Alleged RC4, 
+	32-bit RC5, REDOC III. 
+
+Public-key: Digital Signature Standard, ElGamal, RSA.  (There's a
+	non-functional ESIGN module included, too; I'll finish it
+	for a subsequent release.)
+
+	Python is an interpreted scripting language; see
+http://www.python.org for more information, the source code, and
+binaries.  It includes arbitrary-sized integers, so the public-key
+algorithms are implemented in pure Python; this entails a speed
+penalty, but makes the code more valuable for educational purposes.
+
+	A sample usage of a hash algorithm (MD5) is:
+>>> import md5
+>>> hash=md5.new()
+>>> hash.update(message)
+>>> hash.digest()
+'\235\361\034\357\217MX\2246\226\367\366Ebx\326'
+
+	A sample use of an encryption algorithm (IDEA, in this case) is:
+>>> import idea
+>>> obj=idea.new('This is a key456', idea.ECB)
+>>> message="The answer is no"
+>>> ciphertext=obj.encrypt(message)
+>>> ciphertext
+'\2325$\343=)d\341^\025<\344\013\204 T'
+>>> obj.decrypt(ciphertext)
+'The answer is no'
+
+	Questions, comments, or suggestions are welcomed at the
+address below.
+
+
+	Andrew Kuchling 
+	andrewk@cst.ca
+
+
+
+

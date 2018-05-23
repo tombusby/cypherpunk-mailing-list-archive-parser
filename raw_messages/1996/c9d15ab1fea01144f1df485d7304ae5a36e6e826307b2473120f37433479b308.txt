@@ -1,0 +1,37 @@
+From: "E. ALLEN SMITH" <EALLENSMITH@ocelot.Rutgers.EDU>
+Date: Wed, 22 May 1996 20:00:40 +0800
+To: dsmith@prairienet.org
+Subject: Re: Long-Lived Remailers
+Message-ID: <01I4ZO8U2J4O8Y5IL9@mbcl.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From:	IN%"dsmith@prairienet.org" 22-MAY-1996 01:33:37.30
+
+>Actually, there's an Idea.  Set up a single address; use added
+>headers in the style of:
+
+>::
+>Remailers-To-Chain: 7
+>Remailers-To-Avoid: remailer@nsa.gov
+>Final-Destination: tcmay@got.net
+
+>Each remailer could construct a message that decrements the
+>remailers counter, preserving the other headers.  The
+>usual caveat on encrypting at each step would apply; but since
+>remailers' pubkeys are available, that's a trivial concern.
+
+	Well, if you use this for the entirety of the chain, you'll be giving
+away the cleartext at each step. Not too good of an idea. You won't want
+the mails to an output location to themselves go through remailers; you'd want
+multiple remailers going to the same output location (or group of output
+locations, which is probably preferable) via a more direct means such as POP.
+Otherwise, you've simply got the same old - but good nonetheless - of adding
+on new full remailers to the end of a chain, which doesn't avoid problems for
+the full remailer at the end. (Re: TCMay's post in response to yours.)
+	-Allen
+
+
+
+

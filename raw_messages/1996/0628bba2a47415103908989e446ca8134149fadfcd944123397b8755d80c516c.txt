@@ -1,0 +1,64 @@
+From: Joel McNamara <joelm@eskimo.com>
+Date: Wed, 28 Aug 1996 08:25:59 +0800
+To: cypherpunks@toad.com
+Subject: Re: Microsoft Explorer security hole (fwd) MSoft's reply...
+Message-ID: <3.0b11.32.19960827142515.009f60f0@mail.eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Displaying warning dialogs in browsers and using default settings so as not
+to auto run macros are only bandages to this problem.
+
+Consider the following:
+
+By using API routines to access the Win95 registry, someone writes a macro
+virus (or even just a garden variety trojan) that turns off the warning
+levels for MSIE which are stored in the registry (I haven't had time to
+look, but I'm assuming they're there).
+
+The user has no idea the setting has been changed, and is never warned when
+evil, malicious, unsigned code is executed.  Until too late.
+
+The registry, or whatever file you're saving state values to, should have
+some form of write authorization associated with it.  Encryption would also
+be extremely nice for privacy's sake (check out a Windows .INI file or
+registry entry some time, and see what little tidbits of information are
+being stored there).
+
+In my experience, one of Microsoft's main problems when it comes to security
+has been its developers and program/product managers don't think like "bad
+guys" when it comes to design and subsequent exploits and holes.
+Unfortunately, the user is the ultimate loser.
+
+Joel
+
+BTW - The paranoid side of me wouldn't be surprised to see PC
+"espionage-enabled" viruses and trojans within the next few years.  Their
+main purpose would be to either disable or patch various security features
+for later attacks, or directly snatch information off of hard drives and
+send it out over the Net.  I know of a few lab projects of a similar nature,
+that were very easy to implement.
+
+>Date: Thu, 22 Aug 1996 15:49:33 -0700
+>From: Thomas Reardon <thomasre@MICROSOFT.com>
+>Subject: Re: Internet Explorer security problem (Felten, RISKS-18.36)
+> 
+>  >We have discovered a security flaw in the current version (3.0) of
+>  >Microsoft's Internet Explorer browser running under Windows 95.  An
+>  >attacker could exploit the flaw to run any DOS command on the machine 
+>  >of an Explorer user who visits the attacker's page.
+> 
+>We now post the virus warning dialog on local files (file: urls).  We have
+>always posted it on remote files (http: urls).  Note that the root of the
+>problem is not Java or the browser, but in macro-enabled applications.  IE3
+>has a mechanism to warn users about safety of documents when used with
+>common macro-enabled applications.  We are have updated Microsoft Word such
+>that by default it will not run macros embedded in documents.
+> 
+>-Thomas
+
+
+
+
+

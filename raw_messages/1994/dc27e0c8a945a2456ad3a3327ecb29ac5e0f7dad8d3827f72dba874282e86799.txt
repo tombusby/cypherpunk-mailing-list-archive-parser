@@ -1,0 +1,43 @@
+From: Roger Bryner <bryner@atlas.chem.utah.edu>
+Date: Mon, 4 Jul 94 15:30:59 PDT
+To: wcs@anchor.ho.att.com
+Subject: Re: Password entropy
+In-Reply-To: <9407042147.AA17444@anchor.ho.att.com>
+Message-ID: <Pine.3.89.9407041650.A7942-0100000@atlas.chem.utah.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+<thanks for the analysis above>
+On Mon, 4 Jul 1994 wcs@anchor.ho.att.com wrote:
+> If you still *are* worried about it, however, you can scramble things a bit;
+> since MD5 produces 128 bits of output but uses 448 bits of input+padding,
+> you can add a different constant to the input at each step.
+> If you're using it as a salt, put it at the beginning; if you're
+> just doing it for multiple iterations it doesn't matter much.
+This is not correct.  You still have the same problem that you don't know 
+if the transformation is 1=>1.  You have added a lot of "psudo-random" 
+stuff but unless you keep this in your head, it is laying around for your 
+oppenent to grab(assuming non-secrecy of the algorithim).
+
+Assuming a random function for MD5, it is simple to calculate the loss of 
+entropy by calculating the number of collisions on adverage(intigrate the 
+probilility of n collisions) and assumeing indipendence between rounds.  
+
+I might point out that a better "buisy work" function would be to use to 
+output of a RNG as a key for multiple idea incryptions, or some such 
+scheme as this, as you are guarenteed of not loosing any entropy if you 
+can (theoretically) decrypt the result.
+
+The problem with such a "buisy work" function is that it sould be hard to 
+simplify, ie xoring with the sequence 1010101010101010101010101... is 
+easy to calculate dirrectly, without going through all the steps.  This, 
+I would guess, gets into a whole other ball of wax.
+
+Roger, Mad Dog Libertarian, Bryner.
+
+
+
+
+

@@ -1,0 +1,81 @@
+From: aba@atlas.ex.ac.uk
+Date: Wed, 21 Feb 1996 12:53:13 +0800
+To: geeman@best.com
+Subject: Guaranteed snake-oil, er, privacy...
+Message-ID: <13501.9602202156@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+geeman@best.com writes:
+>	The 
+>        posting(s) concern an extremely easy to use, unbreakable system 
+>        for encrypting all user sensitive data going out over Internet.
+>        As a reference to its unbreakability, I refer you to an 
+>        article by Paul Leyland on Internet at:
+>
+>               http://dcs.ex.ac.uk/~aba/otp.html
+>
+>        Mr. Leyland refers to some problems, which our PCX 
+>        system addresses and resolves.
+
+Some corrections: I (Adam Back) wrote the www page you refer to, the
+attribution to Paul Leyland <pcl@oucs.ox.ac.uk> on that page is
+refering to his implementation of a OTP in 1 line of C which I
+included with permission:
+
+main(i,c)int*c;{for(c=fopen(c[1],"r");i=~getchar();putchar(getc(c)^~i));}
+
+>        Mr. Leyland refers to some problems, which our PCX 
+>        system addresses and resolves.
+
+Neglecting the misattribution, some comments on IPG's claims are in
+order.  My page mentions that OTPs are provably secure:
+
+: "OTPs are provably unconditionally secure"
+
+BUT, I also go to great pains to make clear that the security of OTPs
+rests critically on the true randomness of the PAD:
+
+: <H3>Generating OTPs</H3>
+: 
+: It can't be stressed enough how important it is to have a truly random
+: OTP.  Just using the <TT>random()</TT> function provided with C
+: libraries is nowhere near good enough, these typically have a seed of
+: one 32 bit word, so that even if you used the millisecond of your
+: clock as a seed the whole system could be broken with a brute force
+: keysearch of all possible seeds.  In cryptographic terms a 32 bit
+: keyspace is tiny, and would take a negligble amount of compute time to
+: break.
+: 
+: <P>
+: 
+: Basically if you use pseudo-random number generators they are going to
+: be the weak point in the system, unless you have external input like a
+: radio-active decay card, or timings of the milliseconds between
+: keystrokes with proper entropy estimation as used by PGP.
+
+I'm sure everyone reading understands ad nauseum about OTPs etc, but I
+would like to take the opportunity to distance myself from any claims
+being made by IPG, and to state categorically as the author of the www
+page quoted that I do not agree with IPG interpretation of what one
+can legitimately call a secure OTP system.
+
+I think (and this has been pointed out repeatedly to POTP in the past)
+that you would go a lot further if you made realistic claims, and used
+standard nomenclature.
+
+If you have a new stream cipher using a PRNG, say so, publish the
+algorithm for peer review, and go from there.  It is the calling it
+something which it is not which generates criticism out of hand.
+People look no further.  I'd suggest replacing marketing at IPG with
+some one who can at least sound convincing.  As lots of people have
+said: publish the algorithm.
+
+Adam
+
+
+
+
+

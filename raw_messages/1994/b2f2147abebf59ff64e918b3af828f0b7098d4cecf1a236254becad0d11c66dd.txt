@@ -1,0 +1,113 @@
+From: nates@netcom.com (Nate Sammons)
+Date: Mon, 14 Mar 94 14:07:08 PST
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: pgptools app wanted
+Message-ID: <199403142207.OAA27743@netcom9.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hello punksters...
+
+I am almost done with some remailer software and I need something:
+an app that takes input from a specified file and sends output
+to anothe specified file (all on command line) and asks for the
+key from stdin or from an environment variable.  This I need since 
+PGP will not take environment vars or stdin for getting the key for
+a conventionally encrypted file.
+
+I would also like a program that will do nothing but encrypt
+a file specified on the command line and dump ascii-armoured
+output to another file, and ask for the password from an
+environment variable or from stdin.
+
+I am asking this since I hope someone else will have already 
+done this or learned pgptools well enough to do it quickly.
+I thought about modifying PGP, but I also thought that many people
+would not want to use my remailer if I had to hack PGP to make
+it work ;-)
+
+My remailer implements the following features:
+
+::
+Latency: ## MINUTES  (where ## is an integer or the word "RANDOM")
+
+::
+Request-Remailing-To: username@machine (of course)
+
+::
+PleaseDontPad  (keeps the mailer from padding the message)
+
+::
+Encrypted: PGP  (message is encrypted with the remailer's pubkey)
+
+::
+SubjectEnclosed  (if message is encrypted, the subject can be hidden
+                  inside the encryption envelope, on lines 1-5)
+
+::
+SuperEncrypted  (if the messge is encrypted, it looks for a line in the
+                 decrypted message that looks like: (on lines 1-5)
+                 SuperEncryptionKey: cjkdsancuiabcdsbakjcdsabkjcdsa
+                 and uses that key to decrypt the message again. )
+
+In a configuration file, the owner can specify a few options, also:
+
+here's an example:
+
+# debuglevel sets the degugging level, 0 = off, 1 = on and 2 = picky.
+debuglevel                2
+
+# loglevel sets the resolution of logs:
+# 0 = off.  No logs at all.
+# 1 = Log Synopsis of message (from, to, subject, size, etc... not content)
+# 2 = Log Full message to the mailbox specified in logmbox
+# 3 = Log Full text and synopsis
+loglevel                  3
+logmbox                   ./log/mbox
+logsynopsis               ./log/synopsis
+
+# This is the directory that all tempfiles, etc are set relative to
+homedir                   /staff/nate/dev/perl/remail
+
+# set the maximum number of latency minutes for random latency requests
+maxlatmin                 20
+
+# the process number will be appended to this name
+tempfile                  ./remailer-temp
+
+# defaultsubject specifies the subject to use if none is given, omit to
+# forward no subject at all.
+defaultsubject            There is no subject.
+
+# The mailbox that diagnostic mail and non-remialer mail is sent to.
+mbox                      ./mbox
+
+# Passphrase for PGP decryption.
+passphrase                nckldanjcsancjkndsakjcdsajk
+
+# sourceblock blocks mail coming FROM this address
+sourceblock               detweiler@detweiler.org
+
+# destblock blocks mail addressed TO the address.
+destblock                 nate@vis.colostate.edu
+
+# netblock will block all mail going to that subnet.
+netblock                  whitehouse.gov
+
+In addition to this, the owner can change the number of padding
+sizes and their individual sizes... the remailer strips out the padding
+when it gets a message and adds it to the end when it's about
+to leave.
+
+-nate
+
+--
++---------
+| Nate Sammons  <nates@netcom.com>  PGP Key and fingerprint via finger.
+| Clipper == Big Brother Inside. Question Authority. Encrypt everything.
++---------
+
+
+

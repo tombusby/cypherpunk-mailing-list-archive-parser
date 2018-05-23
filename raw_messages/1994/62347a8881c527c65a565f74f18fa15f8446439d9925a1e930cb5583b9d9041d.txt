@@ -1,0 +1,66 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 17 Nov 94 23:40:23 PST
+To: cypherpunks@toad.com
+Subject: Re: Islands in the Net
+In-Reply-To: <9411172229.AA01226@ch1d157nwk>
+Message-ID: <199411180739.XAA20067@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Andrew Lowenstern <andrew_loewenstern@il.us.swissbank.com> writes:
+
+>What if remailers were implemented using 'agents'?  Instead of me sending a  
+>dumb message to a smart remailer, what if I could send smart remailer, with  
+>an encrypted message embedded in it, to a friendly machine offering agents  
+>access to SMTP (i.e. a machine that allowed any authorized agent to arrive  
+>and initiate an outgoing tcp stream to the SMTP port of any other machine).   
+>Now I can make my remailer system as convoluted as I want, simply by  
+>programming this agent to cruise around machines that answer when it knocks.   
+>Once it has moved between enough hosts, it moves to a host that offers  
+>outgoing SMTP connections and delivers it's payload.  No longer am I limited  
+>by the time and effort of the remailer operators to implement fancy new  
+>features.  Any machine that gives access to my agent becomes another hop in  
+>my remailer chain (or whatever purpose I want).  All my remailer agent needs  
+>to operate is one host, the final destination, that will let it make an  
+>outgoing SMTP connection, which could be provided by the hosts currently  
+>running remailers.
+
+Yes, I think as Tim mentioned that safe-tcl is a possible way to go here.
+You could really do a lot of what Telescript promises with safe-tcl, and
+it is completely open and non-proprietary so anybody could run a server.
+
+Basically, safe-tcl is a limited subset of the tcl scripting language
+designed to allow "active mail", which can contain programs to run either
+at the time the mail is put into your mailbox or at the time you read it.
+Most of their interest is in the latter, because since tcl is married to
+the X scripting package tk, you can actually have an incoming mail
+message which puts up its own X dialog boxes, etc.  Somebody wrote a
+sample mail-based tictactoe game, where you click in a box and it
+automatically sends an appropriate program to the other player which will
+put up the game board and let him click, etc.  Imagine this for crypto
+protocols.
+
+But, back to the remailers, as Andrew says this agent-based or "active"
+mail provides a whole new paradigm for viewing remailers.  Rather than
+being this anarchic threat to the net as they are often pasted, they are
+simply one of a wide class of servers.  If we can move to a model in
+which semi-autonomous agents do surf the net, then remailers become just
+a small part of a much bigger picture.  I may allow incoming agents to
+use various resources on my machine, including the mail facilities.  A
+remailer is then just a server which does not enforce a lot of
+state information on outgoing messages to record their incoming path.
+
+I suppose the thing to watch for here will be efforts on the part of
+net.control freaks to force agents to be carefully authenticated,
+regulated, ordered and tracked.  Just as the mail specs (RFC822)
+emphasize the importance of a human owner of every piece of mail so you
+have someone to complain to, similar motivations may play a part in
+future specs for active mail and similar extensions.  This is going to be
+a continual battle which we will have to be ready for.
+
+Hal
+
+
+
+

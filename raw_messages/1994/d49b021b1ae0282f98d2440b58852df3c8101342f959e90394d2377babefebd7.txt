@@ -1,0 +1,120 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 22 Sep 94 17:54:28 PDT
+To: cypherpunks@toad.com
+Subject: MATH: Brands' cash, Hal's post #2
+Message-ID: <9409230054.AA24515@snowy.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+This post gives numerical examples to go along with Hal Finney's excellent
+description of Brands' digital cash, posted earlier.  If the math is too
+much, just remember the whole point:
+
+> Blind signatures are, IMO, the key to anonymous digital cash, and in fact
+> to many forms of anonymity.  The ability to engage in mutual information
+> manipulation with another person, while guaranteeing that no linkage will
+> later be possible between the data exchanged and the results of that
+> calculation, is the foundation for interacting in a complex way without
+> losing any privacy...
+> Vicki wants to end up with a non-interactive signature on m', which is a 
+> special transformation of m.  To do this, she engages in an interactive 
+> signature protocol with Paul, getting him to sign m... the result is
+> that she ends up with a non-interactive signature on m' because Paul was
+> willing to participate in an interactive signature session on m
+
+Continuing along:
+
+> Now for the mathematics.  Recall the g is the "generator" of the group,
+> the base of all of the powers.  x is Paul's secret key, and GX=g^x is his
+> public key.  
+
+I will use g = 10, n = 17389 as in the previous example.  Paul will choose 
+x = 351 to be his secret key, so GX = 10^351 mod 17389 = 16987 is his public 
+key.  In addition, the message is m = 1994.
+
+> As the first step of the interactive protocol, Paul chooses a random w
+> and sends Vicki MX = m^x, GW = g^w, and MW = m^w.
+
+Paul chooses a random w = 666
+
+MX = 1994^351 mod 17389 = 11740
+GW = 10^666 mod 17389 = 7115
+MW = 1994^666 mod 17389 = 13262
+
+> The relationship between m', which is what Vicki will end up
+> with a signature on, and m, which is the number that Paul sees, is
+>       m' = (m^s)*(g^t).
+
+Vicki chooses s = 3694, t = 1243
+
+m' = (1994^3694)*(10^1243) mod 17389 = 10313
+
+> the challenge c is calculated as the hash of (m,MX,GW,MW).  Vicki
+> must transform these numbers so that Paul will not recognize them, but in
+> such a way that the mathematical relationships are maintained.
+> To do this, Vicki chooses two (more) random numbers, u and v (along with
+> s and t above).
+
+Vicki chooses u = 5192, v = 100
+
+>   MX' = m'^x = ((m^s)*(g^t))^x = (m^(s*x))*(g^(t*x)) = (MX^s)*(GX^t)
+>   GW' = g^w' = g^(u*w+v) = (g^(u*w))*(g^v) = (GW^u)*(g^v)
+>   MW' = m'^w' = ((m^s)*(g^t))^(u*w+v) = [...] =
+>                                       (GW^(u*t))*(MW^(u*s))*(m'^v)
+
+MX' = (MX^s)*(GX^t) = (11740^3694)*(16987^1243) mod 17389 = 10710
+GW' = (GW^u)*(g^v) = (7115^5192)*(10^100) mod 17389 = 12113
+MW' = (7115^(5192 1243))*(11740^(5192 3694))*(10313^100) mod 17389 = 9314
+
+> Using these, Vicki calculates her hash c'= Hash(m',MX',GW',MW').
+
+c' = hash(10313,10710,12113,9314) = 7672 (some hash function I made up)
+
+> Now, the c she sends to Paul...
+> c = c'/u 
+
+c = (7672/5192) mod 17389 = 323
+
+[     5192 c = 7672 mod 17389  
+  --> 5192 c" = 1 mod 17389 
+  --> c" = 3520
+		 ==> c = c" 7672 mod 17389 = 323
+
+  check: (323 5192) mod 17389 = 7672
+]
+
+> Paul will ... calculate r = c*x+w.
+
+r = (323 351 + 666) mod 17388 = 9711
+
+> [Vicki calculates] r' = u*r + v
+
+r' = (5192 9711 + 100) mod 17388 = 11800
+
+> The resulting signature on m' is (MX',GW',MW',r')
+
+So the resulting signature is (10710,12113,9314,11800)
+
+Okay, that should be an actual example of the protocol, unless I messed 
+up somewhere ;)  I hope to finish going through Hal's third post soon.
+
+Karl Barrus
+klbarrus@owlnet.rice.edu
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.1
+
+iQCVAwUBLoImUMSF/V8IjI8hAQGRmAP/RojMlpm8rnnx4K6c3GEHsBoQL7hIhdBB
+bTiwBhkXbi8ZhHsZJtX9mFceIhTK7yIxVsq9y17d2m5NghGME1qtIN+MjbbvwHfp
+j9S9fWwF6/mIiRvV9IM1a23IGhyZi0ZQASLKRiPlStjbcwv6QoGxZQuTyGOD8pSn
+hpoKosUFbqY=
+=EIjf
+-----END PGP SIGNATURE-----
+
+
+
+

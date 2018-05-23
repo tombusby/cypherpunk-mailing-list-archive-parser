@@ -1,0 +1,46 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 29 Sep 95 00:00:30 PDT
+To: jsw@neon.netscape.com (Jeff Weinstein)
+Subject: Re: Netscpae & Fortezza (Or, say it Ain't so, Jeff?)
+Message-ID: <199509290659.XAA09185@ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I for one am against any kind of GAK on moral grounds.  I also think
+>that trying to implement mandatory GAK in a software only system
+>would be a nightmare.
+
+Unfortunately, it's quite simple, if your only intent is to get the keys,
+and not to use it as a way to increase NSA leverage...
+Carl Ellison's web page points out the simple version of this,
+and it's easy to extend to make it more reliable.
+1) Have the NSA/NIST/DEA/etc. generate public keys for their GAK agents.
+2) Have each session-key-transfer encrypt a copy of the session key with
+the public key of the GAK agent, and send it at the beginning of the connection.
+3) To make it more robust, have the recipient of the session key also 
+encrypt the session key with the GAK key and send it back,
+so that a conformist receiver can rat the key even if the sender didn't.
+(takes a little protocol support to make sure the sender doesn't mind
+getting it echoed back to her.)
+
+Unlike Steven Walker's fancy complex method (which Dorothy liked a lot),
+this is simple and straightforward, and requires no validation by
+the recipient.  (Both parties could send fakes, but they could
+do that anyway.)  What it doesn't do is allow third parties to detect
+whether the GAK field has the real session key in it or a fake,
+but c'est la guerre.  You can even get fancier and support M-of-N splitting,
+requiring M of N GAK agents to give out their keyparts; just do the
+split and encrypt each piece with the corresponding GAK agent's public key.
+This also works in a wide variety of environments (e.g. Diffie-Hellman).
+You could also scrounge a few bits by using the GAK field as an IV if you 
+need one.
+#---
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

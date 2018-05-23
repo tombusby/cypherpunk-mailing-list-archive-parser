@@ -1,0 +1,68 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Thu, 6 Aug 1998 23:12:56 -0700 (PDT)
+To: Mok-Kong Shen <fygrave@freenet.bishkek.su>
+Subject: Re: text analysis
+In-Reply-To: <Pine.LNX.3.96.980806105040.20223u-100000@freenet.bishkek.su>
+Message-ID: <3.0.5.32.19980806202007.0090e140@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:44 PM 8/6/98 +0100, Mok-Kong Shen wrote:
+>CyberPsychotic wrote:
+>> text). Anyways, when things come to 2 characters set, i have to get 1024
+>> character set, and so on, which looks quite unreasonable to me to allocate
+>> memory for elements, which probably will be never found in text... I was
+>> thinking of other solution and came to two way connected lists (correct
+>> term?)  things, i.e. : i have some structure like:
+>> 
+>> struct element {
+>> char value[ELEMENT_LENGTH];
+>> unsigned int frequency;
+>> struct element *previous;
+>> struct element *next;
+>> }
+>>  and could dinamically allocate memory for each new found element, but
+>> this would slow down whole code by the time list of new elements grow up.
+>
+>I think currently memory is cheap enough so that you could do
+>frequency counts of at least trigrams with one dimensional array.
+
+RAM is cheap - any 486 computer and most 386 computers has at least 4MB.
+In the US, most new PCs have 16MB or more, and many have 64MB.
+But learning how to program efficiently is still important :-)
+And some computers have operating systems that make it hard
+to use all of the RAM.
+Disk is cheaper - almost all new computers have 1GB or more,
+and most older desktops have at least 200MB.
+You probably should use 32-bit integers to store your counters,
+but you need to make sure your program does the right thing
+if you exceed counts of 2**31.
+
+Are you counting all kinds of text, or only words made of alphabetic
+characters and spaces and punctuation, or only ASCII 127-bit?
+Your 1024 number is 32*32, which sounds like only alphabetic and spaces;
+if that's good enough, you could do 32*32*32*32 with 4-byte counts
+and still fit in 4MB.
+If you want all 256 possible 8-bit characters, two characters 
+requires 64K counters (256KB).   Trigrams require 16 million counters
+if you allocate space for them all, which is 64MB, and may be expensive.
+But you could store 256*256 pointers in 256KB, and allocate memory
+for 256-counter arrays only for the digrams that appear,
+and probably save lots of memory.  You could also store the counts on disk, 
+and keep only the more frequently used arrays of counts in RAM.
+This was how we did things in the old days, when almost everything
+was too big for RAM, and it really is much slower if you're not careful :-)
+If you have a machine with a real operating system, you can 
+pretend keep your counters in RAM and let the operating system
+decide what to page out to disk.  Think about this carefully,
+because it can be very fast or very slow depending on how
+well you write your programs.
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+

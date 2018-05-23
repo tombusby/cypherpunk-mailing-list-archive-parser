@@ -1,0 +1,55 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Fri, 7 Feb 1997 21:49:56 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: 40-bit RC5 crack meaningless?
+In-Reply-To: <199702071941.LAA29283@toad.com>
+Message-ID: <5dh45q$mqh@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <199702071941.LAA29283@toad.com>,
+Peter Trei  <trei@ziplink.net> wrote:
+>The purpose of an IV is to make dictionary and replay attacks more
+>difficult. It is not intended to prevent brute force attacks, and so
+>is _normally_ included in the clear in communications protocols (for
+>example, see RFC 1827 for it's clear transmission in IPSEC). If it
+>is not included, it is effectively part of the keying material, and
+>thus adds it's bits to the strength of the key. As such, its value
+>would have to be transmitted and protected as carefully as the rest of
+>the key.  
+
+This is a common mistake.  Just use the first block of ciphertext as the IV,
+and start decrypting from the second block.  Let's say you discover that
+key K causes C2,C3,... to decrypt to something intelligible (P2,P3,...),
+using C1 as the IV.  What could P1 have been?  Well, we know that
+(if IV is the _actual_ IV, which you don't know) E_K[IV^P1] = C1, so
+IV^P1 = D_K[C1].  But we now have what is effectively a one-time pad
+situation, where P1 is the plaintext, IV is the pad, and D_K[C1] is the
+ciphertext.  Thus, if you don't know the IV in a CBC situation, you can
+still recover all of the plaintext starting at the second block with
+the same amount of work it would have taken to have recovered the whole
+plaintext, given the IV (the IV does not in fact add its bits to the
+strength of the key), but you learn nothing about the first block
+(unless something about the protocol gives you a clue based on your knowledge
+of subsequent blocks).
+
+Disclaimer: I've been having a rough week...
+
+   - Ian
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMvwT8kZRiTErSPb1AQEqMgQAoM3TW9xyN47aLt5p8BsYMEvWFa+e7sgt
+TGZa8DtuPPosciR8J7O2aMbKSvRHoLFFF0bBccC6NSsoVTlBUB2C+gGeMJ4ufk+A
+PbPMW1z4JvGyeVYtrEKPweetTl5ZprbbLoS778Pwm+9/RpwZte372B7BkgTvQR+H
+QjXuSmuua9c=
+=pqWE
+-----END PGP SIGNATURE-----
+
+
+
+

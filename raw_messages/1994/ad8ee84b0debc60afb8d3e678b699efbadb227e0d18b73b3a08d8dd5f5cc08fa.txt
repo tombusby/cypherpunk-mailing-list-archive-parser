@@ -1,0 +1,57 @@
+From: dps@kafka.atinc.com (Doug Shapter)
+Date: Wed, 28 Sep 94 05:32:17 PDT
+To: dcwill@ee.unr.edu
+Subject: Re: Mandatory email verification
+In-Reply-To: <199409272247.RAA18617@pentagon.io.com>
+Message-ID: <9409280832.ZM12030@kafka.atinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Its my understanding that to be truly useful on multi-user
+systems, digital signatures require some user input (eg, PGP
+requires entering a pass phrase). Sendmail could be hacked
+easily
+enough to append signatures and to even ask the user for the
+requisite pass phrase-- or sendmail can append the signature
+automagically, using an environment variable (yuch, just a touch
+insecure?) or some other method (a root-owned and executed shell
+script).
+
+The first method, having sendmail ask the user for the pass
+phrase, is most secure, but also the most inconvienent. For
+instance, at our site, we have several distributed
+workstations. We send numerous mail messages to each other every
+day, and signing each one would be a real pain. To prevent this
+sendmail could be hacked to only require signatures on mail
+messages addressed outside the domain. This still leaves us back
+at the original problem-- one of us could flame the boss and
+then
+deny the authenticity of the message because it lacked our
+signature.
+
+The automagic method is frightfully insecure. Creating an
+environment variable transparently requires that the pass phrase
+be physically located on the system, instead of the user's
+mind. (I wouldn't want to ask users to slip in their "pass
+phrase" disk every morning when they log on). There is also a
+question of trust-- a dishonest sysadm could easily break this
+method. The dishonest sysadm could also easily break a shell
+script method, as could anyone who got the root password.
+
+Jim McCoy pointed out aptly that the hack could be done quickly,
+but, laying technical issues aside, do we really want our
+computers signing our mail for us (what about messages to
+anonymous remailers-- a digital signature defeats that in short
+order)? That's the real question.
+
+
+
+-- 
+Doug Shapter                
+dps@kafka.atinc.com         
+finger dps@kryten.atinc.com for PGP public key
+
+
+
+

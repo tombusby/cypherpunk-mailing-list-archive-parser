@@ -1,0 +1,56 @@
+From: Bill Frantz <frantz@netcom.com>
+Date: Mon, 30 Dec 1996 23:01:00 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Hardening lists against spam attacks
+Message-ID: <v03007803aeee6643cfe0@[206.217.121.121]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The Christmas attack against this list shows the need to develop lists
+which are resistant to attacks.  If cyberspace is to become the town square
+of the next century, we need to be able to discourage brown shirts attacks
+on political gatherings.  If lists are to be a major part of the political
+life of the community, then they must be resistant to attacks from
+knowledgeable, well financed attackers, not just the shits who were the
+most recent perps.
+
+There are several principles which should be observed:
+
+(1) Since attacks are based on sending to the list, receiving the list
+should remain substantially unchanged.
+
+(2) Spam attacks should be throttled at the source, so they do not act as a
+denial of service attack on the list server.
+
+Here is a sketch of a protocol which attempts to achieve these goals:
+
+(1) All messages sent to the list must be encrypted with the list's public
+key.  This requirement is primarily to protect the posting token (see
+below).  However, it alone will probably reduce the problem.  Certainly it
+will eliminate the effectiveness of the "subscribe the list to some other
+list" attacks.
+
+(2) In order to post to the list, the poster must have a valid posting
+token.  These tokens are available, in limited number, anonymously.  Tokens
+remain valid unless canceled for abuse.  However, if too many posts are
+received with a given token, TCP performance on sockets using that token
+may become arbitrarily slow (or the circuit may be dropped).
+
+(3) In order to limit the number of posting tokens, the list server will
+only issue a few per day.  The lucky few who get them, everyone who asks
+under normal circumstances, may be determined by an algorithm designed to
+limit token collection by future attackers.  (This area is where this
+proposal needs work!)
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | Client in California, POP3 | Periwinkle -- Consulting
+(408)356-8506     | in Pittsburgh, Packets in  | 16345 Englewood Ave.
+frantz@netcom.com | Pakistan. - me             | Los Gatos, CA 95032, USA
+
+
+
+
+
+

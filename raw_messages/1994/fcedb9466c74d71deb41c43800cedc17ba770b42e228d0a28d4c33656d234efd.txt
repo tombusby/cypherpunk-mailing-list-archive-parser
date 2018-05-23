@@ -1,0 +1,56 @@
+From: "Pat Farrell" <pfarrell@netcom.com>
+Date: Fri, 26 Aug 94 06:06:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: Fast modular exponentiation
+Message-ID: <32551.pfarrell@netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+  Phil Karn <karn@unix.ka9q.ampr.org>  writes:
+
+> I.e., if I come up with a list of clock counts for each basic
+> arithmetic instruction, how can I tell which algorithm is probably
+> best for my machine?
+
+Back in the days of Mix, Knuth worked out the model. But with modern
+pipelined chips with significant on-chip cache, the model becomes
+too complex to solve arithmetically.
+
+The usual solution is to use Berkeley's Architect's Work Bench (AWB)
+which allows you to model the chip's instruction set, cache structure,
+pipeline stall characterists, etc. while using a compiler to
+generate actual code to execute. You can then execute your algorithm
+against the chip, and declare a winner.
+
+Of course, you have to validate the chip model, and you have to know
+how the compiler optimizations work, how it interacts with branch prediction
+logic, etc.
+
+While awb is readily available for the usual Unix systems, using it for
+anything less trivial than a grad school compiler optimization course is
+a ton of work. It makes sense when you are inventing a new chip
+architecture, or even a significant revision to an existing chip.
+I believe that it is far too much work to use awb (or anything of similar
+capabilities) to evaluate algorithms for real world chips.
+
+For algorithm optimization, it makes more sense to study the chip's
+characteristics, and use a heuristic approach, testing real implementations.
+
+I've already measured nearly a four to one difference in execution times
+using Phil's DES code using different compilers and operating systems
+on the same hardware (my 486).
+
+But it is pretty unsatisfying to say that the best algorithm "depends" on
+half a dozen variables, and that we can't reliably predict (engineer) a
+solution.
+
+Pat
+
+Pat Farrell      Grad Student                 pfarrell@cs.gmu.edu
+Department of Computer Science    George Mason University, Fairfax, VA
+Public key availble via finger          #include <standard.disclaimer>
+
+
+
+

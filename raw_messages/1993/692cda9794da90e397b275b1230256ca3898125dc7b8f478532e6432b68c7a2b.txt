@@ -1,0 +1,74 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Tue, 28 Dec 93 15:07:35 PST
+To: pfarrell@netcom.com
+Subject: RE: GPS and security
+In-Reply-To: <62594.pfarrell@netcom.com>
+Message-ID: <199312282303.PAA21817@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Before the Gulf war started, the military needed zillions of GPS units, so
+>they bought commercial marine navigrtion units. After the war, there
+>was talk of turning on the division, but that was made
+>impractical with 'differential' calibration.
+
+You appear to be referring to Selective Availability. It was indeed turned
+off during the Gulf War to allow the use of civilian C/A units. Companies
+like Trimble couldn't keep up with the military demand during the buildup
+to the war.
+
+Selective availability was turned on again some months after the war
+ended.  The effects were quite visible. The level of SA has varied
+quite a bit since then.
+
+>To get military accuracy, all you have to do is take the commercial GPS to
+>known places. Such as the surveying marks at the US Naval Acadamy, or
+>"ground zero" in the Pentagon. Get your "imprecise" reading, calculate the
+>difference between it at the known value, and use it for subsequent
+>calculations.
+
+False. SA-induced errors are time varying, so the differential trick
+only works in *real time*. You need receivers at both the reference
+location and the location to be measured at the same time. The
+experience with differential GPS is that you need updates that are
+less than 30 seconds old, otherwise accuracy degrades rapidly.
+
+By the way, the differential updates include both range offset and
+range-rate offset (relative velocity). The addition of range-rate
+makes the updates last as long as 30 seconds, otherwise you'd need a
+very high update rate to get 2-3m accuracy.
+
+>BTW, two satellites is enuff for a general location fix. Three identifies a
+>place on the globe, four adds altitude (handy for planes, bombs, and
+>missles)
+
+Also false. You need at least THREE satellites for any kind of GPS
+position fix.  And you need to know your altitude ahead of time for
+this to work.  Give a unit operating in 3 satellite mode the wrong
+altitude, and it will give you the wrong latitude/longitude.  Four
+satellites will give you a three-dimensional fix, i.e., the unit will
+tell you your altitude.
+
+Most units have an "auto 2D/3D" mode, where the unit remembers the
+altitude from the last 3D (4 satellite) fix and uses it in 2D (3
+satellite) mode.  Some other units, apparently including my Icom GP-22
+unit, seem to assume you're at sea level whenever fewer than 4
+satellites are visible. This may be a reasonable assumption for a unit
+designed for marine use, but it is a bad assumption in places like
+Colorado. When I took it there last summer, I often saw it give one
+position as soon as it got 3 satellites, and then jump a half mile to
+the correct position when it got the fourth.
+
+About the only useful thing you can do with less than 3 visible
+satellites is time transfer to a fixed station. A station in a known
+location need only track one satellite in order to keep its clock
+updated. At Qualcomm we use special GPS receivers (with built-in
+rubidium clocks) in our CDMA base stations as time references to
+synchronize our own spreading codes.
+
+Phil
+
+
+
+

@@ -1,0 +1,56 @@
+From: rick hoselton <hoz@univel.telescan.com>
+Date: Wed, 17 Apr 1996 06:54:48 +0800
+To: perry@piermont.com
+Subject: Re: why compression doesn't perfectly even out entropy
+Message-ID: <199604161843.LAA19508@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:07 AM 4/16/96 -0400, Perry E. Metzger wrote:
+
+>...Usually, random
+>sequences are non-compressable, but it is possible (though very
+>improbable) for Hamlet to appear out of a random number generator,
+>and it is of course quite compressable...
+
+But even if it came from a completely random source, it would 
+still make a bad one-time pad.  When people say "compressable" 
+or "algorithmic complexity" or "random", a context is always implied.  
+
+In the context of "fair coin flips" the text of Hamlet is NOT compressible.
+Because no string is more likely than any other.  Any algorithm that could 
+compress that string, will, on the average INCREASE the length of 
+"fair coin flip" strings it tries to compress.
+
+Under the context of "pads that might be used for cryptographic purposes" the 
+text of Hamlet is quite compressible.  An attacker is much more likely to 
+test for such a stream than one that appears more random.  So, even if you 
+got "Hamlet" from a perfectly random source, you should reject it for crypto 
+purposes.
+
+There is an exception to this rule.  If you are so revered as a cryptographer 
+that no analyst would believe that you would deliberately choose a
+non-random pad, 
+then it would be safe to use Hamlet if it appeared in a random source.
+
+It is amazing that one's reputation can affect the randomness of the bitstrings 
+one uses.  
+
+PS:
+I have written a compressor that can compress ANY string to the single byte "X".
+There are 2**n different decompressor programs, where n is the bit size of the 
+original file.  All you have to do is specify the number of the correct 
+decompressor program, and you have the original file.  Note that no computer 
+is required for either the compressor or the decompressor.  (patent pending)
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Tue, 26 Jan 93 08:59:23 PST
+To: cypherpunks@toad.com
+Subject: Hash Cash and Ripped Checks
+Message-ID: <9301261617.AB12479@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's a form of digital cash and checks that takes off from Tim May's
+and Hal's ideas, and might have advantages, but uses crypto.  I find it 
+easier to understand than Chaum's method (but maybe the complexity
+vs. benefits make it the worst of all possible worlds...lemme know).
+
+Consider:
+        This message can be exchanged for $x at Fred's Bank
+        by the first person to present it along with a message whose
+        MD5 hash is: h
+        (Serial number: n)
+        Digitally Signed,
+                Fred's Bank
+
+Think of this as the right half of a $x bill that's been ripped in half.  
+The hash is the shape of the rip.  The bill is valid if you're the first
+one with both matching halves.  The left half is blank (a random message
+that hashes to h).
+
+TO VERIFY: take a new piece of paper, rip it in half (generate a random 
+number, take its hash).  Send both halves of the old bill, plus the right 
+half of the piece of paper (the new hash), to the bank.  The bank either 
+says the old bill was spent*, or sends back the right half with the same 
+amount and their signature.  Now only you have the whole new bill.
+
+CHECKS: ask the payee to give you a blank right half.  Pay the bank to fill 
+it in.  The payee can verify that it's good without taking it to the bank.
+
+STAMPS/TOKENS/GIFT CERTIFICATES: The payee gives you a pack of right 
+halves.  You turn them to checks later.  They might include a serial
+number with each one and ask you to give it back with the check so they
+can look up (or regenerate!) the left halves easily.  They might even 
+insist that you use the hash/serial # pairs in sequence!  (Or is crypto-
+strong hashing of serial numbers too much to ask?)
+
+There are even more compromises of anonymity here than with Tim and Hal's
+ideas--I assume some compensation with remailers, as Hal suggested.
+
+I was thinking you could launder money by buying checks from Bank B 
+with checks to Bank B that are drawn on Bank A, etc.
+
+A similar form would be something that said:
+        This message can be exchanged for $x at Fred's Bank
+        by the first person to present it 
+        signed with the private key that matches this public key: k
+        (Serial number: n)
+        (pad)
+        Digitally Signed,
+                Fred's Bank
+
+This would let you buy checks to random strangers without having to
+transact anything with them first, but it's sure obvious who the check 
+is to.
+
+*Maybe you'd send the right half, then the bank would either
+prove that it already had the left half, or you'd proceed as above.
+
+-fnerd
+quote me
+fnerd@smds.com (FutureNerd Steve Witham)
+
+
+
+
+

@@ -1,0 +1,116 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 26 Jan 1998 10:11:43 +0800
+To: kelsey@plnet.net
+Subject: future proofing algorihtms (Re: (eternity) Eternity as a secure filesystem/backup medium)
+In-Reply-To: <199801221532.JAA28790@email.plnet.net>
+Message-ID: <199801260118.BAA00753@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+John Kelsey <kelsey@plnet.net> writes on cpunks:
+> >1. communications crypto used by the author in submitting
+> >   the document is broken
+> 
+> This is only a threat if the authorities have a good idea
+> who submitted the data, and want to prove it.  
+
+If we assume that the document was submitted by mixmaster remailer,
+and that there is another leap forward in factoring algorithms such
+that 1024 bit isn't enough any more.  (Not like it hasn't happened
+before cf Rivest & friend's original predictions of hardness of
+RSA-129).
+
+Now threat model is that NSA is archiving mail between mixmaster
+nodes.  They observe which exit mail corresponds to the target
+document.  They look at the set of mixmaster mails going into that
+node which could plausibly have corresponded to that message as
+determined by the pool size.
+
+Repeat to get back to originator.  If we assume 100 message pool size
+(probably generous) and chain of length 10, that is 1000 decryptions
+which adds equivalent to 10 bits worth of symmetric key size.
+
+Paranoid stuff yes, but the NSA mixmaster traffic archive doesn't seem
+that unlikely.
+
+It is interesting to note that Tim May's recent suggestion of LAM
+(Local Area Mixes) would help here because if 5 of those mixmaster
+nodes where part of a LAM, it is unlikely that the NSA would be able
+to archive inter remailer traffic, thus increasing effective pool size
+to 100^5.  So one advantage of the LAM approach is that it provides
+links which are protected by physical security.
+
+A user might like to amuse himself trying to use channels he suspects
+will not be archived as the entry point.  Perhaps a disposable account
+at a high volume free mail account like hot mail might be nice.  We
+would like to push NSA's problem towards having to archive the entire
+net traffic.
+
+> >2. the eternity architecture contains encrypted documents to
+> >   frustrate attempts to locate documents, and to hide the
+> >   contents of documents from individual servers
+> 
+> Again, this won't be too economical unless the eternity
+> service is rarely used.
+
+The design criteria of efficiency and robustness are conflicting.  Our
+problem is to design something with useful tradeoffs.  Probably a
+system offering a range of trade offs so that low risk documents can
+make use of more efficient but less secure services, etc.
+
+> M XOR s_1(K1) XOR S_2(k2) XOR ... XOR s_5(k5).
+> 
+> leaves no way to recover M unless all five s_i() can be
+> guessed.
+> 
+> Note that, in practice, this isn't likely to be useful
+> unless you've done the same kind of thing for symmetric key
+> distribution, random number generation, etc.  Otherwise,
+> your attacker in 2050 will bypass the symmetric encryption
+> entirely and factor your RSA modulus, or guess all the
+> entropy sources used for your PRNG, or whatever else you can
+> think of.
+
+Yes.  We need to build constructs for all areas.  A mega hash would be
+nice, with a large output size even in the face of birthday attack,
+preferably as secure as a collection of hash functions.
+
+That gives us something to wash our pseudo random number input entropy
+with, and then we can go on to combine public key systems.
+
+A problem with public key systems however is that there isn't a lot of
+choice -- basically all based on discrete log or factoring.  So
+perhaps RSA and DH combined in a construct with an optimistically
+proportioned key size would be near all that could be done.
+
+> The good news, though, is that active attacks (like chosen
+> input attacks) and many side-channel attacks (e.g., timing
+> attacks) turn out not to be possible if you are trying to
+> mount them after the encryption has been carried out.
+
+A variation of this is that if we can get widely deployed blanket
+encryption (IPSEC), we have largely won because we can mix all sorts
+of things below that envelope, and the NSA is reduced to archiving
+some large proportion of network traffic.  Our task is then to design
+protocols which aggresively rekey (earliest opportunity) and which
+maximise the number of nodes which the NSA would need to archive
+traffic between to recover traffic with future cryptanalysis.
+
+I suspect archiving world Network traffic would pose something of a
+operational and financial strain :-)
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

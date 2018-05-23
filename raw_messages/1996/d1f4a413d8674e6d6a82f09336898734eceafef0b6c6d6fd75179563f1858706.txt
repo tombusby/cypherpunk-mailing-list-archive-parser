@@ -1,0 +1,59 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 30 May 1996 09:36:10 +0800
+To: cypherpunks@toad.com
+Subject: Re: An alternative to remailer shutdowns
+Message-ID: <199605292009.NAA01448@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>Remailers on the attack points (first in chain, last in chain) simply MUST
+>>>be disposable as tissue.  They must be run as anonymously as possible,
+....
+>>	Why the first in chain? If the anti-traffic-analysis provisions are
+>>working properly, it should be impossible to prove that a given first remailer
+>>was the first remailer for any particular message. [....] entrapment 
+
+>Likewise, I don't see why the first address in the chain is vulnerable, as 
+>long as the message subsequently passes through at least one trustworthy 
+>remailer, and probably  a temporary output address.  
+
+There are two major problems, which have different impacts
+- protecting the users from corrupt remailers, and
+- protecting the remailers from spamming or entrapping users
+
+To protect users from corrupt remailers, you not only have to pass through
+at least one trustworthy remailer, you have to encrypt the message for
+each remailer in the chain so that any corrupt remailers can't read it
+at least until it's been through the trustworthy remailer.
+
+Protecting remailers from users depends on the threat.  If the government
+wanted to claim that all the remailers were part of a Conspiracy to
+Distribute Laundered Narcoterrorist Tax Evasion Paraphrenalia, 
+first-in-chain remailers become vulnerable,
+since the Postal Inspectors can send entrapment material to them
+and document where it comes out, though the path between first and egress
+can't always be documented, depending on how the remailers handle mail.
+On the other hand, if the Church of Spam tries to frame remailers
+by posting their own Secret Documents, they can only target the
+terminal remailers and as far back as they can subpoena,
+because they'd otherwise have to admit that they posted it.
+
+There's been some discussion of delivering outgoing mail by
+sending it through systems that don't add Received: headers;
+it may make sense for non-root-owned remailers to do this
+using telnet to port 25 instead of their local sendmail,
+to prevent local logging and prevent their sendmail from
+adding its own information.  Some sendmails try to detect forgery,
+but systems that aren't even configured to do Receive: probably don't.
+
+ Bill
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+# goodtimes signature virus innoculation
+
+
+
+
+
+

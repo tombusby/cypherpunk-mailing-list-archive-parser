@@ -1,0 +1,60 @@
+From: rarachel@prism.poly.edu (Arsen Ray Arachelian)
+Date: Sun, 10 Jul 94 18:01:08 PDT
+To: ifarqhar@laurel.ocs.mq.edu.au (Ian Farquhar)
+Subject: Re: Request: tamper-proofing executables
+In-Reply-To: <199407102309.AA17740@laurel.ocs.mq.edu.au>
+Message-ID: <9407110048.AA04494@prism.poly.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> The neatest trick I heard of was to use the 68000's single step mode
+> to decrypt each word of the program on the fly, run it, then write it back
+> reencrypted under another key, so that a decrypted copy never existed in 
+> memory, and what was there was a moving target.  Unfortunately, the decrypting 
+> software did sit in memory, and so you could eventually hack that right out,
+> and decode the core image.
+
+This is as useful as writing your own PCode interpreter and encrypting the
+PCode as it runs.  Whoop de doo. :-)  You can still get at the actual
+interpreter and copy it along with the key and along with the code it is
+executing it.  It's a simple thing.  Capture it in memory, save the memory
+image to the disk, write some code to reload it, and restart it again.
+
+There's no way to do this securely without hardware.  Optionally if you had
+smart drives, that is disk drives with their own CPU and RAM, you could
+make it very hard to defeat this by loading a program in the drive's CPU
+which would run in sync with the actual program and spit out consecutive
+encrypted sequences or issue challenge numbers and check them against the
+previous number.  This makes it hard because now you have to hack two
+devices.  Offers more protection than a single program doing this, but it
+is still not foolproof.
+
+The best thing to do is to build a custom CPU with custom RAM and seal it in
+some epoxy with self destructive materials in it.  This is excruciatingly
+cumbersome, and you have to deal with the problem of heat dissipation. (Since
+the CPU is a custom made one, you can't simulate it or break it.  Since you
+have no access to RAM, you can get RAM images, etc.)
+
+Another alternative is to use a hardware key generator dongle.  But if the
+hacker finds the algorithm and the key for this device, and it can be done
+by probing it, he can simulate it in software.  Fer instance, if the program
+accesses it via the operating system instead of direct I/O on the CPU, a
+routine can be written to emulate this box in software.  For protected mode
+CPU's with virtual ports, even doing direct I/O will fail....
+
+There's always a way around everything but the most excruciatingly painful
+schemes...
+
+At best you can devfeat mediocre hackers and viruses attempting to screw with
+your code...
+At worst you can have lots of headaches trying to implement an overly secure
+system when it isn't always called for.
+
+Unless your program is some super duper new tech thing and you don't want
+people to disassemble and reverse engineer it, don't bother with anything
+more than a simple CRC and a bit of encryption...
+
+
+
+

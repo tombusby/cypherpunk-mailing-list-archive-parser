@@ -1,0 +1,45 @@
+From: stewarts@ix.netcom.com
+Date: Mon, 8 Apr 1996 15:30:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: Spinners and compression functions
+Message-ID: <199604080336.UAA16840@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:52 PM 4/7/96 -0400, perry@piermont.com wrote:
+>JonWienke@aol.com writes:
+>> I am not saying that the output of the compression function has 8 bits of
+>> entropy per byte, but rather that it will have a more consistent entropy
+>> level per byte than the input to the function.
+>What makes you think that? There is little to no cause to expect this
+>at all. I can think of a number of instances, like image data streams,
+>where this idea is completely unfounded for most conventional
+>compression techniques.
+
+Obviously you need to mix raw data with a hash function if you really
+want to smear out the entropy so there's an even amount per output byte.
+But lossless compression can gain you a little bit, and seldom hurts
+(assuming it's faster than the hash), and it can help you be less 
+unrealistic about the amount of entropy you've really got.
+
+Data contains varying quantities of predictablity and unpredictability.
+Some of the predictability has simple enough structure that a basic
+compression function can find and exploit it to squash the data.
+Some of the predictability doesn't.  For what it's worth, compressing
+the data before using it for other things does leave you with somewhat
+more consistent entropy per byte for "typical" random input, because it
+eliminates the easy stuff.  Obviously there are cases where this doesn't
+help you much, like inputting a graphic representation of a column of
+Chinese characters, where you'd benefit a lot more by looking them up
+and outputting Unicode or some such and then compressing (and where the 
+first time you encounter a given character, the output of the compression
+function has to represent the picture, where the next time it sees the
+same set of input bits, it's able to abbreviate much more.)
+
+
+
+
+
+
+

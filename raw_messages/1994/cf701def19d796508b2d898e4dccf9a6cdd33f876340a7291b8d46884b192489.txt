@@ -1,0 +1,40 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Wed, 2 Feb 94 07:40:56 PST
+To: cypherpunks@toad.com
+Subject: New Remailer Up.
+In-Reply-To: <9402021500.AA11889@igi.psc.edu>
+Message-ID: <9402021536.AA17122@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> New remailer: qwerty@netcom.com.
+
+>  Is the sendmail [...] daemon
+>  set up so that it *doesn't* log to /usr/spool/mqueue/syslog [...] ?
+
+>  This is one of the problems (it seems to me) with using a remailer and
+>  *not* having root access.
+
+The remailers could implement their own outoing SMTP, to get rid of
+one end of the log, albeit the less important end.
+
+They could also run a SMTP server on a non-reserved TCP port, but that
+would require a few things:
+
+-- The remailer would have to be in the process table at all times and
+listening to some TCP port.  Right now the remailer is activated by
+incoming mail and appears only transiently in the process table.
+
+-- The remailer chain would have to know to use the alternate port
+when sending.  This should require new syntax for setting up source
+routes.
+
+It would, however, eliminate the standard mail logging.
+
+Eric
+
+
+
+

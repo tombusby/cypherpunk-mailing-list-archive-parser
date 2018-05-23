@@ -1,0 +1,53 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Mon, 25 Dec 1995 21:26:56 +0800
+To: cypherpunks@toad.com
+Subject: Only accepting e-mail from known parties
+In-Reply-To: <QQzvnv07234.199512242055@relay2.UU.NET>
+Message-ID: <901NgD5w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+owner-cypherpunks@toad.com writes:
+> Eric Murray wrote:
+>
+> | Where we're headed is mail filters with PGP imbedded (PGP 3 will
+> | make this much easier) that check incoming mail for a valid signature
+> | for certain PGP keyid/fingerprints and pass that mail along.
+> | Other mail that doesn't match gets tossed into a 'junk' folder
+> | or thrown away if you really don't want to talk to anyone that you
+> | don't already know.
+>
+> I agree with the assesment of where we may be going, but the
+> technology is available now.  (Marshall Rose uses it; if you want to
+> get mail into his private mailbox, offer him some $ via imbedded FV
+> authorizations in the mail, and it goes into his inbox.  If he thinks
+> it was worth his time, he doesn't charge you.)
+>
+> Anyway, the code is defeintely available now.  The back end is a
+> little kludgy, but it was needed for an auto ley retreival script.
+> This could easily be hacked to include a +pubring=$people line.  The
+> script gives you a keyid, which you can then use to filter on, ie:
+<shell script>
+
+This is much better than nothing. This would stop the e-mail being
+sent to everyone who's ever posted to Usenet. I see a couple of attacks:
+
+1. Alice only accepts signed e-mail from Bob. Carol receives a signed e-mail
+from Bob to Carol, sends 10,000 e-mails to Alice (via sendmail) with From: bob,
+same body+signature, possibly varying message-ids and subjects.
+
+2. Alice only accepts signed e-mail from Bob. Carol, a rogue sysadmin,
+intercepts an e-mail from Bob to Alice, sends 10,000 more copies of it to Alice
+(via sendmail) with From: bob, possibly varying message-ids and subjects.
+
+As I keep pointing out, pgp-signing the body is not enough.
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

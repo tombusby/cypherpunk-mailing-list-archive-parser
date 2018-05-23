@@ -1,0 +1,45 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Tue, 16 Jul 1996 18:23:19 +0800
+To: cypherpunks@toad.com
+Subject: Re: DES & IDEA built right into the Linux kernel...
+In-Reply-To: <m0ue5GK-000HE6C@hackvan.com>
+Message-ID: <4se8do$dlp@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <199607130507.WAA25103@myriad>,
+Anonymous <nobody@mockingbird.alias.net> wrote:
+>> Nicholas Leon <nicholas@binary9.net> has created tools that allow DES
+>> and IDEA encryption at the device level for the Linux kernel.  Some of
+>> the patches are in the 2.0.4 kernel, and the rest can be found at
+>>
+>>     http://www.binary9.net/nicholas/linuxkernel/patches/
+>
+>
+>Yep, you can mount encrypted files or partitions as filesystems. (sorta
+>like securedrive/securedevice for messydos.)  Nifty stuff...
+
+Except that last I checked (2.0.6) it was completely insecure.  The
+DES-encrypted filesystem ignored your password and always used a key of
+all 0's (which is a weak key in DES, to boot).  I've been touching it up
+to do DES and IDEA _right_ (CBC mode within each block, IV based on block
+number), and plan to put in some simple stego as well.
+
+   - Ian
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMeqk5EZRiTErSPb1AQEbdwQAl/ZyhK+ZczFnfUFm9wVNGAq9MBSGNmZc
+t1xS2G6urjit3IvHn0ZYSCzkwUj00Hun4FLdFkp0i45M2PWGSJMZtr/Mx7Xua9yr
+2uw1p3bN1iId8JrQOGuo1aCTm8rTUh30OW2cL+jPM+RBWgLGg9YcBUQzO7OLoqeM
+xpROxmPL8CI=
+=pezJ
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,57 @@
+From: daw@quito.CS.Berkeley.EDU (David A Wagner)
+Date: Fri, 19 Jan 96 14:17:37 PST
+To: cypherpunks@toad.com
+Subject: Re: Hack Lotus?
+Message-ID: <199601192214.RAA28470@bb.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <199601190610.RAA17232@sweeney.cs.monash.edu.au>,
+Jiri Baum <jirib@sweeney.cs.monash.edu.au> wrote:
+> > Hack Lotus?  Please do.
+> 
+> I have no idea how Lotus actually does this, but:
+> 
+> How about a salt determined by the forty bit part?
+> 
+> Ie if the key is s.g (s=secret, g=gaked), the BARF (="Big-brother Access
+> Required Field") could contain Encrypt(Hash(s).g,BigBrother).
+> 
+> The receiving end, knowing both s and g, could re-calculate the
+> BARF and only function when it's correct. Unless it's been hacked too,
+> in which case it could barf when the BARF is correct :-)
+
+Looks good to me -- I think that should work.
+
+I guess that goes to show my lack of creativity. :-)
+
+I was talking to Avi Rubin from Bellcore last night, and he speculated
+that maybe the 64 bit key was a fixed one, generated once at installation
+time and escrowed with the government then.
+
+With a fixed pre-escrowed key, the receiver wouldn't have to do any
+checking; and it would obviate the need for a LEEF/BARF/... field.
+On the other hand, it seems to me like one should be able to disable
+this fixed pre-escrowed key mechanism with a little binary patch.
+
+I guess we need hard technical details.
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBFAwUBMQAXySoZzwIn1bdtAQFQxgF/d72pj3qiRVIxCBPvhBEsLwWtTiO9tibv
+HEa8VbFTwMWoWY70XAMd8meFG5ktMRob
+=8JMW
+-----END PGP SIGNATURE-----
+
+
+
+

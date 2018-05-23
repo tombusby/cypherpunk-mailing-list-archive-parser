@@ -1,0 +1,39 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Thu, 15 Dec 94 13:16:08 PST
+To: cypherpunks@toad.com
+Subject: Re: Algebra
+In-Reply-To: <2B20CAE5>
+Message-ID: <199412152213.OAA07233@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   So, how is division defined in Fp?
+
+There's a wonderful little theorem of broad technical use which says
+(a, b, m, n are all integers, or more generally, elements of a
+Euclidean domain)
+
+   \forall a, b \in Z \exists m, n \in Z : a m + b n = gcd( a, b )
+
+What this says is the greatest common divisor of 'a' and 'b' is a
+linear combination of them.  The algorithm to find the gcd is the
+Euclidean algorithm; the algorithm to find the constants 'm' and 'n'
+is the extended Euclidean algorithm.
+
+To define multiplicative inverses in F_p, substitute 'p' for 'b' in
+the above equation.  The gcd of 'p' and any non-zero element of F_p is
+1.  (And we already knew you can't divide by zero.)  Now, reduce the
+equation modulo p; this turns elements of Z into elements of F_p and
+the second term of the addition goes to zero.  What you get is
+
+   \forall a \in F_p \exists m \in F_p : a m = 1 (mod p)
+
+That's the existence of multiplicative inverses in F_p.  Use the
+extended Euclidean algorithm to calculate them.
+
+Eric 
+
+
+
+

@@ -1,0 +1,61 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Thu, 24 Mar 94 22:41:33 PST
+To: jkreznar@ininx.com (John E. Kreznar)
+Subject: Re: Digital Cash
+In-Reply-To: <9403250506.AA02358@ininx>
+Message-ID: <UhYcaza00iUxMD4WwS@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Quite a bit of work has already been done on this concept.
+>> Basically one generates a very large sequence of machine
+>> instructions which computes the image of the output of an
+>> algorithm under a strong cipher from the image of the input under
+>> the cipher.  A controlled amount of redundant information is
+>> added to both the input and output.  This yields a piece of code
+>> so obtuse and complex that nothing may be gleaned about what
+>> algorithm it is executing by observing it run.  Figuring out what
+>> it actually is doing is a cryptanalytically hard problem.  Also,
+>> determining a way of modifying the code which does not break it
+>> is a similarly hard problem.
+> 
+>> Once encased in such a module, an algorithm may be distributed
+>> with no fear that it will be stolen.  This raises interesting
+>> poblems with software patents, since one can not tell from such a
+>> module whether it is performing a function in a way which
+>> infringes.
+> 
+>Fascinating!!  Almost unbelievable!
+> 
+>Can you provide references?
+
+This is not new.  It's been used for years by software companies in
+copy-protection schemes.  Ask anyone who's ever "cracked" software. 
+Copy-protection systems rely on the fact that someone can not easily
+find and remove the algorythm which impedes duplication.  There are
+three common ways of preventing this.  First, the code is encrypted in
+layers and modules.  Each module decrypts the next layer and rescrambles
+or erases the last.  This prevents the attacker from getting an overall
+view of the program, as it is never all accessable at once, but it can
+be viewed in peices as it executes.  Secondly, several layers of
+interpreted code can be used.  Each layer interprets the next.  In this
+way, no assembly language code ever exists in plaintext (except the
+first level interpreter).  Finally, the program checksums itself to
+prevent tampering.  These methods can never provide foolproof
+protection, but they can slow down attacks considerably.  Even the most
+determined attacks can be delayed for weeks or months.  But if they want
+it bad enough, they can probably reverse-engineer it - as has been said
+before, crypto is all economics.
+
+I've considered such possibilities for digital cash, but even if the
+algorithm could not be derived from the cryptographically protected
+software, it really doesn't solve the double-spending problem.  You can
+just copy the entire module, along with all the money, and spend it
+twice (on seperate victims, of course).
+And all those layers of encryption can make it unbearably slow.
+
+
+
+
+

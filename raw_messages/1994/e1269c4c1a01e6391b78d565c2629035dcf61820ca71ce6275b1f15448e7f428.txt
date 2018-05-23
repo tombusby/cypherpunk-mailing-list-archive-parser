@@ -1,0 +1,77 @@
+From: loki@nately.UCSD.EDU (Lance Cottrell)
+Date: Thu, 27 Jan 94 11:57:41 PST
+To: tcmay@netcom.com
+Subject: Re: Anonymous Anonymous ftp
+Message-ID: <9401271954.AA27799@nately.UCSD.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+:Jim Miller asks for an example:
+:
+:
+:> > - prepaid mailers, good for sending a packet to a
+:> > destination. With the final address nested insided a
+:> > series of encrypted packets, no mix along the way can
+:> > identify Bob without extensive collusion with other
+:> > mixes.
+:...
+:> I understand how you can do 2-way anonymous communication via message  
+:> pools and Penet-style systems, but I don't "get" prepaid mailers.  Could  
+:> you post an example showing how two people can converse anonymously via  
+:> prepaid mailers.
+:
+:I'll use Lisp-like notation to encapsulate the sending of a packet to
+:a remailer "Bob." If Alice wishes to send a packet to Bob, she creates
+:this packet:
+:
+:(Bob (more stuff))
+:
+:I'm assuming encryption, which several remailers support and which all
+:users and all remailers should be using.
+:
+:Bob gets this packet, decrypts with his private key and recovers the
+:"more stuff." He may discover "more stuff" contains some digital money
+:for his troubles, instructions on how much latency (number of
+:messages, for example) to use, and where to send the resulting packet.
+:All kinds of stuff can fit in here. But that's not the point.
+:
+:If Alice wanted to send a message to Zeke, through a bunch of
+:remailers, she might create this initial message:
+:
+:(Bob (Charles (Doris (Ed (........ (Zeke (final stuff))))....)))
+
+[Lots of stuff removed]
+
+:
+:Well, enough for now. There could be some fatal flaws, but this is the
+:direction I've been thinking about. Eric Messick and Hugh Daniel had
+:some ideas about "onions" about a year ago, but I never fully grokked
+:--Tim May
+:
+:
+:
+:-- 
+:..........................................................................
+:Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+
+
+This will not work if Yancy is not trustworthy. She could then send the
+message through a chain of compromised remailers, to create the prepaid
+mailer packet. This would also happen, though less harmfully, any time the
+chain hit a bad node. Letting the nodes choose the other nodes is fatal.
+----------------------------------------------------------
+Lance Cottrell	who does not speak for CASS/UCSD
+loki@nately.ucsd.edu
+PGP 2.3 key available by finger or server.
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+			--Nietzsche
+----------------------------------------------------------
+
+
+
+
+

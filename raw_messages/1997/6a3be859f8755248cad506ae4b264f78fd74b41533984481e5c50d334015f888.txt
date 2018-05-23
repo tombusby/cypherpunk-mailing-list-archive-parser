@@ -1,0 +1,93 @@
+From: Kent Crispin <kent@bywater.songbird.com>
+Date: Mon, 20 Oct 1997 15:19:31 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Is PGP still private?
+In-Reply-To: <19971018092636.45297@bywater.songbird.com>
+Message-ID: <19971020000916.31377@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Sun, Oct 19, 1997 at 07:22:37AM +1000, Andrew Bromage wrote:
+> G'day all.
+> 
+> Kent Crispin wrote:
+> 
+> > Your reencryption scheme fails because of the management of the short
+> > term encryption keys, among other things.  Here's another approach I
+> > will toss out, without thinking through:
+> > 
+> > How about formalizing superencryption, or tunneling? That is, treat
+> > CMR traffic as a transport medium for messages that are themselves
+> > already encrypted.  The "key" idea here is to allow layering of non
+> > CMR traffic over CMR traffic.  All the code for both is obviously
+> > already in PGP, with a little glue and perhaps some minor protocol
+> > mods...
+> 
+> If we start considering that, could I suggest making the system
+> _completely_ flexible?
+> 
+> The sort of things I'm thinking of include:  Allow any object to be
+> encrypted using conventional encryption (including conventional
+> encryption keys) or signed, allow any conventional encryption key to
+> be public-key encrypted or split, conjunction/disjunction of two
+> conventional keys, etc.
+> 
+> Disadvantages:
+> 
+> 	- Greatly complicates the decryption process.  In particular,
+> 	  decrypted streams must be fed back into PGP.
+
+My impression from a talk by ???, perhaps at the San Jose IETF, is
+that the new version of PGP is actually coded to facilitate this kind
+of interaction internally -- that is, it is designed around a general
+interface philosophy of connecting filter modules via a stream
+abstraction. 
+
+> 	- Difficult for an end-user to specify what combination of
+> 	  features they want.
+
+I think it would be a relatively straightforward, fun project to
+develop a simple scripting language that could specify this.  Not knowing 
+that much, I toss this out just to give the flavor of something that could 
+be in a .pgprc file:
+
+message-to:private_joe@bigco.com
+	encrypt(joes_private_private_stego_key)->
+	stegosaurous.gif->
+	encrypt(joes_bigco_cmr_key,bigco_cmr_key)
+	address-to:joe@bigco.com
+
+message-to:joe@bigco.com
+	encrypt(joes_bigco_cmr_key,bigco_cmr_key)
+	address-to:joe@bigco.com
+
+message-from:joe@bigco.com
+	decrypt(*)->encrypt(my_private_storage_key)
+
+> 	- This working group would be around for years arguing about
+> 	  details. :-)
+
+Definitely not for version 1 of the standard.
+
+> Advantages:
+> 
+> 	- Allows PGP to be used for lots of things that we haven't
+> 	  thought of yet.
+
+	- GAK would be impossible to enforce.
+
+> 	- File format could be considerably simplified, if we could
+> 	  scrap the old format.  (Unrealistic, but what the hell.)
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

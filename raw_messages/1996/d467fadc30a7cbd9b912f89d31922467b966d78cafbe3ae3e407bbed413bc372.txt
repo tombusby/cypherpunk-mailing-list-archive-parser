@@ -1,0 +1,47 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Thu, 18 Jul 1996 13:27:29 +0800
+To: perry@piermont.com
+Subject: Re: Sternlight on C'punks
+In-Reply-To: <199607161639.MAA00191@jekyll.piermont.com>
+Message-ID: <199607171622.LAA04536@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Perry E. Metzger wrote:
+> 
+> "Peter D. Junger" writes:
+> > How does one set up a kill-file for a mailing list?  I run a Linux box
+> > with sendmail and use the MH mail system.
+> > 
+> > My best guess is that I will have to install procmail, but would like
+> > your advice before going to a lot of labor.
+> 
+> You can use procmail. If you use MH, you can also use a combination of
+> "pick" and "rmm" to nuke a specified list of users before going
+> through your mail.
+> 
+
+Here's the procmailrc recipe that I use for cypherpunks: 
+
+:0
+* ^(Sender|From): owner-cypherpunks@toad.com
+{ 
+  :0
+  * ? fgrep -q -i -f $HOME/.procmail/killfile.cpunks
+  /dev/null
+
+  :0:
+  $CRYPTO
+}
+
+
+All you have to do add a new entry to your killfile is to add a new
+line to te file ~/.procmail/killfile.cpunks which is real easy.
+
+
+	- Igor.
+
+
+
+

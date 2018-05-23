@@ -1,0 +1,50 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Fri, 19 Apr 1996 15:07:33 +0800
+To: daw@cs.berkeley.edu (David Wagner)
+Subject: Re: why compression doesn't perfectly even out entropy
+In-Reply-To: <4l660q$167@joseph.cs.berkeley.edu>
+Message-ID: <199604182325.TAA08657@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+David Wagner writes:
+> Therefore, I suggest making a *copy* of the input noise stream,
+> running it through Jon Wienke's "this shouldn't happen" filter, and
+> feeding the result to some entropy estimator.  When the entropy
+> estimator says "I've got 1000 bits of entropy", I stop crunching.
+> 
+> This is conservative design, folks.  Using Wienke's filter in this manner
+> can't be any weaker than not using it at all. (agreed?)
+
+Unfortunately, I think his filter puts too high a bound on the
+entropy. Put it this way: I think he's only giving you an upper
+bound. Furthermore, he's using his technique because he's using
+spinners as RNGs, which I have a substantial fear of.
+
+However, you are correct that this mechanism is no worse than not
+using it at all. However, it doesn't substitute for doing a thorough
+systems analysis to try to figure out how much entropy there actually
+is in your source.
+
+Thus, to summarize, yes, I agree with your strict statement that using
+the filter this way is not weaker than not using it at all, but I'm
+not sure it is worthwhile in this case because it isn't sufficient.
+
+> Applying Wienke's filter to the random noise stream, to the input to
+> the hash function, or to the output to the hash function, is clearly
+> a bad idea.
+
+Agreed.
+
+> (The mathematician says "clearly", knowing full well that, unfortunately,
+> some small part of the audience probably doesn't get it... <sigh>)
+
+Sad but true.
+
+Perry
+
+
+
+

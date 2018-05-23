@@ -1,0 +1,80 @@
+From: wichita@cyberstation.net
+Date: Tue, 10 Dec 1996 23:31:45 -0800 (PST)
+To: "Igor Chudov @ home" <ichudov@algebra.com>
+Subject: Re: Another problem with IPG algorithm
+In-Reply-To: <199612011844.MAA03510@manifold.algebra.com>
+Message-ID: <Pine.BSI.3.95.961211010624.11832A-100000@citrine.cyberstation.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Sun, 1 Dec 1996, Igor Chudov @ home wrote:
+
+> Don and others,
+> 
+> At the heart of IPG algorithm there is a pseudo-random number generator
+> which generates values of A(JV). (see http://www.netprivacy.com/algo.html)
+> 
+>        DO
+>          JV=JV+1
+>          IF JV=53 THEN JV=0
+>          A(JV)=(A(JV)+B(JV)) MOD C(JV)
+>        UNTIL A(JV)<16384
+> 
+> Note that if B(JV) and C(JV) in a triplet (A(JV), B(JV), C(JV)) are not
+> mutually prime, they will generate very few numbers and not a whole set
+> 0-16383. For example, if C(JV) is 20000, and B(JV) is 10000, and initial
+> A is (for example) 57, the only two numbers that this triplet will
+> generate will be 57 and 10057.
+> 
+> This refutes Don Wood's claim that the distribution of results
+> approaches even. Even if only ONE triplet is such as I described (and it
+> is VERY likely to happen statistically), the distribution will be
+> skewed.
+> 
+> Don, what do you think about it?
+> 
+> igor
+> 
+Igor, 
+
+Also included in the more detailed explanation is the set of As, Bs, and
+Cs that are used. Either the B or a C is prime in all instances,
+I would agree with you if that was not the case. All 16384 numbers, 0
+through 16383, are always generated. In addition of course, the numbers
+between 16384 and each of the Cs are also generated but not used. 
+
+Thus each of the C(JV) values are operating at different speeds and
+produce a staccato, meaning in this case, something that is discontinious
+or disjointed. However, the sum of series approaches an even distribution
+in the almost precisely same manner as a true random number generator
+approaches an even distribution. Thus over short frames variance is great
+but over long frames, the frequency of occurrence tends to approach a
+perfectly even distribution.
+
+Also, keep in mind, that the values are never used directly - they are
+only used as a variable for a three dimensional table lookup, where all 
+three of the 4096 element tables are constantly changing depending upon
+the the sum of the A(JV) variables combined with the initial settings,
+which were initally determined determined by the user generated key, and 
+other related information.   
+
+Also, remember that the order and the actual As, Bs, and Cs used are also
+randomly arrived at by using the user defined key, 256 bytes or 8192
+bytes.
+
+There is a lot more revealed at the web site. If you have further
+interest, I would provide you, Igor, with source code for the 
+algorithm, subject to a binding NDA. I think you will be suprised if
+you examined it in detail.
+
+With kindest regards,
+
+Don Wood
+
+
+
+
+

@@ -1,0 +1,156 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Thu, 7 Dec 95 19:06:06 PST
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Java musings
+Message-ID: <199512080311.WAA02282@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Some musings on policies, threats and liabilities of Java, Livescript
+and other downloadable applets.
+
+I. Policies.
+
+	The recent Livescript problem was predictable.  Building an
+execution environment to safely handle all the myriad of tricks that
+programmers will throw at it is not a simple or easy task.  People
+will make mistakes in the design and execution of these environments.  
+
+	Right now, many people are chasing the idea of applets; its
+neat, sexy, and everyone wants in.  But, for many users, and many
+environments, certain capabilities may be inappropriate.
+
+	There has already been loud complaining in many forums about
+the lack of site configurable Certification authorities, lack of site
+control over Java features.  A site needs to be able to decide who to
+trust, and who should be able to make these decisions, in a manner
+that a user can not easily override.  The ease of configuration of
+trust parameters in Netscape is neat for personal use, but
+inappropriate for business.  When Java gets its ability to check
+signatures, expect complaints about lack of site configuration of
+trust hierarchies. (Yes, as opposed to web of trust.  As a bank, I
+want to be able to control what code can run with a very explicit
+hierarchy.)
+
+	All applets are not created equal.
+
+	All user requirements are not equal.
+
+	Applets are not created equal.  Some are created in house to
+do certain things, like watch the price of two stocks relative to one
+another.  If an applet is created in house, signed off on by the
+InfoSec people, then there's no reason (assuming strong integrity
+checking) to deny it access to local disk, arbitrary network access,
+etc.
+
+	However, for various reasons (notably compartmentalization,
+aka defense in depth), it is desirable to restrict disk (and possibly
+network) access to certain addresses.  Something akin to chroot(),
+tagging of packets outside the applications control to make firewall
+filtering easy, filtering of available addresses to send to (only talk
+on local subnet).  The ability to assign various levels of privilege
+to code that runs on a virtual machine will be essential.  The ability
+to limit these privileges must be reserved in some way to those with
+site security responsibilities.   The security people, in turn, will
+need the ability to delegate.
+
+	This can perhaps be provided based on a least trusted basis.
+Code starts out in a small, tight environment, with no access to
+anything other than the (protected) processor, and a promote()
+function which does authorization checking before granting new levels
+of privileges in certain areas.
+
+	Access to disk, access to local and remote network services,
+and the ability to pull the browser to a new URL are all privileges
+that should be orthogonally configurable, by site, by machine, or by
+applet.
+
+	All user requirements are not equal.
+
+	This should be obvious.  Not all users need Java or
+Livescript.  If a user is using Netscape to look at man pages, access
+to Java and livescript is not very important.  Access to unsigned Java
+applets may or may not meet the site security policy.  At home, I
+might happily look at them.  In the office, I might have a very
+different approach.
+
+	A bank teller might need access to applets developed by the
+bank for various things, but not need access to anything over the
+internet.  He would need to be able to access the local lan servers.
+
+	The need of users to get to different resources, and work
+under different levels of protection calls out for mandatory strong
+authentication in applets.  In other words, a better design might be
+only execute applets with some (verified) signature attached to them.
+
+	The language in which the applet was written is important.
+More important is the ability of users and management to set policies,
+and see those policies enforced by applications.  I could then set my
+browser only to run Livescripts signed by someone I know (or an agency
+that vets them for bugs), and only run Java with minimal trust in the
+absence of signatures.
+
+
+
+II.  Threats and liabilities
+
+
+	A malicious applet, running amok on a machine, with the same
+disk & network access as a user, can send off to the world anything it
+thinks interesting.  However, there are times when letting an applet
+at certain files, or giving it heavy network access, might be very
+useful.
+
+	I'll take as an example Anderson Consulting's demo
+BargainFinder (http://bf.cstar.ac.com/bf/).  BargainFinder is a way to
+search 9 music stores on the web for an album, with one form.  3 of
+the stores are blocking the searches. In addition, a cypherpunk might
+wonder if the searches and their origins are being logged.
+
+	Thats not very useful for those of us who look forward to
+perfect marketplace information for consumer goods.  Let me sketch
+BargainFinder2, as powered by Java.  Instead of going to Anderson for
+the page, you download BF to your local machine.  It does the
+searching, same as BF1 did, but with no blocking possible.  You find
+your CD at the best price.  Perhaps BF is rental-ware, perhaps its
+someone advertising their Java coding skills.
+
+	But its clear that this applet needs to be able to access the
+network freely.  Its also plain that it won't be written for 6
+platforms.  It might be written for Windows, but the Java market might
+be larger still, and thus more attractive.  (Not to mention that the
+network interface is mostly taken care of.  no Winsock version
+worries.)
+
+	Other applets, say a Ecash wallet manager that interfaces with
+Quicken, needs access to your local disk, and needs to be able to
+respond to incoming network queries from shops.
+
+	Granular control of the access that applets have thus seems to
+be needed.  Making Java 'secure' is not enough, because people will
+'turn off' all the security to make one applet work.
+
+	It might also be interesting to consider automatically
+updating software, that can replace itself from time to time, after
+verifying that a signature is correct.  Although, that does raise the
+value of stealing a key from some well known, trusted applet vendor.
+
+	To summarize, 'security' in the vauge sense that Java
+promises, while useful, needs granularity to allow it to fulfill its
+potential.
+
+	Comments are welcome.
+
+Adam
+
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+

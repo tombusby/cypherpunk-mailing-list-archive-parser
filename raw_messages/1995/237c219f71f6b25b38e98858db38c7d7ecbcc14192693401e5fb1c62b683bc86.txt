@@ -1,0 +1,67 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 10 Oct 95 11:28:55 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Certificate proposal
+Message-ID: <199510101828.LAA17871@ix2.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:04 AM 10/10/95 -0700, Hal wrote:
+>Still, there is a problem here: how did the bank know that it _should_
+>honor requests to withdraw money from bank account x if they are signed
+>with a certain key?  How did it determine that that is a valid key, if it
+>never had a secure channel to the person opening the account?  I think
+>the answer is clearly that it cannot, that it must have had a secure
+>channel.  Would a certificated key presented by Alice have been
+>sufficient to create such a channel, do you think, or would a face to
+>face meeting have been necessary?  (Or would an uncertificated key be
+>adequate?)
+
+I think you're probably right, though a one-way secure channel is enough.
+If Alice has a trusted copy of the Bank's key, she can open her account and 
+get her key certified by them without them having to trust her key (modulo 
+little details like government requirements that banks get positive 
+identification for their accountholders.)
+
+
+>What if you are accessing the bank via a MITM?  Consider this example:
+>Alice writes you a check, signed with a key (without her name) which
+>has a credential from the bank saying that it will back up the check.
+>But you need the bank's key to check the credential, so Alice gives it
+>to you, or you get it from a public cache.  Suppose the bank's key is
+>fake, and Alice is defrauding you.  How do you tell?  
+
+With online clearing, you'd be able to tell because Alice's check cleared
+and your bank (which we're assuming you've got a secure channel to)
+says you've got the money.  Or in the case of digicash, because the cash
+Alice's bank gave you was good.
+
+>Wouldn't a certificate on the bank's key be necessary, one which ties the
+bank's
+>name and reputation to the key?
+Maybe not, but it would sure help.
+
+>Or what if the bank really is and has always been behind a MITM?  You say
+>that it is more profitable for the bank not to abscond with your money.
+>What about the MITM?  He doesn't make any profits until he cheats.  
+
+Hmmm.  That one's interesting; he pays fakes everything for a while,
+including paying out money, and then pulls off the Big Con.
+
+>It seems to me that a lot of protocols assume the existence of secure
+>channels.  Yet the MITM attack shows that public key cryptography does
+>not in and of itself provide a secure channel.  This is a problem which
+>IMO should not be ignored simply because it is inconvenient.
+
+Agreed.
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

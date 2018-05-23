@@ -1,0 +1,41 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Wed, 27 Apr 94 02:38:04 PDT
+To: cypherpunks@toad.com
+Subject: Re: Clipper Key Exchange
+Message-ID: <01HBNPYJTZDE9S87TE@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+matsb@sos.sll.se (Mats Bergstrom) writes:
+Subj:   Clipper Session Key
+
+>How do two Clipper/Capstone/Skipjack/Tessera units agree on a session key 
+>without compromising it to the bad guys tapping the line? If not known 
+>outside of the NSA, what possible solutions are there?
+
+In the case of the MYK-78, the simple Clipper chip to be used in phones
+and similar devices, that's your problem. You have to do a Diffie-Hellman
+exchange or RSA or something externally. Or hire a courier. This will cause
+compatibility problems between different manufacturers' Clipper devices,
+unless they agree on a standard up front. Probably everyone will clone AT&T
+Clipper devices, since they are going to be the first to market. If the
+government buys a large batch, that will set the standard. Without at least
+a de-facto protocol standard, the system would be almost useless. There is
+also the problem of adding encryption to the V.x standards for fax, LAPM
+for modems, etc. Each of these devices will need some kind of key exchange.
+
+The Capstone and Tessera (same thing, different package) have the ability
+to do a modexp operation. From this you can internally do DH exchange or
+RSA. As I remember, the Capstone does up to 1024 bit modexp, comparable
+to PGP in security.
+
+Skipjack is just a symmetric cipher like DES, except it has an 80-bit key
+and has (according to the review team) all of DES's problems fixed.
+
+--- Mike
+
+
+
+
+

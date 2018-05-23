@@ -1,0 +1,63 @@
+From: collins@newton.apple.com (Scott Collins)
+Date: Wed, 11 Aug 93 09:56:59 PDT
+To: williacw@vuse.vanderbilt.edu (Charles Williams)
+Subject: Re: How long would it take?
+Message-ID: <9308111649.AA17888@newton.apple.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello,
+
+When you encrypt a message M with PGP, you are really doing several things:
+
+        1. Generating a random IDEA key K
+        2. Encrypting M with K yielding IDEA(K,M)
+        3. Encrypting K with the public key of the recipient, Rpub
+           yielding RSA(Rpub,K)
+           (note that if YOUR key is 1256 bits, but THEIR key is only 512 bits,
+           you only get 512 bits of 'security' because you are encrypting to
+           them, not to yourself)
+        4. Sending (essentially) the message {RSA(Rpub,K)+IDEA(K,M)}
+
+Someone who wants to read the message (e.g., the recipient or some
+interceptor) must either know Rpri (Rpub's corresponding private key) to
+extract K, or must be able to break RSA, or must know K a priori, or must
+be able to break IDEA.
+
+This is a lot of ways to get in.  Most of them prohibitive, except for the
+recipient who can be expected to know Rpri.
+
+  > Could the NSA reverse PGP encryption on a message that was encrypted with a
+  > 1264 bit key?
+
+Yes.  Although, I think it would be more likely through cryptanalysis of
+the IDEA cypher than of the RSA encrypted IDEA key.
+
+  > Do you think they could do this in a matter of hours?
+
+I don't think so.
+
+  > Why or why not
+
+Cracking RSA is presumed to be as hard as factoring one of the components
+of the key.  Although this has not been proven, I think it likely that no
+better attack is currently known.  I have no figures yet on the complexity
+of the IDEA cypher.  I do not know if it is susceptible to differential
+cryptanalysis.  To my knowledge, exhaustive search is the only attack. 
+With a random 128 bit key, search is prohibitive.
+
+Sorry I didn't include more numbers,
+
+Scott Collins         | "Few people realize what tremendous power there
+                      |  is in one of these things."     -- Willy Wonka
+......................|................................................
+BUSINESS.   voice:408.862.0540  fax:974.6094   collins@newton.apple.com
+Apple Computer, Inc.   1 Infinite Loop, MS 301-2C   Cupertino, CA 95014
+.......................................................................
+PERSONAL.   voice/fax:408.257.1746    1024/669687   catalyst@netcom.com
+
+
+
+
+

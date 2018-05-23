@@ -1,0 +1,39 @@
+From: mccoy@communities.com (Jim McCoy)
+Date: Wed, 7 Aug 1996 15:03:15 +0800
+To: Cerridwyn Llewyellyn <ceridwyn@wolfenet.com>
+Subject: Re:appropriate algorithm for application
+Message-ID: <v02140b00ae2db6e5a520@[205.162.51.35]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Cerridwyn Llewyellyn <ceridwyn@wolfenet.com> writes:
+> I need an algorithm/protocol that is capable of encrypting numerous
+> files with separate keys, but there also needs to be a master key
+> that will be able to decrypt all of them.  Is there such a system
+> that is relatively secure?  I'd prefer the system to be as secure
+> as possible, but in this application, security is secondary to
+> functionality.
+
+You can get the basic functionality you require by using a regular hybrid
+PKE system (pubkey encrypts symmetric session key) and encrypting the
+session key with the public key of a "master key" as well.  For example,
+assuming a user A and a master key C you just have the program A uses to
+encrypt files operate in a manner similar to that used by PGP and other
+public-key encryption systems [pubkeyA(sessionkey),IDEA(sessionkey,data)]
+except in addition to the pubkeyA(sessionkey) which encrypts the random
+key used to encrypt the actual data you add a masterpubkeyC(sessionkey)
+section to the beginning of the file as well.  The resulting data packet
+is [pubkeyA(sessionkey),masterpubkeyC(sessionkey),IDEA(sessionkey, data)]
+This system is as secure as the public-key system used for encryption and
+would actually be fairly easy to hack in to PGP, although the modified PGP
+messages which contain the master key information would not be usable by
+regular PGP.
+
+jim
+
+
+
+
+
+

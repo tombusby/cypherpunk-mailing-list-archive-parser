@@ -1,0 +1,49 @@
+From: rarachel@prism.poly.edu (Arsen Ray Arachelian)
+Date: Wed, 6 Jul 94 18:59:57 PDT
+To: rishab@dxm.ernet.in
+Subject: Re: Counting bits
+In-Reply-To: <gate.Pk12oc1w165w@dxm.ernet.in>
+Message-ID: <9407070147.AA11105@prism.poly.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Why bother when you can simply do an eight line function?
+
+int bitcount(char b)
+{
+register int retval=0;
+
+ if (a & 1) retval++;
+ if (a & 2) retval++;
+ if (a & 4) retval++;
+ if (a & 8) retval++;
+ if (a & 16) retval++;
+ if (a & 32) retval++;
+ if (a & 64) retval++;
+ if (a & 128) retval++; 
+
+return retval;
+}
+
+This function, (if you have a decent compiler) will be turned into about 32
+instructions at most.  IE:
+  MOV BL,00
+  MOV AL,value_of_a_wherever_that_may_be_in_the_stack
+  AND AL,01
+  JZ @+2_instructions
+  INC BL
+  AND AL,02
+  JZ @+2_instructions...
+  ad compiler nausea.
+
+Simple, no shifting, no adding, no dividing, and best of all, it's straight
+forward, and you don't have the possibility of sneaking in bugs.  Whereas
+the previous example is a one liner, and may be shorter, it will be far
+harder for humans to understand. :-)
+
+
+Just my two bits. ;^)
+
+
+

@@ -1,0 +1,31 @@
+From: "Rev. Mark Grant" <mark@unicorn.com>
+Date: Thu, 7 Dec 95 10:55:04 PST
+To: Mark Twain Ecash Support <support@marktwain.com>
+Subject: Re: Still more on the Digicash protocol
+Message-ID: <Pine.3.89.9512071804.A21520-0100000@unicorn.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 7 Dec 1995, Mark Twain Ecash Support wrote:
+
+> >Anyhow, the obvious solution is encryption.  Our new observation is
+> >that encrypting deposits & cancellations with the mint's public key
+> >is not enough to solve the problem.
+> [Argument in support of claim elided... I am not conviced.]
+
+I think he means you shouldn't use a stream cipher like RC4 that XORs the
+plaintext with the generated keystream, since if you know part of the
+plaintext, you can XOR those bytes with (the id you want) XOR (the id
+being sent) and change the encrypted data so that the payment goes into
+your account and not theirs. This is a tough, but potentially feasible
+attack if you use that kind of encryption scheme. 
+
+Is there anywhere that you could use a similar attack on SSL ?
+
+	Mark
+
+
+
+
+

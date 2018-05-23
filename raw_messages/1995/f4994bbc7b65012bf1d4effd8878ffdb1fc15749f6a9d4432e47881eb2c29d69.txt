@@ -1,0 +1,32 @@
+From: Thomas Grant Edwards <tedwards@src.umd.edu>
+Date: Thu, 24 Aug 95 15:53:09 PDT
+To: Tom Gillman <syshtg@gsusgi2.Gsu.EDU>
+Subject: Linux fix was Re: brloop not working
+In-Reply-To: <199508242146.RAA21529@gsusgi2.Gsu.EDU>
+Message-ID: <Pine.SUN.3.91.950824183000.22646I-100000@thrash.src.umd.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 24 Aug 1995, Tom Gillman wrote:
+
+> Use 'nice -20 brutessl -- -' instead. The '--' tells getopts() not to parse
+> anything else as arguments, then the next '-' will be interpreted correctly.
+
+I made the change, and while it still chokes when you call brutessl 
+without keys (a feature, right?), it DOES work when you get a valid keyspace.
+
+So Linux people might want to change the command in brloop if you are 
+getting the same problems I was:
+
+#:10: the actual command to do the work ....
+cmd="${cmd-$brclient -dklLt$type|(read a;nice -20 $brute$type -- - \$a)|(read a;
+
+[Huh, like, I wrote more code ;]
+
+-Thomas
+
+
+
+
+

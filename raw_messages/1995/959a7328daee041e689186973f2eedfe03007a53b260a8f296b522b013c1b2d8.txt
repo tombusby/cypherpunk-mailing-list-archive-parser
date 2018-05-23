@@ -1,0 +1,32 @@
+From: jps@monad.semcor.com (Jack P. Starrantino)
+Date: Fri, 15 Dec 1995 23:10:08 +0800
+To: cypherpunks@toad.com
+Subject: Re: Secured RM ? (source)
+In-Reply-To: <Pine.LNX.3.91.800121064335.1068A-100000@HellSpawn.gate.net>
+Message-ID: <9512151425.AA07871@monad.semcor.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I don't think this will work. When you
+
+> if ( (Pfp = fopen(Pfilename, "wb") ) == NULL)
+
+the file will be truncated. Subsequent writes could be anywhere on the
+platter; you're building a new file.
+
+I think you can work this way if you open the file for read/write
+access, although I'd be more inclined to take the file name into the
+directory and then walk the inodes.
+
+jps
+-- 
+Jack P. Starrantino     (215) 674-0200 (voice)
+SEMCOR, Inc.            (215) 443-0474 (fax)
+65 West Street Road     jps@semcor.com
+Suite C-100
+Warminster, PA 18974
+
+
+
+

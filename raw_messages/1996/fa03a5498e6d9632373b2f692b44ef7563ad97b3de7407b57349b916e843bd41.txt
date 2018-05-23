@@ -1,0 +1,75 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Fri, 11 Oct 1996 07:51:05 -0700 (PDT)
+To: raph@cs.berkeley.edu (Raph Levien)
+Subject: Re: pgp, edi, s/mime
+In-Reply-To: <325D21FD.75BFB75B@cs.berkeley.edu>
+Message-ID: <199610111552.KAA15601@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Raph Levien wrote:
+
+| But how can you be sure that _any_ software does what it's supposed to
+| do? As someone (I don't remember who) pointed out a few days ago,
+| Kerberos 4 was available in source form for a long time, and it had a
+| really weak PRNG.
+| 
+| How many people have really looked critically at the PGP 2.6.2 sources?
+| The key management code, in particular, is pretty bad. I didn't find any
+| actual bugs (I wasn't looking for them - I was just trying to understand
+| how it worked), but it didn't leave me with much confidence that it's
+| completely robust code.
+
+	I've been doing a lot of work recently for an organization
+that does a lot of code reviewing.  The technique, while very useful
+(we find security & reliability bugs at about one per 20-50 lines of
+code, which is dropping to closer to one per hundred as I distribute
+copies of code review guidelines I wrote. (available for comment at
+www.homeport.org/~adam/review.html)
+
+	However, reviewing superficially takes about an hour for
+500-1000 lines of commented code.  A deep review to find tricky
+problems can take much longer.  (I would expect that a review that
+moved at 600 lines/hour would have missed the xor bug in PGP's key
+generation code in 2.6.0)
+
+	We've found that a review team of fewer than 4 people is less
+effective at finding problems, and haven't had more than about 8 in a
+review, so I can't offer an upper bound.  Reviewing more than about
+2000 lines of code (2-3 hours) in a day burns me out.
+
+	SSH has 16 000 lines of code.  PGP has about 30k, not
+including RSAref.
+
+	Incidentally, if someone wants to contract to review ssh, I'd
+be interested in talking to you.
+
+
+| At least with products like Netscape, money is being spent on quality
+| assurance.
+
+	QA does not always assure security.  You need a team dedicated
+to security QA, although getting code thats been worked over for
+reliability is always a win.
+
+| You've raised a good question here. It's just that there are no easy
+| answers.
+
+Yep.  I figured I'd share my real world experience in getting secure
+code deployed.
+
+Adam
+
+-- 
+"Every year the Republicans campaign like Libertarians, and then go to
+Wasthington and spend like Democrats."
+
+Vote Harry Browne for President.  http://www.harrybrowne96.org
+
+
+
+
+
+
+

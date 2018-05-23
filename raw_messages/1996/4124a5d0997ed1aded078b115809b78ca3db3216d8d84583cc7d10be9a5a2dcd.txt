@@ -1,0 +1,84 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 8 Sep 1996 00:50:51 +0800
+To: loki@obscura.com
+Subject: forward secrecy in mixmaster
+Message-ID: <199609061703.SAA00170@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Since Peter Allen's discussion of mixmaster, I started doing something
+I'd been thinking of for a while, since noticing that it was on the
+mixmaster to-do list months ago (ie there is unfinished source to do
+this): direct socket connections and diffie-hellman key exchange for
+forward secrecy.
+
+I wrote the socket stuff yesterday evening, didn't take too long as
+socket programming is something I've done lots of.
+
+Now comes what do you actually send down the sockets.
+
+Question for Lance, and any others who were involved in mixmasters
+implementation: what did you have in mind as a way of negotiating the
+DH keys?
+
+I notice that mixmaster generates a DH key and stores it in file
+`DH.mix', but that this is not (as far as I can see from the source)
+included in the remailers public key block.
+
+(A couple of comments as an aside: I think that you should be able to
+have a much smaller generator without loss of security, this should
+reduce the overhead of a DH key exchange.  Using 3 even I think is
+safe, without any extra precautions on prime generation.  You can even
+go to 2, with a few precautions (PGPfone does this).  Comment #2 I
+think 1024 may be a bit small, I don't have any figures handy for
+relative security of DH key lengths, but PGPfone offers 4096 bit DH
+for instance.  Does rsaref have limits on prime lengths for DH, the
+same as it does for RSA?).
+
+There are lots of options for DH public key negotiation.
+
+First option is whether you have a common prime and generator for all
+remailers or not.  If you have a common prime, accusations of the
+prime being `cooked' (chosen to have a weakness) can be mitigated by
+using a deterministic generation method based on the hash of a known
+phrase (a Jefferson quote perhaps), or PI or whatever.
+
+A common modulus may offer a fatter target for attack (for some
+precomputation attacks), but with large enough keys this probably
+isn't that bad, as there aren't that many mixmasters anyway.
+
+With a common modulus there is DH key negotiation needed, just include
+it with the source.
+
+For different modulii for each remailer, there are more options:
+
+a) include the DH key signed by the RSA key in the remailers public key
+   (may break backwards compatibility with existing versions of
+   mixmaster)
+
+b) send the DH public key at the start of each session
+
+c) send the DH public key on request
+
+There is also a question of which key do you use, the sender remailers
+or the recipient remailers.
+
+Negotiating DH public keys during execution also opens the possibility
+for periodic re-keying.
+
+Thats the end of my thoughts on direct socket mixmaster.
+
+Next message is some thoughts on non-interactive forward secrecy
+protocols.
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

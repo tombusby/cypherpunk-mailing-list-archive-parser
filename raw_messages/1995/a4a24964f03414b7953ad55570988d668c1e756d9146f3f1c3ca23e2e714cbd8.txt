@@ -1,0 +1,70 @@
+From: "Peter Trei" <trei@process.com>
+Date: Tue, 19 Dec 1995 09:32:23 +0800
+To: cypherpunks@toad.com
+Subject: (Fwd) SECURITY ALERT: Password protection bug in Netscape 2.0b
+Message-ID: <9512190026.AA15461@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Haven't had time to test this myself.
+
+Peter Trei
+
+------- Forwarded Message Follows -------
+Date:          Mon, 18 Dec 95 17:18:28
+From:          <lstein@genome.wi.mit.edu>
+Subject:       SECURITY ALERT: Password protection bug in Netscape 2.0b3
+To:            www-security@ns2.rutgers.edu, jcarroll@redman.canada.dg.com
+Cc:            tara@linkage.cpmc.columbia.edu
+
+A potentially serious bug has just come to my attention concerning the
+handling of password-protected pages accessed via Netscape 2.0b3.
+Apparently when you type in the password to access a protected document
+Netscape stores the password in a local hidden file (in one of the .db
+files created in the .netscape directory on UNIX systems, and in the
+Netscape Preferences file on Macintoshes).  This password is then used for
+accessing the document during subsequent accesses.  The problem is that
+Netscape does not delete the stored password when the program quits.
+
+The problem has been reproduced on Unix and Macintosh platforms.  I haven't
+tried the Windows implementation yet, but I suspect the same problem
+exists.
+
+This leads to the following behavior:
+
+        1) Open up Netscape and access a password-protected document.
+        2) Quit Netscape
+        3) Start Netscape again and try to retrieve the document.  When the
+                password-entry dialog comes up, click "Cancel".
+        4) Try to access the document a second time.  Now Netscape lets you
+                in without asking for the password!
+
+On Unix systems, this means that if you go over to a associate's machine to
+show him a protected document, Netscape will record your typed in password
+for posterity.  Your associate now has full access to this page.
+
+The situation is particularly dangerous on PCs in a shared "computer lab"
+environment.  Everybody who uses Netscape unwittingly makes his passwords
+available to all other users.
+
+Please let me know if anyone finds out more about this problem.  I'm going
+to add it to the WWW security FAQ.
+
+Lincoln
+
+========================================================================
+Lincoln Stein, M.D.,Ph.D.                       lstein@genome.wi.mit.edu
+Director: Informatics Core
+MIT Genome Center                               (617) 252-1916
+Whitehead Institute for Biomedical Research     (617) 252-1902 FAX
+One Kendall Square
+Cambridge, MA 02139
+=================http://www-genome.wi.mit.edu/~lstein====================
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+From: qwerty-remailer@netcom.com
+Date: Fri, 11 Feb 94 11:10:38 PST
+To: cypherpunks@toad.com
+Subject: Bug in Magic Money minting found
+Message-ID: <199402111904.LAA05874@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here is code from near the end of mms_mint in s.c:
+
+free(pc);
+pgp_fix_mpi(&c->c);
+f=fifo_file_create(fp);
+fifo_put(MM_REGCOIN,f);
+fifo_aput(pc->coinid,16,f);
+
+pc is being freed but then used four lines later.  This is why the
+coinid field was being corrupted in the output coins.dat file.  The
+fix is to move the free to after the fifo_aput.
+
+
+
+

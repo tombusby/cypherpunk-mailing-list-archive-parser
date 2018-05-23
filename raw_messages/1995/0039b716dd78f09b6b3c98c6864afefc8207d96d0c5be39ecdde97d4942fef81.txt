@@ -1,0 +1,59 @@
+From: Nathan Loofbourrow <loofbour@cis.ohio-state.edu>
+Date: Tue, 17 Oct 95 11:21:02 PDT
+To: cypherpunks@toad.com
+Subject: DalSemi: Add-Only Memory for Storage of Digital Cash
+Message-ID: <199510171820.OAA24348@colon.cis.ohio-state.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A press release breezed through the list a while back about some
+"decoder rings" -- basically, a nonvolatile RAM chip embedded in a
+Jostens ring.
+
+On further inspection, it looks to be a superior product to the
+DataKey products I remember seeing about ten years ago, targeted at
+this same sort of niche. The part in question is much smaller -- it
+fits in a ring, after all, or on the usual sorts of key fobs and
+employee badges -- and establishing electrical contact to transceive
+data is trivial.
+
+Cypherpunks relevance? Twofold. One, the Touch MultiKey
+(ftp://ftp.dalsemi.com/pub/datasheets/1991.ps), which promises to hold
+three 384 bit blocks under 64-bit passwords. The device will transmit
+the stored data under the correct password, and "random bits" under
+all other passwords. No crypto here, though, just a simple on-chip
+comparison with a stored password. So I assume the determined opponent
+with physical access can extract the info; but better that than store
+your private key on a publically accessible machine, no?
+
+Secondly, an app note: "Use of Add-Only Memory for Secure Storage of
+Monetary Equivalent Data" (ftp://ftp.dalsemi.com/pub/datasheets/app84.ps).
+A creative idea based on the peculiar nature of the EPROMs* that are
+also available in this form factor. In particular, one bits may be
+burned to zeros, but not vice versa; so why not burn particular bits
+to indicate credits and debits?
+
+Knowing that this scheme depends on keeping an attacker from guessing
+which bits to burn, they use the unique serial number to uniquely
+permute the bits, so that an attacker is as likely to burn a "debit"
+bit as a "credit", and far likelier to burn out-of-sequence so that
+the monkey business is apparent to any vendor.
+
+And there's another item of note: each chip has a unique, etched,
+machine-readable serial number. What are the bets that Dallas
+Semiconductor can tell you who purchased that chip? Well, so much for
+an anonymous payment scheme based on *this* product.
+
+Still, if I had to choose a place to keep a secret key, I'd choose my
+knuckle over my key ring, let alone a floppy disk, PDA, or portable
+computer.
+
+nathan
+* Gee, back in my day EPROMs were Eraseable; these folks mean instead
+  to indicate an Electrically Programmable chip, which sounds like a
+  good old PROM to me. Ahhh, acronyms...
+
+
+
+

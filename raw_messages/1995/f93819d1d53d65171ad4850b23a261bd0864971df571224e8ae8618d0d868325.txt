@@ -1,0 +1,69 @@
+From: "James A. Donald" <jamesd@netcom.com>
+Date: Wed, 1 Feb 95 00:11:56 PST
+To: Eric Hughes <eric@remailer.net>
+Subject: Re: The security characteristics of crypto modules with secrets
+In-Reply-To: <199502010607.WAA04942@largo.remailer.net>
+Message-ID: <Pine.3.89.9501312316.A19818-0100000@netcom4>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Matt Blaze <mab@research.att.com>
+On Tue, 31 Jan 1995, Eric Hughes wrote:
+> Let's take as our model general purpose computers which can't store
+> secrets connected directly to crypto modules which can.  Furthermore,
+> let us assume that these general purpose computer are subject to
+> intrusion.  In other words, it's today's servers with attached crypto.
+> 
+> Now, the crypto module can't authenticate the machine it's plugged
+> into, because, by definition, that machine can't keep a secret.
+
+The model does not work, because that is not what we
+want to do.
+
+True:  Matt's proposal cannot authenticate a machine.  But
+one does not really want to authenticate a machine.  One
+wants to authenticate data, that one might choose
+to transmit from that machine.  For this purpose a 
+tamper resistant crypto module that can be connected 
+to a machine, but which is under user
+control, not under the control of the machine, is the
+only totally bullet proof solution.
+
+Of course expensive tamper proof crypto modules already exist:  A 
+Dos computer in a room with a key, running virtually no 
+network software and possessing almost no utilities, though
+doubtless what Matt had in mind was a PCI card that one
+could keep in ones wallet.
+
+> The prevalent use of modules further reduces the likelihood of initial
+> attacks based on spoofing.  Since active IP attacks require the
+> subversion of routers, and since router software is much more
+> difficult to subvert than general purpose servers, adding crypto
+> modules to routers would be a big win.
+
+This does not make sense:  The advantage of a tamper resistant module
+is that if somebody physically gets to the system, he still cannot
+get the key.  But if he physically gets to the router, he can
+make it do his will, even if he does not get the key.  So one
+might as well have the key in software in the router.
+
+If the router is hard to subvert, and the attacker cannot 
+physically get to it, then there is little need for a separate
+tamper resistant module.  Software will do fine.
+
+If the router can be got at, you are stuffed regardless, tamper
+resistant module or not.
+
+ ---------------------------------------------------------------------
+                                          |  
+We have the right to defend ourselves     |   http://www.catalog.com/jamesd/
+and our property, because of the kind     |  
+of animals that we are. True law          |   James A. Donald
+derives from this right, not from the     |  
+arbitrary power of the omnipotent state.  |   jamesd@netcom.com
+
+
+
+
+

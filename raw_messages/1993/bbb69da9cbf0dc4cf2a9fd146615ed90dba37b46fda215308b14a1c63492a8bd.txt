@@ -1,0 +1,41 @@
+From: Eric Fogleman <Eric.Fogleman@analog.com>
+Date: Thu, 25 Feb 93 09:48:11 PST
+To: cypherpunks@toad.com
+Subject: problem installing pgp on a sun4...
+Message-ID: <9302251745.AA26765@ack.adstest.analog.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Cypherpunks,
+
+I downloaded 'pgp' from soda.berkeley.edu and 'unproto' from
+win.tue.nl, ran the Makefile (make sun4cc) and got a binary that passes
+the test given in setup.doc.
+
+However, I got the following warnings:
+
+"crypto.c", line 1445: warning: constant 256 is out of range of
+unsigned char comparison 
+"crypto.c", line 1445: warning: result of comparison is always true
+
+(along with the same messages for line 2445.)
+
+Here are the relevant lines...  from pgp.h:
+		#define MAX_PATH        256
+
+from crypto.c:
+			unsigned char litfile[MAX_PATH];
+			...
+1445 -->                if (litfile[0] < MAX_PATH) 
+2445 -->                if (litfile[0] < MAX_PATH)
+
+I can see where this is a problem; 256 won't fit into eight bits.  What
+is the correct way to fix this.  Should MAX_PATH be set to something else?
+
+Thanks for your help,
+Eric Fogleman
+
+
+
+

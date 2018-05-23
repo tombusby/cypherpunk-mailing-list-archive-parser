@@ -1,0 +1,43 @@
+From: iagoldbe@csclub.uwaterloo.ca (Ian Goldberg)
+Date: Wed, 20 Sep 95 14:56:33 PDT
+To: cypherpunks@toad.com
+Subject: Re: netscape's response
+In-Reply-To: <199509200812.BAA17876@infinity.c2.org>
+Message-ID: <43q2l8$l10@calum.csclub.uwaterloo.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <9509200248.ZM206@tofuhut>, Jeff Weinstein <jsw@netscape.com> wrote:
+>On Sep 20,  1:12am, sameer wrote:
+>> 	Is UNIX really the most vulnerable? How many bits did the
+>> tickcount account for? Seems to me that guessing just time & tick
+>> would be easier than guessing time, pid and ppid if you are not logged
+>> into the machine in question. . .
+>
+>  This is really dependent on how long window has been running.  If you
+>boot windows and immediately start an ssl connection, then the number
+>will be pretty low, but if you don't make the first SSL connection until
+>later, it should get better.  I think an hour would get you around 16-bits,
+>but this is just a guestimate on my part.  If you leave your machine
+>running windows for days you will get close to 32bits.
+>
+But you don't have the usec at all, if I read your post correctly.
+
+Windoze uses the time in seconds (essentially 0 bits of randomness,
+maybe a couple, since Windoze machines don't set their clocks very well),
+and the tick count.
+
+In one hour, the tick counts counts to 3600*1000, or about 22 bits.
+Many hours given another bit or two.
+
+Thus, in total, given *no* information except the assumption that the
+clock is reasonably accurate, you get at *most* 25 bits.
+
+Since our code can do 21 bits in 1 minute, we'll need 16 minutes.
+
+   - Ian
+
+
+
+

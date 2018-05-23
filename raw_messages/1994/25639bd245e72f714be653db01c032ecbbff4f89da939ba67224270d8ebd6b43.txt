@@ -1,0 +1,67 @@
+From: rseymour@reed.edu (Robert Seymour)
+Date: Thu, 8 Dec 94 10:02:38 PST
+To: samman@CS.YALE.EDU (Ben)
+Subject: Fixing Flash/ANSI Bomb/Terminal Screwup
+In-Reply-To: <Pine.3.07.9412081154.E238-a100000@jaguar.zoo.cs.yale.edu>
+Message-ID: <m0rFnAL-0001Y9C@vishnu.reed.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In the world according to Ben:
+> > On Wed, 7 Dec 1994, Roy M. Silvernail wrote:
+> > > That person asks that I post instructions for recovering from so heinous
+> > > an attack.  All I can suggest is escaping to a shell and doing a 'clear'
+> > > (or, under MS-DOS, 'cls').
+
+> > I have found that some attacks that leave your screen doing strange 
+> > things can be recoverd from by ussing the talk command. This program, on 
+> > UNIX machines seems to reset alot of things that might have gone array 
+> > with your screen.
+
+> If you hit the control button with both mouse buttons at the same time in
+> twm(an X windows manager) there pops up a menu--choose the 'reset
+> terminal' option.
+
+Flash/ANSI Bomb/terminal codes or just general screwups can be quite a pain.
+Though the methods suggested above may work in some circumstances, they won't
+work all the time. One method I have found to be quick and highly effective
+is the following alias (shown from my bash rcfile, but you can easily
+translate to other shells):
+
+## This last one is a nifty little way to fix the terminal after being
+## flashed or otherwise messed up by some program.  If your terminal is
+## really screwed up, it may not be able to parse the return (^M) correctly.
+## If so, use linefeed (^J), then type "sanity", then type another linefeed.
+alias sanity='stty 500:5:96c:3b:0:3:1c:8:17:4:0:0:0:500:5:96c:8000003b:3:1c:8:17
+:4:0:0:0:ff:ff:ff:4:0:1a:11:13:0:0:1a:ff'
+
+(N.B.: make sure that is one line for the alias).  Unfortunately this does
+assume that your terminal is at least semi-clued (i.e. minimal vt100 features,
+but it should be able to get your back to a sane setup wherein you can re-
+source your own rcfiles or set the terminal paramters yourself.  There is
+also a script called unflash which will fix basic terminal codes attacks, 
+but it is less robust (it just echos {esc}c {esc}0 and clears the screen,
+which will end text properties but not neccesarily fix status lines and
+other problems).
+
+If you use it, let me know how this generalizes, its been quite stable in
+my experience.  The real tough one to deal with is xterm, which can have
+font properties set through escape codes, a well designed talk request,
+terminal write, or irc bomb can make it entirely unintelligible and very
+difficult to recover.  Get you admin to install a good fingerd/talkd
+and/or use mesg n to prevent access in the first place.  There are several
+around now which disallow terminal codes in the talk requesters id and
+check IPs, etc.
+
+|Robert
+
+-- 
+Robert Seymour					rseymour@reed.edu
+Reed College Artificial Life Project		NeXTmail, MIME, PGP accepted
+
+  WWW Pages  
+
+
+
+

@@ -1,0 +1,112 @@
+From: ph@netcom.com (Peter Hendrickson)
+Date: Tue, 19 Nov 1996 16:17:32 -0800 (PST)
+To: abostick@netcom.com (Alan Bostick)
+Subject: Re: Playing Cards - Caution!
+Message-ID: <v02140b01aeb7f62047d8@[192.0.2.1]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:57 AM 11/19/1996, Alan Bostick wrote:
+> Thirty-two bits of randomness in a space that is 225 bits wide leave
+> room for an awful lot of order.
+
+The maximum entropy after one riffle shuffle is actually about
+48 bits, assuming the deck was split in half.  That is, n! / k! (n-k)! =
+52! / 2 * 26! ~= 4.9592 * 10^14.  log_2 4.9592 * 10^14 = 48 bits.
+(Think of one half of the deck of k cards fitting into n possible
+holes.  The order of each half of the deck is guaranteed, so this
+can be thought of as the number of ways k balls fit into n holes.
+What about the other half of the deck?  They just fall into the
+empty holes.)
+
+Assume the split introduces about 4 more bits, and we get 52 bits
+of possible shuffles.  However, in practice a riffle shuffle may be
+more predictable.
+
+It is possible that 32 bits of entropy are introduced with each riffle
+shuffle, but it is not obviously true.  For a cryptographic application,
+the standard is higher than for almost any other.  So, if it is not
+clear that something is the case, probably it shouldn't be used.
+
+>> A model is presented which Diaconis believes is similar to how people
+>> shuffle in real life.  What is troubling from a cryptographic point of
+>> view is that there is little empirical evidence to back this up.  What
+>> is more, Diaconis mentions that there is some variation in shufflers.
+>> A neat shuffler will be less random.  (Side note: The Economist claims
+>> Diaconis can execute 8 perfect shuffles in less than a minute.  This
+>> means the deck is returned to its original order!)
+
+> Mathematics does not rely on empirical evidence. ;-)
+
+That's true, but the application of mathematics certainly does
+depend on empirical evidence.  I would be very surprised if Diaconis
+made a mistake with the math.  I think the math is what primarily
+interests him.  From his book I did not see a lot of evidence that
+a great deal of empirical research on card shuffling had been performed.
+Rather, a few mathematicians here and there appear to have tried out
+the model and decided that it more or less works.  For the standards
+we should apply, those of a cryptographic application, this is not
+good enough.
+
+>> The study of randomness in cards looks much harder to me now.  Also,
+>> flaws which may be exploitable for financial reasons when real money
+>> is on the table may have to be substantially more dramatic than the
+>> flaws required to exploit, for instance, an alleged one-time pad.
+
+> Do bear in mind that, unless you distill its entropy through hashing,
+> a randomly-ordered deck of cards is going to show a lot of seemingly
+> non-random properties if you try to use it as a one-time pad.  Most
+> obviously, because each card in the deck is dealt once and only once,
+> there must of necessity be correlations between cards dealt early in
+> the deck and cards dealt later.  (Card-counters at blackjack tables
+> make their money by exploiting these correlations.)
+
+I solved this problem in my original message on the subject.  You use
+the order of the cards to represent your message.  Then you use a
+fully shuffled deck to mix up the mapping of the cards to numbers.  If
+the deck is truly randomly ordered, the scheme I proposed is a true
+one time pad.  (If I made an error, I would like to hear about it!)
+
+Tangentially, I would be reluctant to rely on a one time pad whose
+key was produced by a hash function.  We assume that the hash function
+is cryptographically secure, but if we can assume that, we might as
+well assume that some cryptosystem is secure.  One time pads are supposed
+to avoid those types of assumptions.
+
+> The randomness of rolling dice is much more easy to interpret than that
+> of dealt cards.
+
+I agree completely.  In practice, you pretty much have to have a
+computer to make use of the original schemes I proposed.
+
+The literature on card shuffling is quite interesting.  A number of people
+over many years have worked on this.  It looks to me like there's lots
+more interesting work to be done.  Many readers of this list would
+probably find Diaconis's book interesting.
+
+There might even be a number of new attacks possible on card games.
+If 7 riffle shuffles does not, in fact, bring the deck to complete
+entropy it means that a number of combinations of cards are unlikely.
+Is the distribution of pokers hands perfectly even?  They may not
+be.  Solving this problem in the general case appears to be very
+hard.  But, some progress could be made by modeling real shuffling
+and looking for patterns in the relationships between the cards
+electronically.  Conceivably, poker hands are not as random as people
+believe.  While the cards you have in your hand may be random, their
+relationship to other cards may not.
+
+This is like a pseudo random number generator.  If you don't notice
+the pattern, you will believe you are looking at a random number
+stream, but in fact you are not.
+
+However, the entire subject is orthogonal to my goals right now.
+
+Peter Hendrickson
+ph@netcom.com
+
+
+
+
+
+

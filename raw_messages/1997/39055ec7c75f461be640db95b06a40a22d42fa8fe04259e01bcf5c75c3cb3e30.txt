@@ -1,0 +1,149 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Wed, 12 Feb 1997 18:55:34 -0800 (PST)
+To: ravage@EINSTEIN.ssz.com (Jim Choate)
+Subject: Re: subscribe
+In-Reply-To: <199702130252.UAA02738@einstein>
+Message-ID: <199702130248.UAA11775@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Jim Choate wrote:
+> 
+> 
+> Hi Igor,
+> 
+> > I will not impact me negatively. I do, however, suggest very strongly
+> > that hosts should be subscribed to each other thgrough another mechanism
+> > and not majordomo, in order to prevent mail loops, header rewriting and such.
+> 
+> Suggestions? What I had in mind was that any messages that get sent on
+> cpunks@ssz.com get sent over to algebra. One mechanism I would like to play
+> with is a 'linked list' of remailers. Remailer A sends only to B and
+> receives only from C...
+> 
+> 
+>                                A
+>                              ^   v
+>                              C < B
+
+> Then to stop loops B deletes all outgoing mail from B. Since email can be
+> forwarded from many sites the search must traverse the entire forward chain
+> killing the message if B appears as a source. I suspect a simple procmail sort
+> can accomplish this. My next step is to brush up on my procmail. I hope to
+> have something in a couple of days that will allow you to subscribe
+> cpunks@algebra to cpunks@ssz and both ends will be filtering.
+
+Here's how I do it (it is pretty close to your proposal): 
+
+1) I delete duplicate messages (by looking up the database of
+message-IDs) right away
+2) I bounce all incoming messages to several other list servers
+3) I pipe the article to majordomo for distribution.
+
+Note that majordomo changes headers and I wuold like to feed
+other servers with UNCHANGED articles.
+
+Here's the .procmailrc that takes care of this:
+
+(OTHER_HOSTS will be redefined to include, e.g., cypherpunks@ssz.com)
+
+# Please check if all the paths in PATH are reachable, remove the ones that
+# are not.
+#
+# NOTE: I use lockfiles extensively (and even excessively) because
+# I do not want to overburden the system. Since I am on a
+# PPP link that is not always on, sometimes large amounts of 
+# submissions come in simultaneously and that may impair
+# performance of the overall system. You do not REALLY need
+# to use these lockfiles otherwise.
+###################################################################
+
+PATH=/bin:/usr/bin:/usr/local/bin:$HOME/bin
+MAILDIR=$HOME/Mail	# You'd better make sure it exists
+DEFAULT=$MAILDIR/mbox
+# VERBOSE=ON
+LOGFILE=$MAILDIR/from
+LOCKFILE=$HOME/.lockmail
+
+OTHER_HOSTS="cypherpunks@zzzz.com"
+
+:0 c
+$MAILDIR/allmail
+
+############################################################ mailbombing
+############################################################ end mailbombing
+
+:0
+* ^TOcypherpunks
+* !^X-Loop:
+* !FROM_MAILER
+* !FROM_DAEMON
+{
+  #
+  # This recipe removes duplicates!
+  #
+  :0 Wh: msgid.lock
+  | formail -D 128000 msgid.cache
+
+  # send it to all other hosts
+  :0 c
+  !$OTHER_HOSTS
+
+  # add X-Loop:
+  :0 fhw
+  | formail -I "X-Loop: cypherpunks@algebra.com"
+
+  # send it to people
+  :0 c
+  | cypherpunks-send-subscribers
+
+  # Accounting, logging
+  :0
+  | cypherpunks-accounting
+}
+
+:0:
+* ^TOcypherpunks-request
+$DEFAULT
+
+# all the rest is trash
+:0
+$DEFAULT
+
+# thats where it should be
+#/dev/null
+
+> Another nice advantage of this architecture is that 'rings' of remailers can
+> be interconnected by simply sending output to more than one site. Might even
+> be a good stability rule, "Never have a remailer send to more than 1 machine
+> in its 'own' ring". I see no limit other than resources that would limit the
+> number of rings an individual remailer might be in.
+
+A very good point.
+
+> The address is 'cypherpunks@ssz.com' but as alluded to above. I would  like
+> to let it run 1 way for a day or so to get an idea of the stability of our
+> network link. You might consider creating a bogus username on your end.
+> Subscribe that user to the SSZ remailer and to your own mail list. Then use
+> procmail to filter all outgoing mail of that user since its incoming would
+> be from your list and its outgoing would go to mine, which then forwards
+> them to your list. We might want to call the bogus user 'gatekeeper'.
+
+Yes, we really should make darn sure that no loops are poissible
+before inviting people to subscribe to our lists.
+
+> If its agreeable lets get together on the cpunks-hosts list tomorrow and
+> discuss this a little more.
+> 
+> If you don't mind, please forward this to the cpunks@toad list with your
+> responces. I would like to expose it to a little criticism.
+> 
+
+
+
+	- Igor.
+
+
+
+

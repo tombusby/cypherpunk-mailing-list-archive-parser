@@ -1,0 +1,45 @@
+From: Steve Gibbons <steve@aztech.net>
+Date: Sun, 28 Jan 1996 18:58:53 +0800
+To: llurch@networking.stanford.edu
+Subject: Re: Possible Java hack.
+Message-ID: <0099CFE5.860A1B00.11@aztech.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Rich,
+
+[I've CCed this to cypherpunks, as well, I hope that you don't mind.]
+
+In Article: <Pine.ULT.3.91.960127010243.19154N-100000@Networking.Stanford.EDU>, Rich Graves <llurch@networking.stanford.edu> wrote:
+# On Sat, 27 Jan 1996, Stephen P. Gibbons wrote:
+
+# > If this is the case (and I don't have a source license at this point, or
+# > even a system that will run Java) there is the possiblility that a sytem
+# > with control of a web server and a DNS server could coerce a Java client
+# > into initiating TCP connections to clients other than the system that
+# > provided the applet (which should be a prohibited behavior, as I read the
+# > specs.)
+
+# If I understand you correctly, this is only true if neither your stack nor
+# your client caches DNS queries. One or the other almost always does, at 
+# least for a minute, no matter how low you set TTL. 
+
+Yes, a client that cache's DNS queries can get in the way somewhat.  I've
+already considered this, and the "devious applet" would take advantage of Java's
+capability to use multiple threads (one of which would sleep() for whatever
+period of time was necessary to invalidate the cache, and _then_ initiate the
+attack.)  Yes, there are are various other specific cases that need to be
+considered in order to make the attacking app (if it's even feasable) work all
+of (or a good percentage of) the time.
+
+It would be very easy to conceal the "devious" portion of the applet inside of
+trojan horse that ran for a length of time greater than the minimum TTL for DNS
+caching.
+
+--
+Steve@AZTech.Net
+
+
+
+

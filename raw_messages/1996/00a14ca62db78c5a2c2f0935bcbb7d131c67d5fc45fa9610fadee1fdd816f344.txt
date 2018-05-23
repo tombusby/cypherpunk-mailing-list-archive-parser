@@ -1,0 +1,84 @@
+From: jim bell <jimbell@pacifier.com>
+Date: Thu, 1 Feb 1996 22:27:27 +0800
+To: JR@ns.cnb.uam.es
+Subject: Re: Time codes for PCs (fromn German Banking)
+Message-ID: <m0thuEN-0008zjC@pacifier.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:42 PM 1/29/96 +0100, JR@ROCK.CNB.UAM.ES wrote:
+>From:	SMTP%"jimbell@pacifier.com" 27-JAN-1996 03:43:05.83
+>
+>>A peripheral I've long wanted to see, commonly available:  ACCURATE  time, 
+>>broadcast to the millisecond/microsecond/nanosecond, available from sources 
+>>as varied as TV VIR's, FM subcarriers, and other sources, available as an 
+>>easy input (via a peripheral card) to a computer.
+>>
+>	Yup! Do you think it is really possible? If I remember well
+>speed of light is 300.000 Km/s. That means that light takes around
+>1 ms. to cover 300 Km. If you use a satellite, antenna, whatever
+>to broadcast a timing signal, the accuracy will depend on when
+>do you receive it, and that in turn on your distance from the
+>source.
+
+<sigh!>  I am well aware of the facts you indicate, and many more of which
+you aren't even aware.  But one of the functions (in fact, the basic,
+intended one) of GPS is to locate, as precisely as possible, the exact
+location of the receiver.  Thus, time delays can be compensated to the
+accuracy of the location fix, at the very least.  If we assume 100 meters
+error, max, that's about 300 nsec error.  (GPS receivers AUTOMATICALLY
+compensate for such delays!)
+
+
+>>I have a 12-year-old Heathkit "Most Accurate Clock" that I assembled myself, 
+>>and had the foresight to install it with its computer  interface option. 
+>>(receives 5, 10, or 15 MHz signals broadcast from Boulder, Colorado, 
+>>containing "exact" time.) 
+>>
+>	Just remember that the best you can get would be microseconds if
+>you're in a 300 meter radius, or milliseconds on a 300 Km. And possibly
+>nanoseconds at 0.3 m.
+
+Well, this clock doesn't pretend to be better than about 5-10 milliseconds
+even in signal-locked condition.  However, there is a dipswitch on the
+bottom of the unit, settable in 500 mile increments, from Boulder, Colorado.
+500 miles corresponds to 3 milliseconds.  Clearly this was a good device
+when made, but has obviously been supplanted by at least a factor of 1000 by
+GPS.
+
+
+>	Then remains the cypherpunk part on all this: how can you
+>trust the *signal* your receptor receives? How do you know no one is
+>interferring it or sending an inaccurate or false one?
+
+Simple answer:  You don't.  More complicated answer:  Most such devices
+don't merely input the time signal, but they use an accurate internal clock
+to maintain good time when signals go away.  In fact, the best units
+"discipline" the local oscillator, either actually changing its frequency or
+at least following its errors over time.  The result is that sudden errors
+would be noticed.  A good TCXO is stable to well better than 1 ppm.
+
+
+>	And that on a broadcast system. A system owned by someone who
+>you may not trust (say a private TV channel, radio or satellite). So
+>you may want to have several sources, and to be able to verify that
+>the signals you receive all come from their respective sources.
+
+Well, since "everybody" in one locale can receive a particular (local) TV
+channel, one solution might be to compare time with respect to the beginning
+of a particular scan line..  You may not trust the signal, but you know its
+a signal that "everybody" receives.  There may be no other provision for
+adding time to it, but a relatively low accuracy crystal oscillator could
+identify particular frames, etc.
+
+
+>	Yum! a nice problem to think about. One factor is that you
+>wouldn't expect changes in public sources used by sensible systems
+>since those could not pass unnoticed and might raise big protests.
+>But you still have the MITM attack to consider...
+
+
+
+
+

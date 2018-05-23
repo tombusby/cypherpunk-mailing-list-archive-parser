@@ -1,0 +1,95 @@
+From: jerry@terminus.dell.com (Jeremy Porter)
+Date: Sat, 22 Jan 94 22:46:28 PST
+To: jim@toad.com
+Subject: Re: Remailers: The Next Generation
+In-Reply-To: <2hq9sv$cdq@uudell.us.dell.com>
+Message-ID: <9401230638.AA05002@terminus.us.dell.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <2hq9sv$cdq@uudell.us.dell.com> you write:
+>From: jim@bilbo.toad.com (Jim Miller)
+>Message-Id: <9401212232.AA06926@bilbo.suite.com>
+>Date: Fri, 21 Jan 94 16:32:13 -0600
+>To: cypherpunks@toad.com
+>Subject: Re: Remailers: The Next Generation
+>
+>Since the remailer system works better (harder to track messages) as  
+>message traffic increases, then perhaps the remailers should circulate  
+>bogus messages around the mix in order to sustain a minimum level of  
+>traffic.  As more real messages enter the system, the remailers would  
+>decrease the number of bogus messages they issue.
+>
+>How would a remailer tell the difference between a real message and a  
+>bogus message from another remailer?  It wouldn't, but that's ok.  All a  
+>given remailer cares about is the number of messages coming in versus the  
+>number messages that constitute a "good" level of traffic.  If a remailer  
+>isn't seeing enough traffic, it would issue some bogus messages that would  
+>pass through a random set of remailers and eventually come back to itself.
+
+Hm... actually what one could do is set up a remail/DC-Net combination,
+maybe this has already been suggested in a different form, but first
+you set up your anon-net, as a virtual ring topology between your remailing
+sites.  Alice wants to send an annonymous message to Bob, such that
+Bob can reply back without revealing Alice's email address.  First off,
+Alice public key encrypts a message to remailer site "Zeta".  This
+message contains an encrypted message block to remailer "Iota".  This
+message block contains a reply header to remailer "Epsilon".  Zeta receives
+a message encypted to it.  It decrypts the messages picks a new remailer,
+at some random distance (n/2 + R) hops away.  In this case remailer "Gamma".
+Zeta encrypts the message to "Gamma" and inserts it into the
+anon-net ring.  When Gamma receives the message, it takes it, decrypts it,
+puts the plain message(still encypted by Alice to "Iota") back in.  Iota
+gets the message, re-addresses it to yet another remailer chosen at random,
+"Delta".  Iota actually builds the final outgoing mail message and that
+is what is encrypted to "Delta".  Delta takes the message and mails it
+to Bob.  (Alice of course first encrypted the message with Bob's public
+key).  Bob can of course reply to the message by prepending the "Epsilon"
+message block to his reply, and using encrypting remailing to some remailer,
+"Sigma", Bob can reply to Alice's message, protecting Alice's identity
+in several different ways.
+	Because of the remailer ring using a random number of hops, i.e.
+the distance (N/2 + R, where R is between N/2 - 1 and 1), message
+latency is random.  Because each message is ecrypted to the upstream
+neighbor, direct monitoring is foiled.  By using a fixed size message,
+say ~100K, and each site padding any data to the fixed size and including
+that in the encrypted data sent to the upstream site, an outside
+agency can't monitor packet size to determine anything.  No even
+if a spy is in the net, say a remailer at "nsa.gov" any messages passing
+through are protected by the difficulty of the encryption.  The site
+will know which remailer sites on the ring are being sent to, but
+because the the random remailer step in the middle it can't even tell if
+the message is incoming or outgoing.  Two sites i.e. "fbi.gov" and nsa.gov,
+could work together, but still not getting useful information
+most of the time.  Thus, as long as the entrance port to the ring
+is not a spy no one knows you are sending anonymous mail.  And assuming
+the exit port is not a spy no one knows Bob is receiving aonymous mail.
+	Just by putting a few of these ring nodes in places like 
+Finland, or even on commerical backbone sites(Alternet, Sprintlink, etc)
+makes government monitoring more difficult(or even non government 
+monitoring).
+	I think this can actually be improved on by hiding the internal
+ring identities, but my  brain is not working as well as I would like
+and I can't find any detailed info on the "dining sterlight net".
+	Actually I think something like this might work well at the
+socket level to give a higher bandwidth to directly connected sites,
+using mail and mail agents to simulate a token ring network, is not
+the most efficient usage of bandwidth, particularly with things like
+message length restrictions.
+	I've been wanting to set up and play with remailer's but,
+my unix host doesn't want to allow |'s in .forward's or the sendmail
+aliases.  (I'm assuming this is a feature due to the sendmail bug from
+several months ago, I haven't had time to learn sendmail or ask
+our resident sendmail expert how to fix it).  
+
+
+-- 
+ Jeremy Porter  -----------------  Systems Enginneering ----
+ Dell Computer Corp. --- jerry@terminus.us.dell.com --------
+ ------------------------------------------------------------
+  Support your Second Amendment rights to encryption technology. 
+
+
+
+

@@ -1,0 +1,60 @@
+From: Marc Horowitz <marc@GZA.COM>
+Date: Fri, 21 May 93 14:56:50 PDT
+To: Stanton McCandlish <anton@hydra.unm.edu>
+Subject: Re: cypto + compression
+In-Reply-To: <9305212100.AA18233@hydra.unm.edu>
+Message-ID: <9305212156.AA03491@dun-dun-noodles.aktis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Any ideas?  What is wrong with this idea? (something must be, or it
+>> would've been done by now, I am guessing.)  I don't know the math, so
+>> I suspect I must've erred gravely somewhere.
+
+You have indeed erred gravely :-)
+
+One of the information theoretical concepts we are dealing with here
+is that of information density.  The whole reason compression works is
+that in most files, the information density is not "perfect"; that is,
+there is repeated information in the file.  This reflects what we see
+when we compress a file: the more which is repeated, the better
+compression is.  Graphics compress much better than executeables.
+
+Well, one of the reasons encryption works is because I can't tell from
+the encrypted text what kind of patterns exist.  Consider a
+letter-substitution cipher.  If I were to apply one to this message,
+you could probably decrypt it, because much of the structure is still
+there: common english words, letter frequencies, etc.  This makes
+letter-substitution a pretty poor cipher.  What about DES?  Well, this
+is interesting.  Without the key, the information density of an
+encrypted file looks the same as the density of a compressed file, or
+of noise.  This is why you could claim something was just noise, not
+encrypted data.  It's also why a common "good" PRNG is formed by
+feeding the numbers through some crypto algorithm, because it makes
+the numbers appear random.
+
+It is because encrypted data appears to have a very high information
+density that it will not compress much, if at all.  Compressing
+encrypted data, from some standpoints, is tatamount to actually
+decrypting it.
+
+Examples:
+
+A is a file with 1000 lines of 79 "A"'s followed by a newline.
+A.Z is the file, compressed.
+A.x is the file, encrypted (unix crypt, lame, I know)
+A.x.Z is the encrypted file, compressed wiht the -f option.
+
+-rw-rw-r--  1 marc        80000 May 21 17:26 A
+-rw-rw-r--  1 marc         1466 May 21 17:26 A.Z
+-rw-rw-r--  1 marc        80000 May 21 17:47 A.x
+-rw-rw-r--  1 marc       106577 May 21 17:47 A.x.Z
+
+Note that A.x doesn't compress at all.  In fact, it grows!
+
+		Marc
+
+
+
+

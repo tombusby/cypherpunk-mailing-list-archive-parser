@@ -1,0 +1,141 @@
+From: loki@obscura.com (Lance Cottrell)
+Date: Thu, 31 Aug 95 01:14:28 PDT
+To: cypherpunks@toad.com
+Subject: Re: Mixmaster Security Issues
+Message-ID: <ac6b18ea00021004679f@[137.110.24.250]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+At 6:17 PM 8/30/95, hroller Mixmaster wrote:
+>Apart from thwarting traffic analysis attacks, how does the security
+>of a Mixmaster Type II remailer packet compare to that of a
+>PGP-chained Type I message?
+>
+
+There is no way in which the security of Mixmaster messages is LESS than
+that of type I (cypherpunk) remailers. 
+
+>For example, is each remailer in the path limited to knowing only
+>the next remailer in the path?  Is there any way for a remailer
+>(except for the first and last in the chain) to know how many hops
+>have already occurred or how many remain?  Is there a session key
+>chosen via an RNG?  If so, how random is the RNG?  Is it seeded from
+>a pseudo-random source that's at least as secure as measuring
+>keystroke latencies, as PGP does?
+
+Yes, each remailer is limited to knowing the previous and next
+destinations. 
+
+A Mixmaster remailer can only tell if it is first, last, or somewhere in
+the middle. No information is leaked about position in the chain. There is
+a hard limit of 20 hops. 
+
+
+>Lance Cottrell's original "remailer essay" which proposed the Type
+>II concept envisioned, if I'm not mistaken, the use of PGP
+>technology to do the actual encryptions.  Now it seems that another,
+>seemingly proprietary, implementation of RSAREF was used, instead.
+>What was the reason for this change?
+
+Version 1.0 (which was released but not widely used or promoted) used
+PGPTools by Pr0duct Cypher. This is a library which provides hooks for most
+of the major PGP routines. The main problem with PGPTools is that I could
+not get it to compile on anything but a SUN. The other problem was that it
+was difficult to control the encryption so I could avoid any change in the
+size of information when it was encrypted. RSAREF is very portable, robust,
+supported, easy to work with, and was easy to use for fine control of the
+encryption process. RSAREF is also much less of a black box to me. I can
+understand what it is doing in detail. 
+
+>
+>Would any security be lost if Type I and II technology were combined
+>and a PGP-chained Type I packet were initially sent via Mixmaster?
+>This would would seem to provide the necessary protection against
+>traffic analysis while bypassing any *POSSIBLE* hidden weaknesses in
+>Mixmaster.  IOW, if the outer Mixmaster "envelope" were "steamed
+>open", perhasps based on some hidden weakness in Mixmaster, the
+>inner, nested PGP envelope(s) would remain intact.
+>
+
+Because of the message size limitations there are some advantages to
+sending the mixmaster chain through some type 1 remailers first, rather
+than sending a type 1 message in a Mixmaster packet.
+
+>BTW, what volume of message traffic is the Mixmaster network of
+>remailers currently handling?  Is much cover traffic necessary to
+>minimize delays while providing enough reordering to thwart traffic
+>analysis?  (IOW, so a remailer with a reordering pool size of five
+>messages, and averaging one REAL message a day, wouldn't have to
+>keep a message for an average of five days before sending it on its
+>next hop, as a worst-case scenario).
+>
+
+It is very difficult to know what fraction of the traffic I see is cover. I
+generate some cover traffic my self, and I know some others do as well.
+Right now a reordering pool of 5 messages results in a latency of about 30
+min. Mixmaster is no longer a small fraction of the remailer market. A
+majority of all public remailers support Mixmaster. 
+
+>Is my math correct in surmising that chaining a message through five
+>remailers, each with a reordering pool of five messages, could mean
+>that the message eventually leaves the chain as one of 5^5 (3125)
+>possible messages?  (My math is a bit weak, so please feel free to
+>correct my methodology, if necessary.)  If so, does that work in
+>reverse?  Could a given output message that finally surfaced in the
+>clear be narrowed down to one of 3125 Mixmaster input messages
+>through traffic analysis?  Or would the fact that the attacker
+>didn't know the exact number of hops utilized significantly increase
+>the odds against identifying the sender?  What effect, if any, would
+>increasing the number of available remailers have on traffic
+>analysis?
+
+This is not quite correct, at each hop your message could have gone to any
+remailer at all. There are now 16 Mixmaster remailers in operation. If you
+have two good remailers in your chain (not run by the enemy), then a given
+message into the system is probably one of the messages that emerges
+between 10 Min and several hours later (with some complex probability
+distribution over that time). Note that because of the way the reordering
+is done, messages could stay in the pool forever, but this is exponentially
+less likely with time.
+
+It turns out that this is good security for one message, but is much less
+secure if you continue to communicate with the same person for some time.
+Then the attacker can look for correlations between your sending a message,
+and everyone who receives them. After several messages in one month, you
+will stand out, unless you send cover messages regularly, so you correlate
+with everyone all the time (destroying any information about who you
+actually correspond with). 
+
+        -Lance
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMEVuSvPzr81BVjMVAQGDOAf/RnB3COZyT54zaPZea3dg3DvDRVWDXdTw
++vSlTdOO7Znu2EGy2hqr6hbXGFO6ExsR4ZbC/3q8WeBmATtFIkiFYbTGYR1E/plC
+ujN6G33eCPJayFDQY3D9ETx5jXd0fYJl4O560zRrxWoK8bdD1E2RWeEKCt8ck3mm
+B0apFL8M9Z5RuSmL4uke7/R3m8vXH2Iq3V28VUMSSIYyFb44ZDwjjaC35Yl91NZv
+145QWv7DdyiZIr/nFgyIh+5jifuvynNNJVbIGWSH5WUevpmPTvCbwJSNnsXI78OO
+uvFgQfupk1tMKbdRRHUofVoDCW1e5LuYieQwk7It2rW9wo63Bx1LUA==
+=Hyma
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------
+Lance Cottrell   loki@obscura.com
+PGP 2.6 key available by finger or server.
+Mixmaster, the next generation remailer, is now available!
+http://obscura.com/~loki/Welcome.html or FTP to obscura.com
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+----------------------------------------------------------
+
+
+
+
+
+

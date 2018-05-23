@@ -1,0 +1,288 @@
+From: usura@vox.xs4all.nl (Alex de Joode)
+Date: Sun, 18 Sep 94 03:31:50 PDT
+To: cypherpunks@toad.com
+Subject: Chaing Remailers (instructions) [long]
+Message-ID: <c3Husc2w165w@vox.xs4all.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Note-1: [RRT- stands for Request-Remailing-To:, most remailers also
+         accept Anon-To: ]
+Note-2: [You is in this doc me@mysite.home, 
+         substitute that adress for your own if you 
+         want to receive the test message yourself]
+
+
+First you should test only one remailer:
+
+you > remailer 1 >> RRT- you
+
+*************************************************
+This is what you send:
+
+-->
+
+> From: me@mysite.home 
+> To: hal@alumni.caltech.edu
+>    
+> ::
+> Request-Remailing-To: me@mysite.home
+>    
+> Test of remailer at alumni.caltech.edu
+
+*************************************************
+
+This is what you receive from alumni.caltech.edu:
+
+-->
+
+> From: nobody@alumni.caltech.edu
+> To: me@mysite.home
+>        
+> Test of remailer at alumni.caltech.edu
+
+*************************************************
+
+If this is succesful you add another remailer:
+
+you > remailer 1 >> RRT- remailer 2 >>> RRT- you
+
+
+This is what you send:
+
+-->
+
+> From: me@mysite.home
+> To: hal@alumni.caltech.edu
+>    
+> ::
+> Request-Remailing-To: usura@xs4all.nl
+>     
+> ::
+> Request-Remailing-To: me@mysite.home
+>    
+> Test of remailer at alumni.caltech.edu and RRT xs4all.nl
+
+*************************************************
+
+        Remailer usura@xs4all.nl will receive this message from
+        hal@alumni.caltech.edu
+
+-->    
+
+> From: nobody@alumni.caltech.edu
+> To: usura@xs4all.nl
+>         
+> ::
+> Request-Remailing-To: me@mysite.home
+>         
+> Test of remailer at alumni.caltech.edu and RRT xs4all.nl
+
+*************************************************
+
+    Because the message has the header pasting tokens [::] 
+    the remailer at xs4all.nl knows where to send it to.
+    
+        You will receive this message from xs4all.nl
+-->        
+
+> From: nobody@vox.xs4all.nl
+> To: me@mysite.org
+>         
+> Test of remailer at alumni.caltech.edu and RRT xs4all.nl
+
+*************************************************
+
+You can keep adding remailers this way, everytime you receive
+a test message back you add another remailer: if you stop receiving
+test messages, the last remailer added is most likely "down". You can
+check that by using that remailer directly.
+
+*************************************************
+
+The above is simple unencrypted remailing. If you want to have an
+encrypted chained remailing, you first have to "design" the chain.
+
+    0] from your PC send to alumni.caltech.edu
+    1] at alumni.caltech.edu RRT jpunix.com
+    2] at jpunix.com RRT vox.hacktic.nl
+    3] at vox.hacktic.nl RRT me@mysite.home
+    
+
+{Stage 3:} This is actually the first message you make. 
+                             
+-->
+
+> ::
+> Request-Remailing-To: me@mysite.home
+>     
+> Test of PGP'ed remailing trough caltech, jpunix and vox.
+
+*************************************************
+
+The above is encrypted with the PGPpubKEY of vox.hacktic.nl and will
+result in this:
+
+> -----BEGIN PGP MESSAGE-----
+> Version: 2.6 for VoX Labz.
+> 
+> hIwCWd90FI1WkT0BA/9I6ILVhl5ZpsgKgHye+ng9CokwzdW1pMgcd0ecigppAODe
+> 53LlyVw/hl1ERYIzWW9W4vnuh7sLgu9XjxB515FtT5VSyZLZrhKIF7XtACga2On+
+> 1NmsecLTrgXYcc4k0Y+l66Hs06z92yhFvjXruDBS2Pame0VDtgZo+4aPntioDaYA
+> AABJsVIWRaJkCib+uek9Pr6GqFP7lwaMqq8XFnFxY42h3Wn3c5DikrzmwKGK5xVs
+> hmiZnEhJgXvR7jS2cNNOk/geG4SnUqvMTzpq6w==
+> =b0bT
+> -----END PGP MESSAGE-----
+
+*************************************************    
+    
+Then you than proceed to the 2nd stage the message wich has to leave
+jpunix.com, so remail@vox.hacktic.nl knows what to do [decrypt it] is:
+
+-->
+
+> ::
+> Encrypted: PGP
+>
+> -----BEGIN PGP MESSAGE-----
+> Version: 2.6 for VoX Labz.
+> 
+> hIwCWd90FI1WkT0BA/9I6ILVhl5ZpsgKgHye+ng9CokwzdW1pMgcd0ecigppAODe
+> 53LlyVw/hl1ERYIzWW9W4vnuh7sLgu9XjxB515FtT5VSyZLZrhKIF7XtACga2On+
+> 1NmsecLTrgXYcc4k0Y+l66Hs06z92yhFvjXruDBS2Pame0VDtgZo+4aPntioDaYA
+> AABJsVIWRaJkCib+uek9Pr6GqFP7lwaMqq8XFnFxY42h3Wn3c5DikrzmwKGK5xVs
+> hmiZnEhJgXvR7jS2cNNOk/geG4SnUqvMTzpq6w==
+> =b0bT
+> -----END PGP MESSAGE-----
+
+*************************************************
+
+{Stage 2:}
+
+But jpunix.com has to know where to send it to, so the 2nd stage msg is:
+
+-->
+
+> ::
+> Request-Remailing-To: remail@vox.hacktic.nl
+> 
+> ::
+> Encrypted: PGP
+> 
+> -----BEGIN PGP MESSAGE-----
+> Version: 2.6 for VoX Labz.
+> 
+> hIwCWd90FI1WkT0BA/9I6ILVhl5ZpsgKgHye+ng9CokwzdW1pMgcd0ecigppAODe
+> 53LlyVw/hl1ERYIzWW9W4vnuh7sLgu9XjxB515FtT5VSyZLZrhKIF7XtACga2On+
+> 1NmsecLTrgXYcc4k0Y+l66Hs06z92yhFvjXruDBS2Pame0VDtgZo+4aPntioDaYA
+> AABJsVIWRaJkCib+uek9Pr6GqFP7lwaMqq8XFnFxY42h3Wn3c5DikrzmwKGK5xVs
+> hmiZnEhJgXvR7jS2cNNOk/geG4SnUqvMTzpq6w==
+> =b0bT
+> -----END PGP MESSAGE-----
+
+*************************************************
+    
+The above is then encrypted with the PGPpubKEY of jpunix.com
+*************************************************
+
+{Stage 1:}
+
+This new encrypted message gets the headers for caltech to remail:
+
+-->
+
+> ::
+> Request-Remailing-To: remail@jpunix.com
+> 
+> ::
+> Encrypted: PGP
+> 
+> -----BEGIN PGP MESSAGE-----
+> 
+> and the PGP encrypted message from {stage 2}
+> 
+> -----END PGP MESSAGE-----
+
+*************************************************
+
+{Stage 0:} the message you send to alumni.caltech.edu
+
+is the encrypted message [with the PGPpubKEY of alumni.caltech.edu] of
+stage 1 plus a Encrypted: PGP header.
+
+-->
+
+> To: hal@alumni.caltech.edu
+> 
+> ::
+> Encrypted: PGP
+> 
+> -----BEGIN PGP MESSAGE-----
+> 
+> and the PGP encrypted message from {stage 1}
+> 
+> -----END PGP MESSAGE-----
+
+*********************************************************************
+
+This you send from your PC to hal@alumni.caltech.edu :
+
+->
+> ::
+> Encrypted: PGP
+>
+> -----BEGIN PGP MESSAGE-----  [with alumni.caltech.edu's PUBkey]
+> Version: 2.6.1
+> ::
+> Request-Remailing-To: remail@jpunix.com
+> 
+> ::
+> Encrypted: PGP
+>
+>     -----BEGIN PGP MESSAGE-----   [with jpunix.com's PUBkey]
+>     Version: 2.6.1
+>     ::
+>     Request-Remailing-To: remail@vox.hacktic.nl
+>
+>     ::
+>     Encrypted: PGP
+>
+>         -----BEGIN PGP MESSAGE-----   [with vox.hacktic.nl's PUBkey]
+>         Version: 2.6.1
+>         ::
+>         Request-Remailing-To: me@mysite.home
+>
+>         Hi mom I'm home.
+>         ---------------------------------
+>         -----END PGP MESSAGE-----
+>     -----END PGP MESSAGE-----
+> -----END PGP MESSAGE-----
+<-
+  ^   ^   ^
+  |   |   |
+  |   |   -> the inner envelope: you close this first
+  |   |
+  |   -> the second envelope: you close this second
+  |
+  -> the outer envelope: this one you close last
+  
+--
+If you finger remailer.help.all@chaos.bsu.edu you will
+receive a list of active remailers and their peculiarities.
+
+If you finger remailer-list@chaos.bsu.edu and/or
+              remailer-list@kiwi.cs.berkeley.edu you will
+              receive a list of uptime statistics. 
+
+Hope this helps.
+
+Happy Remailing ...
+--
+Exit! Stage Left.
+Alex de Joode                                 <usura@vox.xs4all.nl>
+
+
+
+

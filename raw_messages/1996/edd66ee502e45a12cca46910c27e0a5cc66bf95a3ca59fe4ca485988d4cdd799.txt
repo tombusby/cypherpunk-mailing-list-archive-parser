@@ -1,0 +1,43 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Wed, 2 Oct 1996 16:35:28 +0800
+To: roger@coelacanth.com (Roger Williams)
+Subject: Re: Encrypted lists and ease of use
+In-Reply-To: <rogerg23zb1op.fsf@sturgeon.coelacanth.com>
+Message-ID: <199610012300.SAA00281@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+I wrote a perl script for such encrypted list.
+
+It works the following way: suppose the list address is
+somelist@someplace.com. The list owner generates a pgp key
+with user name equal to "somelist@someplace.com". The public key gets
+sent to all list participants.
+
+The members, in turn, submit their public keys to the maintainer.
+He lists their email addresses in the "subscribers" file. 
+
+The perl script gets invoked from procmail. It decodes the incoming
+message.  If an incoming message is not encrypted or cannot be decrypted,
+the list processor returns it to the sender (this quickly teaches people 
+to do encrypt their messages).
+
+The script then encodes the message for each participant and sends it to
+the recipients. 
+
+What you need to run it: 
+
+	- Perl 5
+	- Perl 5 PGP module (it is quite crappy because it does not
+          allow passphrases containing several words)
+	- PGP
+	- premail
+
+have fun
+
+	- Igor.
+
+
+
+

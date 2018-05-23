@@ -1,0 +1,55 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 3 Mar 1996 06:12:35 +0800
+To: "A. Padgett Peterson P.E. Information Security" <PADGETT@hobbes.orl.mmc.com>
+Subject: Re: Problems with certificates.
+Message-ID: <199603022121.NAA10418@ix8.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:35 AM 3/1/96 -0500, "A. Padgett Peterson P.E. Information Security"
+<PADGETT@hobbes.orl.mmc.com> wrote:
+>Today, each person generates their own PGP key. While it is unlikely that
+>any two will match, it is likely that at some point some two will match
+>(see matching birthdays in a bar - number is less than you would think).
+
+PGP KeyIDs are 8 hexes long (formerly 6), and there have been some natural
+collisions and it's easy to manufacture them.  On the other hand,
+the MD5 hash used for key fingerprints is 128 bits long, and
+cryptographically strong.
+So birthday-problem collisions occur when you have ~ 2**64 keys around,
+which is not a problem, and you can't generate collisions on purpose either.
+A 64-bit hash would be more interesting; you get collisions if you have
+around 2**32 keys, which could actually happen.
+
+>Next rage might well be "vanity" PGP keys. While at the moment it is not known
+>how to create a specific match key to a sequence, if you generate enough
+>keys, there will be some interesting sequences found. Possibly some PGP
+>signatures will even be in violation of the CDA (now that should start a
+rush 8*).
+
+:-)  The main problem is the limitations of hex; keyids like 0xdeadbeef
+are available, but it's tough to really trigger Exonization that way.
+Using 32 bits as ASCII instead is a bit more flexible.
+
+>For some time I have been concerned about the scalability of PGP. It works
+>well in small groups but after trying once to create a 6,000 member keyring
+>(took over three days on a 386 & was several meg when done) 
+
+Yeah - lots of people have been concerned about this.  Keyservers
+simplify the problem a lot, since you no longer need to carry a large
+number of keys around yourself, but the keyring handling mechanism of PGP
+wasn't designed to scale.  Wouldn't be too hard to redesign, once PGP 3.0
+comes out and we've got tools to do it - you could use a database or decently
+structured ASCII file or files.  And DNS or similar distributed keyserver
+can make it easier to find, for people who are on-line.
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

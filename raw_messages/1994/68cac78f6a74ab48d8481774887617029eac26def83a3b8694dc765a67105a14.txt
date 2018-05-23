@@ -1,0 +1,198 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Tue, 6 Dec 94 00:30:59 PST
+To: cypherpunks@toad.com
+Subject: One-shot remailer replies
+Message-ID: <01HKB4JDI40290QGGZ@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>The remailers need a one-time reply mechanism.
+>
+>>This would enable many other things, including "persistent" anonymous
+>>entities, without using broadcast techniques. The current remailers
+>>encourage hit-and-run anonymity, like the recent burst of anonymous
+>>nastiness, and discourage conversational anonymity and persistent
+>>anonymous entities. Sending a one-way message is easy and fairly secure.
+>
+>Bill Stewart pointed out some of the problems with one-shot reply
+>addresses, although he seemed to be analyzing them as features which the
+>remailers provided against the users's will.  I think Mike's idea was
+>that this is something which remailer users would like.  Still, Bill's
+>comments seem valid.  How useful is a single-use reply address?  If you
+>posted a message to a mailing list or newsgroup only the first person
+>would get through to you.  You could post a message with a list of
+>reply addresses but that would open up some traffic analysis problems.
+
+Yes, they are supposed to be voluntary and created by the user in advance.
+I don't want mandatory replyability, just to make conversation easier. As
+for replies from a list or newsgroup, use the pigeonholes. Anonymous reply
+is an enabling primitive for all kinds of servers and anonymous mechanisms.
+
+>>One way to do this: each remailer has a list of secret (symmetric) keys.
+>>Each secret may have an expiration date. By some method (problem discussed
+>>later) the user and the remailer establish a shared secret, adding it to the
+>>list, while the remailer does not find out who the user is. The reply ticket
+>>contains a series of nested hops, each encrypted with that remailer's secret
+>>plus all the others after it.
+
+>As you have seen, this model is very similar to Chaum's 1981 paper except
+>for where the secret keys come from.  This is not to disparage your ideas
+>but it's just that as long as we have giants around, we might as well
+>stand on their shoulders.  Chaum's system was considerably simpler as it
+>used ordinary PK decryption of the address at each stage, with the header
+>including a secret key that would encrypt the body to maintain
+>unlinkability.  As you point out this has a certain kind of vulnerability
+>to coercion that your scheme is less sensitive to.
+
+Chaum's system isn't too different if the remailers generate new keys on a
+regular basis. That would forcably expire reply tickets when the keys were
+changed, whether they had been used or not.
+
+>>The catch: how do we establish a shared secret with the remailer, without
+>>identifying ourselves to it? If the first remailer (the one the replyer
+>>sends the ticket to) is corrupt, and it knows who established the secret
+>>contained in the ticket, it knows the end-to-end path of the message.
+
+>>    Problem: remailers are coerced or hacked to decrypt a captured secret-
+>>    establishing message, before the secret key is expired. Trail of a reply
+>>    ticket can then be followed. Solution: no good one that I can think of.
+
+>We tend not to worry so much about this forward vulnerability as we do
+>about the reverse one.  Partially this is because our current remailers
+>don't implement Chaum's scheme, but partially too we sense that an
+>interesting public pseudonym is a more inviting target than the hopefully
+>anonymous true name behind it.  I'm not really sure how good an
+>assumption this is, though.  So I am less inclined to view Chaum's scheme
+>as broken since the remailer network inherently suffers the same
+>vulnerabilities.  We hope to develop enough independent remailers that
+>the coercion issue will not be a major problem.
+
+True, outside traffic analysis is the major problem, as long as there are
+enough hops to withstand a few bad remailers. Forward (source capture)
+vulnerability is harder to stop.
+
+>Tim May has advocated
+>hardware, tamper-proof circuits to hold the keys so that coercion is
+>impossible.
+
+Yes, but I actually want to build this thing. Fairly soon even.
+
+>Plus, I think an important part of the picture which is not currently
+>being implemented is remailer key changes.  This can provide forward
+>secrecy similar to your scheme.  Once last week's key is gone, there is
+>no longer any danger of your message ever being traced (as long as you
+>trust the remailer to truly erase it, just as in your scheme).  This
+>would be useful both for ordinary remailing and for Chaum-style reply
+>blocks, which as I say are both vulnerable to the reply-with-coercion
+>attack.
+
+Better is perhaps a three-day key with one overlap, that is, a current key
+and one "last key" kept around at all times.
+
+>There is one attack on all these schemes which you didn't mention, which is
+>that the bad guys are the first one to try the return address and coerce
+>each remailer along the way.  This might be especially dangerous in the
+>case of your "pigeonhole" described below, where the pigeonhole account
+>makes for a tempting target for the snoopers, giving them a chance to
+>intercept the reply message back to you and be the first ones to be using
+>it.
+
+True, the path has to be there, or the message can't go. I can't think of a
+fix for that one, can you? Mostly I just don't want an endlessly growing
+amount of information out there. I want old information to die after a
+while, as keys are erased or expired.
+
+[ DH exchange / Key broadcast approach ]
+
+Broadcasting a list of keys is one possibility; what if someone else uses
+the same key? Birthday theorem makes this hard to prevent.
+
+>>Given a secure two-way messaging mechanism, persistent anonymous identities
+>>are established using a "pigeonhole service". This is a service, with a
+>>publicized address, that will accept public-key encrypted mail and store it
+>>in a "pigeonhole". The owner of the pigeonhole anonymously sends a request
+>>(with authentication) and a reply ticket. The pigeonhole service sends the
+>>owner his mail using the ticket.
+>
+>This is a good idea, although there is a tradeoff between frequent polls
+>of the pigeonhole, which might allow some traffic analysis particularly
+>if there is a suspected link between persona and true name, and less
+>frequent checks, which may cause high priority messages to be delayed.
+
+Pigeonhole holds a one-time reply address. Every week or two it expires and
+you send a new one. If a mail comes in, it uses it, and you send a new one.
+
+>>The non-anonymous user could reply with any mail reader, send the message
+>>back to the remailer that sent it to him, and the message would be
+>>transported securely back to the anonymous user that sent it.
+>
+>Yes, well, we do this already with our current remailers.  Many
+>people have written clients to create these reply blocks, along with
+>little instructions to the baffled recipient to cut and past the reply
+>block at the front of the reply message.  Once in a while these even
+>work, I think.
+
+>With your pigeonhole idea you don't need this, you can just have a
+>Reply-To that points at the pigeonhole, which is one of its biggest
+>advantages.
+
+Methinks I'd make it a little more robust than the existing systems (easy
+with perl) like being able to grep out a reply header anywhere in the
+message, ignore > indentation, and similar safety precautions.
+
+>>For reliability in a large remailer network, end-to-end reliability is
+>>better than point-to-point reliability. Messages should be m-of-n secret
+>>shared before transmission, and reassembled at the terminal end. For
+>>clientless reception, the terminal node remailer could do the reassembly
+>>and splitting of replies.
+>
+>I agree with this.  This also relates to issue of message size
+>quantization with cryptographically strong padding.  I don't suppose the
+>RSAREF library could do that...
+
+>Yes, this is a good idea.  I first read about this in the 1993 Crypto
+>conference proceedings, in a paper called "Secret Sharing Made Short" by
+>Hugo Krawczyk.  You might find the paper useful although it sounds very
+>similar to what you have in mind already.
+
+RSAREF is useful for public key and DH. Secret sharing we have to get for
+ourselves. I looked at Shade v1.0, and it seems to be broken on
+little-endian machines. It works on an HP-UX machine, but fails on a 
+PC running linux with small-endian enabled in shade.h. The half-hour setup
+delay is not encouraging, either. Your SECSPLIT is nice and simple, but each
+shade is the size of the message. What I need is an error-correcting
+protocol to build a no-growth secret splitter.
+
+>Considering all the pros and cons, I am afraid that even the security of
+>the one-shot return address is probably insufficient, especially when the
+>simple "post replies to usenet encrypted with this key" is so easy and
+>safe.  Granted it will be a problem once everybody starts doing that, but
+>flooding is going to be hard to beat for safety.
+
+Yes, broadcast is the most secure, but it has a fundamental problem:
+security scales linearly with bandwidth. If you have a pool of 100 users and
+one of them gets a message, your uncertainty is 1 in 100. I've tried without
+success to figure out a broadcast mechanism where security scales faster
+than linearly with bandwidth.
+
+Any system with a unique path is subject to an attack where each element of
+the path is examined in turn. If the path forks and sends to several people,
+the security is enhanced only to the extent that more people are annoyed.
+
+We need a mechanism where there is either a circulating data stream or a
+large file on a server. An incoming message alters the data somehow,
+diffusing the changes over a large area. A request for information selects
+out some transformation of the selected data in such a way that the server
+cannot correlate the incoming message with the outgoing message. I don't see
+any way to do this.
+
+Elimination of the replay traffic-analysis problem is major progress. As for
+step-by-step coercion back to the source, I don't see a fix, and we will
+probably have to live with that unless there is a major breakthrough.
+
+						Mike
+
+
+
+

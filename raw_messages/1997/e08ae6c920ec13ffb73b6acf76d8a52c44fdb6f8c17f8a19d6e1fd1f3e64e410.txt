@@ -1,0 +1,50 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 20 Oct 1997 07:11:21 +0800
+To: ietf-open-pgp@imc.org
+Subject: encryption key expiry in pgp5.x
+Message-ID: <199710192239.XAA05744@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+What happens in this scenario with pgp5.0, or pgp5.5:
+
+- You have a signature key which you'll keep for say 2 years before
+  creating a new one.
+
+- You have a policy of generating new encryption keys every 6 months.
+
+- Your email archives are stored as received still encrypted to your
+  public encryption key (I think you have no choice but to do this with
+  some of the pgp5.x plugins).
+
+- You expire the key, and securely wipe the private half of the key.
+  (An advantage of rekeying in this way is to gain forward secrecy:
+  messages gathered by an attacker can no longer be decrypted with
+  information you have, but to get the forward secrecy you must
+  literally securely wipe the private key).
+
+If you do this, you won't be able to read your old mail folder,
+because you no longer have the key it was encrypted to.
+
+Does this imply that you must keep the private key for perpetuity?
+(Or at least as long as you want to read old mail archives).
+
+One presumes the same problem applies to CMR recovery keys, they must
+also be kept as long as recovery is required, if the user forgets the
+password.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

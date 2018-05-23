@@ -1,0 +1,59 @@
+From: "James A. Donald" <jamesd@echeque.com>
+Date: Wed, 27 Sep 95 09:04:10 PDT
+To: RJ Harvey <rjc@clark.net
+Subject: Re: Hack Microsoft?
+Message-ID: <199509271603.JAA23248@blob.best.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 10:33 AM 9/26/95 EDT, Dan Bailey wrote:
+
+>>For fun ways to hack NT, check out http://www.somar.com/security.html.
+>> Some of these are really laughable.  You can use NT's LogonUser API
+>>call to repeatedly guess passwords until you hit it, since NT offers
+>>no way to limit number of login attempts.
+
+At 12:10 PM 9/26/95 -0400, RJ Harvey wrote:
+>   I don't believe that's correct; under User Manager, select
+>the Account option under the Policies menu item; it lets you
+>select whether to lock-out the account after a given number
+>of invalid logon attempts, and to set the number.  The main
+>problem here is that by default, I don't believe the 'lock out'
+>option is enabled
+
+Similarly there is an awful lot of other stuff that is left wide
+open by default, most notably important parts of the registry, in particular
+\HKEY_LOCAL_MACHINE\SOFTWARE 
+
+Permissions on this are usually set to give every use write access, so that
+every user can install software.  None of the installation programs
+reset their registry key to exclude write access by anyone other than
+the administrator or the person installing the program, as a result any
+user can muck with the environment of any program installed by any other user.
+
+As a result any user can force feed most programs strings which the 
+program would ordinarily assume are internally generated, and can therefore
+be trusted.  A low privilege user can muck with the internals of a program
+installed by a high privilege user.
+
+This of course is a bug in the installation programs, rather than a bug 
+in the operating system, but it is an almost universal bug.
+
+(But before you Unix folk gloat, consider how few Unix programs *have*
+installation programs, also that Unix has no registry security problem
+because it has no registry.)
+
+ ---------------------------------------------------------------------
+              				|  
+We have the right to defend ourselves	|   http://www.jim.com/jamesd/
+and our property, because of the kind	|  
+of animals that we are. True law	|   James A. Donald
+derives from this right, not from the	|  
+arbitrary power of the state.		|   jamesd@echeque.com
+
+
+
+
+

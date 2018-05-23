@@ -1,0 +1,40 @@
+From: "Thomas W. Strong, Jr." <strong+@CMU.EDU>
+Date: Thu, 16 Sep 93 12:04:43 PDT
+To: cypherpunks@toad.com
+Subject: Re: Random Numbers
+In-Reply-To: <18957.9309161647@otter.TIS.COM>
+Message-ID: <kga=Sey00WB98ukHco@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+mjr@TIS.COM writes:
+>         One possibility is to treat part of the random seed as
+> if it was your secret RSA key. Systems like PEM store the RSA
+> key encrypted on disk someplace - you could also store an
+> encrypted random seed which you decrypt when you retrieve the
+> secret key, use to bootstrap your PRNG, and then replace with
+> some output from the PRNG when you're done. That way, the seed
+> is (by definition) hidden, and an attacker is going to have
+> much more trouble attacking your PRNG by searching your random
+> seed space.
+
+You don't want to do that...  that would amount to using one seed
+(probably when you created your key) and then generating a key from
+that.  Since the relationship between a random seed and the IDEA key is
+known, one can be reproduced from the other.  (to go from key to seed
+would take considerably longer, but it's doable)  Since you are storing
+what effectively amounts to the random number generated from the seed in
+place of the seed, all an adversary has to do is get one of your IDEA
+keys from a message that he can read.  Once he has that, he gets the
+seed used, and then just works it forward from there.  Instead of having
+2^128 possible keys, you've just let him narrow it down to a couple
+hundred or so.  There's a reaason that you have to give it a new seed
+rather often.
+
+ -----------------------------------------------------------------
+  Tom Strong              N3NBB              ts49+@andrew.cmu.edu
+
+
+
+

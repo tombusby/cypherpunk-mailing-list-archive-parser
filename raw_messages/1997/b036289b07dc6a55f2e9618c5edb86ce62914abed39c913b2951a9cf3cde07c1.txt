@@ -1,0 +1,117 @@
+From: "Peter Trei" <trei@process.com>
+Date: Wed, 25 Jun 1997 23:19:26 +0800
+To: cypherpunks@toad.com
+Subject: Re: Comparing Cryptographic Key Sizes II
+Message-ID: <199706251502.IAA17998@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There is still quite a bit of confusion about the difficulty
+of factoring 512 bit moduli. I'll try to clear that up.
+
+Adam writes:
+
+> 
+> For example, 40 bit RC4 (a symmetric key cipher) can be broken in a
+> few hours with a few hundred workstations but 40 bit RSA (a public key
+> cipher) can be broken in a fraction of a second on one PC. A 350 bit
+> RSA key is roughly equivalent in strength to 40 bit RC4, and 512 bit
+> RSA key is thought to cost roughly the same to break as a 56 bit DES
+> key.
+> 
+> (That last comparison (DES vs 512 bit RSA) glosses over many issues.
+> Here's a summary if you're interested: no one's broken a 512 RSA bit
+> key yet, and you need lots of memory to break RSA at that key size, a
+> PC with 128 Mb would be required to participate.  In contrast, you
+> need hardly any memory to break DES, any PC will do.  The internet
+> based breaking of a DES key in answer to RSA DSI's challenge involved
+> many participants, and included some participants with low end 486 PCs
+> with 1Mb of memory.  Theoretically 512 bit RSA could be broken more
+> quickly than DES, but, as you need more memory than typical
+> workstations have, a distributed internet attack with the same group
+> of participants as for the DES break would clearly take longer.  There
+> are a number of other factors also.)
+
+Here's the sequence of events:
+
+ We cracked a DES key, searching about 1/2 the keyspace. I used the
+published speeds of the clients, and my own knowledge of the Pentium
+processor, to estimate that this search used about 457,000 MIPS 
+years.
+
+ In his usenet note announcing the factoring of RSA-130 using GNFS,
+(General Number Field Sieve) Lenstra estimates that the effort was 
+about 500 MIPS years, '1/10th of the effort for RSA-129, using QS
+(Quadratic Seive)'.
+
+Bruce Schneier, in AC2, has a table giving 28,000 MIPS years as the
+time to factor a 512 bit number using GNFS.
+
+ I wrote to Lenstra, asking him how big a modulus he thought could
+be factored with 1000x the power he used for RSA-130.
+
+ Lenstra responded that that power should be able to factor a 600
+bit modulus using GNFS, but that the sieving clients would need about
+128 M of memory, and that the matrix problem would be 'very big' (he
+did NOT say impossible).
+
+ RSA-129 was factored using QS, on clients with as low as 8M of 
+memory. In the paper "The Magic Words Are Sqeamish Ossifrage", in
+which the factorization of RSA-129 using QS is described, the authors
+(including Lenstra) estimate the QS could factor a 512 bit modulus
+in about 500,000 MIPS years.
+
+ I wrote to Lenstra, asking if QS could be used instead, to deal with
+the memory and matrix problems. Lenstra responded to the effect that
+it could.
+
+So, to summarize:
+
+Using GNFS, on clients with 128M of memory, you could factor a 512
+bit modulus in 28,000 MIPS years. With 500,000 MIPS years, you could
+factor a 600 bit modulus.
+
+Using QS, in 500,000 MIPS years you could factor a 512 bit modulus on
+machines with modest memory requirements.
+
+The effects of memory speed and bandwidth would slow things down
+somewhat.
+
+-----------------------------
+One of the things that is bothering me about the reports I've been 
+seeing is 'they took 6 months to break the key using thousands of
+machines.' This is inaccurate - heavy work on the DES challenge did
+not start for several months after the challenge was announced, and
+the number of machines grew gradually as the work was done. 
+
+Lets crunch some numbers:
+
+Suppose an average client can test 500,000 keys/sec (this is 
+a conservative figure).
+
+Suppose we had 18,000 clients, 24x7, 100% utilized for this work.
+(there were 14,000 in DESCHALL, 3000 in SolNet, 1000 misc(last is a 
+conservative guess)
+
+That's 9x10^9 keys/sec
+
+To search 1/2 the keyspace, we need to test 2^55 keys = 3.6x10^16 keys.
+
+->about 4,000,000 seconds
+
+= 46 days.
+-----------------------
+
+Peter Trei
+trei@Process.com
+
+
+
+ 
+
+
+
+
+

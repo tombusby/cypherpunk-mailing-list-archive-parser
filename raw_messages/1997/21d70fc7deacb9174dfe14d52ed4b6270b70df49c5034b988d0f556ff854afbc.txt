@@ -1,0 +1,292 @@
+From: Kent Crispin <kent@songbird.com>
+Date: Sun, 11 May 1997 14:45:35 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: key recovery vs data backup
+In-Reply-To: <19970510122931.54997@bywater.songbird.com>
+Message-ID: <19970510233052.07440@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sun, May 11, 1997 at 12:51:38AM +0100, Adam Back wrote:
+> 
+> Kent Crispin <kent@songbird.com> writes:
+> > On Sat, May 10, 1997 at 07:19:40PM +0100, Adam Back wrote:
+> > > It seems to me that it is you Kent who is scrambling to find plausible
+> > > reasons why key escrow is the best or only technology to use in
+> > > corporate email systems.
+> > 
+> > Not "best".  "Easiest".  Look at it this way, Adam -- if it was easy 
+> > to implement Carl's model, it would already have happened, given the 
+> > dislike of key-escrow in the cryptographic community.  
+> 
+> Firstly: have you done a comprehensive survey of corporate access
+> systems available to commerce.
+
+No.  I personally have not.  People I know have, though -- the survey 
+was completed about -- um -- a year and a half ago, I guess.  So it 
+is somewhat out of date.
+
+> Secondly: there are a number of other forces "encouraging" the GAK
+> model.  Government incentives: Europe companies and research groups
+> get given research funding to experiment with GAK/TTP architectures.
+> Either the architecture is stipulated as part of the call for
+> proposals, or proposals involving GAK are going to get funding more
+> easily.
+
+That's a good point.
+
+> Third: people involved with key recovery at all have tended to be
+> defense contractor types, who are more likely to go with government
+> "standards" (such as TTPs/clipper/tessera/etc).
+
+I'm not so sure about this.
+
+> > But, when examined in detail, in light of real requirements from
+> > organizations, it is not easy at all.
+> 
+> I was under the impression that PGP Inc had done it, or is working on
+> it.
+
+This is one reason I'm not so sure -- PGP Inc is not a defense contractor.
+
+>  It's not very hard at all, all you need is PGP's existing
+> multiple crypto-recipient feature.
+
+If you believe all your employees will correctly use the proper PGP
+incantation each and every time, even when they are tired and haven't
+had coffee for 4 hours, and their kid is sick, and their wife is mad
+about something, then yes, it is simple.  But of course, that is not
+realistic.  Employees are forgetful, the organizations goals are not
+their goals, and the PGP UI is -- well, I find it a little awkward, 
+at times.
+
+So PGP's multiple recipient feature is a fundamental building block, 
+but you need something more in a crypto-client to be sure that 
+company policy is followed.  It's that "somthing more" that is the 
+hard part.
+
+And lest we get into the macho programmer argument -- of course it's 
+just a mere matter of design and programming.
+
+> The storage of your company master key needs some thought, but that's
+> a common problem with either your crypto key safe model or multiple
+> recipient model.
+[...]
+> I'm not sure that multiple recipient is that much less useful to GAK
+> than the safe model, buf if it is at all less useful, and the systems
+> otherwise basically equivalent I would argue against the safe model
+> for that reason alone.  However I consider the safe model inferior in
+> several areas neglecting this issue anyway.
+[...]
+> I contend that there are similar and mostly comparable problems with
+> the safe model.  Lets take a look at a few:
+> 
+> > > > With this background, perhaps now you can see why I say that Carl's 
+> > > > solution doesn't even address the problem.  The problem is management 
+> > > > of complexity.  Carl says "encrypt to Acme Corp".  Who in Acme Corp?  
+> 
+> Kent says give all the keys to Acme corp, or let Acme corp generate
+> the keys.  Who is Acme Corp?
+
+The company that bought the crypto software for the protection of 
+company secrets.  I think I said "who *in* Acme Corp", though, as a 
+prelude to the following points, because with the multiple recipient 
+model there is a policy decision as to which key in Acme is the 
+master.  
+
+> The next bit is as a result of multiple recipient being more flexible
+> than the safe model as stated.  We now have freedom to allow different
+> elements in the company to audit and access different departments
+> communications.  Naturally this extra flexibility results in policy
+> decisions.
+
+Yes.  To make use of this flexibility you now need a piece of software
+that allows you to produce policy decisions, sign them, and make them
+visible to all the crypto clients.  Another mere matter of design and
+programming.  And this bit of sortware needs to operate securely -- 
+you can't just any joe blow subverting it.  
+
+> 
+> > > > What part of the organization that is Acme Corp is authorized to know 
+> > > > this particular bit of information?  Because some of the employees 
+> > > > are idiots you want this built automatically into the application 
+> > > > they are using for encryption/email/whatever.  How does this software 
+> > > > know what policy is appropriate for which employee?  How is that 
+> > > > policy distributed?  What is the interface that allows a policy to be 
+> > > > defined?   How do you protect the policy definition from subversion?
+> 
+> If making policy decisions is too complex in your view for
+> implementation or practicality, well just substitute a policy dumbed
+> down to the level of the safe model.  Ie there is one crypto
+> recipient, all company communications _must_ be encrytped to it as a
+> second crypto recipient.
+
+
+You are right -- there is the degenerate case where the master key is
+fixed.  However, I would contend that is *very* bad crypto design.  So
+thus you have the problem of distributing information about a revoked
+master key.  (Your solution, below, was that you have a signed policy
+statement.  If you have a security breach, and are revoking a master
+key, how do you know what signature to trust?)
+
+Furthermore, by encrypting every document to the same master key you
+have actually vastly increased your exposure -- a key-safe can have a
+lot of special-purpose physical and cryptographic security, but the
+master key in the multiple recipient model is almost certainly treated
+the same as all other keys.  For example, in the key-safe model I can
+just hand someone the master key on a floppy, and it doesn't do them
+any good, because they can't get to the key-safe -- it is physically
+secure.  Next I walk into the physically secure facility (I, as keeper
+of the keys, have legitimate access), and change the master key.  No
+security problem, no documents have been compromised, regardless of
+their physical location or access.  With the multiple recipient model
+if I hand out the master key, every visible encrypted document is
+immediately and irrevocably compromised.  So the key-safe model 
+allows you a far greater security for your data than the multiple 
+recipient model.
+
+> Policy distribution is something Netscape has been doing; apparently
+> the difference between it's browsers is largely a signed policy file
+> with a mildly obfuscated public verification key check in the code.
+
+Completely different environment, of course -- I saw some traffic 
+where they admitted that probably without too much effort 
+the policy could be subverted.  But I don't deny that it would be 
+possible to build a policy distribution scheme -- but it is a 
+non-trivial problem.
+
+> I'm sure you can arrange this same flexibility and bring in the
+> baggage of the policy decisions that come with it for the safe model
+> also if you want it.  Store keys for different departments in
+> different safes.  Give the master keys for the department to the
+> department head, etc.,etc.  Same problem, similar policy decisions,
+> right?
+
+Nope.  Not at all.  The policy for multiple recipients needs to be
+interpreted by the crypto clients.  But in the key-safe model policy
+is almost entirely in human hands.  It doesn't even have to be written
+down.  
+
+Modestly secure example: The keysafe runs on a single workstation,
+hardened similar to a firewall.  The only network connections are to a
+single port, which does the cryptographically secure key storing
+protocol.  When a key needs to be recovered, three trusted employees
+troop into the room (three passwords are required, these passwords are
+essentially the master key), and retrieve the needed key on a floppy. 
+Other than the authentication protocol, there is *no* policy embedded
+in the key-safe, which is to say, *any* policy the company wants to
+use is ok.  It may take the personal presence of the company
+president, it may take a signed statement from operations staff,
+whatever.  No policy is embedded in software, and no software to
+support software needs to be written. 
+
+> > The key-safe model has no significant policy issues that need to be
+> > embedded in software -- the only policy is "when data encryption
+> > keys are generated a copy is sent to the key-safe (using an
+> > encrypted channel, of course)."
+> 
+> As stated above, this is because you have chosen a single master key
+> to go with the safe model.  If you choose a single crypto-recipient,
+> and master key encrypting the private half of that key, you largely
+> have equivalence.
+
+Not so, as I hopefully explained above, the key-safe can have enhance 
+security, so that the danger of a compromise is lessened.
+
+> > > I don't see the difference.  With the encrypt to multiple recipients
+> > > approach where the second crypto-recipient is the company key you can
+> > > store the private half of the corporate key using the same techniques
+> > > you discussed above.
+> > > 
+> > > Access to the data requires access to the master key in both cases.
+> > 
+> > It follows, therefore, that if the master key is compromised in both
+> > systems, all data is compromised.  From that perspective, the systems
+> > are equally secure. 
+> 
+> Or similarly insecure.  They are quite similar, I think multiple
+> recipient offers more flexibility, and security advantages, as well as
+> avoiding the sharing of private keys.
+
+I spoke too soon here.  The key-safe model is intrinsically more 
+secure.
+
+> 
+> > > You fix the second crypto-recipient in the MUA if you wish to.
+> > 
+> > This is precisely the point I was alluding to in the policy discussion
+> > above.  In an organizational content, *of course* you will put all the
+> > complexity in the MUA.  The question is, how do you change the 
+> > "master key" indicator that is in each MUA?  Suppose that the 
+> > organization wants different keys for different departments -- how do 
+> > you keep track of which master key goes where?  How do all those 
+> > MUA's get their key policy module updated?
+> 
+> Sign the policy file.  Certify the signing key(s).  You're going to
+> have this anway for authentication of email content.
+
+You may not be able to trust the signature.
+[...]
+
+> > >  You
+> > > can use binding cryptography to ensure the fire-wall can tell that it
+> > > is an encrypted copy of the same document without the firewall needing
+> > > access to the master key.  You can't do this company has all keys in
+> > > the safe model, without givin the firewall automatic access to the
+> > > safe, which is a huge security risk.
+> > 
+> > ???
+> > With the key-safe model the firewall never enters into the picture.
+> 
+> It does for the same functionality.  With the key-safe model how do
+> you know that the ciphertexts flowing out of the building are
+> encrypted with a key that is in your safe at all?
+
+Oh -- I'm sorry.  I didn't think through what you were saying.  You
+were attempting to guard against an insider threat.  A waste of time,
+probably.  He could frisbee a floppy out the window to his honey in
+the red sports car. 
+
+> You don't have to do the binding cryptography stuff with multiple
+> recipients if you don't want to.  With the safe model you can't do it
+> even if you do want to.
+
+How does the firewall know what is encrypted?  Just a bunch of gifs 
+of the family?  Just the first 5000 lines of "Paradise Lost", slightly 
+altered? 
+
+Anyway, if the employee uses the "approved" MUA, and it isn't 
+compromised, then it can store a copy of all outgoing mail, encrypted 
+with the employee's key.  If he doesn't use the approved MUA, or the 
+MUA is compromised, then of course the firewall protections are 
+useless.  So, in the keysafe model, the firewall never enters the 
+picture -- it is all handled in the MUA, anyway.
+
+> > > The advantage of the multiple recipient model is that doesn't commit
+> > > the cardinal sin/design flaw of sharing private crypto keys.
+> > 
+> > Two things:  First, any crypto system that doesn't deal with 
+> > protection/recovery/secure-use of private keys is incomplete.
+> 
+> For storage encryption keys where backups are not plaintext, I agree.
+> For communication keys, you do not need to backup.  Doing so weakens
+> security.  Communications keys should be transient, forward secret
+> even.  Authentication keys should be persistent, back up not required,
+> just generate new key, and new certificates if lost.  Storage keys
+> should be backed up where necessary.
+
+I agree with all this.  Only storage keys need to be in the keysafe.
+
+[...]
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

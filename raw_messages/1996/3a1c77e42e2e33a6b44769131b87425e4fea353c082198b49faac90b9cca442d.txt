@@ -1,0 +1,56 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 12 Jul 1996 19:40:39 +0800
+To: cypherpunks@toad.com
+Subject: Re: rsync and md4
+Message-ID: <199607120654.XAA19128@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 02:05 AM 7/1/96 -0400, "David F. Ogren" <ogren@cris.com> wrote:
+>Irregardless, this argument is moot.  This thread is titled "rsync and 
+>md4".  It is a discussion about which hash function suits this particular 
+>purpose and he is not particularly concerned with resistance to deliberate 
+>attack.  In this case MD4 will function adequately.
+
+There are three issues with MD4/5 relevant to rsync
+1) Collision probability - if you're concerned that a damaged packet
+will have the same hash as the original correct packet, that's 2^-128.
+If you're concerned that you may find a damaged packet with the same
+hash as _some_ correct packet out there, that's a birthday problem,
+and approaches 2^-64 if you've really got lots of packets that you
+can keep track of at once, but in reality the probability is much lower
+since you won't be keeping 2^64 packets around to collide with.
+
+2) Deliberate collisions, and 3) speed - If I understand the description
+of rsync, it needs a checksum to detect packets with different values
+so it can determine whether to send an update packet.  It's concerned with
+people changing _data_ in non-malicious ways that you want to detect,
+so the security issues about MD4 and MD5 aren't relevant, though 
+systematic changes to data resonating with the hash function are.
+You can use _much_ simpler hash functions than MD5 - go check out a book
+on error correcting codes and related math.  Most error detection 
+applications these days use 32-bit polynomials, since they're good detectors
+and can be implemented very efficiently on 32-bit hardware.  They're
+useless for security, since you can invert them, but that's irrelevant.
+If that's not reliable enough for you (and it may not be), 
+there are polymomials in lengths like 64 bits or 128 bits that should
+have good change detection, not be too sensitive to patterns in data, 
+and be _far_ faster than MD4 or MD5.  
+
+If I remember right, rsync was looking at using 16- and 32-bit checksums
+to get a quick probable result and MD4 as a backup; you can save yourself
+work by just calculating the 128-bit function and using the first 32 bits
+as a quick check.  If you're _sure_ you're not worried about birthday
+problems in your collisions, a 64-bit checksum is fine,
+and will be even faster.
+
+#				Thanks;  Bill
+# Bill Stewart +1-415-442-2215 stewarts@ix.netcom.com
+# http://www.idiom.com/~wcs
+#				Re-delegate Authority!
+
+
+
+
+

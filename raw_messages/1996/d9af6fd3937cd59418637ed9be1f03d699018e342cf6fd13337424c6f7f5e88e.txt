@@ -1,0 +1,70 @@
+From: andreas@artcom.de (Andreas Bogk)
+Date: Thu, 22 Feb 1996 20:01:51 +0800
+To: IPG Sales <ipgsales@cyberstation.net>
+Subject: Re: Internet Privacy Guaranteed ad (POTP Jr.)
+In-Reply-To: <Pine.BSD/.3.91.960221145534.3814H-100000@citrine.cyberstation.net>
+Message-ID: <y8aybpww62l.fsf@horten.artcom.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>>>>> "IPG" == IPG Sales <ipgsales@cyberstation.net> writes:
+
+    IPG> I find less and less disagreeement with your comments - with
+    IPG> one major exception - for a given message length - say 10 to
+    IPG> the 500th power, a OTP seeded algorithm, a better term would
+    IPG> be to call it an OTP driven algorithm, can produce the exact
+    IPG> same effect as an OTP of that length - that is, the encrypted
+    IPG> text can be any possible message of that length, and it is
+    IPG> not possible to predict in way what the RNG generated stream
+    IPG> is -
+
+First, what you describe is commonly called a keyed RNG. Such a system
+is provably less secure than an OTP, because the number of possible
+plaintexts from any given ciphertext is limited by the number of
+possible keys. This makes an exhaustive search of all keys possible,
+because it is very unlikely that a given ciphertext decrypts to
+multiple plaintexts that make sense. In contrast, with a OTP there are
+as many keys as there are possible plaintexts, so any given plaintext
+can be reached, making it impossible to recognize the correct
+plaintext. Of course, searching the whole keyspace might be impossible
+if the number of possible keys is large enough.
+
+But there are other ways of attacking a croyptosystem besides trying
+all possible keys. Your cryptosystem seems to be based on what is
+called a linear congruential generator in combination whith an
+RC4-like 8*8 S-box, although somewhat simpler.
+
+I don't want to make any claim about the security of the algorithm,
+but linear congruential generators can't be considered secure for any
+cryptographic use. Your only chance is that the security of that
+algorithm does not depend on the generator, but I doubt that.
+
+For further reference, go out and buy "Applied Cryptography" by Bruce
+Schneier.
+
+The pseodo-code snipped describing your algorithm, for other people's
+reference:
+
+    IPG> Bi=(Bi+Ci MOD Di) Mod 256              Large prime numbers
+    IPG> ENCRYPTEXTi=OTP[Bi] XOR PLAINTEXTi     Encryption
+    IPG> OTP[Bi]=ENCRYPTEXTi                    Makes the OTP Dynamic
+
+Andreas
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.4, an Emacs/PGP interface
+
+iQCVAgUBMSu6OEyjTSyISdw9AQGKIQP+MqE5Scq99kGfLT8CdN3h9abJZNhj9qzm
+rUFGsnXfdAvyRzfLz6v8FsfLHgnkgu10MG++NABFBz0I+U0iGFi8Zivkd3Ae9/6J
+qOHqbGjiS4r3QN8IOLDwAW6eO6pF4Z0A/+FqLVR+zB+OZF/7TzUmgWpa8+cLWQkH
+Hndr5tAVekw=
+=bY+f
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,44 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Fri, 16 Dec 94 10:35:47 PST
+To: cypherpunks@toad.com
+Subject: Thoughts on 15 day CJ crypto
+Message-ID: <199412161933.LAA09366@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+As most of you know, the SPA/NSA deal for auto-approved export
+requires 512 bit RSA and 40 bit RC4.
+
+Everyone knows that 40 bit RC4 is weak cryptographically, but no one
+particularly thought that 512 bits RSA was -- weakening, maybe, but
+not down in the real-time crack range.
+
+I had an insight yesterday as to that particular requirement.
+Consider the standard kind of way that one uses a hybrid crypto
+system.  The secret session key is encrypted with the public key.
+There are now two ciphers that can be broken.  And you only need to
+break one of them.
+
+So the NSA breaks 40-bit RC4 by brute force.  The keyspace is small.
+What is left unsaid about the search is that candidate decryption keys
+need to be selected.  You can't do a ciphertext only attack if the
+plaintext is random bits.
+
+The 512 bit RSA can be used to verify candidate keys.  Doing 2^40
+modexp's is probably not how it's done (but it might be), but if you
+can eliminate the bulk of candidate RC4 keys in some other way (by
+looking at trial decryptions) then you've got a way of verifying the
+rest of them.  If trial decryption can eliminate, say, one of every
+hundred or thousand keys then the RSA verification could be done in
+real time.
+
+So it's possible the RSA requirement is in there to provide an
+assurance that the right key was selected.
+
+Eric
+
+
+
+
+

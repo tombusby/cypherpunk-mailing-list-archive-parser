@@ -1,0 +1,78 @@
+From: Sean Walberg <umwalber@cc.UManitoba.CA>
+Date: Wed, 14 Aug 1996 03:42:00 +0800
+To: sasa.roskar@uni-lj.si
+Subject: Re: PGP...
+In-Reply-To: <009A6C9C.E823907E.18@uni-lj.si>
+Message-ID: <Pine.SOL.3.91.960813085749.9206A-100000@merak.cc.umanitoba.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Nope.  With PGP you get 2 keys... One you keep secret (secret key), the 
+other you make public (public key).  This way, if I want to send you a 
+message, I don't need to talk to you to arrange for a session key or any 
+passcodes, because PGP takes care of it.  
+
+Say you wanted to send me a message...
+
+You check your keyring (pgp -kv), but alas my key isn't there.  So you go 
+to the keyserver (http://www-swiss.ai.mit.edu/~bal/pks-toplev.html), and 
+retreive my key into a file (sean.asc).  Then you run pgp on it (pgp 
+sean.asc) and it gets integrated into your keyring.
+
+Now you type your message to me, and encrypt it with *my* public key, and 
+*sign it with your private key* (pgp -sea message_to_sean.txt 0xD12B3419).  
+Then you send it off to me.  (The 0xD12B3419 is my key id, and is 
+displayed when you play with my key)
+
+When I get it, I can export it to a file (message.asc), and run pgp on it 
+(pgp message.asc).  Hey, it is signed, so I grab your key from the 
+server, and pgp message.asc it again.  Since you encrypted it with my 
+public key, _only my secret key_ can decrypt it, not even you can see 
+it!  Also, since only you have access to your secret key, (if your 
+signature checks out), I know it had to have been you who wrote the 
+message and it was not tampered with.  (To be technically correct, I 
+don't exactly know it was you, since I haven't trusted your key at this 
+point, but we'll let that one slide)
+
+- From this point, we can send and receive messages pretty easily, since we 
+don't have to snarf keys.  It is also a bit easier than I make it out to 
+be, because there are many automation tools out there for pgp.
+
+Sean
+
+
+On Tue, 13 Aug 1996 sasa.roskar@uni-lj.si wrote:
+
+> I'm confused.... if you don't want people to be able to read your
+> email, you code it with PGP or other encoders... but why give away
+> your key on your website to everyone? That makes your email readable
+> to everyone... doesn't it? Oh well... I hope someone can explain this
+> to me...
+> 
+> Roki
+> 
+
+- ------------------------------------------------------------------
+Sean Walberg                              umwalber@cc.umanitoba.ca
+The Web Guy                  http://home.cc.umanitoba.ca/~umwalber 
+UNIX Group, U. of Manitoba          PGP Key Available from Servers
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3i
+Charset: noconv
+Comment: Processed by mkpgp, a Pine/PGP interface.
+
+iQCVAwUBMhCMc982JgvRKzQZAQEjYAP/SWjf2z2lZjYzBKVRMo9fcaMEZXiQSal2
+YRjhzIXI9LyOF+mEz+KvPscJEsKqwM0JQl64ZpYhvp2junRly292jflIpxsnSJSS
+ZteKoFJ+JE2Rd4TMDHbojucAEN4ZrW0G5y6RUcT5ntkKKWCzjGnYhSeM//bb9mOe
+ccq+A8aI9dY=
+=j2nK
+-----END PGP SIGNATURE-----
+
+
+
+

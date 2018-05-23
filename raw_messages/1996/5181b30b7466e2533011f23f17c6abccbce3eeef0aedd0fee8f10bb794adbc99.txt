@@ -1,0 +1,66 @@
+From: John Pettitt <jpp@software.net>
+Date: Wed, 7 Feb 1996 02:33:46 +0800
+To: Nathaniel Borenstein <nit@chron.com
+Subject: Re: FV's blatant double standards
+Message-ID: <2.2.32.19960206180750.00caaa14@mail.software.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:34 AM 2/6/96 -0500, Nathaniel Borenstein wrote:
+
+>1.  He doesn't explain how he's going to spot the VirtualPIN in the
+>outgoing stream.  Given the non-structured nature of the VirtualPIN,
+>this alone probably requires more sophistication than our entire attack
+>program.
+>
+>2.  He acknowledges that this approach will miss anyone who isn't buying
+>things from the machine that actually composes his mail messages.  What
+>he doesn't seem to realize, however, is that this means that any
+>automated attack will cause "fraud" to be called as soon as it hits a
+>user of AOL, Compuserve, etc.  Jeff's approach would last a bit longer,
+>but is also vulnerable to heterogeneous mail environments.  The real
+>point is that an automated attack like this one is undermined by email
+>heterogeneity, which will cause FV's fraud department to be alerted
+>quite quickly & trace things down.  In contrast, the attack we've
+>outlined on credit card numbers is simple, single-step, and has no
+>obvious "misfiring path" that would lead to quick detection.  It could
+>do its dirty work for a long time.  
+>
+>
+You missed my point.
+
+1) hook into the winsock and look for an FV message in the web data stream,
+save the ID.
+
+2) now look for an approve/deny/fraud, when you see one you know that the
+user uses an IP connection for mail and web.
+
+3) only now does the attack begin.
+
+The attack does not trigger until it *knows* that both FV orders and
+confirms are moving via winsock - I.E. it does not report back the FV ID of
+the victim until it sees the victim use FV and *knows* it can intercept the
+reply.  The key  here is not breaking all cases just a significant number
+and not setting off too many alarms.
+
+This significantly lowers the fraud detection risk, now the fraud does not
+get noticed until the card statement shows up, the same as with a card
+number snooping attack.
+
+Yes it will miss a large group of FV customers who use AOL, CI$ etc
+(although a similar hook in the common serial port code on Win95 could catch
+most of them).
+
+The basic point is if the achine is not secure then no data on it is either.
+
+
+John Pettitt, jpp@software.net
+VP Engineering, CyberSource Corporation, 415 473 3065
+ "Technology is a way of organizing the universe so that man
+  doesn't have to experience it." - Max Frisch
+
+
+
+
+

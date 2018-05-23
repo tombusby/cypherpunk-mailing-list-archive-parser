@@ -1,0 +1,57 @@
+From: "David J. Bianco" <bianco@itribe.net>
+Date: Sat, 23 Sep 95 10:41:57 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSL Man-in-the-middle
+In-Reply-To: <199509221407.KAA23176@gatekeeper.itribe.net>
+Message-ID: <199509231738.NAA25269@gatekeeper.itribe.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sep 22, 10:10, David J. Bianco sent the following to the NSA's mail
+archives:
+> Subject: SSL Man-in-the-middle
+|| I've read through the SSL spec, and it provides authentication for both
+|| the server and the client, but these features are rarely used, probably
+|| because they are somewhat inconvenient for the user.  A good first step
+|| would be to include the IP address of the server in the certificate
+|| signed by VeriSign. In this way, browsers could perform automatic checks
+|| that the IP address in the certificate is actually the one that's being
+|| communicated with. This does raise other questions (such as protecting
+|| from IP spoofing), but IMHO would be a good way of providing an
+automatic
+||  "first check" without inconveniencing users.  The added inconvenience
+of
+|| obtaining a new certificate when your server's IP address changes is
+|| fairly minor, and could be viewed as necessary overhead for doing secure
+|| transactions via the Net.
+||
+||
+
+Of course, the above is complete and utter crap (as Simon Spero pointed out
+to me in much, much more polite terms 8-).  Let me take a stab at v2.0:
+
+I've read through the SSL spec, and it provides authentication for both the
+server and the client, though these features are rarely used, probably
+because they are somewhat inconvenient for the user.  A good practice would
+be to always code your SSL app to check that the CN (Common Name) field of
+the certificate is the same as the hostname listed in the URL (CN always
+appears to be an IP address, at least for Netscape server certificates).
+
+
+Still, even with the bogus last paragraph, I stand by the rest of my post.
+ I obviously haven't seen Netscape source, so I don't really know what
+checks it might have, but none of the other SSL apps I've seen have an
+auto-check feature, though it doesn't seem to be much more trouble at all.
+
+
+--
+==========================================================================
+David J. Bianco			| Web Wonders, Online Oddities, Cool Stuff
+iTribe, Inc.			| Phone: (804) 446-9060 Fax: (804) 446-9061
+Suite 1700, World Trade Center	| email: <bianco@itribe.net>
+Norfolk, VA 23510		| URL  : http://www.itribe.net/~bianco/
+
+
+
+

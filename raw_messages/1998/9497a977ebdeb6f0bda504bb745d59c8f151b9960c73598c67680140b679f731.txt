@@ -1,0 +1,68 @@
+From: Michael Motyka <mmotyka@lsil.com>
+Date: Mon, 21 Sep 1998 14:18:02 +0800
+To: Robert Hettinga <rah@shipwright.com>
+Subject: Re: Stego-empty hard drives...
+In-Reply-To: <v04011743b229a12c2f0b@[139.167.130.247]>
+Message-ID: <3606A3B8.5B33@lsil.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Robert Hettinga wrote:
+> Stegoing an encrypted partition as "blank" hard drive space without
+> actually writing over it unless you wanted to?
+> 
+A freshly formatted partition has a fill value. Noise would indicate
+that is is not fresh. This would not be proof that it contained
+encrypted data but it would indicate some sort of use. 
+
+Another layer: 
+	create a partition. 
+	Use it as an archive for 'unclassified' materials. 
+	At some point after the use has fragmented it enough to look real:
+		disable all automatic accesses ( temp files, caches ... ) to the
+partition
+		create an application program that uses the unused space as a secure
+filesystem
+
+Then the partition would be arguably "in normal use" and it could get
+tough to prove the nature of the unused space. You could even leave some
+space filled with the format fill value. Not sure how to hide the app.
+maybe as passphrased option in some innocuous custom application.
+Accounting app?
+
+The possibility of them taking a hash and saving it for later comparison
+is a problem.
+
+> Stegoing an encrypted partition as not even *there* at all?
+> 
+Just do a drive ID command and you can figure out how many logical
+sectors are there. Add up the elements in the partition table and look
+for a difference. Unused space -esp that filled with noise- is suspect. 
+
+> Obviously, even if the partition were found, it would look, to sniffer
+> programs, as if it were empty, right? :-).
+> 
+Just the existence of a "hidden" partition might might get the juices
+flowing.
+
+*************************************************************************************************
+
+It would be truly beautiful if you could alter the drive firmware to
+identify itself as a 3Gb drive when it was actually a 5 Gb drive. Add
+some kind of extended command to the drive that allowed you to
+activate/deactivate the extended region at will. Without a password of
+course, the additional command would just report the appropriate error.
+Then just make sure you have an extra slot in the partition table to
+address the extended region unless you want to write a low-level driver.
+
+Any Quantum or Maxtor persons on the list?
+
+Mike
+
+Security requires hardware and software.
+
+
+
+

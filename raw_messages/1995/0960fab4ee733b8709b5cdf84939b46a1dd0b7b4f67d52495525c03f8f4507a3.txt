@@ -1,0 +1,33 @@
+From: Tom Weinstein <tomw@cthulhu.engr.sgi.com>
+Date: Wed, 1 Nov 1995 10:02:57 +0800
+To: perry@piermont.com
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <199511010026.TAA22659@jekyll.piermont.com>
+Message-ID: <3096CA5A.41C6@engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry E. Metzger wrote:
+> 
+> Tom Weinstein writes:
+> > One problem with this scheme is that if multiple processes have
+> > /dev/random open you can block unexpectedly.  If I try to avoid
+> > blocking by first checking if entropy is available there's a race
+> > condition if another process reads from the device.  Is there
+> > another way to avoid blocking?
+> 
+> Yeah. Use non-blocking I/O. Its in every version of Unix I've touched
+> for over a decade.
+
+I guess I wasn't clear.  The message I was replying to defined how
+the driver decided whether to block.  Since I don't have the source
+code, I was wondering whether non-blocking I/O worked for this driver.
+
+-- 
+Sure we spend a lot of money, but that doesn't mean | Tom Weinstein
+we *do* anything.  --  Washington DC motto          | tomw@engr.sgi.com
+
+
+
+

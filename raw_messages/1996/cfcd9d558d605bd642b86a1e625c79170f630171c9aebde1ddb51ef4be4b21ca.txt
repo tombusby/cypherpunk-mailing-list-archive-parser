@@ -1,0 +1,46 @@
+From: Raph Levien <s_levien@research.att.com>
+Date: Tue, 16 Jul 1996 23:41:00 +0800
+To: cypherpunks@toad.com
+Subject: Clueless "Attachment converted" uses
+Message-ID: <Pine.SGI.3.93.3.960715163006.21363B-100000@asparagus.research.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Simon Spero wrote:
+> 
+> On a very similar note - could people who are using clear-text PGP
+> signatures with mime use text/... instead of application/...; that way
+> people without pgp will see the message text without having to mess with
+> their mailcaps (that's the way text/* is supposed to work)
+
+I'd hate to turn this into "e-mail encryption"-punks, but I believe that 
+clear-signed PGP messages should not have MIME types at all. Here's why:
+
+1. All PGP-aware mail reading programs can recognize MIMEless PGP 
+messages. Thus, adding the MIME type does not help.
+
+2. For all mailers that are not PGP-aware, the best way to handle 
+clearsigned messages is to cut-and-paste them to a PGP window. This is 
+most easily done if the message is simply displayed as text. Thus, 
+adding the MIME type does not help.
+
+3. There _is_ a PGP/MIME standard, and these clearsigned PGP messages do 
+not conform to it.
+
+ObPlug: premail, I believe, implements the correct policy. Some messages 
+need to be in MIME format (e.g. pictures). These messages are encoded 
+using the real PGP/MIME spec. Other messages do not. These are encoded 
+using plain PGP, and no MIME gorp.
+
+There is a small bug in 0.44, by the way, that causes messages with tabs 
+to be wrongly classified as needing MIME.
+
+Just my two cents.
+
+Raph
+
+
+
+
+

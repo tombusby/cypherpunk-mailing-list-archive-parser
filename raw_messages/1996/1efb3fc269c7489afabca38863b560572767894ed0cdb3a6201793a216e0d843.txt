@@ -1,0 +1,53 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Tue, 17 Sep 1996 17:01:11 +0800
+To: mac-crypto@thumper.vmeng.com
+Subject: Re: Gaining trust in OCO crypto code
+Message-ID: <199609170523.WAA20766@netcom8.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I agree with Norm's points.
+
+At  6:59 PM 9/16/96 -0700, Norman Hardy wrote:
+>At 3:06 PM 9/12/96, Bill Frantz wrote:
+>....
+>>(2) Key generation.  There are published ways to encode an RSA secret key
+>>in the corresponding RSA public key.  A key generation algorithm which only
+>>uses 32 bits of the random number would be hard to detect, but easy to
+>>break by one who knew its secret.  You have to be able to examine in detail
+>>how keys are generated.
+>
+>Actually if you generate 100,000 RSA keys with the algorithm the birthday
+>effect says that
+>you will have some collisions. Of course even 100,000 key generations takes
+>a long time.
+
+This statement was not as clear as I wish I had been.  The trap door in RSA
+key generation is sufficient to require careful examination of the source
+for any RSA key (unless you can take the out Norm suggests as):
+
+>If random number generation is specified not to be integral to RSA key
+>generation, then two or more untrusted programs, from mutually hostile
+>sources, can generate your RSA key if they yield the same output from the
+>same input. In paranoia situations I would rather trust my keyboard random
+>than an algorithm chosen by my enemy.
+
+When I started discussing using only 32 bits of the random number, I was
+thinking of random session keys such as PGP generates for its IDEA cypher. 
+I agree you could detect a small number bits being used to generate these
+keys by a birthday attack.  However, most systems make sure these keys are
+never revealed outside the system (to preserve the secrecy of the
+messages).  It is not easy to do a birthday audit of e.g. PGP session keys.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | "Cave softly, cave safely, | Periwinkle -- Consulting
+(408)356-8506     | and cave with duct tape."  | 16345 Englewood Ave.
+frantz@netcom.com |           - Marianne Russo | Los Gatos, CA 95032, USA
+
+
+
+
+
+

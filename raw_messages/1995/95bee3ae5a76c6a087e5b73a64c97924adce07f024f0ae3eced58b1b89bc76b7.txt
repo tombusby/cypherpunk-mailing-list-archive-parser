@@ -1,0 +1,53 @@
+From: "Jonathan M. Bresler" <jmb@FreeBSD.ORG>
+Date: Fri, 15 Dec 1995 10:13:47 +0800
+To: Sten Drescher <dreschs@austnsc.tandem.com>
+Subject: Re: kocher's timing attack
+In-Reply-To: <55loofy5qn.fsf@galil.austnsc.tandem.com>
+Message-ID: <Pine.BSF.3.91.951214200818.22735C-100000@Aspen.Woc.Atinc.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On 14 Dec 1995, Sten Drescher wrote:
+
+> On Firewalls, "Jonathan M. Bresler" <jmb@FreeBSD.ORG> said:
+> 
+> JMB> regarding kocher's timing attack paper:
+> 
+> JMB> RSA attack.  only known ciphertext is needed.  dont know how many
+> JMB> known ciphertexts are required (related to key size surely).  the
+> JMB> paper's example is digital signature, rephrase that to Alice signs
+> JMB> Bob's public key certifying that (you know the story).  After
+> JMB> several large key signing parties hundreds of known ciphertexts
+> JMB> could have been generated using Alice's key--each one a public key
+> JMB> of someone else.  over several years it piles up.  the known
+> JMB> ciphertexts can be tested/analyzed to yield Alice's secret key.
+> JMB> ouch.  ;/
+> 
+> 	Are you sure about this?  It would seem that the same principle
+> would then apply to signed messages as well, and I find it a bit hard to
+> believe that signing messages would make ones key pair vulnerable.
+
+	no, i am not sure.  but after reading the paper carefully that is 
+what i conclude.  on page 4 start of the 4th paragraph "The Chinese 
+Remainder Theorem RSA attack can also be adapted to use only known 
+ciphertext, and thus can be used to attack RSA digital signatures."
+
+	the key here is "known ciphertext": you have both the message and 
+its encrypted version.  When Alice signs Bob's public key, with her 
+private key of course, she is encrypting Bob's public key.  this allows 
+Charlie to use Alice's public key to decrypt the signature, recovering a 
+message that is identical to Bob's public key.  that's the proof that 
+Alice was the signer.
+
+	no, i am not sure.   anyone see holes in this?
+
+
+Jonathan M. Bresler        FreeBSD Postmaster         jmb@FreeBSD.ORG
+play go. ride bike. hack FreeBSD.--ah the good life 
+i am moving to a new job.                 PLEASE USE: jmb@FreeBSD.ORG
+
+
+
+
+

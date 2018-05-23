@@ -1,0 +1,108 @@
+From: Karl Barrus <elee9sf@Menudo.UH.EDU>
+Date: Tue, 9 Feb 93 22:58:55 PST
+To: cypherpunks@toad.com
+Subject: anonymous script
+Message-ID: <199302100657.AA06626@Menudo.UH.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Cypherpunks,
+
+Out of curiosity, what are the approximate computer ratios among this
+list?  That is, how many people use MSDOS, how many use Mac's, how
+many Amigas, many have Unix, how many have VMS?  
+
+I'm just curious because it recently struck me that not everyone here
+is running Unix, and thus can't really use the scripts I've written
+(which help use the anonymous remailers).  So I wrote a helper program
+in C++ for MSDOS, but after looking at the code, I've decided to bury
+it and replace it with the following MSDOS script (at bottom of this
+message). 
+
+Also, I'm curious because I'm thinking of writing some help programs
+for the digital bank, which will help automate interactions with the
+bank.  
+
+------8< cut here >8------
+@echo off
+rem anonmail.bat - MSDOS script to assist in using the anonymous remailers
+rem Karl L. Barrus - elee9sf@menudo.uh.edu
+
+if '%3'=='' goto help
+
+echo :: > zzztemp1.txt
+echo Request-Remailing-To: %2 >> zzztemp1.txt
+echo. >> zzztemp1.txt
+
+if '%3'=='1' goto noencrypt
+if '%3'=='2' goto noencrypt
+if '%3'=='3' goto noencrypt
+if '%3'=='4' goto encrypt
+if '%3'=='5' goto encrypt
+if '%3'=='6' goto encrypt
+if '%3'=='7' goto encrypt
+if '%3'=='8' goto encrypt
+if '%3'=='9' goto special
+
+echo Improper choice.
+goto done
+
+:noencrypt
+copy zzztemp1.txt + %1 zzztemp3.txt
+
+goto done
+
+:encrypt
+if '%3'=='4' set pgpremail=hal@alumni.caltech.edu
+if '%3'=='5' set pgpremail=remailer@rebma.mn.org
+if '%3'=='6' set pgpremail=elee7h5@rosebud.ee.uh.edu
+if '%3'=='7' set pgpremail=phantom@mead.u.washington.edu
+if '%3'=='8' set pgpremail=hfinney@shell.portal.com
+
+echo :: > zzztemp2.txt
+echo Encrypted: PGP >> zzztemp2.txt
+echo. >> zzztemp2.txt
+
+pgp -ea zzztemp1.txt %pgpremail% 
+copy zzztemp2.txt + zzztemp1.asc + %1 zzztemp3.txt
+
+goto done
+
+:special
+if '%3'=='9' set pgpremail=remail@extropia.wimsey.com
+
+copy zzztemp1.txt + %1 zzztemp2.txt
+pgp -ea zzztemp2.txt %pgpremail%
+copy zzztemp2.asc zzztemp3.txt
+
+goto done
+
+:help
+echo  Usage: anonmail filename destination_address remailer_number
+echo  1: hh@pmantis.berkeley.edu          no encryption
+echo  2: hh@cicada.berkeley.edu           no encryption
+echo  3: hh@soda.berkeley.edu             no encryption
+echo  4: hal@alumni.caltech.edu           encryption
+echo  5: remailer@rebma.mn.org            encryption
+echo  6: elee7h5@rosebud.ee.uh.edu        encryption
+echo  7: phantom@mead.u.washington.edu    encryption
+echo  8: hfinney@shell.portal.com         encryption
+echo  9: remail@extropia.wimsey.com       special
+echo NOTE: final output will be placed in the filename specified
+:done
+del %1
+rename zzztemp3.txt %1
+del zzz*.*
+
+
+
+/-----------------------------------\
+| Karl L. Barrus                    |
+| elee9sf@menudo.uh.edu             | <- preferred address
+| barrus@tree.egr.uh.edu (NeXTMail) |
+\-----------------------------------/
+
+
+
+

@@ -1,0 +1,36 @@
+From: ebrandt@muddcs.cs.hmc.edu (Eli Brandt)
+Date: Mon, 18 Jul 94 13:00:13 PDT
+To: cypherpunks@toad.com (cypherpunks list)
+Subject: Re: How to make a random permutation
+In-Reply-To: <9407181835.AA22253@ah.com>
+Message-ID: <9407181959.AA18227@muddcs.cs.hmc.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Eric Hughes said:
+> I continue to be amazed at how few people know an algorithm to
+> generate a truly random permutation efficiently.
+
+The slowest one I've seen in code is "pick at random until you
+get an unchecked element; select it and check it off."  What's
+worse is how many people know algorithms that they *think*
+generate true-random permutations, but which don't.  They are
+sometimes good approximations in practice, but it irks me.
+
+1. Assign a random tag to each element.  Sort on these.
+2. The one you responded to: do a large number of swaps.
+3. Sort, using a random bit generator as a comparator function.
+   (This one is actually in Schneier.)
+
+Why?
+1. Tag collisions.
+2. Asymptotic at best.
+3. Counting argument.
+
+Elaboration is left as an exercise, etc. etc.
+
+   Eli   ebrandt@hmc.edu
+
+
+

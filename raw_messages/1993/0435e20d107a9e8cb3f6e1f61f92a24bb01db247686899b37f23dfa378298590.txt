@@ -1,0 +1,41 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 26 Aug 93 12:05:48 PDT
+To: cypherpunks@toad.com
+Subject: Re: blinding & PGP
+Message-ID: <9308261903.AA19617@arcadien.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It occured to me over lunch that PGP IDEA encrypts files; what is RSA
+encrypted are session keys, hashes, etc.  
+
+So you never really digitally sign the file itself, you instead
+digitally sign the portion that contains the session key used, hashes
+and so forth.
+
+Again, I'm sure PGP doesn't blind the RSA portion, so I would
+say you can't bamboozle someone into signing a blinded document with
+PGP.  
+
+Now, as for verifying a commercial version of PGP by comparing
+encrypts... it all depends on how exactly randseed.bin figures into
+the session key creation.  Two files encrypted with the same public
+key could compare very differently if the random session keys are
+different, since the IDEA encryptions would differ and the so would
+the MD5 hashes, and so forth.
+
+I'm not sure if additional info besides the randseed.bin file goes
+into session key creation.
+
+
+-- 
+/--------------------------------------------------\
+| Karl L. Barrus                                   |
+| klbarrus@owlnet.rice.edu                         |
+| D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 |
+\--------------------------------------------------/
+
+
+
+

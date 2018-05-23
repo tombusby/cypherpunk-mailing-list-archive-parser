@@ -1,0 +1,56 @@
+From: Martin Minow <minow@pobox.com>
+Date: Tue, 24 Nov 1998 14:40:24 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Is Open Source safe? [Linux Weekly News]
+In-Reply-To: <199811230327.VAA20072@einstein.ssz.com>
+Message-ID: <v03102803b27ffb12efc6@[17.219.105.235]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Vlad Stesin <rmiles@Generation.NET> writes:
+
+>I don't quite understand the logic behind this. The fact that the
+>program's source is available is itself a proof that there are no
+>backdoors. Anyone can read the source code and make sure it's OK.
+>
+
+You're missing the point that Thompson and Ritchie made in
+"Reflections on Trusting Trust." To summarize:
+1. They added a Trojan Horse function to the login sources.
+2. They added code to the C compiler that recognized the
+   login source code and inserted the Trojan Horse function,
+   then they erased it from the login sources.
+3. They added code to the C compiler that recognized the
+   C compiler sources and added the code noted in step 2 above.
+4. They then erased the source from the C compiler.
+
+Now,
+1. If you recompile login using a distributed C compiler, the
+   Trojan Horse will be added to the executable, but will not
+   be visible in the source.
+2. If you recompile the C compiler using an existing C compiler,
+   it will add the Trojan Horse insertion function, but this,
+   too, will not be visible in the C sources.
+
+I might have missed a step or two here, but you probably get
+the picture. The only way to detect the Trojan Horse is to
+read the executables. In the actual case, if I remember
+correctly, Ken and Dennis didn't try to conceal all their
+tracks, so the Trojan Horse was visible in the global symbol
+(nm) listing.
+
+>From personal experience, I am aware of at least one manufacturer
+of safety-critical computer-controlled hardware who read the
+assembly language output by the compiler to validate the actual
+machine instructions that were generated.
+
+Martin Minow
+minow@pobox.com
+
+
+
+
+
+

@@ -1,0 +1,81 @@
+From: nobody@REPLAY.COM (Anonymous)
+Date: Fri, 10 Oct 1997 00:35:59 +0800
+To: cypherpunks@cyberpass.net
+Subject: Object code disassembly (was Re: [LONG, off-topic]] Interactive Programming)
+Message-ID: <199710091614.SAA25567@basement.replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> It worked.  After a few iterations of this I had all the entry points, and
+> everything that didn't disassemble cleanly was outputted as hex data.
+> 
+> For fun, run objdump on a cleanly compiled unix binary... It makes it all
+> look so easy... :)
+
+
+Not quite that easy.
+
+Awhile back I disassembled RealAudio because I was curious how their codec
+worked.  Turns out it was not all that interesting and the codecs in
+nautilus and speak freely are probably better.  But anyway....
+
+Running objdump on the binary spit out ~800000 lines of code.  They
+statically linked the whole thing, motif, c library, and all.  I'm not
+sure what they compiled it with, the c-library they had in there didn't
+look like any of the standard ones.
+
+It disassembled fine, but 800k lines of assembler dump is not really all
+that readable.  So I ended up doing it interactively, setting breakpoints
+on the I/O operations and backtracing to find the coder.  The user
+interface code tended to get in the way a lot.
+
+The 1kb/s coder is very basic.  No predictor/corrector, and no redundancy
+(eg lempel-ziv, rle) compression at all.  It's just a frequency/band coder
+at 10 frames per second.  I guess thats so it can handle dropped frames.
+No checksums at all.
+
+The "28.8" codec is more sophisticated.  It appears to be a LPC and
+compresses data into much larger blocks/packets.  I didn't look into it
+too deeply because there are lots of other lpc coders available.
+
+Shortly after this, they put out a new version 3.0, with yet another
+codec, which I never looked at.  This was quite awhile ago, and all this
+is from memory.
+
+So the codec was rather uninteresting, but there were a number of other
+"features" which got my attention.
+
+I looked at the network protocol.  Its pretty simple.  The client connects
+to the server and requests the file it wants.  It also sends a whole
+bunch of other info, like host operating system, version number, etc.
+("for statistical purposes, right?  uh huh..."  are you guys over there
+at anonymizer.com reading this?  hint, hint.)
+
+Then it does something truly bizarre.
+
+The client and server exchange 32-digit hex numbers.  The client calls
+gettimeofday() and gethostname() and uses this as a random seed.  Then
+it sends a 128-bit random number, encoded as 32 ascii hex digits.  The
+server does the same.
+
+I haven't a clue what this is for.  Considering that the other data
+structures are all binary, sending this as ascii is really dumb.  It looks
+as though its part of some third-party library.  I thought maybe it was
+some variant of netscape cookies but it doesn't save anything to disk. 
+It's just wierd.  I tried stepping through this section of code a few
+times, but doing so usually caused the server to time-out.
+
+Then the server starts sending the audio file as one big stream of
+packets - same format as the files it saves to disk, just broken up into
+packets, each preceeded by a length byte.  In udp mode the client sends
+acks every second or so.  In tcp mode there are no in-band acks at all,
+it relies solely on the tcp protocol driver.  No checksums on anything,
+and it uses predictable port numbers.  You can probably spoof it real
+easy.  That might make for an interesting prank.
+
+
+
+
+

@@ -1,0 +1,44 @@
+From: Jim Gillogly <jim@acm.org>
+Date: Sat, 31 Oct 1998 01:41:33 +0800
+To: cypherpunks@einstein.ssz.com
+Subject: Re: Random array (fwd)
+Message-ID: <3639EF00.5B20F3A0@acm.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I said:
+>> One could modify Greg's suggestion slightly by attaching an auxiliary
+>> array of 256 random numbers to each of the members of the original
+>> array and then using the most efficient handy sort algorithm to sort
+>> those random numbers, dragging along their associated original array
+>> elements.  This way it doesn't have a chance to interfere with the
+>> operation of the sorting algorithm, at the cost of an extra array.
+
+Jim Choate responded:
+> If I understand the process. Each array would cycle through in parallel
+> sorting 2 elements of each array. Once that was finished we'd then sort the
+> arrays themselves according to some process. From your description it seems
+> to imply that you're going to sort the 1st element descending at that point.
+> This in effect mis-orders each array after every sort.
+>
+> This sort of system is an IFS and could lead to determinism (ie a cycle of
+> sort patterns that repeat endlessly) or chaos (ie a pattern that doesn't
+> repeat). It in and of itself doesn't guarantee any randomness merely a
+> continously munged sort.
+
+I expressed myself badly.  Steve Gibbons posted a message
+to Coderpunks expressing more clearly what I had in mind:
+Fill up the high bits of your N words with random numbers and
+the low bits with an index from 0 to N-1.  Sort the array, then
+mask off the high bits.  If the random numbers were unique, you
+are left with a randomly shuffled array.
+-- 
+	Jim Gillogly
+	Trewesday, 9 Blotmath S.R. 1998, 16:48
+	12.19.5.11.12, 10 Eb 5 Zac, Seventh Lord of Night
+
+
+
+

@@ -1,0 +1,63 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Fri, 10 Feb 95 12:59:12 PST
+To: Eric Hollander <hh@xcf.Berkeley.EDU>
+Subject: Re: why pgp sucks
+In-Reply-To: <9502101849.AA21833@xcf.Berkeley.EDU>
+Message-ID: <9502102058.AA07955@josquin.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> if i use a command like
+> 
+> 	pgp filename
+
+The problem is that you are using the wrong command....
+
+> it will automatically figure out the right thing to do with the file.  if
+> it's encrypted, and i have the key, it will attempt to decrypt it.  if it
+> contains keys, it will ask if i want to add them to my keyring.  if it's
+> signed, it checks the signature.
+
+This is the correct behavior of "pgp filename".  If you want other
+behavior, you should tell PGP how you want it to behave.
+
+> if i'm trying to write a program to automatically process incoming mail (for
+> instance, to see if it's encrypted with a specific key), i certainly don't
+> want to have the possibility of people being able to add garbage to my
+> keyring just by mailing it to me.
+
+A very noble effort, combining PGP with mailers.  Btw: When you run
+"pgp filename" and filename contains public keys, it will ask you
+before it adds them to your keyring!
+
+You can use "pgp -d" to force it to do a decryption (although you
+cannot specify which key to use for the decryption; it will choose any
+of the keys on your secret keyring).
+
+> is there a way of using pgp in a diagnostic mode, to just inform me of what
+> the file contains (is it signed and/or encrypted, from who and to whom?),
+> without processing it, and without interaction, and without messing around
+> with the keyring?  has anyone written some scripts to do this kind of thing?
+
+Well, I'm not exactly sure what you want.  You can give PGP no
+password and it will tell you to whom a message is encrypted.  You can
+call pgp -ka and it will _only_ add keys (and complain if you are
+given anything else).  There is no way to ask PGP "what kind of
+message is this"; that is sort of what the ASCII ARMOR header is for.
+
+> or should i just wait until some of the groups working on the other
+> encryption software get it out?
+
+No, you should, at this point, consider working around the problems in
+the monolithic PGP, until a more modular library is available, to
+which multiple end programs can be built to do multiple little tasks,
+as Matt explained.
+
+Does this help?
+
+-derek
+
+
+
+

@@ -1,0 +1,109 @@
+From: John Deters <jad@dsddhc.com>
+Date: Wed, 4 Jun 1997 05:58:28 +0800
+To: Jim Choate <cypherpunks@EINSTEIN.ssz.com
+Subject: Re: Webpage picketing?...
+In-Reply-To: <199706031316.IAA15007@einstein.ssz.com>
+Message-ID: <3.0.1.32.19970603164718.00a218e0@labg30>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 09:57 AM 6/3/97 -6, Peter Trei wrote:
+>Jim Choate wrote:
+>> I have been looking at how to impliment picketing on the web. To date I
+have
+>> been unable to come up with a way to force a connection to one machine
+to go
+>> through a third machine in order to express some view about the original
+>> target.
+
+There are a couple ways to do it.  One would be to implement an
+"anonymizer" type scheme, where you "hijack" an unsuspecting surfer by
+sending him/her off to http://www.evil.hijacker.org/www.yahoo.com, where
+your server does the surfing for the victim, editing and picketing the HTML
+returned.  You can do anything you want to them, your machine is in control
+of the http connections.
+
+Another method, which is quite a bit easier (and I've enclosed an example
+below,) is to throw up a frame; giving the bottom of the users the screen
+to wherever they surfed to, but retaining a frame on the top to play your
+parade of protest animated gif banners.
+
+Note that both of these require you to be an unscrupulous stealer of other
+peoples browser space.  They also require the users arrive at your site
+first, and leave via your links (their own bookmarks or typed URLs will let
+them off the hook.)  I don't know of a way (short of usurping a DNS
+server's authority) of getting hooked into their site from the first.  I
+suppose if you ran a router between the site you wished to hijack and the
+viewer whom you've hijacked, you could, but we're talking MAJOR no-no (and
+lots of code) here.
+
+Enclosed is an example set of files that shows "permanent" frames of the
+type that hang around and annoy people.  Cut'n'paste to save them to your
+local machine, then open the file fooIndex.htm with your frame-enabled
+browser.  Notice how the banners (picket signs) hang around even after
+linking off to somewhere else.  The drawback to this method is that your
+protest is not "dynamic".  If they're on your vegetarian site, and follow
+your link to www.beef.com, your banners will scream "Meat is Murder."
+However, if they then follow the link from www.beef.com to
+www.fur-coat.com, they'll still be under "Meat is Murder" banners.  You'd
+be unable to display the "Fur is Dead" banners, because the browser hasn't
+been talking to you since it loaded your page.
+
+John
+
+-- fooIndex.htm -- cut here --
+<HTML><HEAD><TITLE>Picket Line</TITLE></HEAD>
+<frameset rows="80,*" framespacing="0" frameborder="0" border="0">
+<frameset cols="400,*" framespacing="0" frameborder="0" border="0">
+<frame src="fooTop.htm" SCROLLING="NO" NORESIZE MARGINWIDTH="6"
+MARGINHEIGHT="6" >
+<frame src="fooTopRight.htm" SCROLLING="NO" NORESIZE MARGINWIDTH="6"
+MARGINHEIGHT="6" >
+</frameset>
+<frame src="fooMain.htm" SCROLLING="AUTO" NORESIZE MARGINWIDTH="0"
+MARGINHEIGHT="0" BORDER="0" >
+</frameset>
+</HTML>
+-- fooTop.htm -- cut here --
+<HTML><HEAD><TITLE>FooTop Title</TITLE></HEAD>
+<H4> This is FooTop. </H4>
+Down with Foo!
+</HTML>
+-- fooTopRight.htm -- cut here --
+<HTML><HEAD><TITLE>FooTopRight Title</TITLE></HEAD>
+<H4> This is FooTopRight. </H4>
+Down with Bar!
+</HTML>
+-- fooMain.htm -- cut here --
+<HTML><HEAD><TITLE>FooMain Title</TITLE></HEAD>
+<H4> This is FooMain. </H4>
+Not to be confused with EggFooMein.
+<P>
+Click here to not be here.
+</HTML>
+-- fooBar.htm -- cut here --
+<HTML><HEAD><TITLE>FooBar Title</TITLE></HEAD>
+<H4> This is FooBar. </H4>
+You're not where you were before, but there are still picketers hanging about.
+<P>
+Where we want you to go today.
+</HTML>
+-- end files -- cut here --
+
+--
+J. Deters "Don't think of Windows programs as spaghetti code.  Think
+          of them as 'Long sticky pasta objects in OLE sauce'."
++--------------------------------------------------------------------+
+| NET:   mailto:jad@dsddhc.com (work)   mailto:jad@pclink.com (home) |
+| PSTN:  1 612 375 3116 (work)          1 612 894 8507 (home)        |
+| ICBM:  44^58'36"N by 93^16'27"W Elev. ~=290m (work)                |
+| For my public key, send mail with the exact subject line of:       |
+| Subject: get pgp key                                               |
++--------------------------------------------------------------------+
+
+
+
+
+

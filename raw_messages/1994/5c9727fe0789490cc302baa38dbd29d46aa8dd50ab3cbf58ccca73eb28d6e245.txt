@@ -1,0 +1,52 @@
+From: rarachel@prism.poly.edu (Arsen Ray Arachelian)
+Date: Sun, 28 Aug 94 12:22:58 PDT
+To: CCGARY@MIZZOU1.missouri.edu (Gary Jeffers)
+Subject: Re: CEB 8 - WNSTORM Info
+In-Reply-To: <9408240134.AA26527@toad.com>
+Message-ID: <9408281909.AA00358@prism.poly.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+WNSTORM is available from:
+ftp.wimsey.bc.ca:/pub/crypto/software/dist/US_or_Canada_only_XXXXXXX/Steg
+
+Usual routine to get it. i.e. cd /pub/crypto/software, get the README
+file, and if you agree to the terms then follow the instructions.
+
+Short description off the top of my head (I wrote the beastie)  Another
+info scrap should be in the same directory as WNSTORM.
+
+
+WNSTORM is a data encryption/steganography utility which is pretty secure for
+most uses.  Unlike some stego systems WNSTORM is expandible, all you have to
+do is write your own LSB injector/extractor for whatever data format you wish
+to hide information into.
+
+WNSTORM doesn't require the recipient of the host picture, sound, movie, etc.
+to have the original un-stormed picture.  Unlike primitive stego programs,
+WNSTORM doesn't compare an stormed picture with an unstormed picture.
+
+WNSTORM will cover its tracks statistically.  If it changes a 0 bit in the
+LSB data stream to a zero, or a 1 bit to a 1, it does nothing.  If it changes
+a 1 bit to a zero, it will balance itself by changing an unused adjacent 0
+bit to a 1.  Ditto for a 0->1 transform.
+
+WNSTORM will NOT change every bit of the LSB in order to prevent detection.
+It will use a passkey along with a probabilistic algorithm to decide which
+bits it will change.  The algorithm for picking bits depends on the previous
+succesfully encoded/decoded cyphertext AND the passkey.
+
+Internally WNSTORM works by picking "windows" or "packets" of bytes out of
+either a random number stream or an LSB stream extracted from a picture,
+sound, movie, etc.  It then injects eight bits of cyphertext into this window.
+Each window is of variable size.  The bit locations where the bits are inserted
+are randomly exchanged for each pass.  The bit values are also randomly 
+exchanged for each pass.
+
+WNSTORM includes an injector/extractor for PCX images, however I will write
+more injecotr/extractor programs for it in the future, and OTHERS can do so
+as well.
+
+
+

@@ -1,0 +1,72 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Thu, 24 Mar 94 14:39:06 PST
+To: Cypherpunks@toad.com
+Subject: Digital Cash
+Message-ID: <199403242239.OAA00431@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal writes:
+
+ > The notion of a "cryptographically tamperproof software
+ > module" is interesting, but I'm not sure such a thing exists
+ > or could exist.  The secure offline cash systems I have seen
+ > rely on tamper-resistant HARDWARE modules which at least
+ > exist although this requirement would be very inconvenient.
+
+Quite a bit of work has already been done on this concept.
+Basically one generates a very large sequence of machine
+instructions which computes the image of the output of an
+algorithm under a strong cipher from the image of the input under
+the cipher.  A controlled amount of redundant information is
+added to both the input and output.  This yields a piece of code
+so obtuse and complex that nothing may be gleaned about what
+algorithm it is executing by observing it run.  Figuring out what
+it actually is doing is a cryptanalytically hard problem.  Also,
+determining a way of modifying the code which does not break it
+is a similarly hard problem.
+
+Once encased in such a module, an algorithm may be distributed
+with no fear that it will be stolen.  This raises interesting
+poblems with software patents, since one can not tell from such a
+module whether it is performing a function in a way which
+infringes.
+
+Of course, there is a severe performance penalty to be paid for
+such protection.  But in the case of digital cash, it could
+provide a mechanism for implementing a secure offline system
+without special hardware.
+
+ > Again, I don't know how you handle the case of two
+ > almost-simultaneous attempts to redeem the same note (or
+ > piece of cash).  Both notes are identical, so having the two
+ > notes gives you no more information than having just one,
+ > hence if one note is anonymous so will two be.  You know
+ > someone is cheating in this situation, but who?  One of the
+ > redeemers may have stolen a copy of the cash from the other;
+ > the two redeemers may be working together; or the note maker
+ > may be working with one of the redeemers having slipped them
+ > a copy of the note as soon as it was presented for
+ > redemption.  How can a court decide who is right?
+
+Assuming the transactions are done via a tamperproof module
+distributed by the issuer, and the math is arranged such that
+using a note in multiple transactions reveals the perpetrator,
+the system prevents anonymous double-spending while still
+providing all the benefits of digital cash.  Of course, you could
+claim that someone was in possession of your tamperproof module
+and associated passwords, but it is your responsibility to guard
+these and report them stolen promptly, just as with credit cards
+and PINs.
+
+P.S. Is anyone worried that the Netherlands seems on the verge of
+banning PGP?  Wasn't this country once a hacker's paradise?
+
+-- 
+     Mike Duvos         $    PGP 2.3a Public Key available    $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+

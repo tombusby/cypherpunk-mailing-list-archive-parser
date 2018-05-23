@@ -1,0 +1,206 @@
+From: yanek@novavax.nova.edu (Yanek Martinson)
+Date: Wed, 23 Dec 92 14:31:14 PST
+To: jwn2@qualcomm.com (John W Noerenberg)
+Subject: Re: Signing ascii text
+In-Reply-To: <9212231707.AA03963@harvey>
+Message-ID: <9212232230.AA21068@novavax.nova.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >Canonical Text has a CR and LF at the end of each line.
+> Which RFC are you referring to?  
+
+I am not aware of any single RFC that defines this, but every RFC
+that I have read, if it mentions end-of-line at all, it is defined
+as, or assumed to be, a carriage return followed by a newline.
+
+Even in cases where the native representation is different, it
+is converted to this format before transmission through the net,
+and then converted back.  This is in some RFC-s referred to 
+as "internet tradition", or "NetAscii".
+
+This is similar to the Network Byte Order.  No matter what order
+your machine stores bytes (little/big endian), it gets converted
+to one standard format.
+
+It is also referred to as "NVT Standard".
+
+The only mention of a different end of line convention is in
+relation to EBCDIC, which has an explicit newline <NL> character.
+
+Here are excerpts from various RFCs that deal with, or mention, 
+use of CRLF at the end of lines:
+
+
+Request For Comments: 1078                                       SRI-NIC
+                 TCP Port Service Multiplexer (TCPMUX)
+
+   A TCP client connects to a foreign host on TCP port 1.  It sends the
+   service name followed by a carriage-return line-feed <CRLF>.  
+
+   acknowledgment, immediately followed by an optional message of
+   explanation, terminated with a <CRLF>.  If the reply was positive,
+
+Request for Comments: 1123                             R. Braden, Editor
+
+       Requirements for Internet Hosts -- Application and Support
+
+              To allow interoperability between arbitrary Telnet clients
+              and servers, the Telnet protocol defined a standard
+              representation for a line terminator.  Since the ASCII
+              character set includes no explicit end-of-line character,
+              systems have chosen various representations, e.g., CR, LF,
+              and the sequence CR LF.  The Telnet protocol chose the CR
+              LF sequence as the standard for network transmission.
+
+Request for Comments: 1184                             D. Borman, Editor
+
+                         Telnet Linemode Option
+
+   line should be transmitted with "CR LF" as the line terminator.  When
+ 
+   responsible for doing all output processing.  Specificly, it should
+   send "CR LF" when it wants the "newline" function
+
+Request for Comments: 1204                                        D. Lee
+
+                     Message Posting Protocol (MPP)
+
+      USER <SP> <username> <CRLF>
+      PASS <SP> <password> <CRLF>
+      DATA <CRLF>
+      NOOP <CRLF>
+      QUIT <CRLF>
+
+      354 Enter mail, end with <CRLF>.<CRLF>
+
+Request for Comments: 1288           Center for Discrete Mathematics and
+
+                  The Finger User Information Protocol
+
+   Any data transferred MUST be in ASCII format, with no parity, and
+   with lines ending in CRLF (ASCII 13 followed by ASCII 10).  
+
+Request for Comments: 1312                               Crynwr Software
+
+                        Message Send Protocol 2
+
+		  New lines should be represented using the usual
+		  Netascii CR + LF.  (Following the Internet tradition,
+		  a server should probably be prepared to accept a
+		  message in which some other end-of-line convention is
+		  followed, but a conforming client must use CR + LF.)
+
+     NWG/RFC# 561                   AKB KP RST JEW 5-SEP-73 11:19  18516
+     Standardizing Network Mail Headers           RFC 561 / NIC 18516
+
+        Formal Syntax:                                               
+
+           <mailtext>    ::= <header> <CRLF> <message>               
+           <headeritem>  ::= <item> <CRLF>                           
+
+           <message>     ::= <line> <CRLF> ! <line> <CRLF> <message>
+                                                                    
+           <line>        ::= a string containing any of the 128 ASCII
+                             characters except CR and LF            
+           <word>        ::= a string containing any of the 128 ASCII
+                             characters except CR, LF, and SP       
+           <CRLF>        ::= CR LF                                  
+           <SP>          ::= space                                  
+
+   RFC 821
+                                    
+                     SIMPLE MAIL TRANSFER PROTOCOL
+
+            MAIL <SP> FROM:<reverse-path> <CRLF>
+
+            RCPT <SP> TO:<forward-path> <CRLF>
+
+            DATA <CRLF>
+
+         SEND <SP> FROM:<reverse-path> <CRLF>
+         SOML <SP> FROM:<reverse-path> <CRLF>
+         SAML <SP> FROM:<reverse-path> <CRLF>
+         HELO <SP> <domain> <CRLF>
+         QUIT <CRLF>
+
+         The SMTP commands define the mail transfer or the mail system
+         function requested by the user.  SMTP commands are character
+         strings terminated by <CRLF>.  The command codes themselves are
+         alphabetic characters terminated by <SP> if parameters follow
+         and <CRLF> otherwise.
+
+     RFC #  822
+
+
+                        STANDARD FOR THE FORMAT OF
+                        ARPA INTERNET TEXT MESSAGES
+
+
+          A message consists of header fields and, optionally, a body.
+     The  body  is simply a sequence of lines containing ASCII charac-
+     ters.  It is separated from the headers by a null line  (i.e.,  a
+     line with nothing preceding the CRLF).
+
+
+     field       =  field-name ":" [ field-body ] CRLF
+
+     field-body  =  field-body-contents
+                    [CRLF LWSP-char field-body]
+
+
+        Each header field may be represented on exactly one line  con-
+        sisting  of the name of the field and its body, and terminated
+        by a CRLF;
+
+Request for Comments: 959                                    J. Reynolds
+
+                      FILE TRANSFER PROTOCOL (FTP)
+
+            In accordance with the NVT standard, the <CRLF> sequence
+            should be used where necessary to denote the end of a line
+            of text.  (See the discussion of file structure at the end
+
+               process will interpret appropriately.  <CRLF>, in exactly
+               this sequence, also denotes end-of-line.
+
+         the FTP implementation should use the end-of-line sequence,
+         <CRLF> for ASCII, or <NL> for EBCDIC text files, as the
+
+      For the purpose of standardized transfer, the sending host will
+      translate its internal end of line or end of record denotation
+      into the representation prescribed by the transfer mode and file
+      structure, and the receiving host will perform the inverse
+      translation to its internal denotation.  
+
+      End-of-line in an ASCII or EBCDIC file with no
+      record structure should be indicated by <CRLF> or <NL>,
+      respectively.  
+
+            information.  The data will be transferred in ASCII or
+            EBCDIC type over the data connection as valid pathname
+            strings separated by <CRLF> or <NL>.  (Again the user must
+
+Request for Comments: 977                   Phil Lapsley (U.C. Berkeley)
+
+                     Network News Transfer Protocol
+                                    
+
+   Each command line must be terminated by a CR-LF (Carriage Return -
+   Line Feed) pair.
+
+   that indicates that text will follow.  Text is sent as a series of
+   successive lines of textual matter, each terminated with CR-LF pair.
+
+
+
+--
+Yanek Martinson    mthvax.cs.miami.edu!safe0!yanek     uunet!medexam!yanek
+this address preferred -->> yanek@novavax.nova.edu <<-- this address preferred
+Phone (305) 765-6300 daytime   FAX: (305) 765-6708  1321 N 65 Way/Hollywood
+      (305) 963-1931 evenings       (305) 981-9812  Florida, 33024-5819
+
+
+
+

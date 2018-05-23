@@ -1,0 +1,41 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 2 Apr 1996 16:43:02 +0800
+To: cypherpunks@toad.com
+Subject: Java flaw is in bytecode verifier
+Message-ID: <199604020006.QAA21649@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From http://java.sun.com/sfaq/960327.html:
+> Researchers at Princeton recently found an implementation bug in the Java
+> bytecode Verifier. The Verifier is a part of Java's runtime system which
+> certifies that applets downloaded over the Internet adhere to Java's
+> language safety rules. Through a sophisticated attack, a malicious applet
+> can exploit this bug to delete a file or do other damage.
+
+This is one of the more worrisome places for a bug to exist.  Much of
+Java's security rests in the claim that it can screen for and detect bad
+bytecode sequences.  This screening code is extremely critical for Java
+security and I am surprised to see that it was implemented in a flawed
+manner.
+
+I've been writing Java quite a bit in the last couple of weeks, and I
+find that I have crashed my browser, whether Netscape or appletviewer,
+many times.  Granted some of my code has been pretty buggy, but it's
+still not supposed to crash the browser.  Obviously some of the runtime
+checks are not being done properly.  I had expected that the bug would
+be in these areas, something like the stack overflows that we have seen
+cause problems in the past.  A simple error in the bytecode verifier
+(if that is what this really is) seems like a more fundamental security
+flaw.
+
+The researchers have still not released full details on the bug, although
+they had planned to do so by the end of March.  Maybe they are waiting
+for the fix to be distributed.
+
+Hal
+
+
+
+

@@ -1,0 +1,46 @@
+From: hfinney@shell.portal.com (Hal Finney)
+Date: Sun, 28 Nov 93 20:14:41 PST
+To: cypherpunks@toad.com
+Subject: Re:  Traffic analysis and file size
+Message-ID: <9311290413.AA27849@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Scott Morham asks about how well file sizes are preserved by encrypted
+remailers.  Generally speaking, in creating a nested encrypted remailing
+request, at each stage PGP will attempt to compress the input, then encrypt
+it, which preserves its size but adds a block to the beginning of about
+the size of the public key (typically 100-150 bytes), then makes it ASCII,
+which increases the size by 1/3, then adds a small header block of 50 to
+150 bytes or so.
+
+Since the compression is ASCII-encoded encrypted text, the best it can do
+is to "undo" the ASCII encoding or compress by about 1/4, but I don't know
+if it actually does that well.  Probably it compresses by somewhat less.
+So generally each chain will add a few hundred bytes and scale the size of
+the message up by probably 10 or 20 percent.
+
+I think that this will probably allow pretty reliable matching of incoming
+and outgoing messages on the basis of size alone, at least, more reliable
+than I would be willing to count on to prevent attacks by this means.
+
+Scott also suggests using .zip compression at some point, but this isn't
+likely to help much since encrypted files look random and are basically not
+compressible.
+
+What we have talked about here is adding random padding to change the file
+size.  Because encrypted files do look random, you can generally pad them
+with random bytes pretty easily and undetectably.  This depends somewhat
+on the file format but it is basically easy.  I wrote some perl scripts to
+pad .pgp public-key-encrypted files undetectably.  The extra bytes are
+ignored when the file is decrypted.  The scripts aren't really production-
+quality since they just use perl's built-in random numbers.  Good random
+numbers should be used.
+
+Hal
+hfinney@shell.portal.com
+
+
+
+

@@ -1,0 +1,28 @@
+From: wlkngowl@UNiX.asb.com (Mutatis Mutantdis)
+Date: Tue, 7 May 1996 14:24:00 +0800
+To: cypherpunks@toad.com
+Subject: Bug in NOISE.SYS v0.5.5 w/fix...
+Message-ID: <199605062324.TAA08083@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There's a bug in the API in NOISE.SYS v0.5.5. I've uploaded a fix as
+noise056.zip to ftp.funet.fi, so keep an eye out for it.
+
+The fix is easy. In the file "multiplex.inc" you'll see the  @ReturnOk LABEL
+where it restores the ds, si and bp registers... at the @ReturnErr hook it
+only fixes the ds and si registers. Add a "pop bp" appropriately and remake
+the file.
+
+Sorry for the inconvenience.
+
+--Rob
+
+
+
+
+
+
+

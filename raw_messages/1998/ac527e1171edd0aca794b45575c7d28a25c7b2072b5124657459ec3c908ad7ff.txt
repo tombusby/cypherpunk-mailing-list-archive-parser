@@ -1,0 +1,57 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 8 Jan 1998 08:37:42 +0800
+To: frantz@netcom.com
+Subject: Re: Silly Shrinkwrapped Encryption
+In-Reply-To: <v0311070eb0d8be53e6a8@[207.94.249.133]>
+Message-ID: <199801080006.AAA00669@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Frantz <frantz@netcom.com> writes:
+> 
+> [lotus notes 24+40 GAK design]
+> 
+> It seems to me that if you step on the correct part of the message, you zap
+> the encrypted 24 bits, and cut NSA out of the loop.  Of course the receiver
+> could notice and refuse to decrypt, which would require some software
+> hacking to defeat, but that is certainly doable.
+
+Well if that were all they were doing you could just fill it with
+random numbers, or encrypt the wrong 24 bits of random data with the
+NSA's public key, etc. and the receiving software couldn't tell
+without access to DIRNSA's private GAKking key.
+
+However, I figure that they could do this... encrypt to the recipient
+and include in the GAK packet the RSA padding used to encrypt the 24
+bits.
+
+The recipient gets the 24 bits anyway because he can decrypt the main
+recipient field; with the padding he can re-create the RSA encrypted
+GAK packet.
+
+Not that we want to help the GAKkers or anything :-)
+
+Still as you say even that would likely be a single byte patch or
+whatever to skip the test.
+
+Also as William notes, don't use the crap -- it's only 64 bits anyway
+even for non-export version, and their reputed motives in smoothing a
+path to domestic GAK, and even in buying into the KRAP program might
+be enough to move some to boycott them even if there crypto key sizes
+were reasonable, which they are not.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,49 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 22 Nov 1997 11:12:35 +0800
+To: cypherpunks@cyberpass.net
+Subject: SMTP forgeries
+Message-ID: <199711201948.TAA01894@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+What is the state of the art with SMTP mail forgeries?
+
+It seems that the forwarding SMTP agent can determine the senders IP
+address.
+
+I am wondering if this could be prevented by using IP level spoofing
+to put fake return IP address on the TCP/IP connection to the
+receiving mail hubs SMTP port, in that the sender does not really need
+the information the SMTP hup sends back.
+
+This would then be a variant of the IP spoof attack.  What would be
+needed would be a site which blindly accepted the one sided traffic
+from the receiving SMTP hub where it thought it was replying to the
+traffic.
+
+eg. Sender says:
+
+HELO nsa.gov
+250 locahost Hello locahost [127.0.0.1], pleased to meet you
+
+The sendmail seems to be trying to be clever doing a reverse name
+lookup, and ignoring what you tell it on the HELO line.
+The 250 reply is not required by the sender.
+
+MAIL FROM: nobody@nsa.gov
+250 nobody@nsa.gov... Sender ok
+
+RCPT TO: joe@acme.com
+250 joe@acme.com... Recipient ok
+
+DATA
+354 Enter mail, end with "." on a line by itself
+asdfasdfasdf
+
+
+
+
+

@@ -1,0 +1,92 @@
+From: Bill Frantz <frantz@netcom.com>
+Date: Fri, 10 Oct 1997 12:57:29 +0800
+To: Adam Back <kelsey@plnet.net
+Subject: Re: Defeating MITM with Eric's Secure Phone
+In-Reply-To: <199710091653.LAA14615@email.plnet.net>
+Message-ID: <v03007818b0635662f1f0@[207.94.249.179]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 12:08 PM -0700 10/9/97, Adam Back wrote:
+>John Kelsey <kelsey@plnet.net> writes:
+>> Adam Back <aba@dcs.ex.ac.uk> writes:
+>> [computationally infeasible jobs for MITMs]
+>> I prefer to work on the more immediately useful problem: How can I
+>> secure my use of the (very nicely done) Comsec secure phones using
+>> existing infrastructure?  I am concerned with the MITM voice
+>> impersonation attack, since that's the easiest attack on the
+>> system.
+>
+>We were discussing this problem before turning to talking about
+>automated methods.  I think Eric Blossom suggested this earlier on:
+>
+>> 1.	Exchange PGP-encrypted e-mail establishing a set of
+>> sixteen different words, labeled for 0..f in each direction.
+>> Thus:
+>>
+>> 0. Dilbert 1. Alpha 2. Cable 3. Swordsman ... f. Marxist
+>>
+>> Now, the checksum reading is very hard to spoof.  Suppose I
+>> get 0x33f. I say ``My checksum is Swordsman Swordsman
+>> Marxist, or 33f.''
+>
+>It seems like a good solution.  An interesting question might be how
+>many times can you use the same table without starting to leak values.
+>Perhaps it doesn't matter that much because the MITM can't exactly use
+>brute force on the problem otherwise you will know he's there.  He has
+>to act non-passively to extract information.  (Presuming the protocol
+>exchanges part of the information hashed for the challenge is
+>encrypted with the negotiated key).
+>
+>> Now, the problem with this is that it's too cumbersome.
+>
+>What would be nice would be able to have information on one sheet of
+>paper which you could continue to use for lots of communications,
+>without need for calculator, or computer, or more emailed tables.
+
+When I suggested using code words to exchange the checksum, I thought you
+would have to use them in one-time-pad mode to be secure.  The following
+argument makes me think you can reuse them several times, changing them at
+about the same rate as you would change a symmetric crypto key.
+
+Assume that the contents of the paper are secret between Alice and Bob.
+When Alice calls Bob, she reads the word coresponding to the first digit of
+the checksum.  Either Mallory is in the middle or he isn't.  If he isn't,
+no problem.  The word list remains secure.
+
+If he is in the middle, he has 15 chances in 16 of being caught on the
+first exchange.  He only survives if the first digit of the Alice-Mallory
+connection is the same as the first digit of the Mallory-Bob connection.
+He now knows the word for one value and can continue to play 1 out of 16
+times.
+
+The probability he can survive the next word that Bob reads to Alice is
+harder to calculate.  He can survive if the second digit of the Mallory-Bob
+connection is the same as the second digit of the Alice-Mallory connection,
+or the second digit of the Alice-Mallory connection is the same as the
+first digit on that connection.  Without doing the math, Mallory's survival
+probability becomes very small as the exchange continues.
+
+If Alice and Bob catch Mallory, they talk about the weather and exchange a
+new list by email.  If they don't, there is a very high probability that
+the word list has not been compromised, and they can safely continue to use
+it for the next call.
+
+
+BTW - I really like John's idea of doing another exchange later in the
+conversation.  Perhaps something like, "You know, I was dancing the Foxtrot
+with my wife 9 days ago at 5AM."
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | Internal surveillance      | Periwinkle -- Consulting
+(408)356-8506     | helped make the USSR the   | 16345 Englewood Ave.
+frantz@netcom.com | nation it is today.        | Los Gatos, CA 95032, USA
+
+
+
+
+
+

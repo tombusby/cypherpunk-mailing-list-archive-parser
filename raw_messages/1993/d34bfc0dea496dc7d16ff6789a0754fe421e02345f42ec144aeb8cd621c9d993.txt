@@ -1,0 +1,36 @@
+From: Karl L. Barrus <barrus@tree.egr.uh.edu>
+Date: Tue, 12 Jan 93 20:00:31 PST
+To: cypherpunks@toad.com
+Subject: security of constructed addresses
+Message-ID: <9301130359.AA00390@tree.egr.uh.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Alert!  Hal Finney has alerted me to a problem with the way my script
+builds an anonymous remailer chain.  Simply saving eachheader portion
+into a seperate file and running pgp on the pieces reveals each link
+in the chain.
+
+The solution (also from Hal Finney) is: hide the intermediate hops
+until they get to the machine that needs them.
+(machine1, encrypt1(machine2, encrypt2(machine3, encrypt3(user@dest))))
+Here, the entire header is decrypted at each remailer, revealing the
+next destination to that remailer only.  No peeking ahead!  The only
+remailer that will be revealed is the first one, where mail has to be
+sent anyway.
+
+I'll rework the script, provide a ksh version, and write a little help
+file ASAP. 
+
+/-----------------------------------\
+| Karl L. Barrus                    |
+| barrus@tree.egr.uh.edu (NeXTMail) |
+| elee9sf@menudo.uh.edu             |
+\-----------------------------------/
+
+
+
+
+

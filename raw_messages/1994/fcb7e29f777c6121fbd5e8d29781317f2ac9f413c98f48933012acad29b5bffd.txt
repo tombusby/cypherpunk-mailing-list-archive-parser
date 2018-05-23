@@ -1,0 +1,76 @@
+From: jim@bilbo.suite.com (Jim Miller)
+Date: Thu, 12 May 94 12:13:09 PDT
+To: cypherpunks@toad.com
+Subject: Re: Message Havens
+Message-ID: <9405121909.AA28859@bilbo.suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+> Downloading the whole message base to scan for one's
+> messages will place a massive load on net.resources, and
+> probably a prohibitive load on most people's terminals. 
+
+> 
+
+
+Here's an alternative to using tags that need to be agreed upon in  
+advance:
+
+I call it "Indexed Message Pools"
+
+The key ideas:
+
+Each message sent to the message pool will be encrypted in the  
+recipient's public key. (nothing new here)  The Subject: line for the  
+message will be the MD5 hash of the message body.
+
+For each message sent, the sender will also send a small, fixed  
+length "index message" encrypted with the recipient's public key.   
+The index message will contain the MD5 hash of the full message (and  
+a confounder?). The Subject: line for the index message will contain  
+an unencrypted copy of the message hash.  The index message will go  
+into an index pool.
+
+Instead of downloading the entire message pool to check for messages,  
+you download the index pool (should be smaller in size).  You would  
+attempt to decrypt each index message (should be quicker).  A  
+decryption will yield something that looks like a hash of a full  
+message.  Compare this with the contents of the index message's  
+Subject: line to detect a successful decryption.
+
+To get the full message, send a request to the message pool server.   
+The request will contain a list of message hashes.  One of the hashes  
+will be for the message that was sent to you, the other hashes are  
+chosen randomly from the collection of index messages you couldn't  
+decrypt.
+
+The message pool server will send you the messages that have Subject:  
+lines containing the hashes you sent in the request.  You discard all  
+the messages that are not for you, decrypt the one that *is* for you,  
+and there you have it.
+
+This idea scales up a bit, although not greatly.  I can imagine a  
+network of message pools that maintain a distributed index pool among  
+themselves.  You can obtain the complete index pool from any of the  
+message pool servers.  In this scenario, a index message would  
+contain the message hash plus the address of the message pool that is  
+holding the associated message.  
+
+
+Small detail: To avoid downloading sections of the index pool you've  
+already seen, the client-side software will need to maintain a  
+timestamp or something to keep track of the last index message you've  
+seen.  Pass this timestamp to the message pool server to request all  
+index messages since "timestamp".
+
+Comments welcome,
+
+Jim_Miller@suite.com
+
+
+
+
+

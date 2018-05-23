@@ -1,0 +1,39 @@
+From: Tatu Ylonen <ylo@cs.hut.fi>
+Date: Tue, 24 Oct 95 09:13:40 PDT
+To: weidai@eskimo.com
+Subject: Re: Encrypted TCP Tunneler
+In-Reply-To: <Pine.SUN.3.91.951023022123.9641C-100000@eskimo.com>
+Message-ID: <199510241625.SAA00777@soikko.cs.hut.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> However, I probably won't give up ETT yet, because there are some design 
+> differences that would make ETT more useful in certain circumstances.  
+> SSH seems to be design mainly as a secure telnet program, with TCP port 
+> redirection added on, which suggests (although I'm not sure) that you 
+> need to have an user account on the SSH server to connect to it.  It also 
+> does not seem to do any filtering of TCP redirection requests.  Chaining 
+> would not work well with SSH because of its packet overhead.
+
+You are quite right here; some kind of account is needed on the
+forwarder machine.  (It can, though, be an account without password
+and a login shell that just sleeps.)  But anyway, TCP port forwarding
+is not its main function.  (I don't think the packetizing is such a
+major overhead though - it currently transfers around 400kbytes/sec
+over ethernet encrypted with RC4 between P90 machines.)
+
+> authentication schemes.  What are the relative advantages of your protocol
+> over a more straight-forward DH + signature of exchange values?  DH would
+> provide forward secrecy directly without the need to change the server key
+> every hour. 
+
+The reasons for this key exchange are mostly historical.  If I was
+starting the implementation now, I would use DH + signatures.  The
+performance difference is not very big, but DH + signature would be simpler.
+
+    Tatu
+
+
+
+

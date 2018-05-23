@@ -1,0 +1,78 @@
+From: John Douceur <johndo@microsoft.com>
+Date: Mon, 18 Jul 94 18:02:10 PDT
+To: cypherpunks@toad.com
+Subject: Re: Why triple encryption instead of split+encrypt?
+Message-ID: <9407190102.AA15543@netmail2.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>From:  <solman@MIT.EDU>
+>Date: Monday, July 18, 1994 4:18PM
+
+>Clearly, if you have access to P0, P1; C0 and C1 this attack crushes the
+>algorithm. In most books I've seen, it is assumed that you do not have
+>access to this.
+
+The assumptions about the information available to the cryptanalyst
+vary with the type of attack.  The essence of a known-plaintext attack
+is that both plaintext and cyphertext of several messages are known,
+and the task is to deduce the key.  This is more practical than it may
+sound, since there may be (for example) header information that has
+small or no variability among messages.
+
+>Nonetheless, your cryptanalytic algorithm makes clear an additional
+>constraints that must be placed on the system which I had not realized:
+
+>From the algorithm, the plaintext, and the cypher text, in must not be
+>possible to reconstruct both the plaintext, and the cyphertext for either
+>half of the message.
+
+>To that end I would suggest the improvement of making the splitting
+>operation dependent on the keys.
+
+For that matter, one could have a third key which is used by the
+splitting algorithm.  If one chooses to make this splitting key a
+function of the two DES keys, then this approach reduces to your
+suggestion, at the expense of a smaller keyspace.  It could be said
+that, in the code fragment of my previous message, the splitting key
+is fixed at 0x55555555.
+
+So now the meet-in-the-middle attack regains its earlier applicability:
+A known-plaintext attack would encrypt P with the splitter, decrypt
+C0 with DES, and attempt to meet in the middle to discover key K0;
+similarly, decrypting with C1 to get K1.  If you can design a splitter
+that is as cryptographically secure as DES (good luck), then the
+resulting algorithm is as secure as double DES.  Actually, the
+computational complexity of a cryptanalysis would be somewhere between
+one and two times that of double DES, since it requires one encryption
+analysis and two decryption analyses.
+
+In your previous message, you commented:
+
+>I have a hunch that if I'm wrong, its because the time required to do secure
+>non-redundant secret splitting is as large as the time I'm saving.
+
+If your secret-splitting algorithm is as secure as DES, then it probably
+runs as slowly as DES does, making your hunch correct.  However, even if
+this were not the case, the security of this scheme is significantly less
+than that of triple DES.
+
+JD
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLisjcEGHwsdH+oN9AQHwDgQAualDZ4kcq15Cs/oIufau4f23x11gVmEY
+nAkWt7teczUa+ZUHIRrsY1x3D6FDgzQLdBeajMpz3W8XHzO9HjAykbx3Rg8eTeQf
+ZjGtysnNhSqJwtQLypGhZV+kSv8n4UY5lYkhGHVhTbnn/2ynyjKmqZMkmoN66Klt
+GcbayT4Jhzw=
+=qfay
+-----END PGP SIGNATURE-----
+
+
+
+

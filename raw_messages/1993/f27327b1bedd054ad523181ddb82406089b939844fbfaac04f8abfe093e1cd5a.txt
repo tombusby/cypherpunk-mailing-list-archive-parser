@@ -1,0 +1,51 @@
+From: nobody@rosebud.ee.uh.edu
+Date: Fri, 11 Jun 93 18:38:57 PDT
+To: cypherpunks@toad.com
+Subject: DH for email
+Message-ID: <9306120138.AA10588@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Suppose you are communicating with someone using email about something
+which the government wouldn't like.  Being careful, you use PGP or
+something similar.
+
+Later, the government gets wind of your activities.  They seize your
+computer, recovering your encrypted secret key.  You do not have copies
+of your old mail, but to your dismay, you discover that your email
+service provider keeps backups of old mail.  Using a court order, the
+government is able to recover copies of all of your old email.
+
+The court orders you to reveal your pass phrase for your secret key.
+Any refusal will result in your being jailed for contempt.  You are
+forced to comply.  The result is that your old messages are decrypted
+and used against you as evidence.
+
+It would be good to have an alternative which would not be subject to
+this kind of attack.
+
+Diffie-Hellman key exchange is generally suitable for an interactive
+environment like an encrypted telnet session or a secure serial line.
+But it could be adapted to email by having each side create one or more
+"key halves" in advance, and exchanging these in an initial message.
+Future email could use a session key created by taking the next pair of
+key halves (one from each person).  When the supply of key halves got
+low, more could be generated and piggybacked with the next email message.
+
+Such a system would be more secure against the kind of attack described
+here.  There would be no possibility of reconstructing the session key
+used if the key halves were destroyed after use.  You may choose to
+keep your own personal copies of email, but you can delete them and be
+secure in the knowledge that no attacker will be able to reconstruct
+them.
+
+A program like PGP could be created which would automatically take care
+of the bookkeeping involved with creating and exchanging key halves for
+the DH algorithm.  Then users could have electronic conversations
+which were freer from the threat of being coerced into revealing their
+secret keys and having the contents of their mail exposed.
+
+
+
+

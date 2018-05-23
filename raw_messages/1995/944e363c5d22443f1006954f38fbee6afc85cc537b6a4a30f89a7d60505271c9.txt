@@ -1,0 +1,106 @@
+From: don@cs.byu.edu
+Date: Tue, 29 Aug 95 14:01:35 PDT
+To: cypherpunks@toad.com
+Subject: SSL search attacks
+Message-ID: <199508292102.PAA01897@wero>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: Scott Brickner <sjb@austin.ibm.com>
+
+>We've identified several forms of "real-world retaliation:"
+>
+>1) "Result hoarding" - failure to report a found key
+>2) "Segment hoarding" - requesting more segments than one can hope to search
+>3) Denial of service - preventing access to the server
+
+>The "random search" method eliminates all three of these at about 37%
+>higher cost in search time, on the average.  I submit that if we
+>*really* were trying to break something important, we could design a
+>system which eliminated the first two and adequately limited the third,
+>but at *much* less cost.
+>
+>The problems in the current system were to be expected of a first
+>attempt.  In the future:  Only the server assigns segments, only the
+>assignee may report the status of a segment, and after all segments are
+>NAKed we know condition 1 has occurred, at which time we start over,
+>but never assign the same segment to the same searcher.  Limit the
+>number of segments which may be outstanding with one searcher at one
+>time as a function of work rate.  Deploy redundant servers.
+
+BEAAAT STATE! Push 'em back.. WAAAAAAY BAAAACK. 
+(relevant comments follow)
+
+
+From: tcmay@got.net (Timothy C. May)
+
+>An interesting question: Is it a valid approach for J. Random User to
+>"claim" some chunk of keyspace to search?
+>
+>If the "reward" of finding the gold buried in the keyspace (a key that
+>meets the  challenge) is high and the cost of claiming the keyspace is low
+>(or nil), then game theory tells us that some folks will be tempted to
+>claim a bigger chunk of keyspace than they can possibly process.
+>
+>What can be done to reduce this effect?
+
+
+In regard to both messages, I think that with sequentially allocated
+keyspace an attacker who knows the real key would have trouble getting the
+right segment unless s/he grabbed a big enough piece. If the search is
+restarted, we know something's up. Ensuring that nobody gets to search
+keyspace they searched before would be one improvement. A random (instead
+of sequential) allocation _by the keyserver_ (out of unallocated 
+piecemeal segments) would also take some work to implement. 
+
+
+>On the negative side, ostracize or punish those who bite off more than they
+>can chew. This approach is fraught with dangers.
+
+If the search wraps around to catch the UNACK'ed pieces, this type of
+oversight will only slow down the actual discovery of the key. Failure
+to report a found key, though, is a bit different. I would not be opposed
+to having my program report possible hits, with the server being what
+discovers if I've found it or not.
+
+>On the positive side, let everyone simply attack the keyspace as they see
+>fit, picking random parts to attack. This should not be "worse" than a
+>factor of several from a "perfectly coordinated" attack. (I haven't spent
+>time calculating this, but my intuition is that a random attack, with
+>overlapping keyspace, is not a lot less efficiently attacked than
+>attempting to arrange for no overlaps...just based on my mental picture of
+>dropping line segments randomly on some interval and figuring coverage of
+>the line segment.)
+
+Why not have a random backup-mode, in case someone does mount a denial of
+service attack. Or imploy a combination of the two modes. The machines
+running brloop can search sequentially (out of the middle 50%?) and the
+machines not connected search randomly (out of the outside 50%?). Or,
+venturing further into the I-wonder-who's-gonna-code-this world, log the
+random searches for possible conversion to an exhaustive search later. 
+
+It would be nice to be able to hit the emergency button and switch to
+random mode, but currently I don't think there's a need to actually
+use it.
+
+Don
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQB1AwUBMEN/U8La+QKZS485AQHNcgL+ItlNLYcsIjjlQPQJBxgts66GXPMs3ijb
+QIcqiAbrg4cq7F9xWNRvZa9LTvw75UUM1+PmItGkSUuqOqvJ9VkzaUp8/Sf5zuDs
+5XTlJLVhYa7qQzY4Ov4a3k0ora0SPvKh
+=wyzo
+-----END PGP SIGNATURE-----
+<don@cs.byu.edu>           fRee cRyPTo!   jOin the hUnt or BE tHe PrEY
+PGP key - http://bert.cs.byu.edu/~don     or PubKey servers (0x994b8f39)
+  June 7&14, 1995: 1st amendment repealed.  Death threats ALWAYS pgp signed
+* This user insured by the Smith, Wesson, & Zimmermann insurance company *
+
+
+
+

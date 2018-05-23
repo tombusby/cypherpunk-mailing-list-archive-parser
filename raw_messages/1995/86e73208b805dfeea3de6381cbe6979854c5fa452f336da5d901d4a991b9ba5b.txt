@@ -1,0 +1,63 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Mon, 20 Nov 1995 06:59:47 +0800
+To: Andy Brown <asb@nexor.co.uk>
+Subject: Re: 4096 bit strong prime for Diffle-Hellman
+In-Reply-To: <Pine.SOL.3.91.951116091316.19868C-100000@eagle.nexor.co.uk>
+Message-ID: <Pine.SOL.3.91.951117123337.27369A-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 16 Nov 1995, Andy Brown wrote:
+> > Just for anyone interested, I 'found' a suspected 4096 strong prime (p and
+> > (p-1)/2 are prime) for use with Diffie-Hellman, generator of 2.
+> As a matter of interest, how long did it take you to generate this, and
+> with what hardware?  I left a 120Mhz Pentium searching for 15 hours
+> overnight without any success (it managed to eliminate 10 candidate primes
+> as not strong in that time). 
+
+Well, I left it running for about 50 hours over last weekend without a hit. 
+Then I restarted it on Monday night and got a hit in about 12 hours :-).
+(I thought it has finished sooner but I looked again at the 'script(1)' 
+output and it did take 12 hours).
+It is sort of hard to tell how longs things would take, due to the hit or
+miss nature of this kind of search for primes. This is on a SGI with a
+200mhz R4400 which is about the same speed as a 120mhz pentium when using
+my maths libraries.
+
+I'm doing the 'pick' an odd random number 'p', sieve p and (p-1)/2 over
+the first 2000 primes, adding in steps until a number passes the sieve.
+For a generator of 2, p mod 24 == 11 should be true.
+
+When it passes, then do Miller-Rabin tests on P and (P-1/2) enough times
+to be happy that the number is probably a prime :-). 
+
+I believe that there are improvement that I can put in there for the
+initial search for candidate primes
+
+The actuall numbers for the search are as follows, 
+1057 numbers passed the 'strong prime sieve'. 
+7 numbers passed the prime test 
+1 number passed both the prime and strong prime test. 
+
+I suspect the ratio of 132 cadidates for 'strong' prime testing for each
+'prime' could be brought down quite a bit but since I only need strong
+primes for DH parameters, I probably will not spend the time on improving
+my initial sieve right now. 
+
+eric
+
+PS, I just 'found' another 2048 bit strong prime last friday night,
+2929 numbers passed the 'strong prime sieve'.
+29 numbers passed the prime test (101 candidates per hit)
+1 number passed both the prime and strong prime test,
+4h12m run time.
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+
+

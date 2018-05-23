@@ -1,0 +1,51 @@
+From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+Date: Thu, 27 Jan 94 12:02:12 PST
+To: cypherpunks@toad.com
+Subject: Re: Remailer Noise Traffic
+In-Reply-To: <9401262019.AA14167@toad.com>
+Message-ID: <199401271953.AA12329@flubber.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Philippe Nave writes:
+> W. Kinney writes :
+> > 
+> > Is there some reason why lots of 'punks _aren't_ running a simple script 
+> > that will, say, fire a message to one's self through a chain of remailers 
+> > every time you log on or at random intervals or something?
+
+Something to consider for this is Safe-Tcl and the proposed Enabled-Mail
+extension for MIME.  Enabled-Mail will allow you to create a multi-part
+MIME message that contains a script to be executed in a safe interpreter at
+delivery-time (to the user's mailbox) or at read-time; one proposed use
+listed in the draft was to generate return-reciepts when mail had been
+delivered to the recipient.  It would be quite trivial to adapt this system
+to send off an encapsulated message back through the remailers that would
+take a random path through the system and at the final remailer ask to be
+delivered to /dev/null.  
+
+[...]
+> Things That Would Be Nice:
+>    1) The script, incantation, or whatever should be easy for even Unix
+>       novices (*blush*) to implement without assistance. [...]
+
+If/when enabled-mail is accepted as a part of the MIME standard it will
+become fairly transparent to the user and can be spread to more than just
+Unix hosts.
+
+>    2) The script may need to incorporate some random element that changes
+>       the path through the remailers every now and then [...]
+
+It would be trivial to have the remailer randomize the paths generated in
+the scripts it attaches to messages going out.
+
+>    3) Some assurance that this will be a *quiet* process;
+
+Again, this could be done by the script-generation process so that all
+error messages are pointed to the remailer.
+
+jim
+
+
+

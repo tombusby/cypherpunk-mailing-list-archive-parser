@@ -1,0 +1,67 @@
+From: Phil Karn <karn@qualcomm.com>
+Date: Tue, 5 Jul 94 21:33:02 PDT
+To: ifarqhar@laurel.ocs.mq.edu.au
+Subject: Re: Dr. Dobbs Dev. Update 1/5 July 94 & Schneier
+In-Reply-To: <199407030001.AA14425@laurel.ocs.mq.edu.au>
+Message-ID: <199407060433.VAA13108@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>An interesting thought hit me when reading this.  The "classic"
+>Cray series (Cray-1, X-MP, Y-MP) all have a rather curious instruction
+>generally known as population count.  All it does is to take a register
+>and count the number of one bits in it, and return that count.  Originally
+>I could never figure out a use for this, but later was told that it was the
+>"canonical NSA instruction", and was consistently demanded by almost all
+>military SIGINT operations.
+
+>On reading this, I realised that one possible use was to implement a
+>vectorized version of a LFSR.  Take a vector register (the shift register),
+>AND it with a mask of the taps into another vector register, and then
+>do a population count to determine the carry in.
+
+>Just a thought.  It's the only plausable use that I have yet thought of
+>for this instruction.  Has anyone else got any ideas?
+
+This operation is ideal for computing the "hamming distance" between
+two binary words, an important operation in the encoding and decoding
+of forward error correcting codes. It's also used when correlating
+binary streams, eg, searching for frame synchronization vectors or
+despreading spread spectrum signals. All these operations are
+fundamental to modern digital radio communications.
+
+I've written software that implements a correlator, a convolutional
+coder and a sequential decoder. All three make heavy use of this
+operation, so I know first hand how useful it would be to have such an
+instruction. The best I can do on the 386/486 when is to add the
+results of table lookups on manageable pieces of the word (e.g., 8
+bits at a time).
+
+People keep assuming that NSA spends most (or even all) of its CPU
+cycles on cryptanalysis. They forget that before you can attack a
+cipher, you need some ciphertext. Usually this comes by radio. This
+means analyzing, demodulating and decoding (as opposed to deciphering)
+the digital RF modulation being used by your target. A Cray with a
+library of signal analysis and demodulation programs would be ideal
+for this purpose.
+
+I would make an educated guess that this, and not cryptanalysis, is
+NSA's biggest use for their Crays.  A Cray is not especially
+cost-effective for cryptanalysis, at least compared with special
+purpose hardware that could, say, attack DES far more cheaply.
+
+And then there's this friend of mine who works for IDA/CRD, the NSA
+think-tank in Princeton. His specialty is digital signal processing,
+often using Crays. As a lark, he once demodulated some amateur packet
+radio signals that were used in "Star Trek IV" as background sound
+effects. Great fun.  Another time he helped the Russians demodulate
+some telemetry signals from their "Vega" Venus balloon probe. Sucked
+the bits right out of the noise.
+
+Phil
+
+
+
+
+

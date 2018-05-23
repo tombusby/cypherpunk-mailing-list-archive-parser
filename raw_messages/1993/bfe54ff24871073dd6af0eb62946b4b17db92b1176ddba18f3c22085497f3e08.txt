@@ -1,0 +1,42 @@
+From: smb@research.att.com
+Date: Mon, 11 Oct 93 14:16:21 PDT
+To: an41418@anon.penet.fi
+Subject: Re: Breaking DES
+Message-ID: <9310112113.AA18057@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 My understanding of how an exhaustive search on the key space
+	 can be used to break DES is that for every key, K, D(K,Cipher)
+	 is applied until the output matches something legible.
+
+	 Say that some random string, to be thrown out, is added
+	 to the beginning of the plain text, and that DES is applied
+	 in cbc mode, then how could such an attack work? 
+
+	 My point, I don't see how DES can be broken if the initial
+	 block is a grabage block, and cipher block chaining is used.
+	 Please enlighten me (gently).
+
+	 One other point... is the decision to encrypt - decrypt -encrypt
+	 when applying triple des arbitrary? Why not just encrypt
+	 with k1 and then encrypt with k2. Isn't the effect the same?
+
+There are two reasons for that, one of which no longer applies.
+
+The one that still matters is that if you set k1==k2, then the operation
+is equivalent to single encryption with k1, thus providing backwards
+compatibility.
+
+The other reason is that it was initially feared that DES was a group.
+That is, encryption with k1 and k2 might be equivalent to single encryption
+with some unknown (to you and me) key k3.  But a cryptanalyst or a brute-
+force cracker would neither know nor care that you double-encrypted.
+
+It has now been proved that DES is not a group.  What isn't clear to me
+is whether it's ``mostly closed'', though I suspect not.
+
+
+
+

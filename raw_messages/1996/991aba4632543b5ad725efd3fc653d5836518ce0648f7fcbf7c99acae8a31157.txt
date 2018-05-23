@@ -1,0 +1,57 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 26 Apr 1996 17:16:11 +0800
+To: cypherpunks@toad.com
+Subject: Re:  US law - World Law - Secret Banking
+Message-ID: <199604260406.VAA07851@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Another thing Baker said in that report about Japanese crypto policy was
+interesting.  He was talking about key escrow and how he thought the
+Japanese discussions about it were on the wrong track.
+
+Apparently the Japanese idea of key escrow combines it with a government
+Certification Authority (CA) infrastructure.  You get certified keys
+which you will use in commerce, and these keys are escrowed.  (Japan is
+not showing much enthusiasm for the escrow idea, to Baker's displeasure,
+but they are discussing it.)
+
+Baker's problem was that the keys would be used for signing as well as
+for encryption.  He said that in the U.S. they had been careful to
+separate these functions in their plans.  That's why we have DSS for
+signatures and Clipper (Capstone, Skipjack, etc.) for encryption.  Only
+the Clipper keys get escrowed.  The DSS keys are kept private.
+
+The problem with using one set of keys for both functions (as for
+example when RSA keys are used for both encryption and signing a la
+PGP) is that the escrow people can not only defeat encryption, they can
+forge signatures.  If escrowed keys were stolen, not only would privacy
+be lost but also the reliability of signatures.
+
+Now at first this seems strange.  Why would it be more of a problem that
+a broken escrow could forge signatures than break privacy?  Well, from
+the corporate point of view it could be a lot worse.  When you get a
+signature on a business document you want to be able to trust it.  If a
+company can hope to get out of a commitment by saying that hackers must
+have broken in and stolen the keys, the value of digial signatures is
+much reduced.
+
+Privacy, on the other hand, at least from the point of view of someone
+like Baker, is not as important.  His people eavesdropped all the time,
+and it wasn't that bad.  So from his perspective it is reasonable that a
+possibly insecure escrow system is acceptable for encryption, but not for
+signatures.  And that is apparently a principle behind the US crypto
+policies as they have unfolded over the last few years.
+
+This may shed light on the battle a few years back over whether RSA
+signatures would be adopted as the digital signature standard rather
+than the discrete log system which was finally chosen.  It also
+suggests that the government has long realized the difficulties of
+keeping the escrowed key database secure.
+
+Hal
+
+
+
+

@@ -1,0 +1,98 @@
+From: David Honig <honig@sprynet.com>
+Date: Sat, 24 Oct 1998 06:34:46 +0800
+To: Mok-Kong Shen <mok-kong.shen@stud.uni-muenchen.de>
+Subject: Re: PRNGs and testers.
+In-Reply-To: <19981021151835.A26267@krdl.org.sg>
+Message-ID: <3.0.5.32.19981023145454.008dd100@m7.sprynet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 09:00 AM 10/23/98 +0200, Mok-Kong Shen wrote:
+>David Honig wrote:
+>
+>> Recall that Ueli's Universal Statistical Test
+>> is valid only for real sources of entropy.
+>> PRNGs have zero entropy asymptotically ;-)
+>
+>Sorry that I haven't yet understood. Could you explain a bit more
+>from the entropy point of view? In my opinion, a statistical
+>test does not and should not take into account how a sequence
+>being tested is obtained. Given is simply a sequence and no other
+>information and the test should give an answer.
+>
+>M. K. Shen
+
+A *sequence* isn't random; a process is.   A sequence may be the result of
+some process, but its always a sample of a process.
+
+When you ask, "Is some process random", you *must* define "random"
+operationally, thus, finitely.
+
+
+
+A test for structure, such as Marsaglia's "Diehard" suite, 
+measures various statistics (structure) of a sample and compares
+them to the measurements you'd get for (abstractly modelled, "real")
+randomness.  If the particular tests you've chosen 
+don't see some structure that's present in the sample, you'll mistakenly 
+accept the process as "random".  Diehard is nice because it includes
+complex stats and some Monte Carlo evaluations.
+
+Marsaglia's test was designed to find problems in PRNGs, which he was
+working on.
+
+Maurer suggests a way to compute the entropy of the data, taken as N-bit
+blocks, and computes the value you'd compute for random data.  His test
+consumes a lot more data, and is 
+
+Now, a PRNG has a finite amount of (unknown) initial internal state.
+This state is expanded into the output stream, which goes on forever,
+thus the finite initial entropy is spread infinitestimally thin.
+
+A true RNG, even an imperfect one, generates a constant amount of entropy
+per symbol ("bit per baud" averaged over any sufficiently large window).
+
+-----------------
+An experiment
+
+Run a block cipher in a feedback mode, generating a large data file.
+Any good cipher will pass Diehard's tests for structure.  So will
+a true random file.  
+
+(I've posted directions for producing decent true randomness from
+a detuned FM radio, soundcard, and 8->1 parity-reduction filtering.)
+
+Now run Maurer's test; I've posted a version for blocksize = 16.  
+The cipher-PRNG output will not have the entropy expected for randomness.
+The physical-random file will.
+
+
+-----------------------------
+
+D. Honig
+
+"When horsemeat is outlawed, only outlaws will eat horsemeat"
+	--California Voter Information Pamphlet
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+

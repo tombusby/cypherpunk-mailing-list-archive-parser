@@ -1,0 +1,61 @@
+From: "Peter Trei" <trei@process.com>
+Date: Sat, 20 Jan 1996 10:28:21 +0800
+To: <cypherpunks@toad.com
+Subject: Re: Hack Lotus?
+Message-ID: <9601200158.AA07776@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Phill writes:
+> 
+> I've been thinking about how I would do the lotus hack. I certainly would not be 
+> wanting to do a public key operation for the benefit of the government on every 
+> message. How about the following:
+> 
+> During installation of program: 
+> Select a random key ER, encrypt it under the govt. public key to give Eg(ER). 
+> To start encrypting,
+> 
+> chose a random value R, encrypt under destination public key to give Ek(R)
+ 
+> set 40 bits of R to 0 to produce R' 
+> Encrypt R' under ER to give E-ER(R')
+> Hash R, E-ER(R') and Eg(ER) with a one way function (MDMF like) to produce the 
+> actual key. 
+> Send across Ek(R), E-ER(R'), Eg(ER) 
+> To decrypt the message one needs the information for the escrow authority.
+> 
+> 		Phill
+
+Wouldn't this interoperate only with other systems which had a similar setup? I suspect
+the Lotus wants the US-Domestic and the International versions to interoperate
+transparently, including with  their older versions.
+
+Kaufman describes the encryption setup of Notes in moderate detail on pages 448-454
+of 'Network Security'. It's a typical mixed system, with a secret key encrypted under the
+recipient's Public key (a short one or a long one, depending on the local of the 
+recipient and/or sender).
+
+I suspect that Lotus has not completely reworked it's security system for the 
+international version, and that they are in fact doing a second public key operation on 
+the 3 bytes of GAK'd data.
+
+If they're nasty, they'll check on the receiving side as well, to ensure that the LEAF 
+and/or the espionage-enabling key have not been patched in the sending 'International'
+version.
+
+Peter Trei
+trei@process.com
+
+
+Peter Trei
+Senior Software Engineer
+Purveyor Development Team                                
+Process Software Corporation
+http://www.process.com
+trei@process.com
+
+
+
+

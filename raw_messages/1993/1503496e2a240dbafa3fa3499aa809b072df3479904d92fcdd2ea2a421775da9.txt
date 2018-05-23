@@ -1,0 +1,43 @@
+From: rjc@gnu.ai.mit.edu (Ray)
+Date: Sat, 27 Nov 93 05:39:08 PST
+To: cypherpunks@toad.com
+Subject: Secret sharing program available
+Message-ID: <9311271337.AA04964@albert.gnu.ai.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[Note: I'm not subscribed so if you reply, remember to Cc: me]
+
+   A few hours ago I was bored so I started experimenting with Shamir
+"threshold" sharing in G++. The result: Cryptosplit.  It's a hacked up
+but working implementation of polynomial interpolation over an integer
+field of prime order. Basically, you can take an arbitrary integer, D,
+generate m keys, k of which are required to reconstruct the original
+integer.  Its inner workings are very simple. Pick a random polynomial
+P(x) of degree (k-1) over Z_p with constant term D, and generate m 2-tuples 
+(x, P(x)). These "keys" are output in the form x*p+y which can be reversed by
+the division algorithm. 
+   The interpolation process generates a k X k matrix of linear equations
+by plugging (x,y) into y=a_n*x_n + ... + a_1*x + 1*D and then solving
+by Gaussian elimination (upper triangular matrix. element k,k is the constant
+term D)
+
+   Right now it's not very usable since you have to choose your own 
+prime modulus > D (I was too lazy to write a prime generation routine.
+I just choose Mersenne primes of sufficient size) and because
+it only accepts base-ten input from the command line. It needs to be
+optimized a lot too.
+
+   If anyone wants the source (especially if they want to fix it up),
+let me know.
+
+-Ray
+
+
+-- Ray Cromwell          |   Engineering is the implementation of science; --
+-- rjc@gnu.ai.mit.edu    |       politics is the implementation of faith.  --
+
+
+
+

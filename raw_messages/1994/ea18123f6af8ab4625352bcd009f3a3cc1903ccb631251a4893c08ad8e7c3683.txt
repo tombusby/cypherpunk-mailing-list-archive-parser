@@ -1,0 +1,57 @@
+From: Graham Toal <gtoal@an-teallach.com>
+Date: Thu, 14 Apr 94 19:28:58 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer Reply Blocks
+Message-ID: <199404150227.DAA28644@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+
+: Which is why my remailer uses 3DES and adds random padding to the
+: address before encrypting it.  Random padding will thwart many chosen
+: plaintext attacks, especially if you do some transpositions prior to
+: encrypting it.  Since the text to encrypt is so small, doing five or ten
+: consecutive DES encryptions with different keys would not use up much
+: CPU time, but could dramatically increase security.  Also I compress the
+: address slightly by stripping off the high bits so that 8 bytes fit into
+: 7.  Just a few suggestions to keep in mind...
+
+You beat me to it :-)  I was going to suggest xoring the data with a set
+of random numbers (generated along with the des key) to shield it from
+known plaintext, but a few rounds of DES might do just as well.  You have
+to do *something* because there's a known-plaintext '@' in every email addr.
+
+: Overall, looks pretty good.  BTW, what's the number that it prepends to
+: your email address when you get a reply?
+
+The things I'd improve on it are the need to edit out the indentation
+when you use the header block in a reply, and that you have to move the
+block from the end of the file to the top.  Either it should start
+out at the top, or the remailer should search the whole mail for it.
+
+On chaining reply blocks:  I was wrong about them getting larger and
+larger as they went through remailers - you don't have to encode the
+ascii representation of the last remailer's block and then ascii
+encode that too - you could generate your block by first de-ascii'ing
+the last block, prepending the return address, and then re-ascii'ing it.
+That way the previous return addresses would contribute the same size
+of data in every link in the chain.
+
+One thing more has to be done to foil traffic analysis - the encrypted
+email address has to be padded out a lot so that they can't guess who
+it was by knowing the lengths of the email addresses of a small set
+of possible posters.  Assuming we're already stripping out the personal
+names etc in email addreses and just keeping the canonical bits (for
+example "Graham Toal" <gtoal@gtoal.com>  ->   gtoal@gtoal.com
+then I'd suggest padding with spaces to something like 64 chars, then
+going up +64 each time for those X400 idiots who might want to post
+through us :-)  That way you won't be able to tell a 128-byte long name
+from 2 hops of a 64-byte short name.
+
+G
+
+
+
+

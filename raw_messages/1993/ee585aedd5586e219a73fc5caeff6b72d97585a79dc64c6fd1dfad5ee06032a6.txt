@@ -1,0 +1,209 @@
+From: shipley@dis.org
+Date: Mon, 1 Feb 93 04:30:16 PST
+To: cypherpunks@toad.com
+Subject: mh wrappers for pgp.
+Message-ID: <9302011223.AA06080@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+
+
+#!/usr/local/bin/tperl4.010
+#!/usr/local/bin/perl
+
+# pgpedit V1.0
+# Mon Feb  1 04:10:42 PST 1993
+# Peter Shipley (shipley@utter.dis.org -or- shipley@berkeley.edu)
+
+# to install (mh instructions)
+# place this script in your path (eg ~/bin)
+# create few links:
+#
+#       ln -s /usr/local/mh/bin/repl ~/bin/pgprepl
+#       ln -s /usr/local/mh/bin/comp ~/bin/pgpcomp
+#
+# Add the following to your .mh_profile:
+#
+#       pgprepl: -editor pgpedit
+#       pgpcomp: -editor pgpedit
+#
+# To use just use the commands pgprepl or pgpcomp instead of repl or comp
+#
+
+
+
+require "sys/wait.ph";
+
+#custom stuff here
+
+#default editor
+$defaulteditor="/usr/ucb/vi";
+
+
+$pgpcommand="/usr/local/bin/pgp -sta +clearsig=on";
+
+$debug=0;
+
+#test the arg count
+    die "bad argument count" if ($#ARGV > 0);
+
+#set the umask to something really paranoid
+    umask(07177);
+
+#set the path if there is not one
+    $ENV{'PATH'} = '/bin:/usr/ucp:/usr/bin' unless $ENV{'PATH'};
+
+# get the editor
+    if ($ENV{'VISUAL'}) {
+	$editor=$ENV{'VISUAL'} ;
+    } elsif ($ENV{'EDITOR'}) {
+	$editor=$ENV{'EDITOR'} ;
+    } else {
+	$editor = $defaulteditor;
+    }
+
+    $editor = $defaulteditor if $editor =~ /pgpedit/ ;
+
+# prepare the file.
+    &prepfile($ARGV[0]);
+
+# run the editor
+    &runeditor($ARGV[0]);
+
+# have pgp sign the file
+    &SignMailFile($ARGV[0]);
+
+# the end
+    exit 0;
+
+
+
+
+sub SignMailFile {
+
+    local($INPUT) = @_;
+
+    local($BODY) = "/tmp/pgp$$.body";
+    local($PGPBODY) = "$BODY".".asc";
+
+
+    print "$INPUT \n" if ($debug);
+
+    open(INPUT, "+>>$INPUT" ) || die "failed to open $INPUT: $!\n";
+    seek(INPUT,0, 0);
+
+    open(BODY, "+>$BODY") || die "failed to open $BODY: $!\n";
+    select(BODY); $| = 1; select(STDOUT);
+
+line:
+    while (<INPUT>) {
+	if (/^--------/) {
+	    $where = tell;
+	    last;
+	}
+    }
+
+
+    print STDERR "$BODY \n" if ($debug);
+
+    while (<INPUT>) {
+	print BODY $_;
+    }
+
+    print STDERR  "$pgpcommand $BODY\n" if ($debug);
+
+    `$pgpcommand $BODY`;
+
+    truncate(BODY, 0); unlink($BODY); close(BODY);
+
+
+    open(PGPBODY) || die "failed to open $PGPBODY: $!\n";
+
+    truncate(INPUT,$where) || warn "failed to truncate file $FILE: $!\n";
+    seek(INPUT,$where,0);
+
+    print INPUT "\n\n";
+
+    print INPUT <PGPBODY>;
+
+    truncate(PGPBODY, 0); unlink($PGPBODY); close(PGPBODY);
+
+    return;
+}
+
+
+
+
+sub prepfile {
+
+    local($FILE) = @_;
+    local(@data);
+
+
+    open(FILE, "+>>$FILE" ) || die "failed to open $FILE: $!\n";
+    seek(FILE, 0, 0);
+
+    while(<FILE>) { push (@data, $_); last if ( /^--------/ ); }
+
+#	push (@data, "\n\n\n");
+
+    while(<FILE>) { last if (/^-----BEGIN PGP SIGNED MESSAGE-----/); }
+
+    if( !eof(FILE) ) {
+
+	while(<FILE>) { 
+	    last if (/^-----BEGIN PGP SIGNATURE-----/);
+	    push (@data , $_); 
+	}
+
+	seek(FILE, 0, 0);
+	truncate(FILE, 0);
+
+	print FILE @data;
+
+    }
+    close(FILE);
+	
+    return;
+}
+
+
+
+sub runeditor {
+    local($file) = @_;
+    local($pid);
+
+FORK: {
+	if ($pid = fork) {
+		wait;
+	} elsif (defined $pid) { # $pid is zero here if defined
+		exec "$editor $file";
+	} elsif ($! =~ /No more process/) {     
+		# EAGAIN, supposedly recoverable fork error
+		sleep 5;
+		redo FORK;
+	} else {
+		# weird fork error
+		die "Can't fork: $!\n";
+	}
+}
+    return;
+}
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQBFAgUBK20WHMhmn7GUWLLFAQFBawF6AuCjRKbZQcAM1NFXwrYO1MLmTvPcV7FC
+loRe/LqIoNwMST9sKfDFNSBoKmvCEaaB
+=Cjuz
+-----END PGP SIGNATURE-----
+
+
+
+

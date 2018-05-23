@@ -1,0 +1,60 @@
+From: jis@mit.edu (Jeffrey I. Schiller)
+Date: Sun, 3 Sep 95 00:34:34 PDT
+To: cypherpunks@toad.com
+Subject: ASN.1 and Kerberos version 5
+Message-ID: <ac6e483800021004fa65@[18.162.1.1]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Perry E. Metzger writes:
+>I've heard people associated with the decision to use ASN.1 in
+>Kerberos V say it was a mistake. Frankly, I think ASN.1 is a blight
+>which should be exterminated from the planet.
+
+I'll say it. I was the person who pushed for the use of ASN.1 in Kerberos
+version 5. I had this disease at the time that made me think that ASN.1 was
+a good idea. I got better, unfortunately we have been living with the
+results of my braino for quite some time now... poor Ted.
+
+However, the problem with ASN.1 isn't its waste of space (which actually
+isn't that bad for a mechanism for encoding arbitrary objects). The problem
+is that it is the product of a standards making process that didn't (and
+doesn't) value interoperability. Adherence to the ISO specifications does
+not guarantee interoperation. Instead regional "workshops" negotiate
+aspects of implementations to obtain interoperation.
+
+What does this mean for ASN.1? It means that the definition of ASN.1 is a
+bit abstract (as its name implies). Problems result when two organizations
+(say MIT and OSF!) attempt to implement from the specification in ASN.1 but
+use different ASN.1 compilers and things then don't work. Arguments then
+ensue about whose compiler (or manually written parsing code) is "correct"
+in terms of doing the right thing with ASN.1. This is particularly so when
+using DER (for Distinquished Encoding Rules) which is itself an
+after-thought added to ASN.1 later in the process. It is required in order
+to verify digital signatures (which have to be computed on the "encoded"
+form of an object because there is no good way to calculate a signature on
+an "abstract" object).
+
+If the Kerberos specification said: "pub this byte here and that one there"
+none of these arguments and problems would happen.
+
+                                -Jeff
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMEiaf8UtR20Nv5BtAQFzNAP/Q/LuIMbxAPAp64Kn2PSPd600TYlRAUJh
+QbsuL/iRhGXWrxSjsFzkcr6e3sIpSFggxglFU38TJT/DG2AD8MOid3Uj4pRJVbyo
+z7Au0Vp1NiotmRBHq2udItzJ7LLPM0j38FHQenqPs9mkX2Cq5kVgGUBO94HabEuE
+S9XPCgV8E1Q=
+=kTyw
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

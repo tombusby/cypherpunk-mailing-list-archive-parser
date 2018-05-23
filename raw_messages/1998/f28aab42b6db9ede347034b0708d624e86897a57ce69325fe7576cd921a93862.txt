@@ -1,0 +1,108 @@
+From: Andy Dustman <andy@neptune.chem.uga.edu>
+Date: Sun, 4 Jan 1998 11:10:50 +0800
+To: Charlie Comsec <comsec@nym.alias.net>
+Subject: Re: [RePol] Re: Remailer Logs (and Accountability)
+In-Reply-To: <19980103050003.766.qmail@nym.alias.net>
+Message-ID: <Pine.LNX.3.94.980103214235.6085G-100000@neptune.chem.uga.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On 3 Jan 1998, Charlie Comsec wrote:
+
+> > The "reordering pool" is
+> > always a minimum of 5 messages so people can opt for how long their
+> > message wil be 'stashed' at replay. (use 'Latency: +00:00' for zero latecy).
+> 
+> Is that default reordering pool size the same for Type I and Type II
+> messages?
+
+Type-II messages don't support latency yet (or not until fairly recently,
+I can't remember). Type-I remailers don't, by default, do any reordering,
+but reordering is not as useful for type-I messages (unless you remix). 
+Cracker uses Mixmaster to reorder type-I messages. In addition to the pool
+size of 5, it also will remail a maximum of half the messages present, so
+in reality, the pool size floats up and down (but not lower than 5).
+
+> Perhaps someone can double-check my math on this.  Assuming
+> equally-sized messages that are otherwise indistinguishable, and a
+> reordering pool size of five, then the odds of matching up an
+> encrypted incoming message with an encrypted outgoing message are
+> one in five.
+
+The odds are somewhat worse (for the attacker). In the case of the
+scenario above on cracker, the odds of any given message being cycled out
+of the pool (the pool is processed at six minute intervals) is generally
+50% per cycle. Thus, there is a 75% chance that it has been sent by the
+end of the second cycle, and therefore a 25% (.5*.5) chance that it is
+still in the queue. The current RMS latency (from the remailer's own
+stats) is 19.5 minutes. You want to about double that to be sure that the
+message has really come out (and then, you still can't be sure), so that's
+about six cycles. If we are doing 5 per cycle, then the odds are 1 in 30. 
+A very rough estimate.  However, by my estimates, it's more like 12
+messages per cycle (typically; it's variable for the reasons above), so
+that runs it up to 1 in 72 or so.
+
+(And of course, the remixing ensures that all messages are
+indistinquishable, whenever possible.)
+
+> What I'm unclear on is how setting a Latency:  flag affects the
+> diffusion of the output.  Is that lattency IN ADDITION to the pool
+> size of five, or does Latency:  +00:00 bypass the reordering process
+> altogether?
+
+Latency occurs before reordering. Latency: +00:00 does nothing, BTW, and
+it's the default. Latency: +12:00r adds a 0-12 hour random delay before
+reordering.
+
+> My main concern is the security of chained reply blocks which are
+> more vulnerable to attack than normal anonymous messages.  A single
+> anonymous message can only be traced BACKWARDS after it's been
+> received.
+
+Which is probably not so hard when you record all inter-remailer traffic,
+which is probably what happens somewhere.
+
+>  An anonymous reply, OTOH, could, theoretically, be
+> "walked" through each remailer in the chain until the identity of
+> the recipient was discovered.  While that process would require
+> convincing each remailer operator in the chain to cooperate, it's a
+> lot more feasible than tracing a message backwards to its source.
+> (Yes, I know about posting to a public message pool, such as a.a.m,
+> but NG posting seems to be rather unreliable lately.)
+
+Yep, that was part of the motivation for remixing: To keep eavesdroppers
+from intercepting partially-decrypted reply blocks. It also prevents
+traffic analysis based on the message section after the reply block. Reply
+blocks, of course, tend to get smaller after each hop, while the message
+getting delivered tends to get larger. Automatically encapsuling type-I
+messages in type-II format whenever the recipient supports it prevents
+this type of traffic analysis.
+
+Andy Dustman / Computational Center for Molecular Structure and Design
+For a great anti-spam procmail recipe, send me mail with subject "spam".
+Append "+spamsucks" to my username to ensure delivery.  KeyID=0xC72F3F1D
+Encryption is too important to leave to the government. -- Bruce Schneier
+http://www.athens.net/~dustman mailto:andy@neptune.chem.uga.edu   <}+++<
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3ia
+Charset: noconv
+
+iQEPAwUBNK77/BOPBZTHLz8dAQHlRwfPY/0uPyFXIgQxGAFt+kbNT85lZ9/Bf9B6
+XIoRHARSbE0np2JB7kB0PdjXIxgyFoxcn9kuTyspOgFgF80zQjFR7RYSQC8QKXDV
+1dnod7X4ynrvjmHbGtfOYDfgZSKUboTrwIPuehfUw3IDnDliVjDnnDy76f4uZdLc
++Jn4JGRGPqVBQ3EX2d0yxDsIXY88geeGa4xgzSMSEaXWW+AoNw19mNJRA0AehiLg
+DZRDHKbCKYRtqt9aOn1h3qi3VrOqUjkO8awBkSQw84ycEqVaBgczBW/nBtNIpHq5
+42pHjHpCc1riYY/2vuOXXD3juou1Th4By7JaZLwt+GkbZA==
+=r/Dk
+-----END PGP SIGNATURE-----
+
+
+
+
+

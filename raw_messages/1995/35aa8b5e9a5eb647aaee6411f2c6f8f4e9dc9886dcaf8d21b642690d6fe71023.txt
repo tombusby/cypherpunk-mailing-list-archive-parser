@@ -1,0 +1,29 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Thu, 24 Aug 95 00:06:01 PDT
+To: David Neal <dneal@usis.com>
+Subject: Re: Brute SSL Challenge
+In-Reply-To: <199508240552.AAA00601@gnupln8.usis.com>
+Message-ID: <"swan.cl.cam.:169220:950824070545"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Hopefully everyone on here is accomplished enough to know
+> optimizing the brutessl code helps immensely.  If not, well I used
+> 
+> gcc -O6 -funroll-loops -fomit-frame-pointer -finline-functions -c search.c
+> gcc -O6 -funroll-loops -fomit-frame-pointer -finline-functions -o brutessl \
+>                      brutessl.c search.o
+> 
+> To go from 5,000 keys per second to 10,100 keys per second.
+
+If people could send me timings for various compilers / flags I'll collate a
+table of speeds [see brutessl.h 1.02 for an example -- I tried using different
+sizes for the RC4 info and it appears that only ALPHAs really gain by using int]
+
+I recommend that you do not blindly use the above flags -- I just tried it on
+our fastest machines (SGIs) and it *REDUCED* the speed from 35200 to 28400.
+
+
+
+

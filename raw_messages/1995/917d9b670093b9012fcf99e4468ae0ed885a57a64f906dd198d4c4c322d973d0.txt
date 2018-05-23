@@ -1,0 +1,96 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 2 Nov 1995 11:36:46 +0800
+To: Michael Froomkin <froomkin@law.miami.edu>
+Subject: Re: ecash remailer
+Message-ID: <199511020239.SAA27491@ix.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:20 PM 11/1/95 -0500, Michael Froomkin <froomkin@law.miami.edu> wrote:
+>I thought a property of Chaumian DigiCash was that a coin *had* to go back
+>to the bank before it could be spent again.  
+
+No.  The basic Chaum Digicash method looks like this:
+1) Alice creates a number of a recognizable form (Chaum's 1985 CACM paper
+uses n1n2n3...n64n1n2n3....n64, i.e. a 64-bit number concatenated with itself).
+2) Alice blinds the number and sends it to the bank (along with some request
+for withdrawing money from her account or payment in other coin or whatever.)
+3) The bank signs the number and sends it back.
+4) Alice unblinds the coin; now it's good, recognizably signed, and untraceable.
+
+5a) Alice gives the coin to Bob, who deposits it; the bank records the coin
+number,
+and in case of double-spending, the first person to the bank wins.
+This is useful for on-line transactions, or off-line where everyone trusts
+each other.
+
+OR 5b) Alice gives the coin to Bob using a complicated cut&choose protocol that
+doesn't give away her identity if it's only used once, but if she also gives the
+same coin to Carol with the same protocol, Bob and Carol can identify Alice
+with probability 1 - 1/2**n, for some adequately large n.  This is more work,
+but you can use it for off-line transactions where you don't trust Alice
+not to double-spend.  The protocol doesn't say what to do to Alice if you
+catch her
+cheating; depending on the environment you can debit her account or sue her etc.
+
+6) Bob now has a number, signed by the Bank of Foo, which he can either give
+to them
+to deposit or get cash or use for highway toll (if Foo is really the highway
+company)
+or give to somebody else to spend (which is a little messy in the cut&choose
+method.)
+
+>Logically, I can see at least four possibilities:
+>1) payee data is encoded onto the coin at time of payment, making it 
+>impossible for Carol to bank the coin.  I see no evidence of this in the 
+>docs at the Digicash site, but I just rechecked quickly and may have 
+>missed it.
+
+The basic protocol doesn't say anything about what a valid coin looks like;
+you could use the example in Chaum's paper or a long string followed by
+a checksum or whatever.  You _could_ put the payee's name account number
+in the string as the 64-bit "random" number, or even put both payer and payee.
+The bank could insist on that sort of thing if they wanted.
+If I remember right, the version in the Digicash trial left you the choice
+of filling in a specific payee or using "@" for bearer-payable coins.
+
+>2) No payee data as such is encoded on the coin but it is marked "spent" 
+>to prevent multiple uses by payee to the detriment of payor.  
+
+The bank marks the coin spent upon deposit.
+
+>3) the Digicash software only allows you to send a "spent" coin to the 
+>bank.  You have to hack the software to send the coin to Carol (do you 
+>have to break your own key?).
+
+I don't know if their merchant-client software lets you do this or not,
+but it's just a matter of implementation, not protocol.
+
+>4) nothing in the DigiCash software or protocol prevents you from sending 
+>a coin to Carol so long as you trust Carol not to get you in trouble by 
+>misusing the coin in some way.  That's why Chaum is interested in 
+>hardware based agents that would keep you from respending coins you receive.
+
+Your problem isn't trusting Carol not to get you in trouble,
+it's trusting Alice not to spend the coin again.
+Hardware-based agents are interesting because they make it easier to
+enforce double-spending prevention in off-line systems, and to offer
+better anonymity because you've got more trust that the person didn't 
+double-spend.  Stefan Brands has done a lot of work on this.
+
+In on-line systems you can check whether a coin's been spent already
+by depositing it - the problem is that on-line systems aren't
+always convenient for many applications (e.g. newspaper machines),
+and the costs of communication for an on-line system may be higher
+than the cost of a sufficiently smart smart-card.
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

@@ -1,0 +1,35 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 31 Jan 95 20:12:54 PST
+To: cypherpunks@toad.com
+Subject: Re:  remailers and multiple recipients
+Message-ID: <199502010412.UAA19934@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: jrochkin@cs.oberlin.edu (Jonathan Rochkind)
+> Can the remailers handle multiple recipients?  If I list several addresses
+> in the "Request-Remailing-To:" line, seperated by commas, will the remailer
+> do what I would think, and send off to all of them?
+
+We had some concerns here a while back that someone was trying to exploit
+such a feature to create an exponentially-growing message that would
+totally overload the remailers.  A message of the form:
+
+::
+Request-Remailing-To: <list of remailers here>
+
+::
+Request-Remailing-To: <list of remailers here>
+
+<repeat about 20 times>
+
+was sent.  If all remailers had observed and honored the multiple
+requests, there would have been uncounted trillions of messages flying
+about.  So I would caution anyone considering implementing this feature.
+
+Hal
+
+
+
+

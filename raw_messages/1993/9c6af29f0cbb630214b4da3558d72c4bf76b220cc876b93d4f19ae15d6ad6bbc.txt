@@ -1,0 +1,52 @@
+From: wcs@anchor.ho.att.com (Bill_Stewart(HOY002)1305)
+Date: Wed, 11 Aug 93 19:27:28 PDT
+To: hfinney@shell.portal.com
+Subject: Re: Secure voice software issues
+Message-ID: <9308112126.AA25524@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> First, there has seemed to be general agreement in our earlier discussions
+> of this concept that the hard part is compressing the voice to the point
+> where it can go over commonly-available modems.  The government-standard
+> CELP algorithm is too slow for general-purpose home computers.  You need
+> an algorithm that can operate in real time and compress intelligibly down
+> to about 13K bits per second. 
+
+I downloaded a copy of the GSM 06.10 software (gsm-1.0) from some machine
+at Technische Universitat Berlin, tub.cs.tu-berlin.de, which does
+a 13.3 kb/s voice coding, and has conversion for Sun, linear, mu-law, and A-law.
+(Jutta Degener and Carsten Bormann, Copyright 1992.)
+It runs in two different modes - a strictly-follow-the-standards mode
+and a cheat-a-little-using-floating-point mode.
+In standard mode, piping the compressor into the decompressor ran epsilon faster
+than real time on a Sparcstation 2, and epsilon slower on a Sun ELC.
+Cheating mode took about 2/3 as long as standard mode.
+
+Looked like it was fairly portable.  I compiled it with GCC.
+One of the readmes says that compression and decompression run faster than
+realtime on Sparcs, but I assume that means doing just one at a time,
+not both simultaneously.  As is typical, the decompression is about
+twice as fast as the compression.  I assume it won't be quite fast enough
+on a 486 box, but a "Version 1.0" of anything can often be made faster;
+I haven't looked at the algorithm to see how much optimizing can be done,
+but the code's cleanly written and has a bunch of medium-sized tables and
+unrolled loops suggesting they've at least done some work on speed.
+
+
+Both of these were on samples that were a little fancier than /dev/tty voice;
+one was /usr/demo/SOUND/sounds/sample.au, and one was the 106.au
+"It's 106 miles to Chicago, we've got a full tank of gas...." 
+Blues Brothers sound-byte from the net.  Haven't tried it on other samples
+yet, and I need to try running it across the net.
+I also don't have two 14.4kbs external modems to play with on Sparcs,
+so I haven't been able to verify which V.42/V.42bis/MNP options will let
+you squeeze out the start/stop bits to let you fit 13.3 kbps of data over it,
+but people tell me it should work ok.
+
+
+			Bill Stewart
+
+
+

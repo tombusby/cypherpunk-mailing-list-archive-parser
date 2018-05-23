@@ -1,0 +1,53 @@
+From: Sameer <sameer@soda.berkeley.edu>
+Date: Mon, 14 Mar 94 14:36:10 PST
+To: cypherpunks@toad.com
+Subject: A "standardized" remailer syntax
+Message-ID: <199403142235.OAA00730@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+	In writing my client-end software for my anonymous server I
+came across the difficulty of building remailer paths because I was
+unsure that the cypherpunks remailers all act in a similar fashion,
+with a certain set of syntax.
+	I've been out of touch with the list lately so maybe I missed
+something, but some sort of standard would be a good idea so that even
+though the underlying guts of the remailers, and even the latency,
+padding, and special features of remailers are different, there is a
+standard set of commands and actions which will make it easier to
+build tools for the user to make remailing easier.
+	Here's my suggestion..
+
+	Header pasting:
+	The '::' header pasting syntax should be available-- i.e. when
+a message comes into a remailer with a body starting with '::' the
+lines following until a blank line are pasted into the header.
+
+	The '##' header pasting syntax-- when a remailer is sending
+out a message, if the body begins with a '##' line then the lines
+following that are pasted into the header of the outgoing message.
+
+	Header commands:
+	"Anon-To","Request-Remailing-To": strips headers and sends the 
+message to the specified recipient.
+
+	"Encrypted: PGP": The message has a pgp block encrypted with
+the remailer's key. The remailer will decrypt the pgp block before
+acting furthur upon the message.
+
+	I *think* that this is the scheme that all the remailers are
+using, but I can't be sure. All remailers should have at *least* this
+functionality. Furthur features can be added-- commands for those
+could be standardized as well, but I can't think of anything.
+Comments?
+
+	I can put this standard up on the ftp site, after some discussion.
+
+-Sameer
+
+
+
+
+
+

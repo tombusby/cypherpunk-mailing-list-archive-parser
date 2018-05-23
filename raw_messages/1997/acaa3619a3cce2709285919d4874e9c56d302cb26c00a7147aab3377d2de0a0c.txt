@@ -1,0 +1,71 @@
+From: "Robert A. Costner" <pooh@efga.org>
+Date: Fri, 3 Oct 1997 14:07:24 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Traffic Analysis
+In-Reply-To: <199710030423.XAA29605@einstein.ssz.com>
+Message-ID: <3.0.3.32.19971003013456.0356271c@mail.atl.bellsouth.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 11:23 PM 10/2/97 -0500, Jim Choate wrote:
+>Why/how does it decide to throw them away? Does the incoming produce cover
+>traffic even if its thrown away? Traffic analysis generaly does not look at
+>the contents of the packets, encrypted or not is irrelevant.
+
+Remailers in general will throw away messages at times.  Sometimes on
+purpose, sometimes by accident.  This is not replaced by any cover traffic.
+ For purposes of argument, we could say that a remailer throws away
+messages that violate usage policies.  This accounts for some amount of
+traffic, let's just say 10% to name a figure.  Of course this sounds
+reprehensible, so you ask what sort of message gets thrown out?  Some
+examples might be:
+
+ * 3,000 copies of the same message to the same person
+ * Any mail from Sanford Wallace at Cyberpromo.com
+ * A 300MB mailbomb
+
+Basically some messages that constitute abuse (without examining actual
+content) get tossed.  These are "valid" messages from people which the
+remailer might decide to not continue to send.  Much of this mail never
+even reaches the remailer code as it gets tossed at an earlier level.
+Since about 10% of incoming traffic gets tossed, it would seem that this
+would somehow effect traffic analysis.  This traffic is not replaced, and
+much of the dropped traffic is not even know to the remailer.  How much
+would this actually effect traffic analysis?
+
+As a side point, software problems will at times cause chained messages to
+get tossed.  From time to time certain remailers become incompatible with
+each other, or user held public keys do not get updated properly.  This
+will also cause messages to get tossed.
+
+>By 'nym' you mean each subscribed address or to each address used in the
+>outgoing? I would say it is bad to send to subscribers.
+
+Cracker sends messages as "Anonymous" and does not allow replies to be
+returned to the sender.  Redneck on the other hand allows each user to pick
+a pseudonym and allows relies to be returned to the sender.  This is known
+as a "nym".  The whole point of a nym is to be able to receive replies (as
+well as establish reputation capital).  People who have nyms on the
+remailer want to receive email back to them.  Nyms are managed and
+authenticated with PGP.  My question is would it foil traffic analysis if a
+number of remailer server generated messages were to go out to the nyms
+without ever having matching incoming traffic?
+
+>A commercial remailer should not keep records of its use. However, I suspect
+>that eventualy remailers will be required to keep usage records by law.
+
+I'd be willing to be involved in a first amendment challenge against any
+such law.  I suspect we would win in the US.  At least we won the last 1st
+amendment challenge against remailers.  (ACLU vs Miller)
+
+
+  -- Robert Costner                  Phone: (770) 512-8746
+     Electronic Frontiers Georgia    mailto:pooh@efga.org  
+     http://www.efga.org/            run PGP 5.0 for my public key
+
+
+
+
+

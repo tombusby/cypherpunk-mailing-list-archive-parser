@@ -1,0 +1,91 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 22 Jun 1997 18:52:33 +0800
+To: tcmay@got.net
+Subject: how to `go underground' (was Re: The Global Fix is In)
+In-Reply-To: <v0310281cafd1ba6444d6@[207.167.93.63]>
+Message-ID: <199706221002.LAA06654@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Tim May <tcmay@got.net> writes:
+> [G8 outlawing of crypto efforts forging ahead]
+> 
+> It's not hopeless. Physical havens are vulnerable, to all sorts of
+> pressures (I doubt many cryptographers want to set up shop in Libya or
+> Iraq, not that these places would be hospitable to Cypherpunks sorts of
+> goals and methods).
+> 
+> Going underground, using the untraceable features of cyberspace, may
+> be the last, best hope.
+
+I'm not sure we have the software to do this right now.
+
+Let's say that we start with the assumption of remailers still running
+in some countries (non G8).
+
+Message pools are ok for receiving messages.
+
+But for sending messages, we need a stego interface to remailers.  Now
+seems like a good time to produce this software.  It's time has come,
+much as Phil Zimmermann felt the pressure of the 1991 Senate
+anti-crime bill 266.
+
+Good stego encoding techniques are the difficult problem.  We could do
+something in-your-face like:
+
+use a random number, go to jail!
+BECBFEAAA13241237419283749183123487A7BCDEFBBDCEFDBEB23CDDEBDEBDB
+AA13241237419283749183123487A7BCDEFBBDCEFDBEB23CDDEBDEBDBBECBFEA
+419283749183123487A7BCDEFBBDCEFDBEB23CDDEBDEBDBBECBFEAAA13241237
+...
+
+As a form of protest, where it really is stegoed instructions to a
+remailer in a GAK-free country, which is reading the list.
+
+Text stego is hard to do.  At ultra low encoding rates (say a few bits
+per email), it would be ok.  (Just message parity, perhaps the entropy
+in the message-id, posting time).
+
+Anything more in text seems intrinsically hard to do well enough to
+feel comfortable betting against a jail term.
+
+Images and audio files are much rosier targets, but who posts volumes
+of gifs, or uses audio files?  Not I, the bandwidth isn't up to it
+yet, and pay-per-second phone bills don't help either.
+
+PGP 2.x signatures (presuming we're still allowed to sign posts with
+such software) don't have much scope for subliminal channels.  The
+time of posting in seconds is about it.
+
+However, PGP 3.x signatures on ElGamal/DSS keys should have.  There
+are several subliminal channels in DSS signatures.  It involves
+generating a random number component, and this can be exploited.
+Still pretty low bandwidth.
+
+Perhaps someone can have a go at adding this to PGP3.x, once Stale has
+finished scanning the source code books, and has posted the source.
+
+Also, I hear that PGP3.x has support for RSA keys, but won't generate
+them?  Perhaps we can add that back in also.
+
+
+For comfort, I'd like to be able to post, lets say 10k per day of
+messages, via remailers in non-GAKed countries.  Clearly I'm going to
+have to increase my rate of bit-production to stego encode this much
+data in my stegotext output.  How am I going to do it with good
+plausible deniability though?
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

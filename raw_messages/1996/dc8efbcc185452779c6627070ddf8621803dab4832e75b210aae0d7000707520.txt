@@ -1,0 +1,61 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 20 May 1996 15:08:16 +0800
+To: Rich Graves <llurch@networking.stanford.edu>
+Subject: Re: crosspost re remailers
+Message-ID: <199605200149.SAA10873@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:00 AM 5/16/96 -0700, Rich Graves <llurch@networking.stanford.edu> wrote:
+>The entry points into the system, though, have value. You need to be able
+>to locate and trust them. Remailer reputations are valuable. Otherwise,
+>you're liable to send your message into the NSA-remailers-are-us system.
+>You need a web of trust among remailers at the very least, which means
+>some level of exposure (at least by "social analysis" by observing the
+>relationships among the various remailer nyms).
+
+There are two ways around this problem - chaining remailers, and encryption.
+As long as one remailer on the chain from your source to your destination
+is not compromised, you can send mail encrypted to each remailer in the chain
+(i.e. send Alice's Remailer the message E(Alice, E(Bob, E(Carol, message))))
+and the message won't be compromised, though it may be blocked.
+
+For reply-style remailers, chaining is much harder, at least if you use
+a non-stealth encryption system like PGP or RIPEM which reveals the recipient's
+public key in the headers, and if the remailers don't include a public key
+to encrypt the message contents with as well as a key to encrypt the
+connection to the next remailer with.  (Otherwise, if the sender
+encrypts a message to NymA@Alice, and Alice encrypts it with Bob's key and
+sends it to Bob, Bob decrypts it, encrypts with Carol's key, and sends.... 
+Zed decrypts it, encrypts it with your key, and sends it to you,
+then any node compromised by Bad Guys will see a message encyrpted to NymA.
+
+>Chaos within the system is good. Moving remailers around could be good,
+>provided that a service location infrastructure is established.
+>Raph's list is a good start, but it needs to be more automatic and dynamic --
+>which to me (perhaps wrongly) suggests formalization, which means points
+>of failure. 
+
+It would be much easier if there were a DNS hack that lets you connect to
+dns.remailer.net:registry, which takes your IP address and serves it as
+remailerN.remailer.net until you log off (using a short DNS expiration time).
+This does provide a large number of interesting attacks on the system -
+denial of service is easy (make lots of connections, filling all ports),
+and it's easy to add subverted remailers (just connect!)  It also doesn't spoof
+reverse lookups unless your system is able to handle multiple IP addresses
+(which requires cooperation from your ISP's routers, unless remailer.net
+is also running a packet laundry, which increases its targetness.)
+Signed DNS responses would help some attacks, once that's standardized.
+
+Does anyone have any ideas on how to do this correctly?
+
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+# goodtimes signature virus innoculation
+
+
+
+
+
+

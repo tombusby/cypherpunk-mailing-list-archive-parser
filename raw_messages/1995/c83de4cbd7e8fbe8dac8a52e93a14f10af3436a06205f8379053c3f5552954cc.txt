@@ -1,0 +1,45 @@
+From: jalicqui@prairienet.org (Jeff Licquia)
+Date: Thu, 19 Jan 95 08:45:58 PST
+To: cypherpunks@toad.com
+Subject: Re: JP vs Homer
+Message-ID: <9501191645.AA26767@firefly.prairienet.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>     We are capable of controlling mail bombs, for instance, in the
+>following way:
+> 
+>     Take an incoming message, capture From: line.  Strip header.  MD5 body.
+>Add to sorted table [From: MD5(message) date].  Check for repetition of
+>first two fields.  If reps = 1, forward message.  If reps = 2, send message
+>to From:  "Possible error.  Two copies of message <message> received."  If
+>reps = 0 mod 5, send letter to postmaster@From:.  "Possible mailbomb or
+>spam.  <reps> copies of <message> received from <From:> at your site in the
+>past week." Clear table of entries more than a week old every midnight.
+> 
+> 
+>     If all remailers did this, then no matter where the net was entered,
+>the messages would be rejected.  And spammers/bombers would be spamming/
+>bombing their own postmaster.  Probably a bad idea.  If not all did it,
+>then add special handling to hit remailer-operator@.  This would encourage
+>the operator to auto-magically handle the spam-bomb himself.
+
+This works only if one assumes that the exact same message is posted using
+the exact same path.  Granted, it would probably be effective for novice
+spammers.
+
+Consider a premail/chain type script and a cleartext spam message.  The
+script is executed once every five minutes, say.  When it runs, it creates a
+new random path through the remailers, adding encryption wrappers for each
+hop.  Your spam detector would miss this one completely unless your remailer
+was used as the terminal remailer for a significant number of spams.  More
+significantly, the MD5 hashes of each message would be different even if the
+same path were used more than once because the PGP session key would be
+different (again, unless your remailer would be the terminal remailer in the
+particular path that repeated).
+
+
+
+
+

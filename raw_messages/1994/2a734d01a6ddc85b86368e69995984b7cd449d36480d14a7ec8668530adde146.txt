@@ -1,0 +1,73 @@
+From: Pierre Uszynski <pierre@shell.portal.com>
+Date: Wed, 24 Aug 94 13:18:20 PDT
+To: cypherpunks@toad.com
+Subject: Re:  Remailer-list pinging frequency
+Message-ID: <199408242017.NAA04677@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Raph Levien (raph@kiwi.cs.berkeley.edu) says:
+
+>    I believe that I am providing a useful service with my remailer
+> list, but I have received one complaint about the frequency of
+> pinging.
+
+If I may suggest without implementing :-) use adaptive pinging.
+
+There is little point in sending one ping per hour while getting
+no answer, then getting 24 answers all at once, and then doing the
+same thing all over again the next day... A more general way to put
+this is that pinging much more frequently than necessary does not give
+any more info. If you measure up time and latency both in days,
+there is no need to ping more than once a day. If you measure up time
+and latency respectively  in days and minutes, there is still no need
+for very frequent pinging.
+
+The only case where you need frequent pinging is when a site keeps
+going up and down and you want to distinguish latency due to down
+periods from operating latency.... But from a practical standpoint,
+these need not really be distinguished. Most mailers are configured
+correctly to retry failing connections, so that connections that are
+down only for a few hours are seen only as long latency.
+
+In conclusion:
+
+Start with pings at random phase, and 180 minute period.
+
+If for the last 16 pings of average period n minutes (random phase),
+the average latency is more than 4xn minutes, triple the period. Use
+a maximum period of once a day. If the average latency is less than
+n minutes, divide by three the period. Use a minimum period of one hour.
+
+You could do the same thing for very stable sites (stable latency):
+they require less pinging. Short latency stable sites need not be pinged
+every hour.
+
+The rule may have to be fixed a bit one way or the other, but it would
+help both your pinging script and slow remote sites (personal
+remailers) by cutting traffic for both.
+
+Pierre.
+pierre@shell.portal.com
+
+Still, there is no harm in making pinging traffic look more like real
+traffic. Like you said chaining is questionable for pinging (and if it
+comes from a remailer site, and goes back to a remailer site, it would
+not be obvious if it still met 1, 2 and 4):
+
+> 1. Encrypt the ping, so it looks like so much PGP traffic.
+> 
+> 2. Pad it with a random amount of junk (but not _too_ much :-), so
+> traffic analysis based on size will fail.
+> 
+> 3. Chain it through other remailers. A good approach might be to
+> choose two random remailers out of the "top five," and sandwich rebma
+> between them. The drawback is that it penalizes rebma for their
+> latency and failure rate, but this might be acceptable.
+> 
+> 4. Randomize the time that the ping is sent.
+
+
+
+

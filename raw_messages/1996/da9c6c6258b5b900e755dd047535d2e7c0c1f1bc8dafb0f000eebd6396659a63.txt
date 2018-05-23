@@ -1,0 +1,72 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Sat, 27 Apr 1996 14:37:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: An idea for refining penet-style anonymous servers
+In-Reply-To: <Uc5fx8m9LojB085yn@netcom.com>
+Message-ID: <4lrkjn$abo@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <Uc5fx8m9LojB085yn@netcom.com>,
+Alan Bostick <abostick@netcom.com> wrote:
+>My scheme is the design of the address database.  It consists of two
+>hash tables, one for sending messages (which maps anonymous IDs onto
+>sender's addresses), and one for receiving them (mapping recipient's
+>addresses onto anonymous IDs).  A cryptographically secure hash (say,
+>MD5) is used for the index of both tables.
+>
+>The index of the sending message table is the MD5 hash of the sender's
+>address.  The table entry the index points to is the sender's anonymous
+>ID, encrypted by a symmetric algorithm (maybe IDEA).  The encryption key
+>would be a different hash, by another algorithm (let's suppose it's
+>SHA), of that same address.
+>
+>In forwarding a message, the server MD5-hashes the sender's address and
+>looks at the table.  If it doesn't find a corresponding entry, it
+>creates one.  If it *does* find an entry, it SHA-hashes the sender's
+>address and uses this key to decrypt the anonymous ID.  In the unlikely
+>event of collision the decrypted ID will be gibberish and the server
+>does something sensible (like appending padding to the address and
+>trying again).  The header information is filtered and the anonymous ID
+>inserted in the From: line. 
+>
+>The receiving message hash table is designed similarly, in reverse.  The
+>index of the hash table is the MD5 hash of the anonymous ID; the entry
+>in the table is the recipient's email address, encrypted with the SHA
+>hash of the anonymous ID.  When a message comes in, the anon ID is
+>hashed and looked up in the table.  If  nothing is found, the message is
+>bounced. If an entry is found, the anon ID is SHA hashed and the table
+>entry decrypted.  If it is gibberish, a collision has taken place and
+>handled appropriately.  The message is then forwarded to its intended
+>recipient. 
+>
+>What all this accomplishes is to obscure more information from attackers
+>and from honest operators.  In the event of abuse it is a simple matter
+>to find out who the abusers are and block them out.  If the operator is
+>subject to subpoena, anyone named in the subpoena can be easily
+>identified . . . *but nobody else can!*  Authorities cannot use a search
+>for one identity as an excuse for a fishing expedition in the address
+>database. 
+>
+>(Obscuring information from honest operators can protect the operator
+>when questions of liability or even conspiracy come up.)
+>
+>There is a way that attackers who have seized or copied the database can
+>search it - by trying it out on anonymous IDs, or user addresses, until
+>they hit paydirt.  And of course such an anonymous server can be no more
+>trustworthy than its operator; and the fundamental security limitations of
+>the penet-style anonymous server are well-understood.
+>
+>So what do people think of this scheme of mine?  Are there drawbacks or
+>weaknesses that I'm not seeing?  Is it a good idea?  I'd really like it
+>if *something* good came out of being laid up with the flu. 
+
+This sounds a bit like the scheme mentioned in AC2, pp73-74.
+Check it out (and its reference, if you have time...).
+
+   - Ian
+
+
+
+

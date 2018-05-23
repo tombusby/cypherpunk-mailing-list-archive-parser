@@ -1,0 +1,117 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 10 Oct 1997 20:24:06 +0800
+To: jwn2@qualcomm.com
+Subject: do NOT escrow communications keys (Re: What's really in PGP 5.5?)
+In-Reply-To: <v04001b20b0637c652eba@[129.46.85.154]>
+Message-ID: <199710101123.MAA01069@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+John Noerenberg <jwn2@qualcomm.com> writes:
+> 
+> At 6:06 PM +0100 10/8/97, Adam Back wrote:
+> >
+> >Email itself is pretty fragile, and email is not commonly used for
+> >long term storage.
+> 
+> Now this is a pretty bold assertion.  One with which I completely disagree.
+> As I peruse my Eudora folder this evening, I can easily pick out messages
+> that date back nearly 6 years.  Looking thru IETF working group archives
+> (which are *all* email) it is possible to find messages dating back 10
+> years and more.
+
+You're misunderstanding what I'm saying.  There was some other context
+around the above quote.
+
+What I'm saying is that you don't use the *email in transit* for
+storage.  You receive the email, then you archive it (store it in your
+eudora folder), then you consider it storage.  Perhaps with your
+current software you archive the PGP encrypted email.  This is a bad
+security practice.  You should have different, storage only keys for
+encrypted archives.
+
+Email in transit isn't that reliable.
+
+About the only example of email in transit being considered storage
+was a USENET article years ago by someone who considered it a kewl
+hack that he had some games or something else which was in breach of
+policy in his account and rumor went around that the admin was having
+a purge.  He tarred, gzipped & uuencoded the lot and emailed it to
+himself down a _long_ ! fowarding path.  It came back to him around 3
+days later after the purge.  That's the kind of thing I mean when I
+say you don't consider email storage.
+
+I'm arguing that you should not backup, or escrow communications keys,
+and that you should backup storage keys.
+
+(Separately I have argued in the past that you should use forward
+secrecy to ensure that you have no long term private keys which after
+the fact allow you to decrypt traffic -- if a competitor, or the feds
+get a copy of this key, your past traffic is vulnerable.  Encrypting
+the session key to two long term keys, never mind one, makes this
+situation even worse, and also results in a system useable for GAK.)
+
+> Moreover, it is not unheard of during legal discovery for email to be made
+> subject to search (Our lawyers are constantly tut-tuting about all the
+> email that is saved).  So to say it is not used for long-term storage is
+> simply incorrect.
+
+Your lawyers have a good point.  I know a few examples where people
+really wish that email hadn't been kept around, as an email sent with
+1 minutes thought has been dug up and used somewhat out of context as
+the basis of a court case.
+
+A pgp signed email is even worse.  There you have transferable
+undeniable signature proving that you wrote the contested email.
+
+
+I'm sure I've said this all before, but hey, maybe PGP has it's ears
+open this time:
+
+You should have two types of email.  "Official statement" type email,
+which you might want to back up, and which you might want proof read
+and approved by your company legal team, depending on how important it
+is.  Official email you want to sign with a transferable signature
+(normal pgp signature).
+
+Unofficial email, for example to and fro communications between
+co-developers at different companies, etc. you probably don't want
+transferable signatures on.  (This is the kind of thing lawyers go
+tut-tut about.)  So you use non-transferable signatures.  You use
+forward secrecy, and for the really paranoid deliver it via mixmaster
+to avoid mail delivery logs.  Archive if you wish.  It'll then be
+largely one persons word against the other, as there will be little in
+the way of proof of authorship.
+
+> Since your argument pretty much is based on this claim, Adam, I have
+> a hard time accepting any of it.
+
+It isn't based on the idea that you never want to store email.  That's
+clearly bunk.  I've got 54Mb of old email on my disk.
+
+What I'm arguing is that if you're going to encrypt your stored email
+on your disk, that you should encrypt it with a storage key, and NOT a
+communications key.  Communications keys should ideally be transient
+(via forward secrecy), but failing that you should at least not have
+multiple recipients to exarcerbate the problem.
+
+Am I making sense?
+
+I know I'm fighting against the tide .. but I'm confident that what
+I'm saying is correct.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

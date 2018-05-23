@@ -1,0 +1,80 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 2 Sep 93 05:58:16 PDT
+To: cypherpunks@toad.com
+Subject: MISC: DH key xchange
+Message-ID: <9309021252.AA12006@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Earlier somebody (Samuel Pigg?) asked for a D-H key exchange reference.
+It should be in any modern crypto textbook, and is easy to follow.
+
+Alice and Bob want to exchange keys over a hostile channel.  They pick
+a prime p, a random number a, and exchange this information.  
+
+Alice picks Ra, a random number less than p, and keeps it secret.  Bob picks
+Rb, also a random number less than p.  Alice calculates Ya = a^Ra mod p, and 
+sends the result to Bob.  Bob calculates Yb = a^Rb mod p, and sends the 
+result to Alice.  To recover the common key Alice and Bob will now use with
+each other, they raise the result the other person sent them to their secret
+random number, and take the result modulo p.  That is, Alice calculates
+Yb^Ra mod p, and Bob calculates Ya^Rb mod p.
+
+Even if an eavesdropper gets a, p, and the intermediate Ya and Yb, the final
+key cannot be determined (due the difficulty of the discrete logarithm).
+
+Example:
+
+1) Alice and Bob pick a = 11, p = 347
+
+2) Alice picks Ra = 240
+   Bob picks Rb = 39
+
+   Alice and Bob keep Ra and Rb secret
+
+3) Alice calculates Ya = a^Ra mod p
+                       = 11^240 mod 347 = 49
+
+   Bob calculates   Yb = a^Rb mod p
+                       = 11^39 mod 347 = 285
+
+4) Alice sends Bob Ya = 49
+   Bob sends Alice Yb = 285
+
+
+5) Alice calculates Yb^Ra mod p = 285^240 mod 347
+                                = 268
+
+   Bob calculates   Ya^Rb mod p = 49^39 mod 347
+                                = 268
+
+   Now Alice and Bob can communicate using their common key.  Even if an
+   enemy intercepts a = 11, p = 347, Ya = 49, and Yb = 285, the common
+   key cannot be calcuated.  (Well, they can here since I'm using small
+   numbers, but with large numbers the discrete log problem is intractable).
+
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLIVzxYOA7OpLWtYzAQGzvQQAltkJR3xd/5YJt1pBt2/fWmCrRGqy0RFW
+ZZEL5ZHUNO9glaYOA39vUlRbZX8IDwHwKSDXJt98NsHH3WT5JJ0i52hy37mcWLOx
+7FbsCo8MMjg2xOye3YLLzXa6a99ad5nV7/rk2pL+9mP0lNZdFcWGnfDvz/F5gqCF
+qMRAYby1KI8=
+=6ZSd
+-----END PGP SIGNATURE-----
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+
+

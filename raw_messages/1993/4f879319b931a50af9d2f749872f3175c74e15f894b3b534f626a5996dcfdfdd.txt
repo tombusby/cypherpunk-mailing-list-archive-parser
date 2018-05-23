@@ -1,0 +1,50 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Mon, 25 Oct 93 19:44:49 PDT
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: Totally Anonymous Remailing
+In-Reply-To: <9310250201.AA21182@dink.foretune.co.jp>
+Message-ID: <9310260243.AA27775@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Robert J Woodhead <trebor@foretune.co.jp>
+
+> Just toying around with some ideas, and came up with this:
+> 
+> Totally Anonymous Remailing (V1.0)
+[...]
+> 	SEND <destination>
+> 
+> 		Sends accumulated mail, in a batch, to the
+> 		email address specified.  So you can log on
+> 		to any account, even a guest, and get your
+> 		mail.
+
+A problem here.  The SEND system eliminates the risk of database
+seizure, and encrypting mail to the remailer eliminates snooping on
+incoming mail, but outgoing mail is unprotected.  Anybody watching
+net traffic coming out of the TAR can snoop the destination of SEND
+requests, and reasonably presume that address to be the owner of the
+nym.  This is of course a problem with a penet-style setup too, but
+it's something to fix if you want to be "totally anonymous".  
+
+I fairly recently posted a scheme by which a remailer could reduce
+this hazard, while retaining the same front end -- which may or may
+not be a wise move.  I hesitate to blat the thing to the list again,
+but the plan was to use cypherpunks remailers as a back-end delivery
+mechanism.  With a given key the nymserver would associate a
+pseudonym and a list of delivery points, of which the first living
+one would be used.  These could be either normal addresses (backward-
+compatible idiot mode), or remailer addresses associated with
+(encrypted!) addressing blocks to prepend.  
+
+One thing I didn't address, which needs to be, is how best to handle
+testing of the delivery chains.  I think this is a make-or-break
+issue for the general usability of this thing.
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

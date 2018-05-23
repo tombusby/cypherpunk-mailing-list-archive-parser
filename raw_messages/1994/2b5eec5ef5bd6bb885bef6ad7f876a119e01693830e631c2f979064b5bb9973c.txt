@@ -1,0 +1,69 @@
+From: db@Tadpole.COM (Doug Barnes)
+Date: Mon, 12 Dec 94 23:24:29 PST
+To: dfloyd@io.com
+Subject: Re: What, exactly is elliptic encryption?
+In-Reply-To: <199412130621.AAA07346@pentagon.io.com>
+Message-ID: <9412130723.AA14508@tadpole.tadpole.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> What, exactly is elliptic curve encryption?
+> 
+
+Exponentiation-based ciphers such as Diffie-Hellman
+use the fact that discrete logarithms are hard, but
+modular exponentiation is easy. So we quickly 
+compute:
+
+x^y mod n (where n is prime)
+
+But not:
+
+log_x(x^y mod n) mod n
+
+Think of the numbers between 0 and n-1 as a group that
+work sort of like all Integers taken as a whole. Because
+they do have many of these properties, this makes these
+numbers an "abelian" group. So we can use some old properties
+from arithmatic such as:
+
+   (a * b * c) mod n  == (((a * b) mod n) * c) mod n
+
+With an elliptic curve, such as y^2 = x^3 - x, you can define
+a set of coordinates {<x0, y0>, <x1, y1> ... <xt, yt>} that are on
+the curve, where all x and all y are in a group like we use
+for Diffie-Hellman.
+
+For the different isomorphisms of the curves, you can then
+construct addition of coordinates, subtraction, multiplication
+and division, such that the results are also points on the
+curve. This makes this set of points an abelian group too. 
+
+You can then do a Diffie Hellman analogue substituting
+multiplication for exponentiation, and a El Gamal analogue
+substituting multiplication for exponentiation and addition
+for multiplication. 
+
+I have just recently been researching this subject, but I can
+provide some references tomorrow, if people are interested. I 
+have found what appears to be an implementation of some of the 
+artithmatic in a package called "pari", but  I haven't had a 
+chance to look at it closely. There are no p.d. elliptic curve
+_cryptography_ implementations that I'm aware of, which is 
+something I'd like to see change... :-) There is an IEEE group 
+working on a proposed standard at the moment; I need to get back 
+to my contact with them to find out where they are at now.
+
+Most of the work in this area is being done by smart card 
+people, because ec's seem to give you more bang for your buck 
+in terms of modulus size, etc.
+
+Hope this helps. 
+
+Doug
+
+
+

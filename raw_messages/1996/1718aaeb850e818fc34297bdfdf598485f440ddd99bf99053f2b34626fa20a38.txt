@@ -1,0 +1,62 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Fri, 26 Jan 1996 18:52:50 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Quick MACs (Re: Why is blowfish so slow? Other fast algorithms?)
+In-Reply-To: <199601260940.BAA26380@ix7.ix.netcom.com>
+Message-ID: <199601261012.FAA14755@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Bill Stewart writes:
+> Are there any simple but crypto-strong hash functions?
+[...]
+> I was thinking about using RC4 in some feedback mode as a MAC,
+> but it sounds like that's not secure enough?  Is there anything
+> else that's short?  MD5 requires too much code.
+
+Phil Rogaway gave a great talk at RSADSC about keyed hashing MACs. In all he
+described 12 different MACs (some of them variations on a theme), and gave
+some efficiency/security tradeoff numbers relative to the security of the
+underlying hash function. 
+
+Apparently he had a paper in Crypto `95 about
+bucket hashing, which is generally fast and simple and apparently pretty
+secure. The idea is to place each word of the message into a unique fixed-size
+subset of a large set of buckets, XOR each bucket internally, then concatenate
+the results. I haven't yet read the paper (though I expect to do so soon), so
+I don't know all the details. I think the notion is that you can plug in any 
+pseudo-random function to select the buckets, and get provably good security 
+if you know your function is suitably pseudo-random.
+
+Check:
+
+http://wwwcsif.cs.ucdavis.edu/~rogaway/talks/list.html
+
+which has a link to his slides from last week, and
+
+http://wwwcsif.cs.ucdavis.edu/~rogaway/papers/list.html
+
+which has links to a heap of papers, including the full version of the
+Crypto `95 bucket hashing one.
+
+Futplex <futplex@pseudonym.com>
+"a heap of PS papers that I _can_ print out without destroying whole forests"
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMQiouCnaAKQPVHDZAQHo+Af7BtpL5kErtzeWR0dBuR1/rOfQzw8Ezaxi
+Gp7Va8kjJLYJlWa1+Ih2fbKr8oUIKL1N1a5JoDarr2G75B9GilyyjCIf75FIrWnZ
+JQDti8wJIK6TGV9ClZGbl6jowUkc4PtFzp6VN85K/Rnv/l/Wekv4kWl41O2Cq656
+bsQaE2jYAfRqkOziarytaszVROoTNbGvyYoLk1ESf9yijwp0E9R/SXlw4OvUAna7
+qSnuhbIayLX8auQWxoUf9lRlJ8tdreqXzP2G4yL1tXI+i+nr6z3A9m/+sXXCxNb1
+vzQtUTkVtCniKoGrtm7WN0RtusjIrVEoaDi/msx+ADBphHGxPxIJlA==
+=g1Jt
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,179 @@
+From: "John Kelsey" <kelsey@plnet.net>
+Date: Wed, 28 Jan 1998 06:57:59 +0800
+To: "Adam Back" <aba@dcs.ex.ac.uk>
+Subject: future proofing algorithms
+Message-ID: <199801272251.QAA01965@email.plnet.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[ To: Cypherpunks, Adam Back ## Date: 01/26/98 ##
+  Subject: future proofing algorithms ]
+
+>Date: Mon, 26 Jan 1998 01:18:31 GMT
+>From: Adam Back <aba@dcs.ex.ac.uk>
+>Subject: future proofing algorihtms (Re: (eternity) Eternity
+>         as a secure filesystem/backup medium)
+
+>It is interesting to note that Tim May's recent suggestion
+>of LAM (Local Area Mixes) would help here because if 5 of
+>those mixmaster nodes where part of a LAM, it is unlikely
+>that the NSA would be able to archive inter remailer
+>traffic, thus increasing effective pool size to 100^5.  So
+>one advantage of the LAM approach is that it provides links
+>which are protected by physical security.
+
+This is a good point.  The crypto looks like the strongest
+link in the chain right now, but if it turns out not to be,
+reliance on local physical security isn't a bad idea.
+(This works only if the huge numbers of the local machines
+must be subverted for an attack to work; if the attacker has
+to take over only a couple machines, he can probably manage
+this.)  Discovering a better way to bypass my physical
+security today doesn't let you know who sent what last year,
+and security guards don't become retroactively twice as
+cheap to bribe every eighteen months.
+
+>> Note that, in practice, this isn't likely to be useful
+>> unless you've done the same kind of thing for symmetric key
+>> distribution, random number generation, etc.  Otherwise,
+>> your attacker in 2050 will bypass the symmetric encryption
+>> entirely and factor your RSA modulus, or guess all the
+>> entropy sources used for your PRNG, or whatever else you can
+>> think of.
+
+>Yes.  We need to build constructs for all areas.  A mega
+>hash would be nice, with a large output size even in the
+>face of birthday attack, preferably as secure as a
+>collection of hash functions.
+
+Right.  I've seen some work done on this, mostly informally.
+The basic result I'm aware of with hash functions is like
+this:  Let f() and g() be two different hash functions,
+such as SHA1 and RIPE-MD160.  Let X,Y be the concatenation
+of X and Y.  Then:
+
+Hash1(X) = f(X),g(X)
+Hash2(X) = f(g(X)),g(f(X))
+
+You can quickly convince yourself that Hash1(X) is at least
+as resistant to collision as the stronger of f() and g(),
+but it's only as resistant as the weaker of the two to
+leaking information about X.  (That is, if f(X) just gives
+you the low 160 bits of X, then Hash1(X) gives you the same
+thing.)  Hash2() won't leak information unless both f()
+and g() leak information about their inputs, but you can't
+guarantee that it will be very good against collisions.
+(That is, if f(X) = 0 for all X, then all possible X values
+cause a collision in Hash2(X).)
+
+If f() and g() are independent, and one of them
+looks like a random function of X, then
+
+Hash3(X) = f(X) XOR g(X)
+
+looks pretty good.  But it's possible for either f() or g()
+to be non-reversible without Hash3() being nonreversible.
+(The obvious case occurs when you think of something like
+
+f(X) = X
+g(X) = encrypt_{knownKey}(X) XOR X.
+
+Note that g() looks rather like some existing hash
+functions, where encrypt() is a known function.
+
+>That gives us something to wash our pseudo random number
+>input entropy with, and then we can go on to combine public
+>key systems.
+
+Right.  Choosing the PRNG well is important, but I suspect
+that the real issue is going to be getting enough input
+entropy.  If you can get 80 bits of real entropy today, you
+have a reasonably secure system now, but NSA may not find
+your system that secure in twenty years.
+
+For resistance to cryptanalysis, we can use the same set of
+stream ciphers as before.  If we run Blowfish, 3DES, and
+SAFER-SK128 in OFB-mode, and XOR the streams together, we
+get an output stream that's no easier to predict than the
+weakest of the three ciphers used.
+
+Entropy collection on a wide range of different machines,
+without specialized hardware, is just a hard thing to do
+well.  It's especially hard if you're postulating a
+massively powerful attacker years in the future.
+
+>A problem with public key systems however is that there
+>isn't a lot of choice -- basically all based on discrete log
+>or factoring.  So perhaps RSA and DH combined in a construct
+>with an optimistically proportioned key size would be near
+>all that could be done.
+
+That sounds about right.  Note that LAMs and such can use
+shared symmetric keys along with the public keys, so that an
+attacker has to get both to defeat the system.  When the
+number of mixes is small, maybe some informal
+password-sharing at conferences might help this.  For LAMs,
+some level of hand-carried key exchange can be used.  Then,
+actual keys can be encrypted as
+
+RSA(R_0), ElGamal(R_1) are sent
+Previously shared secret key K_2 is known.
+Session Key = SK = E_{K_2}(R_0) XOR E_{K_2}(R_2).
+
+Also note that DH should probably be used with many
+different prime moduli, to resist any massive precomputation
+on one modulus.  Maybe each mix could have several
+expensively-prepared Sophie Germaine primes, and senders
+could randomly select one for DH or El Gamal encryption.
+This would spread out a future attacker's resources, though
+of course, the attacker's effort scales only linearly in the
+number of (expensive to find) primes.
+
+>I suspect archiving world Network traffic would pose
+>something of a operational and financial strain :-)
+
+On the other hand, perhaps this is how NSA will pay their
+employees' salaries once crypto becomes sufficiently
+widespread:  They will start a search engine service on all
+those archives of usenet/internet traffic for all these
+years:  ``Check up on your political opponents' newsreading
+habits.  Read the love letters of libertarian activists in
+the 90s.  Find out whether Chief Justice Clarence Thomas
+ever visits adult web sites these days.  *Only* at
+http://www.archives.nsa.org ''
+
+It would actually be very funny if historians in a couple
+centuries got access to the NSA's archives of recorded phone
+calls, telegrams, and e-mails.  Imagine the odd assumptions
+that would result, with history students having this image
+of twentieth century america based on recorded phone calls
+of anarchists, antiwar activists, civil rights activists,
+communists, important politicians, mobsters, suspected
+spies, and wealthy businessmen.
+
+>Adam
+
+Note:  I read CP-LITE instead of the whole list.  Please CC
+       me on replies.
+
+- --John Kelsey, kelsey@counterpane.com / kelsey@plnet.net
+NEW PGP print =  5D91 6F57 2646 83F9 6D7F 9C87 886D 88AF
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBNM5efSZv+/Ry/LrBAQGN8wP/aHKJbm024oDMNZIozcBGW+Vt4bKKLDoZ
+xhV6DQ3e4v9UadYJeKpCfRjrMDC06H6eP3D4E8vizEHVk2JCvHDTN3Fshf5pOtB2
+tgrooYOP1pC5FuQAPPyhkJ840V7ve0mlpy3VWz5/hSvkkP1BW7KHoFv47sniVHZe
+RFsiz/hW7jc=
+=2Oml
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,43 @@
+From: paul@fatmans.demon.co.uk
+Date: Mon, 27 Jan 1997 17:02:30 -0800 (PST)
+To: Rick Osborne <osborne@gateway.grumman.com>
+Subject: Re: OTP security
+Message-ID: <199701280102.RAA11550@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> I was thinking about the thread we had a week or so ago about OTPs.  Say
+> I'm going to burn a CD of what I think are cryptographically random bits,
+> but somehow I end up with part of my stream being predictable (say every
+> 16th bit).  What does this do to the security of my CD?
+
+Depends on how that 16th bit is related to the other bits and whether 
+these predictable bits give any information about the other bits on 
+the disk.
+
+If we assume all the other bits are true random and that the 16th 
+bits are predictable only in that they can be predicted left and 
+right but do not depend upon the other bits not in positions 16, 32, 
+48, 16n etc... we can just discard them and use the rest obtaining 
+perfect security. We can even use all the bits and all we lose is one 
+bit every two bytes and therefore if we are calling the bytes ASCII 
+and say adding mod 13 we only have "imperfect" security on every 2nd 
+character where there are 2^7 eg. 128 possible characters. 
+Suprisingly this yields perfect security as there are still a number of
+possible pads which lead to reasonable and plausible decryptions.
+
+
+
+  Datacomms Technologies web authoring and data security
+       Paul Bradley, Paul@fatmans.demon.co.uk
+  Paul@crypto.uk.eu.org, Paul@cryptography.uk.eu.org    
+       Http://www.cryptography.home.ml.org/
+      Email for PGP public key, ID: 5BBFAEB1
+     "Don`t forget to mount a scratch monkey"
+
+
+
+
+

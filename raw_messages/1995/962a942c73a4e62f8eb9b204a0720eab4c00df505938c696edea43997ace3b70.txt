@@ -1,0 +1,40 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Tue, 11 Jul 95 16:32:29 PDT
+To: jim@acm.org
+Subject: Re: Moby ints [Re: Num Rat]
+In-Reply-To: <199507111851.LAA18222@mycroft.rand.org>
+Message-ID: <199507112331.TAA12573@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+The state of the art in multiprecision integer arithmetic is Scho"nhage.
+Schonhage invented the all-integer Fast-Fourier-Transform based 
+big-int multiplication method. An n-bit can be multiplied in O(n ln n) 
+operations. This is a big improvement over the Karatsuba method which is
+O(n^1.5) and the classical method O(n^2). Surprisingly, the constant
+factor isn't that large. This can be combined with modmult techniques
+for fast modexp routines. However, it's only worthwhile for large
+numbers (>512 bits). At n=512, if your bigints are stored as polynomials
+with a 32-bit radix, then N=512/32=16. 16^1.5 = 64, 16 * lg(16) = 64
+(so the FFT method and the Karatsuba method are equivalent for numbers
+of that size)
+
+If you are dealing with 2048 or 4096 bit keys, it starts to look attractive.
+
+
+Schonhage published a book in the last year, the result of more than 10 
+years of research into this area. It's hard to get a hold of though, you
+have to order it from germany.
+
+95-133299: Schonhage, Arnold.  Fast algorithms : a multitape Turing
+     machine implementation /  Mannheim : B.I. Wissenschaftsverlag, 
+     c1994.  x,
+     297 p. : ill. ; 25 cm.
+
+ 
+
+
+
+

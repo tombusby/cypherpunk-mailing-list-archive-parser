@@ -1,0 +1,50 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Wed, 8 Feb 95 20:10:38 PST
+To: cypherpunks@toad.com
+Subject: Re: Hastur CT status
+In-Reply-To: <199502082009.TAA22774@seabsd.hks.net>
+Message-ID: <199502090408.UAA24470@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: A Loose Affiliation of Millionaires and Billionaires and Babies <cactus@hks.net>
+
+   For instance, I've asserted several times here that X.509 keys
+   can be fully modelled as special cases of PGP web-of-trust keys
+   with one additional field, the expiration time.  Nobody has flamed
+   me, but nobody has agreed with me... since I've only read the X.509
+   spec and never actually used them, I'd like some assurance that I'm
+   not missing some subtleties in this approach.
+   
+The only real question about a particular string of bits claiming to
+be a public key of a certain persona is whether the operator trusts
+that the key does belong to that persona.  PGP and X.509 models both
+provide their own kinds of assurances to individuals who might use a
+key.  The relation between the user and the claim of ownership is the
+important relationship.  Any sort of key certificate, of whatever
+sort, is merely an aid to gaining trust.
+
+Key certificates don't prove ownership.  Key certificates transfer the
+need for trust in the key to the need for trust in the certificate.
+Put another way, a key distribution system allows a user to trust
+something harder to fake than a single key.  The transfer is the
+critical point here; instead of trusting one small thing, you can
+trust one larger thing.  We hope that the larger system is worthy of
+our trust.
+
+Neither PGP nor PEM is a general purpose key distribution system,
+although PGP is more general than PEM.  Both have their various
+arbitrary and capricious policies hardcoded into both spec and source.
+
+I would recommend, Todd, that you not try to unify the various key
+distribution systems.  It's premature.  Rather, provide a local policy
+hook for the user (and this is _not_ just the sysadmin, as you know)
+to specify how much trust pertains to each given keydist system, and
+of what idiosyncratic sorts.
+
+Eric
+
+
+
+

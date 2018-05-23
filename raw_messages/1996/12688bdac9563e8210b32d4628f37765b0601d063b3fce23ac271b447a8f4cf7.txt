@@ -1,0 +1,43 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 3 Mar 1996 09:27:16 +0800
+To: "A. Padgett Peterson P.E. Information Security" <PADGETT%TCCSLR@emamv1.orl.mmc.com>
+Subject: Re: PGP 3.0/4.0
+Message-ID: <199603030054.QAA28612@ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:23 AM 3/1/96 -0500, you wrote:
+>At the same time am trying to set up a secure mailing system for
+>80,000 mailboxes (soon to be over 200,000) and the last time I put
+>together a 6,000 key ring on a 386 it took three days & several Mb.
+
+Fortunately, on a site this big, you can afford to use a Pentium or
+Sparcstation and 32-bit code :-)  However, if it took you that long
+(as opposed to, say 4 hours), you probably were short of RAM and
+were paging a lot.
+
+>This will require a "different" mechanism.
+
+Yup.  You may be able to do it within the structure of the current PGP,
+by dyamically managing keys in separate files (e.g. 80,000 files,
+or condensations into keyrings of say 100 keys) though it would help
+immensely to hack the key retrieval code.  Under PGP 3.0, you'll have
+libraries to let you do this stuff; until then it's probably not
+too hard to build a front-end (stealing the non-RSA portions of PGP)
+that looks at the keys in a file and calls PGP with a request to use
+the correct keyring file, or some such hackery.
+
+Or, of course, you can license RSAREF and integrate the code yourself.
+Depending on the email volume, it may be cheaper to just license RSA,
+so you can use better bignum packages like some of the European PGP flavors.
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

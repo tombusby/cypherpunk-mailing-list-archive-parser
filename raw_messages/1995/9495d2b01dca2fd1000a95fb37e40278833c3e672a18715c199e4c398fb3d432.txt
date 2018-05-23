@@ -1,0 +1,67 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Tue, 19 Sep 95 03:16:22 PDT
+To: Jeff Weinstein <jsw@neon.netscape.com>
+Subject: Re: NYT on Netscape Crack
+In-Reply-To: <43lu3k$7q6@tera.mcom.com>
+Message-ID: <Pine.SOL.3.91.950919185921.17727B-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On 19 Sep 1995, Jeff Weinstein wrote:
+
+> In article <199509190355.XAA01329@frankenstein.piermont.com>, perry@piermont.com (Perry E. Metzger) writes:
+> > I suspect that there are far more flaws in Netscape. String buffer
+> > overflows are another good guess here -- they are probably rampant
+> > through the code both for the browser and the commerce server they
+....
+>   Sigh.  For your information the security code for 1.x versions of
+> netscape was not even written by someone from NCSA.  The current
+> security team (which does not include the person who did the 1.x
+> version) also does not include anyone from NCSA.  While I can't
+
+I will defend Netscapes code on the point about the RNG even though I 
+have not seen any.  I assume the Netscape code is quite large and each 
+release would have to pass various fuctionality tests.  How can you test 
+that the RND seeding is wrong?  You have to actually look at the code, the 
+number coming out are still random.  As of last week I was told by
+Mike_Spreitzer.PARC@xerox.com that the random number generator seed 
+routine in my DES library was only copying in 4 bytes of passed data 
+instead of 8.  Given des_cblock data;, it was
+
+memcpy(init,data,sizeof(data));
+
+it should have been
+
+memcpy(init,data,sizeof(des_cblock));
+
+Rather hard to notice unless you know that des_cblock is passed as a 
+pointer and even this can be compiler dependent.
+
+Now I had not noticed this, my library runs like a charm and things 
+appear random from the random number generator.  This sort of error can 
+only be checked by reading the code and specifically looking at critical 
+routines like this the RNG seeding routines.  The advantage of my code 
+being public is that some-one like Mike can have a look and pick up 
+problems like this.
+The moral of the story I suppose is to be 
+paranoid about checking routines relating to RNG.
+
+What would be interesting is to see if packages like PEM use 
+similar simple systems for generating random data.  Any of the systems 
+that do digital envelopes are relying on libraries to provide random data 
+for encryption keys.  At least with the old 'enter passwd' type 
+encryption there was a bit of secret random data coming from a human, 
+pitty about packet watchers seeing those characters as they fly over the 
+net :-)
+
+eric (who has also been burned by dodgy RNG seed routines in the past and
+      so now uses a rather extrem system involving MD5 and lots of state :-).
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

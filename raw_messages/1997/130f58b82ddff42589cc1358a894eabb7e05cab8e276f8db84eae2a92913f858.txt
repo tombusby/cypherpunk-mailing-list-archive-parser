@@ -1,0 +1,74 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 7 Feb 1997 07:15:18 -0800 (PST)
+To: shamrock@netcom.com
+Subject: Skipjack uses Elliptic curve? (was Re: Moderation [Tim,Sandy])
+Message-ID: <199702071515.HAA24943@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Lucky Green <shamrock@netcom.com> wrote:
+> [...]. How many of you remember the anonymous message posted to this
+> list revealing that Skipjack is an elliptic curve cipher? [One of the most
+> respected names in cryptography confirmed this to me in private
+> conversation. No, the person was not privy to the secret specs. The person
+> didn't need to be. :-]
+
+What aspect of Skipjack family is Elliptic curve?
+
+Skipjack itself I thought was a symmetric key block cipher, with 80
+bit keys and 64 bit block size.
+
+The key escrow designs (clipper chip and family) included several
+additions:
+
+1. check sum to prevent LEAF (Law Enforcement Access Field) forgery
+   (16 bits, which is not enough as Matt Blaze demonstrated)
+
+2. government access copy of chip's serial number encrypted with LE
+   family key in LEAF 
+
+3. copy of session key encrypted with unit's escrow key in LEAF (the
+   escrow key is the key that is stored in the government database
+   indexed by chip serial number - the database which is split between
+   the two escrow agents).
+
+4. hardware random number key generation
+
+5. undisclosed key exchange mechanism
+
+6. are DSS signatures used?
+
+Presumably the Elliptic curve is for key exchange?  Is there something
+about the design which implies Ellitpic curve must be the key exchange
+mechanism used?
+
+Another possible area for public key, if they had it on chip, would be
+to use public key encryption for the encryption of the serial number.
+Otherwise, when the chip is reverse engineered the LE family key would
+allow traffic analysis of all clipper traffic.  Public key would
+prevent this.
+
+(According to Ross Anderson's paper on tamper proof hardware, at least
+one chip manufacturer has reverse engineered the clipper chip)
+
+> If nobody cares about the leaks, why do we need to provide a forum for
+> them? Besides, there are other fora that could be used. sci.crypt or
+> Coderpunks are both good places to post "found" code.
+
+It is true that sci.crypt and coderpunks do make alternative fora.
+Somebody else pointed out that rc4.c was posted to sci.crypt first.  I
+think they are correct, and in fact if I remember, it was forged as
+from David Sterndark <david@sterndark.com> or some other play on David
+Sternlight's email address.
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,86 @@
+From: lmccarth@cs.umass.edu
+Date: Mon, 11 Mar 1996 03:01:39 +0800
+To: olcay@libtech.com (Olcay Cirit)
+Subject: Re: Request Comments: Transpose/XOR Hash
+In-Reply-To: <199603040416.XAA23922@bb.hks.net>
+Message-ID: <199603080211.VAA05994@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Olcay Cirit writes:
+> I'd like to know if anyone has comments regarding the hash
+> method I came up with. 
+
+My primary suggestion is that you do some reading in a good crypto text like
+Applied Cryptography (2nd ed.). The introduction to PRZ's manual for PGP is
+also particularly germane, as is the sci.crypt FAQ.
+
+> It is a combination of Transposition
+> and XORing. Basically, it works like this:
+> 
+> Let's say K is the 8 character key that will be hashed. 
+> There are two binary accumulators M and L, which store the
+> Most and Least significant bits in each byte of K. After M and
+> L are both 8 bits long, they are XORed together and the 
+> resulting value replaces byte N in the Key. This is repeated
+> 8 times, and each time, N is incremented by one.
+
+OK, since I'm procrastinating doing some non-crypto work right now, I looked
+at your algorithm for 10 minutes or so. Your description is rather vague, so
+I'm not sure I understand exactly what you're proposing. My best guess is:
+
+The hash has 8 rounds. The initial 64-bit digest value is H = K. For 
+notational convenience, let H[i] denote the i-th byte of H, and H[i,j] denote 
+the j-th bit of H[i]. Juxtaposition denotes concatenation. I'll assume bit 1 
+is the MSB. You hash K by doing:
+
+H = K
+for k = 1 to 8 do
+	M = H[1,1] H[2,1] ... H[8,1]
+	L = H[1,8] H[2,8] ... H[8,8]
+	H[k] = M xor L
+od
+return H
+
+First of all, this isn't even a good checksum, since the output depends on 
+only 16 of the 64 input bits (namely the MSBs and LSBs of each byte of K).
+
+Many pairs of output bits are highly correlated (in fact, equal).
+H[2,1] == H[3,1] == ... == H[8,1] because H[1] doesn't change after the first 
+round. Similarly H[1,8] == H[2,8] == ... == H[8,8] because H[8] doesn't
+change until the end of the algorithm. For each other choice of bit index j, 
+there's a "before" value H[1,j] == ... == H[j,j] and an "after" value
+H[j+1,j] == ... == H[8,j].
+
+This tells us that there are at most 2^(1 + 7*2) == 2^15 possible hash output 
+values. 
+
+But it would be faster to take advantage of the observation that for each j,
+H[1,j] == K[j,1] xor K[j,8]. We guess the 8 LSBs as g_1, g_2, ..., g_8, and
+compute the corresponding 8 MSBs as m_j = g_j xor H[1,j], which gives us all
+the information we need to compute a hash value.
+
+So we can compute a preimage of an arbitrary hash value with at most 2^8 = 
+256 guesses.
+
+In any case, this is an extremely weak cryptographic hash.
+
+Lewis			"...made my own pretty hate machine" (Tori Amos)
+lmccarth@cs.umass.edu	http://www.cs.umass.edu/~lmccarth
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMT+XOWf7YYibNzjpAQHSSAQA3iBNxdO/xtWUVK66tw/JsgMnEG6U/KwD
+wurB+s8GpMEUHlHAuKpTDeiJJDe1qIPHg7lXoArs7kadgBTcnGVkaoMsLZ5zWStb
+yLJ5rMn2M4C1SnlxSkE6DfGXxnjbrAZtI60vwuIAkuPwJRknDyrmY/dTizy4R8GU
+Erf/KmTj0uU=
+=P1O+
+-----END PGP SIGNATURE-----
+
+
+
+

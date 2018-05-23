@@ -1,0 +1,43 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 2 Jun 1996 18:15:22 +0800
+To: cypherpunks@toad.com
+Subject: How can you protect a remailer's keys?
+Message-ID: <199606020659.XAA25725@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Encryption is critical for protecting against traffic analysis,
+but it's tough to protect a remailer's keys.  Unlike regular email,
+where you can type the key in as you read it, remailers need to
+run automatically once you set them up.  Some of the choices are:
+- leave it around in plaintext with only Unix file protections
+        (Ghio2 works this way - does Mixmaster?  My ghio2 version has it 
+        compiled into the binary, and I try to delete it from source.)
+- type it in to a long-running remailer process 
+        (with human intervention to start)
+- SSL-based remailers, where the web server handles crypto on
+        a per-machine basis instead of per-remailer
+- use unauthenticated Diffie-Hellman (either hanging off
+        a TCP port somewhere instead of mail, or
+        3 pieces of email)
+- off-line or off-site remailer such as a POP3 winsock remailer
+        that makes it Somebody Else's Problem, and separates
+        the remailer's public interface from the working parts
+- human intervention on every message (which may not be totally
+        worthless for moderated news postings, if you want to
+        take that approach to spam prevention.)
+
+Anybody have any other approaches?  These are mostly weak,
+annoying, or both.
+
+
+#				Thanks;  Bill
+# Bill Stewart +1-415-442-2215 stewarts@ix.netcom.com
+# http://www.idiom.com/~wcs
+#				Rescind Authority!
+
+
+
+
+

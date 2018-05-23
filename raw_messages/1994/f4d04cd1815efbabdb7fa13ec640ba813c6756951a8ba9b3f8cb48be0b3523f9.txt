@@ -1,0 +1,37 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Thu, 14 Jul 94 12:07:09 PDT
+To: cypherpunks@toad.com
+Subject: Probabilistic Encryption
+In-Reply-To: <199407141619.RAA13236@an-teallach.com>
+Message-ID: <9407141841.AA16182@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   I hope we're not about
+   to get the usual kiddy PRNG exor encryption lecture. 
+
+A PRNG XOR-ed with a data stream is a perfectly good stream cipher,
+provided the PRNG is sufficiently strong.  It's that sufficiently
+strong part that usually goes wrong.  LFSR doesn't cut it (Linear
+Feedback Shift Register).  Neither does LC (Linear Congruential).  I
+should point out that these are both iterates of 
+
+	x_{i+1} = x_i * A + B (mod C)
+
+where the domain is Z_2[x] (polynomials with coefficients mod 2) for
+LFSR and Z (integers) for LC.
+
+Blum-Blum-Shub makes a very good stream cipher, even with just XOR.
+
+For those of you may have interpreted GT's comments as to disparage
+all PNRG-XOR combinations, I hope the above may help.
+
+Graham, you can read up on probabilistic encryption on page 406 of
+Schneier.  In fact, it discusses the BBS generator in this context.
+
+Eric
+
+
+
+

@@ -1,0 +1,35 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Tue, 23 Feb 93 09:38:43 PST
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: Doubled penet messages
+Message-ID: <930223173029_74076.1041_DHJ36-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I see what's causing the double messages from Deadbeat.
+ 
+Penet puts an X-Anonymously-To: cypherpunks@toad.com into the header that it
+sends.  (I'm not sure why it has to do this; isn't this redundant with the
+"To:" header?)  The cypherpunks mailing list rebroadcaster keeps this
+header.  The mailing list goes to Chael Hall's remailer.  That remailer sees
+the X-Anonymously-To line in the header and thinks this message is a
+remailing request.  (The other Cypherpunks remailers uses a different header
+line for their remailing requests.)  That remailer then obediently sends the
+mail to Cypherpunks, and so we get two messages.
+ 
+Either Chael's remailer should not accept X-Anonymously-To as its remailing
+request, or Penet should not put X-Anonymously-To into the outgoing message
+headers.
+ 
+Perhaps this would be a good time to standardize the supported set of
+headers for remailing requests.
+ 
+Hal
+ 
+
+
+
+
+
+

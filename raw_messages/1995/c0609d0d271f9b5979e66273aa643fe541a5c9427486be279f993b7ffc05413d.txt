@@ -1,0 +1,28 @@
+From: "Rev. Mark Grant" <mark@unicorn.com>
+Date: Wed, 27 Sep 95 07:57:21 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Re: Status of Netscape Bug Exploit (suggestions needed)
+Message-ID: <Pine.3.89.9509271529.A7869-0100000@unicorn.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Couldn't you either create the address in a register, and then do an 
+indirect jump through the register, or push it onto the stack and do a 
+ret ? You could do something like 
+
+	mov ecx, address + 01010101
+	sub ecx, 01010101
+	jmp [ecx]
+
+I'm not certain of the format for BSDI assembler, but I presume that's 
+possible. You could modify the value you add and subtract to make sure 
+there are no netscape-invalid bytes in the compiled code.
+
+	Mark
+
+
+
+
+

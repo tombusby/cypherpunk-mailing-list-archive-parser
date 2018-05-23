@@ -1,0 +1,94 @@
+From: John Bashinski <jbash@cisco.com>
+Date: Tue, 17 Sep 1996 11:32:38 +0800
+To: jfricker@vertexgroup.com (John F. Fricker)
+Subject: Re: J'accuse!: Whitehouse and NSA vs. Panix and VTW
+In-Reply-To: <2.2.32.19960916190033.010773d0@vertexgroup.com>
+Message-ID: <199609162039.NAA10136@mort>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Well IPSec provides for authentication of endpoints which would identify the
+> syn attacker.
+
+Only if the attacker were so stupid as to put in valid authentication
+data identifying herself. 
+
+I think IPSEC would allow you to throw away the SYNs without processing
+them and without putting anything in your incoming connection queue. On the
+other hand, you'd have to do all the authentication protocol and
+computation for each packet in order to determine that it was bogus. I can
+see where that could lead to a still worse denial-of-service attack if your
+IPSEC code wasn't properly written.
+
+> What amazes me is that routers happily pass packets with foreign IP return
+> addresses.
+
+Defining what a "foreign IP return address" is quickly becomes complicated.
+
+> I guess there is some valid utility to being able to originate a
+> connection that actually goes somewhere else for intiating a many to many
+> protocol. But I can't think of any practical application that would
+> necessarily be that way.
+
+As far as I know, nothing does that.
+
+> So why do routers let packets leave local networks that do not appear to
+> originate from said local network?
+
+Because routers don't know which networks are "local networks" and which
+networks are transit networks. When a router gets a packet from one of
+its interfaces, it has no way of knowing whether that packet originated
+on the local network, or was forwarded on by some other router... possibly
+from an original source a dozen network hops away.
+
+> Doesn't routing work "both ways" so to speak?
+
+Um, "both ways"? No, not really, if you mean what I think you mean.  I
+think you're saying that, if a router receives a packet claiming to be from
+host A, and that packet doesn't come from the direction of host A, as
+defined by the direction in which the router itself would send a packet
+which was destined for host A, it should drop the packet.
+
+The problem with that is that, if host A sends a packet to host B, there's
+no guarantee that the path that packet takes is the same as the path a
+packet would take from host B to host A. It usually is, but not
+always. Transient routing assymetries are very common in routing protocols,
+and it's possible, and even occasionally useful, to set up networks where
+there are permanent asymmetries.
+
+It's a pretty basic part of the architecture of IP networks that routers
+forward based only on destination addresses. Changing this would break a
+lot of existing systems. Keeping both "to" and "from" route information
+for each destination would entail redesigning all the routing protocols now
+in use, as well as doubling the associated memory and computation
+requirements. It won't happen soon, if ever.
+
+It may happen that router vendors will start adding configurable options to
+discard suspicious packets in the (pretty common) case where routing is
+expected to be symmetric. Such options would have to be used with great
+care, by network administrators who were very sure they knew what they were
+doing. They couldn't be made the defaults without breaking the universe, so
+there'd always be people who should turn them on, but wouldn't.
+
+As it stands today, it's possibly to manually configure a router to reject
+packets that don't come from addresses expected on the interface the
+packets arrive on. Such filters are entirely static, and don't respond to
+changes in the network. It's reasonable to set them up on a "stub" link
+that forms the only path leading to a reasonably well-defined segment of
+the network...  like a LAN, or a small site. It's much less reasonable on a
+router in the middle of a complex network, and more or less impossible in
+Internet "core" routers... unless you can anticipate every possible dynamic
+network change, your filters are going to get it wrong sometimes.
+
+Myself, I always configure routers to filter out bogus source
+addresses... when they're being installed at points in the network where
+it's obvious which addresses those are. Most ISPs don't do it even when
+it's easy, and that's one of the sources of the problem.
+
+					-- John B. 
+
+
+
+
+

@@ -1,0 +1,121 @@
+From: Charles Watt <watt@sware.com>
+Date: Tue, 2 Jul 1996 03:29:35 +0800
+To: perry@piermont.com
+Subject: Re: rsync and md4
+In-Reply-To: <199607011320.JAA20895@jekyll.piermont.com>
+Message-ID: <9607011359.AA15838@mordred.sware.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PRIVACY-ENHANCED MESSAGE-----
+Proc-Type: 4,MIC-CLEAR
+Content-Domain: RFC822
+Originator-Certificate:
+ MIIBvzCCAWkCEFmOln6ip0w49CuyWr9vDVUwDQYJKoZIhvcNAQECBQAwWTELMAkG
+ A1UEBhMCVVMxGDAWBgNVBAoTD1NlY3VyZVdhcmUgSW5jLjEXMBUGA1UECxMOU2Vj
+ dXJlV2FyZSBQQ0ExFzAVBgNVBAsTDkVuZ2luZWVyaW5nIENBMB4XDTk1MDUwODIw
+ MjMzNVoXDTk3MDUwNzIwMjMzNVowcDELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1Nl
+ Y3VyZVdhcmUgSW5jLjEXMBUGA1UECxMOU2VjdXJlV2FyZSBQQ0ExFzAVBgNVBAsT
+ DkVuZ2luZWVyaW5nIENBMRUwEwYDVQQDEwxDaGFybGVzIFdhdHQwWTAKBgRVCAEB
+ AgICBANLADBIAkEM2ZSp7b6eqDqK5RbPFpd6DGSLjbpHOZU07pUcdgJXiduj9Ytf
+ 1rsmf/adaplQr+X5FeoIdT/bVSv2MUi3gY0eFwIDAQABMA0GCSqGSIb3DQEBAgUA
+ A0EApEjzeBjiSnGImJXgeY1K8HWSufpJ2DpLBF7DYqqIVAX9H7gmfOJhfeGEYVjK
+ aTxjgASxqHhzkx7PkOnL4JrN+Q==
+MIC-Info: RSA-MD5,RSA,
+ AUgiTVoKIzYpT3U2b5lxqGU6+uLTb+C+hivLsd0PxXH993pdEwRJ3rvJtAPSIacX
+ +G7fosR46YQw+F9wxr955fI=
+
+> "David F. Ogren" writes:
+> > I stand by my statements.
+> 
+> Then you have lost all your reputation with me. If you don't even have
+> the integrity to admit that you are wrong, you are obviously not a
+> reasonable source of information.
+
+How typically Perry.  
+
+> 
+> > However, MD5 (and MD4) have not been completely cracked.  The problems that 
+> > you bring up have to do with situations where an active attacker develops a 
+> > slightly different pair of documents with the same hash.
+> 
+> I believe that is "cracked" under most definitions of cryptographic
+> hashes, Mr. Ogren. A cryptographic hash is supposed to be useable in a
+> signature precisely because it is supposed to be computationally
+> infeasable to find two documents with the same hash. Whether both
+> documents are chosen by the attacker or only one is immaterial -- the
+> property as stated is independant of that. As things stand, you can
+> get someone to sign a contract saying "I agree to pay David F. Ogren
+> $100" and turn it into one saying "I agree to pay David F. Ogren
+> $2395.39" or some such. If that isn't "cracked" what would be
+> "cracked"? Yes, it could be worse, but is this not far more than bad
+> enough?
+> 
+> > Although this is highly undesirable characteristic for a hash function, and 
+> > shows a weakness in the function that may eventually lead to its being 
+> > completely cracked, it does not mean that a fraudulent document can be 
+> > created from an already signed document.
+> 
+> Whatever you like, Mr. Ogren.
+> 
+> Perry
+
+Perry, as you are so fond of quoting Dobbertin, let me forward once again to 
+the list Hans' analysis of the "crack" that he discovered.  He explicitly 
+agrees with Mr. Ogren's analysis.  Yes it is prudent to move away from MD5.
+But there are still plenty of uses where it is more than sufficient.
+
+Charlie Watt
+SecureWare
+
+- -----------------------------------------------------------------------
+
+> Some of you may have seen this, but I think it's worth reposting here.
+>   --Rob
+> 
+> Forward from sci.crypt on 11 Jun 1996 14:22:03 GMT
+>   <dobbertin@skom.rhein.de> wrote (Re: "MD5 discussion"):
+> 
+> >In view of the continuing discussion about MD5, I want to make a few comments,
+> >which hopefully can help to avoid some misunderstandings and misinterpretations:
+> 
+> >1. In February 1996 my paper "Cryptanalysis of MD4" appeared (Fast Software
+> >Encryption, Cambridge Proceedings, Lecture Notes in Computer Sciences, 
+> >vol. 1039, Springer-Verlag, 1996, pp. 71-82). In this paper, as an example two
+> >versions of a contract are given with the same MD4 hash value. Alf sells his
+> >house to Ann, in the first version the price is $176,495 and in the second it is
+> >$276,495. The contracts have been prepared by Alf. Now if Ann signs the first
+> >version with $176,495 then Alf can altered to price to $276.495 ...
+> >In principle this risk occurs, if you use a hash function for which (senseful) collisions
+> >can be found,  whenever you allow another person to have influence on the 
+> >contents of a document you are signing. Certainly this does not happen
+> >very often in practical applications. But sometimes you *must* have an agreement
+> >about a text (contract) which is then signed by two or more parties. And these are
+> >often just the most important applications!
+> 
+> >2. I suspect that the recent attack on MD5 compress can be refined and extended
+> >such that it might lead to MD5 collisions (matching the right IV) and perhaps then
+> >even to similar results as already obtained for MD4. Certainly this requires a lot of 
+> >hard additional work.  
+> 
+> >3. If you write a message for your own (nobody else has influence on it) and sign
+> >it using MD5 (and a strong public key algorithm, of course) then there is no danger 
+> >that it can be altered (at least according to our knowledge today)! Thus it is true
+> >that I guess almost all of you will have no risk using MD5, for instance in PGP.
+> >However, if you accept 2., then in some cases there could be problems ... 
+> 
+> >4. After all I have reservations against keeping MD5 as a (de facto) standard, 
+> >because 2. might indicate that there is a serious security problem with MD5.
+> 
+> >5. My conclusions are: no reason for panic, but in future implementations better
+> >move away from MD5.
+> 
+> >6. Presently a paper discussion the status of MD5 in detail is in preparation.
+> 
+> >  -   Hans Dobbertin      
+-----END PRIVACY-ENHANCED MESSAGE-----
+
+
+
+

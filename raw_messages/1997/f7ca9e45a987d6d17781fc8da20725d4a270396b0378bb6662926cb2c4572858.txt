@@ -1,0 +1,43 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 26 Nov 1997 18:26:14 +0800
+To: "William H. Geiger III" <cypherpunks@Algebra.COM
+Subject: Re: Quoting Portions of a Signed Document
+In-Reply-To: <199711252109.WAA05443@basement.replay.com>
+Message-ID: <3.0.3.32.19971126021529.0071f210@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Cantsin> A crude approach would be to sign every paragraph 
+>Cantsin> or line separately, but that's obviously inelegant.
+>
+>Geiger> Well this could be done by creating a document signature 
+>Geiger> and then a collection of sub signatures but it can get ugly real quick.
+
+Creating chains of hashes lets you do this without having to
+do signatures on each piece - you just sign the hash at the end.
+So you'd create 
+	hash_page_1 = hash( hash(page_1_para_1), hash(page_1_para_2)...)
+	hash_final  = hash( hash_page_1, hash_page_2, ... )
+	sign( hash_final, signaturekey )
+or whatever hierarchy you like, and to demonstrate you've got page_2_para_2
+correctly, you provide the hashes for all the page, and the hashes for
+all the paragraphs on page 2.
+
+But then Geiger brings out the other important point:
+>Then what does the sub signature really tell you? Yes you can verify that
+>the quote was written by someone but it may be taken completely out of
+>context. How about when several blocks of text from different messages are
+>combined. Each individual block checks out but by combining them the text
+>has a completely different meaning than the original document.
+
+				Thanks! 
+					Bill
+Bill Stewart, stewarts@ix.netcom.com
+Regular Key PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

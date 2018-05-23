@@ -1,0 +1,74 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Sun, 5 Feb 95 20:32:42 PST
+To: cypherpunks@toad.com
+Subject: Re: "encrypt tcp connections" hacks
+In-Reply-To: <9502060202.AA03281@snark.imsi.com>
+Message-ID: <199502060431.UAA18798@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry advocates IPSP as an almost-panacea for Internet security.  I
+disagree.  I'll quote only the most relevant bits:
+
+   From: "Perry E. Metzger" <perry@imsi.com>
+
+   > I don't just want one or two encrypted applications -- like
+   > the Kerberos telnet and rcp -- but something to transparently provide
+   > privacy for all TCP sockets -- like SMTP sockets between (re)mailers,
+   > NNTP, X11, FTP, MUDs, etc.
+
+   Well, in the long term, my hope is that people use IPSP for this. It
+   will mean that the kernels on their machines simply deal with all this
+   stuff and that userland applications get to ignore it 90% of the time.
+
+   [...]
+
+   However, I'd say that this isn't going to be a permanently deployed
+   thing on the net -- that much we can be pretty sure of.
+
+The basic problem with assuming IPSP as a universal encryption
+solution is that it answers an incomplete threat model.  IPSP works
+where you trust the endpoints but not the intermediates.  When you
+don't trust the endpoints for silence, but do trust them for routing,
+IPSP doesn't work.  Let me make this concrete:
+
+TIA on netcom.
+
+Suppose I'm running extruded netcom ports on winsock clients using TIA
+to multiplex the serial line.  (Some of you may be doing this right
+now.)  My Netscape connection is passing from my MS Windows machine
+through netcom over the internet to my web server of the moment.  IPSP
+doesn't provide end-to-end security in this case, because the endpoint
+for the IP packet (netcom) doesn't coincide with the endpoint of the
+actual connection (the home machine).  A maxim:
+
+Trust boundaries are not the same as machine boundaries.
+
+It's fallacious to argue simply that everyone's going to be _on_ the
+Internet soon enough anyway, and that this problem will go away.
+Absolutely not.  If anything, this kind of proxying for Internet
+connectivity is going to be come _more_ common, and that as a result
+of cypherpunk projects for realtime proxy services, such as web and
+ftp proxies.
+
+You don't want to trust the proxy in an anonymization service to do
+your crypto for you, just like (if you're smart) you won't trust your
+secrets to netcom even for processes, much less for filesystems.  And
+you can't say that all proxies are going to be IP-to-IP proxies,
+either.  Some of them are going to be proxying the whole protocol,
+some will participate partially, some not at all.  What this does
+indicate, however, is that the need for peer-to-peer encryption will
+be necessary at _each_ level of abstraction, and pretty much forever.
+
+It will be an interesting and practical exercise in trust modeling to
+figure out how to pass one layers policy requirement for a secure
+channel to a service offering at a lower layer.  The problems involved
+here are going to be extremely difficult to make work for anything
+approaching generality.
+
+Eric
+
+
+
+

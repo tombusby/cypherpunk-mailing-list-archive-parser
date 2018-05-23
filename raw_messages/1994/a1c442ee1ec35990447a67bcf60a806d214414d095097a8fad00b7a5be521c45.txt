@@ -1,0 +1,51 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Tue, 15 Feb 94 21:29:57 PST
+To: boone@psc.edu
+Subject: Re:  SCHEME for FULL-SPEC RETURN PATH
+Message-ID: <9402160511.AA10151@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Sorry, either I mixed it up with regular cypherpunks mail or didn't 
+realize you were expecting a response.  To summarize your method,
+messages going from the original sender to the recipient have headers like
+
+To: recipient
+X-Anon-Sender-Path: 
+X-Anon-Reply-Path:
+
+where the X-A-*-P: headers have the form
+	remaileruser+stuff@remailersite
+and "stuff" is similar-sorm stuff encrypted with a remailer's public key.
+When going from the sender to the recipient, remailers take their
+names off the X-A-S-P line, decrypt the stuff, and encrypt themselves
+onto the X-A-R-P line, which the recipient can use to reply.
+
+My two main problems with it are
+1) It leaves the recipient's address visible the whole way.
+Not only is this a security risk, but the recipient may not have made
+it known, since the recipient may have set up some messy remailer-chain
+using different syntax to get replies.
+
+2) The syntax may be symmetrical, but it's ugly :-)
+It would be cleaner to package it into the To: field if you can, though
+the user+stuff@somewhere format seems to be an Andrewism, and the
+Internet standard @somewhere.com:user@domain or user%foo@bar.com
+forms only carry machine names, not machine and user names.
+Because you're not using the standard mailer syntax,
+it means that you have to build a chain of only your flavor of remailers
+to get a reply to work, though I suppose almost any method has that problem.
+But you run the risk of a normal machine or smart-mailer along the way
+just seeing the To: recipient@machine.com and sending it directly
+instead of sending it to your remailer-user.  Better to keep roughly
+your same syntax, except have the To: line be only the next hop,
+and the recipient's real address be hidden inside the X-A-S-P pile.
+That's also more symmetric, letting you take a reply from this sort
+of system and reply back to it again.
+
+		Bill
+
+
+
+

@@ -1,0 +1,50 @@
+From: "I~nigo Gonzalez" <nexus@adv.es>
+Date: Wed, 2 Oct 1996 09:32:42 +0800
+To: Kim Yoonjeong <yjkim@ssrnet.snu.ac.kr>
+Subject: Re: the key of DES
+In-Reply-To: <199609301017.UAA04791@ssrnet.snu.ac.kr>
+Message-ID: <32518EA9.3616@adv.es>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Kim Yoonjeong wrote:
+> 
+> Hello, all !
+> With given a unknown DES system with 64 bits plaintext p, ciphertext c,
+> can there be MORE THAN ONE keys ?
+
+I don't think so:
+
+I you look closely to 1-Round DES, you can have this case:
+
+Let p=LR (plaintext) and K=key (without parity check)
+
+When computing f(R,k) in 1-Round DES I can have the same
+input (and output) in the S-Boxes with: 
+       
+     p=LR, with k ; and p=L(R'), with k'
+
+         (k' denotes 1-complement of k)
+
+
+You have _two_ different (plaintext,key) pairs with
+the same input using f(R,k) and f(R',k').
+
+>From this, you can prove that:
+
+   if  y=DES(p,k) then y'=DES(p',k')
+
+wich is what everyone really wants: a beautiful chance of using
+a trapdoor in DES.
+
+Did you like it? - Don't use DES: It's not reliable.
+--
+  Iñigo González - ADV Internet Technical Advisor <nexus@adv.es>
+  "Never say anything online that you wouldn't want to see on the
+  front page of The New York Times." - alt.2600.moderated Posting
+
+
+
+
+

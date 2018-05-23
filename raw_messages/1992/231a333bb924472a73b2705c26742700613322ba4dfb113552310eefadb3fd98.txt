@@ -1,0 +1,45 @@
+From: wcs@anchor.ho.att.com (Bill Stewart)
+Date: Mon, 21 Dec 92 08:11:21 PST
+To: cypherpunks@toad.com
+Subject: Re: Destroying Data (Re: Remailer Policies)
+Message-ID: <9212211610.AA21587@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Yanek points out that "rm" doesn't destroy data on disks, just inodes,
+and that you have to overwrite the data to destroy it.  However,
+he suggests that you do this by
+> 'cat /dev/null > /dev/hdxxx' which overwrites with zeroes all
+as well as overwriting swap space and powering off RAM.  
+Won't work, and it's the hard way to do it: 
+cat /dev/null produces zero bytes of output (there's a /dev/zero on
+some systems which produces lots of bytes of zeros.)
+
+If you're dealing with amateurs (i.e. local cops or maybe FBI, but not NSA/KGB,
+who can take the disk apart and use fancy magnetic techniques),
+you can get away with overwriting the data once with zeros or other stuff;
+a simple approach is to create a file large enough to fill all the
+unallocated space on the disk (either using /dev/zero or writing your own);
+be sure to be root so you get the last 10% of a BSD file system.
+For professionals, overwrite it once with 0s, once with 1s, and once with
+some test pattern like Xs or /etc/termcap.  This still won't help
+if there are bad blocks which the disk controller is mapping out
+transparently to your system, of course, but amateurs can't read them.
+Swap space is tougher - you'll need to look at how your kernel allocates it
+to know how to fill it all up, or else zap it all after rebooting your system,
+if this is practical.
+
+The government's rules for handling, um, special data say that you either need
+an officially approved software program, or an Official Big Magnet,
+or else you need to physically destroy the magnetic media from the disk.
+I don't like having Big Magnets near my lab, but sandblasting has a
+real physicality to it, and floppy disks make this satisfying scrunch in a 
+paper-shredder :-)  Needless to say, unless you're Ollie North, 
+you shouldn't be shredding your data when the cops are busting you ...
+
+
+			Bill Stewart, somewhere in New Jersey
+
+
+

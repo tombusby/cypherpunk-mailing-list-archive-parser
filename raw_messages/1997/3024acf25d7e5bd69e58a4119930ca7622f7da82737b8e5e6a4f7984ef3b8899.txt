@@ -1,0 +1,66 @@
+From: Eric Murray <ericm@lne.com>
+Date: Thu, 13 Nov 1997 02:04:17 +0800
+To: Doug_Tygar@cs.cmu.edu
+Subject: Re: SET
+In-Reply-To: <2325.879351741@tygar.trust.cs.cmu.edu>
+Message-ID: <199711121751.JAA01757@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Doug_Tygar@cs.cmu.edu writes:
+> 
+> rah@shipwright.com wrote:
+> 
+> >At Doug Tygar's talk at Harvard last week, he claimed to have found a way
+> >to crack it. I, um, forgot to press him on this. Has anyone heard about
+> >this, or what it might be?
+> 
+> Actually, I did not claim to break SET.  What I said was:
+> 
+> (a)  because SET is such a complicated protocol, I am certain that it
+>      does have flaws;
+> (b)  SET does not have a clear design philosophy -- for example, it has
+>      modes in which a consumer's credit card number is hidden from a
+>      merchant and modes when it is given to a merchant.  These ambiguous
+>      design points in the protocol make the protocol vulnerable to misuse.
+
+I agree completely.  The people involved in the SET "standards effort" 
+seem to have relatively little concern about security compared to
+say the TLS working group.  There are smart security-aware people
+involved but the process is controlled by non-security-aware
+card company VPs.
+
+ 
+> I have not made a serious effort to crack SET, yet.
+
+Neither have I, but I've already found a significant privacy problem
+which would allow merchants to determine who else a cardholder has
+made purchases from.  When I posted details to the set-discuss list
+the response from the SET czars was "so what?".
+
+[details: according to the spec the cardholder sends to the merchant
+thumbs (SHA1 hashes) of all the certs in the cardholder's cert cache.
+Since this will contain certs from merchants the cardholder has
+made purchases from in the past, a merchant could simply match up
+those merchant cert thumbs with cert thumbs he obtains from other
+merchants, allowing him to build a list of merchants the cardholder has
+attempted to make purchases from].
+
+When the right people do make an effort to crack SET 1.0, it's quite likely
+to be broken.
+
+
+Sorry to sound so negative, but I just got back from a SET meeting
+and those always seem to make me especially cynical.
+
+
+-- 
+Eric Murray  Chief Security Scientist  N*Able Technologies  www.nabletech.com
+(email:  ericm  at  lne.com   or   nabletech.com)          PGP keyid:E03F65E5
+
+
+
+
+

@@ -1,0 +1,51 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Tue, 31 Aug 93 10:54:37 PDT
+To: cypherpunks@toad.com
+Subject: PGP: question
+Message-ID: <9308311748.AA25345@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Cypherpunks,
+
+Are there any heavy implications, security and otherwise, to the
+truncation of the environment variable PGPPATH that occurs in
+buildfilename()?
+
+Background: I've been trying all sorts of stuff getting pgp to read
+config.txt when I'm anywhere else in my directory structure.  My home
+directory is /home/klbarrus which as it turns out is a symbolic link
+another directory (it may even change from time to time).  Since I
+never could get PGPPATH to work on my old NeXT account, and my home
+directory there was also a link to something else, I thought: AHA!
+PGP uses stat() and/or some other functions which don't follow
+symbolic links!!
+
+Nope, it does, so that wasn't it.
+
+So, I poked around the code more and found out that buildfilename()
+returns null if the length of getenv(PGPPATH) is greater than 50.
+This probably explains why it didn't work on the NeXT; PGPPATH was set
+to some huge path like /private/Net/tree/Users/barrus/Cryptography/pgp
+or something close, so buildfilename() returned null.  But the
+pathname on my new account is definitely shorter than 50 characters,
+but I decided to try increasing 50 just to see what it would do.
+
+Right before remaking pgp I realized the mistake I had made, one that
+is (export) almost too embarrasing to admit :-)
+
+Anyway, any "deep" reason to return null if the length of the
+environment variable is > 50?  Or is it just to keep the path
+relatively short, maybe to keep from breaking a system call on some
+machine out there?
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

@@ -1,0 +1,147 @@
+From: mixmaster@remail.obscura.com (Mixmaster)
+Date: Sat, 28 Sep 1996 04:50:12 +0800
+To: cypherpunks@toad.com
+Subject: Jena Remailer
+Message-ID: <199609271630.JAA24185@sirius.infonex.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ wmono@Direct.CA wrote:
+
+ w> On Sun, 22 Sep 1996, Mixmaster wrote:
+
+ >> Can any native English speaker please paraphrase the account
+ >> start-up procedure for us?
+
+ w> I took a stab at re-writing the help file, and I've attached it below.
+ w> The operator of jena might want to use it instead of the help file
+ w> currently being distributed, after correcting any errors and adding
+ w> the German sections back in.
+
+OK, it's an improvement, but there's still some obscurity and a couple
+of other problems:
+
+ w> I believe these instructions are correct -- I was able to follow them
+ w> to create a nym, and use it.  YMMV.
+
+So far I have had no luck, but this may be due to a mail lag, I dunno...
+
+ w>     * The hexadecimal key-ID forms the Email address.  For example,
+        if the nym's key is 0x01020304, the address will be:
+        anon-01020304@as-node.jena.thur.de
+
+Already a confusion:  Is not the address pseudonym@as-node.jena.thur.de?
+
+And, since the key ID is an eight-digit hex number, why the confusing
+
+        "...if the nym's key is 0x01020304, the address will be:"
+                                ^^
+...or am I missing something already?
+
+ w>     * The user-ID of the key contains the pseudonym, only.  Note:
+        This is different from the convention, which is to include the
+        Email address in angle brackets.
+
+OK, so if I understand this properly, when prompted for an account name
+in PGP one simply enters
+
+        pseudonym
+
+...with no quotes or address ("pseudonym" <pseudonym@someplace.net>).
+
+ w> If the signature is valid, the decrypted body should be a header for
+ w> the outbound mail, followed by a blank line, then the body for the
+ w> outbound mail.  The following are headers considered valid by the
+ w> server:
+
+ w>  * Subject: (or Anon-Subject:)
+
+ w>  * To: (or Anon-To:)
+
+ w>  * Newsgroups: (or Post-To: or Anon-Post-To:)
+
+The header fields in parens are identical in function or not?
+
+ w>  - Run 'pgp -esa -u "pseudonym" anon@as-node anonid.asc' to sign and
+ w>     encrypt the extracted key for the server.
+
+These various command lines in the helpfile do not work in the pre-legal
+PGP 2.6/uix/ui versions preferred by many, though equivalent command
+lines of course exist.
+
+ w>  - Test your nym by posting to a test group (de.test is recommended
+       due to the location of the server) and wait several days before
+       requesting mail delivery.
+
+Well, the sent message didn't show up in the newsgroup here, but there
+are often lengthy delays anyway...
+
+ w>  - If it didn't work, repeat the entire procedure.  It's possible that
+       the key-ID already exists in the server's database and belongs to
+       another pseudonym.
+
+The procedure didn't produce results for me so far, but before trying
+again I wish to get confirmation that I am trying properly:
+
+(Shortform directions)
+
+        1:  Generate key with simple, one-word pseudonym, no quotes, no
+            address, no nothing.
+
+        2:  Generate -kxa keyfile, pseudo.asc
+
+        3:  -esa encrypt keyfile with Jenaer Remailer's PGP key and send
+            to anon@as-node.jena.thur.de via a remailer.
+
+        4:  Account is automatically established and should work
+            immediately.
+
+To test...
+
+        1:  Prepare message textfile according to sample:
+
+                Newsgroups: de.test
+                Subject: Test
+
+                This is the test message textbody...
+
+            [or, alternately...]
+
+                To: de.test@news.demon.co.uk
+                Subject: Test
+
+                This is the test message textbody...
+
+        2:  PGP encrypt the filebody and two header lines with the Jenaer
+            Remailer's key using the -esa command, signing the cyphertext
+            with your key previously sent to the remailer.
+
+        3:  Send the resulting cyphertext message to the Jenaer Remailer
+            via another remailer, making sure to avoid command words in
+            the Subject: field of the outgoing message.
+
+As I say, following these protocols I have not yet seen a resulting
+message in the test group I have chosen.  Do you feel this is due to
+lag, or am I doing something obviously wrong?
+
+ w> 2E.request Email to be delivered?
+
+[...]
+
+ w> - Never request a delivery to your real Email address.
+
+So here's what I really want to know:  When/if the new account is up and
+running, how _does_ one discreetly retrieve his mail?  I don't see how,
+other than to have it sent to alt.anonymous.messages via a mail2news
+netmail address such as alt.anonymous.messages@news.demon.co.uk and then
+pick through the mess there until some cyphertext message responds to
+his right key.
+
+Either that or else have it sent to yet another pseudonymous account,
+with all the uncertainties and delivery vicissitudes that entails.
+
+
+
+
+

@@ -1,0 +1,72 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 5 Mar 94 14:04:51 PST
+To: cypherpunks@toad.com
+Subject: Truly Stealthy PGP
+In-Reply-To: <199403052121.NAA19624@jobe.shell.portal.com>
+Message-ID: <9403052155.AA07488@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+OK.  Here's the situation again, hopefully more clearly.
+Unfortunately, more clearly in mathematics often means more notation.
+
+Let n be the modulus, and #n be the length of the modulus in bits.
+Let k be the smallest multiple of eight greater than #n.  Let L = 2^k
+be the bit length of the byte container for n and numbers mod n.
+
+Call an encrypted session key as it appears in the cyphertext Q.  We
+want the Q's to be randomly distributed over the interval [0,L).
+Suppose the encrypted session key R = Q mod n.  The integer R is in
+the interval [0,n), and so can't be evenly distributed over [0,L).
+The session key S = R^d mod n, where d is the private exponent.
+
+The entropy I calculated was the entropy of the distribution of the
+R's with the prior condition that the Q's were randomly distributed.
+In other words, if the key is byte-oriented and if the public
+representation of the encrypted session key reveals zero information,
+the distribution of the encrypted session keys must be non-random.  I
+calculated exactly how non-random that could possibly be, and the
+answer was, not much.
+
+One more time.  We want the encrypted key, as it appears to the world,
+to look random.  So let's assume it _is_ random, and see how that
+affects the rest of the system.  If the encrypted session key, as
+represented, is random over a range of bytes, it can't be completely
+random over the modulus in question, since the modulus doesn't divide
+two to the number of bits.  There's some left over, and therefore some
+numbers map to more encrypted session keys than others.
+
+Now, since we have a non-random distribution, we need to see how that
+affects security, since a non-random distribution lowers the search
+space for brute force search.  I calculated exactly how much it can
+lower the size of the search space.  The maximum decrease in entropy
+is two bits, or a factor of four smaller.  This isn't enough to worry
+about for large moduli.
+
+Therefore, we can conclude that it is safe to use a representation of
+the encrypted session key which is random.
+
+I've left out how we go from a non-uniform encrypted session key
+(which must be generated with a distribution of the entropy
+calculated) to a uniform distribution in the representation of the
+encrypted session key.  This is not at all obvious.
+
+>If the session key is chosen from [0,L), still the encrypted session
+>key m = sd^e mod n will be uniform in [0,n).  
+
+No, in fact it won't be uniform.  That was the calculation I just did.
+
+>I don't quite follow here
+>how exactly we go from something uniform in [0,n) to something uniform in
+>[0,L), if that is what Eric is proposing.
+
+You just can't get uniformity over both intervals at the same time.
+What I showed is that you can tolerate non-uniformity in one range in
+order to get uniformity in the other.
+
+Eric
+
+
+
+

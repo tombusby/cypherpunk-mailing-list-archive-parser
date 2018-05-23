@@ -1,0 +1,105 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Tue, 26 Dec 1995 01:43:47 +0800
+To: cypherpunks@toad.com
+Subject: Re: Only accepting e-mail from known parties
+In-Reply-To: <Pine.SUN.3.91.951225065654.26785C-100000@netcom16>
+Message-ID: <X8BogD7w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jonathan Blake <grafolog@netcom.com> writes:
+> On Mon, 25 Dec 1995, Dr. Dimitri Vulis wrote:
+>
+> > As I keep pointing out, pgp-signing the body is not enough.
+>
+> 	You're wrong.
+
+I'll be delighted if someone convinces me that I'm wrong about this.
+I may even start using PGP signatures. :)
+
+> 	You can setup Procmail to detect if something is signed
+> 	with PGP, and if it is, to run a script which determines
+> 	the authenticity of the signature.  If the signature is
+> 	not authentic, the message goes to /dev/null.  That way,
+> 	even if Carol is using intercepted messages from Bob, Carol's
+> 	messages won't be accepted or seen.
+
+Carol needn't put her real name in the "From:" line.  Much of the unsolicited
+commercial junk e-mail comes from bogus addresses.
+
+I said, Carol can *forge* the RFC 822 header, so her e-mails look like they
+came from Bob, and use the body from Bob's authentic PGP-signed message.
+
+For example, Bob may have once sent Carol an e-mail that looked like this:
+
+-----------------------------------------------------------------------
+From: Bob
+To: Carol
+Date: 25 Dec 1965
+Subject: Carol, we're history
+Message-ID: <111@bob>
+
+----BEGIN PGP SIGNED MESSAGE----
+
+I no longer wish to go out with you. Merry Christmas!
+
+----BEGIN PGP SIGNATURE----
+Version 2.6.2
+
+12341234...
+
+----END PGP SIGNATURE----
+
+"Ask not what your country can do to you, but what you can do to your country"
+
+-----------------------------------------------------------------------
+
+Carol can *easily* forge an e-mail to Alice that looks like this:
+
+-----------------------------------------------------------------------
+From: Bob
+To: Alice
+Date: 25 Dec 1995
+Subject: Alice, we're history
+Message-ID: <222@bob>
+
+----BEGIN PGP SIGNED MESSAGE----
+
+I no longer wish to go out with you. Merry Christmas!
+
+----BEGIN PGP SIGNATURE----
+Version 2.6.2
+
+12341234...
+
+----END PGP SIGNATURE----
+
+"Sex with Carol was the greatest sex I've ever had"
+
+-----------------------------------------------------------------------
+
+The e-mail is sent by Carol, but the RFC 822 header says "From: Bob".
+If you think this is hard to accomplish, take a look, e.g., at the source
+code the Lance Cotrell's mixmaster and see how it talks to sendmail.
+
+The PGP-signed portion is copied verbatim from an authentic message.
+
+Alice _may_ notice that the _Received:_ headers are weird, but this
+forgery will certainly pass through a script that checks signatures.
+E.g., this trick could be used to mailbomb someone with many copies
+of the same authentic e-mail.
+
+That's because PGP only signed a portion of the body, not the important
+headers like "Date:", "To:", "Subject:", and "Newsgroups:", nor the .sig.
+
+Happy holidays,
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

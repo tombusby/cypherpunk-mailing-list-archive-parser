@@ -1,0 +1,52 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Fri, 27 Oct 1995 15:49:34 +0800
+To: loki@obscura.com (Lance Cottrell)
+Subject: Re: Anonymity: A Modest Proposal
+In-Reply-To: <acb4d64d11021004827b@[137.110.24.250]>
+Message-ID: <199510261443.KAA25683@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Lance Cottrell wrote:
+
+| How open is the protocol? Is there and API for it? Does anyone know how big
+| the coins are? There will have to be room for one per header in Mixmaster.
+| Do they vary in size, or are all coins identical? There is so much stuff to
+| try to keep track of all at once! :/
+
+	If the coin is bigger than a Mix header has room for, does it
+have room for an arbitrary token?
+
+	I send a message to the mixmaster I'd like to use, containing
+a coin and a large arbitrary number.  I then put that number in a list
+I maintain of the tokens I can spend with that mixmaster.
+
+	The mixmaster cashes the coin at once[1], and puts my number
+into a list of 'paid' tokens it will accept.
+
+	When I want to spend the token, I put that in the message
+header block.   Since its smaller than the coin, its easier to put in
+the header than the coin.
+
+	This scheme also reduces mapability between the coin and the
+message, since they are not strongly correlated in time as they would
+be if they were included in the message.  This seems to be a stronger
+win than the size benefit that caused me to suggest this.
+
+	[1] Other than the time mapping win, I could also see spending
+a few bucks at the start of each month to be able to use any
+mixmaster.  The mixmasters would, by cashing my coins early, win on
+the float between the time they get my money and the time they provide
+service.  Icing on the cake.
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

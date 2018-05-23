@@ -1,0 +1,55 @@
+From: lmccarth@cs.umass.edu
+Date: Fri, 8 Mar 1996 13:05:37 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: (Fwd) Gov't run anon servers
+In-Reply-To: <m0tthV7-000915C@pacifier.com>
+Message-ID: <199603042306.SAA15164@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal writes:
+# The passphrase is in PLAINTEXT in the script file
+# which runs the remailer!.  It has to be.  That is true of all automated
+# remailers. 
+
+Jim Bell writes:
+> Maybe I just don't know much about automated remailers, but I don't 
+> understand why you said that the passphrase "has to be" in plaintext in the 
+> script file.  I find this hard to believe.  While I am far from an expert on 
+> cryptographic matters, I would assume that any received attempt at a 
+> password could be securely hashed (128 bits?) and compared with a pre-stored 
+> hash value.   If it's the same, it's assumed that the password was correct.
+> 
+> What's wrong with this?
+
+For the less sophisticated remailer software that uses variable-size
+messages and (optionally) PGP, the remailer script needs to feed the
+plaintext passphrase into PGP to decrypt the remailer's private PGP key.
+
+Mixmaster, which includes its own set of crypto routines (currently using
+RSA with 3DES as I recall), allows you to compile the private key passphrase
+into the executable, and wipe out the source code. This obscures the
+passphrase plaintext from (very) casual observers.  
+
+The fundamental problem AFAICS is the difficulty of getting a program to keep
+a secret from an observer. If the program doesn't actually _use_ the secret
+(in the way that the secret is useful, e.g. as the basis for a symmetric
+key), then it seems you can attain an arbitrary level of "security through
+obscurity", because you can encode the secret however you want in the code.
+
+But if a program is capable of possessing and using the secret without
+human intervention, then anyone with a copy of the program can do the same.  
+
+Bottom line: if you can crack (say) the 8-character Unix passphrase for a
+remailer account, you have full access to the remailer's secrets and all the
+opportunities that presents. Good remailer account passphrases are
+important.
+
+-Lewis	"You're always disappointed, nothing seems to keep you high -- drive 
+	your bargains, push your papers, win your medals, fuck your strangers;
+	don't it leave you on the empty side ?"  (Joni Mitchell, 1972)
+
+
+
+

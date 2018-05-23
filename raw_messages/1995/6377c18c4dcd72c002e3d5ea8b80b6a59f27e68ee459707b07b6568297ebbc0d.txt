@@ -1,0 +1,30 @@
+From: sameer <sameer@c2.org>
+Date: Thu, 28 Dec 1995 00:41:34 +0800
+To: cypherpunks@toad.com
+Subject: fun with rsaref and 64-bit machines
+Message-ID: <199512270120.RAA19559@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	Does anyone know if RSAREF works on 64 bit CPUs? It seems
+that RSAREF's NN_Mod is getting stuck in digit.c at:
+
+99         */
+100       while ((t[1] > 0) || ((t[1] == 0) && t[0] >= c)) {
+101         if ((t[0] -= c) > (MAX_NN_DIGIT - c))
+102           t[1]--;
+103         aLow++;
+104       }
+
+
+	on a dec alpha..
+-- 
+sameer						Voice:   510-601-9777
+Community ConneXion				FAX:     510-601-9734
+The Internet Privacy Provider			Dialin:  510-658-6376
+http://www.c2.org/ (or login as "guest")		sameer@c2.org
+
+
+
+

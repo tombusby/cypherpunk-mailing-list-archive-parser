@@ -1,0 +1,92 @@
+From: Bill O'Hanlon <wmo@rebma.rebma.mn.org>
+Date: Sun, 29 Nov 92 20:24:59 PST
+To: cypherpunks@toad.com
+Subject: Some hacked scripts for the remailers
+Message-ID: <m0mw2OO-000A4zC@rebma.rebma.mn.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's a couple of real rough Bourne shell scripts to get some mail
+to go to both Hal's and my remailers.  Not too helpful if you don't
+have a unix machine around--sorry.  Nothing fancy, but it'll keep the
+mental confusion down when trying to put a message together.
+
+First is twohop...
+------ Cut here ------
+#!/bin/sh
+
+# Two hop anonymous remailer  hal's first, then rebma ...
+
+if [ $# != 2 ]
+then 
+	echo Usage: twohop message-file-name destination-address
+	exit 1
+fi
+
+message=$1
+dest=$2
+t1=twohop.1
+t2=twohop.2
+
+# if the "remailing" and "remailer" names look odd--well, that's what hal's
+# and my respective keys for the remailers are named...
+
+
+encap $message $dest remailer $t1
+encap $t1 remailer@rebma.mn.org remailing $t2
+
+elm hal@alumni.caltech.edu < $t2
+
+rm -f $t1 $t2
+----- Cut here -----
+
+twohop calls encap twice.  Encap is a more general and useful script.
+
+------ Cut here ------
+#!/bin/sh
+
+#
+# usage: encap message-file destination remailer resultfile
+#
+
+if [ $# != 4 ]
+then
+	echo Usage: encap message-file-name destination remailer-key-name outputfile
+	exit 1
+fi
+
+mfile=$1
+dest=$2
+remailer=$3
+result=$4
+
+t1=encap.1
+t2=encap.2
+
+echo :: > $t1
+echo Request-Remailing-To: $dest >> $t1
+echo "" >> $t1
+cat $mfile >> $t1
+pgp -ea $t1 $remailer
+echo :: > $t2
+echo Encrypted: PGP >> $t2
+echo "" >> $t2
+cat $t1.asc >> $t2
+
+mv $t2 $result
+rm -f $t1
+
+---- Cut here -----
+
+
+These seem to work for me...  At least, a couple messages now have gotten
+back to me from them.  They helped me get a couple problems out of
+the remailer.
+
+-Bill
+-- 
+Bill O'Hanlon						 wmo@rebma.mn.org
+
+
+

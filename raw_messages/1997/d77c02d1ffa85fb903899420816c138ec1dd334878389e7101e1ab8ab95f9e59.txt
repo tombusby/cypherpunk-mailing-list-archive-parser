@@ -1,0 +1,74 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 20 Feb 1997 00:24:07 -0800 (PST)
+To: Scott Auge <scotta@sauge.com>
+Subject: Re: Cryptanalysis
+In-Reply-To: <199702151726.JAA27016@toad.com>
+Message-ID: <3.0.1.32.19970219081646.00628560@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:21 AM 2/15/97 -0500, you wrote:
+>Was wondering if anyone could help me with short explainations on the
+>cryptanalysis of SKIPJACK and DES.  If ya hit www.sauge.com/crypt you
+>might get a better idea of what i'm trying to accomplish.
+>
+>Vague explanations are OK.  Dont want long drawn out explainations on
+>the implementation of an attack (source code, proofs, statistical
+>analysis and the like), just a short explaination of the attack.
+
+Cryptanalysis of DES is a 25-year ongoing academic exercise, with
+lots and lots of results.  It's easy to attack it in 2**55 tries,
+because of symmetry, but that's a very large number :-)
+Differential cryptanalysis, discovered by Biham and Shamir, 
+shows that the NSA probably did help the design process when
+working with IBM to turn IBM's 128-bit-key Lucifer system into DES,
+and certainly didn't weaken it.  Linear cryptanalysis, discovered
+more recently, shaves some more bits off the strength if you have
+an extremely large amount of known plaintext.  
+
+Brute-force attacks on DES (just try lots of keys until you win) 
+used to be viewed as almost infeasible, but about 5-6 years ago there 
+were a couple of designs for cracking machines that could do a 1-day crack
+for $30-50M, and then Wiener's design for a $1M, 3.5-hour cracking machine
+about 5 years ago.  Gate arrays have gotten denser, faster, and cheaper 
+since then, and if you want to crack a _lot_ of keys (e.g. you're the NSA)
+you can probably afford to burn ASICs to get even denser and faster.
+The slow part of the attack _had_ been key scheduling, but recent work
+by Peter Trei and others shows that you can do key scheduling very
+efficiently for the brute-force keysearch problem by picking keys
+in Gray Code order (since a one-bit change in key causes a simple
+change in key-schedule - it's totally useless for normal encryption/
+decryption, but it's a big win for brute-force cracks.)  
+There may be a distributed Internet crack using that approach, 
+though DES is still very inefficient on general-purpose computers and 
+works better on bit-twiddliing chips.
+
+SKIPJACK is a totally different game - the NSA keeps the algorithm secret,
+and the only semi-outsiders who've seen it were a group of 5 people
+including Dorothy Denning and Dave Maher who were allowed to do a study
+when the NSA were trying to foist Clipper onto us.  They concluded that
+SKIPJACK was reasonably strong (in their interim report), which gave
+them good propaganda points, and never did the "final report" that
+was supposed to address the entire Clipper chip (where most of the
+technical weaknesses were) and the key-handling charade around it.
+I don't remember if Matt Blaze's spoofing attack on the Clipper chip
+came before or after their interim report - the checksums were too short
+so you could impersonate another chip under reasonably wide conditions.
+According to the data sheets for the Mykotronx Clipper Chip, SKIPJACK
+is a Feistel-structured cypher with N rounds (I think it was 16 or 32.)
+80 bits is enough that if anybody can discover the algorithm, 
+it's too long to brute force today but starts looking pretty vulnerable
+in 10-20 years, and of course the Feds would have your keys today,
+so they can wiretap you, without needing legal authorization,
+and you can probably bribe a Fed faster than you can brute-force the chip.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

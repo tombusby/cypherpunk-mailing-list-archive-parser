@@ -1,0 +1,68 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 22 Aug 1997 15:21:49 +0800
+To: Irwan Hadi <phoenix@cutey.com>
+Subject: Re: PGP5i supports RSA keys?
+In-Reply-To: <19970817123643.13713.qmail@hotmail.com>
+Message-ID: <3.0.2.32.19970821225601.0077e370@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>>4096 bit keys are going to be rather hard to break in this lifetime. :-) 
+>but to generate and signing a message with 4096 bits key , will take 
+>much times, than with 2048 or 1024
+
+Diffie-Hellman keys have different standards for how long they
+need to be, since they're based on discrete logs rather than factoring,
+but the necessary lengths are similar.  However, generating
+Diffie-Hellman keys is much faster, once you've settled on a modulus,
+since you don't need to search for probable primes, you just
+need to pick a random number that's relatively prime to the 
+modulus-1 (trivial, if you're using a Sophie-Germain prime modulus)
+and maybe to the generator (also trivial.)  So go for 4096,
+or a least use a much longer key than the 192 bits Sun once used :-).
+
+There's no particular reason _not_ to support 4096-bit RSA keys 
+(since using dynamic-sized data structures makes programs more reliable 
+and less susceptible to attacks like overly-long input data), 
+but there's also really no need for keys longer than 2048 bits unless
+some radical algorithmic breakthrough happens.  (Computer hardware 
+breakthroughs aren't relevant; the exponential behaviour of the
+algorithms mean that a few extra bits makes any device that fits
+on the planet still too small.)  1024 bits is probably enough,
+but maybe not, depending on how long you need to keep something secret
+and how much technology improves doing your lifetime.  
+
+Techniques for breaking into your computer and stealing the private key
+will probably improve far faster than cracking algorithms,
+especially as 
+1) Nanotech makes it much easier to recover old data off disks and
+send nanobots to collect and return it
+2) The Singularity makes people smart enough to find all the security
+bugs in Win2001
+3) The Fingertip Escrow Act requires recording of all keystrokes and
+other potentially illicit finger activities
+4) Telepathy-input Yellow Sticky Notes make recording your passphrase
+so much more convenient.
+-----BEGIN PGP SIGNATURE-----
+Version: PGP for Personal Privacy 5.0
+Charset: noconv
+
+iQBVAwUBM/0p8PthU5e7emAFAQEkzAH/QFXqB3diLTQHi12aXqFKhsoDtZJ2JhAk
+hyOHb9nMmOL/QnyrZ7s3SYega4Pb/cwF+e4w9/lh5+9QzYZawKq/BQ==
+=jAHi
+-----END PGP SIGNATURE-----
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#   (If this is a mailing list or news, please Cc: me on replies.  Thanks.)
+
+
+
+
+

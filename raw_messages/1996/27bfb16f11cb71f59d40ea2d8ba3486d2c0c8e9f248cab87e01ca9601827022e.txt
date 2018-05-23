@@ -1,0 +1,65 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sun, 7 Jul 1996 04:40:07 +0800
+To: AwakenToMe@aol.com
+Subject: Re: Word lists for passphrases
+In-Reply-To: <960706092922_350344400@emout18.mail.aol.com>
+Message-ID: <199607061744.MAA31864@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+AwakenToMe@aol.com wrote:
+> 
+> I have a util that will create a word list starting from aaaaaaaaaaa on up to
+> anythingggggggg
+> basically you could do every combination. Let me know if ya want it.
+> 
+
+Here's the C++ prog that I wrote 1.5 yrs ago for my friend who needed it
+for genetic experiments on evidence in OJ "ZAEBAL" Simpson trial:
+
+
+void nested_loops(int max_depth, int *lower,
+      int *upper, void (*action)(int *indexes, int depth))
+/*
+   calls (*action) for every combination of numbers of size max_depth
+   o max_depth - size of all combinations
+   o lower     - lower boundaries for indices 0 -- max_depth - 1
+   o upper     - upper boundaries for indices 0 -- max_depth - 1
+   o action    - called for every combination
+
+  Example:
+
+   int lwr[] = { 'a', 'a' };
+   int upr[] = { 'b', 'b' };
+   nested_loops( 2, lwr, upr, some_action );
+
+  calls some_action for every combination
+  aa ab ba bb
+*/
+{
+  int *indexes = new int[max_depth];
+  int cur_depth = 0;
+  indexes[cur_depth] = lower[cur_depth];
+  do {
+     if( indexes[cur_depth] < upper[cur_depth] ) {
+       if( cur_depth == max_depth - 1 ) {
+         (*action)( indexes, cur_depth ); // Acting only deep enough
+         indexes[cur_depth]++;
+       } else {
+         cur_depth++;
+         indexes[cur_depth]=lower[cur_depth];
+       }
+     } else {
+       if( --cur_depth >= 0 )
+         indexes[cur_depth]++;
+     }
+  } while( cur_depth >= 0 );
+  delete [] indexes;
+}
+
+	- Igor.
+
+
+
+

@@ -1,0 +1,54 @@
+From: hallam@w3.org
+Date: Wed, 20 Sep 95 12:37:53 PDT
+To: cypherpunks@toad.com
+Subject: Re: Please send me SSL problems...
+In-Reply-To: <v02110104ac85a804545b@[204.179.132.1]>
+Message-ID: <9509201937.AA00765@zorch.w3.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Jeff, the SSL specification has a severe *architectural* problem - it
+>assumes that Internet Protocols are APIs - interface standards, and that
+>you can just slide a "layer" underneath without anyone noticing. Such is
+>not the case - all the Internet Protocols are real protocol standards, in
+>that they specify the syntax, order, and semantics of the actual bits on
+>the wire. The IETF quite explicitly doesn't care about APIs - that's a host
+>software issue, and it doesn't matter what the host software looks like (or
+>even what the machine looks like), so long as it gets the bits on the wire
+>right, according to the protocol spec. This is how the Internet can make
+>very strong guarantees about interoperability.
+
+I agree with parts of this and disagree with other parts. 
+
+The IETF does not as a whole care about APIs. The one exception being the GSS 
+API which appears to be intended as a means of cicumventing ITAR. Nobody asked 
+me about GSS API but a lot of people have assumed that because it comes from the 
+IETF it should be the basis for the Web security protocols. I'm affraid that I 
+can't see any real connection between the GSS view of the world and my own. 
+Hence I find that API more of a hinderance (having to explain why not to use it) 
+rather than a help.
+
+The specific criticism of SSL, that it is layer replacement highlights a 
+fundamental error made by many IETF people. The purpose of a layered protocol 
+model is precisely to permit the underlying layers to be altered without 
+affecting the upper layers. NNTP runs very happily on either TCP/IP or on DECnet 
+for example.
+
+Where I think SSL went wrong was in the approach taken to URLs. Rather than 
+define HTTPS://foo.com/ it should specify a new transport HTTP://foo.com:80:SSL/
+I think the blame for that mess should be laid at another door however. 
+Basically the URI working group should have understood this issue and defined a 
+syntax for handling both SSL like objects and also DECNET, ATM. This would fit 
+much better with the idea of SSL as being a wrapper for an arbitrary protocol.
+
+
+I think its worth pointing out that the people working at Netscape now are a 
+rather different bunch to the original team.
+
+
+		Phill
+
+
+

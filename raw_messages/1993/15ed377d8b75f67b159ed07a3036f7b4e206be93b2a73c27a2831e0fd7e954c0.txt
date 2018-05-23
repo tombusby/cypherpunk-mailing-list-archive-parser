@@ -1,0 +1,78 @@
+From: jazz@hal.com (Jason Zions)
+Date: Tue, 28 Dec 93 14:37:43 PST
+To: m5@vail.tivoli.com (Mike McNally)
+Subject: GPS and security
+Message-ID: <9312282234.AA04489@jazz.hal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   I speculated that the
+   government may in fact have designed the satellite systems so that
+   they could be told to do several things in case of national emergency:
+
+   *	Shut down (probably possible; they may have actually mentioned
+   this on the show).  Problem is that lots of friendlies may grow to
+   rely on the data for life-critical things, like guiding commercial
+   airliners.
+
+It's worse; the military relies on GPS. During the Gulf War large numbers of
+combat vehicles could rendezvous with high accuracy and no radio contact in
+the dark of night; staggeringly important in limiting fratricide as well
+(though not as well as one might have liked...)
+
+   *	Shut down normal transmission and begin strongly encrypted
+   transmission.  No mention of this; apparently, the satellites were
+   originally designed with some sort of weak system that made the data
+   difficult to use for high-accuracy purposes, but that's been defeated
+   (by the FAA or someone contracted thereto).
+
+   *	Enter into a bogus-cleartext with encrypted subchannel mode,
+   where the plaintext is slyly made to be wrong, but using some
+   subchannel encrypted "good stuff" is still available.
+
+Well, this sounds like the "selective availability" (SA) capability, which
+still exists and has in fact been turned on. It is defeatable, but only
+under certain circumstances (see below).
+
+GPS is a clock-based system; by talking to a constellation of satellites (I
+think the minimum is 4, with 5 being desired and 6 being best) and munging
+the timestamps received from them, GPS systems can compute their location to
+a degree of precision related to the precision of the clocks. SA essentially
+truncates a few bits off the low-end of the time stamps and makes them
+available in an encrypted form. Without the key to decrypt the low-order
+bits, you get location information to within a couple hundred meters or so;
+with the low-order bits, within about six feet.
+
+During the Gulf War, the US military was unable to get enough military GPS
+receivers (i.e. ones that could decrypt the selectively-available data).
+Instead, they bought commercial over-the-counter GPS receivers and turned SA
+off. As soon as they got enough SA-enabled receivers, they turned it on.
+
+SA is defeated by something called Differential GPS.  Basically, a ground
+station at a fixed location constantly computes its position via GPS,
+computes the difference between the GPS location and its known correct
+location, and broadcasts the correction factor. A differential-capable GPS
+receiver computes its location via GPS and then applies the correction fac-
+tor from the nearest differential station. These corrections are obviously
+of decreasing accuracy the farther you get from the fixed-position station,
+but you can correct for that to some degree once you have an estimate of the
+direction and distance from your location to that of the differential
+broadcaster; apply corrections iteratively until they converge.
+
+The requirement, of course, is that you be someplace near a differential GPS
+station. These stations are maintained by the US Coast Guard and obviously
+exist only where there is navigable water (and certainly not everywhere,
+since they take time and money to build).
+
+I'm curious if anyone has attempted to crack the encryption used in
+selective availability; although Differential GPS solves my most important
+issues (coastal navigation) it's be nice to be able to use a handheld GPS
+receiver in the middle of Rock Mountain National Park or some such and still
+locate yourself on the bloody maps with some precision.
+
+Jason
+
+
+
+

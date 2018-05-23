@@ -1,0 +1,39 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Sat, 4 Nov 1995 12:12:48 +0800
+To: tomw@cthulhu.engr.sgi.com
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <199511021747.JAA08919@orac.engr.sgi.com>
+Message-ID: <199511031805.NAA09698@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tom Weinstein writes:
+>In article <DHEtE6.FB6@sgi.sgi.com>, Mark Murray <mark@grondar.za> writes:
+>> I chatted with a colleague at work, and he helped bend my mind right.
+>> I had the mistaken notion that adding lots of data would "overflow"
+>> and "dilute" the entropy to an attackable state.
+>
+>I think the problem is not merely flooding the device with non-random
+>input data.  If you coordinate sucking out entropy with feeding in
+>non-random data you can suck the real entropy in the system down to zero
+>while making the driver think it has plenty of randomness.  While it's
+>not clear to me how this would lead to an attack, it would be worrisome.
+
+You need a similar "mind bending".  "Feeding in non-random data"
+doesn't lead to the driver thinking it has "plenty of randomness" left,
+since it doesn't increase the entropy level to counteract the decrease
+from the entropy-sucker.
+
+The hard part would be having the driver figure out how much entropy
+it's getting from the input.  "Non-random" implies some sort of
+correlation between the bits.  I can't think of any way of measuring
+that which doesn't make some sort of "horizon" that a malicious user
+can confuse.
+
+The simple mechanism would be to assume that input from untrusted users
+adds no entropy, forcing entropy estimates to represent a lower bound.
+
+
+
+

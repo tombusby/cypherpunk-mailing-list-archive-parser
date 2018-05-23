@@ -1,0 +1,48 @@
+From: "Deranged Mutant" <WlkngOwl@unix.asb.com>
+Date: Sun, 2 Jun 1996 17:51:42 +0800
+To: cypherpunks@toad.com
+Subject: Re: Compressed data vulnerable to known-plaintext?
+Message-ID: <199606020748.DAA20117@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On  1 Jun 96 at 19:13, anonymous-remailer@shell.port wrote:
+
+[..]
+> But then you still have the problem of identifying the contents.  If there
+> were no headers, one could not tell if the message was compressed using
+> ZIP, LHA, StuffIt, tar*, compress, gzip, Alice's Magical Supercompressor,
+> or even if it was left alone.  One could also not tell if the decryption
+> happened successfully.
+
+Actually you could, since the actual encoding isn't random. It means 
+something to the compressor.  And if you know something about 
+compression algorithms you could probably make some good estimates. 
+(I've seen some arguments that bit-wise a compressed file is easier 
+to make a known plaintext attack against than an uncompressed text 
+file...)
+
+Try taking various small (but compressable) text files that are 
+different and run them through compressors.  Ignore the usual 
+compressor header information and look at a hex dump of the 
+compressed data... think about it in terms of bits.  Look at the 
+algorithm that encoded the data.
+
+A good way to avoid known plaintext is to use a feedback mode with a 
+random IV (from a good RNG!).  Not perfect, of course...
+
+Rob.
+
+
+ 
+---
+No-frills sig.
+Befriend my mail filter by sending a message with the subject "send help"
+Key-ID: 5D3F2E99 1996/04/22 wlkngowl@unix.asb.com (root@magneto)
+        AB1F4831 1993/05/10 Deranged Mutant <wlkngowl@unix.asb.com>
+Send a message with the subject "send pgp-key" for a copy of my key.
+
+
+
+

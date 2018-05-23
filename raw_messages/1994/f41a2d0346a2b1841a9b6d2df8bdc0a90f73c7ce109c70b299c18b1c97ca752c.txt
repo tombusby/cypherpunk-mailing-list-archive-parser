@@ -1,0 +1,65 @@
+From: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Date: Fri, 18 Feb 94 01:15:32 PST
+To: Nick Szabo <szabo@netcom.com>
+Subject: Re: Mimicry
+In-Reply-To: <199402180810.AAA23236@mail.netcom.com>
+Message-ID: <Pine.3.89.9402180337.L9841-0100000@delbruck.pharm.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Fri, 18 Feb 1994, Nick Szabo wrote:
+ 
+> Sergey Goldgaber suggests hiding files amongst the disk blocks
+> marked "deleted" by the filesystem.  
+> 
+> This sounds practically equivalent to implementing an alternative file 
+> system with its own FAT, etc.  
+
+Actually, in it's simplest form, it is much easier to hide files by 
+deleting them than by implementing an alternative file system.  
+Theoretically, the former method should be enough for most of those 
+concerned with having telltale "noise" files on their disks.  Using an 
+alternative file system might, for them, be almost as revealing as having 
+"noise" files.
+
+>                                In addition to the problems and solutions
+> Sergey mentioned, the true/surface/original filesystem must be slightly
+> modified so that it doesn't bash the hidden filesystem in the
+> process of making new files.  
+
+We can assume that the legitimate user would be aware of this drawback, 
+and would take measures not to write over the files he has hidden.
+I see no absolute _need_ to modify the filesystem.  A simple utility that 
+can write files to specific disk locations is all that is required.
+
+>                               Of course, it will look rather funny
+> when the disk runs out of space several tens of megabytes below
+> the manufacturer's specs.  
+> 
+
+This is only a problem if you modify the filesystem.  The standard 
+filesystem will simply write over the deleted files; or, if one is using 
+the above mentioned utility, one would write onto a truely free portion 
+of the disk.  We can assume that the only an intruder would unknowingly 
+write a file onto the disk without using the special utility (thus 
+overwriting the hidden encrypted file, and doing the legitimate user a 
+favor by destroying the evidence).
+
+-- STUFF DELETED --
+
+                 
+                  All feedback welcome,
+
+                       Sergey
+
+
+PS: I agree with your statement about "security through obscurity"
+    sometimes being a good practical solution.
+
+
+
+
+

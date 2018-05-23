@@ -1,0 +1,80 @@
+From: i.am.not.a.number@best.com
+Date: Wed, 15 Jan 1997 00:12:24 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Pentium optimizations for DES (BIG)
+Message-ID: <3.0.32.19700101000000.006b58b8@best.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+here is Mikkelson's macro, with a few cycles shaved.
+on my machine there is a small but measurable improvement.
+
+
+DesRound	macro RoundNo,reg1,reg2
+
+		mov	eax,		DWORD PTR (RoundNo*8) [ebp]
+		xor	ebx,		ebx
+
+		mov	edx,		DWORD PTR (RoundNo*8+4) [ebp]
+
+		xor	eax,		reg1
+		xor	edx,		reg1
+
+		and	eax,		0fcfcfcfch
+		mov	bl,		al
+		and	edx,		0cfcfcfcfh
+		mov	cl,		ah
+		ror	edx,		4
+		xor	reg2,		DWORD PTR _des_SPtrans[ebx]
+		mov	bl,		dl
+
+		xor	reg2,		DWORD PTR _des_SPtrans[0200h+ecx]
+		mov	cl,			dh
+		shr	eax,		16
+
+		xor	reg2,		DWORD PTR _des_SPtrans[0100h+ebx]
+
+		mov	bl,		ah
+		shr	edx,		16
+
+		xor	reg2,		DWORD PTR _des_SPtrans[0300h+ecx]
+
+		mov	cl,		dh
+		and	eax,		0FFh
+		and	edx,		0FFh
+
+		xor	reg2,		DWORD PTR _des_SPtrans[0600h+ebx];ebx
+		mov				ebx,DWORD PTR _des_SPtrans[0700h+ecx]
+		xor	reg2,		ebx
+		mov				ebx,DWORD PTR _des_SPtrans[0400h+eax]
+		xor	reg2,		ebx
+		mov				ebx,DWORD PTR _des_SPtrans[0500h+edx]
+		xor	reg2,		ebx
+
+		endm
+
+At 10:19 AM 1/14/97 -6, Peter Trei wrote:
+>I hope you'll look at Svend Olaf Mikkleson's
+>latest DES round replacement for libdes. He
+>seems to have gotten the round down to 18
+>clock cycles. I have not yet had a chance
+>to try it myself.
+>
+>see: http://inet.uni-c.dk/~svolaf/des.htm
+>
+>Peter Trei
+>trei@process.com
+>
+>Peter Trei
+>Senior Software Engineer
+>Purveyor Development Team                                
+>Process Software Corporation
+>http://www.process.com
+>trei@process.com
+>
+>
+
+
+
+

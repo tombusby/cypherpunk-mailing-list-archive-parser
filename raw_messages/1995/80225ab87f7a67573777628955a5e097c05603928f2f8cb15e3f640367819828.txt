@@ -1,0 +1,47 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Mon, 30 Oct 1995 13:36:15 +0800
+To: Mark <mark@lochard.com.au>
+Subject: Re: MD4-derived hash functions
+In-Reply-To: <199510300353.AA55657@junkers.lochard.com.au>
+Message-ID: <Pine.SOL.3.91.951029210721.22281A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 30 Oct 1995, Mark wrote:
+
+> 
+> That doesnt make sense. If one accepts that double encryption is securer than
+> single encryption, wether marginally or twice as secure, why not use it?
+> 
+
+Hi Mark -
+
+The problem with double encryption with DES is that it's vulnerable to a 
+meet-in-the-middle attack if you have known plain text. You can encrypt 
+the plaintext with all possible keys and store them in a (big) table, then 
+decrypt the cypher text until you get a match with one of the values in 
+the table. 
+
+Doesn't work too well on an 8Mb P90 (2^59 bytes is half a peta byte), but 
+since memory capacity theoretically increases as the square of processor 
+speed, the attack becomes feasible much, much, sooner than breaking a 112 
+byte key.
+
+Using 3-DES,even with only two distinct keys, makes this attack 
+infeasible, as the table size becomes much to large. 2-IDEA is similarly 
+safe (2^131 bytes of memory is a long way off (I wonder what the first 
+version of M$ Word to need that much memory will be).
+
+Simon
+ ---
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 
+	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

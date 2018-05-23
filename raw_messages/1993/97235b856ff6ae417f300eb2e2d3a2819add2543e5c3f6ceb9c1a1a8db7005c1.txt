@@ -1,0 +1,31 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Wed, 11 Aug 93 19:52:05 PDT
+To: wcs@anchor.ho.att.com1305)
+Subject: Secure voice software issues
+In-Reply-To: <9308112126.AA25524@anchor.ho.att.com>
+Message-ID: <9308120249.AA05022@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>so I haven't been able to verify which V.42/V.42bis/MNP options will let
+>you squeeze out the start/stop bits to let you fit 13.3 kbps of data over it,
+
+Whenever V.42 error correction (LAPM) is enabled, synchronous HDLC
+frames are what actually pass over the link. So the start/stop bits are
+already removed.  Unfortunately, the packetizing done by LAPM adds delay we
+don't want for a real time voice application. And if you turn off LAPM,
+you return to sending the start/stop bits over the wire.
+
+Most V.32 and V.32bis modems provide for direct synchronous operation,
+which would let us have our cake and eat it too, except that few PCs
+can speak synchronously to a modem. This may require some extra
+hardware (sigh).
+
+Phil
+
+
+
+
+
+

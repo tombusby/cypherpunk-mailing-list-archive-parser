@@ -1,0 +1,78 @@
+From: stig@netcom.com (Stig)
+Date: Fri, 4 Jun 93 09:58:07 PDT
+To: Karl Barrus <cypherpunks@toad.com
+Subject: Re: HELP: pgp, .forward, mh
+In-Reply-To: <199306031404.AA18382@Menudo.UH.EDU>
+Message-ID: <9306041658.AA28725@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To quote: Karl Barrus <elee9sf@Menudo.UH.EDU>
+Regarding: HELP: pgp, .forward, mh
+> 
+> 
+> Situation: I'd like mail that arrives at my other account to be
+> encrypted and then forwarded to this account.  I have spent a few
+> hours trying various things and nothing seems to work.
+> 
+> I've tried this as my .forward file:
+> 
+> "| /myhome/pgp -fea barrus | mail elee9sf@menudo.uh.edu"
+> 
+> but all that arrives at elee9sf is a blank message.
+> 
+> I've tried
+> 
+> "| /myhome/remail.script"
+> 
+
+The problem is that when sendmail executes your filter, your
+environment is all messed up.  HOME and USER aren't even initialized.
+PATH is probably /bin:/usr/bin.
+
+> 
+> So, if that's impossible, how do I get my elee9sf account to do it?  I
+> use mh on menudo, and have tried
+> 
+> to barrus@tree.egr.uh.edu | A "/path/pgp -fea barrus | /path/rvcstore +tonext"
+
+This works when you send mail to yourself because your environment
+gets passed along to your mail filter.
+
+
+Here's a good wrapper script to use ....
+
+
+#!/bin/sh
+
+HOME=YOUR-DIRECTORY
+PGPPATH=YOUR-PGP-DIRECTORY
+PATH=$HOME/bin:/usr/local/bin:/usr/ucb:/bin:/usr/bin:/etc:/usr/etc
+
+export HOME PATH PGPPATH
+
+cd $HOME
+
+exec >> $HOME/Inbox/FILTERLOG 2>&1	# this logs error messages so
+					# that you can learn from them
+
+FF=/tmp/FILTER.$$
+touch $FF
+chmod 600 $FF
+
+(tee $FF; echo '') >> Inbox/everything	# this saves your mail in case
+					# it gets dropped on the floor
+
+PGP COMMAND GOES HERE
+
+rm $FF
+
+exit 0
+
+/* Jonathan Stigelman, Stig@netcom.com, PGP public key by finger  */
+/* fingerprint = 32 DF B9 19 AE 28 D1 7A  A3 9D 0B 1A 33 13 4D 7F */
+
+
+
+

@@ -1,0 +1,79 @@
+From: shipley@merde.dis.org
+Date: Wed, 6 Jan 93 20:25:15 PST
+To: toad.com!cypherpunks@soda.berkeley.edu
+Subject: mh wrapper
+Message-ID: <9301070203.AA25280@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+
+
+here is my first pass (a 7min hack) at a wrapper for a pgp<->mh use.
+the next verion will me a replacement for the editor to automaticly
+sign the body of a file (while leaving the header alone.
+
+===== CUT HERE ====
+#!/bin/sh
+
+#pgpcomp - pgp compose
+# Peter M. Shipley (Wed Jan  6 17:58:41 PST 1993)
+
+umask 7077
+
+TEMP=${TEMP-/tmp}
+EDITOR=${EDITOR-/usr/ucb/vi}
+
+whatnow=/usr/local/mh-6.7/bin/whatnow
+
+export TEMP EDITOR
+
+tempfile=$TEMP/pgp$$
+
+/bin/cat << EEOOFF > $tempfile
+To:
+cc:
+Fcc: +drafts
+Subject:
+Precedence: special-delivery
+- --------
+
+
+EEOOFF
+
+$EDITOR $tempfile
+
+/bin/sed  "/^--------/,$ d" < $tempfile > ${tempfile}.head
+/bin/sed  "1,/^--------/d" < $tempfile > ${tempfile}.body
+
+/usr/local/bin/pgp -sta +clearsig=on $tempfile.body -o $tempfile.signed
+
+/bin/mv ${tempfile}.head ${tempfile}
+/bin/cat << EEOOFF >> ${tempfile}
+- --------
+
+EEOOFF
+/bin/cat < $tempfile.signed.asc >> ${tempfile}
+
+/bin/rm -f ${tempfile}.*
+
+exec  $whatnow -prom "pgpsend> " $tempfile
+===== CUT HERE ====
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQBFAgUBK0uPgMhmn7GUWLLFAQH7MAF9EuCX3ZAauG771viwGmnyk4YaiNDFhpmr
+ann0Qvd6hVhTOnbSZNKet3Z9i0FUnDDu
+=40PL
+-----END PGP SIGNATURE-----
+
+
+
+

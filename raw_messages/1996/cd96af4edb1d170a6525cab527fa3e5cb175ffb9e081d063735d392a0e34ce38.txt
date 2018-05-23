@@ -1,0 +1,100 @@
+From: "Paul S. Penrod" <furballs@netcom.com>
+Date: Tue, 3 Sep 1996 18:59:29 +0800
+To: cypherpunks@toad.com
+Subject: Still more mileage from the old grey mare... was: Trojan Horse
+In-Reply-To: <199609030151.SAA07328@toad.com>
+Message-ID: <Pine.3.89.9609022139.A8426-0100000@netcom>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Mon, 2 Sep 1996, Bill Stewart wrote:
+
+> >The key to the success is that the application in question has to be 
+> >compromised to respond to these codes, either by design or by hacking. 
+> >Either way the individual responsible must modify the execution 
+> >mechanism, not just the data itself.
+> 
+> A well-written program is hard to exploit, but badly written programs
+> can often be exploited in ways that allow execution of untrusted code.
+> For instance, the fingerd bug exploited so spectacularly by Robert Morris
+> handed a program more input that it was ready to accept, and the program
+> stupidly kept writing the input into the array, past the end, and out
+> into the stack, where it could be later interpreted as executable code.
+
+That is one instance where it was obscure and workable. I am not familiar 
+with the UNIX binary map, but in the Intel DOS world (includes Windows to 
+a large degree), the stack generally lies at the top of DSEG, not CSEG  and 
+flows down. Older incarnations of x86 allowed for such wonders as:
+
+	push	ds
+	push	cs
+	pop	ds
+
+	[ series of writes ]
+
+	pop	ds
+
+and viola, self modifying code by one method. Ugly, but it works. 
+Variations on the same theme exist, now that Intel does not allow direct 
+manipulation of the IP anymore. It's not that difficult to do. Some of the 
+digital audio work I was involved in several years ago required modifying 
+code sequencing on the fly to accomodate time delays and different types 
+of processor performance.
+
+Intel binaries are not difficult to modify directly - especially when 
+they are DOS binaries (note the plethora of viruses in the medium). Even 
+good code can be reworked without having source. One of the tricks is to 
+grab the intial JMP off the binary header and point it down past the 
+bottom of the existing binary towards the code you have added. This way 
+on startup DOS does not truncate the new binary size via Function 31h. 
+Now all you have to do is mudge the read section and look for your 
+trigger before executing the additional code. What I have just described 
+is a very simplistic viral mechanism.
+
+> 
+> If a popular GIF or JPEG interpreter was written that badly, you could 
+> possibly devise a GIF that lies about how big it is and encourages
+> the program to scribble on its stack.  Now, there probably aren't any
+> like that, and it'd probably have to be Netscape or MSIE or Lview
+> to be widespread enough to make an attack like that worthwhile.
+> (I'd bet on MSIE, of the three of them :-)  Does Microsoft have some sort
+> of Really Cool Extension to JPEG, allowing Macros for Self-Modifying JPEGs,
+> trying to out-do Netscape's animated GIFs?)
+> 
+
+It wouldn't surprise me.
+
+> >Let's see -current examples of computing items with this kind of a 
+> >"feature"... magic cookies, macros, OLE, DDE, MS Objects, JAVA, and the 
+> >list keeps growing.
+> 
+> Back when Good Times came out, everyone denied that it was possible
+> for there to be any risk from a text file (though, as I pointed out,
+> escape-sequence hacks have been used occasionally for over 15 years),
+> and not long after that, the MSWord Macro Viruses started appearing.
+> Bad Code can't always be hacked usefully, but it can always be hacked...
+> 
+> #			Thanks;  Bill
+> # Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+> # <A HREF="http://idiom.com/~wcs"> 	
+> # You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+> 
+
+Escape sequence hacking in DOS has been done since the day ANSI.SYS came 
+out to play. IT was a quick and dirty trick to send escape sequence laden 
+files to the unsuspecting and ask them to type them to the screen. Then 
+the fun began.
+
+When you stop and think about it though, any application that functions 
+as a data engine of some type is susecptible at some level to this form 
+of attack. The issue is really which method to employ that will give you 
+ROI. 
+
+...Paul
+
+
+
+

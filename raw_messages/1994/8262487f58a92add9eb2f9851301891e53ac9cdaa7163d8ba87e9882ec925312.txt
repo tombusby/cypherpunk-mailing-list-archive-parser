@@ -1,0 +1,144 @@
+From: "Jon 'Iain' Boone" <boone@psc.edu>
+Date: Tue, 1 Feb 94 07:10:34 PST
+To: cypherpunks@toad.com
+Subject: Re: 2-way anonymous via SASE
+In-Reply-To: <199402010131.RAA05280@jobe.shell.portal.com>
+Message-ID: <9402011510.AA03122@igi.psc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal <hfinney@shell.portal.com>  writes:
+>
+> From: "Jon 'Iain' Boone" <boone@psc.edu>
+> 
+> >   What if you have a remailer that only assigns you an id for that message
+> >   so that your id is equivalent to (say) the Message-ID (or some portion
+> >   thereof)?  How do you return-path without specifying?
+> 
+> Your syntax is a bit hard to follow here, but I'm guessing that you are
+> proposing such a remailer as a way of providing for return paths.  The
+> remailer would remember the message-id's of outgoing messages, and would
+> remember where those messages came from.  Then if a reply came back for
+> one of those message-id's it could send it to that remembered address.
+> 
+> There were some proposals along these lines made last year, or maybe back
+> in 1992.  This scheme doesn't seem to generalize well to multi-remailer
+> paths.  Also, I think people would be nervous about having remailers keep
+> this kind of out-to-in mapping information.
+
+  I think that I am confused.  Please bear with me.  
+
+  Jim Miller <jim@bilbo.suite.com> writes:
+  >
+  > The general idea is that each anonymous messages will include a SASE that
+  > can be used to reply to the sender, without revealing the identity of the
+  > sender to the message recipient.  To reply, the recipient will copy the
+  > SASE from the original message and past it into a special section of the
+  > reply message.  Remailers will examine this section of the reply message
+  > and use its contents to route the message back to the sender of the
+  > original message.
+
+  Now, what is this SASE?  Apparently it is either a) a fully-specified
+  return-path (presumably a chain of anonymous ids at various remailers),
+  b) a next-hop address (anonymousid at the next remailer that "knows"
+  where to send the message), or c) some combination of the previous two.
+
+  Is there another possibility that I have missed?
+
+  Let's assume that the SASE is of type-a.
+  
+  Let's assume three remailers (and my accounts on them) named:
+
+  anon1+@foo.bar.edu
+  anon2+@biff.bam.com
+  anon3+@fred.barney.org
+  
+  Then, if I want to anonymously send mail to you ( <hfinney@shell.protal.com> )
+  , I need to specifiy your address as normal, but specifiy some optional 
+  header (X-Anonymous-Sender-Path) like this:
+
+  <anon3+"anon2+"anon1+@foo.bar.edu"@biff.bam.com"@fred.barney.org> 
+  
+  which says to my mailer that, while the ultimate destination is 
+  <hfinney@shell.portal.com>, it should first mail it to the 
+  X-Anonymous-Sender-Path address.
+
+  HOST: fred.barney.org  Account: anon3+
+
+  This anon3+@fred.barney.org account will accept the mail (it accepts anything
+  like anon3+*@fred.barney.org, so it doesn't matter about the stuff in quotes)
+  It then strips off the anon3+@fred.barney.org section, and re-writes the
+  X-Anonymous-Sender-Path to read like this:
+
+  <anon2+"anon1+@foo.bar.edu"@biff.bam.com>
+
+  It would then instantiate another optional header (X-Anonymous-Return-Path)
+  like this:
+
+  <anon3+@fred.barney.org>
+
+  It would change the Sender: header to say "Anonymous User 3" or whatever 
+  it would normally say, and mail it to biff.bam.com.
+
+  HOST: biff.bam.com  Account: anon2+
+
+  This account accepts the mail and re-writes the headers like this:
+
+  X-A-S-P: <anon1+@foo.bar.edu>
+
+  X-A-R-P: <anon2+"anon3+@fred.barney.org"@biff.bam.com>
+
+  Sender: "Anonymous User 2"@biff.bam.com
+
+  and mails the mail to anon1+@foo.bar.edu
+
+  HOST: foo.bar.edu  Account: anon1+
+
+  This account accepts the mail and re-writes the headers like this:
+
+  X-A-R-P: <anon1+"anon2+"anon3+@fred.barney.org"@biff.bam.com"@foo.bar.edu>
+
+  Sender: "Anonymous User 1"@foo.bar.edu
+
+  Notice that it leaves off the X-Anonymous-Sender-Path: header since it is
+  empty.
+
+  It then mails it to hfinney@shell.portal.com.
+
+  You receive the mail and read the message.  Now, the sender indicates that
+  it is from "Anonymous User 1"@foo.bar.edu, but the X-A-R-P: indicates that
+  it is really from anon3+@fred.barney.org!  So, as long as fred.barney.org
+  can be trusted, no one can tell who I am, right?  And, except for anon3,
+  none of the others needs to be my account!  This requires changing the
+  mail agent on my end, though, and possibly yours.
+
+  Replying follows the same sort of path, except in reverse.
+
+  Of course, you could also allow for a Return-Path header which was not
+  re-writeable, to force a seperate path to get back to me.  And, you can
+  also change the software so that I initially send to 
+  hfinney%shell.portal.com@fred.barney.org, which would *not* require any
+  rewriting of mail-agent software.
+
+  Is this at all coherent?
+
+  If the return-path is type B, I don't see how you can avoid having the
+  ID-mapping which makes the overall scheme weaker.  I don't have a good
+  handle of the type c.
+
+
+> I understand there is already at least one 24-bit collision on the
+> public key servers, not unexpected given a few thousand keys.
+
+  Hmm... I'm not sure I followed all of the math, but how's this for
+  a signature?
+
+
+ Jon Boone | PSC Networking | boone@psc.edu | (412) 268-6959
+ PGP Public Key fingerprint =  23 59 EC 91 47 A6 E3 92  9E A8 96 6A D9 27 C9 6C
+
+
+
+

@@ -1,0 +1,136 @@
+From: lcottrell@popmail.ucsd.edu (Lance Cottrell)
+Date: Thu, 9 Feb 95 22:57:19 PST
+To: Hal <cypherpunks@toad.com
+Subject: Re: MIME based remailing commands
+Message-ID: <ab60b81304021004b962@[137.110.24.250]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+<SNIP my comments>
+>Ah, I see how you are doing it.  Having re-read your docs, I gather
+>that when un-armored the file is in an encrypted binary format, and
+>when decrypted at least the non-header portion of the file is still
+>binary?  I think this is a good way to do it; it addresses the point
+>Eric made recently about size expansion when an armored file is
+>encrypted at each step.
+>
+That is about right. Inside the armor is a bunch of binary data. 20 header
+blocks, and the message block. The first message block is a PGP encrypted
+to the remailer, and contains the next destination. The other 19 headers,
+and the message block are IDEA encrypted with a key and IV in the first
+header. When decrypted, the second header is seen to be PGP encrypted to
+the next remailer, and the rest is encrypted with the key in that header.
+The remailer Shifts up all the headers, sticks junk in the 20th header, and
+rearmors the whole thing.
+
+This is rather more active manipulation than the current remailers.
+
+
+>The one thing I would mention is that "::" was not originally intended
+>as an indication that the message was to be remailed.  Rather, this was
+>simply a "header pasting token" which could be used to move a few lines
+>from the body up into the header for those people who can't set header
+>fields on outgoing mail.  Then the presence of "Anon-To:" or whatever
+>in the header is what actually causes the action.  So you don't need to
+>use "::", you can just set your headers directly and get the same
+>effect.  (This is not to say you need to do it like this, just that
+>that is how the original design that Eric created worked.)
+>
+
+I realize that. It was easy to implement, since I already had to check for
+:: to be compatible with type 1 messages.
+
+>If you did want to follow this model, you could think about using a
+>MIME header to indicate the type of the message contents rather than
+>the "::".  Another alternative would be to use a different special
+>field in the mail header, like perhaps your "Remailer-Type: 2.0", but
+>I'm not sure that a new top-level header field is the right place for
+>this.  It looks to me like most of the standard headers deal more with
+>moving the message around rather than with telling what would be done
+>with it on receipt.  It's kind of a fine line but it looks to me like
+>more of a job for a MIME content type since that is really what it is
+>for.  You could use something like:
+>
+>MIME-Version: 1.0
+>Content-Type: application/remail; version="2.0"
+>
+>or
+>
+>MIME-Version: 1.0
+>Content-Type: application/remail-mark-2
+>
+>Then the rest of the message could look just as you have it.  Or, to use
+>a little more of the existing standard, you could add:
+>
+>Content-Transfer-Encoding: base64
+>
+>and take out your BEGIN and END lines since it looks like you are using
+>base64, although the augmented kind that PGP uses with the CRC at the
+>end; you'd have to lose the CRC in that case.  (I wonder if PGP will do
+>that in the MIME-PGP integration draft that is supposedly being worked
+>on.)
+>
+>One question is, how do you actually send your messages in the
+>mixmaster client and servers?  Do you go directly to sendmail, or do
+>you use a user agent like /bin/mail?  If the former then it doesn't
+>seem like it would be too hard to add these header fields.  On the
+>receiving end then hopefully also it would not be much harder to match
+>the Content-Type: string than the one you are using.
+>
+>The advantage, again, is that to a considerable extent this kind of
+>application is exactly what MIME was planning for with the "application"
+>content-type.  This lets you mark the contents of the message in a
+>standard way.  And you are already using something very close to the
+>base64 encoding that MIME specifies.  So this does seem like a good
+>opportunity to go with the internet mainstream by following this
+>standard.  If this seems like something you want to do I'm sure our MIME
+>experts here can tell how to define a new content type.
+>
+>Hal
+>
+
+I agree that changing mixmaster to search for a MIME line, rather than the
+:: would be no effort at all.
+
+I use sendmail for the client and the remailer (actually they are the same
+code), so adding new headers is easy. Unfortunately I am having some
+problems with sendmail. Sendmail is marking the messages as "Apperently
+To:" rather than "To:". Any idea what might cause that?
+
+I am not sure I want to give up the CRC on the armor (esp. since I am using
+the PGP tools routines and not my own), but I would be interested in
+defining a new MIME content type. So, experts, what all is involved in
+that, and is there any problem with starting to use a MIME type before it
+is official?
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLzsIElVkk3dax7hlAQFlmgP9FNxSrabWU7CyiRu1Kv28Lz2htuukq1Ul
+ANG4y/arJ9gseBvOxDKVDLVKWN1c2XyOKrEbUTVXxHDhk/WwhfpvJE/UrVWQuFEP
+eaFZB4G1xBvyjkx+DoQxsLVTEVcF1V54Mo5tfARBGCqf7aHqQGoLiRu8kR6i04fj
+nPgOrMeE5Bk=
+=vg7R
+-----END PGP SIGNATURE-----
+
+--------------------------------------------------
+Lance Cottrell  who does not speak for CASS/UCSD
+loki@nately.ucsd.edu
+PGP 2.6 key available by finger or server. Encrypted mail welcome.
+Home page http://nately.ucsd.edu/~loki/
+Check out my essay on the next generation remailer Mixmaster on the WWW page.
+For anon remailer info, mail remailer@nately.ucsd.edu Subject: remailer-help
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+
+
+
+
+
+

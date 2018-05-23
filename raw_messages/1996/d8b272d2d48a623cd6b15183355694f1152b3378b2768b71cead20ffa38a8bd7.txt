@@ -1,0 +1,64 @@
+From: Scott McGuire <svmcguir@syr.edu>
+Date: Thu, 10 Oct 1996 16:24:15 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: "Forward Privacy" for ISPs and Customers
+In-Reply-To: <325c26935621002@noc.tc.umn.edu>
+Message-ID: <ML-2.2.844989814.7457.scott@homebox.>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Kevin L Prigge said
+> Timothy C. May said:
+> 
+
+... stuff deleted ...
+
+> > Something ISPs could do--and may do if there is sufficient customer
+> > pressure--is to adopt a policy of "forward secrecy" (to slightly abuse
+> > this technical term). That is, to have an explicit policy--implemented
+> > in the software--of _really_ deleting the back messages once a customer
+> > downloads them to his site. This means that _backups_ must be done in a
+> > careful manner, such that even the backup tapes or disks are affected by a
+> > removal. 
+> 
+> Interesting thought, but it fails when it gets to my scale. It would
+> be trivial to exclude a file or set of files from normal backup, but
+> it would be problematic to exclude files from filesystem dumps, etc.
+> The scale I deal with (40,000 users, 12gb of /home directory files and
+> about the same in the mail spool) would make it almost impossible to
+> provide this service with accuracy to my users.
+> 
+How hard would this be? (and would it work?)
+
+Use an encrypted file system, something like Matt Blazes CFS which allows each
+user to set up his own encrypted directories.  The encryption is file by file
+so that backups can be made by the system, but the backups are still encrypted.
+
+Unlike CFS, this system would allow public key cryptography.  The system could
+write to a directory using the public key, but only the user could read from
+the directory.  As usual, to speed things up, the PK cryptography would just be
+used to encrypt/decrypt conventional keys which would be used for the
+encryption/decryption of the data.  With this in place, when email comes in, it
+could be stored in the recipient's directory of the hard drive.  I guess I'm
+assuming that the user has a shell account.
+
+> 
+> -- 
+> Kevin L. Prigge                     | Some mornings, it's just not worth
+> Systems Software Programmer         | chewing through the leather straps.
+> Internet Enterprise - OIT           | - Emo Phillips
+> University of Minnesota             |
+> 
+> 
+
+--------------------
+Scott V. McGuire <svmcguir@syr.edu>
+PGP key available at http://web.syr.edu/~svmcguir
+Key fingerprint = 86 B1 10 3F 4E 48 75 0E  96 9B 1E 52 8B B1 26 05
+
+
+
+
+
+

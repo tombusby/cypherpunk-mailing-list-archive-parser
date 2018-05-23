@@ -1,0 +1,44 @@
+From: Casper.Dik@Holland.Sun.COM (Casper Dik - ENS Network Security - Network Security Engineer)
+Date: Sat, 30 Mar 1996 19:14:47 +0800
+To: cypherpunks@toad.com
+Subject: Re: Sun patch pulled
+Message-ID: <199603290826.JAA01442@room101.Holland.Sun.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>I noticed that Sun's latest libc patch (101759-04) is empty.  Previous
+>>versions contained the complete U.S. version of libc, including the
+>>tres-dangerous DES and crypt functions.  In the current rev only the
+>>README remains, presumably because:
+>>	EXPORT INFORMATION: This patch includes code which performs
+>>	cryptographic functions, which are subject to U.S. export
+>>	control, and must not be exported outside the U.S. without
+>>	prior approval of the U.S. government.  Prior export approval
+>>	must be obtained by the user of this patch.
+
+>The 101759-?? patch is missing from the Feb 1996 SunSolve Patches CD. However
+>if one pops in the November 1995 Patches CD there is a nice little copy of
+>the 101759-03 patch which also comes with the above warning and the DES
+>enabled libraries.
+
+
+The wide distribution of the DES enabled libc.so was a mistake, as it
+made DES code available world wide.  Now it's no longer even available from
+our patchserver in the local office in the Netherlands.
+
+The "Doemstic" libc patch is only required for thsoe sites that have installed
+the "U.S. Encryption kit".
+
+If you can't get hold of the patch through official channels, it
+*is* possible to take the international version, take the DES modules
+from your U.S. Encyption kit and build a new libc.a and libc.so
+(the latter utilizing the files form /usr/lib/shlib.etc).
+It's a lot more work, but unfortunately Sun can't distribute the
+library the easy way.
+
+Casper
+
+
+
+

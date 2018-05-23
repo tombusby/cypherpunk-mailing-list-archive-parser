@@ -1,0 +1,72 @@
+From: stewarts@ix.netcom.com
+Date: Sat, 31 Aug 1996 05:00:24 +0800
+To: cypherpunks@toad.com
+Subject: Re: Encryption
+Message-ID: <199608301753.KAA21913@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 05:40 PM 8/30/96 +0200, Germano Caronni <caronni@tik.ee.ethz.ch> wrote:
+>Dale Thorn wrote:
+>> Algorithm: Select bit-groups of random length from the file until the file is
+>>            completely processed.  Shuffle the bits in each group randomly and
+>>            save each group back to the file. Repeat if needed using different
+>>            key-strings for each successive encryption, for increased
+security.
+>Very nice. There are just two little issues:
+>a) How do you generate the random bytes?
+>b) How do you transmit them to the other side, without having a secure channel?
+
+I agree.   This method can be looked at as two parts:
+1) Generate a stream of random numbers
+2) Use the stream to transform the plaintext into cyphertext by shuffling.
+
+Generating a stream of random numbers can be done by cryptographically
+strong methods, or by physical methods such as throwing dice or counting 
+gamma rays, or by cryptographically weak methods such as using the RANDOM
+function provided by your BASIC compiler.  If you're using strong crypto,
+the method is strong if the transform is strong.   If you're using physical
+randomness, that's also true, and you'll definitely need to use 
+agents with briefcases handcuffed to their arms to haul the randoms around,
+which doesn't gain you much operational security, since the random stream
+needs to be longer than the plaintext.  If you're using weak crypto,
+we can use those fast computers you're so impressed with to try
+all 32767 or 2**32 random streams on your input to see what works -
+brute force isn't that hard when you've got a small keyspace,
+even if you don't take advantage of the special forms (e.g. there are
+good methods for reversing linear congruential multiplicative generators.)
+
+How long a stream of random numbers do you need to do the transform?
+And how secure _is_ the transform?  For a simple XOR, you know that
+each bit in the stream will diddle one bit in the plaintext,
+so you're fine (as long as you only use the random stream once.)
+But for your shuffling method, you'd have to shuffle much longer
+to make sure that the "random" selection of bitgroups hits all the bits,
+and hits them often enough that adjacent bits will be separated.
+For instance, if your message is a 3000-word set of instructions
+to your fellow plotters, you need to be sure that the phrases
+"gunpowder", "Parliament", and "November 5th" get shredded, not merely
+moved to different places in the document.  This takes much longer
+than deterministic methods, and risks not being as good.
+
+There are some advantages with the shuffling method - assuming you've 
+cranked the system long enough to really shred everything,
+it's hard to take cyphertext and reconstruct plaintext, and 
+brute force is a bit more work than with a deterministic method
+that uses one pass.  But you can get that effect by using
+stronger methods, such as the
+        des | tran | des | tran | des
+where "tran" is a simple key-or-input-driven shuffle that
+doesn't need to be totally strong.  (Is Carl Ellison the person
+who proposed this?  I've forgotten.)  
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	Reassign Authority!
+
+
+
+
+

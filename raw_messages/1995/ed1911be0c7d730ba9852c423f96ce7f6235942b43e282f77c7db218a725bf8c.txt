@@ -1,0 +1,44 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Wed, 1 Feb 95 13:37:44 PST
+To: norm@netcom.com (Norman Hardy)
+Subject: Re: ESP Unix encrypted session protocol software
+In-Reply-To: <ab559e8c000210040b91@DialupEudora>
+Message-ID: <199502012138.QAA26261@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>I trust that that the attack refered to is the "man-in-the-middle". I find
+>it very curious that there is a simple fix to the attack for the enctrypted
+>voice channel. Each unit displays to its human a few bits of g^(xy). One
+>human quotes them vocally to the other. If there is a man in the middle the
+>bits are unlikely to match. What I find curious is that there seems to be
+>no automated analog to this precaution. It has to do with the difficulty of
+>substituting the vocal signals that code these bits. This is too hard for
+>either computer or man (in the middle). I write to stimulate a solution. I
+>have none.
+>
+>
+The reason there's no "computer" analog to the "anti-spoofing vector"
+for human-human voice communication lies in the definition of
+authentication.  In a formal sense authentication here means binding a
+secret that only you know to the encrypted channel.  In the case of voice
+communication over an encrypted link, that "secret" consists of the ability
+to hold a convincing exchange that sounds like your voice.  You bind the
+secret to the channel by speaking a hash of the key.  Computers, not
+pre-equipped with biological mechanisms for establishing who they are,
+need to use another secret (like knowledge of the secret part of a public
+key signature pair) to which only the computer you want to authenticate has
+access.
+
+The encrypted human voice authentication scheme is only as strong as it
+is hard to spoof voices.  Digital signature authentication is only as
+strong as it is hard to break the signature scheme or compromise the
+signing key.
+
+-matt
+
+
+
+

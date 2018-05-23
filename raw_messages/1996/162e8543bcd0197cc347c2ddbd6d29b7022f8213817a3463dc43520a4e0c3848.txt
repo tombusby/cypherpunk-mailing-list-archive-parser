@@ -1,0 +1,74 @@
+From: Martin Minow <minow@apple.com>
+Date: Sun, 17 Nov 1996 17:38:46 -0800 (PST)
+To: Hal Finney <hal@rain.org>
+Subject: Re: Computer CPU chips with built-in crypto?
+In-Reply-To: <199611172105.NAA04230@crypt.hfinney.com>
+Message-ID: <v03007803aeb55bc5644c@[17.219.103.245]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal Finney writes:
+
+>Another possible application for the built in encryption is software
+>piracy protection.  ...  In these days of razor thin profit
+>margins in the PC business it is hard to see how this will sell.
+>
+
+Let me offer a possible scenario: we're entering an era when
+there is much more chip real-estate than "consumer-grade" PC's
+can use. Adding an encryption engine to the instruction stream
+could be as simple as adding a series of barrel shifters between
+(or inside) the processor cache and the instruction decoder.
+(Imagine blowfish or DES -- or something as simple as RC4).
+
+If encryption is turned off, the chip would be bug-for-bug
+compatible with the existing PC. The vendor would put the
+chip into the ordinary production cycle and, in two to
+three years, it would be on the target audience's desktops.
+(Remember, it would run existing and new, non-encrypted,
+software without change.)
+
+Encryption would be turned on on a module-by-module basis by
+operating system "loader" code that would detect a "key required"
+cookie in the executable file (or the Open Doc file, or
+the Java class file). Before starting the module, the
+o.s. loader would lookup the cookie and load the decryption
+key into the chip. The customer would purchase a key by
+giving a magic number from the software and a magic number
+(processor serial number) to the vendor. This could be
+done automatically over the network.
+
+Now, a software vendor could provide the latest software for
+free from a public FTP site, and could offer a variety of
+decryption keys (30 day free trial, one-time-use micropayment,
+etc.) at a variety of prices. This could also be integrated
+into multiple site-license managers such as KeyServer.
+As with KeyServer, key management could be done "invisibly"
+over the Internet.
+
+Note that the chip does not offer end users any encryption
+or decryption capabilities -- the decrypted instruction
+stream cannot be directly examined by end users. On the
+other hand, if the encryption key generator was available
+to "anybody," it would be trivial to construct secret
+messages by generating programs that, when run, constructed
+the desired message. For that reason, I suspect that
+keys will be limited to a length that "national interests"
+are comfortable with.
+
+Martin Minow
+minow@apple.com
+
+
+
+
+
+
+
+
+
+
+
+
+

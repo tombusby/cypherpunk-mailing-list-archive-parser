@@ -1,0 +1,69 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Sun, 5 Feb 95 22:17:10 PST
+To: cypherpunks@toad.com
+Subject: New directions in anonymity (needed)
+Message-ID: <01HMPLWWZOXU90B2L7@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There has been a lot of talk about anonymity and the best ways of providing
+it recently. Anonymity now is about where cryptography was before Diffie and
+Hellman's paper, or untraceable transactions before Chaum. To use it, you
+have to trust someone, or at least a group of people.
+
+All of our anonymous systems boil down to only two techniques: indirection
+and broadcast. Indirection is sending a message through one or more
+intermediate nodes to conceal its point of origin. Broadcast is sending a
+message to multiple recipients to conceal the intended recipient.
+
+Indirection is somewhat secure for anonymous-to-known messaging. Properly
+done, all intermediate nodes must be compromised to reveal the anonymous
+sender. It is entirely broken for allowing replies to an anonymous person.
+To allow a reply, a traceable path must exist back to the anonymous person.
+Having obtained whatever piece of data is used to send a reply, the attacker
+can trace this back one node at a time. Kludge all you want, but there is no
+good solution to this. You can make the path disappear when it is used, but
+if the attacker gets it first, there is nothing you can do.
+
+Broadcast is exactly as secure as it is nonscalable. If you broadcast to 100
+people, an attacker's uncertainty is one in 100. The security grows linearly
+with the overall bandwidth. For cryptographic-level security, it would need
+to grow exponentially with bandwidth.
+
+Anonymity needs something fundamentally new, something comparable to public
+key for cryptography or blind signatures for digital cash. Suppose a server
+has a large file. A message comes in and is combined into this file. Another
+message comes in with a key to retrieve data. The server processes the
+retrieval key against this large file and comes up with an output, which it
+returns to the person doing the retrieving. This output contains the input
+message, transformed in such a way that even the server cannot match it
+to the input that produced it. This is what we need.
+
+It would require three keys: an encryption key, a selection key, and a
+decryption key. The sender uses the recipient's encryption key to encrypt
+the message, then sends it to the server. The server mixes the message into
+its file, but cannot identify the encrypted file as destined for a
+particular recipient. The recipient's selecting key extracts the data, but
+the data extracted does not resemble the data the sender sent. The
+decryption key, kept private by the recipient, is necessary to return the
+data to its original form. The server must be unable to link the data from
+the sender to the data sent to the recipient, and this is the hard part.
+
+A method like this would permit anonymity without trust, much as public key
+allows secrecy without trust and digicash allows transaction privacy without
+trust. Is there any way to do it? There are functions like the Fourier
+transform that can distribute data over a large file, but the inverse
+function gives you back the same data. We need the not-so-inverse function
+to give back a different piece of data, but one that can be converted, by a
+private key, into the original, which the server never sees.
+
+						Mike
+
+P.S. Have any of the "beta testers" actually tested RSAREF for Perl?
+RSA gave me permission to call the random number and DES routines, so I am
+ready to add that in and release the code.
+
+
+
+

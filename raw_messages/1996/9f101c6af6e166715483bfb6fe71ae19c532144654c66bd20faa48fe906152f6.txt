@@ -1,0 +1,44 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Wed, 31 Jan 1996 07:42:07 +0800
+To: cypherpunks@toad.com
+Subject: Re: Alleged RC2
+In-Reply-To: <9601301829.AA11121@alpha>
+Message-ID: <199601301943.LAA05677@netcom11.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike McNally writes:
+
+> Any ideas on whether the comment in the source about the "effective
+> key length" trick being an export control deal is true?
+
+It sounds plausable.
+
+> If there were a known version of this floating around known to have a
+> 40-bit restriction, is it likely that the restriction would be done by
+> always supplying "40" as the "bits" parameter, or would be it by
+> simply limiting the user key length?
+
+The "bits" parameter guarantees that there are exactly 2^bits
+distinct possibilities for the key schedule.  It does this by
+re-calculating the key schedule as a function only of its
+rightmost "bits" bits, after expansion of the user key to 
+128 bytes.
+
+One would not wish to directly limit the length of the user
+key, since it would most likely be a passphrase of some sort. 
+
+The "bits" parameter allows the effective key length to be
+set in a manner which is translucent to the application and
+its user interface. 
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+
+

@@ -1,0 +1,68 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 20 Dec 94 13:36:00 PST
+To: cypherpunks@toad.com
+Subject: HTTP redirectors
+Message-ID: <199412202135.NAA21822@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I posted some experiments on this a few weeks ago.  Some existing web
+proxies, at least the one at CERN, will accept connections from anyone.
+Set your proxy server to one of those and you have a bit of anonymity
+already.
+
+There is a problem with trying to get much more anonymity than this -
+most connections are for a very short period.  So there is not as much
+possibility for batching and mixing as with remailers.  Only those
+connections which are actually active at the same moment could have their
+in/out mapping confused from the perspective of someone watching the
+redirector site.  So generally our goals have to be somewhat more limited
+than with remailers.
+
+The way proxies work, as I understand it, is that normally when you
+connect to, say, http://site.org/dir/file.html, it connects to the
+special port number for http at site.org, then sends it the remainder of
+the URL, dir/file.html.  When you use a proxy, it always connects to the
+proxy machine, then sends the whole URL (possibly not including the
+http:, I forget), e.g. site.org/dir/file.html.  This way the proxy knows
+where you want to connect and does that for you.
+
+The nice thing about this is that it is already built in to most clients.
+The bad thing is that it does not lend itself to chaining.  Ideally, the
+purpose of chaining is so that no single link in the chain knows both
+ends.  That way no one person can betray your trust.  But with the
+current client software the very first proxy server sees both your
+address and your destination, so even if it went on to set up a chain you
+would have to trust it.
+
+One idea that was suggested here would be to have a local proxy process,
+a very simple one which your fancy client connected to for all your net
+accesses.  This would be where you would implement encryption, or new
+protocols for chaining, etc.  This way we don't have to try to persuade
+client writers to incorporate our improvements; the existing proxy
+support provides the loophole we need.  One nice feature, for example,
+would be a full 128 bit IDEA or RC4 encryption engine so that overseas
+Netscape users (or domestic ones who are stuck with crippled versions)
+can get good security.
+
+However, running this kind of local proxy or a general chaining proxy
+does require root access.  Most systems will not let you create a
+low-numbered socket unless you are root.  So this is not something which
+people will be able to do from their user accounts.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLvdN/RnMLJtOy9MBAQG4RAIAk6ngvAJvwagoMMyejrvUOJCLQ7Z1CSfm
+AatsyVIim9++Ehs8wMEXRRyAKp+7/tcOxC0B4f4jk2dqamsZl0YJew==
+=OQsA
+-----END PGP SIGNATURE-----
+
+
+
+

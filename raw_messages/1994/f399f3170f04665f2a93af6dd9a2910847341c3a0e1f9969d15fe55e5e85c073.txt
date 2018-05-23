@@ -1,0 +1,77 @@
+From: koontzd@lrcs.loral.com (David Koontz )
+Date: Sun, 1 May 94 18:30:46 PDT
+To: smb@research.att.com
+Subject: Re: Random #'s via serial port dongle?
+Message-ID: <9405020129.AA18351@io.lrcs.loral.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: smb@research.att.com
+>To: hughes@ah.com (Eric Hughes)
+
+>    >This has probably been discussed before, but has anyone built a little
+>    >device that amplifies the white noise from a transistor junction, and
+>    >converts it into serial data?
+>    As Tim mentions, lots of people have talked about doing this, but few
+>    actually have.  Nevertheless, the device is still needed and no one
+>    has done it.
+>    I estimate you could sell 500 at $50 each within four months if there
+>    were PGP support for it.  And I'll give you advertising space on the
+>    archive site.
+>    Real random numbers should be a standard part of every computer.
+
+>Absolutely.  Given a choice between a hardware encryptor -- even a
+>public key hardware encryptor -- and a true random number generator,
+>I'd unhesitatingly choose the latter.
+
+
+Having seen random noise sources in real digital crypto use I would give a
+couple of hints.
+
+A noise source is used to generate noise at a deterministic rate, either
+a rate at which it is consumed or the rate at which it is stored (in the
+case of one time pad generation).  This implies two characteristics 1) that
+frequency distribution of noise is suitable for that rate, and 2) That the
+noise source is sampled or gated.  The very act of converting noise to
+digital date is fraught with pitfalls.  The noise source needs to be
+extremely well isolated from the rest of a system, to prevent unwanted
+coupling between digital transitions and the noise source (it just about
+always implies amplification for thresold sampling).  Otherwise your noise
+source is not as random as could be hoped.  It should also be suggested
+that a random noise source be tested (statistically) periodically, and
+should not present a single point failure that can endanger the security
+of communications (redundancy).  All noise sources should be isolated
+from each other as well as from the system in which they are utilized.
+
+Intel got a COMSEC noise source module certified in the mid 80s, it would
+not be available to us nor be affordable.  Previously the smallest available
+encapsulated module was the size of a Zippo lighter.  I believe HP used to
+sell zener noise diodes, although you can reverse bias an EB junction on a
+transistor.
+
+Any and all parts should be screened for noise spectrum, especially
+disturbing would be any spectrum holes.  You would be able to extrapolate
+a bell curve distribution, with your sampling rate(s) falling well toward
+the middle.   Were you to use a noise source toward the outsides of the
+curve it would behoove you to consume more noise data over a longer period
+of time.  NSA used to have an unclassified document on criteria for random
+noise sources, which got deleted in the early Reagan presidency when the
+U.S. started losing Perestroka.
+
+Note that as seen from CCEP chip specs and the clipper chip spec, block
+ciphers can be used with special data sets (including the seed) to generate
+a "random" initial vector (IV).  The clipper chip spec shows a maximum
+of 650 clocks to generate and IV, including LEAF generation, while the
+clipper chip takes 64 clocks to execute 32 rounds of Skipjack. The LEAF
+should account 2 rounds (128 clocks).  One could guess that statistical
+testing determines how many skipjack iterations to generate the IV in view
+of the maximum of 650 clocks.  It is even possible that failing statistical
+tests causes a master alarm condition.  Further speculation is entertaining.
+
+Were you to use noise sources for one time pads you have the problem of
+secure distribution.
+
+
+
+

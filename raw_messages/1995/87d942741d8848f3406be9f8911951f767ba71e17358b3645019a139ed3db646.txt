@@ -1,0 +1,51 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 9 Oct 95 12:04:29 PDT
+To: cypherpunks@toad.com
+Subject: Re: Certificate proposal
+In-Reply-To: <ac9ea8f3010210049f44@[205.199.118.202]>
+Message-ID: <199510091903.MAA22499@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+tcmay@got.net (Timothy C. May) writes:
+>For communication, the only credential Alice needs to ensure that only Bob
+>can read her message is that she uses Bob's public key. If "Bob the Key"
+>reads it, presumably it was "Bob the Person" who read it.
+
+>(Again, Bob the Key = Bob the Person to many of us. If Bob the Person has
+>let his private key out, so that Chuck the Person is also able to read the
+>Bob the Key stuff, etc., then of course cryptography cannot really handle
+>this situtation.)
+
+OK, but again, what about the man in the middle attack?  Suppose the
+key that you found that claims to be from Bob is actually not his, but
+another one created by a man in the middle, such as Bob's malicious
+ISP?  Then that ISP is decrypting the messages Alice sends to him using
+that fake key, and re-encrypting them using Bob's real key.  He is
+reading all of the messages, and Alice and Bob do not in fact have
+communications privacy.
+
+I don't want to overstate the risk of this attack.  It would not be an
+easy one to mount and I believe there are countermeasures which could
+detect it unless the MITM had nearly supernatural powers.  But the MITM
+attack is normally considered seriously in discussing crypto protocols.
+It is a well known weakness in Diffie-Hellman, for example.  That is why
+authenticated Diffie Hellman is used in some of the newly proposed key
+exchange protocols for IP.  The risks of MITM attacks on public key
+systems was recognized not long after those systems were proposed.  The
+problems with fake keys have been discussed for over a decade.
+
+Why is this all suddenly irrelevant?  Were these attacks never realistic?
+Is it just not a problem somehow?  I am baffled by the fact that people
+are just turning their backs on all these years of research and
+experience.  If this is some kind of paradigm shift in which the idea of
+communicating with keys is seen as the key to the puzzle, then I am
+afraid I don't share the enlightenment.  To me the problem seems as real
+as ever.
+
+Hal
+
+
+
+

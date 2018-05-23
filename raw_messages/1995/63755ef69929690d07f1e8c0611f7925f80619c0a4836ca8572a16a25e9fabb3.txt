@@ -1,0 +1,39 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Wed, 12 Jul 95 07:48:40 PDT
+To: jamesd@echeque.com (James A. Donald)
+Subject: Re: Moby ints [Re: Num Rat]
+In-Reply-To: <199507120139.SAA07236@shell1.best.com>
+Message-ID: <199507121448.KAA06858@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> At 07:31 PM 7/11/95 -0400, Ray Cromwell wrote:
+> > However, it's only worthwhile for large
+> > numbers (>512 bits). At n=512, if your bigints are stored as polynomials
+> > with a 32-bit radix, then N=512/32=16. 16^1.5 = 64, 16 * lg(16) = 64
+> > (so the FFT method and the Karatsuba method are equivalent for numbers
+> > of that size)
+> 
+> I conjecture that the constant factor is rather smaller for the 
+> Karatsuba method, so the turnover should be somewhat higher than
+> 512 bits.
+
+  True, the Karatsuba method does seem "simplier" than a fast fourier
+transform (which a naive implementation would use complex math), however
+Karatsuba has some hidden costs which the FFT technique doesn't. Karatsuba
+requires dynamically resized integers. (i.e. when you split into subproblems,
+you have to rescale to n/2 bit integers) Karatsuba also has to do several
+big_int additions per subproblem that the FFT doesn't. If the FFT-Poly
+routine is done over a prime field, and it is coded iteratively, it just
+might come close to Karatsuba for small n. I am not aware of any 
+experimental data, but I am working on the implementation of a high
+performance portable big_int library right now, and I'll be doing
+some data collecting. 
+
+-Ray
+
+
+
+

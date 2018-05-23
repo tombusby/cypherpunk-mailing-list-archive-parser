@@ -1,0 +1,56 @@
+From: Enzo Michelangeli <enzo@ima.com>
+Date: Mon, 31 Jul 95 22:17:22 PDT
+To: Matthew Ghio <ghio@cmu.edu>
+Subject: Re: ssh protocol
+In-Reply-To: <9507312036.AA08394@toad.com>
+Message-ID: <Pine.LNX.3.91.950801124040.12351B-100000@ima.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 31 Jul 1995, Matthew Ghio wrote:
+
+> Tatu Ylonen <ylo@cs.hut.fi> wrote:
+> > The basic idea behind the protocol goes roughly like this:
+> >   1. Exchange session keys using Diffie-Hellman
+> >   2. Each side sends a signature of the Diffie-Hellman exchange (the
+> >      signature can be with any of a number of algorithms; RSA and
+> >      Elliptic Curve systems have been defined).
+> 
+> I've been playing with the cryptotcp program available from utopia..  It
+> has some bugs but works pretty well, if you don't mind waiting 20-30
+> seconds at the beginning.  It does a Diffie-Hellman exchange and 3DES over
+> telnet.  How hard would it be to add some sort of authentication to this
+> program?
+
+Yes, I'm interested too, also because cryptotcp looks like a good
+candidate as component of my "SafeSox" pet project, to make unmodified TCP
+applications secure. Apparently, a sockd daemon could be easily modified
+to open encrypted TCP connections to remote cryptod daemons, instead of
+targeting remote servers directly. The next logical step would be a
+Winsock (or Mac) version of that cryptified sockd, to be run on the same
+PC where the applications live (not everybody has a UNIX box on the same
+network). No modifications would be required in cryptod: 
+
+
+Unmod. --- [socksifying DLL] === [crypto-sockd] ~~~~ [cryptod] +++ [server]
+Winsock 
+Client
+
+--- = local API call
+=== = local SOCKS connection (same network or same machine)
+~~~ = cryptotcp connection across the Internet
++++ = cleartext TCP connection on the same network or same machine
+
+Another area where I would appreciate analysis by someone more competent
+than myself is cryptotcp's random key generator. Even though the
+randomizer (in random.c) is called several times, stirring in the pool
+also quantities of entropy depending on the time spent during the
+establishment of the TCP connection, I doubt that the total resulting
+entropy can be that high.  Perhaps, adding some purely local data a' la
+randseed.bin (not available to an eavesdropper) would reduce the risk of
+the scheme being brute-forced. 
+
+
+
+

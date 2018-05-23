@@ -1,0 +1,167 @@
+From: Eric Messick <eric@parallax.com>
+Date: Fri, 15 Jan 93 01:40:12 PST
+To: cypherpunks@toad.com
+Subject: Re: Details on return envelopes
+Message-ID: <9301150713.AA29658@parallax.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+As per Hal's suggestions, I've come up with a simpler example.  I've
+also hardened it against an attack that he noticed, which has
+considerably changed the protocol.
+
+Hal writes:
+> Another general point, which may be important.  Chaum emphasized that his
+> anonymous addresses should be use-once, because if two people send messages
+> to the same anonymous address, someone who has access to the mail going
+> into and coming out of the remailer will see identical address fields
+> coming out for the pair of messages.  I think Eric's scheme has the same
+> property.
+
+While thinking about this weakness, I realized that everything gets a
+lot easier if each (re)mailer knows the public key of the next.  This
+is public knowledge, so there's no need to hide the key once the next
+destination is known.  If there was a complete database of public keys
+of remailers that each remailer had, the key could be found from the
+address.  Since that database might not be up to date, the public key
+is transmitted along with the address.  Consequently, I was able to
+remove all of the conventional keys from the protocol.  All
+encryptions are now done with public keys.  Of course, there is still
+the conventional encryption done for each public key encrypted packet.
+The protocol is strengthened against this attack by fresh encryptions
+at each stage which hide the constant string.
+
+Note that the remailer itself can still identify the set of messages
+that were sent using the same envelope.  It would be nice to fix this,
+but it seems unlikely at this point.  Any ideas anyone?
+
+---------------------------------------------------------------------
+
+I've got two examples here: a paired down one, and a slightly fuller
+one.  The first has no postage, which cuts down considerably on the
+excess.  The second example is just the first with the postage added
+back in (just to show that it still works).
+
+The envelope specifies hosts &Z and &R.  The sender routes the message
+through &Y before using the envelope.  So, the message goes from &S to
+&Y to &Z to &R where it is delivered.
+
+The complete simplified transaction is reproduced below, starting with
+the initial envelope:
+
+Addr: &Z, z, z(&R, r, r(junk))
+
+To: &Y
+Addr: y(y(&Z, z, z(&R, r, r(junk))), pad)
+Message: y(M, pad)
+
+To: &Z
+Addr: z(z(&R, r, r(junk)), pad)
+Message: z(M, pad)
+
+To: &R
+Addr: r(r(junk), pad)
+Message: r(M, pad)
+
+The sender basically ignores the contents of the envelope, but wraps
+it in the public key y for safe delivery to &Y.  The message and the
+address info are both then padded and encrypted with y.  The reason
+for encrypting the address info with y twice will become clear
+shortly.
+
+&Y receives the message labeled To: &Y above.  The outer y encryptions
+are removed, followed by the inner y encryption on the address field.
+The message M, and the original envelope are thus revealed to &Y.  &Y
+now knows to send the message to &Z, and knows the public key z.  The
+message M is then padded and encrypted with z.
+
+There is already a portion of the address field that is encrypted with
+z. That portion contains all of the info that &Z needs to know, but
+this info, as Hal pointed out, is a constant string; an external
+observer could use this to associated a group of messages with a
+single envelope.  To obscure this, the string is encrypted a second
+time with z.  Recall that a random conventional key is generated each
+time a public key encryption is done, so a constant plaintext string
+will encrypt to a different cyphertext string each time.  The padding
+helps keep the string from being identified by its length.  To keep
+the protocol consistent, the original envelope had to be encrypted
+with y twice.
+
+The resulting message is sent to &Z, where the same processing is
+done.  Let's trace it in detail this time, but without the extraneous
+padding.
+
+&Z has received:
+
+Addr: z(z(&R, r, r(...)))
+Message: z(M)
+
+Which looks to the outside world like:
+
+Addr: z(...)
+Message: z(...)
+
+But &Z can decrypt those z(...)'s to obtain, first:
+
+Addr: z(&R, r, r(...))
+Message: M
+
+And then:
+
+Addr: &R, r, r(...)
+Message: M
+
+With r thus exposed, &Z can encrypt both M and r(...) with it to
+obtain:
+
+To: &R
+Addr: r(r(...))
+Message: r(M)
+
+Which to the outside world looks like:
+
+To: &R
+Addr: r(...)
+Message: r(...)
+
+With everything nicely hidden.  This is what gets sent to &R.  Knowing
+r, &R can recover M.  We're done.
+
+--------------------------------------------------------------------
+
+I'll present the postage example without further comment, except to
+note that at each step, all fields are freshly encrypted with the next
+hop's public key.
+
+
+Addr: &Z, z, z(Sz, Qz, &R, r, r(junk))
+Pneed: Pz, Amt_z, Pr, Amt_r
+
+To: &Y
+Addr: y(y(Sy, Qy, &Z, z, z(Sz, Qz, &R, r, r(junk))), pad)
+Post: y(Py($y, Pz($z, Pr($r))), pad)
+Pdue: y(Qs(stuff_s), pad)
+Message: y(M, pad)
+
+To: &Z
+Addr: z(z(Sz, Qz, &R, r, r(junk)), pad)
+Post: z(Pz($z, Pr($r)), pad)
+Pdue: z(Qy(stuff_y, Qs(stuff_s)), pad)
+Message: z(M, pad)
+
+To: &R
+Addr: r(r(junk), pad)
+Post: r(Pr($r), pad)
+Pdue: r(Qz(stuff_z, Qy(stuff_y, Qs(stuff_s))), pad)
+Message: r(M, pad)
+
+
+
+
+
+-eric messick
+
+
+
+

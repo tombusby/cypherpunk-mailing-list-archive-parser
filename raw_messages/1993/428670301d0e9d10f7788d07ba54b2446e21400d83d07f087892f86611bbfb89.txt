@@ -1,0 +1,68 @@
+From: Brian A. LaMacchia <bal@martigny.ai.mit.edu>
+Date: Tue, 19 Oct 93 12:37:31 PDT
+To: an41418@anon.penet.fi
+Subject: Knapsack Cryptosystems
+Message-ID: <9310191935.AA17292@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: smb@research.att.com
+   To: an41418@anon.penet.fi
+   Cc: cypherpunks@toad.com
+   Date: Tue, 19 Oct 93 04:34:58 EDT
+
+For a good survey paper of knapsack cryptosystems, see [1].
+
+   Third -- and this is what sunk the knapsack problem -- you need a
+   cryptosystem that exploits the full NP-complete problem, as opposed
+   to just a simple case.  (The knapsack problem was solvable by someone
+   who knew the key because it wasn't a general knapsack, but a super-
+   increasing sequence -- each number in it was greater than the sum
+   of all of its predecessors.  (This was the simplest version; there
+   were, I believe, some others.))
+
+Even knapsack cryptosystems that exploit the full NP-complete problem
+may still be susceptible to general attacks, depending on their density
+(a property of the weights of the knapsack problem).  If the weights
+$a_i$ are too large, you get a "low-density knapsack" (i.e. you're
+sending lots of bits of cyphertext to hide few bits of plaintext).
+
+Brickell [2] and Lagarias and Odlyzko [3] showed that there are general
+attacks against subset-sum problems with density < 0.6463...  In [4] we
+showed that this bound can be improved to about 0.9408...  Joux and
+Stern came up with essentially the same result at about the same time
+[5].  (Note that if your density is > 1, then you have the possibility
+of two different plaintexts encrypting to the same ciphertext.  Without
+more information, the encryption can be ambiguous.)
+
+We combined our two techniques in a joint paper -- you can get it via
+anon. FTP from martigny.ai.mit.edu in pub/bal/sumcc.ps, if you're
+interested. 
+
+					--bal
+
+References:
+
+[1] A. M. Odlyzko, The rise and fall of knapsack cryptosystems, {\it
+Cryptology and Computational Number Theory}, C. Pomerance, ed., Am.
+Math. Soc., Proc. Symp. Appl. Math. {\bf 42} (1990), 75-88.
+
+[2] E. F. Brickell, Solving low density knapsacks, {\it Advances in
+Cryptology, Proceedings of Crypto '83}, Plenum Press, New York (1984),
+25-37.
+
+[3] J. C. Lagarias and A. M. Odlyzko, Solving low-density subset sum
+problems, {\it J. Assoc. Comp. Mach.\/} {\bf 32(1)} (January 1985),
+229-246.
+
+[4] M. J. Coster, B. A. LaMacchia, A. M. Odlyzko and C. P. Schnorr, An
+improved low-density subset sum algorithm, {\it Advances in Cryptology:
+Proceedings of Eurocrypt '91}, D. Davies, ed., to appear.
+
+[5] A. Joux and J. Stern, Improving the critical density of the
+Lagarias-Odlyzko attack against subset sum problems, to be published.
+
+
+
+

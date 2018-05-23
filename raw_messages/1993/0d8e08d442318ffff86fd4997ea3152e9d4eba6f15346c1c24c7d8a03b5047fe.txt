@@ -1,0 +1,57 @@
+From: nobody@Menudo.UH.EDU
+Date: Thu, 30 Sep 93 22:02:38 PDT
+To: cypherpunks@toad.com
+Subject: PERL: creating pgp look-alike messages
+Message-ID: <199310010500.AA05658@Menudo.UH.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In case you lost your random PGP look-alike message generator :-),
+here is one in PERL.  Run it with an argument (number of lines of
+"encrypted" text to produce).  Such a message won't pass pgp itself,
+since magic bytes and checksums aren't there.
+
+- ----------8< cut here >8----------
+#!/usr/local/bin/perl
+
+#creates random messages that look like PGP messages
+
+@pgpchars = (a .. z, A .. Z, '+', '=', '/');
+$lenpgpchars = @pgpchars;
+$pgplinelength = 64;
+
+$numlines = shift @ARGV;
+
+print "-----BEGIN PGP MESSAGE-----\n";
+print "Version 2.3a\n\n";
+
+foreach $i (0 .. $numlines) {
+  foreach $j (0 .. $pgplinelength) {
+    $char = $pgpchars[rand $lenpgpchars];
+    print $char;
+  }
+  print "\n";
+}
+
+print "-----END PGP MESSAGE-----\n";
+
+- ----------8< cut here >8----------
+Karl L. Barrus
+<klbarrus@owlnet.rice.edu>
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLKuzBIOA7OpLWtYzAQHJZgP+PE0kcLVyHr2Ml/D0QEYJqVh58x8h0UGD
+U8aShHVcryrKk7Uj2xXNtC8OAH1ltoi98jiEuJvqi3rcLaj8lui+gTSe96vpoWRP
+iQSMuQUn0NNMOP3BooeCoeV2KY7Kd4511Km8yOtzJflwPrk2AyeI8Bra4tpuVxnH
+6eErL3MBUzU=
+=Xcys
+-----END PGP SIGNATURE-----
+
+
+
+

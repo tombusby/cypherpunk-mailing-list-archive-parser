@@ -1,0 +1,64 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 1 Nov 1997 03:16:52 +0800
+To: FisherM@exch1.indy.tce.com
+Subject: Re: PGP Employee on MKR
+In-Reply-To: <2328C77FF9F2D011AE970000F84104A74933FD@indyexch_fddi.indy.tce.com>
+Message-ID: <199710311817.SAA05405@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Fisher Mark <FisherM@exch1.indy.tce.com> writes:
+> >Scenario #2: employee quits jon in a huff, refuses to divulge
+> >passphrase, lots of queued encrypted email -- what now?
+> 
+> Or lots of encrypted old email that contains useful information.
+> Especially in a larger corporate environment, where an email system is
+> deployed that uses a proprietary message store (like Microsoft Mail or
+> Microsoft Exchange), people tend to use the mailboxes as storage
+> containers.
+
+Absolutely.  However it is better where this is possible to decrypt
+the message (and optionally re-encrypt the messages to a long-lived
+storage key) prior to storing in the mail folder.
+
+I am lead to understand this is relatively easy to do with the plugin
+APIs pgp are implementing within.
+
+The advantage of using separate storage encryption keys is that you
+can give the communications only encryption keys appropriate expiry
+periods.
+
+> It gets worse if these isn't a way to get the messages out of the
+> vendor's message store conveniently -- if you want to keep old
+> messages around, they _have_ to be stored in the vendor's message
+> store.
+
+PGP Inc already has this problem with their CMR approach -- when the
+user forgets his passphrase there is no backup of the key.  So to
+retain data availability they must have the recovery czar decrypt the
+lot, and re-encrypt it to the users new key.  Messy.
+
+I'm also not sure that they have automated this for the sorts of plug
+environments you are talking about (eg. with monolithic 100Mb
+microsoft exchange sent/received mail databases).
+
+Which tends to suggest corporate users who are worried about the
+password forgetting problem will copy the private keys on floppies.
+This is bad because pgp5.x is not designed for this -- they will get
+private signature keys too allowing forgeries.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

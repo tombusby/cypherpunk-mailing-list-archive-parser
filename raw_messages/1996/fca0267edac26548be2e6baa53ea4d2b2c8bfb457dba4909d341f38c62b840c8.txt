@@ -1,0 +1,87 @@
+From: "Ed Carp, KHIJOL SysAdmin" <erc@dal1820.computek.net>
+Date: Thu, 8 Feb 1996 18:44:40 +0800
+To: cypherpunks@toad.com
+Subject: [CODE] Signing Web Pages
+Message-ID: <199602081016.FAA05219@dal1820.computek.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Here's a quick script I hacked together in the last few minutes to sign 
+web pages.  Very simple-minded, it nonetheless does the job.  If you want 
+to see how it looks in action, visit http://dal1820.computek.net
+
+#! /bin/sh
+#
+# signit - use PGP to sign a web page
+# Written 02/08/96 by Ed Carp (ecarp@netcom.com)
+#
+# This could conceptually be used to sign (and optionally verify)
+# shell scripts, etc.  The possibilities are endless...
+#
+
+#
+# Set up some variables...
+#
+
+# Change this if you're so inclined...
+PGPHELP="http:\/\/www.yahoo.com\/Computers\/Security_and_Encryption"
+
+# Look for a line that starts like this...
+LOOKFOR="This web page has been signed with"
+ADDLINE="$LOOKFOR <A HREF=$PGPHELP>PGP<\/A>.  To see the digital signature, click <A HREF=$1.asc.html>here<\/A>."
+
+#
+# First, we need to make sure that the page hasn't already been signed...
+#
+
+F=`grep "^$LOOKFOR" $1|wc -l`
+F="`echo $F`"
+# If it hasn't already been signed, add signature line
+if [ "$F" = "0" ]; then
+	echo Adding PGP signature HTML to document
+	echo "s/<\/BODY>/$ADDLINE<\/BODY>/g" > $1.temp.$$
+	echo "s/<\/body>/$ADDLINE<\/body>/g" >> $1.temp.$$
+	sed -f $1.temp.$$ < $1 > $1.$$
+	rm -f $1.temp.$$
+	mv $1.$$ $1
+fi
+pgp -asb $1
+# Add rudimentary HTML
+echo "<HTML><HEAD><TITLE>PGP Digital Signature of $1</TITLE></HEAD>" > $1.$$
+echo "<BODY><I>PGP Digital Signature generated `date`</I><HR><PRE>" >> $1.$$
+cat $1.asc >> $1.$$
+echo "</PRE></BODY></HTML>" >> $1.$$
+mv $1.$$ $1.asc.html
+rm $1.asc
+echo Done.
+--
+Ed Carp, N7EKG    			Ed.Carp@linux.org, ecarp@netcom.com
+					214/993-3935 voicemail/digital pager
+					800/558-3408 SkyPager
+Finger ecarp@netcom.com for PGP 2.5 public key		an88744@anon.penet.fi
+
+"Past the wounds of childhood, past the fallen dreams and the broken families,
+through the hurt and the loss and the agony only the night ever hears, is a
+waiting soul.  Patient, permanent, abundant, it opens its infinite heart and
+asks only one thing of you ... 'Remember who it is you really are.'"
+
+                    -- "Losing Your Mind", Karen Alexander and Rick Boyes
+
+The mark of a good conspiracy theory is its untestability.
+		    -- Andrew Spring
+----------------------------------------------------------------------
+According to the Communications Decency Act, these are the words you may
+no longer use in your Internet correspondence:  Shit, piss, fuck, cunt,
+cock-sucker, mother-fucker and tits. The use of shit, piss, fuck, cunt,
+cock-sucker, mother-fucker and tits, may now earn you a substantial fine
+as well as possible jail time, should President Clinton sign this Bill
+into law.  Please refrain from using shit, piss, fuck, cunt, cock-sucker,
+mother-fucker and tits, to protect your children as well as others, from
+their evil influence, thus keeping America "ideologically pure".
+
+
+
+
+
+

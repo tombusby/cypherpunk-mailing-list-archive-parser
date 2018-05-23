@@ -1,0 +1,61 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Fri, 10 Feb 95 11:48:38 PST
+To: Eric Hollander <hh@xcf.berkeley.edu>
+Subject: Re: why pgp sucks
+In-Reply-To: <9502101849.AA21833@xcf.Berkeley.EDU>
+Message-ID: <199502101951.OAA28877@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>if i use a command like
+>
+>	pgp filename
+>
+>it will automatically figure out the right thing to do with the file.  if
+>it's encrypted, and i have the key, it will attempt to decrypt it.  if it
+>contains keys, it will ask if i want to add them to my keyring.  if it's
+>signed, it checks the signature.
+>
+>this sucks!
+>
+>if i'm trying to write a program to automatically process incoming mail (for
+>instance, to see if it's encrypted with a specific key), i certainly don't
+>want to have the possibility of people being able to add garbage to my
+>keyring just by mailing it to me.
+>
+...
+
+PGP suffers from its failure to separate cleanly its primary
+mechanism (encrypting and signing messages) from policy (what to
+do with those signed and encrypted mechansims).  Without a clean
+separation, the mechanism is limited to use in those applications
+narrowly envisioned by the system's authors.  Of course, PGP is
+hardly unique here; designing clean interfaces and separation-of-
+functions isn't easy, and its even harder in the face of meeting
+the needs of an existing installed base of first-generation users.
+
+Personally, I'd much rather see a suite of tools: an encryption/signature
+tool (or maybe tools - let me apply them in whatever order is
+approprate), a decryption verification tool, a certificate management
+system that operates on messages signed with the signature tool and a
+top level that glues all this together and implements local policy
+(like what consitutes a valid signature, key revocation, etc).  If
+we had a system that worked like this,, we could more easily create
+richer key certificates that specify restrictions on what is being
+signed, revocation conditions, etc.  (As it is, there isn't even
+any way for a key signer to revoke a signature, let alone describe
+what purpose the signature exists for.)
+
+Of course, you could probably build all this ON TOP of the existing
+pgp and pem, but you'd still be left with bloated underlying tools
+that implement more policy than they need to.
+
+Oh well.
+
+-matt
+
+
+
+

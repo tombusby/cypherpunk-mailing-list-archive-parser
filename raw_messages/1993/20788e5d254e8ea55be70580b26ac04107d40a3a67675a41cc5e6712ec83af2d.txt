@@ -1,0 +1,45 @@
+From: kqb@whscad1.att.com
+Date: Tue, 30 Nov 93 18:07:51 PST
+To: cypherpunks@toad.com
+Subject: Re: Statistics of Low-Order Bits in Images
+Message-ID: <9312010142.AA07963@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Several people are attempting to create an algorithm to mask the
+presence of a steganized encrypted message in the least significant
+bits of an image.  Don't forget that no matter how fancy your algorithm
+or how closely you mask your steganography with a model of what the
+statistics of an ordinary image look like, you have to assume that your
+opponent also knows your steganization algorithm, including your masking
+technique.  (Otherwise you are just relying on security through obscurity.)
+This leaves you with three problems:
+
+  (1) your opponent may have a much better model of an ordinary
+      image than you do, and still be able to discern the existence
+      of masked steganography,
+  (2) since your opponent knows your steganization algorithm,
+      he/she can look for any "signature" that your steganography
+      masking model leaves, and
+  (3) your opponent can "desteganize" all your images and check their
+      statistics for deviations from the statistics for "desteganized"
+      ordinary images.
+
+Resolving problems (1) and (2) requires a lot of work constructing
+good models.  Resolving problem (3) requires, I think, a modeling
+function for steganography that is invertible only with a secret key.
+(Otherwise, your opponent could desteganize your image and find a
+uniform random distribution, which indicates an encrypted message.)
+Since this type of function is, to my knowledge, not well-developed,
+don't expect it to be secure.  Thus, if breaking it could compromise your
+secret key for desteganization, then don't use the same public/private
+key pair for both encryption and steganography.
+
+                              Kevin Q. Brown
+                              INTERNET    kqb@whscad1.att.com
+                                 or       kevin_q_brown@att.com
+
+
+
+

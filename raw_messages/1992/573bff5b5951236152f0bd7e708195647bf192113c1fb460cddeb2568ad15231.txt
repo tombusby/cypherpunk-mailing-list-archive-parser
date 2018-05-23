@@ -1,0 +1,49 @@
+From: Mitra <mitra@pandora.sf.ca.us>
+Date: Thu, 3 Dec 92 19:36:42 PST
+Subject: Re: Suggest splitting things up
+In-Reply-To: <9212040235.AA27065@soda.berkeley.edu>
+Message-ID: <Byptzn.6J9@pandora.sf.ca.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Sure Eric, 
+
+I'm on SCO unix (i.e. non compatible with everyone else - I cant even 
+get perl running yet), I've added the following lines to my .maildelivery
+
+To	cypherpunks@toad.com	|	A	inews -0 -a list -n list.cypherpunks
+Cc	cypherpunks@toad.com	|	A	inews -0 -a list -n list.cypherpunks
+Apparently-To	cypherpunks@toad.com	|	A	inews -0 -a list -n list.cypherpunks
+
+This catches the three most common address headers, unfortunately the
+mailing list at cypherpunks doesnt behave like a well-behaved reflecter
+should and put its own address in the header (most would add "Sender:
+cypherpunks@toad.com")
+
+All this does is pipe messages that match the headers into inews with the args
+following. Those args are:
+
+-0	An extension I added, which makes inews always return 0 (otherwise
+	our braindead delivery agent "mmdf" cycles forever trying to deliver
+	bad messages and creating a HUGE dead.article.	
+-a list	Add an "Approved: list" line so that inews will post it to a moderated
+	newsgroup
+-n list.cypherpunks	Stick it in the newsgroup "list.cypherpunks"
+
+list.cypherpunks is set up moderated, with the moderater being 
+cypherpunks@toad.com
+
+Happy gatewaying, if someone has a better way of doing this then let me 
+know.
+
+- Mitra
+
+
+-- 
+Mitra                                                  mitra@pandora.sf.ca.us
+Technical Director, Pandora Systems                    (415)488-0944
+
+
+
+

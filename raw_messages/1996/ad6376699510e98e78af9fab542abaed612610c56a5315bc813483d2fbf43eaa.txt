@@ -1,0 +1,46 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 23 Mar 1996 03:56:16 +0800
+To: pgp-friends@fiction.pb.owl.de
+Subject: Re:  PGP key spoofing
+Message-ID: <199603221700.JAA23618@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: christopher@nescio.zerberus.de (Christopher Creutzig)
+>  I think I have realized a serious flaw in PGPs key-handling. This may 
+> lead to people using and signing bogus keys despite the usual security 
+> measures.
+> 
+>  The problem is that PGP fails to differentiate between two keys sharing 
+> the same 64-bit-Key-ID. It is not a real problem to generate a key with a 
+> given key-ID (just take a prime, invert the desired key-ID modulo this 
+> prime and look for another prime whose lower bits are the same as in the 
+> number you just calculated), so the following attack would be possible:
+
+PGP checks specifically for the case of keys whose IDs match but the
+keys themselves differ.  It has always been obvious that keys can easily
+be synthesized with given IDs.  I added this warning in version 2.0
+about four years ago, in the keyadd code:
+
+"\n\007Warning: Key ID %s matches key ID of key already on
+key ring '%s', but the keys themselves differ.
+This is highly suspicious.  This key will not be added to ring.
+Acknowledge by pressing return: "
+
+>  If the owner of the correct key does not give a fingerprint, but rather 
+> a disk with the correct key to the person you are trying to fool, his or 
+> her pgp won't ring alarm bells when reading the key (apart from possibly 
+> a failed signature), but rather will tell him the key is already there. 
+
+As you can see, it does in fact literally ring an alarm bell - the "\007"
+above is the ASCII bell character.
+
+Disclaimer: I have not worked on PGP since version 2.0 so possibly my
+code has been changed or eliminated, but I think that is unlikely.
+
+Hal Finney
+
+
+
+

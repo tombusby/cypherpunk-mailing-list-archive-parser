@@ -1,0 +1,43 @@
+From: Jef Poskanzer <jef@ee.lbl.gov>
+Date: Tue, 1 Mar 94 11:58:10 PST
+To: cypherpunks@toad.com
+Subject: low-overhead encrypted telnet
+Message-ID: <9403011958.AA09178@hot.ee.lbl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've been talking about entrypted telnet with Craig Leres lately, and
+he came up with an interesting idea.  The background is, sysadmins want
+encrypted telnet so that passwords don't fly around in the clear, but
+at the same time, they don't want to spend too many extra CPU cycles.
+I figured at least some sysadmins would resist installing an
+encryption-capable telnetd because of this concern about overhead.
+
+What you'd really like to do so satisfy these people is encrypt only
+when actually transmitting passwords.  Problem is, that's hard to
+implement.  Kerberos does it by supplying new versions of a dozen
+different programs, and it still only works within your organization,
+and even there it doesn't handle chained logins (telnet from host A to
+host B, then from host B to host C, etc.).  It's hard because you have
+different levels of software trying to talk to each other.  A solution
+that worked entirely within telnet would be a lot simpler.
+
+A compromise I thought of a while back is to encrypt the first few
+kilobytes and then switch to cleartext.  This lets you log in securely,
+the average overhead for the session remains low, and there's no
+interaction between different software levels.  But this also doesn't
+handle chained logins, if the second login comes later in your session.
+
+So here's Craig's idea: only encrypt the client-to-server direction.
+That's the only direction that passwords go, so it's secure; and it's
+low overhead because you generally type far fewer characters than you
+read.
+
+Just a tidbit for anyone working on encrypted logins.
+---
+Jef
+
+
+
+

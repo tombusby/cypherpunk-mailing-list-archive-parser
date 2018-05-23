@@ -1,0 +1,75 @@
+From: Eric Murray <ericm@lne.com>
+Date: Fri, 23 Jan 1998 01:06:11 +0800
+To: ichudov@Algebra.COM
+Subject: Re: Revenge on the Nerds  -Maureen on a rampage
+In-Reply-To: <199801220537.XAA00871@manifold.algebra.com>
+Message-ID: <199801221652.IAA05481@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Igor Chudov @ home writes:
+> 
+
+> > to tell the browser that if the page tried to load an image from a URL
+> > that looks like
+> > 
+> > valueclick.com
+> > bannermall.com
+> > adforce.*.com/
+> > bannerweb.com
+> > eads.com/
+> > /*/sponsors/*.gif
+> > *banner*.gif
+> > /image/ads/
+> > 
+> > etc etc, I want the browse to ignore this request. Clearly Microsoft and
+> > Netscape both don't give a damn about the desires of their NON-PAYING users
+> > and would rather bend over for the advertisers.
+> 
+> I suggest writing a proxy server that does such filtering, running it on 
+> the local machine, and using it as proxy server from your netscape browser.
+> 
+> There is a proxy server in form of a 20 line perl script, you
+> can take it and modify it.
+> 
+
+
+I've already done the work:
+http://www.lne.com/ericm/cookie_jar/
+
+It'll block cookies, accepting them from a specific list of sites. 
+
+It blocks the outgoing requests for ads, on a (regex-controlled)
+host or URL basis.  So you don't bother to download ads, saving you
+from seeing them and wasting the bandwidth downloading them.
+
+As an example, my .cookiejarrc file currently holds:
+
+denyhost *.doubleclick.net advertising.quote.com commonwealth.riddler.com
+denyhost *.linkexchange.com *.pagecount.com images.yahoo.com www.missingkids.org
+denyhost ads.*.com ad.*.com adforce.imgis.com www.bannerswap.com
+denyhost *.flycast.com/ songline.com:1971/
+denyurl /ads/* /ads/images/* *sponsors/redirect/* */bin/statthru* */AdID=*
+denyurl /adv/* /sponsors2/*  */ad-bin/ad* /advertising/* */livetopics_anim.gif*
+denyurl /Banners/* /shared/images/ad/* /sponsors3/* /adverts/* /free/FarSight/*
+denyurl /ad/ /*ad*.focalink.com/
+
+
+It'll let you selectively block sending the User-agent line
+in the HTTP request, and will let you randomly select from a list
+of User-agents that you supply if you want to mess up site's data
+collection schemes.  And you can choose to block sending anything
+but the Accept and Pragma lines in the HTTP request for more privacy.
+
+
+
+-- 
+Eric Murray  Chief Security Scientist  N*Able Technologies  www.nabletech.com
+(email:  ericm  at  lne.com   or   nabletech.com)          PGP keyid:E03F65E5
+
+
+
+
+

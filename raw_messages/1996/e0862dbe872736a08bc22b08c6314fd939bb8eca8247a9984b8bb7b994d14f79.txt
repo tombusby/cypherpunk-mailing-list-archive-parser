@@ -1,0 +1,71 @@
+From: jim@suite.suite.com (Jim Miller)
+Date: Sat, 14 Sep 1996 10:01:18 +0800
+To: cypherpunks@toad.com
+Subject: Re: really undetectable crypto
+Message-ID: <9609132313.AA09496@suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Your assumptions are correct.  Applied Cryptography by
+> Schneier discusses this method, referring to it as a
+> "subliminal channel".
+
+Why am I not surprised.  :-)
+
+
+> Because of the very (VERY) slow transmission times (on
+> the order of 1 bit/message), he notes it primarily as a
+> secure method of exchanging keys. 
+
+> 
+
+
+I would think you could do better than 1 bit per message.  Using just  
+hashes, I would think you could get at least 4-8 bits per message using a  
+standard Pentium-class machine.  Maybe more, I haven't actually run any  
+tests to see how long it would take to generate innocent messages that  
+produces hashes with specific bits in certain positions.
+
+
+> In his discussion, he also incorporated a bit in the
+> signature, thus assuring the communication is
+> travelling to the intended recipient unmolested.
+
+I don't see why this is necessary.  If the hidden message is encrypted  
+using a key (or key pair) known only to Alice and Bob, then Walter should  
+not be able to fool Bob.  Walter could disrupt the communications in any  
+number of ways, but he wouldn't be able to generate innocent messages that  
+produce hashes that contain bits that combine to form a message encrypted  
+using a key (or key pair) known only to Alice and Bob.
+
+
+> However, to be "extremely sublime", your method could be
+> incorporated with otherwise signed messages: while the
+> signature appearing with your message includes an MD5
+> hash, the real "stego bit" is the first bit of an RC4 hash of
+> the same file, as computed by an external program on the
+> receiver's end. 
+
+> 
+
+
+The above paragraph has given me an idea:  You don't need to send hashes  
+or digital signatures to send hidden encrypted messages.  All Alice needs  
+to send is the carefully constructed plaintext.  Bob can generate the  
+hashes himself, extract the proper bits and attempt to decrypt the hidden  
+message.  If the hidden message does not decrypt, then either the  
+plaintext was tampered with, it was forged, or not all of the plaintext  
+arrived.
+
+That being the case, then I think we have a very simple proof that any  
+communications channel, even one that allows only unsigned plaintext  
+messages, can be used to send arbitrary encrypted messages (if a bit  
+slowly).  So much for Clipper.
+
+Jim_Miller@suite.com
+
+
+
+

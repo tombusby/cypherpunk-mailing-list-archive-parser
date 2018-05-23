@@ -1,0 +1,35 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Tue, 21 Jun 94 10:00:09 PDT
+To: Jim_Miller@bilbo.suite.com
+Subject: Re: something I've always wondered
+In-Reply-To: <9406211648.AA06523@bilbo.suite.com>
+Message-ID: <9406211659.AA00383@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jim Miller says:
+> Does DES (or name your favorite encryption algorithm) produce as output  
+> all possible cyphertexts of length L, given all possible conbinations of  
+> keys and plaintexts of length L?
+
+DES defines a family of fucntions defined by the keys, call them E_k,
+that map the 64 bit integers one to one into the 64 bit integers. That
+is, no two plaintexts produce the same cyphertext. Therefore, you
+don't need all possible combinations of keys -- any key will produce
+all possible cyphertexts if you chain through all possible plaintexts.
+
+> Since there are more combinations of key and plaintext than there are  
+> possible cyphertexts outputs of length L, you know there must be some  
+> combinations of key and plaintext that produce the same cyphertext.
+
+Given any two distinct keys, k_1 and k_2, it is pretty much guaranteed
+that there are at the very least plenty of cyphertexts C_1=E_k_1(P_1)
+such that there is a C_2=E_k_2(P_2) with C_1 = C_2 and P_1 != P_2.
+
+Perry
+
+
+
+

@@ -1,0 +1,138 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 9 Oct 1997 08:14:39 +0800
+To: anon@anon.efga.org
+Subject: Re: What's really in PGP 5.5?
+In-Reply-To: <b6eadab9ed323417eed33e59a019c8c9@anon.efga.org>
+Message-ID: <199710090009.BAA02288@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Anonymous <anon@anon.efga.org> writes:
+> Adam Back <aba@dcs.ex.ac.uk> writes:
+> > 1. to allow access to important material lost in the mail system in the
+> > event that an employee is hit by a bus
+> > 
+> > Argument 1 seems pretty flimsy to me.  I reiterate my comment in an
+> > earlier post: who in their right mind keeps their _only_ copy of
+> > ultra valuable company information bouncing around in the email
+> > system?
+> >
+> > Regardless, if PGP claims to be catering to those who use this
+> > argument, and to not want to try that hard to make it impossible to
+> > by-pass, the more secure, and less GAK friendly way to do it is to
+> > have the mail client software archive the email sent and received.
+
+Thank you anonymous for some good feed back.
+
+> Two problems.  First, not all mail clients let you archive the mail
+> in a different form than how it arrived.
+
+I was thinking more of a second archive for company use.  You can
+leave the normal MUA archive alone if you have to.  The company
+archive need not be on your machine; could, probably would, be another
+machine inside the corporate LAN.
+
+I do see advantages in using a different archive key for your own
+archive if you can, but I don't think anybody much is doing this at
+the moment anyway.
+
+> Netscape 3 worked like this, maybe 4 too.
+
+3 has an integrated archive of sent and received email.
+
+IMAP mailboxes are interesting in this context.  (Mail stays in the
+remote mail box -- you can't modify it, you've either got to delete
+it, or leave it -- if it's encrypted you're stuck with that (other
+than re-encrypting it and mailing it yourself).  IMAP is nice for
+people who are mobile -- use different workstations/laptops each day.
+
+But still, it doesn't present a problem.  You just archive it once
+you've decrypted it.  Similar to your problem where you can't modify
+the built-in archive method in the MUA.
+
+
+Problem #2: what if you're outside the LAN?  
+
+You get inside the LAN with a VPN / ipsec setup, whatever, and do as
+normal.  You'll have to if your mail box is in there.
+
+> If the mail comes in encrypted just to an employee key, that is how
+> it will be stored, and no business access is possible.
+
+True.  So?  Those calling for GAK for company use argue:
+
+	1. we've been brainwashed by the GAKkers that it's mission
+	   critical to be able to recover email in transit
+
+	2. we want to snoop on what our employees are sending.
+
+This one:
+
+	3. snoop on what our employees are receiving
+
+isn't often mentioned.
+
+Item 1, recovering email in transit is bogus.  Recovering email after
+receipt, is over-rated in my opinion.
+
+Item 2, snooping on sent mail is an independent problem, not involving
+the GAK argument.  (Just send via your mail approver, you sign, he
+encrypts and sends on if he approves).
+
+My suggestion does cater for item 3 because the MUA arranges for the
+decrypted text to be archived after the employee has decrypted it.
+
+To by pass this, the employee has to either: i) modify the software
+to disable the archiving, or ii) not decrypt it at all.
+
+Possibility i) doesn't seem like a major threat, there are ways to
+hack around all of these escrow mechanisms.  PGP Inc are highlighting
+the purposefully puny nature of their enforcement with the suggestion
+that this makes it less GAK friendly.
+
+Possibility ii) doesn't seem like that big a problem.  I presume this
+is going to come about if the company has read a few emails, and from
+the context of the other mails this one looks like the biggy, where he
+is conspiring to do something against the companies interests.  Or
+perhaps they are tipped off.  Anyway, my suggested solution would be
+to ask the employee to decrypt it, and if he refuses, fire him.  Any
+problems?  (If he's forgotten his key, get the sender to resend).
+
+
+> Second, what if an employee doesn't come back from vacation?  You've
+> got messages sitting in his inbox which go back three weeks.  All
+> encrypted to his personal key, which is gone.  It's been long enough
+> that the senders may not have backups any more.  It's all lost, and
+> at best the company is going to put its partners and customers to a
+> great deal of inconvenience by making them re-send everything
+> they've sent in the last three weeks, not to mention making the
+> company look incompetent.
+
+True.
+
+They're going to look a bit incompetent anyway, if this guy was
+working on a project where he was the main player.  They'll have to
+reorganise anyway.  Not really your corporate nightmare situation I
+don't think.  All it requires is a bit if finessing on the part of
+members of the departees team.
+
+If he's an interchangeable employee (one of 20 sales people all doing
+the same job), you won't be using this method anyway .. you don't want
+to loose sales when your sales people go on holiday, there will be a
+sales@megacorp.com which is encrypted to a company key.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

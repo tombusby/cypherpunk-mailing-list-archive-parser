@@ -1,0 +1,47 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Tue, 5 Oct 93 20:39:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: Crypto Idea; Multi-Part Sigs
+In-Reply-To: <9310050349.AA04200@alumni.cco.caltech.edu>
+Message-ID: <9310060336.AA11903@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+nobody@alumni.cco.caltech.edu wrote:
+
+>Is it possible to produce a set of keys (for example, 3 private 1 public)
+>such that       -all three private keys are needed to sign a message from that
+>                I.D.  and
+>                -any of the private keys can decrypt anything encrypted with
+>                the single pubkey.
+>
+
+An excellent paper (author and title have slipped my mind - the paper
+describes key-and, key-or, and other operations) describes how to do
+something related to part 2 of the above.
+
+In that scheme, you would have the three key pairs for the
+individuals, Pa, Sa, Pb, Sb, Pc, Sc, and the "joint" keypair Pj, Sj.  
+
+A message encrypted with Pj can only be unlocked with Sj, which in
+turn is encrypted with Pa, Pb, Pc.  Thus, the final message looks like
+
+E(M, Pj); E(Sj, Pa); E(Sj, Pb); E(Sj, Pc)
+
+where the four parts are passed around as one, and E(a,b) means a
+encrypted with b.  Thus, each of the individuals, knowing their own
+private keys, can extract Sj, and then the message M.
+
+Offhand, I'm not sure if the paper describes joint signings in this
+manner.
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

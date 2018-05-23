@@ -1,0 +1,160 @@
+From: "Deranged Mutant" <WlkngOwl@unix.asb.com>
+Date: Tue, 18 Jun 1996 19:04:18 +0800
+To: Vipul Ved Prakash <vipul@pobox.com>
+Subject: pretty bad idea (was Re: pretty good reputation)
+Message-ID: <199606180215.WAA28846@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On 16 Jun 96 at 12:32, Vipul Ved Prakash wrote:
+
+[..]
+> > That's the point, though. PGP *does not* try to model a reputation 
+> > system.  When you sign keys, you only attest that you are sure that 
+> > that key belongs to the person whose name is on it.  A signature says 
+> > *nothing* about a person's reputation.
+[..]
+> in that case if alice receives a key signed by bob, she would know
+> the key is good.
+
+Pretty-good, yes. (Assuming she trusts anything signed by Bob.)
+
+>                                ... and there is no need for the two other fields. 
+> infact the reason why i felt pgp is trying to model a reputation system 
+> if because of these two fields that carry trust values.
+
+Those are private/personal trust values only. Alice rates Bob on how 
+well she'd trust a key signed by Bob.
+
+This is subjective for Alice, based on her relationship with Bob. She 
+may not know him well and assign him a low rating.  Or she may know 
+him all too well, and give him a low rating.  This has no meaning for 
+Carol, or Don, or anyone else, since they have different (if any at 
+all) relationships with Bob.
+
+> > You can't set up a global web of trust. It's computationally 
+> > infeasable, esp. with contradictions, to resolve.  It's also 
+> > meaningless.  Say Alice trusts Bob.  Bob trusts Carol.  Carol trusts 
+> > Don.  Should Alice trust Don? No... subjective factors like "trust" 
+> > don't commute.
+> 
+> this is precisely what i wanted to know. can there be a model wherein one
+> can compute a trust-like parameter? if yes in what ways should this parameter
+
+No, at least not one with meaning.
+
+There are many factors that would go into one's rating of another: 
+how well one knows the other; part history; bias for or against 
+another because of thing like race, religion, political viewpoint, 
+favorite OS, skills/talent or lack thereof, etc.  People's ratings of 
+each other change as well... just imagine global ratings of a once 
+overly well-liked famous person who after several years is now 
+infamous (or an infamous person who is now forgiven).  And again, 
+social pressure to give someone a certain rating...
+
+[..]
+> lets say a reputation system involves alice, bob, carol and don. Computing
+> trust parameter with respect to each other can lead to situtions where
+> alice trusts bob x% and has y% proof that he is a liar, after considering 
+> all other relations. If this x% > y% she'll believe him, if not she won't.
+
+Generally x+y=1 in this scheme. 
+
+But lets say for a moment they are separate: x = trust level; y = mixtrust
+level, independent of x... that makes little sense, since if y>.5, then Bob
+isn't trustworthy, but why is x > y? x and y would always have to be
+adjusted for each other... (so it's better off to use something like
+x+y=1).
+
+> thats why i feel the liar paradox doesn't really pose much of a
+> threat.    
+
+But even then, For Alice, x(Bob) > y(Bob), so Bob is trustworthy. For 
+Bob though, x(Alice) < y(Alice).  So what of Carol? She does not yet 
+know Alice and Bob, and sees their ratings about each other [Note: 
+some people would assign ratings based on others; others would assign 
+ratings based on personal experience... another problem with a global 
+rating scheme].
+
+Carol asks Alice about Bob, who says he's trustworthy.  She asks Bob
+about Alice, who says Alice is untrustworthy.  If Alice is correct, 
+then according to Bob she's not worth listening to, but then why 
+listen to Bob.  If Bob is correct, Alice isn't worth listening to, 
+but then again, maybe Bob isn't since she says Bob is... so why 
+should Carol bother with any of them.
+
+Ok, in real life it's possible to meet two people, one of him is a 
+liar but not so much as to admit another is more truthful... and that 
+truthful person agrees.  It's actually quite common... but how does a 
+third person who doesn't know any of them figure it out? How does a 
+computer program using a formula?
+
+But given a system with several variables (ie, several people rating each
+other) you'll have something that's even harder to resolve.  Given a 
+global system with thousands or millions of variables... how does one 
+make sense of all those ratings about a particular aspect of one 
+person?
+
+[..]
+> There will be inconsistency only if trust/untrust values are absolute.
+> that is you either trust someone or you don't. i am talking of a system
+> wherein trust values lie between 0..1 which are derived from a set of
+
+Oh no.  There's also a lot of inconsistency there too.  Doesn't 
+matter if you use boolean or fuzzy values.
+
+> tags. in that case bob alice trusts bob x% bob trusts carol y% and carol
+> trusts alice z%. if z < x, z < y simply implies alice trusts bob, bob trusts
+> carol more than carol trusts alice. so the system will be relative rather than
+
+You're ignoring how much Alice trusts Bob, how much Carol trusts Bob 
+and how much Alice trusts Carol.
+
+> absolute. a person who is trusted by more people will carry greater
+> weight
+
+Why should that person carry more weight? (more weight than who else?)
+What if all the people who trust that person are idiots?  Why should 
+I, or you, or anyone else care about somebody more or less because "x 
+number of people trust so-and-so"?
+
+> and people trusted by him will carry higher weight too. this way snoopy
+
+There's another flaw.  And what if those people trust him? 
+Exponentially increasing trust?
+
+> who is not trusted by many people will automatically have a weak relationship
+> with others.
+
+Not many people know Snoopy, so he has no trust level.  Nobody wants 
+to get to know Snoopy just because he has no trust level.  He's 
+locked out.
+
+Bad idea.
+
+> > There's the other point that someone else on the list (Perry?) brought up:
+> > if people publicly rate each other, there may be social/political 
+> > pressure to give some people lower or higher ratings.
+> 
+> again these ratings will be decided in a web rather that on one-to-one basis.
+> that way the social/political pressure can be reduced though not completely
+> eliminated.
+
+No. Individuals put their ratings in the web to skew or confuse 
+things.
+
+Rob.
+
+
+ 
+---
+No-frills sig.
+Befriend my mail filter by sending a message with the subject "send help"
+Key-ID: 5D3F2E99 1996/04/22 wlkngowl@unix.asb.com (root@magneto)
+        AB1F4831 1993/05/10 Deranged Mutant <wlkngowl@unix.asb.com>
+Send a message with the subject "send pgp-key" for a copy of my key.
+
+
+
+

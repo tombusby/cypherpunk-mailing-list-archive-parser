@@ -1,0 +1,42 @@
+From: "John Hemming - CEO MarketNet"  <johnhemming@mkn.co.uk>
+Date: Fri, 30 Aug 1996 07:10:50 +0800
+To: cypherpunks@toad.com
+Subject: Re: MSIE cryptography
+Message-ID: <1996-Aug29-194210.1>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eric Murray writes:
+
+>Peter Trei writes:
+>> 
+>> John Hemming - CEO MarketNet"  <johnhemming@mkn.co.uk> writes:
+> 
+>> > Just downloaded the most recent English Version 2.1 for Windows 3.1.
+>> > This does appear to do the same in terms of no encryption at all after
+>> > the server hello.
+>> Please ensure that the server you are connecting to is not configured for
+>> authenticate-only. It would be a pity to raise a big ruckus over what may be
+>> just a mis-configured server.
+
+>In addition, encryption isn't performed until after the ClientFinished
+>and ServerFinished messages, no matter which CipherSuites are negotiated.
+
+Actually the server verify message should be encrypted (to verify the
+key negotiation).  Also the server and client finished should be encrypted.
+I don't actually get the client finished record or client master key record.
+
+However, I don't get those all I get is the cleartext data in packets of
+SSL record format.   I have done a little more experimentation and it does
+appear quite clear that this happens with a non standard (ie not
+Verisign and a few others) X509 Certificate.
+
+In the trace that I have posted it is clear that cypher 02 00 80 has
+in theory been negotiated.
+
+
+
+
+
+

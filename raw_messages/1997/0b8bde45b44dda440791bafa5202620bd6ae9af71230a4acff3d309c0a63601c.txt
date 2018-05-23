@@ -1,0 +1,62 @@
+From: Secret Squirrel <nobody@secret.squirrel.owl.de>
+Date: Sun, 6 Jul 1997 06:52:10 +0800
+To: cypherpunks@Algebra.COM
+Subject: procmail and hashcash
+Message-ID: <19970705222102.8853.qmail@squirrel.owl.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+PATH=/bin:/usr/bin:/usr/local/bin:$HOME/bin
+MAILDIR=$HOME/Mail
+LOGFILE=$HOME/.procmaillog
+LOCKEXT=.lock
+SHELL=/bin/sh
+
+:0
+* ^X-Hashcash-Coin:.*
+{
+	:0:
+	* ? hashcash-email.pl
+	mbox
+}
+
+:0:
+* 1^1 ^From:.*president@whitehouse.gov
+mbox
+
+:0:
+junk
+
+-----------------------------------------------------
+
+#!/usr/local/bin/perl
+$status = 0;
+$use_db = 1;
+$validity = 28;
+$num_bits = 19;
+$hashcash_coin = "";
+$hashcash_db = "$ENV{'HOME'}/.email_hashcash.db";
+$hashcash_exec = "$ENV{'HOME'}/bin/hashcash";
+$resource_name = "nobody\@foo.bar.com";
+
+while(<>) {
+	/X-Hashcash-Coin:.*\s(.+)/ && do {
+		$hashcash_coin = $1;
+		last;
+	};
+}
+exit 1 if(!$hashcash_coin);
+if($use_db) {
+	$status = system $hashcash_exec,"-d","-f$hashcash_db","-$num_bits",$resource_name,$hashcash_coin,$validity;
+} else {
+	$status = system $hashcash_exec,"-$num_bits",$resource_name,$hashcash_coin,$validity;
+}
+$status = $status / 256;
+exit $status;
+
+
+
+
+

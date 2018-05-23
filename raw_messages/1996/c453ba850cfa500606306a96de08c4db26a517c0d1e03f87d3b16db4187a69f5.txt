@@ -1,0 +1,55 @@
+From: ichudov@galaxy.galstar.com (Igor Chudov)
+Date: Thu, 25 Jul 1996 03:27:37 +0800
+To: cypherpunks@toad.com
+Subject: Brute Force attack Question
+Message-ID: <199607241550.KAA00886@galaxy.galstar.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Hello,
+
+I've been thinking about brute force attacks, and there is something
+that I do not understand. Maybe someone could explain me where I am
+wrong.
+
+Suppose Alice sends letters to BoB, and they always exchange plain 
+text ASCII data. Suppose also that they use DES for encryption.
+They are afraid that Perry intercepts their messages and tries to brute
+force their DES key.
+
+Perry has 100,000 computers (and 20,000 couriers alone:) and his brute
+force attacks are as follows: he tries all keys in succession, looks at
+the decrypted texts, and *if* the decrypted text looks like a potential
+message (has only ASCII characters for example) he looks at that key closer
+as it is likely that he has found the right key.
+
+What is Alice and Bob decide to obscure their letters and add random
+NON-ASCII  characters at random places? They may agree to just ignore
+all non-ASCII characters, so these characters would never change the
+meaning of their letters. If they do that, Perry does not have any easy
+way to tell whether he really recovered the right plaintext or not, because
+even correct key would still produce a lot of non-ASCII characters.
+
+If percentage of ASCII characters in all 256 byte space is 40%, Alice
+and Bob may agree to put in junk characters to make up exactly 60% of
+the message. This way messages will look like random character data.
+
+Is there any good method for attackers to circumvent this obscurity?
+What is the general method to make a judgment whether the recovered
+text really is a plain text if Alice and Bob noisify their letters?
+
+I can think of this: we sift through all recovered plaintexts and remove
+all non-ASCII bytes, and then do some simple testing to see whether
+the remaining ASCII data resembles normal English texts. This kind
+of testing seems to be quite expensive though, compared to just testing
+for ASCII vs. non-ascii bytes. Anything else I am missig?
+
+Thanks.
+
+	- Igor.
+
+
+
+
+

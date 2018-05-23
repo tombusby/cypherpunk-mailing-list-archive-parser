@@ -1,0 +1,119 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 24 Oct 1997 23:45:15 +0800
+To: jseiger@cdt.org
+Subject: Re: puff pieces vs tough crypto issues (Re: Singapore TOILET ALERT)
+In-Reply-To: <v0310280db073ee3bc480@[207.226.3.4]>
+Message-ID: <199710240956.KAA01225@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Jonah Seiger <jseiger@cdt.org> writes:
+> While I suspect that new key recovery or CMR products may create some new
+> traction for supporters of mandatory GAK, PGP 5.5 is not the first example
+> of such a product (TIS has been marketing key recovery products for a
+> while).
+
+PGP has stated that their corporate user requirement is recovery of
+stored data.  This can be easily be acheived by escrowing storage
+keys, or other stored data recovery methods.  That includes sent and
+received email archives.
+
+CMR seems more functionally suited to wire-tapping or corporate
+snooping.  PGP denies that this is a design decision.  PGP states that
+they want to make a system which is hard for governments to abuse as
+the basis of mandatory GAK.
+
+If we accept those denials, the CMR design does not meet it's design
+well.  It sends recovery information with the communication, which is
+both a bad security practice, and easy for government to abuse.
+
+Please read:
+
+	http://www.dcs.ex.ac.uk/~aba/cdr/
+
+for an example of a storage key recovery design for data recovery
+which is more resilient to government abuse.
+
+> More importantly though, the Blaze et al study
+> (http://www.crypto.com/key_study) did not say that key recovery/key escrow
+> systems can't be built.  It said that such systems designed to meet law
+> enforcement specifications (24/7 real time access, the infrastructure for
+> key exchanges, and security considerations necessary for such a system to
+> function) are beyond the scope of the field and would create significant
+> vulnerabilities in the network.
+> 
+> This is an important distinction.
+
+That study was talking about the design problems in centralised key
+escrow.  PGP Inc's design means that these design problems are
+bypassed; the CMR design (if/when it gets abused by government to
+become a "GMR" design) means that the NSA can publish a GMR master key
+on their web page today, and that Clinton can pass the presidential
+decree tomorrow.
+
+Some have argued, that you _could_ build a similar system with pgp2.x
+using it's multiple recipients feature.  I agree, you could.
+
+However that is no excuse to go and build such a system!  It is much
+less dangerous to build CDR systems; much less dangerous to build systems
+which are able to recover only data stored on disk.
+
+> So far, Soloman, the FBI, nor other mandatory GAK supporters have said that
+> PGP 5.5 or other key recovery products on the market today solve their
+> so-called 'problems'.  I don't really expect them to. They seem to want
+> much much more.
+
+All that they want is possible with pgp5.5, or will be with pgp6.0,
+and backwards compatibility is already in place in 5.5 (and perhaps
+5.0, tho' this compatibility seems to be hard to get anyone to clarify).
+
+Another claim is that the CMR system is easy to by pass, and therefore
+it is privacy friendly.
+
+I'm not sure this argument amounts to much, because clipper was also
+easy to by pass.  Unless you're using steganography, the government
+could detect the bypass, and then the GAK system becomes just another
+one of those laws that the die-hards break, but which can translate
+into 10 years jail time if you get caught, or if the government
+decides you need knocking down a peg or two.
+
+I would have thought if any one understood this, it would have been
+Phil Zimmermann, after his Federal investigation.
+
+Really, if you are familiar with the clipper design, PGP Inc's CMR is a very
+related design, it is almost exactly clipper implemented in software.
+
+The design allows for multiple "message recovery" keys, or it allows for one
+single centralised one (belonging to the NSA, if the NSA has their way).
+
+The Blaze et al report you are quoting just says that having a single
+central recovery key is an incredible security risk.  It also says that
+managing many frequently changing recovery keys centrally is also complex.
+
+The NSA still seemed to think it worth the risk with the clipper design,
+because they figured they could keep the key recovery database locked up
+well enough to prevent another Ames selling it to the Russians, or whoever.
+
+PGP 5.5 is clipper written in software.  Yes it can be bypassed, yes the
+software has privacy options which make the recovery option optional; it
+also has installation options to make it non-optional; by passing the
+non-optional version can be detected by a corporate or government snoop.
+
+Corporate snoops are yucky but they are much less ominous than government
+snoops.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

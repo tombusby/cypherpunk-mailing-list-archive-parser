@@ -1,0 +1,39 @@
+From: Mark Murray <mark@grondar.za>
+Date: Wed, 1 Nov 1995 14:34:59 +0800
+To: shields@tembel.org (Michael Shields)
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+Message-ID: <199511010614.IAA08682@grumble.grondar.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> In article <199510311715.TAA05821@grumble.grondar.za>,
+> Mark Murray <mark@grondar.za> wrote:
+> > forever {
+> > 	cat /dev/random > /dev/null
+> > }
+> > 
+> > Severely limiting most decent folk's chance at getting PGP to work.
+> 
+> Ideally, if two processes are trying to read /dev/random at the same time,
+> both would get data at half-speed.  Doesn't it work that way already?
+
+Ideally, yes. However most processes won't swamp (and deplete) /dev/random
+like this will. Most (well-behaved) processes will (should) just take what
+they need. The above loop tries quite hard to take all that is there,
+so any process asking for randomness will be sharing with the above loop
+on an almost byte-by-byte basis, like you suggest.
+
+The above won't leave a "pool of randomness" to act as a buffer for user
+requests, so will cause a nasty slowdown.
+
+M
+--
+Mark Murray
+46 Harvey Rd, Claremont, Cape Town 7700, South Africa
++27 21 61-3768 GMT+0200
+Finger mark@grumble.grondar.za for PGP key
+
+
+
+

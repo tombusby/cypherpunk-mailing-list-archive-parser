@@ -1,0 +1,44 @@
+From: William Oldacre <76114.2307@CompuServe.COM>
+Date: Sun, 9 May 93 10:07:36 PDT
+To: <cypherpunks@toad.com>
+Subject: RNG from zener is easy.
+Message-ID: <930509170215_76114.2307_BHA35-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To: >Internet:cypherpunks@toad.com
+
+This posting is in response to Liam's earlier message on creating a 
+random number generator using a zener diode.  I breadboarded such a 
+circuit over year ago and it worked fine.  Zener diodes, operated in 
+their zener region with a reverse voltage generate electrical noise 
+much like a "noise diode".  This can be amplified and shaped using a 
+single quad op amp package to create what appears to be a very random 
+data stream.  Best way to use this would be to shift it into an eight 
+bit latch before reading the parallel port.  Depending on design, 
+it's operation is much (MUCH) faster than a pseudo random number 
+generator written in software.  It can fill a floppy disk so fast 
+that the main limitation  is the writing speed of the disk drive.
+
+A simple XOR with the message text is enough to create an unbreakable 
+cyphertext.  Problem is, that both parties have to have exact copies 
+of the random numbers since they cannot be regenerated as with pseudo 
+random numbers using a key.  What is needed is a way to encrypt the 
+random numbers so that they can be sent to someone else to use.  This 
+would be hard to decode, because it would be difficult to know when 
+success had been achieved.  If it is being tested against a message 
+text, the loss of one byte shifts everything to that the text becomes 
+gibberish again.
+
+I'm glad Liam brought this up.  It is a good way to produce an 
+absolutely unbreakable code.  This, providing the design is good and 
+no patterns are allowed to appear (introduced by amplifier 
+oscillation or nearby noise sources) in the generated numbers.  If 
+there is any interest out there perhaps we (Liam or I) could produce 
+a few for testing.
+
+
+
+
+

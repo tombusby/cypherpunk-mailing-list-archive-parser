@@ -1,0 +1,51 @@
+From: patrick@Verity.COM (Patrick Horgan)
+Date: Mon, 28 Aug 95 13:12:48 PDT
+To: ab411@detroit.freenet.org
+Subject: Re: SSL trouble
+Message-ID: <9508282009.AA20089@cantina.verity.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+David Conrad wrote, quite well:
+> 
+> Patrick Horgan <patrick@Verity.COM> writes:
+> >I did a distributed scheme for something else that had two levels, a master
+> >and a group of slaves.  Only the slaves talked to the master.  For this 
+> >effort I think a variation of the idea would be better.  Have all of the
+> >brutes contact the master, who will, in the first transaction assign them
+> >to the next slave in a round-robin fashion.
+> 
+> Why not just have the brutes pick a slave at random?  Of course, you need
+> to give them a complete list of slaves to choose from.  But then the only
+> difference between the master and the slaves will be that the master
+> doesn't get any keyspace (it's got it all to begin with) and doesn't
+> report any results upward.
+> 
+
+I think that this is a quite good idea with one caveat.  That we use a 
+good random algorithm.  As people on this list are quite aware, many
+algorithms that ship in libraries of commercial OSs are flawed in one
+way or another.
+
+Perhaps a combination of the two: give the whole list rotated in a
+round-robin fashion, and let the client do with it as they will.  There
+are enough coders on this list that we'll soon see independently 
+developed versions of the client software, (although a published 
+protocol for talking with the slaves would be nice), and some might
+like to draw the first from the list, another randomly choose one,
+etc...
+
+Patrick
+   _______________________________________________________________________
+  /  These opinions are mine, and not Verity's (except by coincidence;).  \
+ |                                                       (\                |
+ |  Patrick J. Horgan         Verity Inc.                 \\    Have       |
+ |  patrick@verity.com        1550 Plymouth Street         \\  _ Sword     | 
+ |  Phone : (415)960-7600     Mountain View                 \\/    Will    | 
+ |  FAX   : (415)960-7750     California 94303             _/\\     Travel | 
+  \___________________________________________________________\)__________/
+
+
+
+

@@ -1,0 +1,39 @@
+From: Carl Ellison <cme@TIS.COM>
+Date: Fri, 11 Aug 95 14:24:45 PDT
+To: hfinney@shell.portal.com
+Subject: Re:  More "S-1" foolishness
+In-Reply-To: <199508111809.LAA02095@comsec.com>
+Message-ID: <9508112119.AA13790@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Thu, 10 Aug 1995 20:53:58 -0700
+>From: Hal <hfinney@shell.portal.com>
+>
+>The other thing I noticed that really makes me question this is that G1
+>only uses 4 of its 8 input bits.  As I wrote, it is equivalent to
+>parity(i&0x17).  A bit is a terrible thing to waste, and it is hard to
+>imagine why it would do this intentionally.  G1 may not be that important
+>an element of the cipher but why throw away four bits?
+
+Not that I say this is real, but...
+
+I can maybe understand throwing out 4 of the bits if G0 picks them up.  G1
+is never used alone.
+
+However, has anyone already noted that
+
+	fullkey[INTEGRITY][i][j] = 0x08 ;
+
+for all i and j?
+
+For that matter, fullkey will be a constant for any key with all the bytes
+the same.  This might constitute a class of weak keys.
+
+
+ - Carl
+
+
+
+

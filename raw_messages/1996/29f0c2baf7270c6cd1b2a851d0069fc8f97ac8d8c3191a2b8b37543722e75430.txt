@@ -1,0 +1,70 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Fri, 23 Feb 1996 21:07:30 +0800
+To: m5@dev.tivoli.com (Mike McNally)
+Subject: I'd like a decaf, please (was Today's JavaScript bug)
+In-Reply-To: <9602221938.AA17154@alpha>
+Message-ID: <199602230109.UAA12579@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+| At <URL:http://www.osf.org/~loverso/javascript/track-me.html> find
+| some interesting "surveillance" applications of Javascript.
+
+	I pointed to a need for configurability for Livescript in
+December (http://www.homeport.org/~adam/java.html).  Now, it seems
+that Javascript a bigger security hole than Java.  We can turn off
+Java, but only downgrade to version 1 to avoid Javascript.
+
+	The problems in Javascript are due to (in no particular order)
+lack of design for security, lack of configurability, lack of
+authentication in scripts, and a lack of control over whose scripts
+are run.
+
+	A design for security would have compartmentalized Javascript,
+so that it only ran with access to the browser main window.  It would
+not have access to the screen, nor to disk, or memory owned by
+Netscape, except where parts of Netscape *explicitly grant* access to
+JavaScript.
+
+	Configurability means Netscape OBEYS /etc/netscaperc,
+/usr/lib/netscape/security.cf, or some other file that allows me to
+turn off Java and JavaScript completely, as a security officer for a
+company.  It would also accept restrictions from a gateway or proxy,
+which could add http and or headers such as <JAVA=off> and
+<Javascript=off> (and perhaps others.)
+
+	Configurability also means that Java or Javascripts can be
+made, in a sitewide manner, to ask permission to run, announce
+themselves when running, log themselves, (source, output,
+interactions, etc), not do things such as shrink below a certain size,
+etc.
+
+	The next needed feature is strong cryptographic authentication
+in the Java/JS engines, such that only digitally signed scripts can
+run.   Again, the site needs to be able to configure this, to say
+'Only scripts signed by the Dalai Lama or Perry Metzger can run at
+all.  Only scripts signed by Perry and the bank security officer can
+get at my e-wallet.'
+
+	The start of this is not complex.  Create a set of standard
+headers that http-gw or other web proxies can add, so people behind a
+firewall can have sitewide policies.  (Notice that this has the clever
+effect of making locally written scripts runnable, since they don't
+pass through the firewall, even if all we get is an on/OFF switch.)
+
+	Add authentication services at several (site configurable)
+levels.  Digital signatures, one time run tokens are easy to do.
+They're not even that tough to do right.  (One time tokens would be
+nice for meter-ware as well).
+
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+

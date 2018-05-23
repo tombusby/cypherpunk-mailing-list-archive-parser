@@ -1,0 +1,77 @@
+From: nobody@replay.com (Name Withheld by Request)
+Date: Fri, 3 Nov 1995 01:29:39 +0800
+To: cypherpunks@toad.com
+Subject: alt.anonymous.messages considered harmful
+Message-ID: <199511021625.RAA17800@utopia.hacktic.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+alt.anonymous.messages considered harmful.
+
+The advantage of using an anonymous message pool over using a chained
+reply block is, of course, the huge number of potential recipients.
+However, there are a number of problems, including a serious attack.
+Some of them could be avoided with a slightly different approach.
+
+
+
+1. When reading news on a server not under her direct control, Alice
+lets leak information (article selection, time used per article),
+so that she loses the additional security of using a message pool.
+She can avoid this by processing alt.anonymous.messages off line.
+
+
+2. By sending messages of a certain size and number to a pseudonymous
+address, an attacker can find out that the pseudonymous user
+participates in the pool: The encrypted messages are public;
+encryption does not affect size and number of messages.
+
+This information is also available at the alias server. That is not a
+problem as such. Anonymity is protected by the size of the pool.
+
+In combination with 1., this attack can lead to disclosure of a
+pseudonym.
+
+
+3. Denial of service attack. If the attacker can delay or suppress
+delivery of messages to a subset of the recipients, the pseudonym's
+reaction to the message or lack thereof reveals which subset the user
+belongs to. He can track down the pseudonym to Alice with O(log(n))
+messages.
+
+This is a practical attack, not restricted to a single point of failure
+such as the local news server: Persons at well-connected Usenet sites
+can send cancel (or superseding) messages with restricted distribution
+by use of the Distribution: and Path: lines.
+
+Those who do get the message, can not notice a cancel attack; those
+who don't, would have to carefully search for suspicious Supersedes:
+lines and monitor the control newsgroup. A denial of service attack by
+manipulated Path: header cannot be detected by the victim.
+
+
+
+Denial of service attacks could be made somewhat less feasible by
+making the pool accessible as a mailing list and via http.
+Some problems not related to security (such as restricted availability
+and bogus cross-posted traffic in the newsgroup) could also be solved
+by reproducing the encrypted posts to alt.anonymous.messages in a
+mailing list.
+
+Identification of encrypted messages as needed for 2. and helpful for
+3. can be prevented by using a fixed-size message format and inserting
+cover messages.
+
+If these messages are numbered and signed by the alias server, users
+can detect denial of service attacks (but not distinguish them from
+network errors) and try to get the messages through another channel.
+
+For perfect security, however, feedback from all participants would be
+required during transmission of the message. This is hardly possible.
+So, for highest security return addresses, an "everyone a remailer"
+mix net might be the better solution.
+
+
+
+

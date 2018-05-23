@@ -1,0 +1,41 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Wed, 20 Sep 95 07:05:47 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Re: NYT on Netscape Crack
+In-Reply-To: <199509200403.AAA14189@clark.net>
+Message-ID: <199509201405.KAA04961@frankenstein.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Ray Cromwell writes:
+> > > 
+> > >   Sigh.  For your information the security code for 1.x versions of
+> > > netscape was not even written by someone from NCSA.
+> > 
+> > If there is ANY place in the code that I can do a data driven buffer
+> > overflow, I can force you to execute code that I supply. I don't give
+> > a damn if it's in the "security" code. It makes no difference where it
+> > is. If there is a chink, thats it -- you're meat.
+> 
+>   How would you do this if the buffer overflow happened in a buffer
+> which was allocated in a separate protected heap apart from stack
+> and executable data?
+
+You could do that, but thats not how C does things. C allocates these
+things on the stack. Overflow the buffer and you fandango on stack,
+allowing you to change where the program counter jumps to on
+subroutine exit, and allowing you to force your own machine code into
+the system for execution.
+
+I suspect that even were subroutine data allocated in a seperate heap
+you could pull nasty tricks -- your protected heap probably has data
+in it that controls execution flow, so cleverness might still get you
+the same results.
+
+Perry
+
+
+
+

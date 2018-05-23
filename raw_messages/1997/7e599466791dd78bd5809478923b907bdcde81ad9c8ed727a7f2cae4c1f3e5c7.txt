@@ -1,0 +1,75 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 27 Jun 1997 07:14:09 +0800
+To: trei@process.com
+Subject: breaking RSA in hardware (was Re: Comparing Cryptographic Key Sizes II)
+In-Reply-To: <199706251502.QAA24075@hermes>
+Message-ID: <199706262151.WAA00229@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Peter Trei <trei@process.com> writes:
+> > [DES breaking]
+>
+> [useful stats]
+>
+> So, to summarize:
+> 
+> Using GNFS, on clients with 128M of memory, you could factor a 512
+> bit modulus in 28,000 MIPS years. With 500,000 MIPS years, you could
+> factor a 600 bit modulus.
+> 
+> Using QS, in 500,000 MIPS years you could factor a 512 bit modulus on
+> machines with modest memory requirements.
+
+Remarkably close to my original figure :-) (same as DES I said, you
+estimate DES to be 475,000 MIPS).  So, even though GNFS is faster, if
+we don't have the hardware, it'll be better to use QS because using
+GNFS whilst continually paging will be even worse.
+
+> The effects of memory speed and bandwidth would slow things down
+> somewhat.
+
+Yup.
+
+With DES software is not at all an efficient way to break DES,
+compared to a Wiener machine.  Unfortunately the press releases have
+had very little to say about the true cost of breaking DES with
+hardware.  
+
+Perhaps it would be interesting to look at the economics of a well
+funded attacker breaking a 512 bit RSA key.  If we asume that they
+would do it in software, and had to buy the machines, would you be
+better to buy fewer workstations with 128Mb or lots with 16Mb.  Factor
+of 17 speed up using GNFS acording to your estimates of DES, and
+Lenstra's for GNFS RSA.
+
+So perhaps we're looking at motherboard $100, cpu $100, PSU+case $100
++ 16Mb RAM $100 = $400.  The same, but with 128Mb $1100.
+
+So that's a 1100 / 400 = 2.75 ratio.  Clearly buying the larger memory
+PCs is the way to go.
+
+Overall GNFS is 6x cheaper it would appear.
+
+However, really the interesting question is how much would it cost to
+break RSA in hardware.  How expensive would it be to build a custom
+hardware machine to break RSA.  What building blocks would be needed.
+How much memory.  What would be the most efficient approach.
+
+Would it be cost effective to use NTTs RSA chip?  What would be the
+most efficient way to distribute the memory.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

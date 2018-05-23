@@ -1,0 +1,62 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Sat, 27 Jan 1996 21:18:02 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Microsoft's CryptoAPI - thoughts?
+In-Reply-To: <199601270550.VAA23195@mailx.best.com>
+Message-ID: <199601271259.HAA18857@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+James A. Donald writes:
+> http://www.jim.com/jamesd/mscryptoapi.html
+
+Thank you :)
+
+> A notable misfeature of the API is that it assumes that in general 
+> you will have two key pairs.  One for signing and one for encrypting.
+> 
+> Since in the most common case you are encrypting something related to a
+> signed message by the person you are encrypting to this is a
+> bad idea, 
+
+Could you elaborate ?  I haven't heard of any known interaction
+effects between a strong encryption algorithm and a distinct strong digital
+signature algorithm (with or without distinct keys), although such an effect
+is certainly conceivable. 
+
+Using "bare" RSA for both encryption and signing, problems can of course arise 
+because signing with a private key amounts to decrypting the plaintext to be
+signed with that key. Thus you can be tricked into decrypting some
+ciphertext by signing it. But this is the sort of problem addressed by the 
+crypto object format standards like PKCS. No-one recommends using "bare" RSA.
+
+Actually, using separate keys for signing and encrypting is another way to
+avoid this issue.
+
+> and protocols that require two key pairs to avoid protocol
+> failure are hazardous and inconvenient.  I think Microsoft should 
+> not have chosen to support such protocols.
+
+(I disagree)
+
+Futplex <futplex@pseudonym.com>
+It takes a budget of billions to hold us back....
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMQohiCnaAKQPVHDZAQEV4gf/ajSPD+CvXFo5R8i4PNxVy+e82IwBCn4l
+2ea16MlCNDGnThA1ZAxJRK+x7df4ysCzDz/Ke0frSZeOE+0/xz1rnEEkyC7ZJ7JF
+1+9RAqkyZ6LAlYrUEGbXxWvhwxm1X8aJUz4HpVOZxihjzaxlW7UaBZiStaAlv4SN
+You+EQd/LS00w345lIjCPGfZUPk9GJjpxFzlU6DPp6a+TLQ1hdvAy7qebdTpqdKm
+uZJnyaTQI0Irz483YqoXLr8gg7kA6JvEFj/UGo3Udt+tNB+I/BlMsNgL/Jm3FbxW
+JJ9WjjmjM/7Fu4Fx6jvpu7F923hCFk5ZqrrNjStwniwWbLl8GMGZ2w==
+=zFg1
+-----END PGP SIGNATURE-----
+
+
+
+

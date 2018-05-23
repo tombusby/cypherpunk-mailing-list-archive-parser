@@ -1,0 +1,50 @@
+From: nobody@REPLAY.COM (Anonymous)
+Date: Thu, 19 Jun 1997 15:33:21 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Recipient Anonymity
+Message-ID: <199706190720.JAA17208@basement.replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Matt Ghio wrote:
+
+> A group of servers collects messages of equal length for anonymous
+> recipients.  All servers exchange messages so that each has copies of all
+> messages.
+> 
+> A recipient wishes to retrieve a message from the servers without any
+> server knowing which message he is receiving.  The recipient selects a
+> group of n servers.  From each server, S_1...S_n-1, he requests a random
+> selection of messages, with a 50% probability that any particular message
+> will be selected.  The server returns the xor of all messages requested.
+> He sends the final server a request which is the xor of all the previous
+> requests and the one single message that he wants.
+> 
+> The xor of all the responses is the desired message.  It is impossible to
+> determine which message was received unless all servers collude.
+
+
+So what you're saying is:
+
+                             - Messages - 
+           A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+Server 1:  1 0 1 1 0 1 0 0 1 0 1 0 0 0 1 0 1 1 0 1 0 1 0 0 1 1
+Server 2:  0 1 1 0 1 1 1 0 1 0 0 0 1 0 0 1 0 1 0 1 0 0 0 1 0 0
+Server 3:  1 1 0 1 1 0 1 0 0 0 1 0 1 0 1 1 0 0 0 0 0 1 0 1 1 1
+
+
+So server 1 sends back the xor of messages A,C,D,F...Z; server 2 sends
+back the xor of B,C,E,F,G...etc.  The xor of all of that cancels out
+everything except Message Q.  But as long as at least one of the servers
+doesn't keep logs then nobody will know that except the person who
+downloaded it. 
+
+Clever.  It sure beats reply-blocks.  :)
+
+
+
+
+

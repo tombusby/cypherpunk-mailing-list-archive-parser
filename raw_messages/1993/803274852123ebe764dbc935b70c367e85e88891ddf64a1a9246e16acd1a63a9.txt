@@ -1,0 +1,41 @@
+From: Marc.Ringuette@GS80.SP.CS.CMU.EDU
+Date: Tue, 26 Jan 93 21:19:45 PST
+To: cypherpunks@toad.com
+Subject: Re: Computerized OTP (was 5th AMENDMENT & DECRYPTION)
+Message-ID: <9301270519.AA17681@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Thug writes,
+> The other possibility is to find a truly random RF source that has all
+> the properties you want, the more important being that the >average<
+> length of a homogenous bit run (0's or 1's) is around 4 or 5 bits.
+
+"All the properties you want?"  What you want is random, and nothing else!
+
+Random isn't "average bit runs of 4 or 5 bits".  It isn't "nice white
+noise".  It is TRULY RANDOM!  You need to understand that the absolutely
+critical property for a one time pad bit-stream to have is this:  given 
+all previous bits seen, the probability that the next bit seen will be
+zero or one is exactly 0.5.  
+
+What you need is a method for converting a biased random number stream
+(say, one where after a run of zeroes, another zero has high probability)
+into an unbiased one where the probability of the next bit being zero is
+exactly 0.5.  Truncating runs to length 5 is an attempt at this, but a 
+VERY BAD and cryptographically useless attempt.
+
+Does anybody remember a good recipe for converting a biased RNG into an
+unbiased one?  I can't think of one off the top of my head, and that's
+what Thug's friend seems to need.  This has been discussed at length in
+the literature.
+
+
+-- Marc Ringuette (mnr@cs.cmu.edu)
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Sun, 3 Jul 94 21:42:57 PDT
+To: nobody@ds1.wu-wien.ac.at
+Subject: No Subject
+In-Reply-To: <9407040349.AA14174@ds1.wu-wien.ac.at>
+Message-ID: <9407040442.AA16557@deathtongue.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I seem to remember reading somewhere that using PGP to encrypt a message 
+> for multiple recipients (in the same output file) somehow made 
+> cryptanalysis easier, but I don't seem to recall the rationale behind that 
+> concern.  Can somebody comment on that.
+
+This is incorrect.  There is a possible security problem with *pure*
+RSA, but PGP does not use pure RSA.  When you encrypt to multiple
+recipients in PGP (and you can verify this by reading the code), you
+choose a random IDEA session key, and then you RSA-encrypt that key
+(with random-data padding) in each public key, changing the random
+padding with each encryption.
+
+> Also, concerning the PGP 2.3a/2.6/2.6ui controversy, is the only "problem" 
+> with 2.6 the fact that after 9/1/94 it will start reporting an incompatible 
+> version number that will make its output unreadable by older versions?  If 
+> so, and if source code is available, why couldn't the date checking routine 
+> be located in the source code and simply commented out, then the whole 
+> thing recompiled?
+
+No can do; this would validate the MIT license on the code.  The
+change, about which you can obtain via anonymous ftp even if you are
+not in the US, is that the data-packet version number will change from
+'2' to '3' on september 1st, rendering older versions unable to read
+the data after 1 September.
+
+Hope this helps
+
+-derek
+
+         Derek Atkins, SB '93 MIT EE, G MIT Media Laboratory
+       Member, MIT Student Information Processing Board (SIPB)
+    Home page: http://www.mit.edu:8001/people/warlord/home_page.html
+       warlord@MIT.EDU    PP-ASEL     N1NWH    PGP key available
+
+
+
+

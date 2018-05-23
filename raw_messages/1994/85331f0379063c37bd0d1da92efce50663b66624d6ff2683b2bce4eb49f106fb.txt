@@ -1,0 +1,69 @@
+From: solman@MIT.EDU
+Date: Sun, 17 Jul 94 11:58:52 PDT
+To: rarachel@prism.poly.edu (Arsen Ray Arachelian)
+Subject: Re: Key length security (calculations!)
+In-Reply-To: <9407171624.AA16313@prism.poly.edu>
+Message-ID: <9407171856.AA01803@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> To quote you:
+> <<Not to attack Doug's point, which has validity here (that we don't
+> know what factoring advances NSA may have made), but I personally
+> think the combined capabilities of "public domain mathematicians" are
+> now far greater than what NSA has. Shamir, Odzylko, Blum, Micali,
+> Rackoff, Goldwasser, Solovay, Berlenkamp, etc., are top-flight
+> researchers, publishing many papers a year on these topics. It is
+> unlikely that some GS-14 mathematicians at the Fort, not able to
+> publish openly, have made much more progress. I think the resurgence
+> of crypto in the 70s, triggered by public key methods and fueled by
+> complexity theory breakthrough, caused a "sea change" in inside
+> NSA-outside NSA algorithm expertise.
+> >>
+> 
+> 
+> You mention Shamir, etc.  However I would point out that even if any of the
+> original RSA mathematicians found a better factoring algorithm, they'd be 
+more
+> than likely to keep it under lock and key.  The obvious reason is that their
+> money supply depends on such an algorithm being suppressed.
+
+What about Shamir's triple pass key exchange protocol (explained briefly
+below). Its the perfect key exchange algorithm. It obsoletes Public key
+systems entirely as long as you only need to exchange keys and not
+authenticate. I'd say that is pretty decent evidence that he does still
+do things to help the field when it might hurt RSADSI. (although I wouldn't
+say the same thing about all of them)
+
+Triple pass key exchange:
+
+Choose a commutative symetric encryption algorithm.
+
+Step 1: A encrypts the session key in his personal symetric key (he doesn't
+        share it with anybody) and sends the message to B: Ea(K)
+Step 2: B encrypts this in her personal symetric key and sends it back
+        to A: Eb(Ea(K))
+Step 3: A decrypts the message and sends it back to B: Da(Eb(Ea(K)))
+        Since we chose a commutative algorithm, this is Eb(K).
+Step 4: B decrypts with her key and Eve (ala Scheier) has no clue. Mallet
+        can't intercept your communication, but he can talk to you and
+        unless you have some sort of authentication impersonate Eve.
+
+Example commutative algorithm out of Schneier by Shamir based on the
+hardness of factoring:
+
+Choose a large prime, p. Choose an encryption key e that is a large prime
+less than p. Choose a d so that d*e mod (p-1) = 1 (i.e. the muliplicative
+inverse of e in mod (p-1)).
+
+C = P^e mod p
+P = C^d mod p
+
+Cheers,
+
+Jason W. Solinsky
+
+
+
+

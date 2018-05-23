@@ -1,0 +1,53 @@
+From: droelke@rdxsunhost.aud.alcatel.com (Daniel R. Oelke)
+Date: Tue, 19 Sep 95 11:21:57 PDT
+To: jsw@neon.netscape.com
+Subject: Re: Verification of Random Number Generators
+Message-ID: <9509191821.AA21270@spirit.aud.alcatel.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> Just an idle thought: it might be possible to do a probabalistic
+> verification of a RNG by sampling it over some number of samples, and
+> statistically analyzing the sample space. This would be analysis under the
+> model of "RNG as black box" as opposed to (or rather, if you're smart, in
+> addition to) code inspection & review. Any statisticians among us?
+> 
+
+In a word - no.
+
+In a longer description - you can black box test the *pseudo-RNG in
+one of two ways.  
+
+One, input a key, and then keep asking for numbers.  The numbers 
+should be statistically distributed, and should have a very long 
+repeat cycle.  (i.e. basic "good" pseudo-random number generator
+theory)
+
+Two, input different keys, and then ask for a number.  Again,
+the numbers should be statistically distributed, even for small
+changes in the input numbers.  
+
+What *both* of those methods don't test, is the key(seed) generation,
+which is what was attacked on Netscape.  The seed number
+must be truely random, and unknowable to the attacker, otherwise
+they can duplicate the random number generator.  Remember that
+all random number generators in software are really pseudo-random
+number generators, and rely on having seed value.
+
+BTW: In some ways, I feel sorry for Netscape being nailed by everyone
+including the press like this.  BUT - they must also accept that
+with being popular, that they will be subject to intense 
+scrutiny.  Besides - if you are going to attack a cryptosystem, why
+not get your 15 minutes of fame out of deal while you are at it ;-)
+
+Dan
+------------------------------------------------------------------
+Dan Oelke                                  Alcatel Network Systems
+droelke@aud.alcatel.com                             Richardson, TX
+
+
+
+
+

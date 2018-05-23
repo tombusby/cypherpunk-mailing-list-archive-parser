@@ -1,0 +1,59 @@
+From: Randall Farmer <rfarmer@HiWAAY.net>
+Date: Wed, 15 Oct 1997 09:13:14 +0800
+To: Cypherpunks List <cypherpunks@toad.com>
+Subject: Re: Encryption Program
+Message-ID: <Pine.OSF.3.96.971014193558.16804C-100000@fly.HiWAAY.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Although I don't know the PRNG in Visual Basic (the one 3dmx uses) well enough 
+to do much real analysis, the description of an attempt to correct a problem in
+it shows a weakness in the "enhanced" version...here's a slightly
+abridged/clarified copy of the message I sent the author about it.
+
+-------------------------------------------------------------------------------
+<headers snipped>
+
+...
+>     While it is true that PRNG's are not very good,
+
+Well, there isn't any big problem with PRNGs as a class -- RC4 is based on a
+PRNG, and it's okay to use as long as you know its limitations (i.e., just so 
+you don't try using the same key twice or anything similarly silly).
+
+...  
+> I believe I found a way around that problem...I used a syst[e]m of cubic 
+> arrays. The program first creates sixteen cubic arrays, and fills them one
+> space at a time with random characters. When the stream of characters to be
+> XORed with the plaintext is generated, it picks a random cube and a random
+> location with[in] that cube. 
+
+I can't do much real analysis since I don't know how Visual Basic's PRNG works,
+but with a truly secure PRNG like one you would see in a good stream cipher,
+you can't predict x bits of the PRNG's output with more than 1/2^x probability
+of bring right without doing exhaustive search of the keyspace.
+
+However, your arrays almost surely won't be filled with the *exact* same
+quantity of each character, so, even if the bytes in your PRNG's output are
+selected randomly from the arrays, some bytes are more likely to be a byte in
+your "enhanced" PRNG's output than others. Therefore, given a bunch of the
+stream, one can guess the next 8 bits of the PRNG's output with more than 1/256
+probability of being right, meaning your PRNG doesn't fit the bill.
+
+To sum it up, no matter what Visual Basic's PRNG does, that method *can't* be
+100% secure. 
+
+...
+
+---------------------------------------------------------------------------
+Randall Farmer
+    rfarmer@hiwaay.net
+    http://hiwaay.net/~rfarmer
+
+
+
+
+
+

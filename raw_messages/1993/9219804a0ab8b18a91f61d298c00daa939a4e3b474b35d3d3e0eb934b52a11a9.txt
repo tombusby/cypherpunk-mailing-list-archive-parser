@@ -1,0 +1,33 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Tue, 5 Oct 93 18:15:07 PDT
+To: cypherpunks@toad.com
+Subject: Re: Need Suggestions for Random Numbers
+In-Reply-To: <oggTBZu00awJIEOqNB@andrew.cmu.edu>
+Message-ID: <9310060114.AA13172@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+> 1,1,2,3,5,8,13,21,34,55,89,144,233...
+> 
+> Taking modulo 10, we get:
+> 
+> 1,1,2,3,5,8,3,1,4,5,9,4,3,7,0,7,7,4,1,5,6,1,7,8,5,3,8,1,9,0,9,9,8...
+> 
+> Which gives a fairly random distribution of numbers from 0 to 9.
+
+This is a very simple linear congruential generator:
+	a_n = a_n-1 + a_n-2	mod 10
+It is decidedly *not* suitable for "producing an `acceptable' random
+file to be xor'd with the plaintext."  It's not a cryptographically
+strong PRNG (it's not even a particularly good PRNG).  To break such
+a system, try Boyar's paper, "Inferring Sequences Produced by
+PRNGs", in JACM 36(1): 129-141.  I believe it takes time logarithmic
+in the modulus, which is not a recipe for security.
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

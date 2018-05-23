@@ -1,0 +1,38 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 26 May 94 19:36:32 PDT
+To: paul@hawksbill.sprintmrn.com (Paul Ferguson)
+Subject: Re: Malformed Signatures?
+In-Reply-To: <9405270230.AA05721@hawksbill.sprintmrn.com>
+Message-ID: <9405270236.AA00459@milquetoast.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There was a bug in the old versions of PGP.  It was discovered
+in version 2.2, and was corrected, somewhat in version 2.3.
+The bug was that the RSA-encoded certificated were actually
+in the reverse byte-order than they should have been, before they
+were encoded in the RSA encryption.
+
+This was somewhat corrected in 2.3, in that 2.3 could read the new,
+correct, pkcs_compatible signature, although PGP didn't start
+outputting this corrected signtature until 2.3a.
+
+PGP version 2.6 cannot read the old version.  This means that anything
+that was created with versions before 2.3a cannot be read by version
+2.6, and this is what you are seeing when you see "Malformed or
+obsolete signature format"..  It is a signature that was created
+before 2.3a, and therefore 2.6 does not understand it.
+
+FYI: PGP 2.6 has a neat feature... If you recreate a signature in
+the new format, with a newer timestamp than an old signature, 2.6
+will use the newer signature in lieu of the older signature when
+merging keyrings, so you can replace old signatures.
+
+-derek
+
+PS: This had to happen eventually.
+
+
+
+

@@ -1,0 +1,67 @@
+From: nobody@REPLAY.COM (Anonymous)
+Date: Tue, 7 Jul 1998 12:27:01 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: A note on the latest randomness quarrel
+Message-ID: <199807071927.VAA23471@basement.replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+* Never use "the lowest few bits" or (t1>t2)?1:0 for the actual random
+number generation.
+
+You only use things like that for estimating the amount of entropy in a
+source. The number of bits of entropy in a pile of bits is one more than
+the base-two logarithm of the average number of guesses required of a
+badguy knowing your condidtioning routine, observing what it can, and
+interfering with your generator to figure out the value of the bits in the
+pile, so if your studies and statistical analyses estimate that it
+requires 2^127 guesses to guess the output of your conditioning routine,
+good for you, you've estimated that somewhere in its input are 128 bits of
+entropy. 
+
+Um, I digress...point is, don't use that output straight. Take twice as
+much unconditioned input, non-random-looking stuff and all, as you
+estimate your conditioning routine needs to produce a key's worth of
+entropy and _hash_it_. Your conditioning routine can introduce some little
+bias you didn't see or make some unnoticed mistake that lets through
+predictable bits. Hashing can, too, but we've studied the hash functions
+to make sure they're good a lot more than we've studied your conditioning
+procedure.
+
+* A badguy's introduction of extra events doesn't poison your randomness.
+
+A badguy could introduce a multitude of predictable-but-random-looking
+events to make your generator close shop before it has enough
+unpredictable events to get its entropy. However, that only works if extra
+events make your generator stop collecting earlier. The amount of time it
+spends collecting randomness shouldn't depend on _any_ output of the
+generator, because that needlessly leaks entropy.
+
+Also, a badguy could introduce two nearly-simultaneous events near the
+beginning of the process, when it can be fairly sure that the wait between
+its events and the previous event will make a zero or make the lowest few
+bits of the delay between the bits match a certain value. (Interpreting
+that sentence is left as an exercise to the reader :) However, you can
+only do this in a system where your conditioning routine allows extra
+events to cause the routine to output bad bets. However, if you hash your
+raw data rather than using one of those conditioning routines, it's nearly
+-- nearly, that's your cue to say it has to be always -- impossible to
+weaken the output without knowing the other data hashed. 
+
+Third, el badguy could introduce so many events that the gap between
+events was always less than the measurement threshhold. However, note that
+the Geiger counter, the computer, and the operator would all fail under
+these circumstances. 
+
+Therefore, pretty much any strategy allowing extra events to kill entropy
+is flawed. 
+
+================================================================================
+	/// anonymous : nobody@replay.com : http://replay.com ///
+================================================================================
+
+
+
+
+

@@ -1,0 +1,66 @@
+From: Jim choate <ravage@bga.com>
+Date: Thu, 7 Jul 94 13:10:38 PDT
+To: cypherpunks@toad.com
+Subject: (fwd) Random Numbers - Request for feedback
+Message-ID: <199407072010.PAA29162@ivy.bga.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Newsgroups: sci.stat.math,sci.math,sci.math.num-analysis
+Path: bga.com!news.sprintlink.net!news.onramp.net!convex!cs.utexas.edu!swrinde!ihnp4.ucsd.edu!agate!library.ucla.edu!csulb.edu!csus.edu!netcom.com!deleyd
+From: deleyd@netcom.com
+Subject: Random Numbers - Request for feedback
+Message-ID: <deleydCsIB28.KEI@netcom.com>
+Organization: NETCOM On-line Communication Services (408 261-4700 guest)
+Date: Wed, 6 Jul 1994 06:51:43 GMT
+Lines: 43
+Xref: bga.com sci.stat.math:1315 sci.math:15353 sci.math.num-analysis:3354
+
+RE: Computer Generated Random Numbers
+
+A few closing comments and requests for further information:
+
+1.  All my tests on random number generators were performed on VAX/VMS
+    computers.  VAX uses a 32-bit architecture, so the random number
+    generators I tested were ones which used a word size of 32 bits or
+    less.  I would be interested in anybody's test results of a random
+    number generator utilizing a larger word size, such as xrand() using
+    SIZE=63.
+
+2.  Anyone know of some good references on primitive polynomials mod 2
+    and their applications?  They're used in additive congruential
+    random number generators like the xrand() one tested here.  They're
+    also used by file transfer programs such as xmodem to insure error
+    free transmission, and they're used in cryptography too.  Anyone
+    know of a good book on Abstract Algebra?  (The ones I have just
+    briefly touch the topic and then move on.)
+
+
+3.  Resolution:  Usually the random number generator is set up to return
+    a floating point value between 0 and 1.  A typical floating point
+    variable R can only represent a finite number of different values
+    between 0 and 1.  If you magnify the result too much the
+    discreetness of the floating point datum will become obvious.  For
+    example, in VAX architecture the F-floating datum has a precision of
+    approximately one part in 2**23.  Multiplying R by a very large
+    number N to create a random variable between 0 and N will fail if N
+    is too large because some of the values between 0 and N have no
+    corresponding R value which maps to them (i.e. the mapping is no
+    longer a surjection or onto map).
+    
+    For an F_floating datum, N above 2**23 is obviously too large.  But
+    even below 2**23 there's still a problem of some bins having 2 R
+    values which map to them while other bins have only 1.  We need to
+    get N small enough so that the number of R values which maps to any
+    bin is about the same, close enough so that differences aren't
+    noticed when we test the random number generator.
+
+-David Deley
+deleyd@netcom.com
+
+
+
+
+
+

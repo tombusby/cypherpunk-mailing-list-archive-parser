@@ -1,0 +1,48 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Wed, 13 Dec 1995 01:21:21 +0800
+To: jim@acm.org
+Subject: Re: Timing Cryptanalysis Attack
+In-Reply-To: <199512111920.LAA24338@mycroft.rand.org>
+Message-ID: <199512121525.KAA09078@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Jim Gillogly wrote:
+
+| > Nathaniel Borenstein <nsb@nsb.fv.com> writes:
+| > Hey, don't go for constant time, that's too hard to get perfect.  Add a
+| > *random* delay.  This particular crypto-flaw is pretty easy to fix. 
+| > (See, I'm not *always* arguing the downside of cryptography!)
+| 
+| Random delay may be harder to get perfect than constant time.  Note that
+| the actual time for the transaction is the minimum of all the transaction
+| times you measure, since you can't add a negative delay to them.  It's
+| presumably even easier if the random distribution is known.  Adding a
+| random delay means more transactions are required to find each new bit,
+| but information is still leaking.
+
+	Does the delay have to be random, or does the total time for a
+transacation need to be unrelated to the bits in the secret key?
+Assume that the time added is pseudo-random (and confidential).
+Further, for any non-overlapping group of N transactions, the
+distribution of the times fits some predetermined curve, say a bell
+curve.
+
+	We've added a non random number, but since those numbers end
+up being a curve, it would be difficult to determine which transaction
+got which time added to it.  This resembles the 'make them all a
+constant time', but allows us to send out some in a shorter time than
+the maximum (although most transactions should probably take longer
+than the average.)
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

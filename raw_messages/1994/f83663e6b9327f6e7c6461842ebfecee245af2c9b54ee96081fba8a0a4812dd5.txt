@@ -1,0 +1,41 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Wed, 6 Jul 94 00:04:01 PDT
+To: warlord@MIT.EDU
+Subject: Re: MD5 is 1=>1?
+Message-ID: <9407060702.AA04557@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >     Are there 128 bit messages 
+> > in MD4 which hash to the same value, and if so, what insight into the 
+> > cycle leingth vs string leingth would it give us.
+> If there are, then you have broken MD4!  This is the definition of
+> breaking a Hash: finding two strings (of *any* size) that hash to the
+> same value.
+
+There are different kinds of brokenness.
+- There's being able to find the original input to match any output
+  (not a problem here, though finding the shortest ASCII input would
+  certainly be interesting...)
+- There's being able to find at least one input to match any given output;
+  that's pretty broken.  For MD5, it's assumed that the probability
+  is 2**-128 of an input producing any given output.
+  If you can do this, it's easy to abuse protocols using the hash.
+- There's being able to find two input strings with the same output,
+  excluding some easily identified set of "weak" inputs; 
+  for MD5 this is presumed to take about 2**64 tries with the usual
+  birthday problem math.  Occasionally this can be useful for
+  abusing protocols that use the hash, though not too often.
+  It might be one way to cheat at net.gambling, for instance....
+- There's being able to find two input strings through careful
+  analysis; I don't remember if MD4 has any, but MD5 has a few.
+  A carefully designed protocol can avoid accepting these outputs
+  if there's a small set of them.
+
+			Bill
+			
+
+
+
+

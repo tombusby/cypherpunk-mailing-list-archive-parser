@@ -1,0 +1,82 @@
+From: solman@MIT.EDU
+Date: Tue, 19 Jul 94 05:37:39 PDT
+To: John Douceur <johndo@microsoft.com>
+Subject: Re: Why triple encryption instead of split+encrypt?
+In-Reply-To: <9407190102.AA15543@netmail2.microsoft.com>
+Message-ID: <9407191237.AA21406@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >Nonetheless, your cryptanalytic algorithm makes clear an additional
+> >constraints that must be placed on the system which I had not realized:
+> 
+> >From the algorithm, the plaintext, and the cypher text, in must not be
+> >possible to reconstruct both the plaintext, and the cyphertext for either
+> >half of the message.
+> 
+> >To that end I would suggest the improvement of making the splitting
+> >operation dependent on the keys.
+> 
+> For that matter, one could have a third key which is used by the
+> splitting algorithm.  If one chooses to make this splitting key a
+> function of the two DES keys, then this approach reduces to your
+> suggestion, at the expense of a smaller keyspace.  It could be said
+> that, in the code fragment of my previous message, the splitting key
+> is fixed at 0x55555555.
+> 
+> So now the meet-in-the-middle attack regains its earlier applicability:
+> A known-plaintext attack would encrypt P with the splitter, decrypt
+> C0 with DES, and attempt to meet in the middle to discover key K0;
+> similarly, decrypting with C1 to get K1.
+
+I don't believe this is true. You have C0 and C1, but you can not figure
+out P0 and P1 without the hash of the concatenation of both keys. Without
+this you can not do a meet in in the middle attack, right?
+
+BTW, after thinking about things, I would modify my earlier design in
+one way:
+
+Don't concatenate the negation of the two key hash to the hash. The
+point of that step was to split the cipher into two equal sized parts,
+but there is no reason to require that. In fact the possibility of
+different sized parts would add to the confussion. (The probability
+of an extreme imbalance in the size of the ciphers is extremelly
+small.)
+
+> If you can design a splitter
+> that is as cryptographically secure as DES (good luck), then the
+> resulting algorithm is as secure as double DES.
+
+I think that multiplexing based on the hash of the concatenated keys
+is as secure as the one way hash function is, no?
+
+> In your previous message, you commented:
+> 
+> >I have a hunch that if I'm wrong, its because the time required to do secure
+> >non-redundant secret splitting is as large as the time I'm saving.
+> 
+> If your secret-splitting algorithm is as secure as DES, then it probably
+> runs as slowly as DES does, making your hunch correct.  However, even if
+> this were not the case, the security of this scheme is significantly less
+> than that of triple DES.
+
+Well I don't believe that this is the case, but there is one way to find out
+:). I believe that for messages longer than a couple of K, my algorithm
+provides substantially more security than its DES analog and is quicker.
+I'll write up a version of this that splits into 4 parts and post it here
+some time over the next week. I think that splitting into four parts should
+be about as quick as double DES while providing substantially more security
+than triple DES (which I will time it against).
+
+The question of the security of the split is difficult to resolve so I would
+like some help with it. Is multiplexing based on the hash of the concat of
+the keys as secure as the hash?
+
+Cheers,
+
+Jason W. Solinsky
+
+
+
+

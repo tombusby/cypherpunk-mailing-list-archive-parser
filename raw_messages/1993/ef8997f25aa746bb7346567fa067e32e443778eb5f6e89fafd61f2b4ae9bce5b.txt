@@ -1,0 +1,48 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Wed, 6 Oct 93 14:10:20 PDT
+To: cypherpunks@toad.com
+Subject: Re:  Quantifying similar graphic images (was Re: criminal gif upload)
+Message-ID: <9310062109.AA22515@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Message-Id: <cggmhoe00VolIKwEcW@andrew.cmu.edu>
+>Date: Wed,  6 Oct 1993 16:32:52 -0400 (EDT)
+>From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+>Subject: Quantifying similar graphic images (was Re: criminal gif upload)
+
+>"Pat Farrell" <pfarrell@gmu.edu> writes:
+>
+>> We can prove statistical insignificance of duplication using strong
+>> hashing functions. Can we find a way to statistically prove "looks like"
+>> on a numerical basis?
+>
+>Yes.  If you were to take an image and divide it into let's say about 20
+>sections horizontally, and 20 sections vertically, and then average the
+>intensities of all pixels in each of the 400 rectangles formed, you
+>would create a fuzzy low-resolution version of the original picture
+>which could be used to compare other pictures
+
+
+You would have a better chance if you took just the low frequency components
+of a 2D Fourier transform of the pictures in question -- perhaps at only
+certain frequencies -- to get a vector describing features of the picture.
+
+You'd have to choose your 2D frequencies and build a set of such indicators
+and then look to see what distance between two vectors suggests that the
+pictures are the same.
+
+You'd want to use only the magnitude of the transform, to remove translation
+effects.  You could use a sum around a circle of frequencies to remove
+rotation effects.
+
+The low res picture by averaging is easily confused by any translation
+or rotation of the image.
+
+
+ - Carl
+
+
+
+

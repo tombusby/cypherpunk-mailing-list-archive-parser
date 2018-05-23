@@ -1,0 +1,80 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 24 Jul 1996 00:26:27 +0800
+To: cypherpunks@toad.com
+Subject: Anonymous web servers
+Message-ID: <199607230317.UAA18923@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[This is somewhat of a follow-up to Black Unicorn's idea about private
+web pages a few weeks ago, also motivated by thinking about Ross
+Anderson's Eternity service, about which I just posted.]
+
+Right now you can get anonymous web pages at various places.  But
+these are basically just regular web pages where you haven't told the
+service provider what your name is.  If somebody doesn't like what you
+have posted there they may be able to get your pages shut down just as
+easily as if you were non-anonymous.
+
+I was thinking about ways to allow more truly anonymous web pages.
+The goal would be to allow them to operate even if someone powerful
+didn't like them.  I'm not sure the idea I have really works but I
+thought I'd lay out some possibilities.
+
+The web is basically a client-server environment.  The server sits
+there all the time ready to accept connections from users running
+clients (browsers).  The client connects briefly to a web page and
+downloads the data for the page.  It disconnects and displays the
+data.  Some of the newer technologies have extended this model but
+it is the original concept.
+
+The idea I have is to provide a meeting place for anonymous servers
+and clients.  There would be a sort of "meta-server" which runs
+software which just pairs up interested parties.  The idea is that
+both servers and clients would be relatively transient.
+
+Two people would arrange in advance to interact via web protocols, and
+agree on a transient URL which they would share.  The client and
+server both connect to the "meeting place" host, specifying the magic
+name they have agreed on.  The meeting place software would then pair
+up connections which shared the same name and allow them to interact
+via conventional protocols.  URL's for the meeting place server would
+be interpreted in this context rather than simply as file names.
+
+In some ways the role of the "meeting place" software is similar to an
+IRC server.  In fact, this concept could be thought of as HTTP over
+IRC.
+
+The big question mark is whether the meeting place would be blamed for
+the possibly illicit transactions it facilitates.  It can argue that
+it didn't know what people are doing (it might require people to use
+SSL for their transactions so it doesn't see them).  But in practice
+it may be easy for attackers to prove that illegal transactions are
+going on (they just arrange to connect to an illicit server and
+download incriminating evidence).  It does seem though that IRC,
+despite having a reputation as a place where a lot of illegal
+transactions occur, manages to keep running, without the servers
+taking the blame.  Maybe it is just a matter of having a low enough
+profile?
+
+You'd also have a problem if a server, protected by anonymity, decided
+that being transient was stupid and arranged to always be ready to
+respond to one of the anonymous URL's.  Then there seems effectively
+no difference between the "meeting place" with an anonymous server
+URL, and an ordinary host with an objectionable file available via
+URL.  In each case clients connect and get the same illegal data.
+
+One thing we haven't seen (AFAIK) is anonymous posters offering to
+supply illegal data to anyone who asks for it.  Something like "just
+post your email address and I'll mail you (anonymously) some Holocaust
+revisionism" (or Christian literature, or whatever else may be
+banned in your particular jurisdiction).  This is the kind of
+application where it would seem that the anonymous web pages would be
+effective.  Maybe there is not much demand for it, after all.
+
+Hal
+
+
+
+

@@ -1,0 +1,45 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Wed, 1 Nov 1995 10:03:15 +0800
+To: hallam@w3.org
+Subject: Re: Keyed-MD5, ITAR, and HTTP-NG
+In-Reply-To: <9510311650.AA32634@zorch.w3.org>
+Message-ID: <Pine.SOL.3.91.951031170143.1256A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[Short response, because I'm at home. More details tommorow ]
+
+On Tue, 31 Oct 1995 hallam@w3.org wrote:
+
+> 
+> >How are you going to handle mechanism negotiation?
+> This is a must do item, Simon is haviung to do >lots< of this.
+
+Just to clarify: one of the most important parts of the design is the 
+negotation mechanism, so a lot of effort has gone into these mechanisms. 
+The aim is to _not_ have to do lots of RTT negotations through the use of 
+caching and dynamic profiling. The negotation facilities in HTTP 1.0 are not 
+used, not because there isn't a need for them, but because they don't 
+offer sufficient power, and are much too inefficient. 
+
+Oh, and when I say dynamic profiling, I'm referring to semi-standard 
+profiles that can be obtained over the network, not to OSI style 
+dead-trees. Deriving negotiated feature sets from a profile works really 
+well for applications like the WEB, as a vast amount of this information 
+remains the same for all copies of a particular version of a Browser. For 
+example, all copies of hotjava support html 1.0, some netscape 
+extensions, and can handle inline gifs, but not inline jpegs; alpha 
+hotjava supports the alpha applet API. 
+
+Simon
+---
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

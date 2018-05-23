@@ -1,0 +1,57 @@
+From: JonWienke@aol.com
+Date: Wed, 10 Apr 1996 19:37:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: why compression doesn't perfectly even out entropy
+Message-ID: <960409222650_372463464@emout04.mail.aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In a message dated 96-04-08 21:04:26 EDT, Perry Metzger writes:
+
+>Jon asked why it is that I contend that a compression algorithm won't
+>in the general case even out the entropy of a semi-random stream.
+
+I am not talking about any "general case," I proposed compressing spinner
+data, which has sequences of repeating numbers interspersed with occasional
+quasi-random fluctuations.  I am not saying that compression is a "magic
+wand" that will fix data streams with a lot of "fake" entropy, such as the
+RND() function available in many BASIC's, which I think most of us will agree
+blows chunks.
+
+>The answer can be obtained by simply trying to run gzip over an image,
+>preferably one that hasn't been compressed. The results are, in
+>general, very bad, even though images are highly compressable (even
+>losslessly). I leave the why up as an exercise to the reader.
+
+I have ZIPed the aforementioned spinner data with the built-in ZIP routines
+in the PC Tools for Windows file manager.  Except for some very slight
+banding (which appears to be caused by the ZIP headers) the noise sphere
+plots look pretty good.  All files are available upon request for independent
+verification.
+
+>I have said before and I will say again that the only reliable way of
+>dealing with a stream that has some amount of randomness mixed in with
+>it that you wish to distil down into pure random bits is to use solid
+>reasoning to figure out how many bits of entropy per unit of input you
+>can actually expect to see, add a large fudge factor to cover your
+>ass, and then distil down using a cryptographic hash.
+
+I have no disagreements with this.  I merely proposed using the compression
+function as a means of roughly estimating entropy and preventing the seeding
+of the hash/PRNG with potentially "weak key" type data.
+
+>Anything else
+>makes me highly nervous. If you can't estimate the amount of entropy
+>in an input stream from first principles, then you are probably in
+>trouble and should seek an input stream that you have a better handle
+>on.
+
+Would anyone like to propose a means of measuring entropy that we can all
+agree on?  I haven't seen anything yet that everyone likes.
+
+Jonathan Wienke
+
+
+
+

@@ -1,0 +1,41 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Fri, 27 Oct 1995 15:28:51 +0800
+To: cypherpunks@toad.com
+Subject: Re: Linux security issues
+Message-ID: <199510270552.WAA17904@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At  1:23 10/26/95 -0500, Aleph One wrote:
+>         I dont see what this has to do with Linux. The question should
+>be does the PGP pass phrase ever apper in a swap partition/file.
+
+Actually keeping the pass phrase out of swap space is fairly easy (although
+I havn't looked at the PGP code to see if it actually does this).  Read the
+pass phrase in raw mode, one character at a time and convert it one
+character at a time to the decryption key for the private RSA key.  Then
+the OS doesn't need to buffer the whole line, either in kernel space or in
+user space.
+
+However, the pass phrase is not the only dangerous information. 
+Intermediate forms used for decrypting the RSA private keys, and the
+decrypted RSA private keys also have to be protected.  The logic of PGP
+requires that it keep at least one of these around for a long time, so it
+will probably be written to swap space.
+
+N.B. This problem affects all virtual memory operation systems.  I can
+think of the Unix/Linux family, MacOS with virtual memory turned on, and
+most mainframe OSs (e.g. IBM's VM/ESA).
+
+
+-----------------------------------------------------------------
+Bill Frantz                   Periwinkle  --  Computer Consulting
+(408)356-8506                 16345 Englewood Ave.
+frantz@netcom.com             Los Gatos, CA 95032, USA
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 12 Dec 94 17:57:11 PST
+To: cypherpunks@toad.com
+Subject: Re: Time to exhaustively break 40-bit RC4?
+In-Reply-To: <199412122330.PAA29185@netcom20.netcom.com>
+Message-ID: <199412130156.RAA11086@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+"Ian Farquhar" <ianf@sydney.sgi.com> writes:
+
+>No, because as you're doing an exhaustive keysearch, you can "pipeline"
+>the key generation process in software.  Each key requires 256 swaps,
+>certainly, but there are only two swaps difference between the key
+>for "0000000000" and "0000000001" (assuming a 40 bit key).  If you
+>recursively generate keys, then you can generate successive keys
+>like this:
+
+This is not true, for a few reasons.  First, keys are replicated
+(reused over and over) until 256*8=2048 bits have been used.  So
+a 40-bit key would get reused about 50 times.  Second, the key
+feeds into a PRNG which is mixed in with the swapping, so once you
+swap with a different one you will swap differently from then on.
+
+And third (and this is the one I find most interesting), SSL does not
+just use a 40-bit key for the export versions.  They use a 128-bit key,
+but they require 128-40=88 bits to be sent in the clear.  So the
+potential keyspace is much bigger than 2^40.  This will make certain
+attacks (primarily those involving pre-calculation, which actually
+doesn't apply to your pipeline I guess) impossible.  I thought it was
+interesting that this "128 minus 88" bit key qualified for the export
+approval.  This suggests that NSA has no better attack than brute force
+(nothing relying on cryptographic weaknesses of 40 bit keys, for
+example).
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLuz/VBnMLJtOy9MBAQFMQwIAgo6XwroajnfYmRzSasstBSTKFGVeGI5U
+Kbg4VBG9FU9qFJaZ6hDpFbfZhvSc8OPnK0COWuZsdEZDcl1QDuwELA==
+=JCls
+-----END PGP SIGNATURE-----
+
+
+
+

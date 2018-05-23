@@ -1,0 +1,42 @@
+From: Eric Messick <eric@parallax.com>
+Date: Wed, 23 Dec 92 19:01:52 PST
+To: cypherpunks@toad.com
+Subject: Re: Signing ascii text
+Message-ID: <9212232303.AA26569@parallax.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I wrote:
+
+>It would canonicalize a file by
+>turning all sequences of white space into a single space and trimming
+>leading and trailing whitespace from the file before computing the
+>hash.
+
+mark@coombs.anu.edu.au resopnded:
+
+> If the message contained a table of figures formatted and seperated with
+> spaces then that method would destroy the readability of the table.
+
+The important part here is that the collapsing of whitespace would
+only affect the message digest, not the text as seen by the user.  Two
+texts which read the same, but differ in whitespace, would have the
+same signature.  If you recieved both files, you could see the
+difference in spacing, yet the same signature would be valid for both
+files.  The main vulnerability is that a message whose meaning is
+partially encoded it its whitespace (like an ascii graphic, map, or
+chart) could have its meaning altered, without affecting the validity
+of the signature.  Clearly one would not want to use this signature
+method on such texts.  It would be a good feature for the signature
+algorithm to warn the user if it detects a pattern of whitespace that
+might convey information.  I am not sure how to detect this reliably,
+though.
+
+-- eric messick
+eric@toad.com
+
+
+
+

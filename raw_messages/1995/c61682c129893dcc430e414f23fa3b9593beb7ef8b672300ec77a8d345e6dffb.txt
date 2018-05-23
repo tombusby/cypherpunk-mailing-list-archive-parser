@@ -1,0 +1,79 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 8 Sep 95 15:39:46 PDT
+To: cman@communities.com (Douglas Barnes)
+Subject: Re: Slightly faster checking for encrypted messages to me
+Message-ID: <199509082239.PAA20047@ix8.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:31 AM 9/5/95 -0800, Doug Barnes wrote to Hal and us:
+
+>If two entities want to communicate via a message pool,
+>without worrying about traffic analysis, but don't want
+>the overhead of trying to decrypt every headerless
+>message to the pool, then they can do the following:
+>
+>1) In a "headered" message, one of the entities (A) sends
+>   a collection of large random numbers to be used as return
+>   markers, encrypted with the public key of the desired
+>   correspondent (B).
+>
+>2) B can then respond to A with an essentially headerless
+>   message prefixed with one of the numbers send by A.
+>   This initial message should contain a list of similar
+>   numbers for B, that A can use to send messages to B.
+
+There's a way to get this without sending as much data -
+using a relative of S/Key (probably not affected by S/Key patent.)
+A sends B two random numbers, thing1 and thing2.
+B's headers include a prefix of
+        n, hash( thing2, hash^n(thing1) )
+where hash^n is n rounds of hash, e.g. MD4 or MD5.
+Thing2 can possibly be a well-known string instead.  
+Assuming there's no special relationship between thing2 and 
+the hash function, it should be hard to derive 
+        hash( thing2, hash^n(thing1) ) 
+from 
+        hash( thing2, hash^(n-1)(thing1) )
+presumably as hard as inverting the hash.  
+(Brute-force is an option if thing1 is not chosen well, 
+involving a few hundred hashes on a few million popular wimpy passwords,
+but S/Key suffers from the same weakness.)
+
+Including n in the header is a mild message-correlation risk, 
+though messages don't have to be sent with consecutive n's 
+(at a cost of more runs of hash per message.)  This lets you recover
+easily from lost messages.  There's also the mild risk that the
+thing1 and thing2 keys need to be stored, though Doug's method
+also suffers from that.
+
+It is also possible to use S/Key itself - the original message
+from B to A contains Xn = hash^n(key) and maybe n.  
+The next message contains Xn-1 = hash^(n-1)(key), which A checks by 
+hashing it and looking in his table of messageids for Xn.
+A can recover from small numbers of lost messages by hashing a few times.
+(Since you're not using it for authentication, is it covered by
+the S/Key patent?)
+
+This method has the weakness that Traffic Analysts can also
+correlate messages by hashing the fields and comparing with previous.
+One workaround is to for B to also send A the keys for some simple
+encryption method E such as "Ek = m xor k" and use Xn = Ek(hash^n(key)).
+This requires A to perform an xor and a hash for each correspondent
+(B, C, D, ...), but is probably secure enough.  Alternatively,
+since the numbers are fairly short, you can use "Ek = m^k mod p",
+but that's starting to look like work :-).
+
+
+
+#---
+#                                Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

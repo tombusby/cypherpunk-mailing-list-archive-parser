@@ -1,0 +1,72 @@
+From: Markus Kuhn <Markus.Kuhn@cl.cam.ac.uk>
+Date: Wed, 18 Mar 1998 05:09:40 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: EMI, Van Eck, etc.
+In-Reply-To: <B0000003809@hades.crmcom.com>
+Message-ID: <E0yFIay-0007c1-00@heaton.cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The Spectre wrote on 1998-03-18 05:11 UTC:
+> In almost every writing I've come across regarding Van Eck, I notice the
+> phrase "...simply a modified television" or something along those lines.
+> 
+> Does anyone have a document for actually modifying a television set to do
+> this sort of thing?  It doesn't have to be extremely long ranged, and could
+> in fact be very short range.. I am interested in performing my own
+> experiments into defeating this sort of eavesdropping.
+
+Ingredients for a minimum cost quick&dirty TEMPEST experiment:
+
+1 RF tuner of a VCR
+1 antenna amplifier
+1 antenna
+1 multisync PC monitor
+1 PC with a video card (or a pair of tuneable sync oscillators)
+
+Connect the PC with the video card to the SYNC inputs of the multisync
+monitor. Program the video card to a video mode with the same deflection
+frequencies as that used by the target system. Connect the baseband output
+of your tuner to the VIDEO-IN pins of your monitor. Connect the antenna
+and amplifier to the RF input of your tuner. Switch on. Fill the
+screen of the target device with a big symbol consisting of dithered and
+non-dithered areas for best results in the first trials. Now tune
+through the VHF bands starting with the dot clock frequency of the
+target.
+
+That's it basically. Such a primitive TEMPEST monitor is of course
+unsuitable for evaluating the threat from much more sophisticated wide-band
+DSP eavesdropping receivers that directly attempt OCR-style algorithms
+on the signal with matched filters. But it is fun to play around with, it
+is useful for getting a feeling for the effect, and it is suitable for
+demonstrating most of the Soft Tempest tricks that I described in
+<http://www.cl.cam.ac.uk/~mgk25/ih98-tempest.pdf>.
+
+> Also, would it be possible to scramble the signal into an unusable level by
+> simply putting another device emanating RF at the snooping frequencies
+> nearby the machine that you want to protect?  Something generating white
+> noise at that frequency, but with a purposely built antenna, say a high
+> gain type turned outward from the monitor, with a significantly higher
+> power output than the monitor?
+
+The FCC and your radiologist advise against this. Shielding is much
+more elegant than jamming. Remember that CRT content is a periodic
+signal, thus you can suppress uncorrelated noise by periodic averaging
+rather easily. Good jamming must produce a correlated output signal.
+See United States Patents 5165098 and 5297201 for descriptions of
+correlated jammers. I don't think, these are widely used though, as the
+TEMPEST standards seem to mandate shielding and not jamming, which I
+think is very sensible.
+
+Markus
+
+-- 
+Markus G. Kuhn, Security Group, Computer Lab, Cambridge University, UK
+email: mkuhn at acm.org,  home page: <http://www.cl.cam.ac.uk/~mgk25/>
+
+
+
+
+
+

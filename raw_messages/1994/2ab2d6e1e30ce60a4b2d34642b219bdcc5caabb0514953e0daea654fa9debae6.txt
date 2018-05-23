@@ -1,0 +1,41 @@
+From: DAVESPARKS@delphi.com
+Date: Fri, 22 Jul 94 21:24:45 PDT
+To: cypherpunks@toad.com
+Subject: Re: Double DES calculations
+Message-ID: <01HF0WQ4C8DK95NB4U@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal Finney wrote:
+
+> I'll give you one similar example, though.  I think this is the technique
+> used in Pollard "rho" factoring.  You have an iterated series, x=f(x), and
+> you want to know if it has any cycles, any values which are eventually
+> repeated.  At first glance you might think that to look for a cycle of
+> length N you would have to store N values of the series and check each
+> value for a match, taking order of N in time and space.  The Pollard tech-
+> nique instead runs two copies of the iteration at once, one twice as fast
+> as the other: x=f(x) and y=f(f(y)).  Each time you just compare x and y
+> for a match.  This takes about twice as long but uses no memory.
+
+The thread was concerning the vulnerability of Double-DES with an
+intermediate layer of IDEA in the middle.  It was proposed that if IDEA
+could ultimately be TRIVIALLy cracked, then DES-IDEA-DES was no stronger
+than Double-DES.  At that point I did some "back of the envelope"
+calculations on the cost of breaking Double-DES using a MITM attack.
+
+I'm not sure how "cycles" fit into DES.  The brute-force technique I was
+hypothesizing involved trying all possible keys on the encrypt and decrypt
+sides, storing them the resultant 64 bit blocks (all 2^60 bytes of them),
+then comparing them.  How would Pollard rho speed that up?
+
+ /--------------+------------------------------------\
+ |              |  Internet: davesparks@delphi.com   |
+ | Dave Sparks  |  Fidonet:  Dave Sparks @ 1:207/212 |
+ |              |  BBS:      (909) 353-9821 - 14.4K  |
+ \--------------+------------------------------------/
+
+
+
+

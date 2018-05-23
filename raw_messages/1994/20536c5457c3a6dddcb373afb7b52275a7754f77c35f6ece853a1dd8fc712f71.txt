@@ -1,0 +1,110 @@
+From: Pierre Uszynski <pierre@shell.portal.com>
+Date: Tue, 26 Jul 94 12:05:44 PDT
+To: cypherpunks@toad.com
+Subject: Re: CYPHERPUNKS TO THE RESCUE
+Message-ID: <199407261851.LAA22277@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Let's not go overboard!!! I hear things like "public/private key",
+"battery backup", "the door unit transmits", "a keypad on both sides"
+
+Hey! This is a garage door opener! You think you can add $20 of stuff
+and still have a profit margin?
+
+How about no keypad, no battery backup on the remote, just a (random)
+secret key, no door unit transmitter, normal batteries in the remote
+and door unit:
+
+1 - Plug the remote into the door unit. The door unit writes a roughly
+random number (electronic noise), into the remote, and remembers the
+same. Units synchronize time, while they are at it.
+
+2 - Take the remote for a drive. When you come back press the "open"
+button.
+
+3 - The remote send the current time (as per its 1 min (im)precise
+real time clock), encrypted with the secret key. See later real
+message because of replay attacks.
+
+4 - The door unit decrypts and checks against time, time +1, or
+time - 1. If valid, it opens the door, and synchronizes its time
+to the time stamp.
+
+POWER LOSS. This is a garage door opener. What do you do when your
+garage door remote fails, you try again, then you use your key and
+replace the **** battery (start again at step 1). In my area, power
+outages are so rare that I wouldn't even need a battery on the door
+unit (your milage may vary).
+
+REPLAY ATTACK. To foil an attacker who would record the time stamp
+and replay it within a minute: After a time stamp opens the door, a
+bare time stamp will only work again after something like 2 minutes.
+Instead, when you push the remote "open" several times within the same
+protected period, you issue "timestamp, tag1", then "timestamp, tag2",
+etc... say you are allowed 6 "opens" in the same protection period.
+The door unit has to check against time - 1, time, time +1, and the
+corresponding 6 tags. When a tagged stamp worked, all the previous ones
+are disabled for the protection period, whether the door unit
+received them or not (to avoid the reuse of messages that failed to
+open the door.) If you push the remote "open" and it fails to open the
+door, and you simply give up on the idea of opening the door, you are
+susceptible to replay attack for something like 2 minutes... that's life.
+
+"CLOSE" ACTION. Just close the door, no crypto.
+
+Any problem with this SIMPLE solution? Considering there is no point
+in spending zillions on the garage door opener if your windows do not
+have alarms.
+
+The reason some current units may not be secure is probably the
+usual: the manufacturers are not interested in what the customers
+don't want and the customers don't want what the manufacturers have
+never told them could (or should) be done. And politicians are more
+interested in legislative action than in suggesting their constituents
+do not buy junk.
+
+Pierre.
+pierre@shell.portal.com
+
+ObQuotesFromPreviousMessages:
+
+Sandy Sandfort <sandfort@crl.com> said something like:
+
+> On Tue, 26 Jul 1994, Arsen Ray Arachelian wrote:
+> 
+> > You'd need a clock on the garage controller....The garage opener
+> > would receive a signal from the remote, issue a challenge code based on a
+> > hash of the time/date + some random numbers.  The remote would encrypt this
+> > hash with the owner's IDEA key and send back the response.
+> 
+> Am I missing something here?  Why would you need a clock?  What I had in 
+> mind was something like:
+> 
+> 	1--The owner presses the "open" button on the remote.
+> 	2--The remote sends an "ask me" signal to the door unit.
+> 	3--The door unit transmits a random number in the clear.
+> 	4--The remote encrypts and signs the random number using
+> 	   its unique private key.
+> 	5--The door unit decrypts and compares the numbers, using
+> 	   the remotes public key.
+> 	6--If the numbers match, the door opens.  QED.
+> 
+> Adjusting my flame retardant underwear,
+> 
+> 
+>  S a n d y
+> 
+> P.S.  For most car and garage doors, relatively short (32 bit?) keys 
+>       should be more than sufficient, I would think.
+>  
+> 
+> 
+> 
+> 
+> 
+
+
+
+

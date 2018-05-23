@@ -1,0 +1,52 @@
+From: SINCLAIR  DOUGLAS N <sinclai@ecf.toronto.edu>
+Date: Fri, 9 Dec 94 06:53:36 PST
+To: cypherpunks@toad.com
+Subject: Secure DAC?
+Message-ID: <94Dec9.095259edt.3818@cannon.ecf.toronto.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I was looking through the PMI analog IC databook from 1988.  Specifically,
+I was looking at the "DAC-08 8-bit high-speed multiplying D/A converter".
+The chip is interesting in that it has two outputs.  One is the current
+corresponding to the digital value on the input lines, and the other is
+the current corresponding to NOT the digital values.  Thus, the two currents
+sum to a constant.  The book says:
+
+    "Power consuption may be calculated as follows:
+
+    Pd = (I+) (V+) + (I-) (V-).  A useful feature of the DAC-08 design
+    is that supply current is constand and independent of input logic states;
+    this is useful in cryptographic applications and further serves to
+                      ^^^^^^^^^^^^^
+    reduce the size of the power supply bypass capacitors."
+        -- Page 11-34.  All typos mine.
+
+I fail to see how this would increase cryptographic potential.  However, 
+it would seem to mask the device's EMR.  The application notes state that
+it is useful in CRT display drivers, audio encoders, &c.  These are all
+devices that are succeptable to TEMPEST monitoring (or whatever the
+correct name is).  If one output goes to the desired next stage (the
+electron gun in a CRT for example) and the other goes to a matched dummy
+load, it would seem that the overall EMR is constant.  This approach
+would obliviate the need for bulky shielding, though it might not be 
+as secure.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLuhtmcyi36CIyUXVAQHPOgQAtfWIF40YQU+pYhYok734qzePhkDmmaaR
+8WLXVB9UvZBi7psIuXRsXoKkODaQIJecQZ6UsIrEfBr1Lor+ZBe7e7fOpWiO5jkE
+gMC+/a62z4xOyr4ukrEsZPG4WfHLR1SSob+CFla/JjiL2Hp3+I2wgtieY7KHTn0m
+13Zpr/eayLM=
+=F8pd
+-----END PGP SIGNATURE-----
+
+
+
+
+

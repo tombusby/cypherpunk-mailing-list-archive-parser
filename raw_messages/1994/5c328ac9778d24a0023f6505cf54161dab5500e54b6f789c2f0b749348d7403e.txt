@@ -1,0 +1,56 @@
+From: remailer@merde.dis.org (remailer bogus account)
+Date: Fri, 11 Feb 94 23:54:13 PST
+To: cypherpunks@toad.com
+Subject: Magic Money bug removed
+Message-ID: <9402120745.AA22450@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Anonymous writes:
+
+>It appears that the problem with bigendian magic money is specific
+>to the "mint" function.  Minting one coin works OK, but minting more
+>than one causes every coin after the first to be rejected by the client.
+>Creating a coins.dat file with the -p function of the client works OK,
+>even with more than one coin.  Sending the output.asc to the server works
+>OK too, as does handling the ascii file that comes back from the server.
+>Only minting fails.
+
+Thank you for finding this one. That was not a big-endian problem, that
+was simple stupidity on my part. When I added the coinid field to the
+protocoin structure, I forgot to move the free(pc); down to the next line.
+So the coinid was getting freed and then written. Version E is on its way
+to csn.org. By the way MPJ, did you get pgptl10b?
+
+					    Pr0duct Cypher
+
+mp_modexp_crt(c->c.value,pc->c.value,sk->p.value,sk->q.value,
+	      dp,dq,sk->u.value);
+free(pc);  <-------------------- DUMB MISTAKE
+pgp_fix_mpi(&c->c);
+f=fifo_file_create(fp);
+fifo_put(MM_REGCOIN,f);
+fifo_aput(pc->coinid,16,f);
+pgp_create_mpi(f,&c->e);
+pgp_create_mpi(f,&c->c);
+fifo_destroy(f);
+free(c);         <-------------- MOVE IT HERE!
+free(d);
+}
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLVtnbsGoFIWXVYodAQHaZgP+JfohckwzIVLvFB3K+r+ywl9ee53h5387
+XycJ+qqjnHvLyPp4wTgfYaYnpqLAOzYDGZkq834pQ3EoE83fr++OmA70CpugXwX/
+6cFTFtc3mK3Lp+MTc5tKJxVe3ktuL4DFY1c80gcbapur4PCw/NS/BIWQQIZNXtwu
+gJH7lPjRno4=
+=I0+O
+-----END PGP SIGNATURE-----
+
+
+
+

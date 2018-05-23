@@ -1,0 +1,178 @@
+From: "Kipp E.B. Hickman" <kipp@warp.mcom.com>
+Date: Mon, 12 Dec 94 15:10:47 PST
+To: perry@imsi.com
+Subject: Re: Clarification of my remarks about Netscape
+In-Reply-To: <9412122242.AA11210@snark.imsi.com>
+Message-ID: <9412121508.ZM17611@warp.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Dec 12,  5:42pm, Perry E. Metzger wrote:
+> Subject: Re: Clarification of my remarks about Netscape
+>
+> "Kipp E.B. Hickman" says:
+> > First of all, lets start with "not wanting to secure the transport
+> > layer". Right now email, passwords, etc. can be read off of the
+> > internet in the clear providing no measure of privacy at all. I
+> > believe the SSL protocol solves this problem.
+>
+> First of all, Mr. Hickman, you might notice that I said that
+> encryption is needed for privacy. However, transport layer security is
+> far from sufficient for the web because it DOES NOT SECURE THE
+> DOCUMENTS. The fact that you mention email and SSL in the same
+> paragraph demonstrates an ignorance of this topic. Because email is
+> store and forward transport layer encryption mechanisms are worthless
+> -- they only say that no one could read the last hop and in no way do
+> they secure the documents themselves. Thats why PEM was
+> developed. There is now a merger of PEM and MIME that is soon going to
+> be a proposed internet standard following the last IETF meeting.
+
+Clearly you and I disagree on a fundamental point. Which is more important?
+Securing the document or securing the transport of the document. I believe that
+today's problem for commerce is securing the transport. Solving this currently
+widespread problem makes the Internet a friendlier place for commerce. It
+allows sensitive information to be transported privately. Protecting against
+forgery is the next logical step.
+
+> Indeed, Mr Hickman, had you and your friends at Netscape been paying
+> attention instead of rolling your own, you might have noticed that
+> IPSP prototypes are around TODAY and that transport layer mechanisms
+> are going to become rapidly obsolete for securing the communications
+> themselves. You can find a version of swIPe, which is not quite IPSP
+> but is fairly similar (and which is being hacked on so that it will
+> conform) on ftp.csua.berkeley.edu; its even modloadable on Suns. Thats
+> available TODAY.
+
+Let's pretend for a moment that you are right. IPSP is the way to go, today,
+and that silly us, we should have used it. So now I go to my site manager, and
+say:
+
+	Please replace all that fancy expensive network hardware with new
+	ones that speak IPSP so that we can do private communications with...
+
+So who can I talk to? Name one router that speaks the secure protocols you are
+documenting? Name one PPP based bridge that does? Show me, today, what
+percentage of the Internet is covered by these standards? Give me some growth
+curves showing how the Internet will quickly be converted to a secure network?
+
+My point is not that IPSP is "bad". My point is that *today* it is irrelevant.
+Tommorow is another matter.
+
+In the future, I hope that you are right, IPSP is everywhere and we can all
+breath a sigh of relief. In this case SSL is of little value. However, in the
+mean time we have what we have. My company's network hardware is typical. It is
+filled with expensive devices that don't understand IPSP or IPNG. In fact, most
+of the world is constructed this way. What you are implicitly asking for is for
+ the world to replace its networking hardware/software solutions before
+allowing privacy. I think that this is a incorrect. SSL is a temporary solution
+to a nagging problem. It's design was predicated on the belief that the future
+is in protocols such as IPSP. Security will be pushed lower and lower until it
+is omnipresent.
+
+> > In some future land where IPNG or it's cousin's appear, then maybe
+> > SSL will be unnecessary.
+>
+> Even were transport layer security needed, there are many other
+> protocols for doing the exact same thing -- your solution is hardly
+> new or interesting. Why not use an existing one instead of rolling Yet
+> Another One? Of course, as I've repeatedly mentioned, network layer
+> security is being used by many people today and will be standardised
+> very soon -- probably before SSL.
+
+We never claimed the solution was new or interesting. However, it is a
+solution.
+
+> > Finally, the system is perfectly usable in a proxy environment.
+>
+> Sheer ignorance. In your system I must trust each and every hop
+> between myself and the document, and I must also trust all the
+> servers. With public key signatures on the documents themselves, as
+> Amanda Walker mentioned, you then need trust nothing at all in order
+> to know that documents are authentic.
+
+You are making the assumption that the proxy is able to understand the secure
+conversations between a client and its eventual server. This need not be true
+and should not be true.
+
+> > Secondly, SSL is not an end, but a beginning. Instead of waiting 10
+> > more years before the standards process gets around to inventing
+> > some old technology and codifying it, we have put something out.
+>
+> I'm afraid that your technology is the old one, and as for "putting
+> something out", as I mentioned network layer solutions are available
+> for ftp TODAY. In source form. Immediately. Oh, and by the way, they
+> don't incorporate such useless abortions as 40 bit RC4 keys.
+
+You must have missed a line in the spec:
+
+         #define SSL_CK_RC4_WITH_MD5                     0x01
+         #define SSL_CK_RC4_EXPORT40_WITH_MD5            0x02
+         #define SSL_CK_RC2_CBC_WITH_MD5                 0x03
+         #define SSL_CK_RC2_CBC_EXPORT40_WITH_MD5        0x04
+         #define SSL_CK_IDEA_CBC_WITH_MD5                0x05
+
+Note the inclusion of plain RC4 (not 40 bit), plain RC2 (not 40 bit) and plain
+IDEA (again, not 40 bit).
+
+If you have an exportable solution that can be manufactured in the US and then
+shipped overseas, then that is something of value. Complaining about 40 bit
+keys is not of value. The ITAR rules are what they are and at this point in
+time we can't change them.
+
+> > We have made the protocol public instead of propreitary
+>
+> IPSP is also public. So what?
+>
+> > > > >	It is also
+> > > > >     tied directly to the RSA certification hierarchy.
+> > >
+> > > I'll point out that X.509 is widely loathed in the internet community
+> > > -- its X.509 that caused PEM to fall flat on its face and die.
+> >
+> > Loathed for what reason? Because it's a standard?
+>
+> We also loathe CLNP. Do you propose to do all your network layer
+> communications over CLNP because it, too, is an ISO standard? ISO
+> standards are universally loathed in the internet community -- and for
+> good reasons. Lets take X.509 as one example.
+>
+> X.509 is tied into X.500 distinguished names. They are
+>
+> 1) Bulky
+> 2) Do not map into DNS names
+> 3) Cannot be mapped into the DNS.
+> 4) Do not support the web of trust model.
+> 5) Are difficult to build parsers for
+> 6) Require bulky and often expensive X.500 directory systems to use
+>    effectively.
+
+Not true. Distinguished names can be bulky, but you don't have to use them that
+way. They can be made to map into DNS names trivially, and because you don't
+have to have a single root, a web of trust is perfectly possible. Examine how
+PGP self signed public keys are managed. Finally, "bulky and often expensive"
+is a matter of opinion.
+
+Please define a solution that is:
+
+	distributed
+	reliable
+	supports an unforgeable name to public-key mapping
+	standard
+	not-bulky
+	not-expensive
+
+I will be the first to sign up and buy one. The market exists.
+
+
+
+-- 
+---------------------------------------------------------------------
+Kipp E.B. Hickman          Netscape Communications Corp.
+kipp@mcom.com              http://www.mcom.com/people/kipp/index.html
+
+
+
+
+
+

@@ -1,0 +1,80 @@
+From: Ben.Goren@asu.edu
+Date: Sat, 14 Jan 95 09:51:54 PST
+To: cypherpunks@toad.com
+Subject: Re: How do I know if its encrypted?
+Message-ID: <v02110104ab3db556857a@[129.219.97.131]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Paul, I think we're after two different objectives here. You want Alice to
+be sure that Dave can't read her file; I want Dave to be sure that he can't
+read Alice's files.
+
+Alice should worry only about her privacy: if she doesn't want Dave to know
+what she's sending, she should encrypt her file in a way that Dave cannot
+break.
+
+Dave certainly doesn't want to know what Alice is sending him, because he
+might have to answer to a Grand Jury if he did. My protocal makes it very
+difficult for Dave to gain any useful knowledge about Alice's files. Dave
+does this not as a courtesy to Alice, but for those three wonderful
+letters, CYA.
+
+Of course, any data haven worth paying for will offer lots of neat
+features, like PGP support, anonymous file drops, and all other sorts of
+goodies. But that does little good if Alice can trick Dave into selling
+child pornography.
+
+Douglass Floyd asked, "How do I know if [be certain that] it's encrypted?"
+Unfortunately, I'm pretty sure the answer is, "You decrypt it." My protocol
+at least delays the decryption until it's [hopefully] too late to matter.
+
+b&
+
+[Here's part of the thread; nothing new follows.]
+
+At 11:00 PM 1/13/95, Paul J. Ste. Marie wrote:
+>At 10:07 PM 1/13/95, Ben Goren wrote:
+>> ... Alice hashes her file and uses that hash as the key to encrypt the file.
+>>She sends the file to Dave, and sends the original hash when she wants it
+>>back. Dave decrypts, and confirms the hash.
+>>
+>>Unfortunately, this still doesn't quite close the loop--Dave knows the
+>>contents of the file once Alice sends the key. It does, however, make it
+>>very difficult for Dave to know anything about Alice's file. ...
+>
+>This seems overly complicated.  If Dave has a known public key, then Alice
+>should be able to hash her file, sign the hash, encrypt (the hash, her
+>public key, and the file) with Dave's public key, and (anonymously) sends
+>the result to Dave's (encrypted) address.  Dave then decrypts, verifies the
+>sig, and stores the file, hash, and PK together, indexed by the hash.
+>
+>When Alice wants the file back, she signs (the hash and her encrypted return
+>address), encrypts the result with Dave's key, and sends it off.  Dave
+>decrypts the request, fetchs the public key based on the decrypted hash,
+>verifies the signature, encrypts the file with Alice's provided public key,
+>and sends it back to the encrypted return address.
+>
+>To avoid Dave's knowing the file contents, Alice can encrypt it before the
+>described protocol and decrypt it afterwards.  The protocol is subject to a
+>replay attack, but the result of the replay would cause the file to be sent
+>to the original sender and not to the replayer.
+>
+>The signed hash in the first step prevents people from spamming Dave with
+>files that have Alice's public key.  Alice only requires an encrypted
+>address and public key for Dave, and Dave validates the retrieval request
+>against the public sent in the first step.
+>
+>    --Paul J. Ste. Marie
+>      pstemari@well.sf.ca.us, pstemari@erinet.com
+
+--
+Ben.Goren@asu.edu, Arizona State University School of Music
+ Finger ben@tux.music.asu.edu for PGP public key ID 0xCFF23BD5.
+
+
+
+
+
+

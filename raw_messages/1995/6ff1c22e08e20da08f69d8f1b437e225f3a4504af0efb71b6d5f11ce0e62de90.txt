@@ -1,0 +1,61 @@
+From: Raph Levien <raph@c2.org>
+Date: Sun, 19 Nov 1995 03:43:15 +0800
+To: cypherpunks@toad.com
+Subject: Re: Design proposal: crypto-capable generic interface
+In-Reply-To: <Pine.BSD.3.91.951118163828.463A-100000@usr3.primenet.com>
+Message-ID: <199511181926.LAA26947@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+atilla brings up many good points, including:
+> one of the biggest problems with _any_ crypto system, and pgp is 
+> no exception, is tmp files, followed closely by insecure memory.
+> insecure memory is a separate issue, but some of the temporary file
+> problems can be relegated to reduced risk by passing the daemon the
+> user's preferred location for tmp file --for instance, [...]
+
+   An even better solution is to design the cryptosystem so that it
+doesn't _need_ temp files int he first place. MOSS wins, PGP loses. I
+don't know enough about S/MIME to say.
+
+   In a related vein, Darren New <dnew@sgf.fv.com> sent me a pointer
+to First Virtual's SMXP (Simple Mime eXchange Protocol). This is a
+cool protocol that does about 50% of what I'm talking about. If you're
+interested, here it is:
+      ftp://ftp.fv.com/pub/docs/smxp-spec.{ps,txt}
+
+   In order to adapt SMXP into something that's useful for what I've
+proposed, numerous changes would need to be made:
+
+* Unix Domain Sockets instead of TCP
+
+* Add negotiation
+
+* Add authentication
+
+   Without these three changes, the system is nearly useless for
+crypto. Further, there are two "aesthetic" points I'd like to see
+claned up given the chance. First, SMXP makes the "ASCII assumption."
+Since the daemon and app will be tightly coupled, definitely running
+on the same machine, there is no reason to exclude binary MIME
+objects. On the other hand, as far as I know, all of the MIME crypto
+protocols are ASCII based (somebody please correct me if S/MIME is the
+exception).
+   Second, in order to support operation without temp files, it's
+necessary to interleave the operations of transferring the object from
+the app to the daemon and vice versa. I have a proposal for a
+lower-level spec which can handle this quite readily, if anyone is
+interested.
+
+   Unfortunately, the proposal doesn't look much like SMXP. However,
+the possibility of creating a prototype based on SMXP is intriguing.
+
+Raph
+
+P.S. Did anyone see the mention of the perl/RSA CJR in the latest
+Wired? Managed to get the attribution wrong. Still no response.
+
+
+
+

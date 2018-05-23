@@ -1,0 +1,39 @@
+From: Rick Osborne <osborne@gateway.grumman.com>
+Date: Thu, 26 Sep 1996 00:16:41 +0800
+To: cypherpunks@toad.com
+Subject: An idle thought on CBC and block lengths
+Message-ID: <3.0b19.32.19960925085644.0068cb90@gateway.grumman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+So I was sitting bored at home and thinking to myself: CBC is cool.
+Without the key, you're screwed because a single bit error propagates
+throughout the entire message.  But then I was thinking, yeah, but you can
+still eventually get the ONE key.  So I began to wonder what the difference
+in security is between encrypting an entire M with just one K in CBC, or
+encrypting M with permutations of K over specific block lengths.
+
+On the one hand you've got just one key, which makes it that much harder to
+find in the keyspace.  On the other hand, If evil interloper Eve gets her
+hands it, she has to find all of the keys to get all of M.  (Assuming she
+is using brute force and can't necessarily find the master K to permute
+into the subkeys.)
+
+The downsides are of course that on the one side you've got just one key,
+and once you get it, you get M.  But on the other hand, you can get any one
+part of the message with less difficulty because of the higher number of
+keys.  And, of course, if your master K is easy to brute force, then it's
+actually worse than the first option.
+
+Does anyone have opinions / knowledge of which is better?
+
+
+____________________________________________________________
+Rick Osborne                     osborne@gateway.grumman.com
+"The universe doesn't give you any points for doing things that are easy."
+
+
+
+
+

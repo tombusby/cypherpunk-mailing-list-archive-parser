@@ -1,0 +1,62 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Fri, 15 Jan 93 11:19:09 PST
+To: Marc.Ringuette@GS80.SP.CS.CMU.EDU
+Subject: Re: possible solution to the anonymous harrassment problem
+In-Reply-To: <9301150856.AA27483@toad.com>
+Message-ID: <9301151918.AA06316@toxicwaste.MEDIA.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> You're poorly informed.  As a condition of a grant from DARPA to RSADSI,
+> RSAREF may be used noncommercially, for free, to do any of the following:
+>      -    RSA encryption and key generation, as defined by RSA Data
+>             Security's Public-Key Cryptography Standards (PKCS) [4]
+>      -    MD2 and MD5 message digests [3,5,6]
+>      -    DES (Data Encryption Standard) in cipher-block chaining mode
+>             [7,8]
+> Moreover, I believe you'll find that RSADSI has become much more helpful
+> recently.  For more information, anonymous ftp to rsa.com and look around.
+> 
+> I've just gone over the RSAREF license agreement again.  It seems to permit
+> any sort of not-for-profit operation, including a public key service.
+
+Uhh, this is not quite true.  If you read closer, you will see that
+you need "special permission from RSADSI" to use non-published
+interfaces to RSAREF.  At the end is an exerpt from the RSAREF
+documentation about its interface.  If you want more functionality,
+you have to ask special permission!
+
+This means that without this permission, you CANNOT use "RSA
+encryption" in-and-of itself.
+
+-derek
+
+---------- begin exerpt --------------
+RSAREF is written entirely in C. Its application interface includes
+the following routines:
+
+      R_SignPEMBlock     computes a digital signature on a message
+R_VerifyPEMSignature     verifies a digital signature on a message
+R_VerifyBlockSignature   verifies a digital signature on a block of
+                           data such as a certificate
+
+      R_SealPEMBlock     computes a digital signature and encrypts a
+                           message
+      R_OpenPEMBlock     decrypts an encrypted message and verifies a
+                           digital signature
+
+       R_DigestBlock     computes a message digest on a message
+
+   R_GeneratePEMKeys     generates an RSA public/private key pair
+
+        R_RandomInit     initializes a random structure
+      R_RandomUpdate     mixes bytes into a random structure
+R_GetRandomBytesNeeded   computes the number of mix-in bytes still
+                           needed to seed a random structure
+       R_RandomFinal     zeroizes a random structure
+
+
+
+
+

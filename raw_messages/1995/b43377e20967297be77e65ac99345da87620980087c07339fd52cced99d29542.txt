@@ -1,0 +1,56 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 15 Dec 1995 07:50:56 +0800
+To: cypherpunks@toad.com
+Subject: Potential defense against timing attack on Diffie-Hellman
+Message-ID: <199512130721.XAA21709@ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The timing attack on Diffie-Hellman depends on assumptions
+about what multiplications are being made, and in what order.
+But you don't need to do them in order.
+
+The standard approach to calculating Y**x mod m is to calculate
+        Y[1] = Y, Y[2] = Y**2, Y[3] = Y**4, .... Y[logx] = Y**(logx), 
+and while you're doing this keep a running total r[i], where 
+        r[i] = (bit[x,i]) ? (r[i-1]*Y[i]) : r[i-1]
+all arithmetic modulo m (and all indices possibly off by one :-)
+
+This may be a bit memory-intensive for a smartcard, but there's
+no need to calculate these partial products in order; precompute
+the Y[i], pick a random permutation of 1..(logx), and compute
+the partial products in that order.  This still leaks the number
+of 0 and 1 bits in x, but it doesn't say what they are.
+You probably still should multiply r[i-1]*Y[i] whether you're 
+going to need it or not; I don't think the method hides enough
+information otherwise, but that needs more analysis.
+
+Cost - mostly administrative, plus the memory, since keeping track
+of permutations of small integers is cheap relative to bignum 
+multiplication and modulo calculations.  You also need a random 
+number generator of some sort; LFSRs seem to be an easy way to 
+do permutations on the fly, so seed them with something decent.
+
+How effective is it?  I'm not sure - I'd need to do a lot more analysis
+than I've done so far, and the long version of Paul's paper would
+help :-)  But at first glance it looks like it makes it much harder;
+no two calculations are in the same order, so feeding the system
+related Y = g**y mod m each time doesn't tell you much.
+
+As a further annoyance to the listener, split the permutation
+at random into two or three pieces, compute their products separately,
+and then multiply those partial products together.  (Don't try this at
+home without analyzing whether it may leak more information than it
+conceals...)  At very minimum, take two numbers you've got lying
+around and multiply them every once in a while :-)
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0663 Pager/Voicemail 1-408-787-1281
+
+
+
+
+

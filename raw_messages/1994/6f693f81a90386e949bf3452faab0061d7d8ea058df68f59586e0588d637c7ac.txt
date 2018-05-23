@@ -1,0 +1,37 @@
+From: raph@netcom.com (Raph Levien)
+Date: Mon, 12 Dec 94 17:57:45 PST
+To: cypherpunks@toad.com
+Subject: Re: Time to exhaustively break 40-bit RC4?
+In-Reply-To: <9412131131.ZM13269@wiley.sydney.sgi.com>
+Message-ID: <199412130151.RAA26048@netcom20.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Ian Farquhar <ianf@sydney.sgi.com> wrote:
+> No, because as you're doing an exhaustive keysearch, you can "pipeline"
+> the key generation process in software.  Each key requires 256 swaps,
+> certainly, but there are only two swaps difference between the key
+> for "0000000000" and "0000000001" (assuming a 40 bit key).  If you
+> recursively generate keys, then you can generate successive keys
+> like this:
+
+This doesn't quite work. As I understand it, the RC4 key scheduling
+algorithm repeats the key to fill 256 bytes. For a 128-bit key, this
+is 16 times. Thus, you can only win on the last repeat. Perry also
+mentioned some "optimizations" but I believe RC4 is resistant to this
+sort of thing. The inner loop is about as simple as you're going to
+get it.
+
+Oh, just to clarify one point. 40-bit RC4 in fact uses a 128 bit key,
+it's just that 88 bits of the key are sent in the clear.
+
+Your idea does help in searching the 128-bit keyspace. Unfortunately,
+it reduces the time needed from about 10^45 to 10^43 operations. Mazel
+Tov.
+
+Raph
+
+
+
+

@@ -1,0 +1,42 @@
+From: Mark <mark@coombs.anu.edu.au>
+Date: Thu, 3 Jun 93 19:53:30 PDT
+To: cypherpunks@toad.com
+Subject: Re: CryptoStacker, long term vision
+Message-ID: <9306040253.AA14575@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>A related topic to encrypted disk drives.  Anybody who has a desire to
+>see their data around long term makes backups of their drives.  At
+>least one of these backups is usually physically near the drive in
+>question.
+>
+>What good it is to have an encrypted disk if the backups are not also
+>encrypted?
+>
+>Backups occur at the file system level, where an encrypted file system
+>does not appear encrypted, so that work here does not directly
+>leverage to encrypted backups.
+
+This problem is most easily solved by copying the entire partion/file
+that is encrypted as blocks. These blocks are size according to the
+destination media. If you use floppies you break the encrypted fs/file
+into (e.g.) 1.44 meg chunks, if you use tape you can throw the whole
+block at the media, similarly with another hardisk.
+
+The unix/linux/386bsd 'dd' program is especially useful for this purpose
+and I assume there are similar utils for dos.
+
+For replacement you simply dump the whole lot back as one encrypted file
+system.
+
+This method should be faster than grabbing individual files and backing
+them up as the program just has to seek to a specified place and start
+reading a defined amount of [encrypted] data.
+
+Mark
+mark@coombs.anu.edu.au
+
+
+

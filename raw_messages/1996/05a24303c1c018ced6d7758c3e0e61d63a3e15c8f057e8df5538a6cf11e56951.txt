@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 1 Mar 1996 06:00:56 +0800
+To: Bruce Zambini <jlasser@rwd.goucher.edu>
+Subject: Re: Simpler solutions (was Re: Stealth PGP work)
+Message-ID: <199602290844.AAA03851@ix4.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:26 AM 2/28/96 -0500, Bruce Zambini wrote:
+>Or, you can develop a public-key stego system...
+>ie a stego system that uses bits in specific ways depending on the 
+>private key of the recipient.
+I assume you mean the public key of the recipient?
+
+>Something I've been thinking about, but haven't quite figured out how to 
+>do yet, except that one could use certain bits based on a PRNG and begin 
+>the message with an RSA-encrypted seed (ie the first X bits will be the 
+>seed, encrypted with your public PGP key).
+
+That's equivalent to 
+   stego(picture, ( RSA(sessionkey,pubkey), Symmetric(message, sessionkey)))
+where Symmetric is a potentially cheaper (and weaker) algorithm than IDEA
+that possibly uses transposition rather than strict block-structuring.
+This approach is no more obscure than stego(stealth(PGP(message, pubkey)))
+though slightly more obscure than stego(PGP(message, pubkey)), optionally
+less secure,
+and probably not much faster except for long messages with wimpy Symmetric.
+And it still suffers from the non-stealthiness of vanilla RSA that 
+Hal Finney, Adam Back, Harry Hastur, and others have discussed.
+Might as well keep the stego and encryption parts separate.
+
+You gain a certain degree of obscurity by using
+   stego(picture, scramble( PGP(message, pubkey), key ))
+where scramble is some cheap symmetric encryption algorithm and 
+key is either the recipient's public key or keyid, and PGP is in binary mode.
+This hides the message from eavesdroppers who don't know the recipient,
+but not from eavesdroppers who are willing to test against the keys
+of a list of usual suspects (assuming the recipient is one of them.)
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

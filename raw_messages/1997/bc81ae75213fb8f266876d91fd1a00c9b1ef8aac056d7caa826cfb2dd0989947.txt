@@ -1,0 +1,68 @@
+From: "Peter Trei" <trei@process.com>
+Date: Thu, 20 Feb 1997 08:08:59 -0800 (PST)
+To: Bill Stewart <scotta@sauge.com
+Subject: Re: Cryptanalysis
+Message-ID: <199702201608.IAA15665@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Date:          Wed, 19 Feb 1997 08:16:46 -0800
+> From:          Bill Stewart <stewarts@ix.netcom.com>
+> To:            Scott Auge <scotta@sauge.com>
+> Cc:            cypherpunks@toad.com
+> Subject:       Re: Cryptanalysis
+
+> At 11:21 AM 2/15/97 -0500, you wrote:
+> >Was wondering if anyone could help me with short explainations on the
+> >cryptanalysis of SKIPJACK and DES.  If ya hit www.sauge.com/crypt you
+> >might get a better idea of what i'm trying to accomplish.
+> 
+> Cryptanalysis of DES is a 25-year ongoing academic exercise, with
+> lots and lots of results.  It's easy to attack it in 2**55 tries,
+> because of symmetry, but that's a very large number :-)
+
+Many people have made statements to the effect that the complement
+key property (if key K encrypts plaintext P to ciphertext C, then
+K' encrypts P' to C', where A' is the one's complement of A') of
+DES halves the work for a brute force attack, but these people don't
+seem to have ever tried to actually use this property - it's 
+effectively useless. You still need to run the DES rounds, and the
+only win would be in the fact that preparing the key schedule of K'
+from the key schedule of K used to be easier than preparing it from 
+K' directly. This is no longer a win, since preparing key schedule 
+for (K+1) from the key schedule of K is just as easy.
+
+There's the possibility that I'm seriously dense (even Denning has
+made statements about halving the effort), but I just don't see it.
+
+[...] 
+> The slow part of the attack _had_ been key scheduling, but recent work
+> by Peter Trei and others shows that you can do key scheduling very
+> efficiently for the brute-force keysearch problem by picking keys
+> in Gray Code order (since a one-bit change in key causes a simple
+> change in key-schedule - it's totally useless for normal encryption/
+> decryption, but it's a big win for brute-force cracks.)
+
+It's not totally useless - if you're going to have to prepare a lot 
+of different key schedules (say, for many session keys under IPSEC),
+it's still a win to OR together the key bit fanouts than to generate 
+the key schedule by the traditional method. It trades a lot of 
+upfront, one-time work for a later speedup. 
+  
+> There may be a distributed Internet crack using that approach, 
+> though DES is still very inefficient on general-purpose computers and 
+> works better on bit-twiddliing chips.
+
+There's one slowly shaping up, organized by the same people who did 
+the RC5-48 crack. I'm still rooting for an uncoordinated search, 
+which is already underway.
+ 
+Peter Trei
+trei@process.com
+
+PS: Is this the last message to cypherpunks actually about crypto?
+
+
+
+

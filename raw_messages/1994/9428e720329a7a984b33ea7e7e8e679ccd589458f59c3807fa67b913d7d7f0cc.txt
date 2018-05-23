@@ -1,0 +1,64 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Wed, 17 Aug 94 10:22:44 PDT
+To: "Bill O'Hanlon" <wmo@digibd.com>
+Subject: Re: cfs & remailers
+In-Reply-To: <9408171615.AA29053@poe.digibd.com>
+Message-ID: <199408171728.NAA13595@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"Bill O'Hanlon" <wmo@digibd.com> writes:
+>On Wed, 17 Aug 94 10:22:19 -0500  Allan Bailey wrote:
+>> 
+>> Has anyone considered using a CFS directory (or directories) for
+>> a remailer's files, spool, etc?
+>> 
+...
+
+>I thought of two problems with it.
+>
+>1) I'd not only have to put the home directory of the remailer user under CFS,
+>   but also the uucp and sendmail spool directories.  (Rebma has a UUCP 
+>   connection for getting mail.)  Otherwise, security would be pointless, sinc
+ e
+>   the messages would be coming in the clear to the spool directories.  Maybe
+>   this wouldn't be so bad, but it seems like I'd have to do a lot of 
+>   tinkering before I'd trust that sendmail wasn't gonna drop my other mail
+>   on the floor.  (I get some consulting-type mail on this machine.  
+>   Potentially, I can miss out on financial opportunity if my mail is not 
+>   dependable.  Chalk my caution up to pure greed.)
+>   
+>
+>2) I'd have to come up with some kludge to spool the incoming mail files in
+>   a directory if the CFS file systems weren't mounted.  (For example, if 
+>   power failed on the machine, or it crashed and otherwise rebooted, and I
+>   didn't notice and wasn't around to type the passphrase in to remount the
+>   CFS system.)  
+...
+
+I'm working (with very low priority, unfortunately) on a sendmail hack
+that spools mail (instead of bouncing) if the mailbox write fails.
+This will be intended for a secure mail system that I'm working on
+that uses CFS for its storage.  Stay tuned...
+
+Another potential problem with sendmail->cfs interaction is that
+CFS doesn't implement NFS file locking.  This isn't much of an issue with
+a single host and a single instance of CFS, but could be a problem if the
+mailboxes are read and written by other machines or are remotely mounted
+by the machine running sendmail.
+
+By the way, another mode of operation you might consider is to use a
+"permanent" key (that you supply at boot time) for the spool directories
+and a temporary key (assigned randomly by the machine at boot time)
+for temp files that have only local significance but that may have 
+sensitive data.  /usr/tmp points to /crypt/tmp on my machine for this
+service (do a cmkdir and cattach at boot time. You also have to hack
+cfs to make /crypt/tmp be mode 777).
+
+-matt
+
+
+
+

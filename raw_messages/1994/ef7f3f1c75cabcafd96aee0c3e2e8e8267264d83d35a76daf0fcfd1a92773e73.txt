@@ -1,0 +1,43 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 24 Mar 94 22:17:30 PST
+To: cypherpunks@toad.com
+Subject: Re: Digital Cash
+Message-ID: <199403250630.WAA26336@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I too would like to hear more about tamper-proof software modules.  They
+would be a natural for software implementations of Clipper (although
+perhaps too slow for many applications).  Imagine running the Clipper
+algorithm on your own computer and it comes out with your key exposed
+to listeners armed with the proper black box, yet you cannot disable
+this exposure.  Interesting thought.
+
+I doubt that these would work as digital cash observers, though, even
+if possible.  It seems to me that the digicash observer has to retain
+some internal state.  In effect, it has to remember which coins you have
+spent and which you have not.  You can cheat, then, by checkpointing
+your computer just before spending a coin.  After you spend, you restore
+the computer to exactly the same state it was in before you spent it.
+You then go somewhere else and spend the coin again.  The observer has
+no way of knowing that these games have been played with its state, yet
+you have obtained twice the value of the coin.
+
+Most of the observer-based protocols are also after-the-fact double-
+spending-detection protocols as well, so that if the observer is defeated
+you can still catch the miscreant eventually.  But the two problems with
+this are, first, that it prevents the client from being anonymous to the
+bank, and second, that the cheater can still multiple-spend quickly and
+then escape the country before being caught.
+
+It was pointed out on sci.crypt some months ago the irony that Chaum's
+privacy-preserving cash relies on similar tamper-resistant technology to
+the privacy-destroying Clipper chip.
+
+Hal
+
+
+
+
+

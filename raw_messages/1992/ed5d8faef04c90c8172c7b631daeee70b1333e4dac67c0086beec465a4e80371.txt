@@ -1,0 +1,39 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Fri, 4 Dec 92 17:46:33 PST
+To: cypherpunks@toad.com
+Subject: getting .hqx files with ftpmail
+Message-ID: <9212050131.AB05869@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A note for fools like me trying to get Mac .hqx files through "ftpmail"...
+
+USE ASCII MODE!  Otherwise it defaults to adding an extra layer of "btoa"
+encoding on the file (or you can switch it to uuencode, but why uuencode
+an .hqx file--it's already plain text).  "btoa" files start like this:
+        xbtoa begin
+        wef9a87eg8a9wery8s7arg87gae8g7waeo87rwe8r(garbage)...
+as opposed to uuencoded files like:
+        begin fred.txt
+        aewhgp9ergu90ser890syuer98gse98r(garbage)...
+or .hqx files (this is from memory):
+        (This file has to be decoded with BinHex 2.0)
+        k9wegesz9p8rgy89serg9oser98ser98(garbage)...
+
+I don't know where to find "btoa," and ftpmail's help message just says
+to ask my local wizard.  He never heard of it.
+
+--- Example request to ftpmail ---
+        connect mac.archive.umich.edu
+        cd mac/util/encryption
+        ascii
+        get macpgp2.0.sit.hqx
+
+-fnerd
+fnerd@smds.com (FutureNerd Steve Witham)
+
+
+
+
+

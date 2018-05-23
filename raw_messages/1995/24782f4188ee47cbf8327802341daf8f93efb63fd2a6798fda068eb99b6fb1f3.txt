@@ -1,0 +1,34 @@
+From: Ian Goldberg <iagoldbe@calum.csclub.uwaterloo.ca>
+Date: Fri, 25 Aug 95 14:39:28 PDT
+To: Piete.Brooks@cl.cam.ac.uk (Piete Brooks)
+Subject: Re: SSL Challenge: Are we in trouble?
+In-Reply-To: <"swan.cl.cam.:068530:950825160033"@cl.cam.ac.uk>
+Message-ID: <199508252137.RAA18903@calum.csclub.uwaterloo.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> [[ PERL gurus out there: how can I avoid the "sh -c" process in
+> 	$out = `cmd -a 'arg 1'`;
+> ]]
+> 
+
+open(CMD, "-|") || exec 'cmd', '-a', 'arg 1';
+$out = <CMD>;  ## Gets one line
+close(CMD);
+
+Use
+
+$out = join('',<CMD>);
+
+instead of the second line above to get the whole output at once.
+
+---------.. ._ _.------------
+
+Ian Goldberg  University of Waterloo Computer Science Club
+iagoldberg@csclub.uwaterloo.ca
+
+unsigned bar(unsigned a){return a?bar(a<<1)<<1|a>a<<1>>1:1>>1;}
+
+
+

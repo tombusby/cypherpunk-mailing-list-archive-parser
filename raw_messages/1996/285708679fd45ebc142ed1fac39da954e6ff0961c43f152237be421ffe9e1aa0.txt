@@ -1,0 +1,56 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 24 Feb 1996 17:09:41 +0800
+To: John Pettitt <jpp@software.net>
+Subject: Re: Hash of plaintext as key?
+Message-ID: <199602240738.XAA15134@ix3.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:56 AM 2/22/96 -0800, John Pettitt <jpp@software.net> wrote:
+>I have this application which encrypts software prior to distribution.  I'd
+>like to pre-encrypt most of the data (individual files) and then just
+>encrypt all the individual file keys with a customer specific key at run
+>time.  (This is mostly a CPU cycle saving thing).
+
+Depending on the security environment you're running in, this can be
+fine or can be dangerous; think about your threat models carefully.
+For some applications, it makes a lot of sense.  It does give you
+a traffic analysis problem - Eavesdroppers can tell that you sent the same
+document to Alice, Bob, and Eve, but not Fred, in case this matters to you.
+You could strengthen it a bit by superencrypting the copy you send to
+the user with a very fast Snake-Oil algorithm, but Eve has the real document
+(and the version encrypted with the good algorithm), so she's got known
+plaintext for cracking messages sent to Alice and Bob if she wants.
+In a DES world, you might do almost-triple-DES by encrypting with two common
+keys up front and use DES with separate third keys for the final stage.
+With RC4 or RC5, that doesn't gain you much, since the difference between
+RC4/40 and RC4/256 is all in the key-scheduling phase, not the bulk part.
+
+>I thought I'd use the MD5 (or SHA) hash of the plaintext as the key. Plenty
+>of entropy in the entire plaintext, a different key for each file and if you
+>know the plaintext to calculate they key you don't need the key anyway!
+
+It doesn't really gain you anything; generating pseudo-random key bits
+isn't much work compared to encrypting the files or public-key encrypting
+the file keys to send to users, and there's no benefit other than getting some
+extra entropy bits (which you may want to do anyway to stir into your
+entropy pool in addition to using a random number source.)
+
+What it does risk, in case this threat matters, is that somebody who can guess
+the documents you might be encrypting can calculate their MD5s and trial
+decrypt.
+This lets them verify whether a given document is in the encrypted database,
+for instance.
+
+One of the NSA Rainbow Books discusses secure databases - maybe Purple or Gray?
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

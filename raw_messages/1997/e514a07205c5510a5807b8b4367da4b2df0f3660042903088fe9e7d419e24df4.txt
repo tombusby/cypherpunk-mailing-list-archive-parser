@@ -1,0 +1,109 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Thu, 27 Mar 1997 11:16:27 -0800 (PST)
+To: cypherpunks <cypherpunks@toad.com
+Subject: [NTSEC] CIFS Authentication Protocol Errata (fwd)
+Message-ID: <Pine.SUN.3.91.970327141856.11156B-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    | "If  you're  gonna die,  die  with your|./|\.
+..\|/..|sunder@sundernet.com|boots on;  If you're  gonna  try,  just |/\|/\
+<--*-->| ------------------ |stick around; Gonna cry? Just move along|\/|\/
+../|\..| "A toast to Odin,  |you're gonna die, you're gonna die!"    |.\|/.
+.+.v.+.|God of screwdrivers"|  --Iron Maiden "Die With Your Boots on"|.....
+======================== http://www.sundernet.com =========================
+  For with those which eternal lie, with strange eons even death may die.
+
+
+---------- Forwarded message ----------
+Date: Wed, 26 Mar 1997 23:21:52 -0800
+From: Paul Leach <paulle@microsoft.com>
+To: "'cifs@listserv.msn.com'" <cifs@listserv.msn.com>,
+    "'WWW-SECURITY@ns2.rutgers.edu'" <WWW-SECURITY@ns2.rutgers.edu>,
+    "'NTBUGTRAQ@RC.ON.CA'" <NTBUGTRAQ@rc.on.ca>,
+    "'ntsecurity@iss.net'" <ntsecurity@iss.net>
+Subject: [NTSEC] CIFS Authentication Protocol Errata
+
+Sharp eyed reviewers have already caught the following errors in
+CIFS-Auth (CIFS Authentication Protocol), draft 3.
+A new version will be forthcoming shortly.
+
+In paragraph 2 of section 1.1, it should say:
+The response is computed by DES encrypting a challenge (a nonce)
+selected by the server with three keys derived from the user's password.
+
+In section 1.2,
+	[s]<n:m>	be the "n" bytes of s starting at byte "m".
+should be clarified to be:
+	[s]<n:m>	be the "n" bytes of s starting at byte "m" (the
+first byte is numbered 0).
+
+In step 1 of section 1.4,
+was:
+	Kb = [Ks]<7:8>
+	Kc = [Ks]<15:2>, Z(5)
+should be:
+	Kb = [Ks]<7:7>
+	Kc = [Ks]<14:2>, Z(5)
+
+In step 4 of section 1.4
+was:
+	Kb' = [Ks']<7:8>
+	Kc' = [Ks']<14:2>, Z(5)
+should be:
+	Kb' = [Ks']<7:7>
+	Kc' = [Ks']<14:2>, Z(5)
+and
+	Km' = Ks, R
+should be
+	Km' = Ks', R
+
+In step 6 of section 1.4,
+C:	MS' = [MD5(Km, SN, Msessr, CC, CS)]<8>
+should be
+C:	MS' = [MD5(Km, SN, Msessr,)]<8>
+
+In step 2 of section 1.5, there is a missing right bracket:
+	S->C:	Mrsp, [MD5(Km', SN', Mrsp)<8>
+should be:
+	S->C:	Mrsp, [MD5(Km', SN', Mrsp)]<8>
+
+> ----------
+> From: 	Paul Leach
+> Sent: 	Tuesday, March 25, 1997 1:18 PM
+> To: 	'cifs@listserv.msn.com'; 'WWW-SECURITY@ns2.rutgers.edu';
+> 'NTBUGTRAQ@RC.ON.CA'; 'ntsecurity@iss.net'
+> Subject: 	CIFS Authentication Protocol Review
+> 
+> We are releasing preliminary drafts of the proposed fixes to the
+> CIFS/SMB authentication protocols for widespread public review. If
+> they pass review, they will be in Service Pack 3 for NT 4.0. 
+> 
+> The original protocol from which the new version descends was designed
+> more than a decade ago; recently, quite a few weaknesses have been
+> found in those previous versions. This latest revision is an attempt
+> to repair those weaknesses with as small a change to the protocol as
+> possible, so that it can be incrementally and rapidly deployed. 
+> 
+> All three documents are available in .doc, .txt and postscript.
+> 
+> Information on how to get them is available from:
+> ftp://ftp.microsoft.com/developr/drg/cifs/sec.htm
+> 
+> All followup discussion should be on the CIFS mailing list at
+> CIFS@listserv.msn.com.
+> 
+> Your comments are actively solicited.
+> ------------------------------
+> Paul J. Leach
+> paulle@microsoft.com
+> 
+
+
+
+
+

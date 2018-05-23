@@ -1,0 +1,59 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 8 Feb 95 12:38:30 PST
+To: cypherpunks@toad.com
+Subject: Re: MIME based remailing commands
+In-Reply-To: <23676.792177411.1@nsb.fv.com>
+Message-ID: <199502082037.MAA02640@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Nathaniel Borenstein <nsb@nsb.fv.com> writes:
+
+>Excerpts from junk.interesting: 7-Feb-95 Re: MIME based remailing co..
+>"Perry E. Metzger"@imsi. (2553)
+
+>> > > It is being remailed via a MIME-based structure where two new content types
+>> > > are defined: multipart/remail and application/remail-commands.  The
+>> > > multipart/remail type is supposed to be composed of two parts, the
+>> > > application/remail-commands part which has remailer commands, and the
+>> > > other part which is the "payload" to be remailed.
+
+>Perhaps you might consider writing up an informational RFC to define
+>these types?  I think that would be very useful. -- Nathaniel
+
+Well, that was just an example; I was making those names up off the top
+of my head in order to concretize what I understood Perry was suggesting.
+
+I can see that putting remailer commands into a specific part of a MIME
+multipart message has some advantages.  Right now we are basically
+having the remailing commands be mail header fields.  But really people
+aren't supposed to just make up new fields like that.  I think the
+"name space" of these fields is protected somewhat more than many other
+aspects of communication protocols on the net.  Is there precedent for
+adding service-by-mail functionality in this way?  I am not completely
+comfortable with it.  And as we think of new functionality and new
+commands they all have to get added at this top level, the same
+visibility and name space as "Subject", "From", and "To".
+
+OTOH it does have the advantage that it is easy to do, at least with the
+"::" pasting token idea (which perhaps would need to be documented in its
+own right).
+
+If we did use a separate message part we'd have our own little name space
+to use, with no fears of conflicting with someone else.  (Maybe "Latency"
+might be used in a future extension of RFC822 for some other meaning than
+what we are using it for.)  I am not sure what has to be done to get an
+RFC approved but I suspect that adding mail header fields would be much
+more likely to hit opposition than adding yet another MIME type.
+
+What does Mixmaster use for its commands?  Does it use "::" followed by
+Anon-Send-To: and such?  Or some other format?  Maybe it should be made
+MIME compliant from the beginning.  This way we are moving with the
+current, the flow of the net, rather than across it.
+
+Hal
+
+
+
+

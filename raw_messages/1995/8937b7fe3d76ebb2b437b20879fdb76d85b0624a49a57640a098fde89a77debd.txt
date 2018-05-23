@@ -1,0 +1,141 @@
+From: Rich Graves <llurch@networking.stanford.edu>
+Date: Sun, 22 Oct 95 21:42:41 PDT
+To: High Society List <cypherpunks@toad.com>
+Subject: Re: WinNews Special Issue (fwd)
+In-Reply-To: <Pine.OSF.3.91.951021053719.24988A-100000@nic.wat.hookup.net>
+Message-ID: <Pine.ULT.3.91.951022212659.1123A-100000@Networking.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 21 Oct 1995, Tim Philp wrote:
+
+> I am on a Microsoft mailing list that is for developers of Win95 stuff. 
+> Today I found this in my mailbox. This file details a security bug in 
+> Win95 that I thought might be interesting to the group.
+> Regards, 
+> 
+> Tim Philp
+> Brantford, Ontario,
+> Canada
+...
+> ---------- Forwarded message ----------
+> Date: Fri, 20 Oct 1995 17:15:33 -0700
+> From: WinNews@Microsoft.com
+> To: WinNews@microsoft.nwnet.com
+> Subject: WinNews Special Issue
+> 
+> UPDATED DRIVERS FOR WINDOWS 95 FILE AND PRINTER SHARING 
+> SECURITY ISSUE - October 20, 1995
+> 
+> Microsoft wants its customers to know that it has
+> discovered and fixed a potential security problem with file
+> and printer sharing in Windows 95.  Only customers who have
+
+What a fucking joke. The Samba development community told Microsoft about
+this in *January*. Microsoft's fix for the same problem in Windows for
+Workgroups is dated September 28. 
+
+> enabled file and printer sharing - a non-default option -
+> may have been at risk, and, to the best of our knowledge,
+> no users have been harmed.
+
+They must not have asked anybody, then.
+
+> What are the issues? 
+> File and Printer Sharing for NetWare Networks
+> 
+> Microsoft was recently made aware of an issue with File
+> and Printer sharing for NetWare Networks which may affect
+> data security for corporate users.
+> 
+> Only users whose environments meet both of the following
+> conditions may be affected:
+> 
+>     1. They configure their machine to share files and
+>         printers with other users on the network using File
+>         and Printer Sharing for NetWare networks (This
+>         option is not turned on by default)
+>     2. They enable remote administration or install
+>         Microsoft Remote Registry Services  (These options
+>         are not turned on by default)
+
+#2 is not actually required.
+
+> If your configuration matches that listed above, it is
+> possible for another user on the network to gain read-only
+> access to your machine after the administrator has logged
+> off the machine and until you restart your computer.  To
+> correct this problem, Microsoft has issued an updated
+> driver for File and Printer Sharing for NetWare Networks.
+> The updated driver ensures that only valid administrators
+> have access to the computer's drive.
+
+Good for them.
+
+Microsoft is also investigating a bug where you can map whole unshared
+drives over IPX or SMB. Maybe they'll acknowledge the problem in February.
+
+> File and Printer Sharing for Microsoft Networks (not MSN:
+>     The Microsoft Network online service)
+> 
+> Microsoft is also issuing an update for a known problem
+> with File and Printer Sharing for Microsoft Networks and a
+> certain UNIX shareware network client (Samba's SMBCLIENT).
+> The update corrects a problem with share-level security
+> documented in the Microsoft Knowledge Base on October 9th.
+
+This is incorrect. The acknowledgement of the bug, which was pointed out
+to Microsoft in January, was not available until October 12. 
+
+> The Samba SMB client allows its users to send illegal
+> networking commands over the network. The Samba client is
+> the only known SMB client at this time that does not filter
+> out such illegal commands.  SMBCLIENT users do not
+> automatically have access to the Windows 95 drive, and
+> must know the exact steps to send these illegal commands.
+
+I wonder what illegal commands they're talking about. All you have to do 
+is "cd ..". The problem is that Microsoft assumed that anyone using SMB 
+was mapping a drive on a WinTel box, and thus couldn't cd below root. They
+provided no mechanism on the server end to ensure that this didn't 
+happen.
+
+The problem was not limited to SMB over TCP/IP; Samba was merely the only 
+radily available software to (inadvertently) expose the problem.
+
+> The updated driver prevents these illegal commands from
+> being executed, preventing SMBCLIENT users from accessing
+> the drive on which sharing is enabled.  With the updated
+> driver, the SMBCLIENT user will only have access to those
+> shared folders that the Windows 95 user has designated.
+
+What a novel security feature. I am so glad that Microsoft came up with this.
+
+> How do I get the Updated Drivers?
+> (Please note that this only affects English language 
+> versions of Windows 95.) 
+
+Yup, they won't install on other language versions. So they're still 
+vulnerable.
+
+> Both drivers are available for immediate download from the
+> Internet (http://www.microsoft.com/windows), The Microsoft
+
+Specifically, http://www.microsoft.com/windows/software/updates.htm.
+
+> Microsoft is committed to providing safe connectivity
+> solutions for customers.  Microsoft takes this
+> responsibility seriously and has worked, and will continue
+> to work, with great speed to provide solutions for
+> customer issues.   
+
+Yes. Tell them about a huge, stoopid bug in January, and they will
+acknowledge the bug in mid-October. In the meantime, they will directly 
+lie to the press and users about it.
+
+-rich
+
+
+
+

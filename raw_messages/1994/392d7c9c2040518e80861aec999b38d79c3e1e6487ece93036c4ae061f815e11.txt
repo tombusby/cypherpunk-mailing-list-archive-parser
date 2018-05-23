@@ -1,0 +1,101 @@
+From: Alex Strasheim <alex@omaha.com>
+Date: Tue, 29 Nov 94 11:00:06 PST
+To: ecarp@netcom.com
+Subject: Re: Transparent Email
+In-Reply-To: <m0rCQOJ-0004G3C@khijol.uucp>
+Message-ID: <199411291900.NAA00304@omaha.omaha.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> They are already there - in elm and pine, as well as many others.
+
+Yes, I know this.  I have hacked up a couple of primitive scripts I use 
+to sign my outgoing mail from elm, for example.
+
+There is, I think, a big advantage to using premail as a
+/usr/lib/sendmail, though, namely that it provides a general solution.  In
+one fell swoop, I get elm, pine, /bin/mail, etc.  Email sent from trn or
+tin is encrypted, (but posts are still unsigned, unfortunately.)
+
+The thing that I'm shooting for is a unix workstation which works and 
+acts pretty much exactly like most other workstations, at least as far as 
+email goes, except that there's a file (in this case ~/.premailrc) with a 
+list of people with whom encrypted and signed email ought to be 
+exchanged, transparently.  As far as I'm concerned, as a user, I won't 
+even be able to tell the difference between corresponding with people on 
+the list and off the list.  It will look pretty much the same to me.
+
+It's not a revolutionary improvement by any means, but I think it is an
+evolutionary step forward.  And because it is pretty much a matter of 
+kludging together a bunch of available pieces, it might be a good prelude 
+to pop clients which would be more useful to the public at large, but a 
+lot harder to implement.
+
+> > This leaves the problem of passphrases for outgoing signatures and
+> > automatically decrypting incoming mail, but I think that cfs will let me
+> > kludge something together which will get around this.  
+> 
+> No need to kludge anything.  Take a good look at the PGP docs - they will
+> let you do exactly what you want.
+
+I know, but I'm a little squeamish about leaving my keys unprotected.  
+Also, I'm not very fond of the idea that encrypted email would be 
+decrypted when it got here and left in plaintext on the mail spool.
+ 
+> > (My situation is a little unusual, because I'm running linux on a pc which
+> > is connected to the net via a static slip account.  I don't think this
+> > would work well in other situations.)
+> 
+> I'm running Linux here, and have run it both as static/dynamic SLIP, and hung
+> (well!) off a T1 line.
+
+The main problem comes from using cfs vs. having mail come in all the
+time.  A constant flow of mail necessitates having cfs dirs mounted all
+the time, which sort of defeats the point of using cfs in the first 
+place.  Of course a queue would fix this, and might tidy up some other 
+loose ends about multiple email addresses as well.
+
+> > o	would be reasonably secure when it was powered off
+> 
+> This last one is really the only advantage to running cfs, IMO.
+
+I agree with you about it being the only advantage, but I think it's a big
+enough one to justfify bringing cfs into the picture.  Otherwise it
+wouldn't be practical to use this setup in an office or school
+environment, because anyone could boot your machine with a floppy and
+steal your key. 
+
+> Here's the set of scripts I use here.  Others use more sophisticated ones, but
+> I'm not into shell programming ;}
+
+Thanks...  yours is a lot more sophisticated than mine, though:
+
+	#!/bin/sh
+	/usr/bin/vi $@
+	clear
+	echo -n "Sign file? (y/N)"
+	read ans
+	case $ans in
+		y)	pgp  -fast < $1 > $1.asc; mv $1.asc $1;;
+		Y)	pgp  -fast < $1 > $1.asc; mv $1.asc $1;;
+	esac
+
+==
+Alex Strasheim | finger astrashe@nyx.cs.du.edu
+alex@omaha.com | for my PGP 2.6.1. public key
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLtt6AhEpP7+baaPtAQHjuQP/XEsruK0E5ViyU95MYUboE8JqWMYATCzh
+beXnus7458hDDq/7zxVhjZHBmNMXz3y3ixrt43n/7VakOyi1pgPEi/7EuEQpvBgt
+6rx5LB19OHZCfeo2H8vsyvuzaGnjP+rFPVcqbp6DVFvg7oD5rF8Zu+OkSkuLaZTA
+k0IVyasvg2Y=
+=Td4h
+-----END PGP SIGNATURE-----
+
+
+

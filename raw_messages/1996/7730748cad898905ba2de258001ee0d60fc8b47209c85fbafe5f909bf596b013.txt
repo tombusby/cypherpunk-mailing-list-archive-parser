@@ -1,0 +1,75 @@
+From: Jeremey Barrett <jeremey@forequest.com>
+Date: Fri, 9 Aug 1996 14:08:01 +0800
+To: pgut001@cs.auckland.ac.nz
+Subject: Re: An SSL implementation weakness?
+In-Reply-To: <83952437618205@cs26.cs.auckland.ac.nz>
+Message-ID: <Pine.BSI.3.93.960808145842.6124A-100000@descartes.forequest.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Fri, 9 Aug 1996 pgut001@cs.auckland.ac.nz wrote:
+
+> The following weakness seems very obvious, I've got a partial writeup of this 
+> but before I turn it into a paper or something and arrange a demonstration of 
+> how it would work I thought I'd check to make sure (a) someone else hasn't 
+> mentioned it before, and (b) it is actually possible (it seems too simple to 
+> be true):
+>  
+> 1. Using DNS spoofing, stage a hostile takeover of an address (for example 
+>    using bogus referrals set yourself up as the delegated server for a DNS 
+>    subtree).
+> 2. Get a Verisign certificate for an arbitrary company and set up a bogus site 
+>    at the stolen address.
+>  
+> Lets say you steal www.megafoobarcorp.com.  People connect to this site (which 
+> is actually your bogus site), Netscape (for example) displays the blue line 
+> and non-broken key (which is actually for your J.Random certificate rather 
+> than the real megafoobarcorp one) to show the connection is secure, and you've 
+> just subverted their site.  
+
+The domain in the server's certificate will not match the domain on the url,
+i.e. the certificate will say www.eve.com and the url will be
+www.megafoobarcorp.com.  Netscape does and should complain about this,
+and that particular warning cannot be turned off.  Now it is quite possible
+that the user will ignore the warning or not fully understand it, and 
+proceed, but if the user pays attention to those sort of warnings, the
+switch will be detected.
+
+Now maybe if you got a certificate for a very similar domain name, the user
+might be more likely to ignore the warning.
+
+
+- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Jeremey Barrett
+Senior Software Engineer			jeremey@forequest.com 
+The ForeQuest Company       			http://www.forequest.com/
+
+   "less is more."
+		-- Mies van de Rohe.
+
+   Ken Thompson has an automobile which he helped design.  Unlike most
+   automobiles, it has neither speedometer, nor gas gage, nor any of the
+   numerous idiot lights which plague the modern driver.  Rather, if the
+   driver makes any mistake, a giant "?" lights up in the center of the
+   dashboard.  "The experienced driver", he says, "will usually know
+   what's wrong."
+
+		-- 'fortune` output
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMgpmWy/fy+vkqMxNAQEZfQP8C69iVqCdXBudh8N2UIlLVew65Yi8lkad
+Wjnsur/vsFbsGQZBOvh5IBshJkLBYPZPL2Q92Zi14Xcir8/Ld18N8kFShQ97id5l
+npXMcY7ncFnfeohdwhIJdDgzaNYK9i/eVeb90JVPh/cV89xw9BnXv4h/7xW3ul+j
+xp/m1oyRZ/w=
+=Tsus
+-----END PGP SIGNATURE-----
+
+
+
+
+

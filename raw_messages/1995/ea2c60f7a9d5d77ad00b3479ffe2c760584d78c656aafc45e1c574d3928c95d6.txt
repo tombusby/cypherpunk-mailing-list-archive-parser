@@ -1,0 +1,104 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Sat, 26 Aug 95 09:40:40 PDT
+To: Damien.Doligez@inria.fr (Damien Doligez)
+Subject: Re: SSL trouble
+In-Reply-To: <9508261034.AA15406@couchey.inria.fr>
+Message-ID: <"swan.cl.cam.:234280:950826164020"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 1. The server is badly overloaded.
+
+Let's not get implementations confused with algorithms ...
+We were using ALPHA code when we started ....
+
+With BETA clients, a hierarchy and select/poll loops, I reckon a server would 
+stand a chance.
+
+> It is vulnerable to a variety of active attacks:
+> 2. "result hoarding" attacks: finding the result and reporting it "not found".
+
+Sure.
+
+> 3. "dilution" attack: allocating some search space and not sweeping it.
+
+Un ACKed space is re-allocated after the first scan has completed.
+
+> 4. plain old "denial of service" attack: deliberately overloading the server
+>    with bogus communications.
+
+Few systems can resist such an attack !
+
+> 5. And of course all of the above in their "buggy software or hardware"
+>    versions.
+
+... causing them ... yes -- especially (1) !!
+
+> The random search has none of them:
+> attacks 1 and 4: there is no server to overload
+
+(4) is still applicable isn't it ?
+What tells people to stop, or do they go on for ever ?
+
+> attacks 2 and 3 are no worse than simply refusing to participate in the
+> search, because the rest of the computation is independent of what any one
+> party is doing.
+
+(3) is just the same for the server -- it re-allocates.
+(4) would require a restart :-(
+
+> The main drawback of the random search is that the expected running "time" is
+> the size of the key space instead of half the size for the sequential search
+> ("time" here is the number of keys to try before finding the right one).
+
+where "expected" is some loose average .....
+
+My stats is *very* rusty, but I'd have thought it would be somewhat less than 
+twice a linear search ...
+However, I agree that as a ballpark figure, yes: it would be somewhere between 
+N/2 and N ...
+
+> In practice, because of server overload, our machines don't seem to be working
+> more than half the time, so the random search could be actually faster than
+> the sequential search.
+
+IMPLEMENTATION !
+
+> Even if it isn't, I think doing twice as much work
+> is a good trade-off for protection against all attacks, and no more network
+> or server problems, and no more allocation hassles for off-line users.
+
+random probing does indeed have its merits.
+
+Personally I'd go for a scheme whereby on finishing a random search, the 
+client multicast a PGP signed message (there would be a WWW/email/telnet/... 
+interface which would multicast for our non-connected members) allowing 
+interested parties
+1) to gather stats as to what actually happened
+2) maps of "unsearched" areas to be built by anyone wanting to fill gaps
+3) the "big boys" could learn to trust each other and use (2).
+4) when all notified keys are tried, go in to killer mode, and try to find
+   who is untrustworthy.  Someone can only try it once, and getting a "big boy"
+   tag takes a while, and a lot of CPU cycles !
+
+>  I suspect that sequential searching from a random starting point would be
+>   much worse in the case of many independent searchers.
+
+Convince me (please) ....
+
+What size "chunks" should be scanned ?
+
+> * Another drawback is that the worst-case running time is infinite (but it is
+>   infinitely unlikely).
+
+See above ... the big boys will do it eventually ...
+
+> In conclusion, I think random searching is the way to go.
+
+It has its advantages -- yes. Did you use it for Hal1 ?  :-))
+
+
+
+
+

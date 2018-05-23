@@ -1,0 +1,90 @@
+From: "Patrick J. LoPresti" <patl@skyclad.lcs.mit.edu>
+Date: Tue, 1 Aug 95 09:34:31 PDT
+To: perry@panix.com ("Perry E. Metzger")
+Subject: Re: a hole in PGP
+In-Reply-To: <199508011542.LAA23817@panix4.panix.com>
+Message-ID: <199508011634.MAA00496@skyclad.lcs.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>>>>> "perry" == "Perry E Metzger" <perry@panix.com> writes:
+
+ perry> "Patrick J. LoPresti" writes:
+
+ >> I find it surprising that people so familiar with public key
+ >> cryptography would be reassured by the argument, "Here, this
+ >> algorithm has been examined by thousands and nobody has found a
+ >> trap door."  Public key cryptography demonstrates that it is
+ >> possible, in principle, to construct an algorithm with a trap door
+ >> that nobody else is *ever* going to find.
+
+ perry> This is not correct as you have phrased it.
+
+On the contrary, it is *precisely* correct as I have phrased it.
+
+ perry> Although it is not possible to find a decision proceedure for
+ perry> any non-trivial property of programs in general (whether it
+ perry> halts, for example) in practice well written code can be well
+ perry> understood and cannot conceal very much at all.
+
+Check my phrasing again.  Note the use of "in principle".
+
+Whether the principle applies in practice is certainly a matter for
+debate.  I would point out that 1) PGP is hardly well written code,
+and 2) many current cryptographic algorithms make ideal places for
+concealing all sorts of things.
+
+ perry> In order to use public key cryptography to obfuscate a program
+ perry> as you suggest, you'd have to include huge tables of large
+ perry> numbers in it. Any idiot can observe the existance of such
+ perry> mysterious tables.
+
+Sorry, I can't resist.  From "md5.c" in the PGP distribution:
+
+/*
+ * Start MD5 accumulation.  Set bit count to 0 and buffer to mysterious
+ * initialization constants.
+ */
+void MD5Init(struct MD5Context *ctx)
+{
+...
+
+
+(Note: Of course I don't think that MD5 has a back door, but that has
+more to do with my trust of Rivest than the fact the algorithm is
+public.)
+
+ perry> Trying to conceal anything in cleanly written code is an
+ perry> enormous challenge, and one that has nothing to do with public
+ perry> key crypto per se.
+
+By "cleanly written code", I presume you mean code which is either
+formally proven to be a correct implementation, or code which is so
+transparent that it is "obviously" a correct implementation.  PGP's
+random number generator is neither.
+
+Moreover, as I precisely mentioned, the algorithms themselves can
+conceal back doors.  This has plenty to do with public key
+cryptography.  A reduction proof from a known hard problem would make
+this virtually impossible, but there is no such proof for PGP's random
+number generator.  (Nor for any other algorithm used by PGP, although
+I admit RSA comes close.)
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.3beta, an Emacs/PGP interface
+
+iQCVAwUBMB5XVXr7ES8bepftAQGkJgP9Gopf96k2vu5ORjqQCOk0hPNrdwtmcR71
+THm+nPgWk2m1CHGXHF3FhgZ7FNZS8zubv1fzunKA+QDFcqKghHCFfhD+pof4bUF6
+fYVq89Oc3P7/pIvS3pCR8BBN/8BTLwxlP+OsPbF4YNANXqsbiqyjvezruojKaOI8
+QiVInZxdeoI=
+=BfP6
+-----END PGP SIGNATURE-----
+
+
+
+

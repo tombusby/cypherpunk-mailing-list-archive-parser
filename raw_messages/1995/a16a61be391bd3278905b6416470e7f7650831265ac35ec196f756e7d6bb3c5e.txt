@@ -1,0 +1,66 @@
+From: michael shiplett <walrus@ans.net>
+Date: Fri, 18 Aug 95 17:45:38 PDT
+To: cypherpunks@toad.com
+Subject: Sun's buggy MD5?
+Message-ID: <199508190045.UAA148800@bugsy.aa.ans.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's something fun to do on Solaris 2.3 or 2.4.  Notice the
+similarity among the Solaris md5 output. Anyone know why this is?
+
+The Sun service folk weren't able to point me to a Solaris bug-report
+email address. I had a similar experience looking through www.sun.com.
+Pointers are welcomed.
+
+
+PROBLEM:
+    A program which uses md5 from a dynamically linked
+    (or loaded) library and the nsl library is loaded before a
+    ``standard'' md5 library will get md5 results different from the
+    rest of the non-Solaris world.
+
+
+NOTES:
+    the non-Solaris md5 files are from RFC 1321.
+
+    some test output has been deleted as it does not fit nicely on a
+    standard message line.
+
+    solmd5 seems to give slightly different output on different machines
+    and greatly different output with different compilers
+
+    the nsl library is required on Solaris 2.4 when using sockets.
+
+    /usr/include/sys/ppp_chap.h includes a slightly modified---mainly
+    names---version of md5.h.
+
+
+% gcc -o md5 mddriver.c md5c.c 
+% gcc -o solmd5 mddriver.c -lnsl
+% ./md5 -x
+MD5 test suite:
+MD5 ("") = d41d8cd98f00b204e9800998ecf8427e
+MD5 ("a") = 0cc175b9c0f1b6a831c399e269772661
+MD5 ("abc") = 900150983cd24fb0d6963f7d28e17f72
+MD5 ("message digest") = f96b697d7cb7938d525a2f31aaf161d0
+MD5 ("abcdefghijklmnopqrstuvwxyz") = c3fcd3d76192e4007dfb496cca67e13b
+MD5 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+= d174ab98d277d9f5a5611c2c9f419d9f
+% ./solmd5 -x
+MD5 test suite:
+MD5 ("") =               f00001c0effffba8429b59d50529097c
+MD5 ("a") =              f00003c0effffba8aec5fcf4284a8dbe
+MD5 ("abc") =            f00005c0effffba896fc8af8ca60a911
+MD5 ("message digest") = f00007c0effffba8f373218f317a9558
+MD5 ("abcdefghijklmnopqrstuvwxyz") = f00009c0effffba896b4f24acb3f4738
+MD5 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+= f0000bc0effffba8cef237a614aa457d
+
+
+michael
+
+
+
+

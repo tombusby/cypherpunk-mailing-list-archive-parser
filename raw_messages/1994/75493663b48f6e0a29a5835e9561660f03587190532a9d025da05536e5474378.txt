@@ -1,0 +1,53 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 12 Dec 94 17:27:46 PST
+To: andrew@riskdev.ml.com (Andrew Brown)
+Subject: Re: extra dashes in PGP-related blocks?
+In-Reply-To: <9412130059.AA07996@nottingham.riskdev.ml.com>
+Message-ID: <9412130127.AA17596@hodge-podge.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+To: andrew@riskdev.ml.com (Andrew Brown)
+cc: jrochkin@cs.oberlin.edu (Jonathan Rochkind), cypherpunks@toad.com
+Subject: Re: extra dashes in PGP-related blocks? 
+
+> but wait!  you can't actually verify the outer sig until you extract
+> the key from inside the signed message?  that's a bit more
+> complicated.  pgp will actually recognize a key embedded inside an
+> armored, signed message but it won't (i don't think -- warlord?) play
+> with the key other than tell you it is one.
+
+Actually, PGP wont even do that.  If the key is not in your keyring,
+it will complain about not finding it and output the de-armored
+message.  If you want to add the key, you need to run it through PGP
+once to de-armor it, save off the output, and then add that output
+message to your keyring.
+
+> what these people should probably be doing is signing their public
+> keys with their private keys to provide the same functionality
+> (almost).  what you have, otherwise, really is a two step process.
+> you will have to strip off the outer sig layer to get the the key.
+
+This is exactly what people should do.  People should _never_
+clearsign a public key block.  If you want to sign it, sign the key
+inside the keyblock.  When someone clearsigns a keyblock, they are
+making two passes over it to create it, which requires you to make two
+passes to read it in!
+
+- -derek
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQBuAwUBLuz4Lzh0K1zBsGrxAQGSTgLDBtb7BWTSXbk5s8taH+2V8/MHpz/1BYIi
+AesXunQmFmJ+WXGNHbkfDK5CF2VzwiYyBaDxTkY90PwEV7cUAoNg3yCI8QJbsGX/
+ZkO1kxTih46a1LucIe6U4EE=
+=Ov0C
+-----END PGP SIGNATURE-----
+
+
+
+

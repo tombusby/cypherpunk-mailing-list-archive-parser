@@ -1,0 +1,50 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Fri, 13 Oct 95 06:53:04 PDT
+To: Adam Shostack <adam@homeport.org>
+Subject: Re: IDEA algorithm
+In-Reply-To: <199510130250.WAA08368@homeport.org>
+Message-ID: <Pine.SOL.3.91.951013135056.2444A-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 12 Oct 1995, Adam Shostack wrote:
+> | (Btw... what would be the absolute coolest thing folk would like to see
+> | added to RSAREF? That is, other than code that we will need to negotiate
+> | for. What new thing, speed upgrade, enhancement, etc would just tickle?)
+...
+> 	Another really big win would be to add more entry points to
+> the code to legitimize Wei Dai's excellent Crypto++ library, which has
+> to jump in at all sorts of unpublished interfaces.
+
+How about just making all the interfaces at the different levels 
+available.  For the next version of SSLeay (when I get it and the 
+documentation finished) will have defined interfaces at the following 
+levels for the various ciphers etc.
+
+The actual cipher level
+	eg des_set_key, des_cfb_encrypt, idea_cbc_encrypt...
+	This level is wanted by things like SSL for the fastest on the fly
+	encryption possible.
+
+The 'by parts' routines
+	eg EncryptBegin, EncryptUpdate, EncryptFinish (which take a CIPHER 
+	pointer as an argument).
+	This is sort of wanted by people implementing higher level digital 
+	signature routines but they are usefull in their own right.
+
+The 'digital' envelope routines.
+	eg SealBegin, SealUpdate, SealFinish (which take a CIPHER pointer, a 	
+	MD pointer and the public keys etc.
+	The high level stuff for PKCS-7/S-MIME/PEM etc.
+
+I am also documenting the interface to the big number library (anyone 
+want to do DSS :-).
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

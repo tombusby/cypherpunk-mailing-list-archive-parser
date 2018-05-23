@@ -1,0 +1,35 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Wed, 21 Oct 92 22:35:21 PDT
+To: cypherpunks@toad.com
+Subject: Keystone
+In-Reply-To: <9210220333.AA009m7@fnordbox.UUCP>
+Message-ID: <9210220541.AA13526@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Ah.  A small PGP subset.  You hadn't mentioned this.  When you said
+you weren't requiring the user to run PGP, I assumed key generation
+must occur on the board.
+
+As for your fatal flaw I hadn't spotted, I had spotted it, and the
+location of the private key was the critical point.  If the key is on
+the BBS, the message goes out in the clear.
+
+Look, it boils down to this.  If the message traffic to the BBS is to
+be encrypted, then the user has to generate a key on his own machine
+and decrypt it on his own machine.  There's no way around that.
+
+But the user interface problem can be solved.  Just make a bunch of
+.com files which do nothing but spawn pgp by invoking the correct
+arguments.  Very simple; a few lines of C is all.  Even the PGPPATH
+can be set before the spawn.  It's an easy encapsulation.  It will run
+a bit slower for load time, but not appreciably.  And you won't have
+to recompile PGP from the distributed executables.
+
+Eric
+
+
+
+

@@ -1,0 +1,131 @@
+From: "Dave Ross" <davros@raf.com>
+Date: Tue, 12 Aug 1997 09:05:41 +0800
+To: <cypherpunks@toad.com>
+Subject: Fw: slow network behavior with Linux kernel 2.0.x
+Message-ID: <m0wy50o-000sS8C@fred.raf.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Can any of you help us with this mess?  Linux is not my strong suit. 
+Thanks!  My engineer is pulling his hair out.  I would appreciate any
+suggestions anyone could make.
+
+-dave ross
+
+davros@raf.com
+
+
+----------
+> From: Bruce Thompson <bt@raf.com>
+> To: davros@fred
+> Subject: Fw: slow network behavior with kernel 2.0.x
+> Date: Tuesday, August 12, 1997 12:18 AM
+> 
+> 
+> 
+> ----------
+> | From: Bruce Thompson <bt@raf.com>
+> | To: linux-kernel@vger.rutgers.edu
+> | Cc: linux-net@vger.rutgers.edu
+> | Subject: slow network behavior with kernel 2.0.x
+> | Date: Thursday, July 31, 1997 4:40 PM
+> | 
+> | 
+> | My company developes a psuedo real-time client-server system that runs
+on
+> | linux connected through TCP sockets.  I have been noticing it has been
+> | taking the data packets quite a while to reach the clients from the
+> server.
+> |  After trying several different ethernet cards and speeds (TP vs
+> thinnet,10
+> | vs 100), I have determined that the slow down only occures when the
+> server
+> | is running with a linux 2.0.x kernel (I have not tried 2.1.x).  Any
+> system
+> | running up to 1.3.89 runs fine at full speed. I have not yet tested any
+> | kernel between 1.3.89 and 2.0.0
+> | 
+> | From looking at tcpdumps, it appears that packets are not getting acked
+> in
+> | a timely way.  I have turned off the 'delayed ack' feature of TCP and
+> have
+> | not seen any improvement.   Here are some tcpdumps
+> | 
+> | 
+> | Example of what I would expect to be normal.
+> | 10:42:17.70 server > client: . 1:1461(1460) ack 98 win 31744 (DF)
+> | 10:42:17.70 server > client: . 1461:2921(1460) ack 98 win 31744 (DF)
+> | 10:42:17.71 client > server: . ack 2921 win 31744 (DF)
+> | 10:42:17.71 server > client: . 2921:4381(1460) ack 98 win 31744
+> | 10:42:17.71 server > client: . 4381:5841(1460) ack 98 win 31744
+> | 10:42:17.71 server > client: . 5841:7301(1460) ack 98 win 31744
+> | 10:42:17.72 client > server: . ack 7301 win 31744 (DF)
+> | 10:42:17.72 server > client: P 7301:8760(1459) ack 98 win 31744 (DF)
+> | 10:42:17.74 client > server: . ack 8760 win 31744 (DF)
+> | 
+> | Example of time lost with no ack of the first packet causing a 200ms
+> delay,
+> | and two acks that cause waits of 40ms and 70ms.
+> | 
+> | 10:42:22.17 server > client: . 8760:10220(1460) ack 1222 win 31744 (DF)
+> | 10:42:22.37 server > client: . 8760:10220(1460) ack 1222 win 31744 (DF)
+> | 10:42:22.37 client > server: . ack 10220 win 31744 (DF)
+> | 10:42:22.37 server > client: . 10220:11680(1460) ack 1222 win 31744
+> | 10:42:22.51 client > server: . ack 11680 win 31744 (DF)
+> | 10:42:22.51 server > client: . 11680:13140(1460) ack 1222 win 31744
+> | 10:42:22.51 server > client: . 13140:14600(1460) ack 1222 win 31744
+> | 10:42:22.52 client > server: . ack 14600 win 31744 (DF)
+> | 10:42:22.52 server > client: . 14600:16060(1460) ack 1222 win 31744
+> | 10:42:22.59 client > server: . ack 16060 win 31744 (DF)
+> | 10:42:22.59 server > client: P 16060:17519(1459) ack 1222 win 31744
+(DF)
+> | 10:42:22.61 client > server: . ack 17519 win 31744 (DF)
+> | 
+> | Here is a particularly bad example where the same 8760 byte file took
+1.7
+> | seconds to be transfered.
+> | 
+> | 10:17:14.95 server > client: . 1:1461(1460) ack 98 win 31744 (DF)
+> | 10:17:15.14 client > server: . ack 1461 win 31744 (DF)
+> | 10:17:15.14 server > client: . 1461:2921(1460) ack 98 win 31744
+> | 10:17:15.14 server > client: . 2921:4381(1460) ack 98 win 31744
+> | 10:17:15.44 client > server: . ack 2921 win 31744 (DF)
+> | 10:17:15.44 server > client: . 4381:5841(1460) ack 98 win 31744
+> | 10:17:15.45 client > server: . ack 2921 win 31744 (DF)
+> | 10:17:15.64 client > server: . ack 2921 win 31744 (DF)
+> | 10:17:16.08 server > client: . 2921:4381(1460) ack 98 win 31744
+> | 10:17:16.27 client > server: . ack 5841 win 31744 (DF)
+> | 10:17:16.27 server > client: . 5841:7301(1460) ack 98 win 31744
+> | 10:17:16.57 client > server: . ack 7301 win 31744 (DF)
+> | 10:17:16.57 server > client: P 7301:8760(1459) ack 98 win 31744 (DF)
+> | 10:17:16.59 client > server: . ack 8760 win 31744 (DF)
+> | 
+> | In general, the system just seems to be slow in responding to this
+> network
+> | traffic.  This is a private network for these systems so there should
+be
+> | now problem with other traffic affecting these timings.  With 1.3.x I
+see
+> | total transit times on the order of 30ms on the 10Mbps network.
+> | 
+> | The same hardware that runs slowly with 2.0.x will run quickly with
+only
+> | the kernel changed.
+> | 
+> | Any ideas as to what could be causing this?
+> | 
+> | 
+> | Thanks,
+> | -------------------------
+> | Bruce Thompson
+> | RAF Technology
+> | (206) 867-0700
+> | 
+> | 
+
+
+
+
+

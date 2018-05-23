@@ -1,0 +1,45 @@
+From: lull@acm.org (John Lull)
+Date: Sat, 13 Jan 1996 08:12:09 +0800
+To: abostick@netcom.com
+Subject: Re: Novel use of Usenet and remailers to mailbomb from luzskru@cpcnet.com
+In-Reply-To: <Q6q9w8m9LYlM085yn@netcom.com>
+Message-ID: <30f6ef04.32298803@smtp.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 12 Jan 1996 22:25:53 GMT, I wrote:
+
+> The remailer could calculate a hash for the body of each encrypted
+> message received (the same portion which will be decrypted by PGP),
+> tabulate the last few thousand hashes, and simply discard any messages
+> with a duplicate hash.  The target of the attack would receive only
+> the first copy of the message.
+
+To refine this a bit further, the hash need not cover the entire
+message.  It could be sped up a bit by restricting it to the header
+containing the encrypted session key.  Since the session key is
+selected randomly, that header (and its hash) should be unique for
+every message.
+
+The hash values could also be retained for a fixed period of time --
+perhaps 23 hours -- following the most recent receipt of a given hash.
+Thus a message could be repeated by the legitimate sender after a
+delay of 24 hours, and would be forwarded.  The original sender could
+re-encrypt the message (thus changing its hash) earlier than that, and
+it would be properly forwarded.  A canned message on the other hand,
+being sent from multiple locations, would likely be received more
+often than this and not forwarded after the first time, even if each
+sender only sent it once a day.
+
+You could even penalize messages for which you've received massive
+dupes, by extending the hash retention time by, say, 12 hours for each
+dupe received.  If you got a message 100 times in one day, you'd
+refuse to forward any duplicates for nearly 2 months.  This would take
+care of those on vacation at the time of the original attack, and
+those with very slow news feeds.
+
+
+
+
+

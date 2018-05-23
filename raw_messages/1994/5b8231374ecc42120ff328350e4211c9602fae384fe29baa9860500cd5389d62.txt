@@ -1,0 +1,39 @@
+From: smb@research.att.com
+Date: Mon, 31 Jan 94 10:59:31 PST
+To: Derek Atkins <warlord@MIT.EDU>
+Subject: Re: Index for ftp site csn.org:/mpj/
+Message-ID: <9401311858.AA29476@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	         I just recently got MacRipem and find it much easier to use th
+	an PGP,
+	         and was wondering why I should use PGP over Ripem.  The above 
+	seems to
+	         indicate that Ripem isn't as secure.  Why is this?
+
+	 I don't doubt that its much easier to use -- it was written by Ray
+	 Lau, who is an excellent Mac/UI programmer.  The most reasonable
+	 reasons why it might be called "less secure" is that RIPEM does not
+	 have a signature web like PGP does.  It is possible in PEM to only
+	 have one signature on your certificate, which can be your own
+	 signature, or that of a CA.  Therefore, you either have the status of
+	 "I say I am who I say I am", or a "Certification Authority says I am
+	 who I say I am".
+
+I can't speak for RIPEM, but that's not accurate for PEM.  You can have
+as long a chain of signatures as you want up to the certifying authority.
+That may not be as general as you'd like, but it's better than just a
+single authority.
+
+A bigger problem is that PEM uses DES rather than IDEA.  I just learned
+of a new attack by Mitsuru Matsui of Mitsubishi that requires 2^43
+*known* plaintexts, not chosen ones.  The note I received says that it
+``breaks the scheme in 50 days on 12 HP9735 workstations''.  This was
+presented last week at the Japanese Conference on Cryptography and
+Information Security.
+
+
+
+

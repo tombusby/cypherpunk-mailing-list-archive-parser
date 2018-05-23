@@ -1,0 +1,39 @@
+From: Eric_Weaver@avtc.sel.sony.com (Eric Weaver)
+Date: Tue, 26 Jul 94 14:14:30 PDT
+To: wb8foz@nrk.com
+Subject: CYPHERPUNKS TO THE RESCUE
+In-Reply-To: <m0qSrax-000Gn6C@nrk.com>
+Message-ID: <9407262113.AA23798@sosfc.avtc.sel.sony.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: wb8foz@nrk.com (David Lesher)
+   Date: Tue, 26 Jul 1994 18:51:19 +0000 (GMT)
+
+   A challenge /response may make sense crypto-wise, but not $$-wise.
+   The car would then need a receiver too, & the house a transmitter.
+   More things to buy & break.
+
+   A one-way solution is needed to make it fly here.
+
+Okay, here's my "bright" "idea"...
+
+A 32-bit counter, a 32-bit somewhat-random "salt", a 32-bit fixed
+authenticator and a 32-bit checksum, two DES blocks.  The transmitter
+just counts up each time the button is pressed, and the whole thing is
+DES'd in CBC mode with the symmetric key or what have you.
+
+The receiver decrypts, verifies the checksum and perhaps the
+authenticator and just checks for the count to be greater than the
+last time it received a signal.  This handles replays and doesn't
+require exact sync between remote and base.
+
+The receiver can have a reset button inside so the owner can push it
+and click the remote if somehow the receiver gets skipped way ahead.
+
+Counterexamples, anyone?
+
+
+
+

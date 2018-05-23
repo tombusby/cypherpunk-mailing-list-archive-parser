@@ -1,0 +1,88 @@
+From: Jim Choate <ravage@ssz.com>
+Date: Thu, 9 Oct 1997 12:20:40 +0800
+To: cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: 6502 ML programming
+Message-ID: <199710090439.XAA16340@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Forwarded message:
+
+> Date: Wed, 8 Oct 1997 23:10:26 -0400
+> From: ghio@temp0132.myriad.ml.org (Matthew Ghio)
+> Subject: Re: [LONG, off-topic]] Interactive Programming
+
+> Reminds me of a time, years ago, where I was trying to modify a program
+> written in 6502 assembler.
+
+> Consider the following line of C code:
+> 
+>   result = function(x,y,z);
+> 
+> One could write this in 6502 assembler as:
+> 
+>   JSR function
+>   DATA x
+>   DATA y
+>   DATA z
+>   STA result
+> 
+> where x,y,z,result are pointers to storage locations.
+
+There in no 'DATA' construct in 6502 assembly.
+
+This is some sort of macro that either the assembler or programmer
+defined. All official Rockwell/Commodore [1] 6502 assembly mnemonics are
+three letter. There are NO official macro's from MOS Technologies under
+either Rockwell or Commodore other than the ORG. ORG simply defined the
+starting address for the target code.
+
+The most efficient way to store data in 6502 is to put it in the first 256
+bytes of ram, then it could be called in no more than 2 clock cycles. Also,
+in 6502 good programmers use the branch instructions (BCC, BCS, BEO, BMI,
+BNE, BPL, BVC, BVS) because the JSR required three bytes versus 2 bytes for
+a Bxx. The only constraint was that the branch target must reside in the same
+256 byte page as the branch itself. The biggest boo-boo committed here was not
+realizing that branch offsets that took you across the upper page boundary
+would leave you at the lower page boundary plus some remaining offset.
+
+Idealy a jump table was created that had the various target addresses for your
+routines. Then a Bxx followed by a indirect mode JMP (NOT a JSR). If that table
+was in the first 256 bytes it was possible to save a whole clock cycle AND a
+byte in the process. At 64k and 1Mhz clock these sorts of short-cuts were
+significant.
+
+Because of the architecture of the 6502 the 0 page of RAM was a very busy
+place indeed because any operation there automaticaly saved a byte and a
+clock cycle.
+
+
+
+    ____________________________________________________________________
+   |                                                                    |
+   |    The financial policy of the welfare state requires that there   |
+   |    be no way for the owners of wealth to protect themselves.       |
+   |                                                                    |
+   |                                       -Alan Greenspan-             |
+   |                                                                    | 
+   |            _____                             The Armadillo Group   |
+   |         ,::////;::-.                           Austin, Tx. USA     |
+   |        /:'///// ``::>/|/                     http:// www.ssz.com/  |
+   |      .',  ||||    `/( e\                                           |
+   |  -====~~mm-'`-```-mm --'-                         Jim Choate       |
+   |                                                 ravage@ssz.com     |
+   |                                                  512-451-7087      |
+   |____________________________________________________________________|
+
+
+[1] Rockwell designed and sold the chip for several years and then in the
+    late 70's Commodore bought MOS Technologies.
+
+ 
+
+
+
+
+

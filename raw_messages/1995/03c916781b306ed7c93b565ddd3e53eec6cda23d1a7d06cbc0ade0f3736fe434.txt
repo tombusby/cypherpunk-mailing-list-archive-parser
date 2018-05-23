@@ -1,0 +1,103 @@
+From: "Peter Trei" <trei@process.com>
+Date: Tue, 12 Dec 1995 14:58:25 +0800
+To: cypherpunks@toad.com
+Subject: Re: Timing Cryptanalysis Attack
+Message-ID: <9512112128.AA06989@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> > People employing systems like PGP are already advised to use them
+> > on private machines, with only one user, and untampered-with
+> > binaries.
+> 
+> Timings like the ones listed are trivial to take in establishing
+> things like SSL sessions, or Photuris sessions. The danger is to
+> online protocols, not to PGP.
+> Perry
+
+Loathe as I am to disagree with Perry :-), is it really 'trivial' to take these 
+timings in an online protocol? Paul writes on the DH example:
+
+-------------------------
+A preliminary implementation of the attack using the RSAREF toolkit[8] 
+has been written. RSAREF scans across the exponent from MSB to
+ LSB and does two exponent bits at a time, so corresponding 
+adjustments to the attack were made. Using a 120-MHz PentiumTM 
+computer running MSDOSTM, a 512-bit modulus, and a 256-bit secret 
+exponent, processing times ranged from 392411 microseconds to 
+393612 microseconds and closely approximated a normal distribution
+with a mean of 393017 microseconds and a standard deviation of
+188 microseconds.
+--------------------------
+
+Note that the range is 1201 microseconds
+
+and for RSA:
+
+--------------------------
+RSAREF's modular reduction function with a 512-bit modulus on the 
+same 120-MHz PentiumTM computer takes an average of 
+approximately 17 microseconds less time if c is slightly smaller than 
+p, as opposed to slightly larger than p. Timing measurements of 
+many ciphertexts can be combined to detect whether the chosen 
+ciphertexts are larger or smaller than p.
+-------------------------
+The range here is 17 microseconds.
+
+Paul notes:
+---------------------------
+Random delays added to the processing time may increase the 
+number of ciphertexts required, but do not completely solve the
+problem since attackers can compensate for the delay by collecting 
+more measurements. (If enough random noise is added, the attack 
+can become infeasible.)
+--------------------------
+
+In a 'real' system, there is a lot of unpredictable variation
+in the timing of the signal. Sources of such noise include
+routers,  and other sessions on the server (any decent server these
+days is multi-tasking, and can handle multiple connections 
+simultaneously). On top of that, real protocols have a lot of
+processing overhead, looking up certificates and keys, generating
+MAC hash values, etc, many of which are difficult to predict.
+
+I tried pinging some machines to look at the slop in the roundtrip
+times. I have not checked traceroute, but for what it's worth,  I'm in 
+central Massachusetts.
+
+elnath (local to my lan)			<10 ms
+rtfm.mit.edu (20 miles)			10-21 ms
+iii1.iii.net (FreeBSD on a 120MHz P5, 35 miles)	100-200 ms
+utopia.hacktic.nl (Netherlands)			190-781 ms
+
+Maybe Paul can give us some figures as to how *much* random
+noise is enough to make his (very elegant!) attack unfeasible. Note 
+that the range of the random slop I'm getting is hundreds to thousands
+of times the range of the signal he needs to detect. Statistical techniques, 
+averaging the return times for the same text over many trials may be useful, 
+but the number required to detect a less than 1% variation is going to be high.
+
+The attack might be feasible of it can be mounted on a quiet server
+from a point 'close' (in network terms) to the timing system, and the 
+intervening network segments are also fairly quiet.  I don't think
+random users are going to crack the Dilbert Store, however.
+
+Speaking for myself....
+
+
+
+
+
+
+Peter Trei
+Senior Software Engineer
+Purveyor Development Team                                
+Process Software Corporation
+http://www.process.com
+trei@process.com
+
+
+
+

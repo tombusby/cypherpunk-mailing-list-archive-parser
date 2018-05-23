@@ -1,0 +1,41 @@
+From: Bryan Reece <reece@taz.nceye.net>
+Date: Thu, 28 Nov 1996 11:39:46 -0800 (PST)
+To: deviant@pooh-corner.com
+Subject: Re: Is /dev/random good enough to generate one-time pads?
+In-Reply-To: <Pine.LNX.3.94.961128152339.1435A-100000@random.sp.org>
+Message-ID: <19961128194007.12992.qmail@taz.nceye.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Date: Thu, 28 Nov 1996 15:31:28 +0000 (GMT)
+   From: The Deviant <deviant@pooh-corner.com>
+
+   On Wed, 27 Nov 1996, Igor Chudov @ home wrote:
+
+   > Subj sez it all.
+   > 
+   > Thank you.
+   > 
+   > 	- Igor.
+
+   Yes, as a matter of fact it is.  /dev/random is based on an entropy pool
+   taken from hardware interrupts and such, thus is a RNG, not a PRNG (thats
+   right IPG, Linux uses hardware to get random numbers... imagine that!).
+   /dev/urandom is, however, a PRNG...
+
+Only if you try to pull out more bits than you can get from /dev/random.
+
+Note that /dev/random on a single-user system doesn't generate bits
+fast enough to be practical for OTP generation (try od -tc1
+/dev/random sometime; you'll get about 512 bytes if you haven't used
+it lately, then reads will block until enough unpredictable things
+happen ).  Of course, you can add more randomness sources.
+
+How good a source would a radio or diode noise source connected to the
+parallel port's IRQ input be?  It certainly sounds like it would be
+cheap enough.
+
+
+
+

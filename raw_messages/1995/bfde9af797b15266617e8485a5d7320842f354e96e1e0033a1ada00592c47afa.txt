@@ -1,0 +1,67 @@
+From: Raph Levien <raph@CS.Berkeley.EDU>
+Date: Fri, 10 Nov 1995 06:03:59 +0800
+To: perry@piermont.com
+Subject: Re: Small keysizes do make sense (was PGP Comment weakens...)
+In-Reply-To: <199511091951.OAA15564@jekyll.piermont.com>
+Message-ID: <199511092046.MAA16851@kiwi.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I've found that in practice the compression pass takes longer than the
+> RSA pass for PGP. If you accept the time for the file compression I
+> don't see how you can have trouble with the 1024 bit RSA operation.
+
+When in doubt, measure. The following measurements were done on a DEC
+Alpha 3000/300, 150Mhz, Digital Unix 3.2. The first test file was an
+email I sent this morning, with a size of 5379 bytes, which is typical
+for the email I send. The second test file was the PostScript version
+of a 52 page tech report done by our research group this summer, with
+a size of 656676 bytes. The version of PGP used was MIT 2.6.2, compiled
+with the default osf configuration (-O compile flag).
+
+In all cases, user time only (not system time) is measured. This seems
+reasonable, because neither compression nor RSA inherently require I/O.
+The standard deviation on timings was somewhere around 5 or 10 ms. I
+took the average "by eye" over about ten runs each. I did not include
+signing tasks, as neither PGP/MIME signing nor clearsigning include a 
+compression step.
+
+Task 1: encrypt file, generating compressed output (RSA is quadratic)
+keysize  compression  time   file size in   file size out
+---------------------------------------------------------
+382      on           95 ms   5379 bytes      2205 bytes
+382      off          90 ms   5379 bytes      8165 bytes
+1024     on           90 ms   5379 bytes      2315 bytes
+1024     off          85 ms   5379 bytes      8275 bytes
+382      on           3.86 s  656676 bytes    255575 bytes
+382      off          2.43 s  656676 bytes    920984 bytes
+1024     on           3.84 s  656676 bytes    255685 bytes
+1024     off          2.43 s  656676 bytes    921090 bytes
+
+Task 2: decrypt file from Task 1 (RSA is cubic)
+keysize  compression  time   file size in   file size out
+---------------------------------------------------------
+382      on           135 ms  2205 bytes      5379 bytes
+382      off          140 ms  8165 bytes      5379 bytes
+1024     on           1.14 s  2315 bytes      5379 bytes
+1024     off          1.14 s  8275 bytes      5379 bytes
+382      on           1.43 s  255575 bytes    656676 bytes
+382      off          2.68 s  920984 bytes    656676 bytes
+1024     on           2.42 s  255685 bytes    656676 bytes
+1024     off          3.74 s  921090 bytes    656676 bytes
+
+We can conclude that for small files, the size of a typical email,
+compression is completely negligible, and the effect of key size is
+significant. We can also conclude that for large compressible files,
+compression increases encryption time by roughly two seconds per
+MB, but decreases decryption time by roughly the same amount (by
+virtue of having to decrypt fewer bytes).
+
+Raph
+
+
+
+
+
+

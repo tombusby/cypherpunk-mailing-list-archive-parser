@@ -1,0 +1,79 @@
+From: "Robert A. Costner" <pooh@efga.org>
+Date: Sun, 14 Dec 1997 00:12:36 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: remailer hashcash spam prevention
+In-Reply-To: <3.0.3.32.19971212234515.006a79a0@mail.atl.bellsouth.net>
+Message-ID: <3.0.3.32.19971213110625.032e7afc@mail.atl.bellsouth.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 10:55 AM 12/13/97 GMT, Adam Back wrote:
+>Remailers require a different strategy.  With remailers you are trying
+>to discourage spammers from using the remailer, with email you are
+>also trying to discourage spammers, but you have to do it in ways
+>which is easy for neophytes to cope with.
+
+I'm unsure that this is what we are trying to do at all.  I'm perfectly
+willing to assume that a remailer gets it's mail into it.  The problem is
+now that the remailer has to deliver the mail.  Under this plan, to deliver
+mail there must be hashcash for the delivery to the point beyond the
+remailer.  I'm suggesting that if the remailer sends out 3,000 messages
+with a 1/3 sprinkling of CC'ed addresses on equipment that is half as fast
+as normal equipment, the 20 seconds of hashcash will require an average of
+44 hours of CPU time per day.  44 hours for the hashcash that is needed at
+the destination SMTP, not the hashcash to get into the remailer.
+
+HashCash has often been suggested as a method for throttling spam that
+would be sent to remailers.  This is not what I was responding to.  I was
+responding to a suggestion that ISPs start requiring hashcash.  I'm
+honestly unclear as to whether the remailer must generate the hashcash for
+the future SMTP's or if the suggestion is that the originator is generating
+all of the hashcash.  Since remailers mangle the messages and regenerate
+them, I am unsure if originator generated hashcash is to be made for the
+destination mail port, or if the remailer must do this.
+
+If there is in fact a requirement that the sender generate the hashcash,
+then I am not sure this will work.  A nym reply block possibly does not
+lead to an exit address, but rather to another reply block.  In fact, this
+should always be the case.  There is no way for the sender of the email to
+know this route, or how many reply blocks there are.  Any scheme which
+permits the same hashcash to send a message to two nym reply blocks and a
+destination address will also allow spammers to send spams to multiple
+addresses with the same hashcash.
+
+Not only with nyms, but with regular email addresses multiple hops may be
+required to deliver email.  For instance, the address "rcostner@cpsr.org"
+will deliver email to me.  This address forwards mail to "pooh@efga.org".
+The efga domain cannot be POP'ed into, so this is then remailed to wherever
+I'm POP'ing into this month.  Since the original sender cannot know this,
+and since ALL email to me requires a minimum of two mail gateways to get to
+me it seems that this hashcash plan has some problems.
+
+Further, I highly dislike the notion of maintaining system level databases
+of who is communicated with.  As in a quote from Adam Back's web page
+
+     To solve this problem subscribers should put the mailing list
+     address in a postage-free recipients list. 
+
+Traditional "wire tapping" would require that a communications port be
+monitored to find out who communications are being made with.  Under the
+"postage free list" plan, this information sits in a file waiting to be
+collected with no difficulty at all.  Implemented on the SMTP level, we
+have a way of testing for who a person communicates with.  After a HELO, we
+spoof in a MAIL FROM:, then look to see if we get a "559 HashCash Required"
+error.
+
+I've never been impressed with the hashcash method of thwarting spam.  I'm
+just not really sure that a technical solution to spam will work in any event.
+
+
+  -- Robert Costner                  Phone: (770) 512-8746
+     Electronic Frontiers Georgia    mailto:pooh@efga.org  
+     http://www.efga.org/            run PGP 5.0 for my public key
+
+
+
+
+

@@ -1,0 +1,116 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Wed, 20 Sep 95 15:41:55 PDT
+To: Phil Karlton <karlton@netscape.com>
+Subject: Re: "random" number seeds vs. Netscape
+In-Reply-To: <30609562.15FB@netscape.com>
+Message-ID: <199509202240.SAA05690@frankenstein.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Phil Karlton writes:
+> Perry E. Metzger wrote:
+> > This is true. However, you must get 128 bits of entropy into the MD5
+> > -- this can be accompanied by as much junk as you like, but if there
+> > are at least 128 bits of entropy fed in, the MD5 process will distil
+> > it into what you want.
+> 
+> My assumption ws that if we conservatively counted at least 300 bits
+> of entropy, we would have 128 for sure. Not very scientific,
+
+Its not a bad way to go. You have to make sure that you have at least
+that many bits of ENTROPY, however. Stuff like keystroke timings
+should only be thought of as handing you a bit or so per click.
+
+> > You might want to read RFC 1750,
+> 
+> Did that. It talks about a lot of the pitfalls. Unfortunately it
+> does not address (nor can it realistically be expected to address)
+> details of what to look for on a particular version of an OS running
+> on some particular platform.
+
+That is true. 
+
+> > PC timers inherently run at Mhz speed -- they interrupt every 100th of
+> > a second but you can get finer resolution by querying the clock
+> > chip. Does Windows let you do this?
+> 
+> I don't know, but I'll forward this on to our PC guys. It might be a
+> portability problem.
+
+It actually shouldn't be -- every PC has the same timer chip or a
+compatible one. The real question is whether Windows lets you get the
+data out.
+
+> > I wouldn't do that, since it forces you to have a dependancy on
+> > executing a subprocess.
+> 
+> We try to be careful about dealing with the subprocess failing to run.
+
+Also be especially careful about how you run the thing! Don't use
+popen or anything like it!
+
+> > >       System specific info such as hardware serial number or
+> > >       system id.
+> 
+> > By definition, that isn't random. Don't use it.
+> 
+> It doesn't hurt. It's also information that is not available to the external
+> evesdropper. Other than execution time, why should I remove it from the list
+> of bits being fed into the hash?
+
+You have to build to the model of someone who knows everything there
+is to know about the machine. Why? Well, many pieces of information
+can in fact be extracted -- license servers and SNMP agents are a way
+to extract things like system IDs. (Overly chatty SNMP extensions and
+similar stuff make me nervious about using too much ps based entropy,
+by the by.)
+
+If you put PROM ID into the hash, don't count it as a source of bits
+-- just think of it as something extra to throw in to make life harder
+-- and heavily comment that it is not to be counted in the magic 300
+bits you are trying to extract. Remember, plan for the worst, not the
+best, and you will never have trouble if the threat model gets worse.
+
+As a security consultant, I always emphasize to clients that you have
+to plan for worst case -- always. That way you can sleep at
+night. Always assume the adversary has a way to break the individual
+components of your system.
+
+When I build firewalls, I rig them so that both an outer filtering
+router, a tightened down application gateway, and an inner filtering
+router must all fail in order for people to break in. I build things
+on the assumption of maximum hostility on all points. Because of this,
+every time a security hole has been announced for the last couple of
+years -- in CISCO firmware, in Sendmail, in anything -- I've been able
+to sleep because I've known that only one of many layers of protection
+has been breeched and I have a few hours to fix the one layer that is
+broken.
+
+When building things like this, BUILD PARANOID. It never hurts.
+
+> > >     Multi-user Unix machines present a special problem. There are those
+> > >     at Netscape that argue that anybody who has login access to your
+> > >     machine may as well be considered to have root access. There are
+> > >     enough known attacks that this is true to a large extent.  However,
+> > >     I think we can do better than just giving up.
+> > 
+> > I agree. Don't run on the assumption that everyone has root --
+> > otherwise you'll build something that produces less safety than it could.
+> 
+> I agree, but I have a hard arguing with those that asser that the security
+> of UNIX is weak enough that given what we are doing for the patch it will
+> be easier to become root from a logged in account than to hack the seed.
+
+Always build belt-and-suspenders around any security system. Try to
+make sure that there are as many ways as possible that things have to
+fail before you get nuked. Throwing an impediment in the way of
+non-root users is a good idea. You program it once and it protects
+forever -- an excellent investment.
+
+Perry
+
+
+
+

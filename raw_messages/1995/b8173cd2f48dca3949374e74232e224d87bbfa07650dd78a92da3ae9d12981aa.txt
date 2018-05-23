@@ -1,0 +1,83 @@
+From: aba@dcs.exeter.ac.uk
+Date: Fri, 11 Aug 95 07:14:33 PDT
+To: kinney@bogart.Colorado.EDU ("W. Kinney")
+Subject: Re: SSL bruting progress
+Message-ID: <10188.9508111413@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Will Kinney <kinney@bogart.colorado.edu> writes on cpunks:
+> > We've not managed to isolate the cause of it, as (two people) have
+> > nearly swept the entire keyspace (heh they had a bit of spare compute)
+> > and no key has been forthcoming so far.
+> 
+> Um, if you're going to sweep the whole space yourself before you release
+> the code, what's the point in a public sweep? 
+
+Surety.
+
+Nothing as disappointing as throwing all your spare compute joyfully
+into such a fun cpunk project, and then finding no key comes from it.
+Witness the RC4 bruting, which lots of folks thought fun, but
+unfortunately (well it should have been expected, and it was in part,
+as there were no specs, all we knew was microsoft said it was RC4 in
+some way, nothing more) no key.
+
+Also the private sweeping wasn't planned, just Eric Young said, hey
+I've started at 8000 I'll sweep up from there till you're ready.
+(Eric already had his own SSL bruting code).  Then David Byers asked
+for a copy of Andrew Roos brute ssl to port to the maspar he has
+access to, and next thing he said, hey I got it working at 1.5M
+keys/sec and left it running, it'll reach Eric's start in a couple of
+days.  As it turned out that they haven't found anything yet, their
+keysweeping is going to be very useful to figure out what's wrong.
+It's much harder to track down problems, accidentally unswept keyspace
+etc, when there are 100s of sweepers.
+
+Anyway, when we're as sure as we can be that it will work, we'll
+probably try to persuade Hal for another sample session.  So that it
+will be a challenge, that we don't know the answer for.
+
+Perhaps it would be fun to have a regular key crunching ring set up
+once it's all verified, and proven to work.  Part of the problem with
+this is the legal implications, you probably can't expect to get away
+with breaking SSL sessions no questions asked - give us a SSL session
+key startup and we'll brute it - at least not openly.  A central key
+distribution point kind of blows this, as it gives legal beagles
+somebody to go after.
+
+The other key distribution architecture, is an unknown machine out
+there somewhere in cyberspace :-) Ie a blacknet style address and 2048
+bit public key:
+
+	brute@cyberspace.nil
+
+with a charge levied in anon digital cash.  A sweepstake perhaps, he
+who hits the key first gets the anon digital cash remailed to him (tax
+free of course).
+
+An architecture resilient to interference on both legal and
+ill-meaning key-sweepers sides (the possibility exists for someone to
+reserve keyspace and not sweep it) is to just search randomly.  Very
+simple architecture, but somewhat wasteful of resources, least likely
+to be detected, as there is less communication.  One drop off of 'the
+session' to cpunks, and another of the result by the euphoric lucky
+person who happened to start in the right place.
+
+Adam
+--
+HAVE *YOU* EXPORTED RSA TODAY? --> http://dcs.ex.ac.uk/~aba/rsa/
+--rsa--------------------------8<-------------------------------
+#!/bin/perl -s-- -export-a-crypto-system-sig -RSA-3-lines-PERL
+$m=unpack(H.$w,$m."\0"x$w),$_=`echo "16do$w 2+4Oi0$d*-^1[d2%Sa
+2/d0<X+d*La1=z\U$n%0]SX$k"[$m*]\EszlXx++p|dc`,s/^.|\W//g,print
+pack('H*',$_)while read(STDIN,$m,($w=2*$d-1+length($n)&~1)/2)
+-------------------------------8<-------------------------------
+TRY: rsa -k=3 -n=7537d365 < msg | rsa -d -k=4e243e33 -n=7537d365
+
+
+
+
+

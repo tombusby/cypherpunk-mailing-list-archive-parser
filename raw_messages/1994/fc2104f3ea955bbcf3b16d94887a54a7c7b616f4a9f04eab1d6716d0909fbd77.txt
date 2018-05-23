@@ -1,0 +1,47 @@
+From: "L. Detweiler" <ld231782@longs.lance.colostate.edu>
+Date: Sun, 16 Jan 94 17:33:15 PST
+To: cypherpunks@toad.com
+Subject: Remailer Technology
+Message-ID: <199401170131.SAA21284@longs.lance.colostate.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello darlings! I was playing with your remailers recently, yesterday
+in particular, and was a bit disappointed in them for a variety of
+reasons. I got a list of the current ones from K.Barrus some time ago
+but even this supposedly up-to-date list had a lot that appeared not to
+work. Out of ~20 on the list, ~8 sent back a ping message. One kept
+sending me some strange error.
+
+In another test, I sent out an informative posting to a whole bunch of
+mailing lists recently through some of the remailers. The remailers
+seem to be very fragile and can be overcome by a huge onslaught of
+postings. It appears that every new message spawns a new process, and
+the machines get overloaded and don't have memory left to do anything.
+Kind of a serious flaw! One could mess them up doing this. Good thing
+that no one has any malicious feelings toward the cypherpunks or their
+remailers, or this might have already happened.
+
+As a solution to the `spawning' problem, here is a possibility: I am
+just guessing, but I bet the perl script is grabbing in the message
+from the incoming socket at the beginning, and then closing the socket,
+and then going about its business to send the message out. But during
+this period, new messages can be sent to the now `clear' socket, hence
+spawning a new process. A solution would be to keep the socket `busy'
+for the duration of the execution of the perl code. Another solution is
+to have the messages sent into a buffering script, and something else
+continuously running in the background to go through the queue to send messages.
+
+Finally, I was wondering if anyone else was doing Ping tests on the
+remailers for run times and whether they post them. If there is
+interest I would be willing to write a script to automate this process
+and post the results say every week, so that people can keep abreast of
+what remailers are active and responsive. If we want a strong
+infrastructure for all our evil deeds, we have to make sure that it is resilient!
+
+Thanks, and please don't flame me for trying *earnestly* to contribute!
+
+
+
+

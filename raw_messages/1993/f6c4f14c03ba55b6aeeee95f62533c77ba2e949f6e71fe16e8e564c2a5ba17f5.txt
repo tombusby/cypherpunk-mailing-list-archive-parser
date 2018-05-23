@@ -1,0 +1,42 @@
+From: zimm@alumni.cco.caltech.edu (Mark Edward Zimmerman)
+Date: Sun, 6 Jun 93 04:51:32 PDT
+To: cypherpunks@toad.com
+Subject: random access into an encrypted file?
+Message-ID: <9306061150.AA07264@alumni.cco.caltech.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I'm enjoying the discussion of encrypting file systems, but have a
+perhaps-naive question: can the methods recently proposed here work
+for fast "random" access of bytes from the middle of a possibly-large
+file?
+
+Specifically, over the years I have written some free-text
+information-retrieval programs which build complete inverted indices
+to every word in a chosen text file (which may be many megabytes long,
+limited by disk space, not by RAM) --- and in order to fetch and
+display text quickly from an arbitrary point in the file, my programs
+do a lot of fseek() operations.  If a file is encrypted under various
+schemes, I wonder how long it would take to fetch byte 100,000,000?
+Could it cause me some performance problems?  :-)
+
+Just thought I'd raise the issue....  BTW, if anybody wants to work
+with large text files, the stuff I've done is all free under GNU GPL;
+for nicest user interface, see Mac version which hides behind
+HyperCard (in INFO-MAC archive at sumex-aim.stanford.edu, under
+directory info-mac/card with a name beginning "freetext", I think).
+Generic command-line C code to build indices is "qndxr.c" in various
+archives, and the generic command-line browser is "brwsr.c".  See
+description in THE DIGITAL WORD, eds. Landow & Delany, MIT Press,
+1993, pps. 53-68, for more details.  Briefly, the programs let you
+scroll around in alphabetized word lists, generate key-word-in-context
+displays and do simple proximity filtering, and retrieve chunks of
+text on demand, very fast.  Index-building is 15-20 MB/hour on an
+older Mac II-class machine, 60-80 MB/hour on a Sparcstation, etc.
+
+Best,  ^z  (no relation!)
+
+
+
+

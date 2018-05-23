@@ -1,0 +1,60 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 6 Nov 1997 03:06:27 +0800
+To: frantz@netcom.com
+Subject: entropy theft (Re: Privacy Software)
+In-Reply-To: <v03110716b0865fb9b2a0@[207.94.249.121]>
+Message-ID: <199711051828.SAA09379@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Frantz <frantz@netcom.com> writes:
+> 
+> At 2:32 PM -0800 11/4/97, Adam Back wrote:
+> >What's wrong with the randseed.bin and the public and private key
+> >rings is that they should all be encrypted with a key derived from
+> >your passphrase.
+> 
+> Think about it for a minute.  randseed.bin is a place to store entropy.
+> Entropy is about uncertainty.  If I do a reversible transform (e.g.
+> encrypt) to randseed.bin, I still recover the entropy without reversing
+> (e.g. decrypting) the transform.
+
+You might get some entropy from it -- but you won't get my PRNG state!
+An attacker is welcome to the entropy, but may find it cheaper to
+generate his own entropy than to copy some of mine.
+
+There are certain attacks which become possible when an attacker can
+snarf a copy of your randseed.bin, eg. the attacker can predict
+session keys if he can guess your plaintext, and you are using an
+environment which does not allow pgp2.x to sample your keystrokes (eg
+integrated mail scripts).
+
+randseed.bin is more sensitive than people treat it.  pgp2.x encrypts
+private keys because people could use them to decrypt traffic, but it
+does not encrypt the randseed.bin which could in some circumstances
+also allow traffic to be decrypted.
+
+An ergonomic disadvantage of encrypting randseed.bin is that you would
+need to enter the passphrase to decrypt it before being able to
+encrypt messages.  (You could make that optional -- and just use it in
+encrypted form when you couldn't be bothered entropy shows through :-)
+
+Encrypted public and private key rings is a separate good, and this
+because it obscures who you are talking to and what your nyms are.
+premail does this for you.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,36 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Wed, 24 Jul 1996 01:31:41 +0800
+To: cypherpunks@toad.com
+Subject: Re: Decrypt Unix Password File
+In-Reply-To: <01BB78C7.358738E0@ip73.i-manila.com.ph>
+Message-ID: <9HRiRD9w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jerome Tan <jti@i-manila.com.ph> writes:
+
+> How can I decrypt Unix password file?
+
+If the /etc/passwd file does not use shadow passwords, then the second field
+of each line contains the 'salt' and a value dependent on both the salt and
+the secret password.
+
+One can try to compute the function of all reasonable dictionary words with
+the salts in the /etc/passwd file, and hope that some of them match the
+values listed in the file.
+
+There are many programs that do this, e.g., look for 'crack'.
+
+This attack can be made more difficult if you force your users not to use
+easy-to-guess passwords, and if you use something like NIS and shadowing to
+make the public part of the passwords harder to get.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

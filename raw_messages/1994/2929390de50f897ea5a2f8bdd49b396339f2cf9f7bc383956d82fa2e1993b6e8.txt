@@ -1,0 +1,65 @@
+From: nobody@kaiwan.com (Anonymous)
+Date: Fri, 19 Aug 94 12:55:40 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSS attachment - is that Splash II?
+Message-ID: <199408191954.MAA12767@kaiwan.kaiwan.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+------- Forwarded Message
+
+Date: Fri, 19 Aug 1994 13:30:42 -0400 (EDT)
+From: Ronald G Minnich <rminnich@descartes.super.org>
+Subject: Re: SSS attachment - is that Splash II?
+
+The WSJ article on the Cray-3 deal involves a chip/system designed here
+called TeraSys. Maya [Minnich djf] has a forthcoming article in IEEE
+Computer about it.
+The basic idea is to embed bit-serial processors in the sram chips, one
+processor per bit in the memory row register. It's a simple processor with
+an ALU and three registers. The memory "words" can now be thought of as
+running vertically up the columns, rather than horizontally along the
+rows. Every time you fetch a row, you are in fact fetching 64 bits from 64
+different words to be operated on in the ALUs.This gives you roughly a
+100-fold increase in memory bandwidth, since you no longer mux the data
+down from 64 bits to 1 or 4 bits to bring it off-chip. The key
+contribution of the Cray (this idea due to Ken Iobst of SRC, who also was
+the architect of the chips) came from Ken's realization that the Cray vector
+scatter/gather hardware could push the bits around BETWEEN the chips as
+fast as the hardware networks on, e.g., the CM-2. Thus the Cray-3, a
+vector supercomputer, can function as a very high-performance SIMD system
+as well. You don't need to build the additional network found on so many
+SIMD machines, e.g. maspar or cm-2.  You also can have phases of a
+program, wherein it runs SIMD for a while, then vector, then SMP mode,
+etc.
+
+The TeraSys processors built here at src cost about $80K each, and for
+several problems could easily outrun our $6M CM-2.
+
+The chips are National Semi SRAMS, with mods done here by Mark Norder and
+Jennifer Schrader. Ken Iobst is the architect of the chips. The
+programming environment was basically Maya Gokhale's DBC language, which
+also runs on Splash-2, the CM-2, and clusters. Cray has reimplemented the
+chips for the Cray-3.
+
+In keeping with the NSAs new plans for SRC, this project was terminated
+at SRC last January. The systems are gradually being turned off and the
+cabinets put to other uses. No further work is occurring at SRC in this
+area.
+
+Feel free to forward this article to people who may ask you. There was
+some good work done by people here.
+
+ron
+
+rminnich@super.org     | Error message of the week:
+(301)-805-7451 or 7312 | NFS server localhost not responding still trying
+
+------- End of Forwarded Message
+
+
+
+
+

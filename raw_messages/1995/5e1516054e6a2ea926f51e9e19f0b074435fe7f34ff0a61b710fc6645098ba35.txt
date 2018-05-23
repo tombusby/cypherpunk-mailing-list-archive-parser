@@ -1,0 +1,49 @@
+From: Don.Stephenson@Eng.Sun.COM (Don Stephenson)
+Date: Sat, 30 Sep 95 23:16:29 PDT
+To: ses@tipper.oit.unc.edu
+Subject: Re: NetScape's dependence upon RSA down for the count!
+Message-ID: <9510010614.AA08538@icenine.Eng.Sun.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> From ses@tipper.oit.unc.edu Sat Sep 30 20:43:51 1995
+
+> My currently recommended approach is to enforce the verisign requirement 
+> that all valid hostnames for the server be included in the certificate as 
+> CN values. This allows the check to be made below the application layer. 
+> Unfortunately a lot of currently issued certificates are non-compliant 
+> (even Verisign and netscape :-); any fully automated implementation needs 
+> a static table of hostnames aliases- interactive applications can 
+> display certificates for manual review.
+
+I don't think binding hostnames to certificates helps much because 
+both hostnames and IP addresses can be spoofed and DNS servers can be 
+subverted.  The important thing is the binding to the "service" name or 
+definition (e.g. InterState online banking service).
+
+
+> This is not really much protection. Getting hold of any key is much 
+> easier than getting a specific key, and don't forget there are a number 
+> of vulnerable keys floating around until their expiration dates pass. 
+
+Well of course, if the secret key of the server (or worse yet, certificate 
+authority) is compromised, all bets are off.  That's true of just about any 
+protocol you can dream up.
+
+Are you just referring to the problem of accurate and up to date certificate 
+revocation lists (CRL) being available ?
+
+If so, you're right, this is a very difficult problem to solve without 
+having a truly reliable and pervasive key-distribution & CRL system 
+deployed throughout the world.
+
+- Don
+
+
+
+
+
+
+

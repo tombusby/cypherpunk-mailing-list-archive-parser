@@ -1,0 +1,41 @@
+From: paul@fatmans.demon.co.uk
+Date: Tue, 26 Nov 1996 09:48:41 -0800 (PST)
+To: Bill Frantz <frantz@netcom.com>
+Subject: Re: IPG Algorith Broken!
+Message-ID: <849030317.93771.0@fatmans.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+ Known-plaintext:   Unbreakable, since the pad is never reused
+ Chosen-plaintext:  Unbreakable, ditto
+ Adaptive-chosen-plaintext: Unbreakable, ditto
+
+Correct but for a different reason. Re-using the pad does render the 
+security useless but the other reason is if we know part of the pad 
+AND the ciphertext (and hence the plaintext) or part of the plaintext 
+and the ciphertext and therefore the pad, We cannot solve the rest of 
+the ciphertext as the pad is true random and the next bits are 
+independent of all the previous ones so we cannot predict from what 
+we have.
+
+A better definition of unbreakable, IMHO, is that there is no way to 
+determine the plaintext given unlimited ciphertext and computational 
+resources. Sure, this isn`t a complete definition but at least it 
+definites perfect security in an analytic sense.
+
+
+
+ 
+
+  Datacomms Technologies web authoring and data security
+       Paul Bradley, Paul@fatmans.demon.co.uk
+  Paul@crypto.uk.eu.org, Paul@cryptography.uk.eu.org    
+       Http://www.cryptography.home.ml.org/
+      Email for PGP public key, ID: 5BBFAEB1
+     "Don`t forget to mount a scratch monkey"
+
+
+
+

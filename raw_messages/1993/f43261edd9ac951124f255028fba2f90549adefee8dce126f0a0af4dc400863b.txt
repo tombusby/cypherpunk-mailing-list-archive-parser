@@ -1,0 +1,68 @@
+From: hfinney@shell.portal.com
+Date: Sat, 30 Oct 93 18:13:35 PDT
+To: cypherpunks@toad.com
+Subject: Signing keys for nyms
+Message-ID: <9310310111.AA04227@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+The big weakness with public-key cryptography is making sure you have a
+valid key for the person you are communicating with.  If you just get
+a key off a key server, it's possible that the key has been faked and
+does not actually belong to the person it claims to.  Key signatures
+from trusted individuals testify that the key actually is associated
+with the given userid.  Without a trusted signature, it's possible that
+your messages could be read en route and then re-encrypted with the true
+key of the recipient, who receives a properly encrypted message and
+doesn't suspect anything.
+
+In practice, this attack would normally be difficult to mount, as it
+would imply some way of intercepting and altering the messages you are
+sending.  But anonymous communicants are perhaps more vulnerable to these
+attacks since their mail generally must go through a server system.  They
+have to trust these servers not to reveal their true identity (at least,
+with the penet.fi server), but there is also the danger that the server
+could alter their messages as they pass through the server, possibly
+posting false public keys for them.
+
+If Wonderer, for example, communicated mostly through the penet server,
+there could be many kinds of changes being made to his messages, and
+he might not notice.  His key could have been changed, then when his
+posted Cypherpunks message came back to him, it could have been changed
+back to what he sent.  Encrypted mail to him could be read by the penet
+operator and then re-encrypted with his real key.
+
+(Naturally, I'm not suggesting the Julf would do something like this,
+but the attack is possible in principle.)
+
+Obviously this kind of attack could be defeated in many ways, such as
+if Wonderer could check his postings through some other path than penet.fi.
+But this might require him to expose himself in some ways (such as by
+signing up to the CP list under his True Name) that he would prefer not
+to.  Ideally, a nym should be able to explore interests completely
+separate from any connection with his True Name.
+
+In general, it seems to me that anonymity server operators are the ones
+in the best position to create fake keys for nyms.  Eric's suggestion
+that operators should sign the keys doesn't help much in this situation.
+I'd say that other methods are needed to confirm that encrypted messages
+to nyms are not being read en route.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLNLezagTA69YIUw3AQGk+AP9HX8RUXgV+qKHcDLOnb75dHJUv+gqO0dm
+znRHtyNruRWOTtbqCp7VMV84+etnU90sMIDt/fwsCJdvaGnktYGwdQx2TkiIUQGF
++n1nXb6/YRvDPcry7/W5Um4cQVHFd3thS8g7GI2FRZgS/qZ9BHJLcmRf17w+FsQs
+ORHMk+JowQw=
+=Y8Uf
+-----END PGP SIGNATURE-----
+
+
+
+

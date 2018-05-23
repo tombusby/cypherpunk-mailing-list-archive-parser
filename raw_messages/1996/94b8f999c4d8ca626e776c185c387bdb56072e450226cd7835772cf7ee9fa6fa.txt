@@ -1,0 +1,43 @@
+From: "D.A. Wagner" <daw27@newton.cam.ac.uk>
+Date: Sat, 13 Apr 1996 06:22:07 +0800
+To: jamesd@echeque.com
+Subject: Re: RC4 improvement idea
+In-Reply-To: <199604120717.AAA17361@mail1.best.com>
+Message-ID: <199604121550.QAA19509@jordan.newton.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> At 02:57 AM 4/9/96 -0700, David Wagner wrote:
+> > For one key in 256, you have a 13.6% chance of recovering 16 bits of
+> > the original key.
+> >
+> > On average, the work factor per key recovered is reduced by a factor
+> > of 35 (i.e. the effective keylength is reduced by 5.1 bits) by using
+> > this class of weak keys.
+> 
+> Why do you not just assume the last byte of the key is 0x4A
+> 
+> Then for one key in 256 the effective keylength is reduced by a
+> whole 8 bits instead of a measly 5.1 bits.
+
+No.  The 5.1 bit figure is averaged over the whole damn keyspace.
+If you pick a random 40 bit key (not necessarily a weak key), and
+I apply the Andrew Woos attack, I can guess your key with 2^{40-5.1}
+= 2^34.9 work factor, on average.
+
+Look.  1 in 256 keys are weak.  For a weak key, you have a 1/7.35 = 13.6%
+chance of recovering 16 bits of the key.  This is an advantage for the
+attacker, as 2^16 / (256*7.35) = 34.8 = 2^5.1 > 1.
+
+Suppose you called keys with the last byte 0x4A jamesd-weak.  1 in 256
+keys are jamesd-weak.  For a jamesd-weak key, you have a 1.0 = 100% chance
+of recovering 8 bits of the key.  This is not an advantage for the attacker,
+as 2^8 / (256*1.0) = 1.0.
+
+Keep an open mind,
+-- Dave Wagner
+
+
+
+

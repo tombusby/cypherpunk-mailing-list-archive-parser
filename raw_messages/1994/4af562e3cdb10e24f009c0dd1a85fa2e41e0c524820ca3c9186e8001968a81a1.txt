@@ -1,0 +1,65 @@
+From: fb@cyberg.win.net (Francis Barrett)
+Date: Fri, 4 Feb 94 17:45:17 PST
+To: cypherpunks@toad.com
+Subject: Re: Magic Money Digicash System
+Message-ID: <81@cyberg.win.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+ > Magic Money is a digital cash system designed for use over
+ > electronic mail. The system is online and untraceable. Online
+ > means that each transaction involves an exchange with a server,
+ > to prevent double-spending. Untraceable means that it is
+ > impossible for anyone to trace transactions, or to match a
+ > withdrawal with a deposit, or to match two coins in any way.
+
+This is the neatest thing I have read in a long time.  Where can I get
+one?
+
+ > The client module then generates proto-coins, which are
+ > blinded but unsigned. It produces an output file containing
+ > Alice's coins, and the new proto-coins.
+
+ > Bob mails this to the server. The server counts up Alice's
+ > coins, checks their signatures, and checks for
+ > double-spending. It puts the coins on the cancelled list,
+ > signs the proto-coins, and mails them back to Bob. Bob runs
+ > his client module on the reply message. It unblinds the
+ > signed coins and adds them to his coin file. This completes
+ > the transfer.
+
+A few questions.  Since the client which generates the proto-coins is
+under the control of the consumer, the bank has no way of making sure
+that he is not running his own code, or that the RNG he is using is
+cryptographically strong, or even that he is not distributing modified
+client programs to other users.
+
+How does the bank deal with collisions in the 16 byte values of coins?
+What if the user picks the numeric values for the server to sign in a
+way which leaks information about the banks private key?  RSA is much
+more secure when signing random-esque data, like a message digest,
+than it is when signing numbers provided to it by some outside party.
+
+Similarly, how can the consumer trust the bank's representation that
+money has already been spent?  Surely the bank should be required to
+publish a list of cancelled coins and timestamps with a running MD5
+hash periodically for inspection by the unwashed masses.
+
+What do you do about lost messages from the server to the client.
+Once coins have been recorded as spent, they cannot be redeemed again.
+Yet the mail message containing the new coins may have been lost in
+transit.
+
+
+---------------------------------------------------------------
+Francis Barrett, F.R.C. |  Thou canst not travel on the path  |
+The Cybernetics Guild   |  before thou hast become the Path   |
+fb@cyberg.win.net       |  itself.                            |
+---------------------------------------------------------------
+
+
+
+
+

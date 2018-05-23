@@ -1,0 +1,56 @@
+From: b44729@achilles.ctd.anl.gov (Samuel Pigg)
+Date: Fri, 3 Sep 93 18:30:31 PDT
+To: bill@twwells.com
+Subject: Remailer Reliability
+In-Reply-To: <CCsM6D.Cx8@twwells.com>
+Message-ID: <9309040125.AA27752@achilles.ctd.anl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> On Fri, 3 Sep 1993 19:30:10 GMT, bill@twwells.com (T. William Wells) said:
+
+	bill> If you're going to do that, why not go for extra security at the
+	bill> same time? Instead of transmitting the same message to all of the
+	bill> remailers, transmit different pieces to each and then reconstruct
+	bill> the original from whatever pieces you get. Done right, this could
+	bill> also be used to make traffic analysis harder.
+
+
+By breaking a message into pieces and sending them via different paths
+to the same destination ("path forking"), this can only make traffic
+analysis easier, because all the pieces lead to the same destination,
+and you can follow any of them to get to the anonymous recipient.
+
+But there *is* a way this could be useful: implementing a "kill message"
+remailer command for pieces that have been forked off from the
+original message. This way, a message could split itself into pieces
+(or duplicate itself with a different header) and the attacker would
+have to determine which one to try to follow to the recipient (or
+follow them all), as only one will arrive there and the rest would die
+after a number of remailer hops.
+
+I really think that non-deterministic "smart messages" are the way to
+go here. A simple command language for the remailers would allow
+the header construction software already being worked on by
+ebrandt@jarthur.Claremont.EDU (CRM) and others to use tricks
+like this to defend against attacks. 
+	The defense complexity would be a function of the users'
+header construction software and needs. People who need "minimal"
+anonymity would have simpler anonymous address blocks, as compared to
+those who require "serious" anonymity, and the remailers themselves
+would have a lighter load (not having to implement very serious
+security for *all* messages-- just those that need it).
+	"Smart messaging" would also have the added benefit of
+not requiring the remailers to be constantly rewritten as new schemes
+are conceived for foiling remailer attack (well, for the most part.)
+
+Sam Pigg                                  dt1acaa@cfraix.cfr.usf.edu
+samp@renoir.cftnet.com        <or>       b44729@achilles.ctd.anl.gov
+PGP Key Fingerprint: ED A7 49 33 65 90 9A BD A4 E4 C5 92 5A 00 BC 6C
+
+
+
+
+
+

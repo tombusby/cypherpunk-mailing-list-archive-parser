@@ -1,0 +1,52 @@
+From: nowhere@bsu-cs.bsu.edu (Chael Hall)
+Date: Tue, 26 Jan 93 17:18:54 PST
+To: cypherpunks@toad.com
+Subject: Remailer Changes
+Message-ID: <9301270115.AA24665@bsu-cs.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+     The following changes have been made to the remailer running here
+at bsu-cs.  Note that they are effective immediately.  If some of you
+would please just try sending a few messages through the remailer so
+I can be sure it is working (I don't care if you remail it to yourself,
+but I want to look at the debug output so that I can turn off the logs.
+
+Changes:
+
+ - Thanks to a suggestion on here, I have changed to the more standard
+   "::" format.  If and only if the first line of the message after the
+   header contains "::" will the lines following it up until a blank
+   line *OR* another "::" on a line by itself be parsed as though they
+   are part of the header.
+ - Any "X-Anon-To," "X-Anonymously-To," or "Request-Remailing-To," lines
+   in the main header or the secondary header will cause the recipient's
+   name to be set to its value.  The last one listed will be the one to
+   which the mail is sent (I haven't decided whether or not multiple
+   recipients are going to be supported yet)
+ - Any "From" line in either header will be stripped.
+ - Any line except the "Subject" line will be stripped from the main
+   header before being sent.
+ - Any lines aside from those already described above that are contained
+   in the secondary header will be appended to the header before the message
+   is sent out.
+ - No X-Anon-To, X-Anonymously-To, or Request-Remailing-To header lines
+   will be passed on in case this remailer is being chained onto another
+   remailer (which would cause an endless loop if it found its own address
+   as the X-Anon-To field and didn't strip it on outbound mail).
+
+     Please let me know what you think.  Once again, this software is written
+in C and I plan to release source code when the project is completed.
+
+Chael Hall
+
+--
+Chael Hall
+nowhere@bsu-cs.bsu.edu, 00CCHALL@LEO.BSUVC.BSU.EDU, CHALL@CLSV.Charon.BSU.Edu
+(317) 285-3648 after 4 pm EST
+
+
+
+

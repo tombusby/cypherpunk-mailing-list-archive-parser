@@ -1,0 +1,53 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Tue, 5 Oct 93 22:05:09 PDT
+To: cypherpunks@toad.com
+Subject: Strong PRNGs
+Message-ID: <9310060502.AA20205@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I  can think of two:
+
+1.	a long-period PRNG (like subtract-with-carry) feeding a
+	cryptographically strong hash function (perhaps triple-DES
+	in ECB  mode with both key nad input taken from the PRNG
+	and output becoming the new PRNG output;
+
+2.	Russell Imagliazzo's (sp?) PRNG as strong as subset-sum.
+
+	Reference:
+	R. Imagliazzo, M. Naor, 
+	``Efficient Cryptographic Schemes Provably as Secure as Subset Sum.''
+	FOCS89.
+
+
+	For example:  (if I  remember correctly)
+
+
+	Algorithm:
+
+	Take an array of 512 numbers, each 521 bits long.
+	Fill those with true random bits (coin flips, etc.).
+
+	fill a 512 bit register with random bits.
+
+	associate each bit of the register with one entry in the array.
+
+   loop:
+
+	for each bit in the 512-bit register, if the bit is a 1, add the
+	corresponding array entry into a 521-bit accumulator (init'd to 0
+	at the start of this pass), modulo a 521-bit prime.
+
+	at the end of the pass over all 512 bits, take the low order
+	8 bits of the accumulator as your output byte (a pseudo random
+	value) and the next 512 bits as the new register for the next round.
+	Toss the top bit.
+
+	goto loop
+
+
+
+
+

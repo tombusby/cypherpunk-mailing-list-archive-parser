@@ -1,0 +1,61 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Fri, 3 Feb 95 11:52:36 PST
+To: cypherpunks@toad.com
+Subject: Re: Remailer encryption module
+In-Reply-To: <9502030123.AA02022@josquin.media.mit.edu>
+Message-ID: <199502031942.LAA15031@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: Derek Atkins <warlord@MIT.EDU>
+
+   > I agree.  PGP just does not have the support for the encryption
+   > required for mixing remailers.
+
+   How
+   is PGP deficient?  What do you need PGP to do in order to get it to
+   work right with remailers?
+
+Note that I said mixing remailers, not just regular remailers.
+
+-- No support for random padding to a fixed length.  Yes, this can be
+patched by script.  Hell, you could rewrite PGP with a script, so the
+existence of a workaround is no defense.
+
+-- Message size blowup for encrypted armor-within-armor.  Yes, I know
+it compresses, but it would be a better thing to get PGP to unpack a
+PGP encrypted message (the message to the next hop) to multipart form,
+part regular text, part armored.
+
+-- Inability to restrict PGP from accepting a non-encrypted message.
+PGP run on an armored plaintext file will work just as if it were
+encrypted.  This precludes being able to require encryption as a site
+policy.  (Again this can probably be worked around; again, not an
+excuse.)
+
+In addition, there's a few really bad misfeatures for pseudonymity
+(which is what everyone seems to want to do with remailers):
+
+-- Identities for secret keys are in cleartext in the secret key ring.
+Upon seizure of a secret key ring, presence of a pseudonym name can be
+considered a presumption of possession of a corresponding secret key,
+simply because people don't fill up their secret key rings with bogus
+keys with other people's names.
+
+-- Key ID of the recipient is always in the clear.
+
+-- The RSA-encrypted session key does not have a flat representation
+over its multiword container.  This yields a statistical traffic
+analysis hole.  (This point is irrelevant without fixing 4.)  Hal and
+I completely solved this problem last year.
+
+
+This is all I can think of off the top of my head.  Not having
+analyzed the problem recently, I can't say that I've got everything.
+
+Eric
+
+
+
+

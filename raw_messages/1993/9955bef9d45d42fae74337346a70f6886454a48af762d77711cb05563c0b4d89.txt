@@ -1,0 +1,31 @@
+From: eichin@cygnus.com (Mark Eichin)
+Date: Fri, 9 Jul 93 12:20:15 PDT
+To: tedwards@wam.umd.edu
+Subject: Hmm...hardware secure phone?
+In-Reply-To: <199307091816.AA09211@rac3.wam.umd.edu>
+Message-ID: <9307091919.AA05781@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Anyway, who knows of a DES or RSA chip which will do 16kbps?
+>> Then all we need is a microcontroller to run the show, and 
+	(kbits? kbytes?) Well, a quick check of some C code gets me
+200Kbytes[*] (1.6Mbits) per second on a SparcStation ELC. I'll have
+numbers for the i960 microcontroller[**] later this weekend -- you
+might be able to have the microcontroller do the encryption too :-)
+							_Mark_
+
+[*] That's 50,000 calls to des_ecb_encrypt and 50,000 calls to
+des_ecb_decrypt, so 100K ecbs, each ecb is 8 bytes, so that's 800K
+bytes, and it took 3.98 user CPU seconds, so that's 200K bytes. Yep,
+the math checks. Compiler: Solaris gcc -O (a few months old); DES
+code: Ferguson's, as folded into Kerberos 4.
+
+[**] Yeah, it's marketed as a microcontroller. If you put it in a
+toaster, you wouldn't need a heating element. Still, it's part of the
+background for my talk at the Embedded Systems conference in October
+on "Security Issues in Embedded Networking". 
+
+
+

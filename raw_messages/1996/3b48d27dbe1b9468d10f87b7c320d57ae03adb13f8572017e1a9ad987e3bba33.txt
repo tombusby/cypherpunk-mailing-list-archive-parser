@@ -1,0 +1,62 @@
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+Date: Fri, 19 Jan 1996 18:25:01 +0800
+To: daw@beijing.CS.Berkeley.EDU (David A Wagner)
+Subject: Re: Hack Lotus?
+In-Reply-To: <199601190154.UAA24710@bb.hks.net>
+Message-ID: <199601190610.RAA17232@sweeney.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello cypherpunks@toad.com
+  and daw@beijing.CS.Berkeley.EDU (David A Wagner)
+ 
+...
+> Hack Lotus?  Please do.
+...
+> If the receiving Lotus Notes program does verify that the high 24 bits
+> are escrowed correctly, then anyone can verify that, so in 2^24 trials,
+> I can recover the high 24 bits, and with 2^40 more trials, I can recover
+> the high 40 bits.  Therefore 2^40 + 2^24 trials should suffice to hack
+> Lotus if this is how it works.
+...
+
+
+I have no idea how Lotus actually does this, but:
+
+How about a salt determined by the forty bit part?
+
+Ie if the key is s.g (s=secret, g=gaked), the BARF (="Big-brother Access
+Required Field") could contain Encrypt(Hash(s).g,BigBrother).
+
+The receiving end, knowing both s and g, could re-calculate the
+BARF and only function when it's correct. Unless it's been hacked too,
+in which case it could barf when the BARF is correct :-)
+
+
+Would that work or have I missed something? As I said, I've no idea
+what Lotus actually does.
+
+
+Jiri
+- --
+If you want an answer, please mail to <jirib@cs.monash.edu.au>.
+On sweeney, I may delete without reading!
+PGP 463A14D5 (but it's at home so it'll take a day or two)
+PGP EF0607F9 (but it's at uni so don't rely on it too much)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMP81zCxV6mvvBgf5AQGcZgP+PZyX+uZsHcG/RM29onq8d7FB402nHiqM
+QgZi6dXb7AkilYrw0YGt1fDDzi1W7+0bufmX2sa02r6Yh/MkJ8Lw+O/WHYau5eDP
+XC91pTFQHAYlvi9zNIKoclh1x2Z3dDUkly5yBA3nAhDuY2tcteop8nPLewA49qm5
+H61a7l3o+Ys=
+=Prxc
+-----END PGP SIGNATURE-----
+
+
+
+

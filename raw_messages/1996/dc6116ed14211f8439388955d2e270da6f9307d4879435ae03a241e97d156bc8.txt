@@ -1,0 +1,280 @@
+From: Ian Goldberg <iang@cs.berkeley.edu>
+Date: Wed, 7 Aug 1996 19:34:02 +0800
+To: coderpunks@toad.com
+Subject: Fixes to loop.c et al. for DES,IDEA,stego now done
+Message-ID: <199608062350.QAA10693@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+As I mentioned before, the hooks to DES (and IDEA; with Nicholas Leon's
+patches) in loop.c and {mount,losetup}(8) are horribly broken.
+For example, the DES key you type in is totally ignored, and only the first
+byte of the IDEA key you enter is relevant.  As well, the DES code was using
+PCBC mode, and IDEA was using ECB mode.
+
+I've fixed the key management (the key is based on a SHA1 hash of the pass
+phrase you enter), and changed both DES and IDEA to use CBC mode.
+
+Adding other encryption methods (Blowfish, for example) should be
+straightforward.  In fact, I'm planning to add a facility for dynamically
+adding and removing general data transformation modules (maybe for 2.1...).
+
+In addition, I've implemented steganography (hiding a filesystem in the low
+bits of, say, an audio file), and fixed some assorted bugs in loop.c
+(incorrect variables were being used in some places, and a deadlock was fixed
+having to do with making a loop device on top of another loop device).
+
+The patches are available from:
+
+ftp://ftp.csua.berkeley.edu/pub/cypherpunks/filesystems/linux/index.html
+
+Since that site seems to be down a lot, there's an alternate site:
+
+ftp://csclub.uwaterloo.ca/pub/linux-stego/index.html
+
+Note that there's one file that contains crypto that users outside of the
+US and Canada must not download.  See below for further details and
+instructions.
+
+Attached is the text version of index.html.  Share and enjoy.
+
+   - Ian
+
+- -----------------8<--------------------8<----------------
+Encryption and Steganography for Linux
+
+This directory contains patches to the Linux kernel to enable encryption and
+steganography of filesystems. Encryption allows you to have a scrambled
+partition or file that, with the proper pass phrase, you can mount, just
+like a normal filesystem. Steganography allows you to hide a filesystem in
+the low bits of, say, an audio file. You can even combine these two to hide
+a scrambled filesystem in the low bits of an audio file (see the example,
+below).
+
+Installation instructions
+
+  1. Get a fresh copy of linux-2.0.11.tar.gz from your favourite site.
+  2. Patch it with the loopfix-2.0.11.patch file found in this directory.
+     This fixes some bugs in the loop block device driver, and adds
+     steganography support to it. Hopefully this will go into the standard
+     kernel soon.
+  3. Now you want to add cryptography support. Due to a strange US
+     regulation, this has to be split up into two pieces. The first piece,
+     export-2.0.11.patch, doesn't actually contain any cryptograhy; it just
+     contains the changes to the Makefiles and documentation, etc. to
+     reflect the eventual presence of cryptography. You should get this file
+     and patch it into the result of step 2.
+  4. If the site you are downloading these files from is in the US or
+     Canada, you may only download the second piece, crypto-2.0.11.patch, if
+     you are also in the US or Canada. If you are not, here's what's in the
+     file, and where to get it:
+        o The file contains the files drivers/block/idea.c, kernel/des.c,
+          include/linux/idea.h and include/linux/des.h.
+        o To get these files, go visit
+          http://www.binary9.net/nicholas/linuxkernel/patches/ and get the
+          patches des-1.0.patch and idea-1.0.patch.
+        o Edit these patches and remove everything in them that isn't
+          related to one of the four files listed above.
+        o What you have left should be functionally equivalent to
+          crypto-2.0.11.patch.
+  5. Take either crypto-2.0.11.patch or what you got from outside the US,
+     and patch it into the result of step 3.
+  6. You now have a complete kernel. Compile as usual.
+
+You will also need an updated version of the mount and losetup commands in
+order to use this. To get these, download mount-2.5k from
+ftp://ftp.win.tue.nl/pub/linux/util/mount-2.5k.tar.gz. Then get the patch
+mount-2.5k.patch from this directory, and patch it into the sources. Compile
+and install.
+
+It would be really good if these patches to the kernel and to mount for
+steganography and encryption were made standard, and enabled by default. The
+reason for this is that it would be more suspicious for someone to have a
+"special" kernel with stego capabilities than to just have a regular kernel,
+configured in the default way.
+
+Sample encrypted and stego'd filesystem
+
+In this directory are two audio files. Alice-Bob.orig.au is a file I
+downloaded from http://www.iro.umontreal.ca/labs/theorique/Alice-Bob.html.
+The other file, Alice-Bob.au, is the same, except that it has an encrypted
+filesystem hidden in the low bit of each byte. You can listen to each of
+them, and see how much difference there is (it's just in the noise). To see
+the filesystem, get a new kernel and mount/losetup as descibed above. Also
+make sure you have loop devices in /dev/loop*, as described below. Then:
+
+# losetup -e stego /dev/loop0 Alice-Bob.au
+Use the low bits of each (b)yte, (s)hort, or (l)ong?
+(Use lowercase letters for little-endian; uppercase for big-endian.)
+b/s/l/B/S/L: [b]
+# mount /dev/loop0 /mnt -oloop,encryption=idea
+Pass phrase: What are we going to do tomorrow night, Brain?
+# ls -al /mnt
+total 220
+drwxr-xr-x   3 root     root         1024 Aug  4 10:47 ./
+drwxr-xr-x  23 root     root         1024 Aug  4 01:50 ../
+drwxr-xr-x   2 root     root        12288 Aug  4 10:46 lost+found/
+- -rw-r--r--   1 root     root           71 Aug  4 10:47 passwords
+- -rw-------   1 root     root       208247 Aug  4 10:47 world_domination_plans
+# umount /mnt
+# losetup -d /dev/loop0
+
+Usage instructions
+
+First, make sure you have devices called /dev/loop0, /dev/loop1, ...,
+/dev/loop7. If not, make them as follows:
+
+# cd /dev
+# for i in 0 1 2 3 4 5 6 7; do mknod loop$i b 7 $i; done
+# chgrp disk /dev/loop[0-7]
+# chmod 660 /dev/loop[0-7]
+
+A note on choosing pass phrases: Pass phrases can be up to 128 characters
+long. It's in your best interests to choose a good one. Make it long, and
+hard to guess. There are FAQs out there on how to choose a good pass phrase,
+I think.
+
+Finally, here is a copy of the file
+Documentation/filesystems/loop_crypt.txt:
+
+Encryption and Steganography for Linux
+- --------------------------------------
+
+The "loop" block device driver allows you to "hide" a filesystem in
+a disk partition or in a regular file, either using encryption (scrambling
+the data) or steganography (hiding the data in the low bits of, say,
+a sound file).
+
+To use this, you will need updated versions of the "mount" and "losetup"
+commands.  They are both in the mount-2.5k, which you can get from
+
+ ftp://ftp.win.tue.nl/pub/linux/util/mount-2.5k.tar.gz
+
+but you will need to patch it with the changes from
+
+ ftp://ftp.csua.berkley.edu/pub/cypherpunks/filesystems/linux/mount-2.5k.patch
+
+Also, if you want to use DES or IDEA encryption and not just XOR (which,
+encryptionwise, is really terrible), you'll need to get the crypto patches
+to the kernel.  If you're in the US or Canada, you can get them from
+
+ ftp://ftp.csua.berkley.edu/pub/cypherpunks/filesystems/linux/crypto.patch
+
+Otherwise, check
+
+ ftp://ftp.csua.berkley.edu/pub/cypherpunks/filesystems/linux/index.html
+
+to see how to get them.
+
+How to use it
+- -------------
+
+Here are a number of examples:
+
+To create an encrypted floppy (using IDEA):
+
+Put a floppy in drive 0.
+# dd if=/dev/urandom of=/dev/fd0 bs=1k seek=8
+# losetup -e idea /dev/loop0 /dev/fd0
+Pass phrase: (type a pass phrase here, up to 128 characters)
+# mke2fs /dev/loop0
+# losetup -d /dev/loop0
+
+To use it again:
+# mount /dev/fd0 /mnt -text2 -oloop,encryption=idea
+Pass phrase: (type the same pass phrase)
+# cd /mnt
+(use the disk)
+# cd /
+# umount /mnt
+
+To make a DES-encrypted filesystem in a regular file:
+
+Decide on a filename and how big you want your encrypted filesystem to be.
+Suppose you choose /root/private/rndseed as your filename, and you want
+it to be 10MB (10240K).  Create it as follows:
+
+# dd if=/dev/urandom of=/root/private/rndseed bs=1k count=10240
+# losetup -e des /dev/loop0 /root/private/rndseed
+Pass phrase: (type a pass phrase here, up to 128 characters)
+# mke2fs /dev/loop0
+# losetup -d /dev/loop0
+
+To use it:
+# mount /root/private/rndseed /mnt -text2 -oloop,encryption=des
+Pass phrase: (type the same pass phrase)
+# cd /mnt
+(use the disk)
+# cd /
+# umount /mnt
+
+There is an additional "feature" (well, _I_ think it's a feature) by
+which you could mount the above filesystem on /root/private, even though
+a file in that directory is being used to store the filesystem itself.
+(Note of course that the encrypted file won't be visible when the
+filesystem is mounted, and that only loop files don't count as "usage";
+if you're _in_ that directory, or some process has any file in that
+directory open, the mount won't work.)
+
+To hide an IDEA-encrypted filesystem in the low bits of an audio file:
+
+Let "penguin.au" be your sound file.
+# losetup -e stego /dev/loop0 penguin.au
+Use the low bits of each (b)yte, (s)hort, or (l)ong?
+(Use lowercase letters for little-endian; uppercase for big-endian.)
+b/s/l/B/S/L: [b]  (.au files store 1-byte samples, so say "b" here)
+# dd if=/dev/urandom of=/dev/loop0 bs=1k seek=8
+# losetup -e idea /dev/loop1 /dev/loop0
+Pass phrase: (type a pass phrase here, up to 128 characters)
+# mke2fs /dev/loop1
+# losetup -d /dev/loop1
+# losetup -d /dev/loop0
+
+And to use it:
+# losetup -e stego /dev/loop0 penguin.au
+Use the low bits of each (b)yte, (s)hort, or (l)ong?
+(Use lowercase letters for little-endian; uppercase for big-endian.)
+b/s/l/B/S/L: [b]  (.au files store 1-byte samples, so say "b" here)
+# mount /dev/loop0 /mnt -text2 -oloop,encryption=idea
+Pass phrase: (type a pass phrase here, up to 128 characters)
+# cd /mnt
+(read secret info from files here)
+# cd /
+# umount /mnt
+# losetup -d /dev/loop0
+
+Note: if you don't have /dev/urandom, do this:
+
+# cd /dev
+# mknod random c 1 8
+# mknod urandom c 1 9
+# chown root.root random urandom
+# chmod 666 random urandom
+
+Last update: 19960806 by Ian Goldberg <ian@cypherpunks.ca>
+
+This work derives from work by a number of people, including:
+Werner Almesberger <almesber@bernina.ethz.ch>
+Andries Brouwer <Andries.Brouwer@cwi.nl>
+Ian Goldberg <ian@cypherpunks.ca>
+Nicholas J. Leon <nicholas@binary9.net>
+Theodore Ts'o <tytso@athena.mit.edu>
+Eric Young <eay@psych.psy.uq.oz.au>
+- -----------------8<--------------------8<----------------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMgfZsEZRiTErSPb1AQGf9wP8Cu0h79vowZVME3dJGhCQM8AbelCOHEck
+O51uZ6o5Fwv3mPsZ0E15IyYns1mLYT4slWQ2VY2vEoTsT6pM4og+45/ZP3aRJh5i
+mBgNulbRvxf/eqlmDBT6433JFrdAVAWHwGcMFTUXewHQJZ3x4WyIzvk1hHv++OGo
+jn96Pbr71Qs=
+=13QI
+-----END PGP SIGNATURE-----
+
+
+
+

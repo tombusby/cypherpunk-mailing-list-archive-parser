@@ -1,0 +1,85 @@
+From: anonymous@extropia.wimsey.com
+Date: Fri, 2 Sep 94 20:20:22 PDT
+To: cypherpunks@toad.com
+Subject: Re: Program to circumvent the Sep 1 Legal Kludge part 1/5
+In-Reply-To: <Pine.3.89.9408252349.F9501-0100000@fido.wps.com>
+Message-ID: <199409030237.AA18100@xtropia>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Tom Jennings <tomj@wps.com> Writes:
+
+>
+>Can you please stop mailing me these unidentifyable, undecodable
+>files from a person I cannot identify, nor detect the reason for
+>the anonymity?
+
+Ok, I won't send that file anymore.
+
+Hal <hfinney@shell.portal.com> writes:
+
+>
+>I've been receiving these, too.  It seems to be a program which has the
+>same effect as a one-line shell script to add the "+legal_kludge" option
+>to the command line for PGP2.6, so that it generates backwards-compatible
+>messages without violating anyone's license agreements.  
+
+Well not exactly, because of a bug in pgp, the +legal_kludge=off
+does not work by itself. What does work is
++CERT_DEPTH=0 +LEGAL_KLUDGE=OFF +CERT_DEPTH=4
+Where 4 is the value that you actually want for CERT_DEPTH.
+I did not want my program to change the behavior of pgp with
+respect to CERT_DEPTH. So I had my program scan config.txt to
+find the value there. It then sets the final value of CERT_DEPTH
+to be the value found there. If no value can be found for CERT_DEPTH
+then it uses pgp's hardcoded default which is 4.
+>                                                         It's easy to
+>do such a shell script in Unix.  
+Which shell language? I understand that unix has several although I am
+not a UNIX expert.
+>                                 Is there a good way in DOS to add a few
+>command-line arguments in front of the ones the user has supplied?
+I wanted to have a program that could be drop in replaceable in
+a dos environment. I wanted it to be possible to have existing pgp
+shells continue to work with the SEPT 1 kludge disabled.
+In DOS, there are common library  calls that only spawn
+executables (.exe files) and do not spawn .bat files. The same is
+true of OS/2. If any of the commonly avaiable pgp shells used these
+calls, I wanted my program to be an executable so that it would
+work as a replacement which would disabled the kludge.
+I do not see how one could write a dos .bat file that could
+scan config.txt for the users choice of CERT_DEPTH. If you could
+do it, it would be sure to be slow. Some Dos users do not use
+microsoft's command.com, so it is hard to see how a .bat file
+could be fully portable in DOS.
+>                                                                    If
+>so that would seem easier (and smaller) to distribute.
+>
+>Hal
+>
+>
+
+
+In short, I think my program could be useful to some people
+who must send messages to people with old versions of pgp.
+I wish that someone would make it available at an ftp site.
+
+I won't send it out anymore and I am sorry I bothered you.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLl42Zw2Gnhl89QSNAQFgeQP9ESyltO1ilDje2WLrJxzgRU7M+AFE58aO
+KgL3V9cFkRnkrqgW0Itj9adG3MV77OI8g5xlaQNnVuOD061ly5Yt6hsCMGj8VTIw
+PLASysn84dsYqVItLD0+mCkLzO7Fw/PgJZ3rhJl+1v7AZZeluHaOSFH5egUs5S9X
+OmX4e/RKV+Q=
+=Ieoj
+-----END PGP SIGNATURE-----
+
+
+
+

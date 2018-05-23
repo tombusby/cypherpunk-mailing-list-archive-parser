@@ -1,0 +1,47 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Mon, 11 Dec 1995 17:55:55 +0800
+To: Anonymous <anon-remailer@utopia.hacktic.nl>
+Subject: Re: Timing Cryptanalysis Attack
+In-Reply-To: <199512110845.JAA25564@utopia.hacktic.nl>
+Message-ID: <Pine.SOL.3.91.951211192419.28608P-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 11 Dec 1995, Anonymous wrote:
+> pck@netcom.com (Paul C. Kocher) writes:
+> I just read this paper, and while it is somewhat interesting, I
+> don't think the walls of cryptography are in any danger of
+> crumbling.
+...
+> So while this is a very nice piece of work, and certainly of
+> theoretical interest, I don't think it will modify the way in
+> which people are advised to utilize cryptographic software, or
+> cause companies like Netscape of RSADSI to shed any tears.
+
+Read the SKIP spec (SKIP is Sun's IP level encryption protocol).  It uses
+Diffle-Hellman certificates.  That means fixed secret DH keys being used
+in routers.  It is hard to thing of a better target for this type of
+attack.  I have not done a complete read of the SKIP specification (only a
+quick scan) so I could be wrong about SKIP but DH certificates sound like
+a very very bad idea.  The other source for attack would be any networked
+service that is on a local network.  Single user machines are far better
+targes than multi-user systems.  That Web server sitting idle not doing
+much, repeatedly hit it with https requests and if you are on a local
+network, you should be able to get very good timing information. 
+
+I for one will probably add a flag for conditional compilation of my 
+bignumber library so that it will take constant time.  This may be a %10 
+slow down (using small windows exponentiation) which is trivial compared 
+to the %30 speedup I will probably get when I implement a faster mod 
+function :-).
+
+eric
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

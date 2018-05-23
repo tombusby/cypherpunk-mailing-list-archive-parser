@@ -1,0 +1,68 @@
+From: Scott Brickner <sjb@austin.ibm.com>
+Date: Tue, 29 Aug 95 10:22:16 PDT
+To: Will French <wfrench@interport.net>
+Subject: Re: SSL trouble
+In-Reply-To: <199508290338.XAA24000@interport.net>
+Message-ID: <9508291647.AA13894@ozymandias.austin.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Will French writes
+>Scott Brickner writes:
+>> Then what do you care about the group's procedures?  It
+>> doesn't "prevent you from participating" --- you *aren't*
+>> participating. You're attempting to solve the problem on your
+>> own.
+
+>  This distinction is valid in the current series of academic
+>exercises.  However, if we were actually trying to break
+>something important, anything that might accelerate the crack
+>would be a form of participation.  And as Nathan Loofbourrow has
+>pointed out, the random method is much more secure against
+>real-world retaliation.  It's also the only method that will
+>work for me; I use a shell account, and I never know in advance
+>when I will get time on the computers at work (which aren't on
+>the net at all).
+
+We've identified several forms of "real-world retaliation:"
+
+1) "Result hoarding" - failure to report a found key
+2) "Segment hoarding" - requesting more segments than one can hope to search
+3) Denial of service - preventing access to the server
+
+The "random search" method eliminates all three of these at about 37%
+higher cost in search time, on the average.  I submit that if we
+*really* were trying to break something important, we could design a
+system which eliminated the first two and adequately limited the third,
+but at *much* less cost.
+
+The problems in the current system were to be expected of a first
+attempt.  In the future:  Only the server assigns segments, only the
+assignee may report the status of a segment, and after all segments are
+NAKed we know condition 1 has occurred, at which time we start over,
+but never assign the same segment to the same searcher.  Limit the
+number of segments which may be outstanding with one searcher at one
+time as a function of work rate.  Deploy redundant servers.
+
+As to whether the distinction is valid, I'd still say the only
+difference between working on your own and working "with" the group,
+but using an uncoordinated, random search method is one of intent ---
+that is, it's all in your mind.
+
+>  I _don't_ care about the procedures, as long as I can get the
+>information I need to go my own way.
+
+So what information wouldn't you be getting?  To "go your own way", you
+need exactly the same information that the client workstations use to
+test one key.  The difference in your code and the clients exists
+solely in how they determine the next key to try.
+
+You're not "participating" when you go your own way.  You're working on
+cracking the cipher, but you're not adding your efforts to the group
+effort, you're working independently.  I'm not saying this is "wrong".
+You're supposedly a free person, do what you think is right.
+
+
+
+

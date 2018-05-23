@@ -1,0 +1,75 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 15 Jul 1996 06:17:18 +0800
+To: cypherpunks@toad.com
+Subject: setting up disposable remailers
+Message-ID: <199607141828.TAA00441@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Some thoughts on solutions to the remailer operator liability problem.
+
+It occurs to me that the risk for the remailer owner could be reduced
+by separating concerns.  That is, introducing separate roles for
+setting up the remailer so that the identity of as many parties as
+possible is not determinable to the litigator.
+
+Model 1
+-------
+
+Separable roles:
+
+- person owning the remailer
+- person installing remailer software
+- person handling complaints to the remailer
+
+In this model a new remailer owner would anonymously email a member of
+the cypherpunks list asking if they would be interested in installing
+a remailer in the owners provided account.
+
+The remailer owner would anonymously open an account with an ISP
+offering anonymous shell accounts, and accepting digicash, or cash,
+and anonymously email the account details to the installer.
+
+Optionally, a third party (the maintainer) could be persuaded to
+accept complaints for the remailer, and (anonymously) send signed
+instructions to the remailer to bar certain receiving addresses.
+
+The only determinable target for a typical litigator would be the ISP.
+If a more powerful adversary were the litigator, such as a TLA anxious
+to demonstrate an excuse for it's continued existance, it is possible
+they may retrieve the identity of the installer (if they do indeed
+have taps and large IP traffic recording facilities for instance).
+They may try to hold the installer responsible if unable to find the
+owner.  Model 2 goes some way to reducing risk for the installer.
+
+Model 2
+-------
+
+In this model the additional separable role of setting up a shell
+command mail processor on the account is introduced.  What I mean by
+this is as has been discussed on the list recently, that a mail
+handler which executes signed shell commands emailed, and anonymously
+emails back the command output.
+
+That is to say the remailer owner now passes the account information
+to the installer of the mail processor.  The shell installer sets up
+the command processor, and leaves.
+
+Now the owner gives the PGP secret key of the command processor to the
+remailer installer (or if the owner feels competent, does this part
+themselves).
+
+Provided that the anonymous remailers used for all of the steps are
+type2 mixmaster remailers, the system should be much more secure.
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

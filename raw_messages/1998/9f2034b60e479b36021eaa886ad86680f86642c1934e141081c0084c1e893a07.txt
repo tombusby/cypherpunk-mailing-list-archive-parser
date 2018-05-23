@@ -1,0 +1,62 @@
+From: Anonymous <nobody@replay.com>
+Date: Sun, 29 Nov 1998 01:12:07 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Securing data in memory (was "Locking physical memory (fwd)
+Message-ID: <199811281641.RAA12739@replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jim Choate misses the point, as usual:
+
+> Wrong, since the ENTIRE OS is run under this it's not nearly that simple.
+> The OS's internal swap page as well as by extension the contexts they point
+> to are going to be sitting in there. The app should also encrypt the address
+> spaces of the system structures.
+
+The original message said:
+
+> From: "Jim Adler" <jadler@soundcode.com>
+> The SCNSM driver supports allocation of non-swappable memory on Windows
+> 3.x/95/98. The principal design goal of SCNSM is to provide memory that will
+> not be swapped to disk, under any circumstances. Typically, security
+> applications require such memory to store private keys, passwords, and
+> sensitive intermediate results of cryptographic calculations.
+
+What is Choate thinking when he says the ENTIRE OS is run under this?
+This is a driver which is used by the application to allocate specific
+memory buffers in non-swappable memory.  It allows the app to lock down
+those buffers so that they won't swap to disk.  These buffers can then
+be used to hold sensitive data.
+
+It is neither possible nor desirable to run the ENTIRE OS out of
+such buffers.  It is not possible because the OS is already written.
+It is Windows 3.x/95/98 (see above).  That OS does not make the special
+driver calls which would be necessary to allocate non-swappable memory.
+You would have to rewrite Windows to use the special calls, which isn't
+possible for a luser like Choate.
+
+And it's not even desirable.  There is no reason to make the ENTIRE OS
+use non-swappable memory.  Most memory is simply not that sensitive.
+It holds public data, or data which is already on the disk in some form.
+Putting the ENTIRE OS into non-swappable memory gives up much of the
+advantage of having virtual memory in the first place.  It would be a
+giant step backwards in OS architecture.
+
+Here's what Choate had to say when Bill Stewart tried to politely help
+him out:
+
+> You don't know this but you're willing to try to rake me....
+> Talk about unprepared.
+> Your guess is pretty much worthless.
+
+It's bad enough to have to endure more of Choate's idiocy, but it is
+especially offensive to see him hassling Bill Stewart, one of the most
+consistently informative and valuable list members.  Bill's a thick-
+skinned guy and it's probably no big deal to him, but it further
+illustrates what a negative contribution Choate makes here.
+
+
+
+

@@ -1,0 +1,49 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Mon, 19 Sep 94 11:20:47 PDT
+To: cypherpunks@toad.com
+Subject: (fwd) "Will You Be a Terrorist?"
+In-Reply-To: <35gl4b$qtn@bb.com>
+Message-ID: <9409191742.AA15343@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   >I'd suggest that a much more productive avenue of approach would be to
+   >improve the aliasing facilities of a remailer provider to allow a
+   >pseudonym to look like a fully normal name.
+
+   I'm not sure that's a good solution.  
+
+Todd, Todd, Todd.  You can run a remailer and the mailing list on the
+_same_ machine and do the aliasing in the remailer.  You can even
+restrict operation of the remailer to work only with the mailing list,
+if that's what you want.
+
+The issue here is clean separation of abstraction.
+
+   >At his site [that's CMU--EH] there's this
+   >'name+extra' syntax which delivers mail to 'name', but because of a
+   >special sendmail version 8 macro in the Received: field both the
+   >'name' and the 'extra' can be recovered.  The 'extra' is then an input
+   >into a remailer as a pseudonym.
+
+   Sure.  I'm familiar with AMS [...]
+
+This doesn't require AMS.  I've done the same hack myself in ruleset 0
+of sendmail.  Then you tweak the HReceived line to add the $u macro,
+which under sendmail v8 includes the whole address which caused
+delivery.
+
+   Another, better I think, possibility is
+   to add headers and let the MUA sort it out: you don't have to depend upon
+   non RFC-822 features in the MTA.
+
+That's exactly how it works now.  The Received field is rfc822
+compliant, and the remailer, which is a part of the MUA, is where it
+gets parsed.
+
+Eric
+
+
+
+

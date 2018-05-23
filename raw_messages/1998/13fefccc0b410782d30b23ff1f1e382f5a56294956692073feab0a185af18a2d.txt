@@ -1,0 +1,65 @@
+From: Anonymous <nobody@replay.com>
+Date: Fri, 31 Jul 1998 20:59:58 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <199808010400.GAA04134@replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I had begun by thinking that, since the output of a block cipher in
+> feedback mode (ie, a stream cipher) is uniformly distributed ("white") that
+> it would be sufficient conditioning to feed a bad RNG into a block cipher
+> with feedback.  Here, the bad RNG would kick the cipher out of the fixed,
+> but key-dependant, sequence it would otherwise generate.
+
+I don't quite parse what you're saying here...?
+
+(more reply below)
+... 
+> On cypherpunks, Bill Stewart mentioned using hashes instead of ciphers.  
+> A hash is like a cipher in that changing any input or key bit changes the
+> output unpredictably, but a hash is irreversible because there are fewer
+> output bits than input bits.  The simplest hash is a one-bit parity; MD5
+> is a more expensive keyed hashing function used for message
+> authentication.
+> 
+> Thinking about a hash instead of a cipher was interesting because now
+> we reduce the number of output bits, which if done right, could
+> improve the information carried by each binary digit.  We take the MAC
+> of an imperfect random number and toss the original random, retaining
+> the MAC as our better random value.
+
+The problem with XORing is that you might have a generator where bits are
+interdependent in a way that causes entropy to be lost in the XOR. You
+generally don't have this problem with the more involved mixing functions.
+
+If the construction you use for distilling the RNG's output to a random
+number works as a collision-free hash function, you can place a lower
+bound on the amount of entropy in the output based on how long it takes to
+simulate the biases in the RNG (I posted a somewhat confuberated
+description of the reasoning to coderpunks -- basically, if the hash of
+the simulation's output has little enough entropy, it means you can break
+the hash; since you can't break the hash, the output can't have that
+little entropy). Normally, though, you can get away with using pretty much
+any nonlinear mixing function, even if it's not a good hash function.
+
+An "entropy pool" setup where you can put entropy in and pull keys out at
+will gets slightly more hairy...if you want to do that, I suggest you try
+to contact someone who knows what he/she's doing. :)
+
+Should that prove infeasible, key a stream cipher with the mixed entropy,
+and, when you want to pull a key out, grab some stream cipher output; when
+you want to drop entropy in, mix some stream cipher output with your new
+entropy and rekey the stream cipher with the result (to save time, I'd
+only do the rekeying right before I want a key containing the new
+entropy). Probably a lot more complicated and slow than it needs to be,
+but I think it lets you add any amount of entropy you want without fear of
+an attacker somehow interfering with the generation.
+
+...
+
+
+
+
+

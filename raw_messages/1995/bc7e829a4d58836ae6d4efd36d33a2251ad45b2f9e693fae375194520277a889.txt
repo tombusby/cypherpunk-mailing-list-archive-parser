@@ -1,0 +1,123 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Wed, 20 Sep 95 20:45:17 PDT
+To: cypherpunks@toad.com
+Subject: Re: Project: a standard cell random number generator
+Message-ID: <ac86115235021004fbe4@[205.199.118.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 9:50 PM 9/20/95, John Gilmore wrote:
+>Software-generated random numbers are likely to be of poor quality.
+>There just isn't that much true randomness visible to computers.
+>Several ways to build good hardware random number generators are
+>known.  But before hardware random number generators can be
+>incorporated into common desktop computers, someone will have to put
+>them into a small fraction of a chip.
+
+Essentially, to have good market penetration, this means building a small
+hardware random number generator into the Pentium, and a few other popular
+processors. Building it into a separate chip is ineffective, as chip counts
+are going down on motherboards. (Some may quibble, but clearly about 60-80%
+of the market is now x86-based, with motherboards supplied by a limited
+number of companies, and with "chipsets" like the Triton.)
+
+What would it take to convince Intel, then, to devote resources to put a
+HRNG module on, say, future versions of the Pentium, Pentium Pro (P6),
+etc.? A lot, I'd say.
+
+First, Intel will ask what products would gain from _some_ hardware
+platforms having HRNG when the majority will not. (This is important,
+because it means that as long as there are vast numbers of 486-, Pentium-,
+SPARC-, MIPS-, 68K-, and PPC-based systems out there that DON'T have
+hardware random number generators, then Netscape and other suppliers of
+software CANNOT COUNT ON THE HRNG.
+
+This is an important point: a hardware RNG standard will take many years to
+percolate into the installed base and reach a level of penetration where
+even 30% of all machines are equipped with HRNG modules. In the meantime,
+Netscape and everyone else has to come up with solutions which fit the
+existing and nearterm-available machines.
+
+Second, how much extra will customers pay? Even if the area of the HRNG is
+less than 1% of the total, design resources are consumed and potential
+reliability and liablility issues arise. (Liability is problematic
+precisely because the HRNG is nondeterministic, and some chips are likely
+to be "more random" (which is "good") than others which are "less random"
+(which is "bad"). Imagine a customer having a chip which he finds out
+produces very little entropy, for technical/manufacturing reasons.
+
+
+>You probably can't build a hardware random number generator out of
+>existing "gate array" gates or "standard cell" cells, because all the
+>existing gates and cells are designed to behave completely
+>predictably!  It will take designing a new circuit structure.
+
+You probably can, actually. CMOS and BiCMOS have all sorts of structures in
+which threshold voltages can be measured. DRAM arrays have various
+seemingly-random (*) discharge characteristics. Zener diodes can be built
+in any of these technologies. At small enough structural levels, such as we
+are now seeing at the .35 micron level and below, noise is omnipresent, and
+is dealt with in various ways. Thus, using the noise is not so difficult.
+
+(* The various charge/discharge characteristics are actually not random, of
+course, and are reproducible. But with care they can be used to increase
+the entropy of other soources. Care must be taken.)
+
+
+>Do we know any solid state physics / circuit design experts who think
+>this might be a fun thing to do?  I bet you could get a paper out of
+>it.  And probably improve the world a few years later, when companies
+>used your paper to close another hole in their computer security.
+
+I'm skeptical for the reasons given above. Even starting today, far too
+long to get enough out there. (Far-future thinkers will say, "Then let's
+start now," but it still is not true that companies like Netscape or
+Verisign will use such an invention to close another hole...they could only
+close the hole for the customers who had the HRNG-equipped machines, and
+this is not likely to be enough for quite some time.
+
+As John knows, but others may not, I worked on random noise effects in
+devices at Intel. A co-worker (now President of IC Works, Ilbok Lee) and I
+developed a hardware random number generator based on very low level
+radiation sources, using an effect I discovered. We tried to get a patent
+on it, in 1978, but there was no interest by Intel.
+
+Personally, I think that "software + user actions + environment stuff" can
+generate vast amounts of usable entropy, especially if a user lets it
+accumulate immediately prior to generating crypto material.
+
+* Software -- the standard cryptographic hash functions to "mix" bits even
+further.
+
+* User Actions -- mouse movements, keyboard timing, microphone noise, etc.
+
+* Environmental Stuff -- measurement of disk access timings, in
+milliseconds, amount of free blocks, Ethernet packet stuff, etc. (This may
+or may not be good for more than a few bits per second, but can be
+accumulated for several minutes or hours.)
+
+Any of these has various weaknesses and points of attack. But let's face
+it, would Golberg and Wagner have been able to crack Netscape if the PRNG
+had used some mouse swirling, some random keyboard pounding, some disk
+access measurements, and had then hashed this with a noninvertible hash
+function? I think not.
+
+This approach has the benefit of working almost immediately, without
+special dongles on the back of machines or of convincing Intel and Motorola
+to add special functions (which would take years to effectively penetrate
+the market).
+
+--Tim May
+
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+Corralitos, CA              | knowledge, reputations, information markets,
+Higher Power: 2^756839      | black markets, collapse of governments.
+"National borders are just speed bumps on the information superhighway."
+
+
+
+
+

@@ -1,0 +1,30 @@
+From: Eric Messick <eric@parallax.com>
+Date: Wed, 23 Dec 92 11:57:58 PST
+To: cypherpunks@toad.com
+Subject: Re: Signing ascii text
+Message-ID: <9212231902.AA25740@parallax.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I would like to argue for a weaker ascii text signature function in
+PGP in addition to the current one.  It would canonicalize a file by
+turning all sequences of white space into a single space and trimming
+leading and trailing whitespace from the file before computing the
+hash.  This clearly involves some major changes to the file, allowing
+many files to hash to the same value, but a human would presumably
+consider all of those files to have the same information content.  The
+only case that I can think of where the information content of the
+message could be changed with the signature remaining valid is if
+information was contained in the pattern of whitespace in the file.
+This should make the signature robust to most of the changes that a
+mailer could make.  I would not advocate extending this to any
+non-whitespace characters.
+
+-- eric messick
+eric@toad.com
+
+
+
+

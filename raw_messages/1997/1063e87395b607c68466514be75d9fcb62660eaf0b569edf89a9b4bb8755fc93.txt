@@ -1,0 +1,57 @@
+From: Antonomasia <ant@notatla.demon.co.uk>
+Date: Tue, 30 Sep 1997 08:24:22 +0800
+To: cypherpunks@ssz.com
+Subject: Re: Fwd: Re: Quor's cypher
+Message-ID: <199709292301.AAA04109@notatla.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+nobody@REPLAY.COM: (21 Sep 1997)
+
+> This is a really nifty encryption program.  It runs about half the speed
+> of rc4, but seems much more secure.
+>
+> --- Forwarded Message:
+>
+> From: quor@nym.alias.net
+> Subject: Re: tell me what you think of this...
+>
+> [snip]
+>
+> /* Qcypher.c */
+>
+> [snip]
+
+Has anybody got anything good against this ?  I can get about
+1/32 of the state with a simple form of differential cryptanalysis,
+but can't see how to progress it beyond that.
+
+My attack takes a long chunk of known text and looks for repetition.
+
+ppppppppppppppp.11.pppppppppppppppppppppp
+ccccccccccccccc.22.cccccccccccccccccccccc
+
+When a two neighbouring p-c pairs are the same you can test
+whether they have the same value of a and b.
+(That is a_n == a_n+1 and b_n == b+n+1,   a != b usually.)
+
+This involves 16 inputs to each byte - very cheap.
+What I really want next is to know "a".
+
+Because c is always known (it's only a counter) if you always knew
+"a" you'd have a handle on "b" because only 2 (predictable) elements of
+the state array change with each byte encrypted.
+
+
+--
+##############################################################
+# Antonomasia   ant@notatla.demon.co.uk                      #
+# See http://www.notatla.demon.co.uk/                        #
+##############################################################
+
+
+
+
+

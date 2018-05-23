@@ -1,0 +1,36 @@
+From: Vangelis <vangelis@qnis.net>
+Date: Thu, 19 Dec 1996 18:58:39 -0800 (PST)
+To: Peter Hendrickson <ph@netcom.com>
+Subject: Re: Code+Data separation
+In-Reply-To: <v02140b01aedf4fba9ec3@[192.0.2.1]>
+Message-ID: <32B9F4F9.7174@qnis.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Peter Hendrickson wrote:
+> Are there any modern processors which keep the code and data separated?
+
+I dunno about processors which make that distinction, but it can be done
+in software using page-protection features of the Intel CPU.  Under DPMI
+for DOS and I would think somehow under Windows, the DATA segment can be
+specified as loading into a seperate page/selector from the code (Im a
+little hazy on the specifics), and that page then marked essentially as
+"read only".
+
+I think this was designed to make software more crash-resistant though,
+not hack-resistance.  There's probably many ways to circumvent this
+(explicity changing the access to that page, tricking the VMM into
+swapping that page out to disk, then editting the swap file while it's
+out there, etc).
+-- 
+Vangelis <vangelis@qnis.net> /\oo/\
+Finger for public key. PGP KeyID 1024/A558B025
+PGP Fingerprint AE E0 BE 68 EE 7B CF 04  02 97 02 86 F0 C7 69 25
+Life is my religion, the world is my altar.
+
+
+
+
+
+

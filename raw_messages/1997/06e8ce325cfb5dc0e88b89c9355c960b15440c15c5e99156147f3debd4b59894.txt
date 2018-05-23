@@ -1,0 +1,44 @@
+From: Hal Finney <hal@rain.org>
+Date: Tue, 20 May 1997 23:57:17 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Public Key Break Paper
+Message-ID: <199705201532.IAA08042@crypt.hfinney.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Peter Gutmann, pgut001@cs.auckland.ac.nz, writes:
+> (I had another look at the unbalanced RSA proposal in the Autumn 1995
+>  CryptoBytes as I was trying to find the above article, did anyone ever do
+>  anything with unbalanced RSA or was it just left as a curiosity?).
+
+The unbalanced RSA idea, by Shamir, was to choose primes p and q with p
+considerably less than q, e.g. p = 500 bits, q = 4500 bits.  With numbers
+of this size, the difficulty of factoring a 5000 bit n = pq is still just
+as hard as if p and q were both about 2500 bits.  Then, you only encrypt
+numbers < p, and it turns out that you can do the decryption mod p rather
+than mod n, so decrypt is much, much faster than for a conventional 5000
+bit modulus.
+
+There have been some attacks on this.  The main limitation is that the
+encrypted number is supposed to be < p.  There is a chosen-cyphertext
+attack, taking an x a few bits larger than p, encrypting it, and asking
+for the resulting decryption.  This produces x mod p, which combined
+with x can be used to find p.
+
+Another attack along these lines is to guess x about the size of p, send
+a legitimate message based on it, then watch the receiver's behavior to
+try to determine whether the message had decrypted correctly.  If x < p
+it would decrypt OK, otherwise it would decrypt to garbage.  Repeat this
+to narrow down an interval containing p.
+
+I believe these were presented by Quisquater at the Crypto 96 rump session,
+although I think he was referring in part to some attacks which had already
+been discovered.
+
+Hal
+
+
+
+
+

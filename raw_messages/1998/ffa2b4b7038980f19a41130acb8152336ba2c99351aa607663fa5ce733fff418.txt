@@ -1,0 +1,59 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Mon, 11 May 1998 11:55:48 -0700 (PDT)
+To: "Mordechai Ovits" <jcea@argo.es>
+Subject: Re: Chaffing & winnowing without overhead
+In-Reply-To: <35571323.D109A0D2@argo.es>
+Message-ID: <3.0.5.32.19980511115153.00941970@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Jesús Cea Avión wrote:
+>> You can have chaffing & winnowing without bandwidth overhead, but the
+>> resulting scheme hasn't the original "elegance" anymore. In particular,
+>> you don't send the plaintext on the clear.
+...
+>> b) Calculate the signature for:
+>>    [sequence]0  ->  MAC0
+>>    [sequence]1  ->  MAC1
+>> c) Compare both MACs and locate the first "different" bit,
+>>    from high to low bit or viceversa.
+>> d) Send that bit from MAC0 if you want to send a "0" or from
+>>    MAC1 if you want to send a "1".
+
+So why not _send_ the plaintext in the clear?
+Send the 0 bit, and the bit from the MAC0, and the 1 and the MAC1 bit
+	0 0, 1 1, 0 1, 1 0, 
+Yes, it's expanding the data 4:1, but that's much better than before.
+
+At 12:04 PM 5/11/98 -0400, Mordechai Ovits wrote:
+>On the contrary, it has an elegance all it's own :-).
+
+I strongly agree.  I had proposed using a short checksum,
+e.g. 8 bits of the MAC, which does leave collisions every ~256 sets,
+but this is almost as short a checksum as you can get,
+and eliminates the collision except every ~2**64 pairs.
+
+>However clever this technique is (and it *is* clever), 
+>it defeats the original purpose of Ron's idea.  
+
+If you do include the data bits, you maintain (very marginally)
+the letter of the requirement here.  What you do lose
+with this method is the ability to mix traffic from different people;
+1 bit of MAC just isn't enough to pick out your own bits.
+Any short MAC limits the amount of mixing you can do;
+an 8-bit MAC lets you mix a bit without too many collisions,
+and a 64-bit MAC should be enough for any mixture you'd
+ever bother with (probably 16 or 32 would as well,
+though especially for 16 you'd still need a longitudinal
+checksum or some method of handling rare collisions.)
+
+Is it close enough for government work?  Probably.
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+

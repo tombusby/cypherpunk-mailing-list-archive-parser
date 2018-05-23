@@ -1,0 +1,47 @@
+From: Anonymous <nobody@replay.com>
+Date: Fri, 7 Feb 1997 08:39:18 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: 40-bit RC5 crack meaningless??
+Message-ID: <199702071639.IAA26432@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Over on sci.crypt, Paul C. Kocker <pck@netcom.com> gave a clear and
+confident response to a query about the statistical difference between a
+brute force attack on a known Russian or English text, versus a similar
+attack on cyphertext with a known-plaintext sample (Strassmann's tell-tale
+Clue #3.)
+
+Said Kocher:
+
+The difference is negligable.  With English text encrypted under
+a 64-bit block cipher, you know that the most significant
+bit of each of the 8 bytes in the block should be zero.  For a
+wrong key, there is a 255/256 probability that at least one of
+these bits will be nonzero, allowing immediate rejection of
+the key.  Keys which do produce all zero bits get tested on
+additional blocks until the key is either deemed correct or
+rejected.  The extra overhead per wrong key is the sum from
+i=1 to infinity of i*(1/256^i), or under 0.4 percent.
+
+In practice, the slowdown is actually a couple of percent, since
+it complicates the skip-the-last-Fiestel-round optimization. Also,
+the 1/256 case requires running extra code, which can fill the
+microprocessor's cache with code which isn't part of
+the main loop, slowing things down a bit when the computer
+goes back to the main search.
+
+Cheers,
+Paul
+
+____________________________________      http://www.cryptography.com
+Paul Kocher (pck@netcom.com)       |     Voicemail: +1-(415)-354-8004
+Crypto consultant                  |           FAX: +1-(415)-321-1483
+
+
+
+
+
+
+

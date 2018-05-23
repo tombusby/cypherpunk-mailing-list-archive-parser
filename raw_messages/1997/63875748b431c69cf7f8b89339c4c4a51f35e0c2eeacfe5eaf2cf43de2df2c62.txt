@@ -1,0 +1,47 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 14 Dec 1997 08:34:53 +0800
+To: bill.stewart@pobox.com
+Subject: supeona immune postage free list (Re: hashcash spam prevention & firewalls)
+In-Reply-To: <3.0.3.32.19971213101329.007794a0@popd.ix.netcom.com>
+Message-ID: <199712132340.XAA03750@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Stewart <bill.stewart@pobox.com> writes:
+> It also creates a valuable soft-target traffic analysis database;
+> unlike current sendmail logs, it'll probably stick around for an
+> extended period of time, and be readily subpoenaed.
+
+I think I figured out a solution to this nasty problem prompted by
+Robert Costner's comments:
+
+How about this alternative which achieves the same functionality and
+removes the juicy supeona target:
+
+Turn on hashash database for all mails.  That means hashcash gets put
+in the database to prevent double spending.  (If we don't do this
+spammers will club together and do one mega-spam reusing the same
+hashcash they generated with their spam fest motivated CPU farm and
+hit you with spam from many addresses, or all forged as from the same
+address or whatever).
+
+So now when you reply to a message, on it's way out via the mail hub,
+mark the hashcash token as reusable.  This means that the sender can
+cache sent hashcash tokens, and re-use them when after he gets a
+reply.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

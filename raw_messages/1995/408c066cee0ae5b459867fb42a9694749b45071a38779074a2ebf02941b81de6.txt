@@ -1,0 +1,71 @@
+From: Bob Smart <smart@mel.dit.csiro.au>
+Date: Sat, 7 Oct 95 05:23:45 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Certificate proposal
+In-Reply-To: <199510060440.VAA23299@jobe.shell.portal.com>
+Message-ID: <199510071223.AA14467@shark.mel.dit.csiro.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The key-centric scheme is not inconsistent with the use of names. Universal
+names are useful in directories and private names are useful ways for
+individuals to name public keys that are important. The key-centric view 
+is not name-free. The difference is just this: Are attributes attached 
+to keys or names?
+
+In any public key system, however long your certificate chain at the
+end of that chain there has to be a public key you trust. It can't be
+a name it has to be a key. So even the most name-centric system has
+a key-centric core. 
+
+ > >1. We go through some process, let's call it Process A, where we determine
+ > >   that we want to talk to IP address 192.9.8.7.
+ > 
+ > This would be, say, a DNS lookup on www.egghead.com.
+
+That picks a process where there is no significant difference. But 
+consider another common case. We are running a server that accepts
+connections from anyone. We get a connect packet from 192.9.8.7. So
+that is how we determine that we want to talk to 192.9.8.7: in order
+to serve it.
+
+In the standard view we now do a reverse lookup to get a name then
+go to the DNS again to get the public key associated with that name.
+And yet we don't care who we are talking to, and we don't need or
+want to have to work out whether we trust the certificate. There was 
+no reason why we couldn't have just had a secure conversation without 
+ever doing any directory lookups.
+
+I have seen it asserted that we would never want to have a secure 
+conversation with someone when we don't know who they are. I strongly 
+disagree with that. Suppose in our example that our server sells 
+alcohol in exchange for digital cash:
+
+ a. We want the sequence of packets from our purchaser to be authenticated.
+    We don't want some humourist doubling the order or otherwise
+    corrupting it.
+
+ b. The purchaser is entitled to a private (encrypted) conversation.
+    For example maybe he is Islamic and doesn't want to his religious
+    bretheren on his ethernet to know about his alcohol purchases.
+
+Now another aspect is that you need to be over 18 to buy alcohol
+[in Australia]. So the purchaser has to present a certificate signed
+by the appropriate authority saying that the owner of the public key
+is over 18. But note that in the key-centric world the liquor seller
+doesn't have to know who the purchaser is. The certificate that says
+you are over 18 is a separate thing, not mixed up in an X.509 v3
+certificate that also has your name, address and sexual preference.
+
+So a question: you are the liquor seller. How do you want the information
+about the "appropriate authority" that signs those "over 18" certificates? 
+Do you want a name that can give you an X.509 certificate and a certificate 
+chain from a directory service? Or do you think you should get hold of the
+public key yourself in some way that gives you real confidence?
+
+Bob Smart
+
+
+
+

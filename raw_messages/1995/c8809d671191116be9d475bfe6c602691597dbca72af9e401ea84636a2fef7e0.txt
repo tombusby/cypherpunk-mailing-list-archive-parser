@@ -1,0 +1,82 @@
+From: tallpaul@pipeline.com (tallpaul)
+Date: Tue, 12 Dec 95 20:14:06 PST
+To: cypherpunks@toad.com
+Subject: Re: The Elevator Problem
+Message-ID: <199512130413.XAA04532@pipe4.nyc.pipeline.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+OK. I'll bite. I realize that whenever non-heavy crypto people tackle heavy
+crypto problems, the answers are virtually always: (a) obviously wrong; (b)
+proposed 400 years ago; (c) not even related to the original question; (d)
+all of the above. 
+ 
+Alice says to Bob, in front of all of the other people on the elevator: "I
+have generated a large(ish) amount of large(ish) prime numbers and have
+recorded all of them. I have multipled two of the numbers to get an even
+larger non-prime number. I have done this a large(ish) number of times
+until I have a 'large(ish)/2' set of non-prime numbers. The elements of
+this set are [Alice reads off the set of non-prime numbers and Bob along
+with the other people on the elevator record them.] Bob, go home and pick
+one of the non-prime numbers in the set. Factor it. Use the largest prime
+as a private key in your message to me. Since I know what the numbers all
+are, I'll try all of them to see which one decrypts your message." 
+ 
+Bob has to factor one large(ish) prime. 
+ 
+Alice has to *try* an average of "large(ish)/2" private keys to decrypt
+Bob's message. 
+ 
+The other people on the elevator have to *factor* an average of
+"large(ish)/2/2" number of large(ish) numbers to decrypt the message. 
+ 
+The *relative* security then depends on the number of digits in the
+large(ish) primes and the number of products in the set Alice reads to Bob.
+
+ 
+E.G. 
+ 
+Imagine that Alice previously generates 2,000,000 prime numbers, giving her
+a set of 1,000,000 products. Neither Bob nor anyone else on the elevator
+knows the 2,000,000 primes that Alice has generated. She reads all
+1,000,000 products to Bob and everyone else on the elevator. 
+ 
+Imagine that any given product can be factored in 100 MIP days (i.e. a 100
+MHz Pentium running for 24 hours or "P-Day"). 
+ 
+Bob factors one and only one of the numbers and uses the factor as a
+private key to generate the message. 
+ 
+Neither Alice nor anyone else on the elevator knows what product Bob picked
+to factor. 
+ 
+Alice receives the message. She takes the 2,000,000 privately recorded
+primes and runs a brute force attack on the encrypted message, decrypting
+it in an average of 1,000,000 tries. 
+ 
+The other people on the elevator need to factor each number and then run it
+has a brute force attempt to decrypt the message. This takes them an
+average of 500,000 P-Days to factor the numbers plus whatever the brute
+force time requires. 
+ 
+The relative security develops because it is faster to generate large(ish)
+primes and to brute force decryption then to factor the large(ish) primes.
+The absolute time it takes to generate the primes and to brute force the
+decryption sets the relative time Alice is willing to spend to get a
+different relative level of security. If the nasties are the NSA, then
+500,000 P-Days is too insecure. If the nasties are Alice and Bob's nosey
+neighbor, then 500,000 P-Days is "excessively" secure. If Alice and Bob are
+sweet patooties, and the nasty is Alice's father who runs the comp sci
+department at the university, then 500,000 P-Days is about right. 
+ 
+Now, if any of you want to waste some time, you can play "kick the newbie"
+re points (a) through (d) above. 
+ 
+--tallpaul 
+ 
+ 
+
+
+
+

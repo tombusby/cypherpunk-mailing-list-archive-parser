@@ -1,0 +1,60 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 22 Nov 1995 07:07:41 +0800
+To: cypherpunks@toad.com
+Subject: Re: Proving I'm not Bob.
+In-Reply-To: <Pine.3.89.9511211301.B20512-0100000@tesla.cc.uottawa.ca>
+Message-ID: <199511212233.OAA16781@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+s1113645@tesla.cc.uottawa.ca writes:
+
+>I had an idea for an advertising based net-payment scheme that has 
+>a particular security flaw making it totally untrustworthy unless it is
+>possible to prove that you are not a particular person (the publisher 
+>receiving the ad money) when consuming (viewing or otherwise) the ads.
+
+BTW, we had some interesting postings here last year from Jason Solinsky
+(solman@mit.edu) about schemes involving advertising and payment, where
+people would get paid to view advertisements.  Is this the kind of thing
+you're thinking of?
+
+I posted some ideas once on how to prove that you are not someone else.
+Any such scheme has to be grounded in a physical mechanism to determine that
+two people are different.  For example, you might be able to get some
+special cryptographic signature or credential from an agency by showing
+some biometric information, such as retina or thumb prints.  You wouldn't
+necessarily have to reveal your name, identity, or any other information;
+just something which would allow the agency to be sure that they had not
+given such a credential out to you before.
+
+If you didn't care about privacy, your problem could then be solved
+simply by having each person exhibit his credential (these are often
+called "is-a-person" credentials).  The more interesting question then
+becomes exhibiting that credential in a privacy protecting way, but
+still being able to tell if two people are showing the same or
+different credentials.
+
+There are various ways of doing this; one of the simplest would be for
+the agency to give you a blind signature using a particular exponent,
+where you would be allowed exactly one of each exponent.  You unblind
+these, and to show you aren't Bob both you and Bob show your signatures
+for some matching exponent, which will be different.  Because of the
+blinding, no one will link the credential to your identifying
+information, and because it is a signature from the agency, no one can
+forge a credential different from the one they have.
+
+Depending on the situation and your tradeoffs between convenience and
+privacy, you might discard used credentials (for maximum privacy), or
+you might reuse them in a particular forum where you have persistent
+identity (for maximum convenience).  In the latter case, the exponent
+used could be associated with the forum, which is the idea behind
+Chaum's pseudonym system.
+
+Hal Finney
+hfinney@shell.portal.com
+
+
+
+

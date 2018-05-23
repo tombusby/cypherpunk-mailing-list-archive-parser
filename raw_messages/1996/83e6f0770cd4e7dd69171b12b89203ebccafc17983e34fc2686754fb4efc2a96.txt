@@ -1,0 +1,45 @@
+From: Peter Monta <pmonta@qualcomm.com>
+Date: Fri, 19 Apr 1996 20:09:03 +0800
+To: cypherpunks@toad.com
+Subject: Re: why compression doesn't perfectly even out entropy
+Message-ID: <199604190607.XAA17848@mage.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry Metzger writes:
+
+> > 1.  If "cooking" a byte sequence in a manner that reduces its
+> > maximum entropy by less than 1% allows an attacker to break your
+> > cryptosystem, then it is crap to begin with.  With only a little
+> > more effort, he could break it anyway.
+>
+> I would suggest that you look at differential and linear cryptanalysis
+> to learn what a tiny little statistical toehold will give you.
+>
+> My "ad hominem PSA" stands. I suggest people not trust Mr. Wienke's
+> pronouncements. He appears to be suffering from significant hubris.
+
+No, he's correct; cryptanalytic schemes like those you mention rely
+on statistical toeholds *in the context of a deterministic cipher
+algorithm*.  For one-time pads that are "cooked" or "screened" (and
+I agree that it's a silly thing to do), the toehold is much weaker,
+infinitesimal in fact.
+
+For example, suppose we take 1024-bit blocks from a physical RNG
+(which we'll agree is "good", has entropy close to 1024 bits,
+whatever that means).  There are 2^1024 such blocks.  Obtain one
+and apply the magical test---if the block fails, toss it in the
+bit bucket. Suppose, conservatively, that half the sequences fail.
+The cryptanalyst now knows that the plaintext cannot be
+( failed_pad xor ciphertext ) for any of the 2^1023 failed_pads.
+Thus, it must be one of the other 2^1023.  This is the *only*
+toehold he gets.
+
+Cheers,
+Peter Monta   pmonta@qualcomm.com
+Qualcomm, Inc./Globalstar
+
+
+
+

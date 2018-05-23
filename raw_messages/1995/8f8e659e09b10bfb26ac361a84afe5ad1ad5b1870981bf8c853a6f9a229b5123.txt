@@ -1,0 +1,66 @@
+From: millar@pobox.upenn.edu (Dave Millar)
+Date: Fri, 29 Sep 95 06:29:07 PDT
+To: cypherpunks@toad.com
+Subject: Assessing Netscape Commerce Server Risk
+Message-ID: <199509291328.JAA08472@pobox.upenn.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Would anyone care to critique this assessment?
+
+>Q:  What is the risk of implementing the Commerce Server without waiting for
+>the Oct. 9 patch (which fixes the randomness problem with the server's
+>public/private key pair)?
+
+>A: The exposure is essentially this: if someone were to make a concerted
+>attack on your public/private key pair, they might be able to discover your
+>private key.  Combined with net eavesdropping this would allow interception
+>and decrypting of SSL-encrypted traffic to your Commerce Server, and
+>combined with IP address and DNS domain impersonation would allow someone
+>to masquerade as your server.
+>
+>I would characterize this risk as low to moderate, with the higher risk
+>only applying if your Commerce Server is handling larger financial
+>transactions or extremely sensitive information.
+>
+>The time required for an attack on your key pair depends on how close the
+>attacker can come to guessing exactly when your key pair was generated, and
+>what the pid/ppid were for the key generation program at the time the key
+>was generated, as well as how fast the attacker can generate candidate key
+>pairs.  Since the time and pid/ppid are probably guessable only within
+>broad limits (e.g., within a few days for the time), and generating key
+>pairs takes on the order of a second or so, the estimated attack times are
+>much longer than the attack times for SSL messages.  I believe Netscape has
+>published estimates like 60 days or so to crack a key pair; even if those
+>estimates are too high by factors of two or three the times are still
+>comparable to the time until the patch is available.
+>
+>So if you're really concerned you can certainly eliminate the risk by
+>shutting down SSL-secure services until you get the patch; however I'd
+>weigh that against the downside of not having those services accessible.
+>
+>P.S. If you do continue running your Commerce Server with SSL, one simple
+>thing that might help thwart attacks is to do a "touch" on your server key
+>file and server certificate file (or copy them somewhere and then copy them
+>back) to update the date/time modified on the files.  This eliminates one
+>possible clue as to when the key pair was generated.
+
+_________________________________________________
+Dave Millar  University Information Security Officer
+3401 Walnut St., Suite 265C
+Philadelphia, PA 19104-6228
+University of Pennsylvania
+For security matters:  security@isc.upenn.edu (read by Data Admin. staff)
+
+Other matters: millar@pobox.upenn.edu
+voice: (215) 898-2172
+fax: (215) 898-1729
+For PGP 2.6 Public key: http://www.upenn.edu/security-privacy/
+PGP Fingerprint:   28 FB 09 DC C7 96 C2 53  1A B8 BE 3B 73 32 46 4C   
+
+
+
+
+
+

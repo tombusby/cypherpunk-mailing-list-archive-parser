@@ -1,0 +1,67 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Tue, 2 Jul 1996 02:25:19 +0800
+To: Charles Watt <watt@sware.com>
+Subject: Re: rsync and md4
+In-Reply-To: <9607011359.AA15838@mordred.sware.com>
+Message-ID: <199607011419.KAA20986@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Charles Watt writes:
+> How typically Perry.  
+
+Thank you for the compliment. I know that you think my comments are
+evidence that I am nasty and that you think this is an insult, but my
+clients seem to think this sort of thing is evidence that I'm
+uncompromising in trying to maintain the security of their
+systems. Everyone here knows my reputation. I may have a rough edge to
+me, but people by now know that my advice is generally right on the
+money. The fact that I have a reputation pleases me -- it does not
+disturb me.
+
+> Perry, as you are so fond of quoting Dobbertin, let me forward once again to 
+> the list Hans' analysis of the "crack" that he discovered.  He explicitly 
+> agrees with Mr. Ogren's analysis.
+
+No, he doesn't. Dobbertin's privately circulated document is entitled
+"Cryptanalysis of MD5", not "Possible weaknesses in MD5". The MD4
+results were even more damning. It is true that the attacks aren't
+general, but they are bad enough that the key property of
+cryptographic hashes -- that it is computationally infeasable to
+produce two documents with the same hash (note that the property is
+NOT that you cannot produce a document with the same hash as a
+document selected by the opponent), has been broken. Chosen plaintext,
+in particular, is completely broken.
+
+Dobbertin explicitly says that although there is no reason to panic,
+that MD5 is not to be trusted.
+
+I quote from your quote of Dobbertin:
+
+      5. My conclusions are: no reason for panic, but in future
+      implementations better move away from MD5.
+
+> Yes it is prudent to move away from MD5.  But there are still plenty
+> of uses where it is more than sufficient.
+
+Yeah, like if you are looking for a wacky checksum and not a
+cryptographic hash.
+
+Look the point is that Ogren seems to think this is some sort of a
+minor technicality and that we can safely ignore it most of the
+time. Thats simply not prudent. Once you find that the key properties
+of your cryptographic hash have fallen and you have to be
+exceptionally careful about what you put through the hash lest an
+attacker somehow influence it, you've lost the game. MD5 is no longer
+trustworthy. I agree that one needn't run screaming in the streets,
+but Ogren made it sound as though this wasn't a matter of
+concern. Thats simply wrong. Saying that leads people to a completely
+incorrect conclusion.
+
+Perry
+
+
+
+

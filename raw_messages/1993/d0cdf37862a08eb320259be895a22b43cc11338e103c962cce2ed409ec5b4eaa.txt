@@ -1,0 +1,49 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Thu, 11 Mar 93 23:56:36 PST
+To: <cypherpunks@toad.com>
+Subject: Tagging data to detect thieves
+Message-ID: <930312075211_74076.1041_DHJ35-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mark Ringuette asks about schemes to detect which copies of some 
+proprietary information were used to resell the data.
+ 
+I recall reading a paper on this in the proceedings of one of the crypto 
+conferences within the past several years.  Unfortunately, I don't have 
+a more accurate reference handy.  The authors referred to this problem 
+as "digital fingerprinting" (i.e. adding a "fingerprint" to each copy of 
+a document).
+ 
+As I recall, the idea was to twiddle bits in such a way that any subset 
+of copies up to a specified size would have a certain number of 
+identically twiddled bits.  The thiefs who cross-correlate 64 (or 
+however many) copies will not know about the bit twiddles which were 
+common to all 64 copies.  Their output will still contain those common 
+bit-twiddles, and this information allows the thiefs to be caught.  The 
+paper shows a formula for the number of possible bit-twiddle-places and 
+the number of bit-twiddles per copy needed, as a function of how many 
+copies you are defending against the bad guys getting.  It was basically 
+just a combinatorial/counting argument.
+ 
+I do seem to recall that if the bad guys could get a lot of copies the 
+number of bits needed grew exponentially.  I don't know whether 
+defeating an attack with 64 copies was practical using this scheme.
+ 
+Mark also asked about secret sharing.  The classic secret sharing paper 
+is "How to Share a Secret"; I think it was by Shamir, in an old CACM 
+from the 70's.  As I recall, he proposed encoding the data as a K-1 
+degree polynomial in some modulus field.  Give each person a point on 
+the polynomial.  K points are required to recover the polynomial.  I 
+don't recall how the encoding of the data as a polynomial was to be 
+done, but the author showed that K-1 points gives you no information 
+about it.
+ 
+Hal
+74076.1041@compuserve.com
+
+
+
+
+

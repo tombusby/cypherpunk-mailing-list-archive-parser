@@ -1,0 +1,45 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Fri, 5 Jan 1996 13:00:12 +0800
+To: Cedric Tefft <CedricT@datastorm.com>
+Subject: Re: 2047 bit keys in PGP
+In-Reply-To: <30EC5109@ms-mail.datastorm.com>
+Message-ID: <9601050442.AA25099@cfdevx1.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+    From: Cedric Tefft <CedricT@datastorm.com>
+    Date: Thu, 04 Jan 96 14:12:00 PST
+
+    >And they strongly imply that brute-force attacks against 256-bit
+    >keys will be infeasible until computers are built from something
+    >other than matter and occupy something other than space."
+
+    Hmmm... Well, the 384-bit Blacknet PGP key was cracked in just a
+    few months.  How?
+
+Factoring a 384-bit number is not equivalent to searching a 384-bit
+keyspace.  Consider that there are 78498 primes less than 1000000.
+This means that you can do a brute force search of a keyspace of under
+17-bits to find a prime factor of any composite number less than
+1000000000000 -- a bit under 40 bits.  I've done this to verify the
+results of an implementation of the Rabin-Miller primality test on
+relatively small numbers.  I'm not sure how many primes there are with
+192 or fewer bits, but it's far fewer than 2^384.
+
+There are better techniques around for factoring large numbers than
+this sort of brute force testing.  While I didn't follow the thread
+very closely, they probably used the quadratic sieve or number field
+sieve algorithm.  See Schneier's _Applied_Cryptography_ for more on
+factoring, including references to more detailed works.
+
+--
+Rick Busdiecker                        Please do not send electronic junk mail!
+ net: rfb@lehman.com or rfb@cmu.edu    PGP Public Key: 0xDBD9994D
+ www: http://www.cs.cmu.edu/afs/cs.cmu.edu/user/rfb/http/home.html
+ send mail, subject "send index" for mailbot info, "send pgp key" gets my key
+A `hacker' is one who writes code.  Breaking into systems is `cracking'.
+
+
+
+

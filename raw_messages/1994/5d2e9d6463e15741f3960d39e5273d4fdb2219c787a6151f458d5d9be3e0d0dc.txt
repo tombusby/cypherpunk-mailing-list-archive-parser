@@ -1,0 +1,40 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Fri, 17 Jun 94 08:47:57 PDT
+To: cypherpunks@toad.com
+Subject: Re: Prime magnitude and keys...a ?
+In-Reply-To: <199406171451.JAA29719@zoom.bga.com>
+Message-ID: <199406171547.IAA13206@netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim choate <ravage@bga.com> writes:
+
+ > I was wondering if anyone is aware of a function or test
+ > which would allow a person to feed PGP or other RSA
+ > algorithm a test key and then look at the result and
+ > determine if the key was greater or lesser than the actual
+ > key?
+
+This is an approach that I haven't heard of before.  If one could
+determine the numerical ordering of two different keys used to
+RSA-encrypt the same piece of plaintext by examining the
+ciphertext, one could easily break RSA by a binary search of the
+keyspace.
+
+Given two moduli N1 and N2, and some plaintext P, and PGP's
+favorite encryption exponent, 17, you need to determine if
+N1 < N2 by examining P^17 MOD N1 and P^17 MOD N2.  Although this
+is only a one-bit function, it clearly depends upon P in a very
+complicated way.  Since P is unknown and deliberately made random
+in practical RSA implementations, I am not sure such an attack
+shows much promise.  I would guess that this would be at least as
+complicated as solving an RSA or discrete log problem directly.
+
+-- 
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+

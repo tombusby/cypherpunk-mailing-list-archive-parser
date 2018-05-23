@@ -1,0 +1,73 @@
+From: Fabrice Planchon <fabrice@math.Princeton.EDU>
+Date: Sun, 22 Jun 1997 04:14:56 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: RC5 crack
+In-Reply-To: <199706211713.SAA00744@server.test.net>
+Message-ID: <19970621160629.55632@math.princeton.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Comme disait Adam Back (aba@dcs.ex.ac.uk):
+> 
+> Been looking at the RC5 crack project.
+> 
+> http://rc5.distributed.net/ has loads of flashy graphics, stats,
+> etc. but no instructions!
+
+seems they are in the final process of rewriting clients entirely, with
+a new protocol, etc... so they don't bother explaining how the old
+clients work. Still, I agree it sucks.
+
+> I've got the linux command line client, and I want to take off 16
+> hours at a time as I am using a dial up slip link, and it insists on
+> taking 20 mins worth.
+
+here is the best that I found on that subject in the rc5 list archive..
+
+   rc5.exe -l -a outland.hway.net -a2 rc5proxy.distributed.net -s -k 20
+   jonass@lysator.liu.se
+     
+     
+   -l is logging (writes to a file)
+   -a primary server to use
+   -a2 secondary server
+   -s shows status
+   -k number of blocks to buffer local. The larger number the less you
+   have to be online
+     
+          
+   This does not hide it, but that is what I like.
+   You start it (beeing online), wait until it got all blocks and then
+   go offline. Later you can go online any time. It will report any
+   blocks finished and get new ones to fill up the 20 slots buffer.
+   Unless you use the -o option or the -z option the client will try to
+   connect every 2 minutes after finishing the first block so be careful
+   if you have any kind of dial-on-demand.
+
+and from strings you get
+Usage: %s [-m] [-n level] [-c count] [-h hours]
+       [-a <address>] [-p <port>] <identity>
+
+doesn't say that much... but you can try the -k option to see if it
+works with the linux client.  I don't need that as I am on-line anyway.
+
+> Also, no source code.
+
+there have been some discussions about that on the list, they seem to
+fair bogus datas sent to the servers. Kind of makes sense, but they
+could at least release the core source without the communication
+protocol...
+
+                    F.
+
+-- 
+Fabrice Planchon                                          (ph) 609/258-6495
+Applied Math Program, 210 Fine Hall                      (fax) 609/258-1735
+
+
+
+
+
+

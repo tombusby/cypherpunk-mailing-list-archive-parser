@@ -1,0 +1,37 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Sat, 28 Oct 1995 04:52:06 +0800
+To: Matt Blaze <mab@research.att.com>
+Subject: Re: New release of CFS Unix encrypting file system available
+In-Reply-To: <9510271856.AA24314@merckx.info.att.com>
+Message-ID: <199510271954.PAA20647@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matt Blaze writes:
+>CFS pushes encryption services into the Unix(tm) file system.  It
+>supports secure storage at the system level through a standard Unix
+>file system interface to encrypted files.  Users associate a
+>cryptographic key with the directories they wish to protect.  Files in
+>these directories (as well as their pathname components) are
+>transparently encrypted and decrypted with the specified key without
+>further user intervention; cleartext is never stored on a disk or sent
+>to a remote file server.  CFS employs a novel combination of DES
+>stream and codebook cipher modes to provide high security with good
+>performance on a modern workstation.  CFS can use any available file
+>system for its underlying storage without modification, including
+>remote file servers such as NFS.  System management functions, such as
+>file backup, work in a normal manner and without knowledge of the key.
+
+What happens to hard links?
+
+mkdir foo bar
+CFS_set_directory_key -directory ./foo -key foo-key
+CFS_set_directory_key -directory ./bar -key bar-key
+cp /etc/passwd ./foo/test1
+ln ./foo/footest ./bar/bartest
+cmp ./foo/footest ./bar/bartest
+
+
+
+

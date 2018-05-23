@@ -1,0 +1,33 @@
+From: Carl Ellison <cme@sw.stratus.com>
+Date: Tue, 11 Jan 94 08:42:08 PST
+To: pem-dev@tis.com
+Subject: retraction re: triple-DES
+Message-ID: <199401111641.LAA14274@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Some of you may remember that I was promoting triple-DES-CBC using three
+feedback loops rather than one, claiming that is was clearly at least as
+secure as triple-DES with one feedback loop, while being faster for
+pipelined operation.  It is clearly faster in a pipeline but Eli Biham has
+shown me his attack on inner-loop triple-DES and it's quite good and I was
+quite wrong...at least for chosen-ciphertext attacks.  The inner loops
+weaken the resulting cipher drastically, under those attacks.
+
+I might still use the inner loops to get longer brute force attacks (as
+noted by Burt Kaliski in a posting here a while ago), if I knew that
+chosen-ciphertext attacks couldn't happen, but my original claim is clearly
+wrong and I thank Eli for pointing that out.  Meanwhile, there are probably
+better ways to get the longer key for avoiding brute force (eg., XOR with a
+single secret value or with a simple (fast) PRNG).
+
+I'm told that Eli has a paper in preparation explaining his attack in full
+and I'm looking forward to that paper.  I am sure that its location will be
+announced to this list when it becomes available.
+
+ - Carl
+
+
+
+

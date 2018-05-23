@@ -1,0 +1,70 @@
+From: Karl Barrus <elee9sf@Menudo.UH.EDU>
+Date: Tue, 23 Feb 93 08:36:38 PST
+To: cypherpunks@toad.com
+Subject: pgpshell
+Message-ID: <199302231635.AA18689@Menudo.UH.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Cypherpunks:
+
+A user new to unix, pgp, the net, etc. wrote to me asking for a "menu
+type of shell" to protect from switch overload.  So I hacked this
+together pretty quickly and have given it a once over testing.  It is
+meant for new pgp users; something which will help until they are more
+comfortable.  I mailed to the original user, but I thought there may
+be wider interest.
+
+pgpshell: it pretty much just passes on arguments to pgp, nothing
+fancy, minimal functionality.
+
+/-----------------------------------\
+| Karl L. Barrus                    |
+| elee9sf@menudo.uh.edu             | <- preferred address
+| barrus@tree.egr.uh.edu (NeXTMail) |
+\-----------------------------------/
+
+------8< cut here >8-----
+#!/bin/sh
+# pgpshell: minimally functional script to help users of pgp
+# (I'm not claiming this yet) :-)
+# last update 2/23/93
+
+echo " 1: encrypt a file"
+echo " 2: decrypt a file"
+echo " 3: conventionally encrypt a file"
+echo " 4: sign and encrypt a file"
+echo " 5: sign a file, result in ascii file"
+echo ""
+echo -n "choice: "
+read choice
+
+echo -n "Name of file? "
+read filename
+
+if [ ! -f "$filename" ]
+then
+  echo "File $filename not found."
+  exit 1
+fi
+
+case "$choice" 
+in
+  1) echo -n "User id? ";
+     read user;
+     pgp -ea $filename $user;;
+  2) pgp $filename;;
+  3) pgp -c $filename;;
+  4) echo -n "User id? ";
+     read user;
+     pgp -esa $filename $user;;
+  5) pgp -sat +clearsig=on $filename;;
+  *) echo "Improper choice."; exit 1;;
+esac
+
+
+
+
+

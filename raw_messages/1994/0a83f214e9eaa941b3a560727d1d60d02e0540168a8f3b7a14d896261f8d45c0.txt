@@ -1,0 +1,54 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Mon, 4 Jul 94 14:44:09 PDT
+To: cypherpunks@toad.com
+Subject: Re: Password entropy
+Message-ID: <9407042147.AA17444@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Nobody" asks whether you really get 128 bits of entropy out of MD5
+if you put in fewer bits, and whether you need to put in more than
+128 bits of entropy to get 128 bits of entropy out.  (This is mainly
+relevant for the case where you iterate MD5 N times for large N.)
+
+Entropy = -sum ( p(Xi) * log2(p(Xi) ) , Xi { outcomes of a random event X }
+which is the sum of the amount of information each event gives you times the
+probability of the event occurring.  In this application, the events are
+"the input to MD5 is" and "the output from MD5 is", and each input is one
+of many (presumably independent) values leading to the same output.
+
+You know that Entropy(MD5(Xi)) is <= 128, since there are only 2**128
+possible outputs, and they're supposedly equiprobable given random input.
+If the distribution of the Xi's is known, and it has substantially lower
+entropy than 128 bits, then the output also has lower entropy, since the
+probability of MD5(Xi) appearing is the probability of Xi.
+
+There's a bit more entropy lost in the MD5 step - if MD5(Xi) = MD5(Xj),
+-p(Xi|Xj)*log(p(Xi|Xj) < -p(Xi)*log(p(Xi)) + -p(Xj)*log(p(Xj)).
+On the other hand, collisions are infrequent - the probability of a
+pair of numbers having the same MD5 value is presumed to be 2**-128,
+and the usual birthday paradox calculations apply, so you'll probably
+find one if you take 2**64 random samples.
+
+At this point, knowing the details of the MD5 algorithm *does* matter;
+you can analytically find a few pairs of inputs that have the same
+MD5 value - but if you're choosing random inputs it's not likely to happen.
+If you could analytically invert MD5 (it's presumed that you can't,
+even for the 128-bit-input case), or store the results in a 2**128 large
+lookup table (:-), you could find out exactly how much lossage there is.
+Don't worry about it :-)
+
+If you still *are* worried about it, however, you can scramble things a bit;
+since MD5 produces 128 bits of output but uses 448 bits of input+padding,
+you can add a different constant to the input at each step.
+If you're using it as a salt, put it at the beginning; if you're
+just doing it for multiple iterations it doesn't matter much.
+
+		Bill
+		
+Celebrate Independence Day the traditional way - overthrow a government!
+
+
+
+

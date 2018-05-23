@@ -1,0 +1,69 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 24 Sep 1996 18:09:04 +0800
+To: Shane Brath <sbrath@froglit.scitele.com>
+Subject: Re: Go away CIA
+Message-ID: <199609240242.TAA28421@dfw-ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 07:32 PM 9/22/96 -0500, Shane Brath <sbrath@froglit.scitele.com> wrote:
+>On Sat, 21 Sep 1996, Wearen Life wrote:
+>> I wont be suprised if they where ALSO watching who was visting your page.
+
+>But how would they go about globaly watching who goes to your URL, unless 
+>they hack into your server and look at the log, or have a network sniffer 
+>at a access point feeding you?
+
+1) Spooks can do anything :-)
+
+2) Network Solutions Inc., who runs the NIC, is run by spooks.
+While they don't run all the root-level domain name servers,
+they influence most of the US ones.  It wouldn't be surprising if they
+can track DNS requests to the root servers, which would let them find
+which ISPs are looking for the addresses of which second-level domains.
+This isn't very informative when somebody at aol.com wants an address of
+compuserve.com (which will get cached at aol.com's DNS server anyway),
+but tells them a lot more when small-isp.com asks for skeeve.net's address,
+especially when they know which Usual Suspects are at small-isp.com .
+
+3) Added-paranoia mode, for people who believed 2) :-)
+Suppose you've got a vanity domain name, like skeeve.net, and
+they really want to track you.  So they hack the data in the .net
+nameserver to respond to requests for skeeve.net with
+198.81.129.94, which tells you that www.skeeve.net is 191.127.0.42,
+which runs an http server that fetches the information from
+203.28.52.181 that you're asking for and an SMTP relay hack that
+forwards the mail while keeping copies for itself.  (Even if you're running 
+SSL encrypted, it can probably still play active eavesdropper, knowing who's
+talking to 203.28.52.181, though it can't read the encrypted packets.
+If SSL is currently including IP addresses in the encrypted information
+to reduce spoofing, it can still at least hose the conversation.)
+Your ISP will cache this, so the next time somebody wants to talk to
+skeeve.net, it'll take care of that for them.
+
+This really doesn't work well for targets on aol.com, compuserve.com, 
+prodigy.com, ix.netcom.com, worldnet.att.net, and uunet.net
+that are a bit big to filter all the traffic for, of course,
+but it catches most of the interesting people.
+
+4) If they _do_ participate in the Network Access Points
+(e.g. fnords.net, on one of the Metropolitan Area Exchange
+FDDI rings, is really a CIA plant) they could probably sniff packets
+for people they don't have peering arrangements with.
+If you don't see the fnords, they won't eat your packets.
+If you do see the fnords, they will eat your packets, so you won't see them.
+This doesn't work as well for switch-based NAPs such as
+Big Hairy Routers or ATM switches, but ATM Virtual Circuits
+have fnords all over them anyway; that's why there are _5_ bytes in the header.
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	
+# You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+
+
+
+
+

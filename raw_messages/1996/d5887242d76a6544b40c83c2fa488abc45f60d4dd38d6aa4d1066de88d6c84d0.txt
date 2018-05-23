@@ -1,0 +1,47 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Fri, 21 Jun 1996 09:30:40 +0800
+To: Adam Shostack <adam@homeport.org>
+Subject: Re: Safemail
+In-Reply-To: <199606201529.KAA02594@homeport.org>
+Message-ID: <9606201728.AA00969@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Shostack writes:
+>  Not to defend the safemail folks, but this does remind me of
+>  something that NeXT did with Eliptic curve based systems;
+>  there was no storage of the private key, it was generated from
+>  the passphrase at run time.
+
+Yup, NeXT did this with their "For Your Eyes Only" demo and the crypto  
+extensions for their Mail application.  Although NeXT used an algorithm  
+called "FEE" (Fast Elpitic Encryption), you can do it with RSA by hashing the  
+passphrase, seeding a random number generator, generating a random prime,  
+etc...  It works but it adds a lot of processing time to encryption and  
+decryption.
+
+There are other, more serious, drawbacks to such a scheme though.  You can't  
+change your passphrase without changing your public key.  People can try to  
+guess your passphrase with only your public key.  Crack can guess peoples  
+account passwords something like 24% of the time.  I doubt the average joe  
+would use much better passphrases for their secret key.  That's a scary  
+thought!!  At least with PGP someone has to get a copy of the encrypted  
+secret key first.
+
+
+One interesting thing about NeXT's software is that the Mail application has  
+crypto hooks.  The crypto code is in a drop-in bundle that extends the app  
+at runtime.  This isn't just a generic interface, but the internationally  
+shipped Mail software calls methods in the external bundle that are  
+definitely crypto related.  Also, much of the crypto and key management user  
+interface ships with the main Mail package.  It is hidden without the crypto  
+bundle, but if you peek around with InterfaceBuilder you can see that it is  
+there.
+
+
+andrew
+
+
+
+

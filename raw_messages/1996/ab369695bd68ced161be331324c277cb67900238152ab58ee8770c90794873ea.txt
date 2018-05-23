@@ -1,0 +1,41 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Thu, 8 Aug 1996 08:40:34 +0800
+To: Cerridwyn Llewyellyn <ceridwyn@wolfenet.com>
+Subject: Re: appropriate algorithm for application
+In-Reply-To: <2.2.32.19960806232209.006e2c84@gonzo.wolfenet.com>
+Message-ID: <199608071703.NAA07097@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>
+>I need an algorithm/protocol that is capable of encrypting numerous
+>files with separate keys, but there also needs to be a master key
+>that will be able to decrypt all of them.  Is there such a system 
+>that is relatively secure?  I'd prefer the system to be as secure
+>as possible, but in this application, security is secondary to 
+>functionality.  Thanks... //cerridwyn//
+>
+
+
+If you need this "master key" feature embedded in the cryptosystem
+itself, you're probably out of luck - such a cipher would be at least
+as slow as a public key cryptosystem.  See Blaze, Feigenbaum, Leighton,
+"Master-Key Cryptosystems", CRYPTO '96 rump session, available at
+ftp://research.att.com/dist/mab/mkcs.ps .
+
+However, you could simulate the function of such a system by
+selecting a different key for each file and then encypting each unique
+file key with the master encryption key (which could be a public
+key or a symmetric key, depending on whether the application that
+encrypts the files is trusted to know the master decryption key).
+This has the disadvantage, however, of requiring that you store
+the encrypted file key with each file, which may or may not be
+an issue for you.
+
+-matt
+
+
+
+

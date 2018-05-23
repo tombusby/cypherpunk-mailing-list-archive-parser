@@ -1,0 +1,50 @@
+From: Laurent Demailly <dl@hplyot.obspm.fr>
+Date: Thu, 28 Sep 95 03:51:10 PDT
+To: cman@communities.com (Douglas Barnes)
+Subject: Re: Another Netscape Bug (and possible security hole)
+In-Reply-To: <v02120d01ac88cf556dd4@[199.2.22.120]>
+Message-ID: <9509281050.AA15525@hplyot.obspm.fr>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Douglas Barnes writes:
+ > Spent too much time last night playing with the Netscape bug;
+ > among other things wrote some code to throw various random binary
+ > URLs at Netscape. Netscape seems prepared to swallow the bait
+ > as long as the URL does _not_ contain characters screened as
+ > follows:
+ >  if ((c != '"') && (c!='>') && (c!=0) && (c!='/') ) {
+ > This means you can't plant 0x00, 0x22, 0x3e or 0x2f.
+
+No, you *can* put 0x22, 0x3e and 0x2f by using respectively
+&#34; &#62; and &#47; html constructs  (&#nnn; nn decimal ascii code)
+unfortunatly &#0; is not recognized but you can probaly use any number
+substracted by itself or even short lda#0 (depending on the cpu),...if
+you need a zero,...(what for ?)
+
+I hope this helps too, btw, anywone having contacts on the 8lgm folks?
+they must have experience with that kind of stuff...
+
+Uptodate infos kept on http://hplyot.obspm.fr/~dl/netscapesec/
+
+It seems the anim is working on about every netscape around, except
+one folk on linux that reported it didn't crash though someone else,
+on linux too said it crashed...
+
+Even if a patch should be availble now, making a demonstration is
+still interesting IMO [specially when you know that there are still
+ppl around using netscape 0.9x beta, and even ppl 'selling' it in ISP
+access packages!...]
+
+dl
+
+--
+Laurent Demailly * http://hplyot.obspm.fr/~dl/ * Linux|PGP|Gnu|Tcl|...  Freedom
+Prime#1: cent cinq mille cent cinq milliards cent cinq mille cent soixante sept
+
+Qaddafi ammunition radar Legion of Doom KGB Khaddafi Croatian
+
+
+
+

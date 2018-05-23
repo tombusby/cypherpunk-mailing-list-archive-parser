@@ -1,0 +1,115 @@
+From: Sunder <sunder@brainlink.com>
+Date: Sat, 10 Oct 1998 02:40:47 +0800
+To: rms@gnu.org
+Subject: Re: propose: `cypherpunks license' (Re: Wanted: Twofish source code)
+In-Reply-To: <199810071026.GAA20270@germs.dyn.ml.org>
+Message-ID: <361E522D.1082C33C@brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Richard Stallman wrote:
+
+> Public domain gives person P the ability to make modified versions and
+> give users no freedom in using them.  The result is that people in
+> general have less freedom.
+
+Untrue.  Person P may make proprietary versions of the program, however,
+the program's users may simply chose to not use them and instead take
+the original public domain program, write their own modifications as needed
+and do what they will with them.  In fact, they may even develop a function
+clone of Person P's program and put it back in the Public Domain if they
+so chose.  
+
+How does this restrict anyone?  Oh, they can't code you say?  Well, too bad,
+if they want to use other people's code, let them learn.  If one choses to
+learn to code, one frees himself.
+
+Nobody is forcing those users to use Person P's code any more than
+anyone is being forced to use Windoze 98.
+
+Cypherpunks Write Code is something I believe in, and practice.   For
+example, someone today needed to modify several bytes in a binary file
+that got corrupted in transit.  Not having any sort of hex editor he asked
+if I knew what I could use.  I told him to try gdb or adb and such, but
+he wasn't able to, so I wrote the bit of code following this message.
+
+Now, I could make this trivial bit of code proprietary and charge money for
+it, but others could simply spend some time and write their own.  I could
+make it GPL, and thus let everyone use it, but nobody would be able to
+copy this code and incorporate it in their code if they didn't want to 
+make their code GPL'ed.  So instead, I am making this available as
+public domain.  Do what you like with it.  Hell, if you'd like go ahead
+and modify it and GPL it, do so, but that won't stop anyone wishing to make
+commercial versions of it from finding this original bit of code rather
+than the GPL.  Nor will it stop anyone who just wants to use the code.
+
+So what's the point?  As long as public domain software exists and can
+be tracked down and use, it frees everyone.  GPL on the other hand does
+not.  Sure, it frees the users, but limits the authors.
+
+Of course the GPL has one advantage that you forgot to mention (or that
+I haven't noticed.)  Should Microsoft decide to grab Linux and produce
+Microsoft Linux (with or without the GNU utilities) they'd have to
+produce their sources.
+
+ --- twiddler.c ----->8 cut here 8<-------------------------------------
+
+
+
+#include <stdio.h>
+#include <errno.h>
+
+int main(int argc, char *argv[])
+{
+ FILE *myfile;
+ long loc;
+ unsigned char val[2];
+ char *endptr;
+
+ if (argc!=4)
+   {
+    printf("%s filename address value\n all values preceded by 0x are hex,\n \
+ 0 are octal, else decimal.\n address is 32 bit, value is 8 bit\n",argv[0]);
+    exit(0);
+   }
+
+ errno=0;
+ myfile=fopen(argv[1],"rb+");
+
+ if (!myfile || errno) {fprintf(stderr,"Unable to open file:%s\n",argv[1]);
+exit(1);}
+ loc=strtol(argv[2],&endptr,0);
+ val[0]=(unsigned char) strtol(argv[3],&endptr,0);
+
+ fprintf(stderr,"write %d to file %s at %ld\n",val[0],argv[1],loc);
+
+ fseek(myfile,loc,0); if (errno) {fprintf(stderr,"Unable to seek to %ld in file
+%s\n",loc,argv[1]); exit(2);}
+ fwrite(val,1,1,myfile); if (errno) {fprintf(stderr,"Unable to write %d to file
+%s at %ld\n",val[0],argv[1],loc); exit(3);}
+ fflush(myfile); if (errno) {fprintf(stderr,"Unable to flush file\n");
+exit(4);}
+ fclose(myfile); if (errno) {fprintf(stderr,"Got error on closing file\n");
+exit(5);}
+
+ return 0;
+}
+
+
+
+
+-- 
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|       Sunder       |Prying open my 3rd eye.  So good to see |./|\.
+..\|/..|sunder@sundernet.com|you once again. I thought you were      |/\|/\
+<--*-->| ------------------ |hiding, and you thought that I had run  |\/|\/
+../|\..| "A toast to Odin,  |away chasing the tail of dogma. I opened|.\|/.
+.+.v.+.|God of screwdrivers"|my eye and there we were....            |.....
+======================= http://www.sundernet.com ==========================
+
+
+
+

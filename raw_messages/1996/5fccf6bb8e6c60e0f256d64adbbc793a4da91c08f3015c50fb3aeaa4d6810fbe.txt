@@ -1,0 +1,90 @@
+From: Lance Cottrell <loki@infonex.com>
+Date: Mon, 9 Sep 1996 16:36:25 +0800
+To: cypherpunks@toad.com
+Subject: Re: strengthening remailer protocols
+In-Reply-To: <ae50bfcc03021004f4a7@[207.167.93.63]>
+Message-ID: <v03007817ae5963e47e23@[206.170.115.3]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mixmaster prevents replay, so flooding multiple copies of a single message
+will not work. This is the reason Mixmaster has no reply block feature. I
+can see two ways in which replies can work safely.
+
+One time reply blocks. Each block is used once and only once. Each routes
+separately, and the creator never deploys enought to allow a good trace (no
+more than 5 in existence at any one time). They would probably need to be
+managed by some kind of nym-server. They have the disadvantage of allowing
+denial of service by simply using up all the available reply blocks. The
+block also point back to the sender (as all reply blocks must). This allows
+an attack to rubber hose each operator in succession at the attacker's
+leasure. Normal chains contain no information about where they have been,
+so interception and cooperation must happen in real time (much more
+difficult).
+
+The other solution is message pools. I think this will turn out to be the
+only really secure and reliable system. Some sort of automated use of pools
+by remailers (so the user need not do so directly) might be possible. I
+designed such a system several months back, with little response.
+
+At 4:50 PM -0700 9/2/96, Timothy C. May wrote:
+>This type of attack is why "reply-block" schemes are fundamentally flawed.
+>Any such scheme gives an attacker (a traffic analyst) a wedge with which to
+>deduce mappings. It is a kind of "chosen plaintext" attack (loosely
+>speaking). Or a "forcing attack." Maybe a "flooding attack" is as good a
+>name as any. One floods the reply block and simply watches where the water
+>goes.
+>
+>(If there were more academics in the crypto community looking at digital
+>mix issues, there would likely be clever names for the various attacks.)
+>
+>Several folks on this list, including (from memory), Scott Collins, Wei
+>Dai, Hal Finney, myself, and others, have noted this weakness over the
+>years.
+>
+>Note that merely fiddling around with probabilities of transmission, such
+>as described above, will not be enough. This just adds a layer of noise,
+>which will disappear under a correlation analysis.
+>
+>(For newcomers, there are interesting parallels between statistical
+>analysis of ciphers and similar analysis of remailer networks. And lots of
+>statistical tools can be used to deduce likely mappings based on
+>source/sink correlations, digram analysis, etc. Making a remailer network
+>robust against such analyses will take a whole more basic thinking. Merely
+>increasing message volume is not enough. Nor is increasing latency enough.
+>Generally speaking, of course.)
+>
+>Instead of reply blocks, I think use of message pools (a la BlackNet) is a
+>more robust reply method, as it uses "widely-distributed messages" (a la
+>Usenet newsgroups) to get around the source/sink correlation issue.
+>
+>--Tim May
+>
+>
+>We got computers, we're tapping phone lines, I know that that ain't allowed.
+>---------:---------:---------:---------:---------:---------:---------:----
+>Timothy C. May              | Crypto Anarchy: encryption, digital money,
+>tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+>W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+>Licensed Ontologist         | black markets, collapse of governments.
+>"National borders aren't even speed bumps on the information superhighway."
+
+
+----------------------------------------------------------
+Lance Cottrell   loki@obscura.com
+PGP 2.6 key available by finger or server.
+Mixmaster, the next generation remailer, is now available!
+http://www.obscura.com/~loki/Welcome.html or FTP to obscura.com
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+----------------------------------------------------------
+
+
+
+
+
+

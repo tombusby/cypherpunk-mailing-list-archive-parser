@@ -1,0 +1,96 @@
+From: Steven L Baur <steve@miranova.com>
+Date: Thu, 23 Jan 1997 18:01:59 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: fingerd
+Message-ID: <199701240201.SAA03902@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+snow  writes:
+
+>> > Couple of things you can do:
+>> >     2.  Install a more secure "fingerd" such that it only
+>> >         allows "finger `userid@node.domain`" instead of
+>> >         "finger `@node.domain`".
+
+>     cfingerd can be gotten from:
+
+cfingerd is not a safe program.  It must run as root, and has some big
+problems.
+
+Date: Wed, 18 Sep 1996 18:34:43 +0200 (MET DST)
+From: Janos Farkas <chexum@shadow.banki.hu>
+To: Administrador da Rede <admrede@opensite.com.br>
+cc: linux-security@tarsier.cv.nrao.edu
+Subject: Re: Finger Doubt
+Message-ID: <Pine.LNX.3.95.960918181033.2523A-100000@shadow.banki.hu>
+
+
+Howdy people!
+
+On Tue, 17 Sep 1996, Administrador da Rede wrote:
+> I use the newest version of cfinger, setted to not allow general finger, just
+> specific ones. Does anyone knows how this person did that ? I hope I can
+> find out, otherwise, bye bye finger service.
+
+Badly.
+
+I have sent the author a letter, but never got any reply back (it's 3
+months later now!), so I just take the opportunity to warn the public
+against its use.
+
+Excerpts from the source (1.2.3, older versions have been a bit more
+directly broken, now it has root privs only at the moments it shouldn't
+have.)
+
+	"This daemon must be run as root!"
+
+[And unfortunately, does..]
+
+...
+	unlink ("/tmp/fslist");
+...
+        sprintf(st, "%s | tail +2 >> /tmp/fslist",
+            prog_config.finger_program);
+        ...
+	system(st);
+
+A similarly terrible one some lines later:
+
+	system("cat /tmp/fslist | sort > /tmp/fslist.sort");
+
+As it stands, it can allow any local user to destroy any file on the
+system, including partition tables on disks.  Please someone correct me if
+I am wrong, I tried this with cfingerd-1.2.2 and it allowed me to do bad
+things.
+
+I was a bit disappointed by the lack of any reply from the author, so I
+think I am now justified to tell that
+
+if anyone installed cfingerd (about 1.1 or later) on his system, disable
+it IMMEDIATELY, until at least the author clarifies this bug in a new
+version.  The current version is BAD.
+
+However if you just need a finger daemon, you may take a look at xfingerd,
+at
+ftp://ftp.banki.hu:/pub/xfingerd/xfingerd-0.1.tar.gz
+which is the one I wrote when I got desperate about cfingerd. (If you take
+a look at its date stamp, you can see that cfingerd is long broken..)  I
+too can't garantee that it's good for you, but it at least doesn't require
+to be run as root, which is why I started being against cfingerd.
+
+I hope this note finds everyone concerned.
+
+Janos
+
+
+-- 
+steve@miranova.com baur
+Unsolicited commercial e-mail will be billed at $250/message.
+Real men aren't afraid to use chains on icy roads.
+
+
+
+
+

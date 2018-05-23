@@ -1,0 +1,87 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Sat, 10 Jul 93 12:26:47 PDT
+To: mdiehl@triton.unm.edu (J. Michael Diehl)
+Subject: Re: encrypted email software
+In-Reply-To: <9307100735.AA09015@triton.unm.edu>
+Message-ID: <9307101926.AA08581@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> Could someone tell me what an s-box is?  Thanx in advance.
+
+
+The Data Encryption Standard (any many other crypto systems devised
+since) use a process of substitutions (replacing one block of bits
+with another) and permutations (re-arranging the bits).  This process
+is iterated a number of times and the key is mixed in at different
+points.
+
+
+    This R                                               This L
+      |                                                      |
+      v                                                      |
+  [E Expansion]                                              |
+      |                                                      |
+      \                                                      |
+        XOR <------------- key for this round (subkey)       |
+         |                                                   |
+     -----------------------------------                     |
+     |   |    |     |    |    |   |    |                     |
+     v   v    v     v    v    v   v    v                     |
+  =========================================                  |
+  | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 |                  |
+  =========================================                  |
+     |   |    |    |    |    |    |    |                     |
+     -----------------------------------                    /
+                   |                                       /  
+               [P Permutation]                            /
+                   |                                     /
+                   \____________________________________/__ 
+                                       |               /   \
+                                       v              /     \
+                                      XOR <-----------       |
+                                       v                     v
+                                     Next R                Next L
+
+This is the basic structure of DES (if I didnt make a mistake, this
+is from memory).  Anyway the basic idea is you take half the key
+(called L and R for Left and Right, but hey, I'm lysdexic).  You
+put it through an expansion, this just mixes up the order of the
+bits and duplicates a few of them.  Then you XOR it with the sub-key
+(the Key Generator is not shown).  Then you split it up into 8 6-bit
+chunks and do a table lookup in the S-boxes, each Sbox has 6 inputs
+and 4 outputs.  Then you re-arrange the bits in the P permutation.
+Finally you XOR that value with the L to get next R, and put the
+pre-XOR'ed value into the next L.
+
+This is 1 iteration and is done 16 times in DES, and 16*25 times in
+crypt(3).  Crypt(3) also has the salt values which cause the swapping
+of two bits in the E expansion for every salt bit that is set.  Before
+pulling apart the 64 bit input into 2 32 bit halfs (L and R) the data
+is passed through an Initial Permutation (IP), and at the end of the
+whole thing passed through (IP^-1) its inverse (this permutation isnt
+cryptographically that significant).  The subkeys are generated
+by taking the input 56 bits of key, mixing them up and then successively
+rotating those bits, and passing them through a permutation.  It outputs
+48 bits of key each iteration to match the 48 bits after the E expansion.
+
+I hope I didnt make too many mistakes in the above discussion, but
+you get the general idea.
+
+> +-----------------------+-----------------------------+---------+
+> | J. Michael Diehl ;-)  | I thought I was wrong once. | PGP KEY |
+> | mdiehl@triton.unm.edu |   But, I was mistaken.      |available|
+> | mike.diehl@fido.org   |                             | Ask Me! |
+> | (505) 299-2282        +-----------------------------+---------+
+> |                                                               |
+> +------"I'm just looking for the opportunity to be -------------+
+> |            Politically Incorrect!"   <Me>                     |
+> +-----If codes are outlawed, only criminals wil have codes.-----+
+> +----Is Big Brother in your phone?  If you don't know, ask me---+
+
+
+
+

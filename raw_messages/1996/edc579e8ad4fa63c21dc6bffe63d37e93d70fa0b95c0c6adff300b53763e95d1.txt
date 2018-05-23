@@ -1,0 +1,165 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Sat, 13 Apr 1996 08:19:18 +0800
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: Protocols at the Point of a Gun
+In-Reply-To: <199604111939.MAA14774@toad.com>
+Message-ID: <199604121822.OAA01246@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart writes:
+>There are serious technical problems with the suggestion that labelling packets
+>as "Adult" or "Child" using IP options and filtering at ISPs for censorship.
+
+Few of the following are really *technical* problems.
+
+>IP works on a per-machine basis (technically, a per-network-interface basis,
+>though for most client machines that's the same thing.)  That means that a 
+>web or nntp server including some "Adult" material and some "Child" material
+>either needs
+>a way for an application process to communicate this to the network drivers,
+>or needs to label all packets as "Adult" to avoid the politically incorrect risk
+>of mislabelling a packet as "Child" when it's not.  The standard TCP/IP API 
+>programming interface software on Windows, Mac, and Unix machines doesn't
+>provide 
+>for applications to _tell_ the network drivers about IP options, so even if
+>IPng had censorship features added, the applications couldn't use it.
+>(There are a few military multi-level security versions of Unix that give
+>you more flexibility for this sort of thing, but they tend to provide
+>mandatory security so you _can't_ send a packet marked "UNCLASSIFIED" from a
+>"TOP SECRET" session.)  
+
+This is more of an economic problem than a technical one.  By the
+"standard API" we usually mean "BSD sockets", which already has a
+"getsockopt()" and "setsockopt()" interface for the application to
+communicate this sort of thing.  Adding a SO_SECCLASS to change the
+setting from the system default would be pretty straightforward,
+technically.
+
+>Another problem is that it only addresses single-user client machines,
+>rather than multi-user operating systems such as Linux, which has a million
+>or so
+>users out there.  The model works fine when you treat a PC as a fancy version of
+>a dumb terminal, but a machine shared by multiple users (whether many at one
+>time,
+>or one at a time) uses a single connection to support all of them - that
+>means you
+>can't have censored material available to the child and uncensored material
+>available to the parent unless the networking software can pass the censorship
+>labels on to the application program - but again, the standard operating system
+>interfaces (developed over many years by thousands of The Free World's finest
+>developers :-) don't have a way to implement it, because it was never a
+>design goal.
+
+Actually, this is a bit of an "ivory tower" picture of the Internet.
+Conceptually, the protocols are purely peer-to-peer, but in the real
+world, those end-user Linux boxes go through an ISP.  The User to ISP
+link is governed by a contrac, which may specify filtering done at the
+ISP.  If you want to access "adult" material, but don't want your kid
+to be able to, you should get a separate filtered PPP account for the
+kid.
+
+>Trying to implement censored sessions at a transport level instead has its
+>own problems.
+>First of all, TCP provides reliable sessions; censoring packets based on IP
+>labels
+>in the middle of a transaction means that TCP will retransmit until the
+>packet gets
+>through or it gives up and drops the connection, so any "Adult" packets would
+
+Not so.  If one end of the connection is discarding "adult" packets,
+the SYN packet attempting to establish the session will *also* be
+dropped, probably resulting in a "connection refused" (from a RST by
+the other side) or "destination unreachable" (from the IP module that
+discarded it).
+
+>dump a Registered Child out of the browser, even if they were unintentional
+
+Dropped connections don't dump you out of the browser.  You just get
+a popup.  (If it *does* dump you out, get a new browser.)
+
+>(e.g. from an Adult who labels all packets "Adult" to avoid being liable for
+>mistakes,
+>or packets from Europe that were default-labelled by a service provider to avoid
+>having to read them all, or from the Library of Congress Online Edition if
+>the Librarian
+>labels each packet correctly.)
+
+Again, these aren't technical issues, they're social.  A European
+company who sends a dirty magazine to a sixteen year old American is
+violating existing non-CDA decency laws.
+
+>On the other hand, UDP packet exchange,
+>which doesn't
+>use sessions, would require validating the user's ID and authorization on
+>each packet.
+
+True, but this isn't a problem.  The "validation" is simply a matter of
+checking the "information level" in the packet with the "authorization
+level" of the user.  If the ISP is filtering adult packets, the "authorization
+level" is a constant per PPP connection.  If the ISP is inserting "information
+levels", it's still constant per PPP connection, but now the content provider
+needs to check if the request is permitted to be fulfilled.  In either case
+the test is trivial.  It's not like there has to be a key exchange and
+RSA exponentiation for each packet.
+
+>Furthermore, if the censorship information is carried at the transport level,
+>or at a higher level (i.e. headers in the message itself), the only way the
+>ISP's routers, which work at the IP level, can censor packets is to perform the
+>equivalent of the Post Office steaming open envelopes before delivering them
+>to your house, and refusing to deliver them if there's a child living in the
+>house
+>and the letter either contains a bad word or is written in a language the
+>Post Office doesn't understand, such as Finnish or Japanese or PGP.
+
+Agreed.  But the current discussion is about adding features to the network
+layer.
+
+>If you create outgoing packets that are labelled "Minor", and contain
+>"Restricted to Government-Certified Adults Only, and No Felons or
+>Foreigners Allowed" material, you can get busted for it.
+>So you have to either restrict all your outgoing packets to be labelled 
+>"RtG-C Adults O,aNFoFA", or else make sure all the material you transmit
+>passes the "Government-Approved-for-Minors, Foreigners, and Victorian
+>ladies" filter.
+>
+>On the other hand, if you don't log in to your ISP with a
+>"government-certified adult,
+>non-felon, non-foreigner, politically stable, not-a-Commie-or-Jew" id,
+>it'll block any packets not approved for you.  Any news or web server will also
+>have refuse to send any "Adult"-labelled material to you if the requests
+>arrived on a "Kid"-labelled connection - this means that either the server
+>machine
+>will have to only carry Kid-approved traffic, or only talk to Adults,
+>or add an "Adult" label to all outgoing packets whether marked "Kid" or not,
+>or else it will have to break protocol boundaries by passing IP-layer
+>information
+>up to the application.
+
+Regardless of whether information is added at the network layer to
+communicate the "adult/minor" information, knowingly sending web pages
+with adult material to a minor is illegal.  With current implementations,
+providers have the excuse that they have no way of knowing that the requester
+is a minor.  If the information is added to the protocols, they lose the
+excuse.  Again, this is a social matter, not a technical one.
+
+The point about breaking protocol boundaries is an interesting one, and
+as far as I am concerned, the *only* technical issue you raise.  I note
+that the IP layer's "Security Compartment" option, which is one I've
+suggested might be used to implement the censorship, already provides
+exactly this "violation".  The "Stream ID" option and "Type of Service"
+field are similar "violations".  The TCP layer gives the application
+layer the "Urgent" and "Push" flags, which are arguably similar
+"violations".
+
+Again, I'd like to emphasize that I think implementing this suggestion
+would be censorship, and do more harm than good.  I really hope someone
+can come up with a solid technical reason why doing this won't work,
+but the more I think about it, the more I think it *will* work.  I
+maintain that the CDA is bad socially, but that support for it at the
+network layer is technically possible.
+
+
+
+

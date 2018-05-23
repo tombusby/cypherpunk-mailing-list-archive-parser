@@ -1,0 +1,99 @@
+From: Lucky Green <shamrock@netcom.com>
+Date: Thu, 21 Nov 1996 17:23:33 -0800 (PST)
+To: Mullen Patrick <Mullen.Patrick@mail.ndhm.gtegsc.com>
+Subject: RE: Mass-market crypto phones
+In-Reply-To: <n1363530815.90062@mail.ndhm.gtegsc.com>
+Message-ID: <Pine.3.89.9611211658.A10580-0100000@netcom14>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On 21 Nov 1996, Mullen Patrick wrote:
+
+> _______________________________________________________________________________
+> From: Clay Olbon II on Thu, Nov 21, 1996 15:20
+> 
+> >A while back, Eric Blossom posted a URL for a mass-market, phone encyrption
+> >device (http://www.comsec.com/).  The point of this post is to posit a
+> 
+> The above mentioned crypto phone was incredibly expensive, if I remember
+> correctly.  What it basically was (Please keep in mind I may be thinking
+> of a different product) a box containing a modem and a crypto-crunching
+> CPU.  Phone in one end, processed by said CPU, and send out other end.  I
+> have/had a similar idea, but I want to try make it a totally software 
+> product (assuming you have the necessary hw requirements on your computer)
+> where you talk in through a microphone (can something be wired so you can
+> use a regular phone plugged into your computer/modem/soundcard???) your
+> CPU crunches code, and spits out the encrypted data.  Obviously, the
+> complementing steps would be done on the receiving end.  
+> Has anyone ever tried anything like this?  
+
+Sure. There are Nautilus and PGPFone. The problem is that software-only
+solutions are unlikely to provide a sound quality that is acceptable for
+everyday use over analog lines. At least not unless you have a very fast
+machine and don't intend to use it for anything else than telephony. Here
+is why: 
+
+Computer telephony codecs are subject to a tradeoff amongst three main 
+factors:
+
+o Voice quality (you want to maximize this)
+o Processing power required (you want to minimize this)
+o Bandwidth (you definitely want to minimize this)
+
+Imagine the three factors to form the dimensions of a cube. You can get
+the choose two values, but not all three. Example: you can get good voice
+quality on a machine with a (relatively) slow CPU, if you have a lot of
+bandwidth. Or you can get good voice quality on a very fast machine with
+little bandwidth. Of the three factors, band with is the most limiting. 
+The best codec in the word on the fastest machine can't give you decent
+voice quality on a very slow connection. 
+
+So how much bandwidth do you need? An ISDN B-channel, which is designed to
+carry one digital telephone conversation, is 64kbps. But a regular POTS
+telephone, using an analog line, doesn't have nearly as much bandwidth to
+work with. You should not expect an analog modem to link up at a speed of
+more than 14.4kpbs. Some lines may link up at only 9600bps.  Forget about
+the less than 10% of US phone lines that allow the use of 28.8kbps. You
+can't rely on your customers to use your product only over such lines. 
+
+The first problem is therefore to find a software codec that compresses 
+your voice down to 14.4kbps. They exist, but they require a lot of 
+computations and therefore a fast CPU.
+
+But that's only half the problem. Next, you need to encrypt the 
+data steam. The rule of thumb here is: the stronger the crypto, the more 
+cycles you need. Since we are talking about strong crypto, such as 
+3DES, you will need _a lot_ of cycles.
+
+Once you add the cycles needed by the codec and the cycles needed by the 
+crypto, you will find that you, more likely than not, don't get enough 
+cycles from your CPU. The obvious solution to this problem is to use a 
+codec that uses lossier compression and therefore less cycles, resulting in 
+lower speech quality.
+
+Even after sacrificing voice quality, telephony is most likely the only 
+task your computer will be able to do while you are on the phone. This 
+may work for you, but it won't work for many others. After all, not
+many people have a spare 200MHz Pentium sitting around that they don't 
+need for anything else.
+
+The alternative is to use dedicated hardware. Remember that a general
+purpose CPU is just that: general purpose. If you want to use the box only
+for one purpose, there is often a cheaper, better solution available in
+special purpose hardware. For the price of the Pentium box, you can build
+a much smaller bump-in-the-cord device that delivers great sound, over
+slow links, *and* uses strong crypto.
+
+Which is what Eric Blossom <http://www.comsec.com/> did. And he did 
+it extremely well, I'd like to add.
+
+I don't want to discourage you. Try the software-only solutions and see 
+if they work you. You can find them at 
+<ftp://ftp.hacktic.nl/pub/replay/pub/voice/>
+
+--Lucky
+
+
+
+

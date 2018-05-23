@@ -1,0 +1,50 @@
+From: Phil Karn <karn@qualcomm.com>
+Date: Wed, 22 Jun 94 02:14:55 PDT
+To: die@pig.jjm.com
+Subject: Re: Cell phone tracking
+In-Reply-To: <9406192230.AA02687@pig.jjm.com>
+Message-ID: <199406220913.CAA03748@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 	And in the future Phil Karn's company Qualcomm's CDMA digital
+> cellphones will provide few feet accuracy position as a byproduct of the
+> spread spectrum receive correlator operation on every transmitting phone
+> within range of more than one cell receiving site unless they actually
+> aviod trying to make the measurement.  Most of the time more than one
+> cell site tracks a given phone so they can vote on which one has the
+> stronger signal - given that each of these sites has a precise estimate
+> of the time of arrival of transissions from each phone it takes little
+> more than netting of the time base (with GPS ?) between the cell sites to
+> detemine cellphone positions since the positions of the cell site
+> antennas are well known.  I suspect that if the hardware and software to
+> do this (mostly software) is not part of the current base station that
+> certain TLAs will pay to have it developed and implemented. 
+
+Yes, as I described in earlier mail this is certainly doable with our
+CDMA system although position location was not one of the original
+design goals for the system nor is it a requirement for the ones we're
+currently building.
+
+During drive tests in the demo/test system it was easy to tell by
+watching a display in the cell when the test van had returned to the
+starting point. We had a continuous display of round trip time which
+would increase and then return to its original value. But we don't do
+anything useful with this information at present. For data logging
+purposes on field tests, we now use commercial Trimble GPS receivers
+that have piezo gyros for dead reckoning through the GPS coverage
+shadows. They work much better than the compass/wheel rotation counter
+scheme used in the ETAK units we had before.
+
+We already "net our time base with GPS" - each cell site has a GPS
+timing receiver that controls frequencies and spreading codes within a
+microsecond (limited mainly by SA dithering). This is needed to make
+our soft-handoff work, but it does have the side effect of making
+a potential location-determination system more practical.
+
+Phil
+
+
+
+

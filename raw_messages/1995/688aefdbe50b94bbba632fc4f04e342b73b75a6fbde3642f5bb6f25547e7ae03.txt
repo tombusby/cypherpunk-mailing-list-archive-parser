@@ -1,0 +1,81 @@
+From: Bob Smart <smart@mel.dit.csiro.au>
+Date: Thu, 5 Oct 95 16:02:51 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Certificate proposal
+In-Reply-To: <199510051924.MAA25839@jobe.shell.portal.com>
+Message-ID: <199510052302.AA11892@shark.mel.dit.csiro.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I strongly support what Carl Ellison is saying. I've been meaning to write
+up something on it for so long that I must accept I'll never do it. So
+here instead is a quick example.
+
+ > I don't understand this whole discussion.
+
+The idea is to make the public key the centre of the architecture instead
+of being an attribute of some other centre (e.g. distinguished name).
+
+Consider the IPSEC case. The current situation is:
+
+1. We go through some process, let's call it Process A, where we determine
+   that we want to talk to IP address 192.9.8.7.
+
+2. We go through another process where we obtain the public key of 192.9.8.7.
+
+3. We then try to decide, based on one or more certificates, whether we
+   trust the public key to be the correct public key for 192.9.8.7.
+
+Now consider the key-centric version.
+
+1. Process A returns a public key which denotes the destination we want to
+   talk to.
+
+2. We then go through a process to obtain the IP address that belongs to
+   that public key. We probably won't use the public key as an index to
+   get that information. We probably use the information that was input
+   to Process A. In fact this information may fall out as a byproduct
+   of Process A. [However if we needed to make a scalable distributed
+   database of RSA public keys then I have a design to do this -
+   available on application.]
+
+3. We don't need to trust any certificates or anything else at this stage.
+   The fact that the IP address belongs to the Public Key is signed by
+   the Public Key itself.
+
+The same thing happens with e-mail. If "Process A" gives us an e-mail
+address to send to then we worry about whether we have the right public
+key to go with it. If Process A gives us a Public Key then we can
+have certainty about the associated e-mail address because the association
+is signed by the Public Key.
+
+And a big win that just falls out of this is that I can have a
+continuous exchange of information with one IP destination even if
+it keeps changing its actual IP address (mobile computing) or I
+can have an e-mail conversation with a person who keeps changing
+their e-mail address. The things you want just fall out instead of
+requiring clever software solutions.
+
+ >  A certificate is a signed
+ > binding of a key and a unique name, right? 
+
+In the key-centric world a certificate binds some attribute as a property
+of a publc key. So an X.509 certificate would say "The owner of this
+public key [i.e. person who knows the corresponding private key] owns
+the following point in the X.500 namespace", rather than that "the
+person identified by this DN owns the following publc key". Experience
+has shown that the latter interpretation is a mine-field. It really
+doesn't work.
+
+The idea of a key-centric architecture is the proverbial "idea whose time
+has come". There are echoes of it in MOSS and in STT. But it really calls
+out for a group to work out a complete architecture. If someone wants to
+start such a discussion I'll make sure I make time to be part of the process.
+
+Bob Smart
+
+
+
+
+

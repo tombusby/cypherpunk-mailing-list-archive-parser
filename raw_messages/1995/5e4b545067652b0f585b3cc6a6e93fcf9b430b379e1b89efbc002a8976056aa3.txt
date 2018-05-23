@@ -1,0 +1,41 @@
+From: droelke@rdxsunhost.aud.alcatel.com (Daniel R. Oelke)
+Date: Mon, 28 Aug 95 16:23:45 PDT
+To: stripes@va.pubnix.com
+Subject: Re: SSL trouble
+Message-ID: <9508282322.AA12838@spirit.aud.alcatel.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >PS3: I'd like to get the raw date in brloop (a sh script). In perl I'd just
+> >     use "time", and I can't see a way to get "date +" to yield the raw time.
+> >     I could use "date=`perl -e 'print time'`" but that seems OTT, and perl
+> >     may not be on teh users PATH. Any suggestions ?
+> 
+> "date '+%s'" does it under BSDI, but I'm not sure how portable it is.
+> 
+
+That doesn't work under SunOS 4.1.x, but this does:
+
+   date "+%S %M 60 * + %H 3600 * + %j 86400 * + %y 31536000 * + p" | dc
+
+This assumes 365 days/year, so if you jump from a leap year to a non-leap
+year it won't work right.  Hey - a 1/1460 failure rate is better
+than most Windoze programs I've used ;-)
+
+It also isn't the "absolute" time, (as given by time()), but
+gives a number of seconds that constantly increases.
+ 
+With a little more work you should be able to adjust this to be close
+to time() functionality.
+
+
+Dan
+------------------------------------------------------------------
+Dan Oelke                                  Alcatel Network Systems
+droelke@aud.alcatel.com                             Richardson, TX
+
+
+
+
+

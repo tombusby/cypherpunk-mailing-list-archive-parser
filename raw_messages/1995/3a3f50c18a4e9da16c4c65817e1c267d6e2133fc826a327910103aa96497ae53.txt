@@ -1,0 +1,150 @@
+From: aba@dcs.exeter.ac.uk
+Date: Mon, 21 Aug 95 09:30:47 PDT
+To: cypherpunks@toad.com
+Subject: NEXT CHALLENGE: plan of action?
+Message-ID: <25403.9508211621@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+[First please moderate my previous couple of postings with the
+knowledge that they may (if they even got out) have been hanging in
+suspended animation for ~40 hours due to stuffed mail server, and some
+things have changed since then.]
+
+I've been out of things for a couple of days due to aforementioned
+dead mailer.  All's well now (well it's croaking along passably
+anyway).
+
+Just posted a config file for Hals 2nd challenge, which Alex Tang
+<altitude@cic.net> has kindly checked.
+
+I read on Saturday Ian Goldbergs post about starting out on the
+challenge using Damiens code.
+
+It doesn't matter a great deal which code is used as such, but the
+main thing is to ensure that this is a coordinated effort.  The aim of
+the challenge (which I requested and Hal kindly provided just before
+popping off for a week or so's holiday) was to see how fast a SSL
+challenge could be broken.  Not how *soon*, note the distinction.
+
+That means that if for instance we count the time that Ian has been
+clocking up since Saturday, the real time will be slowed by approx 2
+days.  We really need to do this with a starting-line like affair, so
+that someone is running a server, and everyone gets the code compiled
+etc, and then the server starts offering the challenge and all the
+clients fire off.
+
+That way we have a less straggly start up which makes for better
+bruteing figures.
+
+Agreed so far?
+
+
+If so here's my ideas...
+
+
+Use Andrew Roos client & Piete's socket server / WWW client for the
+reason that this combination has been designed to operate both an
+automated sockets master / slave system and offer manual key
+allocation over WWW for those without direct connectivity, or behind
+firewalls.
+
+All of the software for this system is indexed from the URL:
+
+	http://www.brute.cl.cam.ac.uk/brute/
+or	ftp://ftp.brute.cl.cam.ac.uk/pub/brute/
+
+The socket server running SKSP protocol (more ont he protocol later)
+is at this address:
+
+	sksp.brute.cl.cam.ac.uk 19957
+
+(ie port no 19957)
+
+
+The clients are setup to use this address by default in any case.  The
+WWW based key doler is indexed from the WWW page above:
+
+	http://www.brute.cl.cam.ac.uk/brute/
+
+and this (transparently) interacts with the socket server also, so WWW
+users can via a WWW forms interface take out keyspace to sweep, and
+return the keyspace after sweeping.
+
+
+The SKSP (Simple Key Searching Protocol) is described in an RFC like
+document available here:
+
+	http://www.brute.cl.cam.ac.uk/ftp/pub/brute/protocol.txt
+
+for anyone wishing to write clients for other platforms, or with more
+advanced features, or for those simply wishing to know what language
+the client is talking.
+
+
+Where to find things...
+
+The brutessl software, the unix socket client, and the Windows NT
+client are on:
+
+	http://www.brute.cl.cam.ac.uk/brute/
+
+Also I have put an untarred version of the brutessl code here:
+
+	http://dcs.ex.ac.uk/~aba/brutessl/
+
+(individual files untarred).
+
+If and when people compile binaries for architectures which don't
+typically come with compilers by default - such as DOS, OS/2, Macs,
+I'll put any binaries sent to me in this directory, and / or send to
+Piete for a pointer to this repository, or copying to brute.cl.
+
+
+UNIX client.
+
+How to use the unix client...  download brclient from the www page:
+
+	http://www.brute.cl.cam.ac.uk/brute/
+
+it is a perl program so you may have to edit the path to perl (the 1st
+line of the program should be #!/full/path/to/perl/binary), and you
+will have to mark it as executable.
+
+You will also need a shell script called brloop which uses brclient.
+It is on Piete's "sources" page, this page is indexed from the main
+brute page above, here it is explicitly.
+
+	http://www.brute.cl.cam.ac.uk/ftp/pub/brute/README.html
+
+So get brloop.
+
+Get and compile the brutessl.tar.gz file.
+
+Run brloop.
+
+The brclient perl socket client talks to a machine with a DNS:
+
+	sksp.brute.cl.cam.ac.uk on port number 19957
+
+At the moment the server is running and will ask your client to sleep,
+as the challenge has not been started yet.  When Piete starts it up,
+your client will periodically ask for work, before the start time
+(Tue 12:00 GMT, or later time if this time is changed) your client
+will just be told to sleep for a while, when it wakes up it will ask
+for work again.  In this way the client can be left ticking over, when
+work does arrive it will notice, as it will actually recieve some work
+when it makes the request, and start doing it, and reporting back when
+it finishes each chunk.
+
+There is a windows NT socket client written by Andrew Brown, pointers
+to that also.
+
+Adam
+
+
+
+
+

@@ -1,0 +1,77 @@
+From: "Jon Leonard" <jleonard@divcom.umop-ap.com>
+Date: Sun, 14 Apr 1996 12:00:41 +0800
+To: frantz@netcom.com (Bill Frantz)
+Subject: Re: Bank transactions on Internet
+In-Reply-To: <199604091732.KAA29261@netcom9.netcom.com>
+Message-ID: <9604100832.AA06344@divcom.umop-ap.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> At 12:13 AM 4/9/96 -0700, Steve Reid wrote:
+> >> Is it really that easy to break 40-bit? Don't you need access to a "fair
+> >> amount of cpu power" to brute force crack 40bit? 
+> >
+> >I remember reading a recent paper at this URL:
+> >  http://theory.lcs.mit.edu/~rivest/bsa-final-report.ascii
+> >They mentioned a Field Programmable Gate Array (FPGA), specifically a
+> >board-mounted AT&T Orca chip available for around $400. They said it could
+> >crack a 40-bit key in 5 hours (average). Sounds like anyone with root
+> >access on a major internet node could make a significant profit stealing
+> >credit card numbers.
+> >
+> >The FPGA sounds like a very interesting device, with quite a few
+> >legitimate uses... Has anyone out there seen one of these? 
+> 
+> I was hoping a hardware type would answer this question, and give
+> references to manufacture's spec sheets, but not having seen such an
+> answer, here is a software person's answer.
+
+I thought Perry Metzger's short answer (roughly "yes, but the software
+can be tricky") adequate, but as a hardware type I can give some more
+insight into the economics.  While my experience is with gate array ASICs
+rather than field programmable chips, I have some idea.
+
+My short answer:  Yes, it's that cheap, but only if you already work
+with the chip vendor and have the software tools to program the chips.
+If not, expect to spend many thousands of dollars buying engineering
+expertise and software.
+
+There's a lot of different ways to make chips for a custom application,
+which vary in unit cost, startup cost, engineering effort, and production
+time.
+
+Some points in the range:  (costs are probably off a bit)
+
+type			startup cost	program		design tool
+
+full custom		$1000000	at design time	schematic editors
+ASIC			$100000		at design time	gate synthesis
+FPGA			$0		once		vendor's tools
+reprogrammable FPGA	$0		dynamically	vendor's tools
+DSP chip		$0		easily		compiler
+General purpose CPU	$0		very easily	compiler
+
+Anyone who knows these better is welcome to correct me, of course.
+
+I've neglected software costs from this, which are significant.  Chip
+synthesis tools are often more expensive than the workstations they run on.
+
+Also, in most cases some of the necesary tools are only available from the
+company that sells the chips.  They tend to insist on nondisclosure
+agreements and software licenses, which makes anonymous production tricky.
+
+More design effort will give better price/performance.  The appeal of the
+Orca and similar chips is that they can be reprogrammed, but still have the
+inherent parallelism of gates in silicon.
+
+I expect that in 5 or 10 years, PC's will come with reprogrammable logic
+chips and software that takes advantage of it.  At present it really
+takes a trained engineer to use these things.  That's just enough difficulty
+that people might feel secure, without actually being secure at all.
+
+Jon Leonard
+
+
+
+

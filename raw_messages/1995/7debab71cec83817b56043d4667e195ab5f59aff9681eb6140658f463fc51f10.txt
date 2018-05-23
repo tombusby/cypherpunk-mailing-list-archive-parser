@@ -1,0 +1,70 @@
+From: jamesd@echeque.com (James A. Donald)
+Date: Sun, 19 Nov 1995 23:17:59 +0800
+To: cypherpunks@toad.com
+Subject: Recompiling PGP 2.6.2i under microsoft.
+Message-ID: <199511191508.HAA19053@blob.best.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I am trying to recompile  PGP 2.6.2i under Microsofts VC 1.5.
+
+Unfortunately the makefile pgp.mak is configured for borlands C
+compiler and linker, and the makefile pgppwb.mak gives me a bunch of
+link time errors.
+
+Is there someone around who has been there and done that.
+
+Is this just a trivial edit or a serious rewrite?
+
+C:\PGP\PGP.SRC\SRC> nmake -f pgppwb.mak
+
+[....]
+
+Libraries [.lib]:
+Definitions File [nul.def]:  /NOI /STACK:12288 /BATCH /ONERROR:NOEXE
+/EXE /FAR /
+PACKC;
+
+RSAGEN.obj(rsagen.c) : error L2029: '_rsa_public_decrypt' : unresolved
+external
+CRYPTO.obj(crypto.c) : error L2029: '_rsa_public_decrypt' : unresolved
+external
+RANDOM.obj(random.c) : error L2029: '_randPoolGetByte' : unresolved
+external
+RANDOM.obj(random.c) : error L2029: '_randPoolStir' : unresolved
+external
+CRYPTO.obj(crypto.c) : error L2029: '_rsa_public_encrypt' : unresolved
+external
+IDEA.obj(idea.c) : error L2029: '_randPoolGetBytes' : unresolved
+external
+RANDOM.obj(random.c) : error L2029: '_randPoolAddBytes' : unresolved
+external
+RSAGEN.obj(rsagen.c) : error L2029: '_rsa_private_encrypt' :
+unresolved external
+
+CRYPTO.obj(crypto.c) : error L2029: '_rsa_private_encrypt' :
+unresolved external
+
+RANDOM.obj(random.c) : error L2029: '_sleep' : unresolved external
+RANDOM.obj(random.c) : error L2029: '_noise' : unresolved external
+PGP.obj(pgp.c) : error L2029: '_noise' : unresolved external
+CRYPTO.obj(crypto.c) : error L2029: '_rsa_private_decrypt' :
+unresolved external
+
+
+NMAKE : fatal error U1077: 'LINK' : return code '0x2'
+Stop.
+
+
+ ---------------------------------------------------------------------
+We have the right to defend ourselves and our property, because 
+of the kind of animals that we are. True law derives from this 
+right, not from the arbitrary power of the omnipotent state.
+
+http://www.jim.com/jamesd/      James A. Donald       jamesd@echeque.com
+
+
+
+
+

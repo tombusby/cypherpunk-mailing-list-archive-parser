@@ -1,0 +1,38 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 14 Dec 1995 00:10:22 +0800
+To: ljo@ausys.se
+Subject: Re:  Blinding against Kocher's timing attacks
+Message-ID: <199512122127.NAA15216@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: ljo@ausys.se (Johansson Lars)
+> Does anyone know whether David Chaum's patent on
+> blind digital signatures extends to this application?
+
+I don't think it would.  Chaum's blinding protocol has one major
+difference: the blinding factor is applied by a different person than
+the one doing the signing.  The purpose of the blinding is different,
+too; in Chaum's case the idea is to end up with a signature which is
+unknown to the signer, while with Kocher's "defensive blinding" the
+signature (or decryption) is an ordinary RSA one, and the blinding is
+just done internally by the signer to randomize the timing.
+
+(I gather BTW that the idea of the blinding is for the server to have
+pre-chosen a random r and pre-calculated r^d mod n, and then when he is
+given c to decrypt he first does c*r mod n and then decrypts this, then
+takes the result and divides by r^d.)
+
+It's conceivable that Kocher's blinding would be a patentable technique
+in itself, and not impossible that he has already applied for a patent
+before publishing.  Probably he would have said so if that were his
+intention, though.
+
+Hal
+
+"Blind defensively - watch out for the other guy..."
+
+
+
+

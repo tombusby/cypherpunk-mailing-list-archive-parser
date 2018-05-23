@@ -1,0 +1,38 @@
+From: Brad Huntting <huntting@glarp.com>
+Date: Tue, 26 Jul 94 09:26:45 PDT
+To: norm@netcom.com (Norman Hardy)
+Subject: Re: CYPHERPUNKS TO THE RESCUE
+In-Reply-To: <199407260711.AAA10426@netcom.netcom.com>
+Message-ID: <199407261607.KAA02397@misc.glarp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Sounds like an application for a "challenge-response" system. But that
+> would require transmission from garage unit to car unit.
+
+> If there were syncnronized clocks then the signal could be a function of
+> time so that the above replay would fail. That requires only a PRNG.
+
+> Both units could compute the next password from the same PRNG but this
+> would require a "backspace" button on the car unit for those occasions
+> where the garage unit failed to hear a broadcast signal. A "reset to new
+> known state" for both units would be required for when the state became
+> hoplessly confused.
+
+I think a simple key seeded MD5 work work fine for garage doors:
+
+The remote can transmit: (n, M(n^k))
+
+Where n is random (and so doesn't repeat often), k is a shared key
+known only to the remote and the door opener, and M is a reasonably
+strong hash function.  k could be set by a bank dip switches, but
+to get a large enough key space would require alot of switches.
+
+
+brad
+
+
+
+

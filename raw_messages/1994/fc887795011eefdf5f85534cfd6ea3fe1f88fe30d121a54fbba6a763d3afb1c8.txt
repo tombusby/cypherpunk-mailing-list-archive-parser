@@ -1,0 +1,63 @@
+From: Carl Ellison <cme@tis.com>
+Date: Fri, 15 Jul 94 10:30:28 PDT
+To: DAVESPARKS@delphi.com
+Subject: Re: Triple encryption...
+In-Reply-To: <01HEPTT89VZI9I5RDS@delphi.com>
+Message-ID: <9407151730.AA19916@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Fri, 15 Jul 1994 01:14:52 -0400 (EDT)
+>From: DAVESPARKS@delphi.com
+>Subject: Re: Triple encryption...
+
+>Carl Ellison (cme@tis.com) wrote:
+>
+>> have you considered
+>>
+>>        des | tran | des | tran | des ?
+>
+>That one's sort of your "trademark", isn't it? <g> 
+
+yup :-)
+
+>clever, BTW.)  One scheme that seems to make even more sense, though, is:
+>
+>         des | tran | IDEA | tran | des
+>
+>You get the benefits of 112 bits worth of DES keyspace along with 128 bits
+>of IDEA keyspace, and thus don't stake your total security on the strength
+>of EITHER algorithm.
+
+good, too.  Of course, it leaves open the question of which should be
+inside and which outside.
+
+I'd be most concerned about any ciphertext-only attack which is improved by
+having purely random bits as input.  Whichever algorithm is more resistant
+to such an attack should be on the outside.  (No, I'm not aware of such an
+attack, yet....)
+
+
+>As I recall, last time we discussed this over on sci.crypt you also
+>advocated an additional step of "PRNGXOR".  Is that still the case?  Have
+>you had the opportunity to read the Eurocrypt '94 paper by Eli Biham on
+>triple DES modes, yet?
+
+Yes, it's in response to Eli's paper that I advocated prngxor, as in:
+
+
+         des | prngxor | tran | des | tran | des
+
+with the DES instances in ECB mode (in acknowledgement of Eli's attack).
+The prngxor destroys any patterns from the input, which was the purpose of
+CBC, without using the feedback path which Eli exploited.
+
+	 - Carl
+
+p.s.  tran.shar is available at ftp.std.com:/pub/cme
+
+
+
+
+

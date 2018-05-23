@@ -1,0 +1,64 @@
+From: lcottrell@popmail.ucsd.edu (Lance Cottrell)
+Date: Mon, 12 Dec 94 22:59:03 PST
+To: cypherpunks@toad.com
+Subject: Re:  Broadcasts - addressing
+Message-ID: <ab12ebe2020210040f62@[137.110.24.249]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>> I have been contemplating how to mark broadcast messages as being
+>> 'for' someone. To foil traffic analysis, you don't want to include
+>> their nym or key-id, for the sake of the your poor CPU, you want to
+>> avoid the need to attempt decryption on everything that passes through.
+>
+>The main problem is how to avoid decrypting _most_ of the traffic,
+>without giving away significant information about the recipient.
+>One approach is to do something some political users have been asking for -
+>implement support for very short keyids (e.g. 4 bits instead of 24-32),
+>so that the keyid isn't a good identifier for the user.
+>Another approach is to include a tag in the Subject: with either a hash
+>of the key (substantially reducing the number of bits),
+>or simply the last hex or two of the keyid - that lets you ignore
+>15/16th or 255/256th of the traffic, without giving away much.
+
+
+I am not completely clear on what sort of communication you are trying to
+protect, and what your threat model is.
+
+Are you worried about an attacker noticing that an anonymous ID is getting a lot
+of messages? If you are using PGP and a message pool, any attacker can decrypt
+all the messages, and see which correspond to which key, and therefor to which
+anonymous ID. The only way around this is to use private key crypto. If you are
+doing that, then you can also use a shared secret to generate a stream of one
+use message IDs.
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLu09tlVkk3dax7hlAQHLkAP+L8j+9eLcwC7oPpq+OPxDb+C6QJ/H0OX5
+3O7uQnU8OZY9YgHsMETh6AY7aTMZYrm9+p3wJu9znFYOwXRIzF+spfyxDDzLVuE1
+kQBwGKQt/5YQd6i/jc1Jias6rb/GOBvckYcHKERjSBL638Gi65cC4OFEff5k6ujQ
+YkkQXkh3JWg=
+=o5nF
+-----END PGP SIGNATURE-----
+
+--------------------------------------------------
+Lance Cottrell  who does not speak for CASS/UCSD
+loki@nately.ucsd.edu
+PGP 2.6 key available by finger or server. Encrypted mail welcome.
+Home page http://nately.ucsd.edu/~loki/
+Home of "chain" the remailer chaining script.
+For anon remailer info, mail remailer@nately.ucsd.edu Subject: remailer-help
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+
+
+
+
+
+

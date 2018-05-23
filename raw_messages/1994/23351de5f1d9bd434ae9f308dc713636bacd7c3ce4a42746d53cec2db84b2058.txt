@@ -1,0 +1,40 @@
+From: Phil Karn <karn@unix.ka9q.ampr.org>
+Date: Thu, 15 Sep 94 11:39:29 PDT
+To: adam@bwh.harvard.edu
+Subject: Re: Running PGP on Netcom (and Similar)
+In-Reply-To: <199409141543.LAA25195@bwh.harvard.edu>
+Message-ID: <199409151822.LAA00459@unix.ka9q.ampr.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This discussion is ridiculous. If you can crunch keys on your own
+trusted machine, why not just run PGP there? Or at least the RSA
+secret key operations?
+
+I've been saying for a long time that there is a role for the latter
+device.  It would hold your PGP secret key and do all RSA secret key
+operations (signing, decryption) locally, taking requests from and
+communicating the results back to hosts running PGP that do the rest:
+RSA public key operations such as signature verification and
+encryption, and IDEA encryption/decryption.
+
+Ideally this device would be a smart card, but a small palmtop might
+make a good prototype (except for speed). The big win is in much
+better protection of the RSA secret key; it would never have to leave
+the device, except perhaps in encrypted form for backup.
+
+By plugging this device into a (possibly hacked) host you could use
+your RSA key without risking all of the traffic you have ever
+protected or will protect with a particular RSA secret key if that
+particular host happens to be compromised.
+
+But any traffic that passed through the hacked host would still be
+compromised, as it would if the link between the secret key device and
+the host were tapped.  There's simply nothing you can do about it.
+
+Phil
+
+
+
+

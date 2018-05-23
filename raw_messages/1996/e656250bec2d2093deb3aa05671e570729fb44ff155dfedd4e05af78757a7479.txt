@@ -1,0 +1,45 @@
+From: "Deranged Mutant" <WlkngOwl@UNiX.asb.com>
+Date: Sun, 21 Jan 1996 11:46:09 +0800
+To: Wei Dai <weidai@eskimo.com>
+Subject: Re: HAVAL (was Re: crypto benchmarks)
+Message-ID: <199601202200.RAA09207@UNiX.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Thanks.  It looks like F4 and F5 are improved.  Do you know how these
+> optimizations can be done in general?  I tried playing with F2 
+> as a multivariate polynomial with coefficients in GF(2) in Mathematica.  
+> This seems to work and I found several equivalent expressions that take 
+> 13 operations (the original also takes 13 operations).  Is there a tool 
+> that can do this automaticly?
+
+I did the optimizations by hand.  Simple rules of boolean arithmetic 
+and logic (you know, things like Demorgan's Law applied to binary 
+operations).  Other processor-related optimizations can be done by 
+hand, such as add x,x instead of shl x,1.
+
+I think I had the same proglems with F2 as well.  Couldn't find a way 
+to optimize it reasonably.
+
+ > The biggest problem I have with HAVAL now is that with 4 or 5 passes the
+> transform functions are larger than 10k even with compiler optimzation for
+> size.  Since the Pentium L1 instruction cache is only 8k, this makes HAVAL
+> with 4 or 5 passes extremely slow.  Do you have ideas how I can fit the 
+> transform functions into L1 cache?
+
+You might do some creative optimization to use more registers than it 
+does.  I haven't looked at it in a while.  The code was so huge and 
+slow compared to optimized MD5 and SHS that I have up using it for an 
+unfinished encrypted file system.
+
+Rob.
+ 
+--- "Mutant" Rob <wlkngowl@unix.asb.com>
+
+Send a blank message with the subject "send pgp-key"
+(not in quotes) for a copy of my PGP key.
+
+
+
+

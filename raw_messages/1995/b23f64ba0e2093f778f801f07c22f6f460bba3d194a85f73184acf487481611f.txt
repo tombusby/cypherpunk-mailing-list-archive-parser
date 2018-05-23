@@ -1,0 +1,42 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Thu, 5 Jan 95 12:56:32 PST
+To: cypherpunks@toad.com
+Subject: Re: Are 2048-bit pgp keys really secure ?
+Message-ID: <9501052056.AA24402@elysion.iaks.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> A somewhat disturbing trend has appeared in the low-end cost-sensitive PC
+> SIMM market.  Some supposedly 9-bit SIMMs are actually 8-bit SIMMs plus
+> a parity generator.  This means that the parity checking is essentially
+> subverted, because the parity bit is generated from the stored contents
+> of memory at read time, rather than the stored contents when it was
+> written to.  As such, NO bit errors are detected.
+
+So why not do a cheap trick:
+
+After the small primes check calculate a CRC checksum over the number.
+Then do the primality check. If it is a prime, store it together with
+the CRC. The CRC can be checked for every use of the number.
+
+(PGP encrypts the secret key and therefore it generates a CRC for the
+encrypted packet. But this CRC is generate after the primality check.)
+
+
+We already had some SIMM modules with bit errors. They were detected by
+a parity check. If cheap pc simms don't have a real parity bit, the probability
+of having such a bug isn't as low as 10^-40. If cheap parity-less simms
+are available they get sold (cheap and expensive). 
+
+
+Hadmut
+
+BTW: Some weeks ago they found motherbords with falsified cache rams:
+They had just the normal DIL-ICs and the normal pins, but the plastic of
+the ICs didn't contain a chip. The BIOS was modified to give out a message
+about a good cache ram check at boot time.
+
+
+
+

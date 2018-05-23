@@ -1,0 +1,34 @@
+From: "Rev. Mark Grant" <mark@unicorn.com>
+Date: Mon, 2 Oct 95 14:27:40 PDT
+To: Yih-Chun Hu <yihchun@u.washington.edu>
+Subject: Re: One-Time-Pad generation from audio device
+In-Reply-To: <Pine.OSF.3.91j.951002141954.21670A-100000@saul1.u.washington.edu>
+Message-ID: <Pine.3.89.9510022206.A14466-0100000@unicorn.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 2 Oct 1995, Yih-Chun Hu wrote:
+
+> I wouldn't bet on it. I did a similar hack with perl, with a much more
+> conservative 5 seconds to 32 bytes. That didn't cut it, when I ent'ed the
+> result it gave 6 bits of entropy / 8 bits of output.
+
+How did you measure the entropy of the output ?
+
+> Um.. I would try to generate bits quickly, then securely, so for example
+> you get a 2k buffer and do it 5 sec / 128 bits. Then slow down and overwrite
+> the buffer and give warnings if the user wants to use the bits too early.
+
+Ah, well the idea is that they can just generate a OTP when they have a 
+few spare hours, not that they'd be generating it in real-time. The 
+Privtool code does use realtime generation of random numbers, but it has 
+a lot of input data other than the audio (e.g. mouse movements, MD5 
+hashes, etc).
+
+		Mark
+
+
+
+
+

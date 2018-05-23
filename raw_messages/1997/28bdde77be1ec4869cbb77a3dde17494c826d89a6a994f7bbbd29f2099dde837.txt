@@ -1,0 +1,66 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 14 Aug 1997 20:08:59 +0800
+To: dlv@bwalk.dm.com
+Subject: PGP in < 100 lines of perl (was Re: Fuck the usenet cabal)
+In-Reply-To: <wiLeBe21w165w@bwalk.dm.com>
+Message-ID: <199708140730.IAA00648@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Dimitri Vulis <dlv@bwalk.dm.com> writes:
+> > > Is it possible to stuff a blatant ITAR violation into about 100
+> > > lines 
+> >
+> > Already been done.  RSA in 4 lines of Perl, etc...  
+> 
+> I mean a useable package.
+
+I once started trying to implement full PGP functionality in as few
+lines of perl/dc as possible.
+
+I got pgp signature verification working.
+and PGP compatible IDEA PRZ style CFB mode in 9 lines.  
+and PGP key lookup in 7 lines.
+and MD5 in 8 lines.
+
+(Several of those were other peoples contributions)
+
+If you used /dev/random for random numbers plus a bit more glue, it
+would've worked.  Everything put compression and key generation.
+
+There was a perl competition for the most interesting program in under
+2000 characters of perl.  I ran out of enthousiasm, patience before
+completing.
+
+With a whole 100 lines to play with you could probably do key gen and
+compression too.  (I wondered if you could shell gzip or zip and some
+hacking to get PGP zip functionality, as it is just ripped off zip
+code).
+
+Makes you wonder what PRZ did wrong with pgp 2.x, what did he use to
+pad it out to 34,881 lines?
+
+PGP 5.0 is fearsomely large, and I'm sure you could do the rest too in
+a few more 10s of lines (already got an SHA1, DSS is more twiddling in
+dc, already got DES in 21 lines, no CAST but that wouldn't be too
+hard).
+
+If anyone is interested naturally I can share the current code.  The
+perl 2000 char competition probably is once a year or something.
+
+Any takers?
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

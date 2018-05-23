@@ -1,0 +1,51 @@
+From: tomw@orac.engr.sgi.com (Tom Weinstein)
+Date: Thu, 21 Sep 95 22:33:41 PDT
+To: perry@piermont.com
+Subject: Re: netscape bug
+In-Reply-To: <199509212242.PAA04533@orac.engr.sgi.com>
+Message-ID: <199509220503.WAA05140@orac.engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199509220443.AAA02254@frankenstein.piermont.com>, "Perry E. Metzger" <perry@piermont.com> writes:
+
+> Tom Weinstein writes:
+>> While it is certainly true that you can stomp on memory in static
+>> buffers, it's not clear that you can execute whatever code you insert
+>> there.  If the buffer happens to be allocated off the stack (and the
+>> stack grows down) then you can modify the return address.  Of course,
+>> you have to know the address of whatever code you want to execute.
+
+> Lets say, Mr. Weinstein, that you shove some code onto the stack along
+> with the return address, and the address happens to be the code.
+
+I never disputed that it could be done, I was just uncertain as to how
+easy it would be.  As has been pointed out, it's not nearly as hard as I
+thought, assuming you can execute in the stack.
+
+> If you don't believe it can be done, its easy enough to demonstrate it
+> on your machines, which I believe suffer from the syslog(3) bug, which
+> your company hasn't patched so far as I know, and which afflicts the
+> Sendmail daemons you ship with your machines. See the recent 8lgm bug
+> report if you want details.
+
+Hmm, could you explain how to exercise this bug?  Perhaps a sample
+program?
+
+>> Of course, that also assumes that you can execute from the data area
+>> which is not always true.
+
+> Its usually true on modern machines -- its very difficult to rig
+> things otherwise given the way that lots of the dynamic loading works
+> these days.
+
+True.
+
+-- 
+Sure we spend a lot of money, but that doesn't mean    |  Tom Weinstein
+we *do* anything.  --  Washington DC motto             |  tomw@engr.sgi.com
+
+
+
+

@@ -1,0 +1,104 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 6 Aug 94 17:34:17 PDT
+To: cypherpunks@toad.com
+Subject: Latency vs. Reordering (Was: Remailer ideas (Was: Re: Latency vs. Reordering))
+In-Reply-To: <4087@aiki.demon.co.uk>
+Message-ID: <9408070005.AA17290@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   In a system that is carrying continuous traffic, random packet delay
+   is functionally identical to packet reordering.
+
+OK.  Prove it.  Here are some difficulties I expect you'll find along
+the way.
+
+First, "continuous traffic" is the wrong assumption; some sort of
+multiple Poisson distribution for arrival times is.  This is by no
+means a hypothetical.  The backoff algorithms for TCP had to be
+developed because packet streams are not continuous, but bursty.
+There is such a thing as too many packets arriving at a router
+simultaneously.  Routers don't swap packets to disk when they run out
+of RAM; they drop them.  So given any relation between arrival
+interval, processing time, and machine capacity, there some
+_percentage_ of the time that the router is going to overflow exactly
+because the traffic is not continuous.
+
+Second, the beginnings and endings of operation are special.  The idea
+of "stochastic deconvolution" hits me immediately, throwing out
+completely any reasoning based only on steady state assumptions.
+
+Third, these two effects interfere with each other, as there are
+bursts of silence in Poisson arrival times which will tend to reset
+the deconvolution.
+
+Fourth, the problem is incompletely specified, since the distribution
+of random added latencies is not made specific.  If I assume a flat
+distribution over a given number of message intervals, that's not the
+same as assuming a geometrically decreasing distribution, or some
+other distribution.
+
+I'd guess there are more.
+
+   If messages are fragmented, random delays on sending packets out is
+   functionally identical to reordering.
+
+This is false; a system that concentrates on reordering has provably
+better average latency that one based only on adding latencies.
+Consider the following.  If I send out a message sometime between two
+messages, I've acheived no more reordering (the significant thing,
+remember) than if I sent out that same message immediately after the
+arrival of the first of the two bracketing messages.
+
+So I can take _any_ latency-adding system and reduce its average
+latency with minimal effect on reordering by the following
+modification.  When a message comes it, each message in the queue is
+tagged to go out at some time relative to present.  For each of these
+messages, I can calculate the probability that no other incoming
+message will arrive before a particular outgoing time.  Pick some
+probability bound close to 1, and send out all messages with
+probability greater than the cutoff _now_, before waiting for their
+time to be up.
+
+The decrease in reordering can be normalized to zero by lengthening
+the time scale of the added latencies.  You'll then find that the
+modified system shows lower latency.
+
+And that's only the first inequivalency.
+
+Latency-adding systems are less efficient at memory usage than
+reordering systems.  Reordering systems can get pretty close to 100%
+use, since the queue can be kept full, as in Hal's threshold sending
+scheme.  The random delays can't have full usage, because there's an
+maximum to memory; it can't be borrowed like money when you
+temporarily need more of it.  The analysis has similarities to
+gambler's ruin.
+
+Anyone else care to point out more inequivalencies?
+
+   More importantly, RemailerNet as described defeats traffic analysis by
+   more significant techniques than reordering.  Reordering is a weak
+   technique.  
+
+WHAT??
+
+Anyone else listening to this: I believe the above quoted two
+sentences to be distilled snake oil.
+
+   The introduction of noise, 'MIRV'ing of messages,
+   fragmentation of messages, random choice of packet routes, and
+   encyphering of all traffic are stronger techniques.
+
+Encyphering is necessary.  Reordering of quanta is necessary.
+
+"MIRV" messages may actually decrease security; multiple routes may
+decrease security; fragmentation may decrease security.  Noise
+messages may not be resource effective.  All the above claims require
+some justification, and I have seen nothing robust yet.
+
+Eric
+
+
+
+

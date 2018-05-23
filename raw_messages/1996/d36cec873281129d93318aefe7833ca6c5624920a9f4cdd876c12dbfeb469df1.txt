@@ -1,0 +1,66 @@
+From: Andrew Tridgell <tridge@arvidsjaur.anu.edu.au>
+Date: Sun, 30 Jun 1996 15:10:34 +0800
+To: root@edmweb.com
+Subject: Re: rsync and md4
+In-Reply-To: <Pine.BSF.3.91.960629145318.187A-100000@bitbucket.edmweb.com>
+Message-ID: <96Jun30.105019+1000est.65036-6357+785@arvidsjaur.anu.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The odds of a certain file having a certain hash are one in 2^128. But,
+> the odds of any two files having the same hash (the "Birthday Attack") is
+> just one in 2^64. 
+
+The birthday paradox doesn't apply in my case I believe. Its not an
+all-to-all comparison. One file is "given" by the user. I'm definately
+not a crypto-expert, however, so I could be wrong.
+
+> That's good, because MD4 collisions can be produced in a matter of
+> minutes. But if you're not concerned about attacks, then MD4 is probably
+> more than you need. 
+
+I'd like to know more about this. 
+
+> You could, but why bother? If you've got a 14.4 or faster modem, you can
+> send a lot of hashes in a short time. The real load won't come until you
+> try to download an altered file. 
+
+You'd have to read the tech report on rsync. It does not download the
+whole file when a checksum mismatch is found, that would be next to
+useless. 
+
+It effectively creates binary diffs of the two files, without direct
+(local) access to both files. As far as I know this is a new type of
+algorithm.
+
+In practice the hashes and checksums dominate the data that is sent
+over the link. They total about 1/30 of the total file size for the
+default settings.
+
+> MD4 is not strong- people can deliberately produce files with the same
+> hash in a matter of minutes. MD5 is secure for now, but it seems to be
+> gradually falling to cryptanalysis, and should be phased out of use before
+> it breaks. IMO the best hash algorithm is SHA1 (which is an updated
+> version of the original SHA). Do a web search for "FIPS PUB 180-1" for the
+> specs. 
+
+Do you have references to the md4 collision stuff? The situation I
+have is a bit unusual so its just possible some of the results may
+apply. 
+
+> For what you're doing it sounds like you don't need a cryptographically
+> secure hash function. If you're not concerned about people deliberately
+> trying to defeat the system, then just use a 32-bit CRC.
+
+It already uses a 16 bit hash as a first level filter and a 32 bit
+"rolling checksum" as the 2nd level. The 2nd level fails about 25
+times on a 25MB test file I've been using. The failure rate goes as
+the square of the file length. When the 2nd level fails it is detected
+by the md4 hash which has to be much stronger.
+
+Cheers, Andrew
+
+
+
+

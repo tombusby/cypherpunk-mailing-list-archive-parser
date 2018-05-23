@@ -1,0 +1,75 @@
+From: Steve Bellovin <smb@research.att.com>
+Date: Thu, 29 Oct 1998 02:10:58 +0800
+To: Hal Lockhart <Harold.Lockhart@platinum.com>
+Subject: Re: log files (was: Re: dbts: Cryptographic Dog Stocks, The Dirigible Biplane, and Sending the Wizards Back to Menlo Park )
+Message-ID: <199810281713.MAA29423@postal.research.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In message <3.0.1.32.19981028093825.00a3f2d0@pop.bos.platinum.com>, Hal Lockhar
+> 
+> I hear you saying, "but what if the guy is trying to break into my system."
+>  I would argue, that if you are using strong cryptographic authentication
+> (whether his identity can be mapped to a human being or not) then either 1)
+> he will fail, in which case you don't care or 2) he will succeed, in which
+> case he must have used some technique like stealing a key which cannot be
+> detected by monitoring.
+
+Why do you assume that the flaw that lets the bad guy in is cryptographic?
+I recently analyzed every CERT advisory ever issued.  85% of them
+described problems that crypto couldn't fix.  Buffer overflow is the
+culprit du jour, but it's hardly the only one.  (This year, the prize
+for second place -- admittedly a distant second -- went to crypto modules.)
+> 
+> I raise this point, because I see it as part of a current trend to resist
+> stong security measures in preference to weak ones.  The current industry
+> facination with weak measures, like firewalls and intrusion detection
+> systems has caused some people to resist the introduction of strong
+> measures, such as cryptographic authentication and data protection.  The
+> most popular example of this is the foolish practice of putting an SSL
+> server, with its vital server private key, outside the firewall in a DMZ.  
+
+That's only a flaw if you assume that there are other weak points on
+the Web server that a firewall can protect.  If you lock down the host
+so that only port 80 is exposed (and maybe a cryptographically protected
+administrative port), what good does the firewall do?  The weakest point
+is probably the CGI scripts, and those have to be exposed in any event.
+> 
+> But I have also heard system administrators protest the introduction of
+> cryptographic solutions because some current half measure will no longer
+> work.  There are even misguided individuals who have proposed putting
+> master decryption keys at vulnerable locations like border routers, so that
+> messages can be inspected in the fly.
+
+There are no panaceas, there is no single technology (and that emphatically
+includes crypto) that will solve this problem.  Defense in depth is our
+best hope, which means firewalls plus crypto plus IDS plus better operating
+systems and programming languages.  Most of all, it means engineering a
+solution -- making the right set of tradeoffs, even if unobvious.
+
+Let me give an analogy.  On most electrical equipment, the ground pin
+is useless -- *unless* there has been another insulation or air gap
+failure within the device, a failure that would render the frame "hot".
+But because of the ground pin, such a failure will instead short the
+hot lead to ground, tripping the breaker.  It thus takes two failures
+to electrocute someone.  *But* -- toasters and other devices with
+exposed heating elements don't use this technique.  Why not?  Well,
+with an exposed electrode, the probability of direct contact with a live
+wire is much greater.  And if you ground the frame of the toaster,
+there's now a direct, high-quality path to ground that in turn is
+in contact with the other hand of the poor fool who is poking at a
+piece of bread with a fork.  In other words, what's a safety mechanism
+in your refrigerator is a danger in your toaster -- and sometimes,
+that can be true of crypto as well.
+
+For another analogy, think of insecurity as entropy.  You can't destroy
+it, but you can move it around.  Using crypto moves the problem from
+the (in)security of the links to the (in)security of the keys.  If
+you can't protect your keys -- and that generally takes much more than
+crypto -- using cryptography hasn't bought you anything.
+
+
+
+

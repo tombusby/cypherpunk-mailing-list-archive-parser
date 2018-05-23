@@ -1,0 +1,96 @@
+From: rick hoselton <hoz@univel.telescan.com>
+Date: Wed, 17 Apr 1996 15:27:09 +0800
+To: perry@piermont.com
+Subject: Re: why compression doesn't perfectly even out entropy
+Message-ID: <199604162331.QAA23163@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 05:34 PM 4/16/96 -0400, Perry E. Metzger wrote:
+
+>> ...it is possible ... for Hamlet to appear out of a random number generator,
+
+>> But even if it came from a completely random source, it would 
+>> still make a bad one-time pad.
+
+>No it wouldn't. 
+
+Are you sure you want to claim that the text of Hamlet would make 
+a good key for a one-time pad?
+
+>There is a tiny but nonzero probability that xoring
+>your one time pad with your text will result in a cyphertext equal to,
+>say, the Bible. Big deal. 
+
+Most unusual, and you're right, its inconsequential.  But if you use the 
+text of Hamlet or the text of the Bible for your KEY to a one-time-pad,
+you're very likely to get broken.  I think any pad that is likely to get 
+broken is a bad pad.
+
+>If the key is really random, the
+>cryptanalyst has no way to tell what the underlying text was.
+
+But that silly cryptanalyst might not know that you got Hamlet from 
+your random number generator.  He might think you copied it out of a 
+book!  Then, Hamlet stops being a random number.  The context changes.
+
+>> In the context of "fair coin flips" the text of Hamlet is NOT compressible.
+
+>There is only one context in which things are compressable or not --
+>is there a smaller representation for them.
+
+Suppose that somewhere on the web is an archive of "The Encyclopedia"(tm).
+I could add a preprocessor to zip that would compare the input file to 
+"The Encyclopedia".  If it finds a match, it outputs a zero-byte.
+If it doesn't find a match, it outputs a one-byte followed by an 
+ordinary zip file.
+
+The decompressor compares the compressed file to a single zero, and if it is 
+equal, accesses "The Encyclopedia" and sends it to the output file.  Otherwise 
+it just unzips the rest of the file normally.
+
+I now have a one-byte representation for "The Encyclopedia".
+(by the way, this will work with 6 and 7 and 8 and 9 and 12-bit bytes!)
+
+That's not really fair.  I took advantage of a particular situation.  
+But that's what ALL compressors do.  They take advantage of particular 
+patterns. And patterns are determined by context.
+
+This is where it gets interesting.  The "randomness" of "The Encyclopedia" 
+depends on whether some archive is online!  If someone deletes "The
+Encyclopedia"
+archive, or disconnects my communications, my special compressor stops working, 
+and the smallest (reversable) representation jumps many orders of magnitude.  
+When the context changes, the smallest representation changes.
+
+As you point out, when the Hamlet comes out of a good random number generator, 
+it is just as random as any other number.  But I contend that when Hamlet 
+can XOR with your ciphertext to reveal your plaintext, then Hamlet is NOT 
+a random number.  When did it stop being random?  When then context changed.
+
+
+
+
+
+
+
+
+
+
+
+>
+>> Because no string is more likely than any other.  Any algorithm that could 
+>> compress that string, will, on the average INCREASE the length of 
+>> "fair coin flip" strings it tries to compress.
+>
+>True enough, but the claim was that a random string has no
+>representation which is smaller than itself.
+>
+>.pm
+>
+
+
+
+
+

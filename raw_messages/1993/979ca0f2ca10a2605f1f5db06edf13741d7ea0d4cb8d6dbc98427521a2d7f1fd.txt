@@ -1,0 +1,395 @@
+From: nate@VIS.ColoState.EDU (CVL staff member Nate Sammons)
+Date: Sun, 18 Jul 93 17:49:53 PDT
+To: cypherpunks@toad.com
+Subject: PGPcompose 1.1 source
+Message-ID: <9307190046.AA11214@vangogh.VIS.ColoState.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+===============  BEGIN README =============
+PGPcompose 1.0
+(c) 1993 Nate Sammons
+
+PGPcompose is a C program (that needs to be compiled, oddly enough)
+that is designed to allow for easy incorporation of digital 
+signatures and encryption with PGP (from Phil Zimmerman).
+
+It may be necessary to change some of the calls within PGPcompose,
+so that it will access the right mailer (it is set to /usr/lib/sendmail)
+etc...  It should be placed somewhere in your path, or that you
+modify your path (in ~/.cshrc) so that it is.
+
+I plan to expand PGPcompose's abilities so that it will be a complete
+mailer package ready for use...  hopefully!  I want to add support for
+replys and for mail management.
+
+BTW, this software carries no warranty, and if in the use of it you 
+break something, it's not my fault (this for all you legaleese-speakers
+out there...)
+
+- -Nate Sammons, July 18, 1993
++--------------------------------------------------------------------
+| Nate Sammons   email: nate@VIS.ColoState.Edu
+|      Colorado State University Computer Visualization Laboratory
+|      Finger nate@monet.VIS.ColoState.Edu for my PGP key
+|      #include <std.disclaimer>
+|  "I have but one single desire - to tear down the sky" -A. Toomba
+|                 Quis Custodiet Ipsos Custodes?
++----------------------+
+
+FIGHT THE CLIPPER!
+
+=============== END README ================
+
+=============== BEGIN COMP.C =================
+
+#include <stdio.h>
+
+char version[] = "1.1";
+int includeFile;
+char fileToInclude[100];
+int PID;
+int signMess, cryptMess;
+char CCwho[130];
+char BCCwho[130];
+char subject[130];
+char toWho[130];
+char cryptWho[100];
+char test[50];
+char whoami[30];
+char spoolName[100];
+char tmpName[150];
+char commandLine[300];
+char scriptName[150];
+
+main(int argc, char *argv[])
+
+{
+
+
+FILE *tmp;
+FILE *message;
+FILE *messageHeader;
+char messageName[150];
+char messageHeaderName[150];
+char messageCypherName[150];
+
+char theChoice[5];
+int n, q;
+int getSub, getCC, getBCC;
+getSub = 1;
+getCC = 1;
+getBCC = 1;
+
+if((argc ==2) && (strcmp(argv[1], "-h") ==0))
+	{
+	printf("Useage: comp -s <subject> -c <Cc list> -b <Bcc list> <recipients>\n");
+	help();
+	}
+
+if(argc == 1)
+{
+	system("/usr/ucb/mail");
+	exit(0);
+}
+
+PID = getpid();
+sprintf(messageName, "/tmp/comp.mess.tmp.%d", PID);
+sprintf(messageHeaderName, "/tmp/comp.head.tmp.%d", PID);
+sprintf(tmpName, "tmp/comp.tmp.%d", PID);
+sprintf(messageCypherName, "/tmp/comp.cypher.message.tmp.%d", PID);
+
+if(argc > 2)
+{
+for(n=1;n<argc;n++)
+{
+if(strcmp(argv[n], "-s") == 0)
+	{
+	getSub = 0;
+	strcpy(subject, argv[n+1]);
+	}
+if(strcmp(argv[n], "-c") == 0)
+	{
+	getCC = 0;
+	strcpy(CCwho, argv[n+1]);
+	}
+if(strcmp(argv[n], "-b") ==0)
+	{
+	getBCC = 0;
+	strcpy(BCCwho, argv[n+1]);
+	}
+}
+
+strcpy(toWho, argv[argc-1]);
+}
+
+message = fopen(messageName, "w");
+
+if((getBCC == 1) && (getCC == 1) && (getSub == 1))
+strcpy(toWho, argv[1]);
+
+printf("PGPcompose %s (c)1993 Nate Sammons\n", version);
+if(getSub == 1)
+{
+	printf("Subject: ");
+	gets(subject);
+}
+if(getCC == 1)
+{
+printf("Cc: ");
+gets(CCwho);
+}
+if(getBCC == 1)
+{
+printf("Bcc: ");
+gets(BCCwho);
+}
+ 
+fprintf(message, "To: %s\nSubject: %s\nCc: %s\nBcc: %s\n---EOH---\n\n", toWho, subject, CCwho, BCCwho);
+fclose(message);
+
+editIt:
+sprintf(commandLine, "/usr/ucb/vi %s", messageName);
+system(commandLine);
+ 
+extractHeader();
+
+signIt:
+printf("Sign this message? [y,n] : ");
+gets(theChoice);
+switch(theChoice[0])
+{
+case 'y':
+case 'Y': signMess = 1;
+	break;
+case 'n':
+case 'N': signMess = 0;
+	break;
+default: goto signIt;
+	break;
+}
+ 
+cryptIt:
+printf("Encrypt this message? [y,n] : ");
+gets(theChoice);
+cypherWithWho:
+switch(theChoice[0])
+{
+case 'y':
+case 'Y': strcpy( cryptWho, toWho);
+	cryptMess = 1;
+	break;
+case 'n':
+case 'N': cryptMess = 0;
+	break;
+default: goto cryptIt;
+}
+ 
+Continue:
+printf("send, abort, edit? : ");
+gets(theChoice);
+switch(theChoice[0])
+{
+case 's':
+case 'S': sendmail();
+case 'a':
+case 'A': system("/bin/rm -rf /tmp/message*");
+	system("/bin/rm -rf /tmp/tmp.*");
+	exit(0);
+case 'e':
+case 'E': messageHeader = fopen(messageHeaderName, "a");
+	fprintf(messageHeader, "---EOH---\n");
+	fclose(messageHeader);
+	sprintf(commandLine, "cat %s >> %s ; /bin/rm -rf %s ; mv %s %s", messageName, messageHeaderName, messageName, messageHeaderName, messageName);
+	system(commandLine);
+	goto editIt;
+default: goto Continue;
+}
+
+}
+#include <stdio.h>
+
+extractHeader()
+{
+
+char tmpName[150];
+char messageName[150];
+char messageHeaderName[150];
+int pid;
+
+FILE *tmp;
+FILE *message;
+FILE *messageHeader;
+
+char commandLine[200];
+char theLine[90];
+char initTheLine[90];
+int rc;
+int n=1;
+int q=0;
+
+pid = getpid();
+sprintf(tmpName, "/tmp/comp.tmp.%d", pid);
+sprintf(messageName, "/tmp/comp.mess.tmp.%d", pid);
+sprintf(messageHeaderName, "/tmp/comp.head.tmp.%d", pid);
+
+tmp = fopen(tmpName, "w");
+fclose(tmp);
+tmp = fopen(tmpName, "a");
+
+message = fopen(messageName, "r");
+
+messageHeader = fopen(messageHeaderName, "w");
+fclose(messageHeader);
+messageHeader = fopen(messageHeaderName, "a");
+
+while(n!=q)
+{
+	fgets(theLine, 81, message);
+	if((theLine[0] == '-') && (theLine[1] == '-') && (theLine[2] == '-') && (theLine[3] == 'E') && (theLine[4] == 'O') && (theLine[5] == 'H') && (theLine[6] == '-') && (theLine[7] == '-') && (theLine[8] == '-'))
+		goto Continue;
+	fprintf(messageHeader, "%s", theLine);
+}
+
+Continue:
+while(n!=q)
+{
+	fgets(theLine, 81, message);
+	if(feof(message))
+                goto keepGoing;
+	fprintf(tmp, "%s", theLine);
+}
+
+keepGoing:
+fclose(message);
+fclose(messageHeader);
+fclose(tmp);
+
+sprintf(commandLine, "/bin/rm -rf %s", messageName);
+system(commandLine);
+sprintf(commandLine, "mv %s %s", tmpName, messageName);
+system(commandLine);
+
+}
+#include <stdio.h>
+
+sendmail()
+ 
+{
+FILE *script;
+ 
+int PID;
+extern int signMess, cryptMess;
+extern char CCwho[130];
+extern char BCCwho[130];
+extern char subject[130];
+extern char toWho[130];
+extern char cryptWho[100];
+extern char test[50];
+extern char whoami[30];
+extern char tmpName[150];
+char messageName[150];
+char messageHeaderName[150];
+char messageCypherName[150];
+extern char commandLine[300];
+char scriptName[150];
+ 
+PID = getpid();
+sprintf(messageName, "/tmp/comp.mess.tmp.%d", PID);
+sprintf(messageHeaderName, "/tmp/comp.head.tmp.%d", PID);
+sprintf(tmpName, "tmp/comp.tmp.%d", PID);
+sprintf(messageCypherName, "/tmp/comp.cypher.message.tmp.%d", PID);
+sprintf(scriptName, "/tmp/comp.script.%d", PID);
+
+if((signMess == 1) && (cryptMess == 1))
+{
+script = fopen(scriptName, "w");
+fprintf(script, "cat %s | pgp -feast \"%s\" > %s\n", messageName, cryptWho, messageCypherName);
+fclose(script);
+sprintf(commandLine, "chmod +x %s", scriptName);
+system(commandLine);
+system(scriptName);
+sprintf(commandLine, "cat %s >> %s ; cat %s | /usr/lib/sendmail -t", messageCypherName, messageHeaderName, messageHeaderName);
+system(commandLine);
+}
+ 
+if((signMess == 1) && (cryptMess == 0))
+{
+sprintf(commandLine, "cat %s | pgp -fast +clearsig=on > %s\n", messageName, messageCypherName);
+system(commandLine);
+sprintf(commandLine, "cat %s >> %s ; cat %s | /usr/lib/sendmail -t", messageCypherName, messageHeaderName, messageHeaderName);
+system(commandLine);
+}
+ 
+if((signMess == 0) && (cryptMess == 1))
+{
+script = fopen(scriptName, "w");
+fprintf(script, "cat %s | pgp -fea \"%s\" > %s\n", messageName, cryptWho, messageCypherName);
+fclose(script);
+sprintf(commandLine, "chmod +x %s", scriptName);
+system(commandLine);
+system(scriptName);
+sprintf(script, "cat %s >> %s ; cat %s | /usr/lib/sendmail -t", messageCypherName, messageHeaderName, messageHeaderName);
+system(commandLine);
+}
+ 
+if((signMess == 0) && (cryptMess == 0))
+{
+sprintf(commandLine, "cat %s >> %s ; cat %s | /usr/lib/sendmail -t", messageName, messageHeaderName, messageHeaderName);
+system(commandLine);
+}
+ 
+sprintf(commandLine, "/bin/rm -rf /tmp/comp.*.%d", PID);
+system(commandLine);
+ 
+}
+
+#include<stdio.h>
+
+help()
+
+{
+printf("\n\n");
+printf("PGPcompose 1.1, (c) 1993 Nate Sammons\n\n");
+printf("This is a utility to let people who do not have perl to\n");
+printf("use PGP from within standard bsd mail with ease.  This\n");
+printf("application relies on general UNIX system calls for several\n");
+printf("of it's functions.  It is meant to be fairly easy to use, and \n");
+printf("as unintrusive as possible.  For reading mail, I recomend setting\n");
+printf("the PAGER variable in your ~/.mailrc file to \"pgp -mf\".\n\n");
+printf("If you like this program, send me mail.  If you don't like something,\n");
+printf("tell me what you don't like.\n\n         -Nate Sammons, nate@vis.colostate.edu\n\n");
+exit(0);
+}
+============================ END COMP.C ===================
+
+I hope you like it.
+
+- -nate sammons
+
++--------------------------------------------------------------------
+| Nate Sammons   email: nate@VIS.ColoState.Edu
+|      Colorado State University Computer Visualization Laboratory
+|      Finger nate@monet.VIS.ColoState.Edu for my PGP key
+|      #include <std.disclaimer>
+|  "I have but one single desire - to tear down the sky" -A. Toomba
+|                 Quis Custodiet Ipsos Custodes?
++----------------------+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3
+
+iQCUAgUBLEnu7dTgi1fmrpxlAQE/JwP3XmktT5YFe5sQ/28YunJigm0CPGVKRgxS
+3MqfbCGDEqmGz3tpXfaPsHvgNCl0H71Wb3sxbqLgQi30FYKrqA8f+VEF0XlyMNJC
+hWCBL0PwZQbQGFKThz7/Tj/dtxUWOksbaV/2mRo66avlULpDAY2PsAyAIe1HksE3
+TUmCUQOyWg==
+=qR9G
+-----END PGP SIGNATURE-----
+
+
+
+

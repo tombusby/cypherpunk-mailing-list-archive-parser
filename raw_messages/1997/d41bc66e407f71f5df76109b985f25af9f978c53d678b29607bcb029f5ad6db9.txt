@@ -1,0 +1,1671 @@
+From: Anonymous Online Limpdick <aol@aol.com>
+Date: Fri, 10 Oct 1997 18:19:09 +0800
+To: cypherpunks@toad.com
+Subject: Re: 6502 ML programming
+In-Reply-To: <199710091925.VAA17154@basement.replay.com>
+Message-ID: <343DDFE3.1F4F@aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Howcum you guys are talking about computer code and stuff?
+Are your browsers broken? Can't get QUAKE to boot?
+Let me know if you need some help.
+I know how to format my hard drive and reinstall Windows. I'm an expert.
+
+AOL'er
+
+
+Anonymous wrote:
+> If you guys are still doing 6502 work, maybe you can make use of this.
+> --
+> 
+> * RSA Data Security, Inc. MD5 Message-Digest Algorithm
+> 
+> *
+> *  ***********************************************************************
+> *  **  Message-digest routines:                                         **
+> *  **  To form the message digest for a message M                       **
+> *  **    (1) Initialize a context buffer mdContext using MD5Init        **
+> *  **    (2) Call MD5Update on mdContext and M                          **
+> *  **    (3) Call MD5Final on mdContext                                 **
+> *  **  The message digest is now in the bugffer passed to MD5Final      **
+> *  ***********************************************************************
+> *
+> 
+>  ORG $2000
+> 
+> * Jump Table
+>  JMP MD5INIT
+>  JMP MD5UPD
+>  JMP MD5FINAL
+> 
+> DIGEST HEX 00000000 ;Message digest ends up here.
+>  HEX 00000000
+>  HEX 00000000
+>  HEX 00000000
+> 
+> MD5INITV HEX 01234567 ;MD5 initialization values
+>  HEX 89ABCDEF
+>  HEX FEDCBA98
+>  HEX 76543210
+> 
+> MD5BYTES DS 8 ;Counts bytes in message digest so far
+> 
+> MD5BUFRP HEX 00 ;Pointer to current byte in partially full buffer
+> 
+> MD5BUFR DS 64 ;64-byte buffer for current MD5 block
+> 
+> * Initialize MD5 - start new message digest
+> 
+> MD5INIT LDX #15 ;Load initialization constants
+> ]LOOP LDA MD5INITV,X
+>  STA DIGEST,X
+>  DEX
+>  BPL ]LOOP
+> 
+>  LDA #0 ;Reset byte count to zero
+>  LDX #7
+> ]LOOP STA MD5BYTES,X
+>  DEX
+>  BPL ]LOOP
+> 
+>  STA MD5BUFRP ;Reset buffer to empty
+> 
+> ]RTS RTS
+> 
+> * MD5UPD - add a byte to the message digest
+> 
+> MD5UPD LDX MD5BUFRP
+>  STA MD5BUFR,X
+>  INX
+>  STX MD5BUFRP
+>  JSR INCBYTES
+>  CPX #64
+>  BCC ]RTS
+>  LDX #0
+>  STX MD5BUFRP
+>  JSR MD5DOBLK
+>  RTS
+> 
+> INCBYTES INC MD5BYTES
+>  BNE ]RTS
+>  INC MD5BYTES+1
+>  BNE ]RTS
+>  INC MD5BYTES+2
+>  BNE ]RTS
+> 
+>  HEX 0000
+> 
+> * MD5FINAL - do last block and compute final digest
+> 
+> MD5FINAL LDA #$80
+>  LDX MD5BUFRP
+>  STA MD5BUFR,X
+>  INX
+>  STX MD5BUFRP
+> ]LOOP CPX #64
+>  BCC MD5FA
+>  LDX #0
+>  STX MD5BUFRP
+>  JSR MD5DOBLK
+> MD5FA LDX MD5BUFRP
+>  LDA #0
+>  STA MD5BUFR,X
+>  INX
+>  STX MD5BUFRP
+>  CPX #56
+>  BNE ]LOOP
+> 
+>  LDA MD5BYTES
+>  STA MD5BUFR+56
+>  LDA MD5BYTES+1
+>  STA MD5BUFR+57
+>  LDA MD5BYTES+2
+>  STA MD5BUFR+58
+>  LDA MD5BYTES+3
+>  STA MD5BUFR+59
+>  LDA MD5BYTES+4
+>  STA MD5BUFR+60
+>  LDA MD5BYTES+5
+>  STA MD5BUFR+61
+>  LDA MD5BYTES+6
+>  STA MD5BUFR+62
+>  LDA MD5BYTES+7
+>  STA MD5BUFR+63
+> 
+>  LUP 3 ;Multiply times 8
+>  LDA MD5BUFR+56 ; to convert number of bytes to number of bits
+>  ASL
+>  STA MD5BUFR+56
+>  LDA MD5BUFR+57
+>  ROL
+>  STA MD5BUFR+57
+>  LDA MD5BUFR+58
+>  ROL
+>  STA MD5BUFR+58
+>  LDA MD5BUFR+59
+>  ROL ;Unlikely the message would be over 500 MB
+>  STA MD5BUFR+59 ;so we can stop here...
+>  --^
+> 
+>  JSR MD5DOBLK
+>  RTS
+> 
+> MD5TEMPB DS 16 ;Temporary buffer for a,b,c,d
+> MD5TEMPV DS 4 ;Temporary 32-bit word storage (used by MD5DOBLK)
+> MD5TEMP2 DS 4 ;Temporary 32-bit variable #2 (used by F,G,H,I fcns)
+> 
+> * Block transformation
+> 
+> MD5DOBLK LDX #15 ;Copy values into temp buffer
+> ]LOOP LDA DIGEST,X
+>  STA MD5TEMPB,X
+>  DEX
+>  BPL ]LOOP
+> 
+>  LDA #0
+>  STA MD5TP
+> 
+> * Round 1 : F-functions
+> *           a = b + ((a + F(b,c,d) + X[k] + T[i]) <<< s). */
+> 
+>  JSR MD5LOADA ;1  (a,b,c,d)
+>  JSR F_BCD
+>  JSR NEXT_T ;(D76AA478)
+>  LDA #0
+>  JSR MD5ADDX
+>  JSR MD5RL7 ;Rotate Left 7
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;2  (d,a,b,c)
+>  JSR F_ABC
+>  JSR NEXT_T ;(E8C7B756)
+>  LDA #1
+>  JSR MD5ADDX
+>  JSR MD5RL12 ;Rotate Left 12
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;3  (c,d,a,b)
+>  JSR F_DAB
+>  JSR NEXT_T
+>  LDA #2
+>  JSR MD5ADDX
+>  JSR MD5RL17 ;Rotate left 17
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;4  (b,c,d,a)
+>  JSR F_CDA
+>  JSR NEXT_T
+>  LDA #3
+>  JSR MD5ADDX
+>  JSR MD5RL22 ;Rotate left 22
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;5  (a,b,c,d)
+>  JSR F_BCD
+>  JSR NEXT_T
+>  LDA #4
+>  JSR MD5ADDX
+>  JSR MD5RL7 ;<<7
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;6  (d,a,b,c)
+>  JSR F_ABC
+>  JSR NEXT_T
+>  LDA #5
+>  JSR MD5ADDX
+>  JSR MD5RL12 ;<<12
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;7  (c,d,a,b)
+>  JSR F_DAB
+>  JSR NEXT_T
+>  LDA #6
+>  JSR MD5ADDX
+>  JSR MD5RL17 ;<<17
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;8  (b,c,d,a)
+>  JSR F_CDA
+>  JSR NEXT_T
+>  LDA #7
+>  JSR MD5ADDX
+>  JSR MD5RL22 ;<<22
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;9  (a,b,c,d)
+>  JSR F_BCD
+>  JSR NEXT_T
+>  LDA #8
+>  JSR MD5ADDX
+>  JSR MD5RL7
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;10  (d,a,b,c)
+>  JSR F_ABC
+>  JSR NEXT_T
+>  LDA #9
+>  JSR MD5ADDX
+>  JSR MD5RL12
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;11  (c,d,a,b)
+>  JSR F_DAB
+>  JSR NEXT_T
+>  LDA #10
+>  JSR MD5ADDX
+>  JSR MD5RL17
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;12  (b,c,d,a)
+>  JSR F_CDA
+>  JSR NEXT_T
+>  LDA #11
+>  JSR MD5ADDX
+>  JSR MD5RL22
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;13  (a,b,c,d)
+>  JSR F_BCD
+>  JSR NEXT_T
+>  LDA #12
+>  JSR MD5ADDX
+>  JSR MD5RL7
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;14  (d,a,b,c)
+>  JSR F_ABC
+>  JSR NEXT_T
+>  LDA #13
+>  JSR MD5ADDX
+>  JSR MD5RL12
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;15  (c,d,a,b)
+>  JSR F_DAB
+>  JSR NEXT_T
+>  LDA #14
+>  JSR MD5ADDX
+>  JSR MD5RL17
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;16  (b,c,d,a)
+>  JSR F_CDA
+>  JSR NEXT_T
+>  LDA #15
+>  JSR MD5ADDX
+>  JSR MD5RL22
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+> * Round 2 : G-functions
+> *           a = b + ((a + G(b,c,d) + X[k] + T[i]) <<< s). */
+> 
+>  JSR MD5LOADA ;17  (a,b,c,d)
+>  JSR G_BCD
+>  JSR NEXT_T
+>  LDA #1
+>  JSR MD5ADDX
+>  JSR MD5RL5 ;Rotate Left 5
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;18  (d,a,b,c)
+>  JSR G_ABC
+>  JSR NEXT_T
+>  LDA #6
+>  JSR MD5ADDX
+>  JSR MD5RL9 ;Rotate Left 9
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;19  (c,d,a,b)
+>  JSR G_DAB
+>  JSR NEXT_T
+>  LDA #11
+>  JSR MD5ADDX
+>  JSR MD5RL14 ;Rotate left 14
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;20  (b,c,d,a)
+>  JSR G_CDA
+>  JSR NEXT_T
+>  LDA #0
+>  JSR MD5ADDX
+>  JSR MD5RL20 ;Rotate left 20
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;21  (a,b,c,d)
+>  JSR G_BCD
+>  JSR NEXT_T
+>  LDA #5
+>  JSR MD5ADDX
+>  JSR MD5RL5
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;22  (d,a,b,c)
+>  JSR G_ABC
+>  JSR NEXT_T
+>  LDA #10
+>  JSR MD5ADDX
+>  JSR MD5RL9
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;23  (c,d,a,b)
+>  JSR G_DAB
+>  JSR NEXT_T
+>  LDA #15
+>  JSR MD5ADDX
+>  JSR MD5RL14
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;24  (b,c,d,a)
+>  JSR G_CDA
+>  JSR NEXT_T
+>  LDA #4
+>  JSR MD5ADDX
+>  JSR MD5RL20
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;25  (a,b,c,d)
+>  JSR G_BCD
+>  JSR NEXT_T
+>  LDA #9
+>  JSR MD5ADDX
+>  JSR MD5RL5
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;26  (d,a,b,c)
+>  JSR G_ABC
+>  JSR NEXT_T
+>  LDA #14
+>  JSR MD5ADDX
+>  JSR MD5RL9
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;27  (c,d,a,b)
+>  JSR G_DAB
+>  JSR NEXT_T
+>  LDA #3
+>  JSR MD5ADDX
+>  JSR MD5RL14
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;28  (b,c,d,a)
+>  JSR G_CDA
+>  JSR NEXT_T
+>  LDA #8
+>  JSR MD5ADDX
+>  JSR MD5RL20
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;29  (a,b,c,d)
+>  JSR G_BCD
+>  JSR NEXT_T
+>  LDA #13
+>  JSR MD5ADDX
+>  JSR MD5RL5
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;30  (d,a,b,c)
+>  JSR G_ABC
+>  JSR NEXT_T
+>  LDA #2
+>  JSR MD5ADDX
+>  JSR MD5RL9
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;31  (c,d,a,b)
+>  JSR G_DAB
+>  JSR NEXT_T
+>  LDA #7
+>  JSR MD5ADDX
+>  JSR MD5RL14
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;32  (b,c,d,a)
+>  JSR G_CDA
+>  JSR NEXT_T
+>  LDA #12
+>  JSR MD5ADDX
+>  JSR MD5RL20
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+> * Round 3 : H-functions
+> *          a = b + ((a + H(b,c,d) + X[k] + T[i]) <<< s). */
+> 
+>  JSR MD5LOADA ;33  (a,b,c,d)
+>  JSR H_BCD
+>  JSR NEXT_T
+>  LDA #5
+>  JSR MD5ADDX
+>  JSR MD5RL4 ;Rotate Left 4
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;34  (d,a,b,c)
+>  JSR H_ABC
+>  JSR NEXT_T
+>  LDA #8
+>  JSR MD5ADDX
+>  JSR MD5RL11 ;Rotate Left 11
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;35  (c,d,a,b)
+>  JSR H_DAB
+>  JSR NEXT_T
+>  LDA #11
+>  JSR MD5ADDX
+>  JSR MD5RL16 ;Rotate left 16
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;36  (b,c,d,a)
+>  JSR H_CDA
+>  JSR NEXT_T
+>  LDA #14
+>  JSR MD5ADDX
+>  JSR MD5RL23 ;Rotate left 23
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;37  (a,b,c,d)
+>  JSR H_BCD
+>  JSR NEXT_T
+>  LDA #1
+>  JSR MD5ADDX
+>  JSR MD5RL4
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;38  (d,a,b,c)
+>  JSR H_ABC
+>  JSR NEXT_T
+>  LDA #4
+>  JSR MD5ADDX
+>  JSR MD5RL11
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;39  (c,d,a,b)
+>  JSR H_DAB
+>  JSR NEXT_T
+>  LDA #7
+>  JSR MD5ADDX
+>  JSR MD5RL16
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;40  (b,c,d,a)
+>  JSR H_CDA
+>  JSR NEXT_T
+>  LDA #10
+>  JSR MD5ADDX
+>  JSR MD5RL23
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;41  (a,b,c,d)
+>  JSR H_BCD
+>  JSR NEXT_T
+>  LDA #13
+>  JSR MD5ADDX
+>  JSR MD5RL4
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;42  (d,a,b,c)
+>  JSR H_ABC
+>  JSR NEXT_T
+>  LDA #0
+>  JSR MD5ADDX
+>  JSR MD5RL11
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;43  (c,d,a,b)
+>  JSR H_DAB
+>  JSR NEXT_T
+>  LDA #3
+>  JSR MD5ADDX
+>  JSR MD5RL16
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;44  (b,c,d,a)
+>  JSR H_CDA
+>  JSR NEXT_T
+>  LDA #6
+>  JSR MD5ADDX
+>  JSR MD5RL23
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;45  (a,b,c,d)
+>  JSR H_BCD
+>  JSR NEXT_T
+>  LDA #9
+>  JSR MD5ADDX
+>  JSR MD5RL4
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;46  (d,a,b,c)
+>  JSR H_ABC
+>  JSR NEXT_T
+>  LDA #12
+>  JSR MD5ADDX
+>  JSR MD5RL11
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;47  (c,d,a,b)
+>  JSR H_DAB
+>  JSR NEXT_T
+>  LDA #15
+>  JSR MD5ADDX
+>  JSR MD5RL16
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;48  (b,c,d,a)
+>  JSR H_CDA
+>  JSR NEXT_T
+>  LDA #2
+>  JSR MD5ADDX
+>  JSR MD5RL23
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+> * Round 4 : I-functions
+> *          a = b + ((a + I(b,c,d) + X[k] + T[i]) <<< s). */
+> 
+>  JSR MD5LOADA ;49  (a,b,c,d)
+>  JSR I_BCD
+>  JSR NEXT_T
+>  LDA #0
+>  JSR MD5ADDX
+>  JSR MD5RL6 ;Rotate Left 6
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;50  (d,a,b,c)
+>  JSR I_ABC
+>  JSR NEXT_T
+>  LDA #7
+>  JSR MD5ADDX
+>  JSR MD5RL10 ;Rotate Left 10
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;51  (c,d,a,b)
+>  JSR I_DAB
+>  JSR NEXT_T
+>  LDA #14
+>  JSR MD5ADDX
+>  JSR MD5RL15 ;Rotate left 15
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;52  (b,c,d,a)
+>  JSR I_CDA
+>  JSR NEXT_T
+>  LDA #5
+>  JSR MD5ADDX
+>  JSR MD5RL21 ;Rotate left 21
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;53  (a,b,c,d)
+>  JSR I_BCD
+>  JSR NEXT_T
+>  LDA #12
+>  JSR MD5ADDX
+>  JSR MD5RL6
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;54  (d,a,b,c)
+>  JSR I_ABC
+>  JSR NEXT_T
+>  LDA #3
+>  JSR MD5ADDX
+>  JSR MD5RL10
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;55  (c,d,a,b)
+>  JSR I_DAB
+>  JSR NEXT_T
+>  LDA #10
+>  JSR MD5ADDX
+>  JSR MD5RL15
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;56  (b,c,d,a)
+>  JSR I_CDA
+>  JSR NEXT_T
+>  LDA #1
+>  JSR MD5ADDX
+>  JSR MD5RL21
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;57  (a,b,c,d)
+>  JSR I_BCD
+>  JSR NEXT_T
+>  LDA #8
+>  JSR MD5ADDX
+>  JSR MD5RL6
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;58  (d,a,b,c)
+>  JSR I_ABC
+>  JSR NEXT_T
+>  LDA #15
+>  JSR MD5ADDX
+>  JSR MD5RL10
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;59  (c,d,a,b)
+>  JSR I_DAB
+>  JSR NEXT_T
+>  LDA #6
+>  JSR MD5ADDX
+>  JSR MD5RL15
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;60  (b,c,d,a)
+>  JSR I_CDA
+>  JSR NEXT_T
+>  LDA #13
+>  JSR MD5ADDX
+>  JSR MD5RL21
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+>  JSR MD5LOADA ;61  (a,b,c,d)
+>  JSR I_BCD
+>  JSR NEXT_T
+>  LDA #4
+>  JSR MD5ADDX
+>  JSR MD5RL6
+>  JSR MD5ADDB
+>  JSR MD5STORA
+> 
+>  JSR MD5LOADD ;62  (d,a,b,c)
+>  JSR I_ABC
+>  JSR NEXT_T
+>  LDA #11
+>  JSR MD5ADDX
+>  JSR MD5RL10
+>  JSR MD5ADDA
+>  JSR MD5STORD
+> 
+>  JSR MD5LOADC ;63  (c,d,a,b)
+>  JSR I_DAB
+>  JSR NEXT_T
+>  LDA #2
+>  JSR MD5ADDX
+>  JSR MD5RL15
+>  JSR MD5ADDD
+>  JSR MD5STORC
+> 
+>  JSR MD5LOADB ;64  (b,c,d,a)
+>  JSR I_CDA
+>  JSR NEXT_T
+>  LDA #9
+>  JSR MD5ADDX
+>  JSR MD5RL21
+>  JSR MD5ADDC
+>  JSR MD5STORB
+> 
+> * Add value to previous digest.
+> * Note that this is four seperate 32-bit additions
+> 
+>  CLC
+>  LDA MD5TEMPB
+>  ADC DIGEST
+>  STA DIGEST
+>  LDA MD5TEMPB+1
+>  ADC DIGEST+1
+>  STA DIGEST+1
+>  LDA MD5TEMPB+2
+>  ADC DIGEST+2
+>  STA DIGEST+2
+>  LDA MD5TEMPB+3
+>  ADC DIGEST+3
+>  STA DIGEST+3
+>  CLC
+>  LDA MD5TEMPB+4
+>  ADC DIGEST+4
+>  STA DIGEST+4
+>  LDA MD5TEMPB+5
+>  ADC DIGEST+5
+>  STA DIGEST+5
+>  LDA MD5TEMPB+6
+>  ADC DIGEST+6
+>  STA DIGEST+6
+>  LDA MD5TEMPB+7
+>  ADC DIGEST+7
+>  STA DIGEST+7
+>  CLC
+>  LDA MD5TEMPB+8
+>  ADC DIGEST+8
+>  STA DIGEST+8
+>  LDA MD5TEMPB+9
+>  ADC DIGEST+9
+>  STA DIGEST+9
+>  LDA MD5TEMPB+10
+>  ADC DIGEST+10
+>  STA DIGEST+10
+>  LDA MD5TEMPB+11
+>  ADC DIGEST+11
+>  STA DIGEST+11
+>  CLC
+>  LDA MD5TEMPB+12
+>  ADC DIGEST+12
+>  STA DIGEST+12
+>  LDA MD5TEMPB+13
+>  ADC DIGEST+13
+>  STA DIGEST+13
+>  LDA MD5TEMPB+14
+>  ADC DIGEST+14
+>  STA DIGEST+14
+>  LDA MD5TEMPB+15
+>  ADC DIGEST+15
+>  STA DIGEST+15
+> 
+>  RTS
+> 
+> * Basic MD5 functions
+> 
+> MD5LOADA LDA MD5TEMPB ;Put 'A' into temp variable
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5LOADB LDA MD5TEMPB+4 ;Put 'B' into temp variable
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+5
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+6
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+7
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5LOADC LDA MD5TEMPB+8 ;Put 'C' into temp variable
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+9
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+10
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+11
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5LOADD LDA MD5TEMPB+12 ;Put 'D' into temp variable
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+13
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+14
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+15
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5STORA LDA MD5TEMPV ;Store temp variable into 'A' in temp buffer
+>  STA MD5TEMPB
+>  LDA MD5TEMPV+1
+>  STA MD5TEMPB+1
+>  LDA MD5TEMPV+2
+>  STA MD5TEMPB+2
+>  LDA MD5TEMPV+3
+>  STA MD5TEMPB+3
+>  RTS
+> 
+> MD5STORB LDA MD5TEMPV ;Store temp variable into 'B'
+>  STA MD5TEMPB+4
+>  LDA MD5TEMPV+1
+>  STA MD5TEMPB+5
+>  LDA MD5TEMPV+2
+>  STA MD5TEMPB+6
+>  LDA MD5TEMPV+3
+>  STA MD5TEMPB+7
+>  RTS
+> 
+> MD5STORC LDA MD5TEMPV ;Store temp variable into 'C'
+>  STA MD5TEMPB+8
+>  LDA MD5TEMPV+1
+>  STA MD5TEMPB+9
+>  LDA MD5TEMPV+2
+>  STA MD5TEMPB+10
+>  LDA MD5TEMPV+3
+>  STA MD5TEMPB+11
+>  RTS
+> 
+> MD5STORD LDA MD5TEMPV ;Store temp variable into 'D'
+>  STA MD5TEMPB+12
+>  LDA MD5TEMPV+1
+>  STA MD5TEMPB+13
+>  LDA MD5TEMPV+2
+>  STA MD5TEMPB+14
+>  LDA MD5TEMPV+3
+>  STA MD5TEMPB+15
+>  RTS
+> 
+> MD5ADDA CLC ;Add 'A' to temp variable
+>  LDA MD5TEMPB
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5ADDB CLC ;Add 'B' to temp variable
+>  LDA MD5TEMPB+4
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+5
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+6
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+7
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5ADDC CLC ;Add 'C' to temp variable
+>  LDA MD5TEMPB+8
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+9
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+10
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+11
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> MD5ADDD CLC ;Add 'D' to temp variable
+>  LDA MD5TEMPB+12
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+13
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+14
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+15
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> * F function:
+> *          F(X,Y,Z) = XY v not(X) Z
+> 
+> F_BCD LDA MD5TEMPB+4 ;B&C
+>  AND MD5TEMPB+8
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+5
+>  AND MD5TEMPB+9
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+6
+>  AND MD5TEMPB+10
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+7
+>  AND MD5TEMPB+11
+>  STA MD5TEMP2+3
+>  CLC ;not(B)&D or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB+4
+>  EOR #$FF
+>  AND MD5TEMPB+12
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+5 ;
+>  EOR #$FF
+>  AND MD5TEMPB+13
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+6 ;
+>  EOR #$FF
+>  AND MD5TEMPB+14
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+7 ;
+>  EOR #$FF
+>  AND MD5TEMPB+15
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> F_ABC LDA MD5TEMPB ;A&B
+>  AND MD5TEMPB+4
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+1
+>  AND MD5TEMPB+5
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+2
+>  AND MD5TEMPB+6
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+3
+>  AND MD5TEMPB+7
+>  STA MD5TEMP2+3
+>  CLC ;not(A)&C or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB
+>  EOR #$FF
+>  AND MD5TEMPB+8
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1 ;
+>  EOR #$FF
+>  AND MD5TEMPB+9
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2 ;
+>  EOR #$FF
+>  AND MD5TEMPB+10
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3 ;
+>  EOR #$FF
+>  AND MD5TEMPB+11
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> F_DAB LDA MD5TEMPB+12 ;D&A
+>  AND MD5TEMPB
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+13
+>  AND MD5TEMPB+1
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+14
+>  AND MD5TEMPB+2
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+15
+>  AND MD5TEMPB+3
+>  STA MD5TEMP2+3
+>  CLC ;not(D)&B or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB+12
+>  EOR #$FF
+>  AND MD5TEMPB+4
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+13 ;
+>  EOR #$FF
+>  AND MD5TEMPB+5
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+14 ;
+>  EOR #$FF
+>  AND MD5TEMPB+6
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+15 ;
+>  EOR #$FF
+>  AND MD5TEMPB+7
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> F_CDA LDA MD5TEMPB+8 ;C&D
+>  AND MD5TEMPB+12
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+9
+>  AND MD5TEMPB+13
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+10
+>  AND MD5TEMPB+14
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+11
+>  AND MD5TEMPB+15
+>  STA MD5TEMP2+3
+>  CLC ;not(C)&A or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB+8
+>  EOR #$FF
+>  AND MD5TEMPB
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+9 ;
+>  EOR #$FF
+>  AND MD5TEMPB+1
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+10 ;
+>  EOR #$FF
+>  AND MD5TEMPB+2
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+11 ;
+>  EOR #$FF
+>  AND MD5TEMPB+3
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> * G Function:
+> *          G(X,Y,Z) = XZ v Y not(Z)
+> 
+> G_BCD LDA MD5TEMPB+4 ;B&D
+>  AND MD5TEMPB+12
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+5
+>  AND MD5TEMPB+13
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+6
+>  AND MD5TEMPB+14
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+7
+>  AND MD5TEMPB+15
+>  STA MD5TEMP2+3
+>  CLC ;not(D)&C or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB+12
+>  EOR #$FF
+>  AND MD5TEMPB+8
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+13 ;
+>  EOR #$FF
+>  AND MD5TEMPB+9
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+14 ;
+>  EOR #$FF
+>  AND MD5TEMPB+10
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+15 ;
+>  EOR #$FF
+>  AND MD5TEMPB+11
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> G_ABC LDA MD5TEMPB ;A&C
+>  AND MD5TEMPB+8
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+1
+>  AND MD5TEMPB+9
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+2
+>  AND MD5TEMPB+10
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+3
+>  AND MD5TEMPB+11
+>  STA MD5TEMP2+3
+>  CLC ;not(C)&B or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB+8
+>  EOR #$FF
+>  AND MD5TEMPB+4
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+9 ;
+>  EOR #$FF
+>  AND MD5TEMPB+5
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+10 ;
+>  EOR #$FF
+>  AND MD5TEMPB+6
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+11 ;
+>  EOR #$FF
+>  AND MD5TEMPB+7
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> G_DAB LDA MD5TEMPB+4 ;B&D
+>  AND MD5TEMPB+12
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+5
+>  AND MD5TEMPB+13
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+6
+>  AND MD5TEMPB+14
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+7
+>  AND MD5TEMPB+15
+>  STA MD5TEMP2+3
+>  CLC ;not(B)&A or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB+4
+>  EOR #$FF
+>  AND MD5TEMPB
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+5 ;
+>  EOR #$FF
+>  AND MD5TEMPB+1
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+6 ;
+>  EOR #$FF
+>  AND MD5TEMPB+2
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+7 ;
+>  EOR #$FF
+>  AND MD5TEMPB+3
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> G_CDA LDA MD5TEMPB ;C&A
+>  AND MD5TEMPB+8
+>  STA MD5TEMP2
+>  LDA MD5TEMPB+1
+>  AND MD5TEMPB+9
+>  STA MD5TEMP2+1
+>  LDA MD5TEMPB+2
+>  AND MD5TEMPB+10
+>  STA MD5TEMP2+2
+>  LDA MD5TEMPB+3
+>  AND MD5TEMPB+11
+>  STA MD5TEMP2+3
+>  CLC ;not(A)&D or (previous) -> MD5TEMPV+=
+>  LDA MD5TEMPB
+>  EOR #$FF
+>  AND MD5TEMPB+12
+>  ORA MD5TEMP2
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1 ;
+>  EOR #$FF
+>  AND MD5TEMPB+13
+>  ORA MD5TEMP2+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2 ;
+>  EOR #$FF
+>  AND MD5TEMPB+14
+>  ORA MD5TEMP2+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3 ;
+>  EOR #$FF
+>  AND MD5TEMPB+15
+>  ORA MD5TEMP2+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> * H function:
+> *          H(X,Y,Z) = X xor Y xor Z
+> 
+> H_BCD CLC ;BxCxD
+>  LDA MD5TEMPB+4
+>  EOR MD5TEMPB+8
+>  EOR MD5TEMPB+12
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+5
+>  EOR MD5TEMPB+9
+>  EOR MD5TEMPB+13
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+6
+>  EOR MD5TEMPB+10
+>  EOR MD5TEMPB+14
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+7
+>  EOR MD5TEMPB+11
+>  EOR MD5TEMPB+15
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> H_ABC CLC ;AxBxC
+>  LDA MD5TEMPB
+>  EOR MD5TEMPB+4
+>  EOR MD5TEMPB+8
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1
+>  EOR MD5TEMPB+5
+>  EOR MD5TEMPB+9
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2
+>  EOR MD5TEMPB+6
+>  EOR MD5TEMPB+10
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3
+>  EOR MD5TEMPB+7
+>  EOR MD5TEMPB+11
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> H_DAB CLC ;AxBxD
+>  LDA MD5TEMPB
+>  EOR MD5TEMPB+4
+>  EOR MD5TEMPB+12
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1
+>  EOR MD5TEMPB+5
+>  EOR MD5TEMPB+13
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2
+>  EOR MD5TEMPB+6
+>  EOR MD5TEMPB+14
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3
+>  EOR MD5TEMPB+7
+>  EOR MD5TEMPB+15
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> H_CDA CLC ;AxCxD
+>  LDA MD5TEMPB
+>  EOR MD5TEMPB+8
+>  EOR MD5TEMPB+12
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1
+>  EOR MD5TEMPB+9
+>  EOR MD5TEMPB+13
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2
+>  EOR MD5TEMPB+10
+>  EOR MD5TEMPB+14
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3
+>  EOR MD5TEMPB+11
+>  EOR MD5TEMPB+15
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> * I function
+> *          I(X,Y,Z) = Y xor (X v not(Z))
+> 
+> I_BCD CLC  ~D|B^C
+>  LDA MD5TEMPB+12
+>  EOR #$FF
+>  ORA MD5TEMPB+4
+>  EOR MD5TEMPB+8
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+13
+>  EOR #$FF
+>  ORA MD5TEMPB+5
+>  EOR MD5TEMPB+9
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+14
+>  EOR #$FF
+>  ORA MD5TEMPB+6
+>  EOR MD5TEMPB+10
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+15
+>  EOR #$FF
+>  ORA MD5TEMPB+7
+>  EOR MD5TEMPB+11
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> I_ABC CLC  ~C|A^B
+>  LDA MD5TEMPB+8
+>  EOR #$FF
+>  ORA MD5TEMPB
+>  EOR MD5TEMPB+4
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+9
+>  EOR #$FF
+>  ORA MD5TEMPB+1
+>  EOR MD5TEMPB+5
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+10
+>  EOR #$FF
+>  ORA MD5TEMPB+2
+>  EOR MD5TEMPB+6
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+11
+>  EOR #$FF
+>  ORA MD5TEMPB+3
+>  EOR MD5TEMPB+7
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> I_DAB CLC  ~B|D^A
+>  LDA MD5TEMPB+4
+>  EOR #$FF
+>  ORA MD5TEMPB+12
+>  EOR MD5TEMPB
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+5
+>  EOR #$FF
+>  ORA MD5TEMPB+13
+>  EOR MD5TEMPB+1
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+6
+>  EOR #$FF
+>  ORA MD5TEMPB+14
+>  EOR MD5TEMPB+2
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+7
+>  EOR #$FF
+>  ORA MD5TEMPB+15
+>  EOR MD5TEMPB+3
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> I_CDA CLC  ~A|C^D
+>  LDA MD5TEMPB
+>  EOR #$FF
+>  ORA MD5TEMPB+8
+>  EOR MD5TEMPB+12
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5TEMPB+1
+>  EOR #$FF
+>  ORA MD5TEMPB+9
+>  EOR MD5TEMPB+13
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPB+2
+>  EOR #$FF
+>  ORA MD5TEMPB+10
+>  EOR MD5TEMPB+14
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPB+3
+>  EOR #$FF
+>  ORA MD5TEMPB+11
+>  EOR MD5TEMPB+15
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> *Rotate left functions
+> 
+> MD5RL LDA MD5TEMPV ;Rotate the 32-bit temp var left by one bit
+>  ASL
+>  STA MD5TEMPV
+>  LDA MD5TEMPV+1
+>  ROL
+>  STA MD5TEMPV+1
+>  LDA MD5TEMPV+2
+>  ROL
+>  STA MD5TEMPV+2
+>  LDA MD5TEMPV+3
+>  ROL
+>  STA MD5TEMPV+3
+>  LDA MD5TEMPV ;Take high bit and wrap around;
+>  ADC #0 ; add it to empty position in lowest byte
+>  STA MD5TEMPV
+>  RTS
+> 
+> * This is somewhat sloppy but it works
+> * It should be optimized to use full byte shifts when possible.
+> 
+> MD5RL7 LUP 7
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL12 LUP 12
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL17 LUP 17
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL22 LUP 22
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL5 LUP 5
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL9 LUP 9
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL14 LUP 14
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL20 LUP 20
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL4 LUP 4
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL11 LUP 11
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL16 LUP 16
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL23 LUP 23
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL6 LUP 6
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL10 LUP 10
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL15 LUP 15
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> MD5RL21 LUP 21
+>  JSR MD5RL
+>  --^
+>  RTS
+> 
+> *Get data from input block and add it to temp variable
+> 
+> MD5ADDX ASL
+>  ASL
+>  CLC ;It better not be greater than 16 anyway!
+>  TAX
+>  LDA MD5BUFR,X
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5BUFR+1,X
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5BUFR+2,X
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5BUFR+3,X
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  RTS
+> 
+> *Get next element from table and add it to temp variable
+> 
+> NEXT_T LDX MD5TP
+>  CLC
+>  LDA MD5T+3,X ;reverse byte order
+>  ADC MD5TEMPV
+>  STA MD5TEMPV
+>  LDA MD5T+2,X
+>  ADC MD5TEMPV+1
+>  STA MD5TEMPV+1
+>  LDA MD5T+1,X
+>  ADC MD5TEMPV+2
+>  STA MD5TEMPV+2
+>  LDA MD5T,X
+>  ADC MD5TEMPV+3
+>  STA MD5TEMPV+3
+>  INX
+>  INX
+>  INX
+>  INX
+>  STX MD5TP
+>  RTS
+> 
+> * MD5 Sine Constants
+> 
+> *   The following is the 64-element MD5 table T[1 ... 64] constructed from
+> *   the sine function. Let T[i] denote the i-th element of the table, which
+> *   is equal to the integer part of 2^32, or 4294967296, times abs(sin(i)),
+> *   where i is in radians.
+> *
+> *   Sorry, Colin, no occult messages here. :)
+> 
+> * These need to be re-arranged to LSB-first
+> * (which is done by the NEXT_T subroutine)
+> 
+> MD5TP HEX 00 ;Pointer to current element in table below
+> MD5T
+> 
+> *  /* Round 1 */
+> 
+>  HEX D76AA478 ; /* 1 */
+>  HEX E8C7B756 ; /* 2 */
+>  HEX 242070DB ; /* 3 */
+>  HEX C1BDCEEE ; /* 4 */
+>  HEX F57C0FAF ; /* 5 */
+>  HEX 4787C62A ; /* 6 */
+>  HEX A8304613 ; /* 7 */
+>  HEX FD469501 ; /* 8 */
+>  HEX 698098D8 ; /* 9 */
+>  HEX 8B44F7AF ; /* 10 */
+>  HEX FFFF5BB1 ; /* 11 */
+>  HEX 895CD7BE ; /* 12 */
+>  HEX 6B901122 ; /* 13 */
+>  HEX FD987193 ; /* 14 */
+>  HEX A679438E ; /* 15 */
+>  HEX 49B40821 ; /* 16 */
+> 
+> *  /* Round 2 */
+> 
+>  HEX F61E2562 ; /* 17 */
+>  HEX C040B340 ; /* 18 */
+
+
+
+
+
+

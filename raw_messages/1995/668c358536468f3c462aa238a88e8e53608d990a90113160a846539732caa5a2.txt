@@ -1,0 +1,41 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Thu, 28 Dec 1995 12:32:14 +0800
+To: sameer <sameer@c2.org>
+Subject: Re: fun with rsaref and 64-bit machines
+In-Reply-To: <199512270120.RAA19559@infinity.c2.org>
+Message-ID: <30E12C02.54F7@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+sameer wrote:
+> 
+>         Does anyone know if RSAREF works on 64 bit CPUs? It seems
+> that RSAREF's NN_Mod is getting stuck in digit.c at:
+> 
+> 99         */
+> 100       while ((t[1] > 0) || ((t[1] == 0) && t[0] >= c)) {
+> 101         if ((t[0] -= c) > (MAX_NN_DIGIT - c))
+> 102           t[1]--;
+> 103         aLow++;
+> 104       }
+
+  In global.h, UINT4 is typedef'd to be unsigned long int, which is a 64 bit
+value on the DEC alpha system.  The type UINT4 is supposed to be a 32-bit
+value.  On the DEC system you need to make that be an unsigned int, which is
+32-bits.  I've complained to RSA before about this problem, as it bit me
+when I was porting SSLREF to the DEC machine.  They mumbled something about
+people using the pre-compiled libraries, and ignored me.  It would be
+so easy for them to just ifdef this one line...
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

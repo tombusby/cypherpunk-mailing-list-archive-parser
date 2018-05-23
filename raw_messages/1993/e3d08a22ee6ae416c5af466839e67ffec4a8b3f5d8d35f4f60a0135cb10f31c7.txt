@@ -1,0 +1,88 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Fri, 1 Oct 93 15:53:40 PDT
+To: cypherpunks@toad.com
+Subject: FIDO, encryption
+Message-ID: <9310012250.AA19691@arcadien.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Here is the companion script to the other one I posted. It takes the
+output of the previous script (which takes PGP encrypted ascii to a
+list of geopraphic name), and turns it back into a PGP file.
+
+Not really stegonography since it's really just a substitution cipher.
+But, with a more sophisticated output grammar, you could embed your
+encrypted file in a bizarre vacation itinerary :-)
+
+pgphide < file.asc | mail -s "not encryped at all" user@host
+
+and then
+
+pgpuhide < mail_file_from_sneaky_person > pgpfile.asc
+
+will allow your friend decrypt pgpfile.asc.
+
+- ----------
+#!/usr/local/bin/perl
+
+#pgpunhide - converts a geographic file back to pgp
+#Karl L. Barrus <klbarrus@owlnet.rice.edu>
+
+%conversion = (
+  'canada', '0', 'united states', '1', 'mexico', '2', 
+  'pacific ocean', '3', 'atlantic ocean', '4', 'arctic ocean', '5', 
+  'gulf of mexico', '6', 'north america',  '7', 'allegheny mountains', '8', 
+  'rocky mountains', '9', 'alabama',  'a', 'alaska', 'b', 
+  'arizona', 'c', 'new mexico', 'd', 'arkansas', 'e', 
+  'california', 'f', 'colorado', 'g', 'connecticut', 'h', 
+  'rhode island','i', 'delaware', 'j', 'maryland', 'k', 
+  'florida','l', 'georgia', 'm', 'hawaii', 'n', 
+  'idaho','o', 'illinois', 'p', 'indiana', 'q', 
+  'iowa','r', 'kansas', 's', 'kentucky', 't', 
+  'louisiana','u', 'maine', 'v', 'massachusetts', 'w', 
+  'michigan','x', 'minnesota', 'y', 'mississippi', 'z', 
+  'missouri','A', 'montana', 'B', 'nebraska', 'C', 
+  'nevada','D', 'utah', 'E', 'new hampshire', 'F', 
+  'vermont','G', 'new jersey', 'H', 'new york', 'I', 
+  'north carolina','J', 'north dakota', 'K', 'south dakota', 'L', 
+  'ohio','M', 'oklahoma', 'N', 'oregon', 'O', 
+  'pennsylvania', 'P', 'south carolina', 'Q', 'tennessee', 'R', 
+  'texas','S', 'virginia', 'T', 'washington', 'U', 
+  'west virginia','V', 'wisconsin', 'W', 'wyoming', 'X', 
+  'washington d.c.','Y', 'bermuda', 'Z', 'guam', '+', 
+  'puerto rico','/', 'virgin islands','=', 
+);
+
+print "-----BEGIN PGP MESSAGE-----\n";
+print "Version: 2.3a\n\n";
+
+while (<>) {
+  $line = $_;
+  chop $line;
+
+  if ($line eq "") {
+    print "\n";
+  }
+  else {
+    print $conversion{$line};
+  }
+}
+
+print "-----END PGP MESSAGE-----\n";
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLKyz4YOA7OpLWtYzAQF3JAP9EjWnj7pix65fJLFf9mE+gLkw719nX0Xa
+jMgHFxmDIdeOxewi9ZnuzE99QqQHv4+TO3dO+CGg0zxGhCMO8/mu4vQtK6825kHl
+9fESP/f2oSVLDPd2/Zv3c0/kMKe9UnMModNgl7tngzsMeBkFJVCnKjkQNGsJGCSz
+C5Z4uXaZccs=
+=M+N2
+-----END PGP SIGNATURE-----
+
+
+
+

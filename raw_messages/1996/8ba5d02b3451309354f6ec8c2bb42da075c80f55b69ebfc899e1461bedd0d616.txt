@@ -1,0 +1,43 @@
+From: Jeff Barber <jeffb@sware.com>
+Date: Wed, 10 Apr 1996 06:52:19 +0800
+To: blane@aa.net (Brian C. Lane)
+Subject: Re: WWW User authentication
+In-Reply-To: <31676b78.52447450@mail.aa.net>
+Message-ID: <199604091558.LAA22026@jafar.sware.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Brian C. Lane writes:
+
+>   I just finished writing a cgi script to allow users to change their login
+> passwords via a webpage. I currently have the webpage being authenticated
+> with the basic option (uuencoded plaintext). MD5 would be nicer, but how
+> many browsers actually support it?
+
+AFAIK, none.  I don't see how this would be helpful anyway.  If you 
+MD5 the password, I won't be able to snoop the password off the wire,
+but I can simply snoop the MD5 hash off the wire instead and since 
+that's what your authentication check must now be against, what does
+this buy you?
+
+
+>   When the user changes their password, the form sends their name, old
+> password, and new password with it, in the clear. This is no worse than
+> changing your password across a telnet connection, but I'd like it to be
+> more secure, but useable by a large number of browsers.
+> 
+>   Any advice?
+
+Well, if you use SSL, it's useable by a "large number of browsers" since
+Netscape has such a large share of the browser market.  And then all of
+the things you're doing w.r.t. authentication are hidden, at least from
+casual eavesdroppers and others too if you use more than the 40-bit option.
+There's really no other choice to reach a large number of browsers.
+
+
+-- Jeff
+
+
+
+

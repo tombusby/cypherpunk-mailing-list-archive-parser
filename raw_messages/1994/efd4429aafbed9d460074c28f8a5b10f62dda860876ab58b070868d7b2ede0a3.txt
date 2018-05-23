@@ -1,0 +1,46 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Wed, 25 May 94 13:27:44 PDT
+To: cypherpunks@toad.com
+Subject: Orthogonal Checksums?
+Message-ID: <9405252005.AA16279@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bob is storing a file for Alice.
+Once in a while Alice wants to check that Bob still has it.
+
+The first time, she can ask him to take the MD5 of the file.  
+What about the second time?  (A single MD5 he could just store).
+
+I've looked it up in Schneier.  There doesn't seem to be
+anything about this exact situation; will the following work?
+
+Alice makes a 128-bit random string and asks Bob to take the 
+MD5 of the file with her random string prepended.  This is
+impossible for Bob to compute without the file.  Right?
+
+Alice, however, can precompute as many of these as she wants
+(as long as she keeps them secret) so she doesn't have to
+actually keep the file.
+
+-fnerd
+ps.  MD5 of a file with a random string appended to the *end*
+     *can* be computed after having discarded the file.
+
+- - - - - - - - - - - - - - -
+To auditors without the code, calls seem
+indistinguishable from noise.  --George Gilder
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+aKxB8nktcBAeQHabQP/d7yhWgpGZBIoIqII8cY9nG55HYHgvt3niQCVAgUBLMs3K
+ui6XaCZmKH68fOWYYySKAzPkXyfYKnOlzsIjp2tPEot1Q5A3/n54PBKrUDN9tHVz
+3Ch466q9EKUuDulTU6OLsilzmRvQJn0EJhzd4pht6hSnC1R3seYNhUYhoJViCcCG
+sRjLQs4iVVM=
+=9wqs
+-----END PGP SIGNATURE-----
+
+
+
+

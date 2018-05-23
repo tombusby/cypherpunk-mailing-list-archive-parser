@@ -1,0 +1,48 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Fri, 29 Jul 94 14:17:43 PDT
+To: cypherpunks@toad.com
+Subject: Re: Q: Chaum style blind signatures?
+In-Reply-To: <9407291929.AA21163@burgess.Eng.Sun.COM>
+Message-ID: <199407292058.NAA01975@netcom11.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jacob.Levy@Eng.Sun.COM (Jacob Levy) writes:
+
+ > Could someone please explain what is a "Chaum style blind
+ > signature" and how it can be used? I looked in all the FAQs
+ > on rtfm.mit.edu and could not find anything about this.
+
+ > P.S. I've seen the term used in a document claiming these
+ > can be used for untraceable e-cash
+
+Given a pair of RSA keys (e,n) and (d,n), the owner may sign a
+number x by computing x^d mod n using his private key.  In real
+life, x usually consists of a message digest and a small amount
+of constant information.  This prevents the product of two
+signatures from also being a valid signature.  Anyone may verify
+a signature by performing a similar operation using the public
+key and recovering x.
+
+Blind signatures allow you to obtain a signature from someone
+without disclosing to them what they are signing.  You pick a
+random number r and ask the signer to sign x*r^e mod n.  Since r
+is arbitrary, this tells the signer nothing about the value of x.
+
+When the signer gives you back r*x^d mod n, you simply multiply
+by the multiplicative inverse of r mod n to obtain x^d mod n, the
+signed message.  The signer still has no idea what he has signed
+and cannot recognize it later if he sees it.
+
+This allows untraceable digital cash, since the bank can sign new
+notes for customers that it cannot later recognize.  It has other
+interesting uses as well.
+
+-- 
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+

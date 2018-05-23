@@ -1,0 +1,86 @@
+From: Blanc Weber <blancw@microsoft.com>
+Date: Thu, 7 Jul 94 08:47:23 PDT
+To: cypherpunks@toad.com
+Subject: FW: Windows for Workgroups 3.11
+Message-ID: <9407071449.AA11623@netmail2.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Below is the reply which I received internally on the question of 
+whether WfW uses RSA:
+
+----------
+From: Michael Ginsberg
+To: Blanc Weber
+Cc: Cypherpunks Mailing List Redistribution
+Subject: RE: Windows for Workgroups 3.11
+Date: Thursday, July 07, 1994 8:22AM
+
+[The following can be distributed outside of Microsoft, and 
+redistributed thereafter, as long as it remains unaltered and is 
+reproduced in it's entirety, including this header]
+
+In the Windows for Workgroups 3.11 fax enhancement, we provide the 
+ability to send "email format" messages over fax.  These are messages 
+that do not lose their original format during faxing, so that they are 
+still editable (ie: if you send a Microsoft Word document, the receiver 
+gets an actual Microsoft Word document, not just printed pages).  One 
+feature of this format is that we allow security enhancements to be 
+applied to the message before transmission.  These enhancements are 
+encryption (either secret key or public key) and signature (based on 
+public key).  I will describe a bit about how we implement these features.
+
+1> Secret key encryption
+	This is exposed to the user as password encryption.  The user chooses 
+a password (of as long a lenght as the user desires, composed of 
+characters with ASCII values 1 through 255) and we hash it down to 64 
+bits.  These 64 bits are used to encrypt the message (including all 
+attachments, text, properties, etc) using RSA's RC4 algorithm.  A 
+header is then placed on the message with sufficient information for 
+routing (subject, sender, receiver, time stamps, as well as a marker 
+identifying the encryption type).  The receiver enters the password to 
+decrypt (the same as the encrypting password), and we verify that the 
+password is correct by decrypting the message and seeing if it's valid 
+(ie: has the right internal structure to be a mail message).
+
+2> Public key encryption
+	We allow the user to generate public/private key pairs.  These key 
+pairs are 512-bit RSA key pairs.  The private part is stored encrypted 
+(with the user's "fax security" password) on the user's hard drive, and 
+the public part is stored in plain (binary form).  The user exchanges 
+his public keys with other users in various ways.  If the user sends a 
+fax with public key encryption, we first generate a random 64 bit 
+number, and encrypt the message with RC4 using that number (similar to 
+password encryption above).  We then scatter the 64 bits in a 64 byte 
+(randomly initialized) buffer and encrypt that buffer using RSA's RSA 
+encryption scheme, using both the sender's private key and the 
+recipient's public key.  We then send the encrypted message and header 
+containing routing information and the 64 byte block.  The recipient 
+performs a similar operation, using his private and the sender's public 
+key to obtain the 64 bit "secret key", and then decrypting the message.
+
+3> Digital signature
+	While the above encryption schemes are performed on entire messages, 
+we provide a method for digitally signing attachments.  Microsoft Mail 
+allows the entering of plain text into a message, as well as the 
+embedding of entire files.  It is these files which we sign.  Signature 
+is accomplished by computing a 128 bit hash of the file using RSA's MD5 
+message digest algorithm.  This 128 bit hash is then embedded in a 64 
+byte buffer, and it is encrypted using the sender's private key.  The 
+buffer (along with some header information) is pre-pended to the 
+document, and it's extension is changed to .aws, so that our applet to 
+view signatures is called upon double clicking or "running" the signed 
+document.  Anyone receiving the document can see the validity of the 
+signatures (by hashing themselves, and then decrypting the stored 
+hash).  If you sign a signed document, the signatures are cumulative, 
+so multiple people can sign the same document.  Signatures are either 
+valid (hashes match), invalid (hashes differ), or unverifyable (you 
+don't have the sender's public key).
+
+--Michael Ginsberg, Software Design Engineer, Microsoft Corporation.
+mikegins@microsoft.com
+
+
+
+

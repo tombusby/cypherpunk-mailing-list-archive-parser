@@ -1,0 +1,41 @@
+From: daw@cs.berkeley.edu (David Wagner)
+Date: Fri, 17 Jan 1997 11:24:22 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Hi again, and an invitation to kibitz
+In-Reply-To: <199701140755.CAA04514@mail.intercon.com>
+Message-ID: <5bojee$gjn@joseph.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199701140755.CAA04514@mail.intercon.com>,
+Amanda Walker <amanda@intercon.com> wrote:
+> (a) Server sends 8-byte challenge to client
+> 
+> (b) Client sends Microsoft NT authentication response to the server
+>     (take the password in Unicode form, do an MD4 hash, pad with 0s to 21
+>     bytes, split into 3 7-byte groups, use these as DES keys to encrypt
+>     the challenge three times, send the 24-byte result as the response).
+> 
+> (c) If authentication fails, close the connection.
+> 
+> (d) If authentication succeeds, all subsequent traffic is enccrypted with
+>     DES in CFB mode.  Until April :), the DES key used is taken from the
+>     first 7 bytes of the MD4 hash of the password (after April, we expect
+>     to switch to Diffie-Hellman key exchange first, followed by a revised
+>     authentication handshake).
+
+Some weaknesses:
+
+- It doesn't resist dictionary attacks (no salt) when the attacker can make
+    one active probe (forge a fixed challenge and get the client's response).
+- It doesn't stop replay attacks (replay a fixed challenge, now the same DES
+    key is used, so replay DES-encrypted session data).
+- DES-encryption doesn't provide message authentication against active
+    attacks; use a MAC too.
+- You should use independent DES keys for each direction of the connection.
+- Also the DES encryption key doesn't change for each connection.  It should.
+
+
+
+

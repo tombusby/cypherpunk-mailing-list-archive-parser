@@ -1,0 +1,52 @@
+From: Robin Hanson <hanson@ptolemy.arc.nasa.gov>
+Date: Thu, 11 Feb 93 10:44:14 PST
+To: cypherpunks@toad.com
+Subject: Re: Timed-Release Crypto
+In-Reply-To: <9302102211.AA22756@longs.lance.colostate.edu>
+Message-ID: <9302111838.AA02493@ptolemy.arc.nasa.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[This is a first post by a crypto-naive person - be kind.]
+
+>Another possibility is to have some kind of standard protocol for time
+>encrypted messages (this is interesting and seems feasible). Let's say
+>I want a message [x] to be unencrypted on date [y].  I call a "time
+>encryption server" and ask for the secret key associated with my
+>message and date [y].  I encrypt the message and publicize that
+>version.  The time server is constantly spewing out the daily code for
+>messages that expire on that date. Anybody just listens to the
+>broadcast and decrypts the messages in their possession using the key. 
+>Note however that it is crucial that somehow the key depend on the
+>message itself (via the hashing approaches), otherwise everybody knows
+>everybody else's keys ahead of time just by submitting messages to the
+>server for the particular date.  I suppose public-key encryption could
+>be used here but I'm hazy on the details.
+
+What came to my mind as I read Tim's message was various competing
+timed-key servers, each publishing its public key associated with
+various future dates, and promising to release the associated private
+key on that date (but not before).  
+
+You then encode your message with an m-of-n scheme using n such
+server's keys for your chosen date, and assume at least m of them will
+eventually publish their promised key, and assume no more than m of
+them will release early.  You then leave it with several escrow
+services and ask them to try to decrypt it once a year with the new
+year's keys.
+
+To prove to all that a server is untrustworthy, simply reveal its
+private key ahead of time, and win a bond posted by the service (easy
+to implement - encode some money with the public key, see if anyone
+cashes it.)  There are economies of scale in shared monitoring of
+trust, so perhaps only a few dozen such servers would be needed.
+
+Hmm.. but how does the server get paid if the public key is public
+knowledge?   
+
+Robin Hanson
+
+
+
+

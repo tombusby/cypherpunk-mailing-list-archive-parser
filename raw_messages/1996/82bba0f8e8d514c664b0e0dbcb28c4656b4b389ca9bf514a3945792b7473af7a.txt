@@ -1,0 +1,55 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Thu, 4 Jan 1996 17:09:43 +0800
+To: "Michael C. Peponis" <mianigand@unique.outlook.net>
+Subject: Re: 2047 bit keys in PGP
+In-Reply-To: <199601040009.SAA07299@unique.outlook.net>
+Message-ID: <9601040052.AA07122@cfdevx1.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+    From: "Michael C. Peponis" <mianigand@unique.outlook.net>
+    Date: Thu, 4 Jan 1996 05:17:35 +0000
+    
+    > Why is there a limit to the size of the key anyway? It's too bad PGP 
+    > doesn't support any size key (within reason).
+    
+    Within reason is the Key Phrase.  Even with a Pentium 90, I notice a 
+    considerable lag in decrypting messages that have been encrypted with 
+    a key larger than 2047/8.
+    
+    Even if you have a fast machine, if the person recieving the message 
+    could wait a long time to decrypt you 4096 byte encrypted message.
+
+Another point to realize is that PGP uses a combination of ciphers.
+When encrypting, the RSA key is only used to encrypt an IDEA key.
+That IDEA key is used to encrypt your message.  Somewhere between 2048
+and 4096, you're making the RSA key stronger (harder to brute force)
+than the IDEA key.  At that point, the extra time that you're using
+for super-big RSA keys is totally wasted.
+
+A similar argument applies to authentication, but then you're
+comparing RSA and MD5, although I believe the argument holds for even
+smaller RSA keys than in the RSA-IDEA comparison.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMOsj8JNR+/jb2ZlNAQGcRgP+JONF2g2Nw7SIKvcfCKurvS5WQ0WWjQmd
+H7NjkVjtjf947o1OKUMDYdKWTjSmvV//hdRloWz3T4kaS9FCLvzFbTZLNRtz33ic
+kcX0XIDYZ0pohMo98IaeXS/odB+tmo8jPTfZeC2lBuv4PRphSLypxDrR0VmQX2ld
+EVOl6RUBknw=
+=l/T7
+-----END PGP SIGNATURE-----
+--
+Rick Busdiecker                        Please do not send electronic junk mail!
+ net: rfb@lehman.com or rfb@cmu.edu    PGP Public Key: 0xDBD9994D
+ www: http://www.cs.cmu.edu/afs/cs.cmu.edu/user/rfb/http/home.html
+ send mail, subject "send index" for mailbot info, "send pgp key" gets my key
+A `hacker' is one who writes code.  Breaking into systems is `cracking'.
+
+
+
+

@@ -1,0 +1,71 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Tue, 7 Oct 1997 05:55:29 +0800
+To: eb@comsec.com
+Subject: using PGP email to authenticate Eric's Secure phone
+In-Reply-To: <199710061905.MAA22945@comsec.com>
+Message-ID: <199710062149.WAA00897@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Eric Blossom <eb@comsec.com> writes:
+> What the commitment prevents is a birthday attack on the verification
+> code by Mallet.  Mallet has to be able to come up with a g^x' that
+> when concatenated with g^y and hashed computes the same verification
+> code as g^x concatenated with g^y and hashed.
+
+Yes.  But that just means that you need commitments to prevent a MITM
+brute forcing a key with the same partial hash.
+
+I don't see that commitments on DH parameters do anything to prevent
+someone who can impersonate voices, as far as I can see it is all
+going to collapse back to whether the attacker can impersonate voices
+and splice in without audible noise.
+
+> >On the other hand, using persistent key public key crypto, Tim has
+> >been signing his posts recently, and I have an ancient public key of
+> >his stashed away which his new key is signed with.  If we were able to
+> >construct a protocol to bolt on top of the reading of hashes, we could
+> >have much greater protection against MITM.
+> 
+> Agreed.  The primary difficulty is getting the public keys into the
+> unit.  And agreeing on what kind of certificate to use...  
+> My preference (for patent reasons) would be to use DSA or ElGamal
+> signatures.
+
+How about touch tone keypad (phone).  Bit tedious?  Or temporarily
+plug unit into a PC's modem port?
+
+What about... a key server on a phone number.  You call key directory
+services, you type in phone number, and your phone downloads
+certificates and phone numbers, and uploads it's own certificate.
+Also put the keyserver on the internet.
+
+Too much complexity probably, if most of your users won't be using it
+as it will add to cost.
+
+But I do think it would be a good idea for you to include
+documentation on a good secure way to use a PGP signature to exchange
+use-once keys suitable for printing on a sheet of A4 which would keep
+a user going for a few hundred calls.  Plus easy to follow description
+of how to use.  Your suggestion in another post in this thread was a
+challenge response.  Say you printed a matrix of random numbers or
+words which were exchanged before hand via PGP.  And then use the
+digits of the hash on the LCD screen to do a table lookup.  The
+attacker won't be able to do his MITM because he won't know the table,
+and so won't know what value he should read.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,47 @@
+From: lull@acm.org (John Lull)
+Date: Fri, 23 Feb 1996 02:31:32 +0800
+To: SINCLAIR DOUGLAS N <sinclai@ecf.toronto.edu>
+Subject: Re: Internet Privacy Guaranteed ad (POTP Jr.)
+In-Reply-To: <96Feb22.110840edt.10494@cannon.ecf.toronto.edu>
+Message-ID: <312cab4d.13399722@smtp.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 22 Feb 1996 11:08:37 -0500, SINCLAIR DOUGLAS N
+<sinclai@ecf.toronto.edu> wrote:
+
+> What they have gained is the knowledge that their random number source
+> isn't broken.  If your RNG started spewing 0 bits by the thousand would
+> you say "This stream is just as likely as any other stream that I can
+> imagine so there is no problem", or "My RNG is broken".  Of course,
+> in nice mathematical abstractions your RNG never breaks, but we live in
+> a nasty world of thermal failiures and cold solder joints.
+
+No, they really haven't.  Their initial post indicated that they are
+throwing away some 50% of their generated sets of "random" data.  This
+indicates either their random number generator is seriously broken, or
+their analysis of the numbers produced is seriously broken.  Either
+way, they have a significant problem which they are NOT addressing.
+
+
+In any truly random data stream, you would expect a certain percentage
+of blocks to have statistics outside whatever you decide is the
+"typical" range.  If their generator is producing significantly more
+or less than the expected number of "atypical" blocks, it is broken.
+If is producing about the expected number of such blocks, it is likely
+working as designed, and such blocks are still TRULY random.
+
+In any case, throwing away some selected portion of its output is NOT
+an appropriate cure for a broken random number generator.
+
+The proper cure is fixing the generator.
+
+
+As a separate issue, if your cryptosystem has a set of "weak keys" it
+may make sense to screen your random numbers to prevent use of such
+weak keys.  This, however, appears not to be what IPG is doing.
+
+
+
+

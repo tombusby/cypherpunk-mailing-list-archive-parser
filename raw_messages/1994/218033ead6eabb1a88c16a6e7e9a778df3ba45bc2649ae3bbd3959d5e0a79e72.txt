@@ -1,0 +1,205 @@
+From: rah@shipwright.com (Robert Hettinga)
+Date: Fri, 2 Dec 94 05:34:29 PST
+To: cypherpunks@toad.com
+Subject: Re: Scalability of Ecash System / Article on Internet Cash available.
+Message-ID: <199412021333.IAA14380@zork.tiac.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Filched from buyinfo, where they've been talking a lot about e$ lately...
+
+
+>From: brands@cwi.nl
+>Original-From: Stefan.Brands@cwi.nl
+>Subject: Re: Scalability of Ecash System / Article on Internet Cash available.
+>To: www-buyinfo@allegra.att.com
+>Date: Thu, 1 Dec 1994 16:12:50 +0100 (MET)
+>Cc: hfinney@shell.portal.com
+>X-Mailer: ELM [version 2.4 PL23]
+>Mime-Version: 1.0
+>X-UIDL: 786299434.063
+>
+>I noticed that the discussion is currently about the e-cash system of
+>DigiCash. Some good issues have been raised in the discussion, and I
+>would like to comment in detail about my own opinion in these matters.
+>As it so happens, I recently wrote an article that addresses in detail
+>each of the raised concerns, and for this reason it seemed easiest to
+>simply make this article available by ftp. So I did. The paper is
+>entitled "Electronic Cash on the Internet," and will appear in the
+>Proceedings of the Internet Society 1995 Symposium on Network and
+>Distributed System Security, San Diego, California, Februari 16-17,
+>1995. To retrieve it: log in anonymously at ftp.cwi.nl, and go to the
+>directory pub/brands.  There you will find the paper, in both dvi and
+>PostScript format (and Unix-compressed formats). The paper contains
+>several drawings; if you want to have the complete paper, including
+>the pictures, then you *must* retrieve the PostScript version. I made
+>a particular effort to explain the concepts behind the system (many of
+>which are due to Chaum); see Section 3, it is about five pages with no
+>math.
+>
+>  Short abstract of the paper: It is generally realized that the Internet
+>  will not be able to offer full-fledged electronic marketplace
+>  capabilities without a suitable electronic mechanism for processing
+>  payments. The electronic payment mechanism that is presented offers a
+>  variety of features that are believed to be particularly appealing in
+>  this respect.
+>
+>  To participate, an Internet user must interface to his computer a
+>  tamper-resistant device with an ordinary 8-bit microprocessor,
+>  typically a PCMCIA card, and install some software. Internet service
+>  providers do not need special hardware. Payments can be made
+>  completely *off-line*, and are untraceable and unlinkable.
+>  Multi-party security is guaranteed without parties having to trust
+>  other parties.  Transaction processing speeds are such that even
+>  modestly equipped computers will be able to meet the performance
+>  levels required by demanding Internet payment applications.  One
+>  particularly interesting such application is click-and-pay ability
+>  when travelling World-Wide-Web links.
+>
+>The presented approach may seem to be less attractive than many other
+>proposals, because it requires tamper-resistant hardware for the
+>users. In the longer run, though, when the use of e.g. smart cards for
+>electronic payments has become commonplace, the advantages in my
+>opinion will significantly outweigh this objection. What will remain
+>are the advantages: click-and-pay ability to make instantaneous
+>off-line payments, the ability to cost-effectively serve tens of
+>millions of participants, the ability to guarantee one's own privacy,
+>multi-party security, support for different currencies, and
+>portability of tamper-resistant devices to other payment platforms.
+>
+>
+>Some brief comments on the current discussion:
+>
+>--- Michael E. Peirce (mepeirce@alf2.tcd.ie) wrote:
+>   >I've been looking at the Ecash payment system and was wondering about
+>   >the problem of scalability if it were to become popular.
+>   >(For anyone who doesn't already know, Ecash is an electronic cash
+>   >solution, details of which can be found at http://www.digicash.com )
+>   >It seems to me that, while their bank (bank.digicash.com) will be able
+>   >to handle the 10,000 odd users in the trial, how would it cope with the
+>   >possibly thousands of transactions that might take place all over the
+>   >Internet, every minute, if the system were to become popular?
+>   >Every transaction requires that the merchant shop, connect to the bank
+>   >to validate the customers coins, right?
+>   >With a popular Ecash system, the bank would be swamped, or what if even
+>   >the link to the bank went down for a few days?
+>
+>   Hal (hfinney@shell.portal.com) wrote:
+>   >There has to be a single common database which all the banks share in
+>   >order to detect double spending. Otherwise I could spend the same coin
+>   >multiple times, going to a different bank each time. Granted, shared
+>   >databases can work, but if a machine which holds part of the database goes
+>   >down it will take special engineering to keep things consistent and
+>   >available.
+>   >There are two different senses in which we can speak of multiple banks.
+>   >One is a setup where all the banks share the same type of cash, where
+>   >they are logically a single bank but distributed to try to get increases
+>   >in reliability. This has the database consistency and access problems I
+>   >described above, which modern-day bank systems don't have to the same
+>   >extent.
+>
+>   I fully agree with these comments. Btw, it is correct that the e-cash
+>   system of DigiCash is an *on-line* *coin* system. It is interesting to
+>   take a look at their faq, at
+>    http://www.digicash.com/ecashinfo/ecash-faq.html, item
+>   "Does ecash really have to be online?". There is sais: "Actually, no. [...]
+>   We'll add some more functionality in that area as soon as the on-line
+>   system is completely operational." Furthermore, in item "If I copy my
+>   money, can I spend it twice," it sais: "In an off-line
+>   situation (future) ..." From these comments of DigiCash, it seems that
+>   they very well realize the problems associated with on-line verification
+>   when the system is used on a large scale, and that they hope to implement
+>   an off-line system in the future. However, a problem with this might be
+>   the following, as noted by Jim McCoy (mccoy@io.com):
+>   >[first part]
+>   >A digital money system can do that, but the current version of Chaum's
+>   >system does not.  The disadvantage of a system that does this
+>   >self-identification of double-spenders is that it front-loads the cost of
+>   >the identification protocol into everyone's withdrawls and purchases; they
+>   >must use a cut-and-choose system during withdrawl to make sure that the
+>   >coins presented for blinding are in the proper format and must perform an
+>   >additional protocol negotiation during purchases.
+>   >[...] The overhead involved in the necessary machinations to make sure
+>   >that a malicious cheater did not send in bogus coins that mis-identified
+>   >him increases the transaction cost of such a system significantly.  It also
+>   >increases the transaction cost of purchases by requiring the merchant and
+>   >purchaser to perform an additional transaction to reveal halves of the
+>   >identity bits after each purchase.
+>   >[second part]
+>   >It is an interesting version of the
+>   >digital coin protocols, but one that is unlikely to be used in the
+>   >immediate future due to the increased costs it places upon the system.  It
+>   >is likely that such a system will first appear in smartcard digital cash
+>   >systems where dedicated hardware can cut down on the increased costs.
+>
+>   The first part is correct, the overhead caused by the cut-and-choose
+>   withdrawal protocols seems unacceptable. Another problem, which
+>   certainly should not be forgotten, is that is can hardly be said to be
+>   sufficient if only traceability of double-spenders after the fact is
+>   offered. It is clearly desirable that there is prior restraint of
+>   double-spending, and ideally the traceability ater the fact should still
+>   be present (as a second line of defense). Now, doing off-line cash with
+>   prior restraint of double-spending, *and* privacy of payments, seems to
+>   result in extremely inefficient systems when one uses the cut-and-choose
+>   technique of Chaum/Fiat/Naor (just try it, and you'll see what I mean...).
+>   Probably these are the main reasons why DigiCash has not implemented an
+>   off-line system. (Yet a third problem is that it is really cumbersome
+>   to use a coin system if each coin is several kilo-bytes...)
+>
+>   This is not to say that efficient privacy-protecting off-line cash systems
+>   with prior restraint of double-spending do not exist. The system that I
+>   present in my paper mentioned above meets all these criteria. The
+>   reason for this is that I do *not* use a cut-and-choose withdrawal protocol.
+>   As those of you who have tried to design off-line systems will
+>   know, the design in fact consists of two protocols, one for paying and one
+>   for withdrawal; designing the withdrawal protocol is by far the
+>   hardest task (which is still an understatement...). The
+>   technique that I use for my withdrawal protocols is a new one, called
+>   restrictive blinding, and the only one known thus far that can provide
+>   efficient withdrawal protocols. Curiously enough, most of the withdrawal
+>   protocols that result from this technique are *not* ordinary blind
+>   signature protocols as defined in
+>   literature (because only the signature is blinded---the message is not!).
+>   The withdrawal protocol in my Internet paper is a blind signature protocol,
+>   but for instance the withdrawal protocol that I used in my technical
+>   report (reference 5 in the paper) is not.
+>
+>-- Hal (hfinney@shell.portal.com) wrote:
+>   >I wish I could. I have applied several times for the beta test at
+>   >digicash, starting almost three months ago. Finally I got a reply at the
+>   >beginning of November saying that I would be hearing from them in a few
+>   >days. Since then, nothing. I wonder if people are actually being
+>   >allowed to join the beta trial as are implied by all of these web pages?
+>   >I would like to see a more honest explanation of the chances of being
+>   >able to experience ecash than the simple "click here to try it out" you see
+>   >everywhere.
+>
+>   I had exactly the same experience; I sent in the registration several
+>   months ago. I'm still waiting for my account, which was announced to me at
+>   the beginning of this month.
+>
+>
+>Stefan Brands,
+>------------------------------------------------------
+>CWI, Kruislaan 413, 1098 SJ Amsterdam, The Netherlands
+>Tel: +31 20 5924103, e-mail: brands@cwi.nl
+>
+>
+>
+>
+>
+>
+
+-----------------
+Robert Hettinga  (rah@shipwright.com) "There is no difference between someone
+Shipwright Development Corporation     who eats too little and sees Heaven and
+44 Farquhar Street                       someone who drinks too much and sees
+Boston, MA 02331 USA                       snakes." -- Bertrand Russell
+(617) 323-7923
+
+
+
+
+
+

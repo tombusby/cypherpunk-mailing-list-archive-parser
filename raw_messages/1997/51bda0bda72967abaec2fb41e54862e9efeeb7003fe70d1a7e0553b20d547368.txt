@@ -1,0 +1,42 @@
+From: nospam-seesignature@ceddec.com
+Date: Wed, 13 Aug 1997 02:09:51 +0800
+To: Ray Arachelian <sunder@brainlink.com>
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <Pine.SUN.3.96.970812111223.26326D-100000@beast.brainlink.com>
+Message-ID: <97Aug12.123816edt.32258@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Tue, 12 Aug 1997, Ray Arachelian wrote:
+
+> A known plaintext attack won't help you to break the keys unless you have
+> one of the eight keys, but will having many keys that encrypt the same
+> data significanltly weaken the security of that tiny chunk of data?
+> 
+> And no, I don't mean, there's N keys so the odds of brute forcing the data
+> is now N times easier.  Assume we're using 128 bit Blowfish/Idea or
+> better, and discarding weak keys.  Are there any differential or other
+> cryptanalysis methods to use the eight resulting cyphertexts to get at the
+> data other than brute forcing it if you don't know any of the keys?
+> 
+> What if instead of using a private key cypher, we used a public key
+> cypher?  Would that make any difference in attack methods?
+
+The only thing I can think of is if you use something like CFB mode, and
+the IV is also the same at the beginning, the first 8 bytes will leave a
+hole - I don't remember exactly, but I was burned by exactly this when I
+saw 8 bytes of plaintext after resetting the IV in an app that xors some
+encrypted blocks of data to do something else.
+
+A PK to encode the conventional key works better since you can do a long
+or complex conventional key and other material such as an IV once, and
+then bury that several times.
+
+--- reply to tzeruch - at - ceddec - dot - com ---
+
+
+
+
+

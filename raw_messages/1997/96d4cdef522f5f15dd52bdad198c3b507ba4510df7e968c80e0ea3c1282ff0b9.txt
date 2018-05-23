@@ -1,0 +1,87 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 10 Oct 1997 05:21:45 +0800
+To: jamesd@echeque.com
+Subject: Re: Secure Phone:  Making man in the middle audible.
+In-Reply-To: <199710091831.LAA06017@proxy3.ba.best.com>
+Message-ID: <199710092112.WAA01188@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+James Donald <jamesd@echeque.com> writes:
+> Suppose that Bob's computer from time to time formulates a plan to
+> do groups of a particular size and form, and sends Ann's computer a
+> hash of that plan and the DH negotiated shared secret.
+> 
+> So malloc must decompress Bob's speech packets, repacketize them, 
+> and recompress them,
+> 
+> Often he will not be able to send off a packet, until he has received 
+> two of Bob's packets.
+> 
+> So this triples the delay, and increases the speech degradation.
+
+Good.  Sounds as though this could work.  Much better than my stego
+ramblings.
+
+One minor point: if I was Mallet faced with the problem your solution
+presents the MITM with I would compose a plan which used a whole row
+of minimum sized packets (or small upward random variations).  That
+would minimise the chance that I would have to wait to compose
+packets.  Clearly you can fix this: you can insist on a certain
+standard deviation, or whatever as part of the protocol.
+
+Another point is that you are making the unstated assumption that you
+can't stream packets.  That is, you are assuming that you must receive
+the whole packet before you can start to resend decoded and
+re-encoded.  Perhaps this is already the case anyway, I don't know
+much about audio compression algorithms or codecs.  Eric can tell us
+whether this will already be the case for his algorithm set.  If not,
+I think it should be easy enough to enforce this property (immediate
+solution which comes to mind: send the bits in a packet backwards!)
+
+
+I'm wondering also whether you couldn't generalise the sort of
+stretched interlock protocol which is going on here, with in your
+solution the readers ears telling him something is wrong, to come up
+with something where the firmware in Eric's fine box could detect
+and just flip out of secure mode, or flash the leds, or whatever in
+protest to indicate it had detected a MITM attempt.
+
+Perhaps what you have already is enough -- if the inter-packet delay
+gets longer than whatever you caculate as the highest possible time
+which could normally happen you flag MITM.  If you can ensure that
+transatlantic delays are lower than the delays MITM will introduce
+with this protocol, you've got it covered.
+
+Being paranoid, I still see a couple of dangers: 
+
+- if the packets are quite small you may be able to have a neural net
+setup fill in the gaps when the packets lengths arrive awkwardly for
+the MITM without it sounding too strange.
+
+- there is no guarantee of real-time, you can make something sound like
+it is coming in real time when it has lag.  For example: if you insert
+some throat clearing, or ponderous "errr".  Some peoples speech
+patterns are that way already.
+
+This second one causes me to suggest that you'd be safer to have the
+box detect the MITM induced lag if you can, rather than rely on human
+ears.
+
+I'm going to think on this some more.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

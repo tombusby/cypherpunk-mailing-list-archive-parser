@@ -1,0 +1,67 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Tue, 25 May 93 16:24:57 PDT
+To: uri@watson.ibm.com
+Subject: Re: PGP voice encryption
+In-Reply-To: <9305251805.AA19930@buoy.watson.ibm.com>
+Message-ID: <9305252324.AA29081@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> Timothy Newsham says:
+> > The biggest problem is CPU power.  The compression schemes that work
+> > best are very computationally expensive.  Add to that the fact that
+> > you need to do simultaneous encryption and compression, and if you
+> > want full duplex make that simultaneous encryption, decryption,
+> > compression and decompression.   You also have to send it over the
+> > modem, and probably frame it too.
+> 
+> You're right.  But if the voice-modem,  or a smart voice card (like
+> SoundBlaster, maybe? Can it do CELP? Can any other available card?)
+I'm not sure.  My understanding of SoundBlaster was that it could
+produce sounds and had digitizing capabilities (ie. A/D D/A card)
+If this is so it couldnt do any computations itself.  Somoene
+mentioned Xyxel's modems will do CELP in and of themselves.
+
+> will handle full-duplex voice in and out, and then a smart data
+> modem will pump it through the line (again, full duplex), then
+> all the CPU has to do is simultaneous encryption/decryption,
+> plus frame management (moving frames to/from Blaster and
+> modem).
+There is no doubt that the CPU can handle the encrypion +
+framing, this is what I plan to do.
+
+> 
+> Am I missing anything?
+> 
+> > I'm currently implementing one scheme (LPC) on a DSP chip.  Hopefully
+> > my end product will be <$50.  I plan put its own ADC/DAC chip on
+> > board (to save computer<->DSP bandwidth).  Possibly some
+> > high end CPU's like 486 and 040 could handle the load, but
+> > wouldnt leave much cpu for anything else.
+> 
+> What DSP are you playing with? How expensive is it? Can I buy
+> such a chip from somewhere (assuming the price won't scare me
+> out)?
+I am using the ADSP2105 from Analog Devices.  The list price
+is about $12.  It has internal memory (1 kwords instruction,
+512 words data,  24 and 16 bits wide respectively), and
+boots instruction memory off of an eeprom.  Minimum setup
+would probably be ADSP2105, xtal, eeprom (4k), max232 
+(interface voltage levels), DAC/ADC chip and a power supply.
+
+You can reach Analog Devices at (617) 329-4700,  they
+send out spec sheets for free.
+
+> --
+> Regards,
+> Uri         uri@watson.ibm.com      scifi!angmar!uri 	N2RIU
+> -----------
+> <Disclamer>
+> 
+> 
+
+
+
+

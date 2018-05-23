@@ -1,0 +1,71 @@
+From: "Jon 'Iain' Boone" <boone@psc.edu>
+Date: Mon, 14 Feb 94 20:01:34 PST
+To: cypherpunks@toad.com
+Subject: Re: SCHEME for FULL-SPEC RETURN PATH
+In-Reply-To: <199402150153.RAA11877@jobe.shell.portal.com>
+Message-ID: <9402150359.AA01529@igi.psc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+Hal <hfinney@shell.portal.com>  writes:
+>
+> > From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+> > 
+> > You send mail to remail+getid@x.edu.
+> 
+> Is this some kind of RFC822 hack?  It doesn't work on my system.  Mail to
+> hfinney+xyz@shell.portal.com bounces.  Are you assuming some special
+> mail address processing has been installed by the administrators of the
+> machines to handle this "+" hack, or is my machine broken in not respecting
+> it?
+
+ After referencing my copy of RFC 822, it doesn't seem (after a quick glance)
+ to allow for user+misc@foo.bar.edu -- I'll have to check more carefully 
+ tomorrow.  In any case, I (and I assume Mr. Ghio) was introduced to the "+"
+ symantic by the Andrew Message System.  The "+" is used as a delimiter
+ for sub-mailboxes for each mail address.  Thus, Mr. Ghio is capable of
+ having the mailbox "mg5n+", "mg5n+faq" or "mg5n+biff".  They all get
+ delivered to the same person, but Mr. Ghio can set up the "+biff" mailbox
+ to re-distribute to all of USENET, after "BIFFing" up the post.  Or he
+ can have "+faq" mail back to you the faq you have requested.  You can
+ also have it automatically file away (read: kill or not!) your mail 
+ based on address.  When I was the comp.os.mach faq maintainer, I had the
+ mail to jb3o+mach@andrew.cmu.edu go to a special mailbox which I read
+ only comp.os.mach faq mail from.  The Filtering Language for Andrew
+ MEssage System (FLAMES) is a lisp-like language which allows you (the user)
+ to write various macros for mail-refiling.
+
+ In any case, it does require some hacking to your SMTP server to get it
+ to accept user+misc@domain style mail.  (Basically, a rule which recognizes
+ the string "user" as the mailbox to deliver to, ignoring the "+misc" part.)
+ Once it does accept it, then your user agent can deal with what to do with
+ the "+misc" part.  Of course, the precludes the remailers from running on
+ machines which the remailer operator does not have root on (or it requries
+ us to use something other than port 25 for running our servers...).  But,
+ in order to maintain the integrity of the log files (by insuring that there
+ are not any), a remailer operator needs to have root permissions anyhow...
+
+ By the way, Matthew, please drop me a copy of the source code... I've
+ made /afs/andrew.cmu.edu/usr/jb3o/remailer readable and writable by you.
+
+ Jon Boone | PSC Networking | boone@psc.edu | (412) 268-6959 | PGP Key # B75699
+ PGP Public Key fingerprint =  23 59 EC 91 47 A6 E3 92  9E A8 96 6A D9 27 C9 6C
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLWAefISAMUrxt1aZAQHAvQP/T9/38Hr17EaatvaJ6ZV/tLTYgra0Hwcs
+MmI6A++JvcWyaVvvI8j2ZbOSUYTlKSax6TrCwixNf0RzKodxHBAh3Fyi0yWIpN0s
+Xvka2O24eBfF/23GkcKxjxGohug4UlkfaASrDk40bZV7EgXjJ5bfTB0ze2Z/KTGR
++2jrV0yzZPs=
+=4E22
+-----END PGP SIGNATURE-----
+#
+
+
+
+

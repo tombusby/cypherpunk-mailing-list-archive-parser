@@ -1,0 +1,188 @@
+From: maruishi@netcom.com
+Date: Mon, 19 Feb 1996 04:03:03 +0800
+To: packrat@tartarus.uwa.edu.au
+Subject: pseudo random: THE CODE
+In-Reply-To: <199602181409.WAA01614@ratbox.rattus.uwa.edu.au>
+Message-ID: <Pine.3.89.9602181140.A871-0100000@netcom18>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Sun, 18 Feb 1996, Bruce Murphy wrote:
+
+> In message <199602172002.MAA09152@netcom20.netcom.com>, 
+>   maruishi@netcom.com wrote:
+> > 
+> > I was trying to think of a way to come up with true random numbers...
+> > And knowing a bit of UNIX socket TCP/IP programming I made a small little
+> > program that generates random numbers by measuring the mili-second timing ies
+> >  a TCP packet to bounce back, from another network. 
+> >   My program simply send some data to port 7 (echo port) of a network on an i
+> > nternal list. Then timing it, randomly picks a different network to send to. 
+> 
+> Interesting idea. Trends may be externally visible, You would probably
+> want to normalize it, and you would find that there was quite a few
+> deterministic elements of network load -> delay.
+> 
+> Oh, did I mention clock granularity?
+> 
+> In short you really aren't going to get 'random numbers' from such a
+> scheme, but that's not to say you couldn't have fun playing with it,
+> you might even find some use for the ways of calculating immediate
+> network load around a node. Especially with regard to interception of
+> packets and allowing for time discrepancies whilst doing so.
+> 
+> Altogether off topic, but could maybe be developed into an idea with,
+> maybe a 30% change of being Perrygrammed. Keep working.
+> 
+> <invisible to perry>
+> Bounce me the code, could be interesting
+> </invisible to perry>
+> 
+> --
+> Packrat (BSc/BE;COSO;Wombat Admin)
+> Nihil illegitemi carborvndvm.
+> 
+Here is the code. Its pretty quick and dirty.
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <time.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <sys/time.h>
+#include <time.h>
+
+#define NET_NUM 1/*change this to the number of networks in
+				the list below******************************/
+struct timezone tz;
+struct sockaddr_in addr;
+unsigned int bits;
+
+main(int argc, char **argv)
+{
+struct timeval tv;
+register FILE *fin, *key, *nets;
+int sock, c, dt, i, net;
+unsigned char *packet;
+unsigned char ch;
+
+if(argc != 3)
+{
+printf("Usage: %s [key.file.path] [number of bits in key]\n", argv[0]);
+exit(1);
+} 
+		if((key = fopen(argv[1], "wb")) == NULL)
+		{
+			perror("file open");
+			exit(1);
+		}
+net = 1;
+packet = (unsigned char *)malloc(16);/*you can of course change this value*/
+memset(packet, "X", 16);
+bits = atoi(argv[2]);
+bits = bits / 8; /*how many bytes?*/
+	for(i = 0; i<bits; i++)
+	{
+		sock = con(getn(net));/*Make a connection and return the 
+socket.*/
+		if((fin = fdopen(sock, "r")) == NULL)
+		{
+			perror("fdopen");
+			close(sock);
+			exit(1);
+		}
+		(void) gettimeofday(&tv, &tz);
+sendto(sock,packet, 16, 0, (struct sockaddr *) &addr,sizeof(struct 
+sockaddr));
+		write(sock, "\r\n", 2);
+		while ((c = getc(fin)) != '\n') ;
+		dt = deltaT(&tv);
+		close(sock);
+		fclose(fin);
+		ch = dt % 255;
+		fputc(ch, key);
+		net = dt % NET_NUM;
+	}/*for*/
+}
+
+int con(char *where)
+{
+struct sockaddr_in addr;
+struct hostent *host_;
+register FILE *fin, *fp;
+int sock, c, dt;
+char *packet;
+unsigned char ch;
+
+(void) bzero((char *)&addr, sizeof(struct sockaddr_in));
+	addr.sin_addr.s_addr = inet_addr(where);
+	if((int)addr.sin_addr.s_addr == -1)
+	{
+			host_ = gethostbyname(where);
+		if (host_ != NULL)
+			bcopy(host_->h_addr, (char *)&addr.sin_addr, 
+host_->h_length);
+		else
+			{
+			printf("Host not found.\n");
+			exit(1);
+			}
+	}
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(7);
+		
+		sock = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+		if (sock < 0) {
+			fprintf(stderr,"error: socket() failed\n");
+			perror("socket");
+			return;
+		}
+	if(connect(sock, (struct sockaddr*) &addr, sizeof(addr))<0)
+	{
+		close(sock);
+		fprintf(stderr, "socket connection error\n");
+		perror("connection");
+		exit(1);
+	}
+	return sock;
+}
+
+/**************put your network list down here************/
+char *getn(int num)
+{
+char *nets[] = 
+	{
+	"127.0.0.1"
+	};
+return nets[num];
+}
+
+/*This part is taken from traceroute.*/
+deltaT(tp)
+struct timeval *tp;
+{
+	struct timeval tv;
+
+	(void) gettimeofday(&tv, &tz);
+	tvsub(&tv, tp);
+	return (tv.tv_sec*1000 + (tv.tv_usec + 500)/1000);
+}
+
+tvsub(out, in)
+register struct timeval *out, *in;
+{
+	if ((out->tv_usec -= in->tv_usec) < 0)   {
+		out->tv_sec--;
+		out->tv_usec += 1000000;
+	}
+	out->tv_sec -= in->tv_sec;
+}
+
+
+
+

@@ -1,0 +1,38 @@
+From: hfinney@shell.portal.com (Hal Finney)
+Date: Sun, 28 Nov 93 20:04:40 PST
+To: cypherpunks@toad.com
+Subject: Re:  Cryptosplit 2.0
+Message-ID: <9311290404.AA27229@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Norm Hardy posted some code for Shamir secret sharing here about a month
+ago, a nice short routine.  At around the same time, I created a program
+to do the same thing and uploaded it to soda.  It is still in
+/pub/cypherpunks/incoming as secsplit.zip.  It contains a DOS executable
+and source for building under Unix or DOS.
+
+I did the polynomial calculations a little differently from Norm and
+Ray; their approaches may be more efficient.  But I did go to some
+effort with the random-number generation on which the security of the
+scheme depends.  My code uses the IDEA.C module from PGP for the
+pseudo-random generator, seeding it with the time of day and an MD5
+hash of the file being split.  So I think this should be pretty secure
+in terms of the randomness involved.
+
+The purpose of this program, as with Ray's and Norm's, is to split a file
+into n pieces (all as big as the original file) such that any k of them
+are sufficient to recover the original file, but k-1 pieces give you NO
+information about the contents of the original file (other than its size).
+
+One possible application is to split up your PGP secret key file this
+way and distribute the pieces to trusted friends such that several of
+them have to cooperate to recover your key.  Then if you accidentally lose
+your key you can get the pieces back from your friends.
+
+Hal
+
+
+
+

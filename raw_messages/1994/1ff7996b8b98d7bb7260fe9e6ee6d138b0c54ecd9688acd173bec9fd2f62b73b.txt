@@ -1,0 +1,95 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 10 Feb 94 09:00:21 PST
+To: cypherpunks@toad.com
+Subject: Re: real encryptor
+Message-ID: <9402101649.AA00123@rufous.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Matt wrote:
+>Karl Lui Barrus <klbarrus@owlnet.rice.edu> wrote:
+>> The program I described earlier (RSA.tar.Z) is pretty minimal.
+>> Secret keys are just text, not locked by a hash of a passphrase,
+>> no "name" information attached.  Public keys are the same: no
+>> username attached, no web of trust, etc.  The output is in
+>> binary form, with no headers or checksums or anything.
+>> PGP has keyrings, this program requires you to keep track of
+>> seperate public keys on your own.
+>Does this program exist?  If so where can I get it?
+
+Sorry about the confusion Matt, I had sent a letter to Xenon about his
+idea for stripped PGP describing this pure RSA program, and didn't
+send it to the list.
+
+Anyway, the program RSA.tar.gz is at ghost.dsi.unimi.it in /pub/crypt.
+It implements pure RSA, no IDEA session keys, no MD5 hash of a
+passphrase, no checksums, no keyring, no usernames, etc.  It is about
+as minimal as you can get.  Which may be perfect for your purposes :-)
+
+Because it is just RSA, it is SLOW!!  Which is to be expected, but all
+the same the amount of time required to encrypt a reasonable sized
+file is surprising.  Heck, even generating a decent size key takes
+quite a bit of time.  I'm sure the code could stand some
+optimizations, but even still public key crypto is much slower than
+secret key.
+
+Here's what a public key from the program looks like (in fact, it's my
+public key for this program):
+
+BB56AA026595006ED21C22FE5E5DD9432285846BB000627D0CFAA4FD28960EF2
+33FABB5F35102460A001C7B2E37DE93C757C3935972086AD55BC69B36C438A05
+291F3B75786BA0E4B9DBF43F6B5AE799A148D779303600D007449E258A8F3ABC
+BA65393C0627BE386F9
+#
+B6E980C29F3D38C4898541565BCFE062AA50C60E4E411379143AD905E9A0257E
+424FA4324B6D0BA71E6FBAC3C18D0F6A53D35CD7C3534DDB0D07ED642A8C7239
+227DE4C742F141BCAE9698426E005F3F15B2E0AED6A0F125E69FC503B6057184
+9124780B096F1C3ADE5
+
+This public key and the associated secret key correspond to about a
+700 bit modulus (100 digit and 110 digit primes).  The program encodes
+numbers as an ascii string, but that is it.
+
+The output of the program is the encrypted file, which has no header
+or magic byte information, etc.  Decryption takes an encrypted file
+back to the original form (except it looks like it pads and doesn't
+toss the padding, maybe a bug) but if you use the wrong secret key
+(i.e. not encrypted for you) the program decrypts the file to junk.
+Or you can decrypt junk into different junk :-)  If you edit your keys
+and change a few characters, or do the same to the encrypted file, you
+don't get "checksum" errors, you just get an unreadable file.
+
+Due to the slowness of the program, I think for testing the output for
+randomness one should create relatively small keys (say 20 or 30
+digits max) and encrypt large files.  Of course, at these sizes, it is
+much easier to factor the modulus than brute force IDEA, for example.
+Also, if you want larger keys be wary of the included script which
+generates keys for you; it assumes you want a small key (and thus will
+mess up the generated files).
+
+So if indeed this is nothing but RSA then it should be impossible to
+tell the output of the file from random noise.  (And incidentally, I
+checked out Chaitin's Algorithmic Information Theory and have tried to
+read the chapter on random numbers, but let's just say that it is
+extremely slow reading :) I guess that's because it builds on stuff
+from previous chapters or something...)
+
+Karl Barrus
+klbarrus@owlnet.rice.edu
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLVmLfoOA7OpLWtYzAQGpjwP+NmT5R3UlAbRN6A4YCk9DwqfjL1NlbhhQ
+3ZDIqbRQISrrftcxNQv5doxUQNLKiQ2WaRBfQBuowCO3/mrjocsPK7QvA5P5on0R
+N40uaudEpSCoEyem+DalRRKrrtSM9qfKNWxEQyL2OAI6cuw9zSvrXT+Ih9qtqigd
+wKUju6ccoLM=
+=Tsrs
+-----END PGP SIGNATURE-----
+
+
+
+

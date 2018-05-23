@@ -1,0 +1,66 @@
+From: Mike Johnson <exabyte!smtplink!mikej@uunet.UU.NET>
+Date: Thu, 15 Jul 93 09:12:43 PDT
+To: cypherpunks@toad.com
+Subject: Information theory and cryptography
+Message-ID: <9307150941.A01243@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Robert W. Clark asks:
+> I asked this one a while back and got no response.  sci.crypt
+> was equally unresponsive.  It concerns the possibly obscure
+> relation between cryptography, number theory and information
+> theory.
+> 
+> Is there considered to be a one-to-one isomorphism between
+> the units in a plaintext-cyphertext pair?  By this, I mean,
+> are they considered to contain the same information?
+>
+> Is this affected by whether or not the key is known?  If the
+> key has been irretrievably lost, does this lessen the amount
+> of information, or does the 'potential' informational content
+> remain the same?
+
+If you have the proper algorithm and key, then the same information can be
+derived from both.  There may be additional information added to the
+cipher text that is not relevant to the plain text if _noise addition_ is
+used in the encryption.  The noise is stripped out on decryption.  Likewise,
+data compression may be involved, so the cipher text may be smaller or larger
+in physical size, but will contain the same information.  Note that strictly
+speaking, the information in the plain text is conveyed by the combination of
+the ciphertext, the key, and the algorithm used.  Take any of these away, and
+you lose information.  In most cases, loss of the algorithm is not an issue,
+but if you forget, lose, or damage either the key or the ciphertext, you have
+reduced the useful information content, possibly to zero.
+
+> Is cryptography considered to be as simple as, say, Huffman
+> coding, for purposes of informational content?  That is, is
+> the relationship between the units of a plaintext-cyphertext
+> pair considered to be more or less 'transparent,' or entirely
+> isomorphic?
+
+Sort of.  If I encrypt my communications with Alice, and you don't have the
+key, then the information content of the message for Alice (who has the key)
+is the same as the plain text, but for you the information content is zero
+unless you crack the encryption scheme.
+
+> Does the Second Law of Thermodynamics enter into this?  Is there
+> a minimum amount of energy required to extract information from
+> cyphertext, or a minimum amount of waste of energy?
+
+Decryption _always_ consumes energy (electrical, mechanical, biological or
+whatever).  Do you have a computer that uses no electricity, heat, light, or
+sound, does not eat, and involves no mechanical work?  If so, patent it quick
+and sell it!  Don't confuse thermodynamic and information theory entropy,
+though.  They are mathmatically similar, but measure different things.
+
+-----------------------------------------------------------------------------
+Mike Johnson       | Opinions expressed herein are mine, and come with no
+mikej@exabyte.com  | warranty, expressed or implied.  PGP key on request.
+-----------------------------------------------------------------------------
+
+
+
+
+

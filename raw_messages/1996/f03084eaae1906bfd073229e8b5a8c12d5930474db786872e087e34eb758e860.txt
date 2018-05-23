@@ -1,0 +1,52 @@
+From: Dave Crocker <dcrocker@brandenburg.com>
+Date: Thu, 15 Aug 1996 01:40:24 +0800
+To: Mike van der Merwe <mikev@is.co.za>
+Subject: Re: PGP...
+In-Reply-To: <009A6C9C.E823907E.18@uni-lj.si>
+Message-ID: <v03007800ae3784a734eb@[205.214.160.100]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Responses you've gotten have foccussed on defining public versus private
+key.  Some have cited how they are used, but I'd like to emphasize this:
+
+Message authentication:
+
+  Make a "hash" of the message, i.e., compute a short, unique tag of the
+message.  (A common algorithm for this is MD5.)  Then "encrypt" the hash
+using the SENDER's private key.  Anyone wishing to authenticate the message
+uses the SENDER's public key to "decrypt" the hash and check it against the
+message receive (i.e., recompute a new hash and compare it to the received
+one.)
+
+
+Message privacy:
+
+  Encrypt the message data.  (A common algorithm is DES or, more recently,
+triple DES.  PGP uses IDEA.)  To get acceptable performance, encryption is
+done using a symmetric key algorithm, rather than a much slower asymmetric
+(public) key algorithm.  Then "encrypt" the symmetric key using the
+RECEIVER's public key.  The RECEIVER uses their private key to decrypt the
+symmetric key and then uses the symmetric key to decrypt the data.
+
+
+	Note that these two different functions use private keys in an
+essential opposite manner, or reverse relationship.
+
+d/
+
+
+--------------------
+Dave Crocker                                            +1 408 246 8253
+Brandenburg Consulting                             fax: +1 408 249 6205
+675 Spruce Dr.                                 dcrocker@brandenburg.com
+Sunnyvale CA 94086 USA                       http://www.brandenburg.com
+
+Internet Mail Consortium               http://www.imc.org, info@imc.org
+
+
+
+
+
+

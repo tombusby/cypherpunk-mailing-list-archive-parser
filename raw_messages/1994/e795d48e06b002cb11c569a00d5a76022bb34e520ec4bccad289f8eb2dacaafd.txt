@@ -1,0 +1,49 @@
+From: andrew@riskdev.ml.com (Andrew Brown)
+Date: Mon, 12 Dec 94 11:33:12 PST
+To: jrochkin@cs.oberlin.edu (Jonathan Rochkind)
+Subject: Re: extra dashes in PGP-related blocks?
+In-Reply-To: <ab124e4c0302100420d1@[132.162.201.201]>
+Message-ID: <9412121933.AA04137@nottingham.riskdev.ml.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+>> From: Jonathan Rochkind
+>
+>When people have been posting their public keys, or encrypted address
+>blocks, to various lists I'm on, all of the "-----BEGIN whatever..." lines
+>seem to have a "- " preppended to them. So, for instance, they look like:
+>
+>- -----BEGIN PGP MESSAGE-----
+>Version: 2.6.2
+>[stuff]
+>- -----END PGP MESSAGE-----
+>
+>I'm guessing if I really sent a block like that to a remailer, the remailer
+>would hork because of the prepended "- "s.  I know that sometimes people's
+>public keys they've posted to a list look like that, and when I try to add
+>them to PGP, it horks, and I've got to go into a text editor and remove the
+>"- ", and then add it to my keyring.
+>
+>Does anyone know what it is that's putting in these "- "s, why it's putting
+>them in, and how to stop it?
+
+pgp is putting those extra "- " pieces in (guess you didn't read all
+your pgp docs :-),  it does that so that it can tell the difference between
+pgp begin/end blocks and other stuff, kinda like sendmail "quoting" lines
+beginning with a dot with an extra dot.  the difference here is that
+sendmail removes any leading dots before delivery and pgp doesn't after
+removing a signature.  yeah, you do have to load it into an editor but
+mailing something to a remailer shoud not "hork" it.  the pgp running on
+the remailer will just "- " the stuff and include it literally.
+
+follow?
+
+-- 
+--< "CYBERBOY" >--
+andrew@ml.com (Andrew Brown)
+Phone: 1.212.449.0088
+Fax:   1.212.449.8612
+
+
+

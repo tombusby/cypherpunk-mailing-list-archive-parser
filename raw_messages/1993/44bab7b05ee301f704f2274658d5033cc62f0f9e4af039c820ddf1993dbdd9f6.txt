@@ -1,0 +1,51 @@
+From: eric@Synopsys.COM
+Date: Fri, 27 Aug 93 20:56:02 PDT
+To: cypherpunks@toad.com
+Subject: Re: Attacks on remailers (LONG)
+In-Reply-To: <9308271052.AA07922@achilles.ctd.anl.gov>
+Message-ID: <199308280353.AA02675@gaea.synopsys.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> On Fri, 27 Aug 93 05:52:43 CDT, b44729@achilles.ctd.anl.gov (Samuel Pigg) said:
+
+Samuel> Correct me if I'm wrong, but as I see it, there are two goals
+Samuel> for the remailers:
+
+Samuel> (1) 	Anonymous addresses to which mail can be sent, but the recipient
+Samuel> 	is unknown and cannot be determined (receiving anonymous mail).
+
+Samuel> (2)	The ability to send mail to someone without anyone (including
+Samuel> 	the recipient) determing that you did so (sending anonymous mail).
+
+Samuel> Number 2 can be mostly taken care of with nested encryption of mail headers.
+
+
+This is an excellent observation which many people seem to ignore when
+thinking about anonymous remailers.  It's understandable why, because
+achieving both of these goals at the same time is really quite
+difficult.  I've been working on a system to accomplish this for
+several months now, and it's quite complicated.  I call it SASE for
+Self Addressed Stampable Envelopes.  Actually a new name that doesn't
+imply prepaid postage would be nice if anyone can think of a catchy
+one...
+
+Samuel> To construct an anonymous address block might be something like:
+
+Samuel> 	Anonymous Anne wants an anonymous address.
+Samuel> 	First she generates a set of N keys (IDEA, DES or .......
+
+That's basically the way SASE works.  It's important that some of the
+keys be public key pairs, however; as you need to be able to publish
+one half of a key, and seal the other half for an unpublished remailer
+to decrypt with.
+
+One thing is certain, these protocols are not simple.  We definitely
+need people thinking about them...
+
+-eric messick
+
+
+
+

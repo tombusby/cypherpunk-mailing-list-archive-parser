@@ -1,0 +1,51 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Tue, 4 Jun 1996 03:21:00 +0800
+To: "Robert A. Hayden" <hayden@krypton.mankato.msus.edu>
+Subject: Re: Security of PGP if Secret Key Available?
+In-Reply-To: <Pine.ULT.3.91.960603023229.6519B-100000@krypton.mankato.msus.edu>
+Message-ID: <199606031411.KAA01253@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> However, I got to wondering about the security of PGP assuming somebody 
+> trying to read my PGPed stuff has my 1024-bit secret key.  ie, if I have 
+> it on my personal computer, and somebody gets my secret key, how much 
+> less robust has PGP just become, and what are appropriate and reasonable 
+> steps to take to protect this weakness?
+
+The security of the PGP system is based around the security of the PGP
+private (secret) key.  The security of the secret key is based on two
+things: 1) The bits in the secring, and 2) the user pass phrase.  An
+attacker needs both 1 and 2 to compromise a secret key.  Posession of
+only one of them is not enough.  It doesn't matter how big your key
+is.  It could be 384 bits, it could be 2048 bits.  You still have the
+same two walls protecting your key.
+
+If someone has read your secring file, that means they only have to
+get your pass phrase.  This gives an attacker something to go for.
+Once they obtain your pass phrase as well, your key is compromised.
+
+If, however, they obtain your secret keyring but they CANNOT obtain
+your pass phrase, you are still safe.  It just means you have one fewer
+walls surrounding your secret key.
+
+I always assume that someone has compromised my secret keyring, in
+that someone has obtained a copy of it.  So I spend most of my "time"
+(granted, it's not a lot) trying to protect my pass phrase.  I have a
+fairly long pass phrase, more than 40 characters, and I make sure I
+KNOW (not believe, KNOW) the path the bits take from the keyboard to
+the CPU -- and I make sure that path is secure.  Otherwise I don't run
+PGP at that time.
+
+Since I have a laptop, that makes my life much easier -- I
+cut-and-paste my PGP mail over to the laptop and run PGP there.
+>From the laptop I can send mail out directly.
+
+I hope this answers your question,
+
+-derek
+
+
+
+

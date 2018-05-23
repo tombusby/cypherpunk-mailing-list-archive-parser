@@ -1,0 +1,72 @@
+From: Alex de Joode <usura@replay.com>
+Date: Sun, 5 Feb 95 16:28:47 PST
+To: cypherpunks@toad.com
+Subject: Re: BROKEN REMAILERS
+Message-ID: <199502060028.AA09342@xs1.xs4all.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199502051758.MAA02142@bb.hks.net> nobody stated:
+
+: I have tested remailers and their PGP keys over some time now and this is
+: what I have found:	
+
+: USURA is really quick too and has lately been reliable. But it has always
+: suffered from the same problem as Nately, namely that it will truncate all
+: of the remaining lines in a PGP message encrypted with its own public key,
+: this making it impossible to chain effectively.  It will read the first 
+: command only.  It DOES forward all attached files, however (by which I 
+: mean text that have been tagged on OUTSIDE of the pgp block encrypted
+: to Usura).
+
+I did some testing myself and the format below did work for me:
+(I encrypt using " pgp -eat ")
+
+->
+
+To: remailer@xs4all.nl
+
+::
+Encypted: PGP
+
+----BEGIN PGP MESSAGE----
+::
+Anon-To: usura@replay.com
+
+::
+Encrypted: PGP
+
+----BEGIN PGP MESSAGE----
+::
+Anon-To: usura@dds.nl
+
+test of chained message
+----END PGP MESSAGE----
+----END PGP MESSAGE----
+
+THIS IS OUTSIDE THE PGP MESSAGE
+
+<-
+
+This drops a message in my dds.nl mailbox stating:
+
+->
+
+test of chained message
+THIS IS OUTSIDE THE PGP MESSAGE
+
+<-
+
+
+Hope this helps,
+--
+Alex de Joode					    
+usura@replay.com	                            
+http://www.xs4all.nl/~usura                PARTIE PIEPEL MOEF JOR FIET !!!
+
+
+
+
+
+

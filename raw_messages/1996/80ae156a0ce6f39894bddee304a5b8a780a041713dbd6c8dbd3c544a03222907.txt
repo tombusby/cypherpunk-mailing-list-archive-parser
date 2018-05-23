@@ -1,0 +1,71 @@
+From: "Mark O. Aldrich" <maldrich@grci.com>
+Date: Tue, 16 Jul 1996 14:01:11 +0800
+To: Deranged Mutant <WlkngOwl@unix.asb.com>
+Subject: Re: Opiated file systems
+In-Reply-To: <199607151158.HAA28540@unix.asb.com>
+Message-ID: <Pine.SCO.3.93.960715172915.7563D-100000@grctechs.va.grci.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 15 Jul 1996, Deranged Mutant wrote:
+
+<snip - much stuff on crypto device drivers for disk subsystems deleted>
+> 
+> > - Facility for duress key, with the real data hidden in the unused
+> >   space of the first encrypted drive.  To increase the plausible
+> 
+> Huh?!?
+> 
+
+Hey, DM, don't laugh.  I've gotten such requests before about crypto
+subsystems, including tokens with "protected" keys onboard.  The idea is
+that there's a "duress key" or a "panic key" that, when entered, fools
+someone into thinking the process is working but, in fact, it's not
+working at all and it usually is doing something else (like scrubbing the
+hard disk, scrubbing the key PROM, or calling the police).
+
+I've worked at sites that have their electronic door locks rigged the same
+say.  The way it works is, let's say a terrorist has a gun to your head
+and demands, "let me in the door or I'll blow your head off."  Naturally,
+the Government doesn't want you to have to choose between dying and giving
+out the cypher lock combination (guess which one people choose in blind
+testing?), so you put in the "duress code."  The door unlocks so the
+terrorist thinks that all is well.  However, the alarm just went off over
+at the security substation and, in about two minutes, a heavily armed SWAT
+team will be arriving. 
+
+Same for cypto keys, but with a different "payload" if the duress key is
+used.  The data either gets "nuked" (Gosh, Mr. FBI Agent, I *thought* that
+was the right crypto key - sorry about destroying the hard disk), the keys
+disappear (damn! my fortezza card just zeroized again!), or the data
+appears to "decrypt" but it's actually phoney data that's been hidden
+somewhere or is 'hard-coded' into the program handling the duress key. 
+
+The payload of getting false data out of a crypto algorithm, such that the
+data looks "real", when a duress key is input to the algorithm is not
+something that I've seen approached in any reasonable manner.  Probably
+because it's just too damn hard and the notion of "real looking" data is a
+little hard to define scientifically.  A combination stego/crypto solution
+may be more appropriate, but close examination of the box is going to
+reveal what happened (assuming the desired solution must withstand some
+protracted forensics?).  The nuke_the_data or nuke_the_keys solutions are
+easier to do, and have been implemented in several situations of which I
+am aware.  
+
+------------------------------------------------------------------------- 
+|Just as the strength of the Internet is  |Mark Aldrich                 |
+|chaos, so the strength of our liberty    |GRCI INFOSEC Engineering     |
+|depends upon the chaos and cacophony of  |maldrich@grci.com            |
+|the unfettered speech the First Amendment|MAldrich@dockmaster.ncsc.mil |
+|protects - District Judge Stewart Dalzell|                             |
+|_______________________________________________________________________|
+|The author is PGP Empowered.  Public key at:  finger maldrich@grci.com |
+|    The opinions expressed herein are strictly those of the author     |
+|         and my employer gets no credit for them whatsoever.           |
+-------------------------------------------------------------------------
+
+
+
+
+

@@ -1,0 +1,84 @@
+From: michael shiplett <michael.shiplett@umich.edu>
+Date: Tue, 5 Apr 94 22:05:53 PDT
+To: cypherpunks@toad.com
+Subject: Re: Proposal: some more standard remailer features
+In-Reply-To: <9404060309.AA25086@geech.gnu.ai.mit.edu>
+Message-ID: <199404060505.BAA08693@totalrecall.rs.itd.umich.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"r" == Ray  <rjc@gnu.ai.mit.edu> writes:
+
+r>    Here are some proposed remailer standards some of which I have
+r> already implemented.
+
+[ command formatting section deleted ]
+
+r> Anonymous Posting:
+r>    On any mailer which supports virtual addresses, the following special
+r> feature shall be implemented:
+
+r>    If the virtual address contains any '.' characters, the address
+r> is first assumed to be a newsgroup. If the newsgroup exists and/or it
+r> is not blocked by the operator, two possible actions can take place.
+[ details on newsgroup posting deleted ]
+r> Example:
+r> ::to remailer1#remailer2#talk.politics.crypto
+
+r>   If asked, I will supply the magic perl subroutine needed to do
+r> this.
+
+r> [note above, I have eliminated the redundant "request-remailing-to".
+r> When mailing through a remailer, you know the mail is going to be
+r> remailed. ::to is easier to type]
+  I suggest changing "to" to the previously mentined
+"post-to"/"send-to" convention. This eliminates the need to perform
+parsing magic on the virtual address. Also it's a simple issue, but
+what's the syntax for defining a variable, e.g., NNTPSERVER or
+NEWSGATE?
+
+[ details on fragmented messages deleted ]
+r> Now when ann's remailer receives a two parted message, it queues
+r> each piece until it gets the full message (timing out after a few
+r> days) After all pieces are received, it removes the envelopes,
+r> pieces the message together, and sends the message off to darkmodem
+r> (which may be a virtual address for lightmodem#bob's_remailer)
+  Sounds like a nice feature.
+
+r> Additional ideas:
+
+r>  A command ::error-to to specify where errors encountered during
+r> processing of the message should be sent. e.g.
+r> ::error-to idstring an99999@anon.penet.fi 
+r> or
+r> ::error-to idstring alt-waste@cs.utexas.edu
+
+r> [idstring will let you know which message the error was for]
+  Another good idea, but how would I, as a user, know with which
+idstring one of my messages is associated?
+
+r>  I also propose ::route which would specify preferences preferred
+r> for remailers when searching for other remailers to chain your
+r> message to. e.g.
+r> ::route Private
+r> [attempt to chain to remailers which are running on single-user
+r> non-public machines first]
+  I've followed the arguments for having the remailers keep track of
+each other's availability. This is fine as long as one can strongly
+trust at least one of the remailers. The chaining functionality also
+belongs in the mail client--even more so than in the remailers.  With
+extensible mail environments, e.g., mh/mh-e, this should be possible
+without too much difficulty.
+
+  I don't know if it's been suggested, but has anyone created a
+remailer that scans a newsgroup for posts addressed to it in some
+manner, e.g., an X-header or the first non-blank line, and then
+handles the post as if it had received it via mail? Sort of a Kibo
+mail gateway.
+
+michael
+
+
+
+

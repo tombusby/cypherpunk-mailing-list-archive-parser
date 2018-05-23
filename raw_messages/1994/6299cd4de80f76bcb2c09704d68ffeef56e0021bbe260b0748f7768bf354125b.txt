@@ -1,0 +1,61 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Sun, 4 Dec 94 21:53:58 PST
+To: skaplin@skypoint.com (Samuel Kaplin)
+Subject: Re: Well now that we're signing...
+In-Reply-To: <QuZukKjqROG3075yn@skypoint.com>
+Message-ID: <199412050553.AAA25066@bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+You wrote:
+
+| -----BEGIN PGP SIGNED MESSAGE-----
+| 
+| 
+| Well folks, now that more people are signing messages, how about every once
+| and a while posting your key? It's kind of a drag having to hit the
+| keyservers.
+
+	Especially when your key isn't on the servers.
+
+The following procmail rules & shell script automatically request keys
+for messages that come in signed where you don't have the key.
+Doesn't address multiple keyrings.  Do what you want with the returns,
+I dump 'em into a folder to look at now and again.  You might pipe
+them to pgp -fka or somesuch.
+
+Adam
+
+
+----procmailrc--------
+# auto key retreival
+:0BW
+* -----BEGIN PGP
+KEYID=|/usr3/adam/tmp/unknown
+
+# I have an elm alias, pgp, points to a keyserver
+:0ac
+|elm -s"get $KEYID" pgp
+
+----~/tmp/unknown------
+
+#!/bin/sh
+# $output is to get the exit status. Othierwise, this would be a one liner.
+OUTPUT=`pgp -f +VERBOSE=0 +batchmode  -o /dev/null`
+echo $OUTPUT | egrep -s 'not found in file'
+EV=$? 
+if [ $EV -eq 0 ]; then 
+	echo $OUTPUT | awk '{print $6}' 
+fi
+exit $EV
+
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+						       -Hume
+
+
+
+

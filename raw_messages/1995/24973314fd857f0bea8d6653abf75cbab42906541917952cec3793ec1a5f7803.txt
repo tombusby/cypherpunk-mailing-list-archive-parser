@@ -1,0 +1,85 @@
+From: "David J. Bianco" <bianco@itribe.net>
+Date: Fri, 22 Sep 95 07:10:59 PDT
+To: cypherpunks@toad.com
+Subject: SSL Man-in-the-middle
+Message-ID: <199509221407.KAA23176@gatekeeper.itribe.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Has anyone given much thought to the feasability of a man-in-the-middle
+attack against an SSL (or other similar) transaction?  To me, the
+possibility seems obvious, so I figure it must have been discussed before,
+though I haven't seen it.
+
+The basic idea is pretty simple, really a flaw in the user interface of the
+browser more than a flaw in SSL.  Neither browsers nor servers routinely
+validate that they are communicating with the entity they think they are.
+ Sure, with netscape you can ask for the document information window, which
+shows the server's public key information, but this isn't a common action
+among users, and certainly isn't something you'd want to do for every page
+you viewed.
+
+The only readily accessible information about security is that blue key at
+the bottom of the netscape window.  Netscape docs tell you that if that key
+is blue, your transaction is "secure."  In reality, the only thing that key
+means is that you've negotiated a session key and are encrypting your
+communications.  It says nothing about the fact that you're actually
+communicating with the correct party.  Authentication is a large part of
+security, and Netscape doesn't make that information conveniently
+available.
+
+Consider the following example.  Bob wants to communicate securely with
+Alice.  He fires up his "secure" browser, looks up Alice's address in the
+DNS and makes a connection.  He then sends Alice a document and
+disconnects.
+
+Now consider the following attack on the scenario:  Bob still wants to
+ communicate with Alice.  He fires up his browser and looks up Alice in the
+DNS.  Mallet, who wants the information Bob's sending, has subverted
+Alice's DNS server and replaced Alice's IP address with his own, making a
+note of the proper value.  Thus, when Bob looks up Alice's address in DNS,
+he gets the wrong information and contacts Mallet instead.  Mallet performs
+the SSL protocol with Bob, pretending to be the server, and then with
+Alice, pretending to be the client.
+
+Since neither the browser nor the server perform any authentication checks,
+neither Bob nor Alice know they are really speaking to Mallet.  The best
+Alice can do is check the IP address of the client she's speaking to, but
+if Mallet has his own DNS, he can make the IP address map to whatever name
+he wants, including Bob, in order to fool alice.  Even if Alice doesn't
+depend on the DNS for IP resolution, probably doesn't know that the IP
+address in question is really Mallet's, since it looks just like any other
+IP address to her.
+
+In this scenario, Bob gets a warm fuzzy since his key is blue and he knows
+his information is being encrypted as it goes out.  Alice has a smaller
+fuzzy, since she believes the transaction is secure from prying eyes.
+ Mallet has a *really big* fuzzy, since he's able to read the data Bob
+sends, decrypt it, save it, then re-send it to Alice.
+
+I've read through the SSL spec, and it provides authentication for both the
+server and the client, but these features are rarely used, probably because
+they are somewhat inconvenient for the user.  A good first step would be to
+include the IP address of the server in the certificate signed by VeriSign.
+ In this way, browsers could perform automatic checks that the IP address
+in the certificate is actually the one that's being communicated with.
+ This does raise other questions (such as protecting from IP spoofing), but
+IMHO would be a good way of providing an automatic "first check" without
+inconveniencing users.  The added inconvenience of obtaining a new
+certificate when your server's IP address changes is fairly minor, and
+could be viewed as necessary overhead for doing secure transactions via the
+Net.
+
+
+
+--
+==========================================================================
+David J. Bianco			| Web Wonders, Online Oddities, Cool Stuff
+iTribe, Inc.			| Phone: (804) 446-9060 Fax: (804) 446-9061
+Suite 1700, World Trade Center	| email: <bianco@itribe.net>
+Norfolk, VA 23510		| URL  : http://www.itribe.net/~bianco/
+
+
+
+

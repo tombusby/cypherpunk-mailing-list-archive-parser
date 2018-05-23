@@ -1,0 +1,49 @@
+From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+Date: Sat, 6 Nov 93 14:58:02 PST
+To: Jim_Miller@suite.com
+Subject: Re: some newbie DC-net questions
+In-Reply-To: <9311062129.AA16194@bilbo.suite.com>
+Message-ID: <199311062256.AA00524@tramp.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> 1) What is happening on a DC-net when nobody is sending a message?  Is it  
+> simply issuing a stream of zeros?  Are "coins" being continuously
+> flipped, even when no messages are being sent?
+
+Yes.  Lots of zeros.  Generally one would probably have a low traffic
+"carrier" of zeros and then once traffic starts the system would ramp up to
+a higher traffic/fast throughput system.
+
+> 2) What does it look like (from a traffic flow perspective) when the DC-net  
+> transitions from no messages being sent to a message being sent?  The
+> stream of zeros becomes and bunch of ones-and-zeros?
+
+Generally one would have a signal that when boradcast by someone indicates
+that they have the token for speaking and things progress from there.  It
+is basically a distributed ring network (because of the lack of true
+broadcasting over any distance) and so it will follow the standard methods
+and protocols for networks of that type.
+
+> 3) What happens when two members of a "table" attempt to transmit at the
+> same time?  How is this case handled?
+
+They will get a collision.  If an even number of members transmit at once
+then the bit will be the opposite of what each expects to see, if an odd
+number then it will be an undetected collision.  There are fairly standard
+protocols for backdown on distributed broadcast networks.
+
+
+> 4) Are there any DC-net papers available for downloading via FTP?
+
+ftp.cc.utexas.edu:/pub/cypherpunks/dc-nets  there is the chaum paper and
+tim mays general outline; both were posted to the list a while back.  Once i
+get motivated i will write up an outline of a proposed implementation for
+mail passing I am going to try to get running to use to test the concept
+and hack out any bugs...
+
+jim
+
+
+

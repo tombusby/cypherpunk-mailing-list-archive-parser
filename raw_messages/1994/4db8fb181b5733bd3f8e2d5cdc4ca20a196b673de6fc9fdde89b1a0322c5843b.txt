@@ -1,0 +1,50 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Fri, 20 May 94 10:52:59 PDT
+To: cypherpunks@toad.com
+Subject: D-H key exchange - how does it work?
+In-Reply-To: <9405201659.AA07058@snark.imsi.com>
+Message-ID: <9405201756.AA11259@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   > For D-H, the modulus must be transmitted in the clear.  Unless you use
+   > a different modulus for each conversation, there is a persistency to
+   > the moduli that gives rise to a pseudo-identity.
+
+   You don't HAVE to transmit the modulus in the clear. 
+
+But we were talking about changing moduli and its effect on traffic
+analysis.  If you change the modulus each conversation, you have two cases:
+
+  1. Transmit before the conversation
+  2. Transmit at the beginning of the conversation
+
+For case 1., you could, conceivably, transmit the modulus for the next
+exchange in a previous (encrypted) conversation, but that introduces
+lots of system complexity, state, and general nastiness.  If the
+modulus is previously transmitted unencrypted, then we're back to the
+beginning.
+
+For case 2., you can transmit the modulus in the clear or encrypted.
+If in the clear, then you have the TA issues as before.  If encrypted,
+you need some method of generating an encryption key, like D-H, which
+we're trying to do.  So you could use a fixed modulus to encrypt for a
+second exchange; that's slow, and when the modulus goes, you reveal
+the same TA data as before.  If you don't use D-H, and, say, public
+key derived things are used, then you even more directly reveal TA.
+
+The above analysis is not very rigorous.  It merely points out where
+some of the problems are.
+
+   Its often
+   worthwhile to use D-H for key exchange even if both sides know the
+   other's RSA public keys. 
+
+It's called forward secrecy.  Sure.  But the issue at hand is TA.
+
+Eric
+
+
+
+

@@ -1,0 +1,65 @@
+From: daw@orodruin.CS.Berkeley.EDU (David A Wagner)
+Date: Thu, 29 Feb 1996 08:26:45 +0800
+To: cypherpunks@toad.com
+Subject: fun with the web and security
+Message-ID: <9602280238.AA15724@espresso.CS.Berkeley.EDU.mammoth>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's a fun way to exploit security holes via the web:
+	http://www.cs.berkeley.edu/~daw/js1.html
+A rough representation of its contents follow.
+
+
+
+Whee! The web is awfully convenient for exploiting security bugs.... 
+
+The following URL contacts your sendmail SMTP server and attempts to exploit
+an old, well-known security hole, trying to gain root access. Click _here_
+to try it. 
+
+As it stands, clicking on the URL above does not do anything harmful to your
+machine-- but it could! (This is a test of the emergency broadcast system.
+This is only a test.) 
+______________
+
+We can get you to send arbitrary text, to an arbitrary port on an arbitrary
+host, from your machine.  (If you are inside a firewall, we can thereby send
+arbitrary text to any internal machine by getting you to click on the link
+above.) The technique is simple: we list the host and port in a gopher URL,
+and encode the text to be sent in the path. 
+
+For instance, a successful exploit of the hole could leave a backdoor root
+shell, and inform us via a pseudonym at an anonymous remailer. 
+
+The exploit could be hidden by use of the JavaScript "width=1,height=1"
+techniques pioneered at John LoVerso's _JavaScript security hole page_; then
+you wouldn't even know when you'd been attacked. 
+
+The exploit could be forced on you via many standard tricks: the Redirect:
+or META-EQUIV Refresh: or JavaScript mechanisms work fine, for instance. 
+
+This is most dangerous when you are behind a firewall. Typically, there will
+be many machines inside a firewall which run insecure software. Normally,
+that would be safe, since the firewall prevents an outsider from connecting
+to the unsafe sendmail servers inside-- yet the example URL above allows
+outsiders like us to exploit security holes on the inside of your firewall.
+Nothing stops us from putting the IP address of a vulnerable machine inside
+your firewall in the URL above, and waiting for you to click on it: the
+firewall doesn't prevent connections from you to the internal vulnerable
+machine, and thus can't stop this attack. Using JavaScript, we don't even
+have to wait for you to click on anything. Furthermore, a JavaScript program
+could systematically and invisibly try all the machines inside your firewall. 
+
+We could have used many other well-known security holes: there's nothing
+special about this particular sendmail bug (except that it was convenient
+for us to implement). 
+______________
+
+Be afraid. Be very afraid. 
+-- Ian Goldberg and David Wagner. 
+
+
+
+

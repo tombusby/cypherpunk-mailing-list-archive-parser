@@ -1,0 +1,54 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Mon, 4 Oct 93 14:24:51 PDT
+To: cypherpunks@toad.com
+Subject: multiple-file encryption
+Message-ID: <9310042122.AA15704@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Mon, 04 Oct 93 14:29:44 MDT
+>From: "Mike Johnson" <exabyte!smtplink!mikej@uunet.UU.NET>
+>Message-Id: <9309047497.AA749770184@smtplink.exabyte.com>
+>Subject: Re[2]: POISON PILL
+
+>Yes.  Make "noise addition" (really multiplexing) part of the cipher.  You
+>could throw away every other bit based on the parity of the key.  The
+>ciphertext would be twice as big, but if you compressed both plain text
+>streams first, this effect might not be very obvious.  Of course, if your
+>encryption program were disassembled, you might be found out...
+
+
+Yup -- I was assuming no padding.
+
+If you allow padding, I already have a secret-key cipher which uses random
+padding in order to frustrate known-plaintext attacks.  My favorite method
+uses a key to initialize a PRNG whose output gives the number of bytes of
+each stream to put in the output stream -- then encipher the PRNG key
+followed by the multiplexed stream.  One of the streams being multiplexed
+(and there can be a huge number, if you're encrypting an archive, for
+example) can and should be random -- so that if you make a small change
+and re-encrypt, you don't end up with cribs.
+
+For this purpose, you'd need to have several files hanging around your
+machine of random numbers yet to be used for padding.
+
+Meanwhile, I have several files of random numbers which I keep around for
+running simulations.
+
+My favorite random number generator is
+
+	compress - </dev/audio | idea | tran | idea | tran | idea
+
+where the idea keys are chosen randomly and there's no mic plugged in
+at /dev/audio.
+
+Other people might generate random numbers other ways. :-)
+[but you might keep my method around, for demonstrating to the cops.]
+
+ - Carl
+
+
+
+
+

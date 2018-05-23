@@ -1,0 +1,93 @@
+From: Niels Provos <provos@ws1.physnet.uni-hamburg.de>
+Date: Sat, 10 Aug 1996 02:40:02 +0800
+To: geoff <geoff@commtouch.co.il>
+Subject: Re: PGP Mailer for the masses ?
+In-Reply-To: <19960809124443785.AAA218@[194.90.103.93]>
+Message-ID: <Pine.A32.3.94.960809153630.15623A-100000@ws1.physnet.uni-hamburg.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Fri, 9 Aug 1996, geoff wrote:
+> Thanks, for describing the features of Pronto Secure :)
+> This is how Pronto Secure matches up to your checklist:
+> > - Traverse the web of trust and show how the public key is
+> >    related to one own keys to mutual signatures on other public keys
+> >    ( For example mean distance to a key signed by the recipient
+> >    himself )
+> NO  (we handle certification by allowing the user to modify a list of  
+>     trusted certifiers for signing keys)
+I personally would find it useful if you could get a measure of
+trustworthy ness due to keydistance. Like that if I knew that the sender
+is only 2 keys away from my own I would most likely trust his public key
+to be the original, it would be nice to see the signing people involved
+though:
+Max Miller 
+  |-signed- a friend of mine <-signed- me
+  |-signed- Molly Malone <-signed- Someone <-signed- friend <- signed me
+
+According to http://bcn.boulder.co.us/~neal/pgpstat/ there were 19124 keys
+in the keyserver but the biggest werb of trust had only 1291 keys and
+the next only 16 keys. The mean key distance was between 6 and 7.
+That means that you don't have to get too many public keys in order to
+find the connection to your key and on the other hand it might show that
+calculating trust according to keydistance isn't worth is since the web
+of trusts are so small. But I figure if you would show the connection of
+keys in your mailer it might encourage people to participate in key
+signing parties.
+
+> > Misc:
+> > - Passphrase should be kept in memory for a definable time, 0 for
+> >  immediate deletion, thus you would be prompted for the passphrase 
+> >  each time you use it. Question about Windows Swapspace ? or tag the 
+> >  memory as uncacheable ?
+> NO (Keyboard sniffing is too easy to do in Windows, This would give    
+>    a false sense of security)
+How would you get the pass phrase if not via the keyboard ? And if you
+keep it in memory till you sign off ( like in premail ) you would only
+have to type it once, though capturing the pass phrase once is normaly
+enough.
+
+> > I would suggest creating a library with seperate io and gui parts in
+> > order to motivate peeple in helping who do not want to support 
+> > mainstream products like Windows. Like taking the PGP 3.0 lib ( is it 
+> > out yet ?) and modify it a bit.
+> YES (Separating UI from security functionality is also the right       
+>    way to go for offering plug in security providers)
+
+Though I think that Pronto Secure will help spread the use of cryptography
+I would prefer a source code distributed library which could handle most
+of the stuff needed including for example preparing encrypted requests to
+key servers ( via anonymous remailers or not )( it keyservers will
+implement encrypted requests ) or calculating the key distance if possible
+with the available keys.
+
+I guess one should wait for the arrival of the pgp 3.0 lib and evaluate
+what it can and can't.
+
+Greetings
+ Niels Provos =8)
+
+- - PHYSnet Rechnerverbund     PGP V2.6 Public key via finger or key server
+  Niels Provos               
+  Universitaet Hamburg       WWW: http://www.physnet.uni-hamburg.de/provos/   
+  Jungiusstrasse 9           E-Mail: provos@wserver.physnet.uni-hamburg.de
+  Germany 20355 Hamburg      Tel.:   +49 40 4123-2504     Fax: -6571 
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3i
+Charset: latin1
+
+iQCVAwUBMgtHOcweILHCAJhBAQFtyQQAo+UQF3KmpAIIQ/rEh1JHHAsQUBd9k6dk
+OB2lfer/dV+kDUrgpW3CDP/GdlgMIl6LCReJz6pXTA1RShQ74cdB0HokQDfytfJW
+pWjHbnUcrfCmotG4KjcWw4MBJLXLbBGY0yqcmhTiOCTpLNuv52Tvtz86vOwe4yxq
+ysXIXokGJpw=
+=5An3
+-----END PGP SIGNATURE-----
+
+
+
+
+

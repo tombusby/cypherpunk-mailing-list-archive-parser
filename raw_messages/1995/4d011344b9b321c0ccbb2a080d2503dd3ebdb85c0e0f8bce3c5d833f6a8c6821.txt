@@ -1,0 +1,330 @@
+From: Nathan Zook <nzook@bga.com>
+Date: Thu, 9 Feb 95 04:05:18 PST
+To: cypherpunks@toad.com
+Subject: Re:  Why encrypt intra-remailernet.
+Message-ID: <Pine.3.89.9502090621.G21224-0100000@lia.bga.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+ 
+I was finally able to read Lance's stuff.  Great work!  Ironically, I
+arrived at the conclusion that his methods are necessary just before
+downloading my mail (including his stuff).  With that in mind, I have now a
+new DRAFT:  model.  I anticapate continued discussions on this matters
+mostly under that topic.  Also, could you send me a copy of Chaum's paper?
+I don't have metamail, but I can convert GIFs, if you could send it PGP -a.
+Thanks!!!!!!!
+ 
+ 
+> From: Nathan Zook <nzook@bga.com>
+> [ Re: remailers checking signatures on incoming messages ]
+> > What benefit does Alice gain?
+> > 1) Plausible deniability.  Remember, "reasonable doubt."  Remember Abscam?
+> >    The gov't is in a good position to fake source info.  This squishes
+> >    that.  (It squishes even better if Chaum _requires_ signatures.)
+> 
+> She doesn't get that.  A signature lets her prove that she sent a
+> message.  It doesn't let her prove she didn't send a message.
+> 
+ 
+If Chaum only accepts validly signed packets, she can.  (Or at a minimum,
+the government must demonstrate that she compromised these other keys.)
+ 
+ 
+> > 2) If Chaum sends Alice a copy of the message that failed the signature
+> >    check, Alice knows that someone is trying to spoof her.  This
+> >    information may be critical in determining how serious her opponents
+> >    are.
+> 
+> I don't really understand this threat that Alice may be "spoofed".  Why,
+> of all places, would her opponents try to spoof her through an anonymous
+> remailer?  Isn't this kind of like sending mail with no return address,
+> and pretending it comes from someone else?  This seems terribly subtle.
+> 
+ 
+It's called "faking evidence".  It's a real problem, especially if you are a
+religious nut with guns.  Or just a nut with guns.  If the government knows
+you are using the remailers, and wants to establish that you are using them
+to conspire, this is the only way to fake evidence.
+ 
+ 
+As for hacking PGP, I am convinced that the mixmaster-type remailers
+require their own package.  Coming soon.
+ 
+ 
+> I can see the problem with standard packets in a chaining context, that
+> they would shrink slightly in size as each successive remailer stripped
+> off its envelope.  Re-encrypting would solve this by providing more
+> padding.  OTOH you can actually stick padding into a PGP packet if you
+> know what you're doing.  I have a perl script around somewhere which will
+> do this.
+> 
+ 
+But padding is worthless if Eve runs some of the remailers.  I know I just
+changed the threat model, but stay tuned...
+ 
+ 
+> > The most obvious one: Eve checks messages (in vs out) for matching tails.
+> > If the tails match, the messages match.  The only way around this is for
+> > the entire message to be wrapped.  Thus, the extropian requirement.  
+> 
+> It is true that encrypting messages intra-remailer would prevent this
+> attack as far as that one remailer in the chain is concerned.  But it
+> seems to me that the message still suffers from this attack against the
+> remailer network as a whole.  This points up the fundamental problem with
+> this form of encrypted reply block.  They are really not secure unless
+> the body itself gets transformed at each step as in Chaum's model.
+> 
+ 
+This attack fails if the last link encrypts on the way out, since the
+session key changes.  Bob still gets the dupe message, Eve gets no info.
+There may be another way to handle dupe messages, stay tuned...
+ 
+ 
+> > When I say that the Mark I remailers are laughably easy to crack, I mean
+> > laughably easy.
+> 
+> None of this is news.  
+ 
+Then why did you say, "Let's not start rumors..."?
+ 
+ 
+> > Get stuck?  Need a hint?  Resend a message.  Watch for the repeat on the
+> > out.
+> That's why Chaum identified one of the main features of a remailer being
+> that it would reject duplicates.  Mixmaster does some version of this,
+> although that needs improvement to really meet this attack.
+> 
+ 
+Not if Chaum encrypts to Bob.  Chaum encrypting to Bob pushes Eve back to
+Wei Dai's work.
+ 
+ 
+> > Alice has been hauled into court.  The Feds claim that she is the one that
+> > actually sent messages M1,...Mx to Bob through Chaum, even though these
+> > messages have varied From: (and From) lines.  As root, she cannot claim
+> > that this is not possible.  OTOH, if Chaum requires a match, the Feds would
+> > have to claim that she compromised the secret keys of all of all the
+> > cooresponding From: addresses.  Much tougher.
+> 
+> OTOH, if Alice actually has signed those messages, her jig is up pretty
+> good, wouldn't you say?  Do we really want to force people to use the
+> nets in a mode in which they can be incriminated like this by a hostile
+> government?
+> 
+ 
+I suppose that depends on the threat model.  If the gov't has control of
+all the remailers, she's toast, except for being able to claim that the
+message was forged.  Here, she loses.  In all other models, the gov't gains
+only the proof that she used the remailer net.  In and of itself suspicious
+(some places and times), but presumably _not_ a hanging offense.
+ 
+ 
+> > Seriously, if a sight is being shadowed, then it is insecure.  It is to our
+> > advantage to know this.  You are right that we "don't care" where a message
+> > comes from only if we assume that the message _didn't_ come from an LEA.
+> > (Or a big corporation.  Some of them probably have the power to do this,
+> > too.)
+> 
+> Hell, Detweiler has the power to do this!  He's spoofed messages plenty
+> of times.  How do we know?  Because of remailer logging.  That's the real
+> threat, IMO (the logging).
+> 
+ 
+I mean the power to spoof a remailer, in the sense of processing messages
+for it, possibly altering them.  I admit, with intra-remailer encryption,
+this is equivalent to compromising the key.  
+ 
+ 
+> > If it did, then the remailer net is under attack, and we most
+> > definitely _do_ care about that.
+> 
+> Even if a message comes from a fake address that is hardly evidence of an
+> attack by a powerful opponent.  It could just be an extra-paranoid
+> legitimate remailer user who doesn't want to extend any more trust than
+> necessary.
+> 
+ 
+Yes, but...  If the address faked is nzook@bga.com, then I have something
+to be upset about, no?
+ 
+ 
+> I meant to refer to encrypted messages identical in size and otherwise
+> opaque, so that your apparent rate of output is constant.
+> 
+ 
+Okay, but in practice we need a lot of garbage.
+ 
+ 
+> > >Do you see your suggestion as protecting against Wei's in/out correlation
+> > >attack?  
+> >  
+> > Yes!  Well, not by itself.  My suggestions about "rational use of garbage"
+> > do that.  If Bob recieves x messages each tick, 0 to x of which are real,
+> > Eve is hosed--if all messages are standard sized & encrypted!.  Eve is even
+> > more hosed if the x messages are concatenated & superencrypted.  If Alice
+> > sends y messages each tick, Eve is hosed.  Even more so if the messages are
+> > concatenated & superencrypted.
+> 
+> How can Bob arrange to receive a constant number of messages each tick?
+ 
+Every remailer knows to send Bob x messages per tick.  It's right after his
+PGP key in the database.
+ 
+ 
+> Do all his messages come from one remailer?  Or do all of the remailers
+> which might send to him check among themselves before sending to him so
+> they can mutually know how many fake messages to send?
+> 
+ 
+Each remailer does its own work.  The sum of equals is equal.
+ 
+ 
+> IMO the real solution to the correlation attack is to have a constant
+> message generation rate.  That is sufficient.  Solutions to the other
+> attacks mentioned in Chaum are described in Chaum.  (This attack was not
+> described in Chaum's paper.)
+> 
+ 
+But the correlation attack might mean more than just A sending to B.  It
+could be B recieves message, then commits act X.
+ 
+ 
+> > >Of course it was Chaum himself in his 1981 paper (which I think is available
+> > >from the CP FTP site) who described the duplicate-message attack.  I don't
+> > >see that inter-remailing encryption helps much, because the attacker can
+> > >still notice that whenever they inject message A, _something_ goes to
+> > >Bob.  The real solution, as Chaum pointed out, is that the remailer must
+> > >reject duplicate messages, even when separated by days.  Doing this without
+> > >keeping a database of all messages ever sent is left as an exercise.
+> > >
+> >  
+> > I disagree.  If identical input to Chaum does not produce identical output
+> > to Bob, how does Eve coorelate them?  Repeating, she can match the top of
+> > the body of messages, so random tails reveal the actual encrypted message,
+> > for whatever that is worth.
+> 
+> I'm not sure what you mean by "matching the top of the body of messages".
+> Are you referring to an encrypted reply block, which might be the same
+> for two different messages to the same user?  Or are you suggesting that
+> messages would have some headers or some other structures at their top
+> which would be preserved through a remailer?
+> 
+ 
+No.  I was refering to your trust in packing garbage on the end of a pgp
+message.  If the headers and bodies are encrypted separately, and the
+remailers just tack garbage onto the end of the message, you get 12345xyz
+one time, and 12345pqr the second.  Match.
+ 
+ 
+> > And if Bob receivs x packets per tick, or a BIG packet every tick, how does
+> > Eve trace it?
+> 
+> If the input to Bob really can be made constant across the whole remailer
+> net then this does seem to largely protect against duplicate-message
+> insertion, in conjunction with the intra-remailer encryption.  However it
+> would apparently also be necessary for every remailer to send a constant
+> number of packets to every other remailer.  Otherwise a bolus of
+> duplicates into one remailer would all leave to go to the next remailer
+> at once and would show up.  This means that the net as a whole has to
+> carry a constant traffic load on all inter-node links, which could mean a
+> large cost in bandwidth load.
+> 
+ 
+Your analysis, as I see it, is essentially correct.  I think that the total
+load can be time-dependent, but should be even across all remailers on each
+tick.  We need a lot of garbage in the net in order to cover all types of
+attacks/foolish useage.
+ 
+ 
+> No, of course message size standardization is a necessary step.  This has
+> been recognized for 15 years.
+> 
+ 
+So why mention it in this context?
+ 
+ 
+> > >          It's one thing if I send a message along with thousands of
+> > >other people, and Bob gets a message along with everyone else.  But if I
+> > >send 10 messages and Bob gets 10 from that batch, that fact alone can
+> > >help to link us up.  So splitting my big message into 10 standard ones
+> > >isn't that great if they're all sent at once.  Ideally you'd want to
+> > >dribble them out at some standard rate, a rate at which you always send
+> > >a message whether you have something to send or not.  But this may introduce
+> > >unacceptable latency.
+> >  
+> > "Dribble them out at some standard rate".  Yes.  y packets per tick.  Set y
+> > equal to your average number of real packets per tick, plus 3 standard
+> > deviations.  Since you are chaining, the latency of you input will be less
+> > than the latency of the remailernet.
+> 
+> OK, but chances are your average number of real packets per tick is < 1,
+> e.g. if a tick is a few hours and you only send one or two messages
+> a day.  So when you do need to send that 500KB GIF it's going to take a
+> lot of ticks.
+> 
+ 
+But I said average plus 3 standard deviations.  If you know you are going
+to send GIFs at some point, you make a point of setting you standard that
+high.  BTW, I envision a tick period of 30 minutes to an hour.
+ 
+ 
+> I would sum up by agreeing with several points: the need for standard
+> message sizes, and for a standard rate of message output.  I am neutral
+> on whether a remailer may want to super-encrypt a message to the next
+> link in the chain (whether a remailer or an end user) if it happens to
+> have a key handy.  I don't see any harm in this and the remailer
+> software will already handle this transparently on the receiving end.
+> I disagree with the idea of remailers checking signatures.  I don't
+> agree that inter-node remailer encryption provides significantly more
+> protection than padding.  I think that encrypted reply blocks are
+> unsafe even with inter-node remailer encryption.  See Chaum's paper for
+> ways that encrypted reply blocks can be used safely.  We have also had
+> some suggestions here for modifications to Chaum's method.  And I don't
+> see how you can arrange to receive a constant load from the net without
+> a highly centralized system, which would have its own dangers.
+> 
+> Hal
+> 
+ 
+Hopefully, I made my positions on these matters clear.  As I said, I have
+new ideas, several of which supercede these.
+ 
+Nathan
+ 
+ 
+On multiple Request-Remailing-To:'s
+ 
+> I don't follow how requiring pgp wrappers would kill this.  Couldn't
+> he create a remailing request to 10 remailers, wrap that in pgp, stick
+> on a remailing request to 10 remailers, wrap that... and end up with
+> the same effect?
+ 
+> Hal
+ 
+Yeah.  I realised this right after sending it.  Genius that I am.  I guess
+you have to limit the number of remailers in the multiples to 1.  Even
+then, you could end up with a remailer-based spam.  (joy)  I guess you have
+to, as a matter of policy, allow 1 remailer and nothing else or any number
+of others.
+ 
+Nathan
+ 
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+ 
+iQEVAwUBLzmmLnmgMs8UcStNAQHk4Af/Qn+azQ9MDiWEbiQgGSfnn1a7w2xS2ktG
+RJTEBlVXAduurz7e+DGxS4ggfvtU61QVpn/rJkM7Q5vk2gZMzdb0v6f9sMkex8ew
+tFFMLf2Q9JXlahONyxiW5yLWHdOjpj18Gf4jfGWVM9DZxWwaA25l8x/qROEzg1Hi
+TM04/mmF+yJVLHJLfyxSTG6d2oaXpbOMsbwwosvWc91iCTA5QqSFNpQFIRqWQE3n
+UKl9+Ym9I93hfJiLL3xvnBrfZQZC26DMZUugoxTUaXfWjUiSeDlc2b0UBpSOn/VN
+FTPr9C5Wa4rDC8gT8BVq4F+M4b0lVcgqijyoQhgMItvA3eZ7Vdd1iQ==
+=Hh4N
+-----END PGP SIGNATURE-----
+
+
+
+
+

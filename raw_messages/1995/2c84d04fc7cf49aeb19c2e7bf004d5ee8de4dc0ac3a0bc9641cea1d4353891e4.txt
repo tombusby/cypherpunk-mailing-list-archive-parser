@@ -1,0 +1,104 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Thu, 5 Oct 95 07:36:05 PDT
+To: cypherpunks@toad.com
+Subject: Re: FORGED CANCELS of posts on n.a.n-a.m
+In-Reply-To: <44pmiq$h7t@segfault.monkeys.com>
+Message-ID: <FXyHcD15w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <45040d$8cd@cougar.vut.edu.au>, gerdw@cougar.vut.edu.au (David Gerard) writes:
+
+>One thing that occurs to me: suppose I go to control, collect cancel messages,
+>and build myself a collection of M1's that will work with a given M2?
+>
+>That is, I can't actually invert the hashing function. But if a given
+>hash function is standard, then I can eventually build up a collection of
+>M1s for M2s that will let me cancel quite a few things I may want to.
+
+Good point -- if M1 is known to be small in size (say, a 128-bit MD5 of the
+article body + newsgroups + message-id + date + secret passphrase), then an
+organization with a lot of $$$$$$$ and computing resources (like Co$ or NSA)
+might even try to pre-compute M2 = H(M1) for many possible M1's, sort the
+result by M2, and build a (partial) lookup table of inverted H. This would be a
+humongous table. Would someone bother to do it just to cancel a few Usenet
+messages? Possibly.
+
+But I see an easy fix: change Hujskonen and Franz's original proposal so that
+an article posted with message-id X contains the header "Cancel-lock: M2",
+where M2 is now H(X + M1), not just H(M1). This way, even if two different
+articles happen to share the lock M2, they'll need different keys M1's to be
+cancelled because their unique message-id's are different. A pre-computed table
+of inverse values of H would be useless. To cancel a given X, a brute force
+attacker would have to compute M2 = (X + M1) for all possible M1's. Hopefully,
+the article X will expire naturally long before this can be done. :)
+
+And in article <9510042317.AA14344@sulphur.osf.org>, Rich Salz <rsalz@osf.org> writes:
+
+>>If the cancel cannot be authenticated (e.g., because the original article lacks
+>>the "Cancel-lock: M2" header, or the cancel lacks the "Cancel-key: M1" header
+>>such that H(M1)=M2), then INN should forward the unauthenticated cancel to one
+>>or more "collection centers" so the author of the original article may be
+>>notified.
+>
+>So if 70% of Usenet follows this scheme a handful of forged cancels can easily
+>cause melt down.
+
+(Thank you for looking at this!)
+
+If 70% of Usenet followed this convention and refused to honor unauthenticated
+cancels and supersedes's, then forged cancels would be much less harmful than
+they are now, and there would be less need to notify the victims and to track
+down the perpetrators.
+
+Perhaps, not _every site should send out notifications. The purpose of getting
+notifications from multiple sites is to compare the Path: header and see where
+it was forged. I suppose notifications from just 5--10 well-positions sites
+would often suffice. But if these sites are well-known, then an attacker might
+put their names in the Path: of the forged cancel, to bypass the notification
+and still propagate the cancel to a lot of other sites.
+
+We can start implementing this scheme gradually, first by patching our posting
+software to insert the "Cancel-lock:/Cancel-Key:" headers, and by running a few
+"watchers" based on Homer Wilson Smith's Lazarus that'll notify the poster when
+an article with a Cancel-lock: header is being cancelled without a matching
+Cancel-Key: -- in all newsgroups, not just in a.r.s. Notifications about
+articles without a "Cancel-Key:" header can be added much later, if ever.
+
+>>Each "collection center" deamon should wake up periodically (say, every hour),
+>>group the collected unauthenticated cancels by message-ids of the cancelled
+>>articles, and e-mail the (distinct) addresses (other than "usenet@*" or
+>>"news@*") mentioned in the "From:", "Sender:", "Authorized:", and
+>>"X-Cancelled-By:" headers, quoting the unauthenticated cancel and the Path's as
+>>seen at many different sites that forwarded the cancels. This way, if the
+>>unauthenticated cancel is indeed forged, its author will see within hours that
+>>it has been fraudulently cancelled _and_ will automatically receive enough
+>>"Path:" samples from all over the world to see where it was posted, by
+>>comparing the "Path:" headers in several forwarded copies.
+>
+>I can post a handful of articles and forge the From line, and create my
+>own Cancel-lock headers by "rolling the dice."  I can then get their mailbox
+>bombed by forging cancels.  A little more complicated then "sendsys-bombing"
+>but not much more so.
+
+Yes -- someone can post an article with random noise in the Cancel-lock:
+header, and it would be impossible to cancel except by NoCeM.
+
+As for mailbombing, one can do it much easier by forging a sendsys in the
+victim's name, or by e-mailing the victim megabytes of junk from a phoney
+"From:" address. This is done, but not too often because the perp is likely to
+be tracked down and beaten up. :) Why would someone use this attack and not
+straight forged sendsys?
+
+One could address this by limiting the number of notifications e-mailed to one
+address or even to one site in a period of time.
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

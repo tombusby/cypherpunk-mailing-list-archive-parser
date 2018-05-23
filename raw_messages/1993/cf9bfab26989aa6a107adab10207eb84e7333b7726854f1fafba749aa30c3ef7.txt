@@ -1,0 +1,48 @@
+From: nowhere@bsu-cs.bsu.edu (Chael Hall)
+Date: Tue, 15 Jun 93 08:34:30 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: X-Discard header line added
+Message-ID: <9306151537.AA07449@bsu-cs.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+     In an effort to make creating more traffic for the Cypherpunks
+remailers easier, I have added a feature to my remailer.  Whenever it
+receives a message that would otherwise be remailed but contains a
+header line saying "X-Discard:" it will discard the message and act as
+though it got remailed.  If all of the Cypherpunks remailers supported
+an automatic discard feature, we could setup cron jobs or whatever kind
+of software we want to send "junk mail" to the remailers that does not
+get forwarded on.
+
+     An idea I just had was to make the X-Discard have a counter.  If
+the number is greater than zero, decrement it and forward the message
+to another known remailer.  If it is less than one or non-numeric,
+discard the message.  Right now, it just discards whatever message
+has that header.
+
+Example Message:
+====================================
+From: nobody@no.com
+To: nowhere@bsu-cs.bsu.edu
+Subject: Test
+
+::
+Request-Remailing-To: bob&tom@bit.bucket.net
+X-Discard: Please!
+
+Test Message
+====================================
+
+Chael
+
+--
+Chael Hall
+nowhere@bsu-cs.bsu.edu, 00CCHALL@BSUVC.BSU.EDU, chall@bsu.edu
+(317) 776-4000 from 8 am - 5 pm CST
+
+
+
+

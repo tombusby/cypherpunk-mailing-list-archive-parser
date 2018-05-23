@@ -1,0 +1,65 @@
+From: "David K. Merriman" <merriman@arn.net>
+Date: Sat, 30 Sep 95 14:02:23 PDT
+To: Matt Blaze <mab@crypto.com>
+Subject: Re: my favorite random-numbers-in-software package (unix)
+Message-ID: <199509302103.QAA26651@arnet.arn.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 03:46 PM 9/30/95 -0400, you wrote:
+
+... <deletia> ...
+
+>The basic idea is that you exploit randomness in the drift between
+>the processor clock and the rate at which interval timer interrupts
+>occur.  Such drift occurs even on idle processors.  randbyte() assumes
+>that there's at least about .4 bits of "entropy" per interrupt, which is 
+>(probably) a safe assumption on modern processors.  Randomness introduced
+>by the OS (scheduler, etc.) can add to the overall entropy, but shouldn't
+>be relied upon by itself.
+>
+>An advantage to this approach (using clock skew) is that the randomness
+>doesn't depend on external events like user input, network traffic or
+>processor load.  That makes it especially attractive for generating keys
+>on unattended servers, e.g., for generating Diffie-Hellman exponents.
+>Note, however, that very (very) slow and heavily-loaded processors may
+>not provide enough cycles to the truerand process between interrupts for
+>these assumptions to hold.  Also, all bets are off on processors that use
+>a single clock source for both interval timing and CPU clocking.
+
+Even with the exclusion of processors using single-source clocking for
+interval and CPU timing, this would *seem* to be somewhat hazardous. Any two
+clocking mechanisms that are 'mixed' are going to result in a number of
+harmonics, or beat frequencies. While your system - at any given instant -
+is quite likely to have a decent amount of randomness in it, I'd hazard a
+guess that repetitive use would result in a discernible pattern. Even
+something as 'coarse' as an interrupt timer has a finite range that it can
+(must) operate in. Even if the CPU oscillator is based on a ceramic
+resonator (nowhere near as stable/accurate as a crystal), the clock on it is
+going to stay within +/-1% (worst case, for a *really* cheap oscillator) of
+frequency, and drift not more than some number of Parts Per Million per
+Period. Mixing the innate (relative) accuracy of two oscillators, and the
+necessarily limited amount of drift that they're capable of, would seem to
+result in an unacceptably low-yield source of 'real' randomness.
+
+Of course, I'm kind of math-impaired when it comes to crypto, so my 20+
+years of electronics (hardware) experience may not apply in this case :-)
+
+Dave Merriman
+This is a test (3 UUE lines) of the unconstitutional ITAR - 1/713th
+of the PGP executable. See below for getting YOUR chunk! 
+------------------ PGP.ZIP Part [015/713] -------------------
+M=$<(&L`#*IPP",(G6(,,S,`P](<2RWU96XCW86/JBYV8A\D8@X'HB_9H#&\X
+MX'PCUB.,13B"X8`R?^J-:UB.M_`U\>[#)BS&5$0C,Y#^1CS>1`\T1QTXX6!3
+M8H,),S$8G>&.WP(8IRA`-M['+`Q%&_C"">5-F%LX@<_Q$;*P'',Q$Z/AA[8M
+-------------------------------------------------------------
+for next chunk to export --> http://dcs.ex.ac.uk/~aba/export/
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+My web page: http://www.geopages.com/CapitolHill/1148
+
+
+
+
+
+

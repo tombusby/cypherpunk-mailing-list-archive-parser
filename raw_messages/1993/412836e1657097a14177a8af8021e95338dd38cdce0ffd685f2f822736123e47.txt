@@ -1,0 +1,85 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Fri, 8 Jan 93 23:43:08 PST
+To: CYPHERPUNKS <CYPHERPUNKS@TOAD.COM>
+Subject: New remailer in C.
+Message-ID: <930109073836_74076.1041_DHJ43-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: nowhere@bsu-cs.bsu.edu (Chael Hall)
+
+> Fellow Cypherpunks:
+> 
+>      I am working on a program in C that will provide both anonymous
+> remailing capabilities and mail server operations.
+
+It's good to see more people working on remailers.  The cypherpunks
+remailers have been written in Perl, which facilitates experimenting
+and testing of new interfaces.  The idea might be to migrate them
+to C eventually for efficiency, but during this experimental phase
+we may want to try out new ideas, and it's easier to modify a Perl
+script than a C program.
+
+> If you cannot add your own header lines with your mailer, set
+> the subject to contain "Request Remailing" and use the following format:
+> 
+> ::
+> Request-Remailing-To: user@host
+> Subject: Anything you choose
+> ::
+> 
+>      Any of the following fields can be placed within the "::" delimiters:
+> 
+> Request-Remailing-To:
+> X-Anon-To:
+> Subject:
+> 
+>      The remailer is case insensitive and you can place the "::" lines
+> anywhere within the message.
+
+This is somewhat similar to the cypherpunks remailers; however, they
+accept the :: only at the beginning of the message, allow any fields to
+be put there that the user desires (not just those three), and terminate
+the block by a blank line.  Does your alternate system have some
+advantages?
+
+>      I forgot to add:  If you are chaining remailers, you can use the
+> sequence "+::+" at the beginning of the line to pass the remaining characters
+> on that line through the remailer untouched.
+
+I do find the use of this string to produce rather complicated looking
+commands.  The cypherpunks remailers get the same effect by just putting
+in blocks starting with :: and separated by blank lines:
+
+::
+Anon-To: anon@anon.penet.fi
+
+::
+Anon-To: nowhere@bsu-cs.bsu.edu
+
+This looks simpler to me.
+
+Hal Finney
+74076.1041@compuserve.com
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK05WUagTA69YIUw3AQGpaAP+LxpocNUI1/Zw3DAwwAxeKBtdj0sSyx8p
+05xnI3FmklosxapVpcF/aVkDKL/FjzwBZ9ML5wt2m7UvqS1iX9UILQByPNAxTOKF
+TIuFKkjt2wT5ykvHRGLl6ZAB6w6PzkNiclHNJw4FFEaFzoxmnz3bQXatKBFFgGFd
+IjIMFF0d0Ig=
+=ztz0
+-----END PGP SIGNATURE-----
+
+
+Distribution:
+  CYPHERPUNKS >INTERNET:CYPHERPUNKS@TOAD.COM
+
+
+
+
+

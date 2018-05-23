@@ -1,0 +1,49 @@
+From: hfinney@shell.portal.com
+Date: Sat, 24 Jul 93 17:02:44 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: replying to cp-remailed messages
+Message-ID: <9307242019.AA01355@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I want to elaborate on Eric's comment about the "##" pasting token.
+The cypherpunks remailers are activated by mail header fields.  They look
+for a header entry of the form "Request-Remailing-To:" among the Subject,
+From, To, etc. headers.  Although it is traditional for user-defined extension
+header fields to start with "X-", Eric argued that since we hope to extend
+remailer availability to the point that it is a widespread and standard
+service, it was reasonable to choose a non-"X-" field name.
+
+Since some mailers don't allow users to insert header fields, Eric created
+the "::" incoming pasting token.  If no header field is found matching the
+ones the remailer looks for, it then checks to see if the first non-blank
+line of the message is "::".  If so, it copies all the following lines of
+the message into the header, up to the next blank line, and then restarts
+processing of the message.  The "::" line is intended to be followed by the
+user-added header fields like "Request-Remailing-To".
+
+When the remailer does a remailing step, it strips all of the header fields
+except Subject.  Keeping the Subject header impairs security somewhat because
+it would facilitate pairing up input and output messages, but it adds a
+lot of convenience for users.
+
+What is little known is that there is another step which can be done.  Just
+before the remailer sends a message for which remailing has been requested,
+it again checks the first non-blank line, this time to see if it is the
+outgoing pasting token "##".  If so, it again copies the following lines
+up to a blank line into the message header of the outgoing message.  The
+message is then sent without further processing.
+
+This means that any header line can be added to an outgoing message by
+this means.  In particular, as Eric pointed out, a Reply-To header could be
+added which would reveal the true sender of the message for those cases
+where that was wanted.  Subject headers could also be added at this step
+as well as after the :: incoming pasting token.  
+
+Hal Finney
+hfinney@shell.portal.com
+
+
+
+

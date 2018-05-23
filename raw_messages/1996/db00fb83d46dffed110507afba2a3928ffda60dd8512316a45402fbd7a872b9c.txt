@@ -1,0 +1,59 @@
+From: "Chris Adams" <adamsc@io-online.com>
+Date: Fri, 7 Jun 1996 21:47:30 +0800
+To: "cypherpunks" <cypherpunks@toad.com>
+Subject: Re: How can you protect a remailer's keys?
+Message-ID: <199606070700.AAA22916@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> The best solution I could come up with (and was willing to write and use)
+>> is to specify the passphrase on the command line argument to the compiler
+
+>A far better solution would be to have a long-running daemon hold the
+>secret key.  The mixmaster client could talk to the key daemon through
+>a unix-domain socket with the permission bits set such that only the
+>mixmaster user can connect.  Each time the machine is rebooted, the
+>operator must start the daemon and give it a passphrase.
+
+>Second, if your machine is seized or someone gains unauthorized
+>physical access to it, the easiest way to get a root shell is by
+>rebooting single-user.  However, if the only cleartext copy of a key
+>is in memory rather than in the filesystem, once the machine is
+>rebooted the secret key is lost.
+
+
+How about adding an "Oh s___" feature that would dump the key? You could
+even tie it to a login attempt (i.e. be sneaky and rename the actual root
+account to something else. Possibly hack the login client to return
+"root" as the username, etc, etc to complete the illusion if they are
+using TEMPEST.  Then set it so that a root login makes the daemon dump
+the password)
+
+This would have possibilities, too, if you made it react to a) certain
+files in certain directories, b) certain signals or c) certain network
+messages.
+This would allow you to put in an innocous clear signal. Set it to a temp
+file created when editing your remailer's configuration (or userlist).
+Make it so that you have to conciously DISABLE security or it dumps the
+password. Have an innocent program terminate it. Be able to cancel it by
+sending an email (or using telnet) - this would be great if you had a
+trusted friend.  Also, with some modification, you could set it to react
+to an external stimulus - say a panic button? or a card lock?  You could
+even have fun putting all your sensitive stuff on an external hard drive
+and rigging your panic button to a) stop the remailer and b) activate the
+thermite charge on the external drive.
+// This was typed on a Warped PC by an equally warped Chris Adams <adamsc@io-online.com>
+// The Enigman Group - We do Web Pages!
+// Opinions expressed are not necessarily my own, much less another's.
+
+This Message Was Sent With An UNREGISTERED Version Of PMMail.  
+Please Encourage Its Author To Register Their Copy Of PMMail.  
+For More Information About PMMail And SouthSide Software's Other 
+Products, Contact http://www.southsoft.com.
+
+
+
+
+
+

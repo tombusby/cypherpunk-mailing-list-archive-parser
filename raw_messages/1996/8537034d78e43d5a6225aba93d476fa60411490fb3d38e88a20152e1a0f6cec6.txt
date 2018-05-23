@@ -1,0 +1,50 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Sun, 20 Oct 1996 22:29:54 -0700 (PDT)
+To: C Kuethe <ckuethe@gpu.srv.ualberta.ca>
+Subject: Re: Wrap Up: Conference on Law Enforcement and Intelligence
+Message-ID: <199610210529.WAA26268@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:13 PM 10/20/96 -0600, C Kuethe wrote:
+>On Sun, 20 Oct 1996, Bill Frantz wrote:
+>> (3) The devil is in the details.  I still am not convinced that MacPGP has
+>> enough sources of entropy for its IDEA key generation.  (But I am not
+>> convinced that it doesn't either.)  I put integrating Jon Callas's entropy
+>> manager into MacPGP as a high priority.
+>
+>Tell me more... I use macpgp.  I just built some new keys tonight, a 2048
+>bit monster.  PGP wanted 1496 bits of rand info... where is it's entropy
+>"Hole"
+>
+>And what is the "Entropy Manager"?
+
+When you build RSA keys in PGP it uses keyboard timings to acquire "true
+randomness" or entropy.  This kind of randomness is related to quantum
+mechanical uncertainty.  It probably has enough entropy to safely generate
+RSA keys by the keyboard technique it uses.
+
+In addition to RSA keys, it generates symmetric IDEA keys whenever you send
+a message.  It uses keystrokes accumulated during normal operation and
+saved in a file called randpool (or something like that) to generate these
+keys.  Since you almost never enter keystrokes during the normal operation
+of MacPGP, I am concerned that randpool does not have enough entropy.
+
+Entropy Manager is a program Jon Callas of Apple is working on.  It uses
+well-known sources of entropy in the computer to build up a pool of entropy
+for use by programs that need it.  The last I heard, it was nearly ready. 
+I would trust it more than the ported PGP since Jon has examined sources
+available in the Macintosh specifically.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | Tired of Dole/Clinton?     | Periwinkle -- Consulting
+(408)356-8506     | Vote 3rd party.  I'm       | 16345 Englewood Ave.
+frantz@netcom.com | Voting for Harry Browne    | Los Gatos, CA 95032, USA
+
+
+
+
+
+

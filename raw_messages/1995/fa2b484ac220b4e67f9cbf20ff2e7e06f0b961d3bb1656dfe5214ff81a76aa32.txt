@@ -1,0 +1,56 @@
+From: Jamie Zawinski <jwz@netscape.com>
+Date: Sun, 8 Oct 95 17:16:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: [NOISE] Caution! Netscape 2.0 and Linux
+In-Reply-To: <199510082054.QAA04516@clark.net>
+Message-ID: <3078691D.50683E45@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(I have no idea what this has to do with Cypherpunks, but...)
+
+Christopher J. Shaulis wrote:
+> 
+> Releaseing an a.out binary without motif staticly linked is a dumb
+> idea.
+
+It wasn't a dumb idea, it was a mistake :-)  We didn't intend to do it.
+
+> Thats why the linux developers switched to ELF format binaries. Under
+> ELF all symbol names are resolved at run-time so one man's motif will
+> work just fine for everyone elf.
+
+Even when ELF has taken over the Linux world, we will still be linking
+Motif statically because we can't count on everyone having it, and even
+if we could, we can't count on everyone having the same version.
+
+And if Motif is static, then the other X libs have to be static, because
+all versions of Motif won't interoperate with all versions of Xlib and
+Xt.  (In particular, Motif 1.2.4 and X11R6 don't get along.)
+
+> Normally I would suggest that someone should drop the good people at
+> netscape a hint that you can link Motif staticly without linking all
+> of the X11 libraries staticly as well, except they are still producing
+> a.out bins and since nobody has a.out libraries any more, making one
+> dynamicly linked wouldn't do anyone any good.
+
+If you can prove that "nobody has a.out libraries any more," we will
+stop distributing a.out binaries and start distributing ELF binaries.
+But we don't have the resources to build and test two Linux binaries,
+especially given that we don't sell the Linux version.  So, given that
+we're only building one binary, my belief is that everyone will be
+able to run an a.out binary, and a much smaller number of people
+will be able to run an ELF binary.  If you have numbers, I'd be happy 
+to be proven wrong.
+
+-- 
+Jamie Zawinski    jwz@netscape.com   http://www.netscape.com/people/jwz/
+``A signature isn't a return address, it is the ASCII equivalent of a
+  black velvet clown painting; it's a rectangle of carets surrounding
+  a quote from a literary giant of weeniedom like Heinlein or Dr. Who.''
+                                                         -- Chris Maeda
+
+
+
+

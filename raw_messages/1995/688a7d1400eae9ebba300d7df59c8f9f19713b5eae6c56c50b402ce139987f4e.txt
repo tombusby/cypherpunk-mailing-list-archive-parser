@@ -1,0 +1,95 @@
+From: Phil Karlton <karlton@netscape.com>
+Date: Sun, 8 Oct 95 01:39:18 PDT
+To: cypherpunks@toad.com
+Subject: Re: NEW Netscape RNG hole
+In-Reply-To: <9510080732.AA14015@anon.penet.fi>
+Message-ID: <30778E3D.4CBD@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+RingZero wrote:
+> 
+> Did anyone else notice a bug in the new, public Netscape
+> RNG code? It appears that on Windows builds, during the
+> RNG seeding, the function that hashes in file contents
+> (EnumSystemFiles) doesn't close a file handle (lFileHandle).
+
+I think you mean lFindHandle. I'm not a windows programmer, so I have
+no idea if the enumerator needs to be cleaned up, but I will forward
+your message to the appropriate folks here.
+
+> This doesn't hurt too badly on the client, but on a server,
+> leaking these resources is deadly.
+
+Not really. SEC_SystemInfoForRNG is called ONCE for each execution.
+This is true for servers and for clients. Did you rig up a test
+bed that called SEC_SystemInfoForRNG in a loop? In addition, if
+the server cannot open any more files, it will have difficulty
+delivering any information (compromised or not) to any clients.
+
+The clients use the SEC_GetNoise data each time they go idle to
+re-initialize the PRNG seed. The servers also re-initialize the
+PRNG seed periodically. That function does not use any file
+handles.
+
+> I ran some experiments. It took a few thousand calls before
+> these open file handles forced not only the file content function
+> to fail, but also made OTHER calls quietly fail. With these calls
+> quietly failing, the RNG is significantly weakened. In my tests
+> on Windows NT, ALL of the following RNG functions failed:
+> 
+> * GetComputerName
+> * GetVolumeInformation
+>         volume Name,
+>         volume Serial Number,
+>         Maximum Filename Length
+>         Filesystem Flags
+>         Filesystem Name
+> * GetDiskFreeSpace
+>         SectorsPerCluster
+>         BytesPerSector
+>         Free Clusters
+>         Total Clusters
+> * subroutine for the inclusion of system files, both number of them & 
+contents
+>         ReadSystemFiles()
+> * subroutine used for other history file accesses
+>         SEC_FileForRNG(*filename)
+
+SEC_FileForRNG does close every file it opens. As I said before,
+I don't know what the rules are for closing the enumerators.
+ 
+> How did this get past Netscape testers?
+
+The tested servers worked? :-)
+
+> Does anyone
+> know if this was fixed before Netscape shipped?
+
+The code that was made available for download was the same that
+was in the shipped updates.
+
+> Does
+> it rate a shirt, or does this mean  Jeff W. gets to shave his
+> head? I seem to remember him promising to shave it if we
+> could show a significant weakness in the new RNG code,
+> and since this does (IMO)...
+
+That was me (Phil Karlton) and not Jeff who put his locks (pun intended)
+at risk. You haven't demonstrated to me that there is significant
+weakness. I'll keep my hair for another day.
+
+I don't think you are going to get a shirt. It's hard to mail one
+to an anonymous person. On the other hand, they are not mine to
+give or withhold.
+
+PK
+--
+Philip L. Karlton			karlton@netscape.com
+Principal Curmudgeon			http://www.netscape.com/people/karlton
+Netscape Communications Corporation
+
+
+
+

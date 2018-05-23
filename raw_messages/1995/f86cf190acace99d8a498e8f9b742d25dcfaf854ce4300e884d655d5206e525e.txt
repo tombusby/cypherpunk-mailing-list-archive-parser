@@ -1,0 +1,33 @@
+From: jbass@dmsd.com (John L. Bass)
+Date: Sat, 30 Sep 95 15:40:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: NetScape's dependence upon RSA down for the count!
+Message-ID: <9509302239.AA11407@dmsd.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>   jbass@dmsd.com writes:
+>    > client ->       filter                          Client sends packet with K(c)
+>                 filter ->       Server          filter forwards packet with K(f)                filter       <- Server          Server sends encrypts with K(f)
+>    > client       <- filter                          filter re-encrypts with K(c)
+>    >
+>    > As the protocol progresses the filter also uses the master key,
+>    > and follows the renegotiation as the master key expires.
+> 
+> Yeah, but in order for this to work, the fake server needs to know
+> netscape.com's private (secret) key, no?
+> 
+> -jon
+
+No ... the public part of any server private key is held by the filter
+and not returned to the client. The client only encrypts with public
+keys provided by the filter. The Server only encrypts with public keys
+provided by the filter. The filter has cleartext of the entire session.
+
+John
+
+
+
+
+

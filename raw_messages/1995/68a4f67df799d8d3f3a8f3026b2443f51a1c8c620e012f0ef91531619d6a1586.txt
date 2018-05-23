@@ -1,0 +1,70 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Sun, 8 Oct 95 21:14:06 PDT
+To: "Perry E. Metzger" <perry@piermont.com>
+Subject: Re: Java
+In-Reply-To: <199510090017.UAA00652@jekyll.piermont.com>
+Message-ID: <Pine.SOL.3.91.951008204557.13119A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry - 
+  This has come up several times on the java list; some of them are 
+covered in the papers on java security, but there's no reason to believe 
+that the treatment in those papers is necessarily correct. Given the fact 
+that it has proved possible to core-dump the jvm interpreter in the 
+past, it's possible there may be security leaks in the implementations out 
+there. 
+
+If anybody is going to perform a more rigorous evaluation of the both the 
+theoretical security model, and of the re-ified systems curently extant, 
+looking at java the language is not the best place to start. A much 
+better place to start is to look at the class loader and the java VM
+
+The major assumptions needed to allow for security are:
+
+	1. It's impossible to upwards modify the JVM  call stack.
+	2. It's impossible to construct a pointer to an object except via 
+	   controlled calls to the JVM
+	3. It's impossible to store a value of one type and access it as 
+	   another.
+	4. It's impossible to access non-public fields of an object
+
+I'm not sure if these are sufficient; however they do present the most 
+promising candidates for attacks. 
+
+If 1 is false, then it becomes possible for a remote class to pretend 
+to be a local class, and thus gain access to the file and networked classes.
+
+If 2 is false, then the method gains un-restricted access to memory.
+3 is similar to 2 - if you can turn an int into a pointer, you've won.
+
+4 is imporant for many reasons - one obvious use is to change the the 
+class-loader in a remote class to disguise it's origin, with the same 
+result as 1. 
+
+Any attack on the Java VM should start with the verifier in the 
+class-loader. This is supposed to prevent 2 & 3. One of the sun papers 
+refers to the verifier as a theorem prover- to me this implies that the 
+design has been formally verfied, but then we know how much that's worth, 
+don't we Phil :-)
+
+BTW, source code for the Java VM is available for no cost; you just need 
+to send in a request to the java team, and a notarised affidavit 
+affirming that X sucks and NEWS was infinitely cooler.
+
+See the java pages for more info  (http://java.sun.com/)
+
+Simon
+p.s.
+	Strange fact: There's a reference to one of Allan Schiffman's papers 
+in the first Java security paper's bibliography. The paper has nothing to do 
+with S-HTTP or any other aspect of security. There also doesn't seem to 
+be any actual cite in the paper itself. Go Fig...
+
+
+
+
+
+
+

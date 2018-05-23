@@ -1,0 +1,38 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Wed, 25 Oct 95 04:22:42 PDT
+To: jsw@netscape.com (Jeff Weinstein)
+Subject: Re: Does your software?
+In-Reply-To: <308D82CA.7AB2@netscape.com>
+Message-ID: <9510251119.AA23193@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+>   Is this the server running on port 80 of all.net?  I've tried connecting
+> to it quite a few times at various times of day and night, using
+> netscape and telnet, and all I ever get in response to 'GET /'
+> is a closed connection.
+
+Could it be that you are from IP addresses 198.95.250.69?
+
+If so, your firewall (or other mechanism) is presenting an incomplete
+falsehood about the mapping between your host name and your IP address.
+
+Oct 24 21:19:15 all in.thttpd[20865]: warning: can't verify hostname: gethostbyname(unknown.netscape.com) failed
+Oct 24 21:19:15 all in.thttpd[20865]: refused connect from 198.95.250.69
+Oct 24 21:19:46 all in.thttpd[20919]: warning: can't verify hostname: gethostbyname(unknown.netscape.com) failed
+Oct 24 21:19:46 all in.thttpd[20919]: refused connect from 198.95.250.69
+Oct 24 21:19:58 all in.thttpd[20945]: warning: can't verify hostname: gethostbyname(unknown.netscape.com) failed
+Oct 24 21:19:58 all in.thttpd[20945]: refused connect from 198.95.250.69
+
+My server refuses connections from hosts when the IP address doesn't
+match to the host name.  This is a common method for reducing the level
+of address forgery on the Internet.  Please ask your firewall manager to
+repair the firewall so we can authenticate you.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

@@ -1,0 +1,36 @@
+From: ghio@temp0201.myriad.ml.org (Matthew Ghio)
+Date: Sat, 31 Jan 1998 00:56:06 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Chaining ciphers
+In-Reply-To: <9801291747.AA26773@mentat.com>
+Message-ID: <199801301645.LAA15149@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jim Gillogly wrote:
+
+> Yes, that's definitely better for high-confidence long-term archival
+> stuff than relying on one cipher.  Carl Ellison's suggestion was DES |
+> tran | nDES | tran | DES, where "tran" is an unkeyed large-block
+> transposition.
+
+One other possibility is to encrypt with plaintext block chaining, then
+superencrypt it PBC in reverse order, starting with the last block first.
+An attacker would thus have to decrypt the entire message before knowing
+whether the key was correct or not.
+
+> One word of caution (which should be obvious, but can't hurt to repeat it):
+> if you chain ciphers (e.g. DES | IDEA | 3DES | CAST | Blowfish), be sure to
+> use separate keys for each of them; otherwise breaking the last one will
+> give the key to the whole lot.
+
+Only if the cryptanalyst knows that the decryption of the last one was
+correct, which shouldn't be possible without also decrypting all the other
+layers.
+
+
+
+
+

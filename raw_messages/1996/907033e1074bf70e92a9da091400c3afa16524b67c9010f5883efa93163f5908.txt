@@ -1,0 +1,60 @@
+From: Raph Levien <raph@c2.org>
+Date: Tue, 30 Jan 1996 10:57:19 +0800
+To: cypherpunks@toad.com
+Subject: Authentication of crypto clients
+Message-ID: <Pine.SUN.3.91.960129160857.27262A-100000@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This post contains (somewhat) technical discussion of (what I believe
+is) an important issue in integrating crypto with applications that do
+not contain their own cryptographic implementation. If that doesn't
+interest you, hit 'n' to resume your regularly scheduled flamefest.
+
+The issue is: how does the crypto provider authenticate the client?
+For example, if the crypto provider can accpet connections from any
+application in the user's process space, then any bogus application
+can easily start decrypting and signing as it likes. In this model, a
+precondition for security is that no bogus programs can be allowed to
+run.
+
+An alternative, slightly more complex model is that the client must
+somehow authenticate itself to the crypto provider. One simple way of
+doing this is to require the client request a password from the user,
+which is then forwarded to the crypto provider. The crypto provider
+will only provide service on connections which have been authenticated
+in this way. This model gives security even in the face of some bogus
+applications.
+
+Of course, as Nathaniel quietly reminded us this morning, any bogus
+application which can intercept keystrokes can subvert any such client
+authentication. Barry Jaspan (in his analysis of a security flaw in
+SSH 1.2.0) reminds us that access to the image of the process is also
+sufficient to break security. Perhaps the class of bogus programs
+which have enough capabilities to connect to the crypto provider, but
+not enough to intercept keystrokes or examine RAM is null, meaning
+that the two models have equivalent security. Actually, the simpler
+model has some security advantages, because the client never has to
+deal with any very sensitive material, such as the password.
+
+I'm interested in this question right now because the current version
+of premail implements the simpler model (in fact, it simply stores all
+the secrets in a file in /tmp, with permissions set to 600). I want to
+know whether it's worth the trouble to design and implement an
+approach based on per-client authentication.
+
+This issue is also relevant to the discussion of Microsoft's CAPI,
+which (as far as I can tell) allows only the simpler model. I'm not
+saying it's bad, but I do feel that the implications should be
+discussed. Thus, I have forwarded a copy of this post to
+cryptapi@microsoft.com in case they have any comments.
+
+If there's been a discussion of this that I missed, then apologies for
+brining it up again and appreciation in advance for any pointers.
+
+Raph
+
+
+
+

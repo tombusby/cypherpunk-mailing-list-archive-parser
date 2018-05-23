@@ -1,0 +1,73 @@
+From: Mike Johnson second login <exabyte!gedora!mikej2@uunet.uu.net>
+Date: Fri, 15 Jul 94 14:45:58 PDT
+To: Carl Ellison <gedora!uunet!tis.com!cme@uunet.uu.net>
+Subject: Re: Triple encryption...
+In-Reply-To: <9407151730.AA19916@tis.com>
+Message-ID: <Pine.3.89.9407151559.A29784-0100000@gedora>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> ...
+> >> have you considered
+> >>
+> >>        des | tran | des | tran | des ?
+> >
+> >That one's sort of your "trademark", isn't it? <g> 
+> 
+> yup :-)
+> 
+> >clever, BTW.)  One scheme that seems to make even more sense, though, is:
+> >
+> >         des | tran | IDEA | tran | des
+> >
+> >You get the benefits of 112 bits worth of DES keyspace along with 128 bits
+> >of IDEA keyspace, and thus don't stake your total security on the strength
+> >of EITHER algorithm.
+> 
+> good, too.  Of course, it leaves open the question of which should be
+> inside and which outside.
+> ... 
+> Yes, it's in response to Eli's paper that I advocated prngxor, as in:
+> 
+> 
+>          des | prngxor | tran | des | tran | des
+> 
+> with the DES instances in ECB mode (in acknowledgement of Eli's attack).
+> The prngxor destroys any patterns from the input, which was the purpose of
+> CBC, without using the feedback path which Eli exploited.
+
+Or for the rabid, clinically paranoid:
+
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+3des | tran | IDEA | tran | Diamond | tran | Blowfish | prngxor | 
+... about 500 more lines of the same ...
+
+with a memorized 5 megabyte key.
+
+And I thought 15 round Diamond with a 256 bit key was overkill worse than 
+3 key triple DES!
+
+Seriously, folks, the weakest links of most cryptosystems are not in the 
+symmetric key cipher (provided you pick one of the good ones), but in the 
+key management, associating people with keys, and in picking good pass 
+phrases.
+
+Peace to you.
+Mike Johnson
+m.p.johnson@ieee.org
+
+
+
+
+

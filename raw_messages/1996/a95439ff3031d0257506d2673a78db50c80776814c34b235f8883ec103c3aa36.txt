@@ -1,0 +1,47 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 1 Mar 1996 06:00:45 +0800
+To: Dimitris Tsapakidis <dimitrt@dcs.rhbnc.ac.uk>
+Subject: Re: Diffie-Hellman for Matchmaking?
+Message-ID: <199602290844.AAA03859@ix4.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:37 PM 2/27/96 +0000, Dimitris Tsapakidis <dimitrt@dcs.rhbnc.ac.uk> wrote:
+>This is a followup to my "Dating Problem" question  [.....]
+
+What's the reason for ZKP below?  Is the objective that A and B
+only know the other one is interested if they have also
+advertised interest, and that nobody else can tell they're 
+interested in each other?  Or just that you can advertise who
+you're interested in so that only they know you're interested
+and nobody else does (except possibly a Trusted Third Party.)
+
+For the latter case, instead of publishing g^(AB)mod n,
+publish hash(g^(AB)mod n), where hash is some non-invertible
+function (maybe strong like MD5, or maybe cheap like a CRC32,
+depending on how often you're willing to risk collisions.)
+If you're concerned about replay attacks, use something like
+(timestamp, MD5(timestamp, g^(AB)mod n)).
+
+>Person A is interested to match person B, so he computes
+>g^(AB)mod n. B is interested in X, where X may or may not
+>be A, and calculates g^(BX)mod n. Now, they compare these
+>two "common keys" either using some Zero Knowledge scheme
+>that ensures fairness (at no point one party has significantly
+>more information than the other) or through a Trusted Third Party.
+>If they are the same, then this means X=A, so A and B
+>have a match (e.g. a date). The common keys must remain
+>secret (hence the ZK above): if g^(BX)mod n "escaped"
+>to the public, then the real X would find out that
+>B is interested in him.
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

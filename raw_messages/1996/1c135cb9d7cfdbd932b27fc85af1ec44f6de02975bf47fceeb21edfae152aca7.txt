@@ -1,0 +1,55 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 25 Jan 1996 13:47:25 +0800
+To: David Mazieres <dm@amsterdam.lcs.mit.edu>
+Subject: Re: Crippled Notes export encryption
+In-Reply-To: <199601242346.SAA14838@amsterdam.lcs.mit.edu>
+Message-ID: <199601250034.TAA09745@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> So where exactly do they draw the line?  You can still construct your
+> software in such a way that there is a clean boundary between the
+> crypto stuff and the rest.
+
+The line is drawn, AFAIK, at the actual crypto routines.  You cannot
+export the crypto routines, and the functions that call the crypto
+routines.
+
+> For example, could you have an application with a  function:
+> 
+> 	authenticate_user (int file_descriptor)
+> 
+> which in the exportable version sends a password, and in the domestic 
+> version constructs some sort of authenticator?
+
+Yes.  In fact, this is what Bones did.
+
+> Could you have an xdr-like function which on in an exportable version
+> just does argument marshaling and in a domestic version also encrypts?
+
+Yes.  However the exported code cannot have the encryption hooks
+in the code.
+
+> How exactly are crypto-hooks defined?  This restriction seems orders
+> of magnitude more bogus than even the ban on exporting actual
+> encryption.
+
+Very vaguely.  If I have a function that does something like this:
+
+authenticate (args)
+{
+	...
+
+	des_encrypt ();
+	...
+}
+
+I would have to remove the des_encrypt() call from the authenticate()
+routine before it can be exported...
+
+-derek
+
+
+
+

@@ -1,0 +1,52 @@
+From: Laurent Demailly <dl@hplyot.obspm.fr>
+Date: Wed, 4 Oct 95 15:39:36 PDT
+To: Alan Barrett <barrett@iafrica.com>
+Subject: Re: New version of my privacy enhanced www proxy is out
+In-Reply-To: <9510042024.AA16962@hplyot.obspm.fr>
+Message-ID: <9510042239.AA17348@hplyot.obspm.fr>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(BCCed to aproxy list, to avoid followup troubles)
+Alan Barrett writes:
+ > > The proxy now issue  "Content-Checksums: md5=xxxxxx"
+Btw i typoed, I use "Content-Checksum: md5=<hexa/ascii-output>"
+like in "Content-Checksum: md5=0246be185424cc79b61f4a55b73362c1"
+like does the "md5" and md5sum (pgp's contrib dir) programs
+ > > headers for its stuff, I 'invented' that  syntax, any www guru to tell
+ > > me if it already exists under another form ? (i checked the
+ > > http docs at w3.org, found nothing)
+ > 
+ > RFC 1544 specifies the Content-MD5 header field for use with 
+ > MIME-conformant messages.  It looks like this:
+ > 
+ >                Content-MD5:  Q2hlY2sgSW50ZWdyaXR5IQ==
+Thanks very much for pointing out,
+
+I don't like the fact they somehow hard wired the checksum/digest
+algorithm in the keyword name, it is imo a bad idea, when you will want to
+use another algorithm, also the rfc state that the checksum applies to
+"canonical" form, the one I want applies to the "Content-Length" bytes
+you read, whatever they are (no interpretation), and I don't like the
+use of base64 which is not nice if you want to check with existing
+md5,md5sum programs what you get.
+
+I stepped meanwhile on a draft on authorization scheme using digest, 
+which might be interesting... when implemented client side... more on
+this later (ref:
+http://www.ics.uci.edu/pub/ietf/http/draft-ietf-http-digest-aa-01.txt
+see also
+http://www.ics.uci.edu/pub/ietf/http/draft-ietf-http-mda-00.txt
+for a "mediated digest" authentification/security scheme)
+
+dl
+--
+Laurent Demailly * http://hplyot.obspm.fr/~dl/ * Linux|PGP|Gnu|Tcl|...  Freedom
+Prime#1: cent cinq mille cent cinq milliards cent cinq mille cent soixante sept
+
+genetic security Legion of Doom spy CIA munitions Serbian
+
+
+
+

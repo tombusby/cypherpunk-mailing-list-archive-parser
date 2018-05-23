@@ -1,0 +1,51 @@
+From: "Mark W. Eichin" <eichin@cygnus.com>
+Date: Thu, 17 Dec 92 15:59:41 PST
+To: UFLTAI%MEMSTVX1.bitnet@CUNYVM.CUNY.EDU
+Subject: re: abusing the system?
+In-Reply-To: <9212172333.AA12866@toad.com>
+Message-ID: <9212172358.AA07292@tweedledumber.cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> ps:  Any tips on tracing anonymous mail and newspostings?  I mean beyond the
+>> "from" and "path" things... ie, trace to the userid...  Someone tried to forge
+>> a posting in my name... (yes, that's what got me thinking :))
+	Remember to look at the "Message-Id" -- on typical unix
+mailers, that has the IP address encoded into it to help make it more
+"unique". 
+	A social point to keep in mind, though: one reason we really
+*need* signed messages is because there is no real identity attached
+to email. It is easy to "believe in" some identity you see on the net,
+and for the most part enough of them are real that it is ok... but
+I expect this to become even more of a problem than it is now without
+signatures.
+	A "historical" example -- at MIT, as part of Project Athena,
+we have a real-time messaging system called Zephyr (for more details,
+look in Usenix proceedings from some time in 87 or 88, or just look at
+athena-dist.mit.edu:pub/usenix/zephyr.PS.) It optionally uses kerberos
+authentication, and the recipient application will display whether a
+message is authenticated or unauthenticated. People tended to ignore
+this, until one of the other developers wrote a program that looked at
+the database of current users, picked a pair at random, picked a
+message at random, and sent it to one, from the other. (It backfired
+amusingly once -- it sent a message from him, to me, saying "I'm
+stopping at the coffeehouse, want me to get you anything?" to which I
+responded sure... and then harassed him about it for years, until he
+finally *did* bring me the M&M's I wanted. :-)
+	The point was that this program didn't fake the authentication
+(it did use privileged access to look at the user database, which is
+not available remotely, but the messages themselves were
+unauthenticated) but rather noone paid attention to it. The
+"unauthenticated" flag was made more visible in a later release, I
+believe... but I don't think anyone ever went as far as refusing
+unauthenticated personal messages altogether. I could see that
+happenning with email...
+				_Mark_ <eichin@athena.mit.edu>
+				MIT Student Information Processing Board
+				Cygnus Support <eichin@cygnus.com>
+
+
+
+
+

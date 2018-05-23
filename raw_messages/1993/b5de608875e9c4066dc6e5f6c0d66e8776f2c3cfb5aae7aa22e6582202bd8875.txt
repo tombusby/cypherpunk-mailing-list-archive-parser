@@ -1,0 +1,31 @@
+From: smb@research.att.com
+Date: Wed, 24 Nov 93 11:23:17 PST
+To: henry strickland <strick@osc.versant.com>
+Subject: Re: <8c> C-source for diffie-hellman?
+Message-ID: <9311241920.AA14514@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 DH itself is a trivial algorithm.  All you need is a decent
+	 multiple precsion math package.    I think all it takes is
+	 	-- random numbers
+	 	-- primality test
+	 	-- gcd
+	 	-- raise-to-power-modulo-some-number
+
+One more thing -- you want the base for the exponentiations to be
+a generator of the subgroup.  Also, ideally the modulus should be
+a prime of the form kp+1, where p is also a prime and k is a small
+integer.  Your DH toolkit should include routines to generate the
+base and modulus according to those criteria.
+
+	 BTW, schneier is literally a FAQ for cypherpunks.  
+	 Fantastic book.  Cough up the money for it...
+
+Indeed, though I've only seen some drafts; my copy of the book itself
+hasn't arrived yet.
+
+
+
+

@@ -1,0 +1,295 @@
+From: Ray Arachelian <sunder@sundernet.com>
+Date: Wed, 28 Jan 1998 02:56:58 +0800
+To: cypherpunks <cypherpunks@toad.com
+Subject: Information on key handling with Microsoft products (fwd)
+Message-ID: <Pine.SUN.3.96.980127135417.15074B-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+> There's been some discussion recently on this news alias about how
+> Microsoft
+> handles key management (and some related topics) in CryptoAPI (more
+> specifically, the Microsoft base CSPs). Below is a document we've put
+> together to help answer these questions.
+>
+> Thanks,
+> -JasonG
+>
+> Product Manager, Windows NT Security
+> Microsoft Corporation
+>
+>
+>
+> Microsoft's Response to Recent Questions on the Recovery
+> of Private Keys from various Microsoft Products
+>
+> Recently, there has been discussion on some Internet forums about the
+> methods Microsoft uses to store private keys in some of its products, as
+> well as about CryptoAPI's role in key management. These discussions
+> included
+> some inaccurate information about the PFX and PKCS-12 formats, as well as
+> how Microsoft implements these formats in its products.
+>
+> This paper was prepared by the Microsoft Public Key Infrastructure team to
+> provide some additional insight and clarification on these issues, and in
+> some cases, identify long-term plans that Microsoft has to continue the
+> improvement of security in our products.
+>
+> CryptoAPI
+> One area to clarify at the outset is the role of CryptoAPI. Implications
+> that any key management problem on Microsoft's Internet products would be
+> an
+> example of fundamental problems with CryptoAPI are absolutely inaccurate.
+> CryptoAPI is a set of cryptographic technologies that are provided for use
+> by other software--sort of a cryptographic toolbox. The actual
+> cryptographic
+> functions are provided through Cryptographic Service Providers (CSPs),
+> which
+> are implemented as DLLs. With the exception of the details about a
+> possible
+> PKCS-12 attack, all the issues raised in the recent discussions are
+> specifically aimed at Microsoft's base CSPs, not at CryptoAPI.  The base
+> CSPs are the royalty-free, software-based CSPs provided with Windows NT
+> 4.0,
+> Windows 95, and Internet Explorer. These attacks do not apply in general
+> to
+> other CryptoAPI CSPs and do not indicate any fundamental concerns with the
+> security of the CryptoAPI architecture or applications built upon it.
+>
+> PFX/PKCS-12
+> Microsoft products do not "store" private key material using PKCS-12,
+> contrary to recent descriptions on the Internet. For clarification,
+> PKCS-12
+> is a standard format, used for export/import of Public Key Certificates
+> and
+> related key material.  At present, the only Microsoft product that
+> supports
+> use of this format is Microsoft Internet Explorer 4.x.  Internet Explorer
+> uses PKCS-12 solely as a means of migrating  a user's Certificate and
+> public-private key pair between multiple Internet Explorer installations
+> or
+> between Internet Explorer and other products, such as Netscape
+> Communicator.
+>
+>
+> Some background might help. Microsoft originally developed the draft
+> specification for an encrypted export/import format, referred to as PFX,
+> but
+> the PFX specification was never implemented by Microsoft.  Instead, the
+> PFX
+> specification was handed over to RSA Labs and it became the draft PKCS-12
+> specification.  The design was then reviewed, and contributed to, by a
+> number of other companies to arrive at the current PKCS-12 standard.
+> Microsoft and Netscape have both implemented PKCS-12 with 40-bit
+> encryption.
+> This was done to provide a common, exportable solution that was completely
+> interoperable.
+>
+> The example of breaking a PKCS-12 data blob, which was given in discussion
+> on the Internet, is not an attack on the "weak" cryptography of PKCS-12.
+> Rather, it is simply a dictionary attack (long known and well understood
+> in
+> cryptography), which works well if people use poorly-chosen passwords to
+> protect the PKCS-12 data blob. Examples of such bad passwords include
+> words
+> in the English dictionary.  In our implementation of PKCS-12, we could
+> possibly do some things to make brute-force attack against an exported
+> PKCS-12 data blob more difficult. For example, performing a dictionary
+> check
+> on the password before accepting it for encrypting the data blob would
+> reduce the use of weak passwords. Alternatively, we could  iterate the
+> setup
+> function to increase "diversity" making it much more expensive for an
+> attacker to search. However, neither of these methods are required for
+> protection of the data blob. Good security is always a combination of
+> technology and policy. As part of a strong security policy, strong
+> passwords
+> should be used on all resources. The Microsoft Security Advisor website
+> (http://www.microsoft.com/security) has some guidelines for choosing
+> strong
+> passwords.
+>
+> One statement by the original poster argues that Microsoft managed to
+> design
+> a security format that actually makes it easier to break into the
+> protected
+> data. As stated above, a number of well respected companies were involved
+> extensively in the design and review of PKCS-12 before it became a
+> standard.
+> An iteration count, which would make the type of attack described above
+> more
+> difficult (in terms of time), was added late in the PKCS-12 evolution.  It
+> was, however, too late to make it into the Internet Explorer 4 product
+> release. Future versions of Internet Explorer will include support for the
+> an iteration count, further strengthening the security of exported key
+> material.
+>
+> Of course, in general the PKCS-12 data objects will not be available on a
+> user's machine, since they are only used by Internet Explorer 4.x when
+> exporting key material to, or importing key material from another system.
+> As
+> with any sensitive data, users should take care when working PKCS-12 data
+> blobs and not leave them on their hard drives.
+>
+> Exploiting Internet Explorer
+> One of the fundamental requirements to perform any possible cryptographic
+> attack discussed in the recent postings is the assumption that a malicious
+> entity could somehow access to data on a user's computer system, without
+> the
+> permission or knowledge of the user.  This is a large leap of faith.
+> Users
+> that are using Public Key Certificates today are generally sophisticated
+> and
+> savvy users, or part of a larger corporate infrastructure with
+> knowledgeable
+> administrators. This class of users will certainly keep abreast of current
+> security issues and install security-related patches and updates as they
+> become available. Microsoft has been extremely responsive in dealing with
+> all known Internet Explorer security attacks and has posted patches for
+> all
+> currently known attacks. And, of course, security issues are certainly not
+> limited to Microsoft software.
+>
+> Information on security-related issues with Microsoft products is
+> available
+> on the Microsoft Security Advisor website at
+> http://www.microsoft.com/security.
+>
+> Attacks against Authenticode signing keys
+> Another concern identified was that if a malicious hacker could steal a
+> user's or company's Authenticode signing key, that hacker could sign
+> objects
+> with that key and distribute them. Then when other users tried to download
+> the signed object, they would think the key's owner really signed the
+> object, which might contain malicious code. The Authenticode program has
+> been designed to ensure that only trusted programs are allowed to run on a
+> users machine. As stated earlier Microsoft has been very responsive is
+> addressing security issues with IE.
+>
+> However, it is extremely unlikely anyone could be successful with a
+> simplistic strategy for stealing Authenticode signing keys and then using
+> them.  As noted above, there are security patches already released for
+> known
+> Internet Explorer bugs that could possibly allow a key blob to be stolen
+> off
+> a user's hard disk (assuming a user left an Authenticode 'key' file on
+> their
+> hard disk).   Second, anyone signing code using Authenticode technology is
+> extremely unlikely to leave their key material sitting on an end user
+> machine routinely used for browsing the Internet.
+>
+> Microsoft recommends storing key material, such as that used in
+> Authenticode, in hardware tokens. Such tokens prevent any of these attacks
+> from getting started as the keys are not stored in the PC and are not
+> exportable.  The Authenticode signing keys that Microsoft uses for all our
+> software, for instance, are stored in such a physical hardware key storage
+> mechanism.
+>
+> Attacks on Encrypted Key material
+> There is some confusion over the algorithms and methods that Microsoft
+> uses
+> to provide protection of encrypted key material in Internet Explorer when
+> using the standard Microsoft base CSPs. There were changes between
+> Internet
+> Explorer 3.0x and Internet Explorer 4.x specifically to address any
+> possible
+> concern. Note, this concern is unlikely to be valid for any third-party
+> software CSP and is not relevant to hardware CSPs.
+>
+> Microsoft is constantly working to improve the security of our products.
+> We
+> determined that there were better suited methods for storing keys than
+> using
+> the RSA RC4 stream cipher algorithm used in Internet Explorer 3.0x.  In
+> particular, a stream cipher, such as RC4, is not ideally suited for this
+> particular use because it can be susceptible to a "known-keystream
+> attack".
+> In a known-keystream attack, if you know the plain text, which you
+> arguably
+> might be able to determine given the number of standard PKCS-8 fields, you
+> can recover the keystream.  If you recover the keystream, then a XOR
+> function will indeed decrypt anything else encrypted with the same key.
+> However, Microsoft only used this RC4-based implementation in the base
+> CSPs
+> that shipped with Internet Explorer 3.0x.  The CSPs that shipped in
+> Internet
+> Explorer 4.x protect private key material in a form that is encrypted
+> using
+> DES, which is a block cipher and is not susceptible to the known-keystream
+> attack that can be used against RC4.
+>
+> Again, note that this kind of attack assumes some degree of security
+> breach
+> on the user's system such that the keystream could be obtained.
+>
+> Key export attacks
+> The original Internet posting raises concern about the CryptoAPI interface
+> CryptExportKey().  This function is fully documented and does indeed
+> export
+> private key material in an encrypted format.  The presence of the
+> CryptExportKey() function is to support functionality such as migrating
+> key
+> material between machines for a user or creating a backup copy of a key.
+> It
+> should be noted however, that many CSPs, including most hardware based
+> CSPs,
+> do not allow exportable private keys and will return and error in response
+> to a CryptExportKey() request.
+>
+> Also, Microsoft's base software CSPs provide a means to mark keys as
+> non-exportable when they are generated.  An additional security protection
+> is provided if the flag CRYPT_USER_PROTECTED is set, in which case each
+> use
+> of the private key, including export, requires the user to supply a
+> password
+> to access the key.  Some commercial CAs are not currently setting this
+> flag
+> and do not provide the user a way to request it during Certificate
+> enrollment.  We recognize this as a problem.  We will continue working
+> with
+> CAs to assist them in supporting these security features.  However, we
+> will
+> also make available a utility to allow setting this flag after key
+> generation for users concerned with this type of attack.
+>
+> The posting also asserts that an ActiveX control could be downloaded from
+> a
+> web page, simply ask for the current users key, ship the key off for
+> collection by an unscrupulous person, and then delete itself without a
+> trace.
+>
+> If users run unsigned code, or code from an unknown origin, a number of
+> unpleasant things can happen.  This could indeed occur if the key as been
+> marked exportable and the CRYPT_USER_PROTECTED flag is not set. However,
+> such a scenario assumes that the user follows few or no policies with
+> regard
+> to good security, such as running code from unknown sources. Similarly, if
+> the user were running software from unknown/untrusted sources, that
+> software
+> could reformat their hard drive, or manipulate other user data. This
+> concept
+> is certainly not new.
+>
+> There was also discussion of 16 dialog boxes appearing to the user for
+> their
+> password if the CRYPT_USER_PROTECTED flag is set. Certainly asking the
+> user
+> too many times would be better than too few times, however in our tests,
+> under extreme (and uncommon cases), a user might be asked for their
+> password
+> at most four times when a key is used with the Microsoft base CSPs.
+> Perhaps
+> the claim came from an early beta release.
+>
+> ----------------------------------------------------------------
+> Users Guide http://www.microsoft.com/sitebuilder/resource/mailfaq.asp
+> contains important info including how to unsubscribe.  Save time, search
+> the archives at http://microsoft.ease.lsoft.com/archives/index.html
+
+
+
+
+

@@ -1,0 +1,78 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Thu, 14 Aug 1997 03:18:05 +0800
+To: tzeruch@ceddec.com
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <97Aug13.114455edt.32260@brickwall.ceddec.com>
+Message-ID: <Pine.SUN.3.96.970813145505.7599M-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, 13 Aug 1997 nospam-seesignature@ceddec.com wrote:
+
+> PGP uses and E of 17 by default, but it would be a problem except that
+> there is a specification for random padding, so it *NEVER* encrypts
+> identical plaintext.  It always uses a number just a few bits shorter than 
+> N, starting with 0x02, then nonzero random bytes, then a zero byte, and
+> finally the message bytes you want to encrypt.
+> 
+> There was a man-in-the-middle or replay attack with SSL that they changed
+> the spec of the padding slightly (8 bytes before the zero byte must be
+> 0x03), I think this is because you might be able to quickly find a random
+> cyphertext that decrypts to having a zero byte followed by something
+> useful as key material, but haven't read the details. 
+
+In terms of padding does it matter WHERE I put the padding info?  Is it
+better to put random stuff in the front or at the end?  The reason I ask,
+say that you're going to encrypt an N byte block where N is bigger than
+your block cypher's key size?
+
+If my intution is correct, and you have the same data encrypted with many
+keys (even RSA) but have the padding at the end, the 1st block would still
+be breakable.  I suppose putting the data at the end would also result in
+the same kind of problem, though it might be a bit harder to attack than
+putting the data 1st...
+
+Would it not make sense to scatter the random padding throughout the
+block?   How is this normally done?  Front?  Back?  Middle?  Scattered?
+
+
+These are some of the same thought threads that I went through when I
+designed WhiteNoiseStorm - (Do a net search for WNS210.ZIP for more info
+on it.)  Basically, this cypher uses random block sizes called windows-
+(it's more of a stream cypher at the input, but a block cypher at the
+output) and mixes random noise with the data.  The bits it hides in the
+ramdom noise source are scattered throughout the window AND encrypted.  It
+turns out this is useful for stego use and that's what it turned into.
+But this may be another use for it...
+
+Since an attacker doesn't know the window size and since the window size
+varries randomly from window to window, it's very hard for the attacker to
+use known or chosen plaintext attacks.  If you encrypt the same data N
+times, you get N different cyphertexts.
+
+It's never been cryptanalized (far as I know - could be the spooks have
+done so already) so its strength is unknown...  But I suppose using
+something like WNS would be ideal for encrypting the same data with
+different keys...
+
+The big disadvantages though: you need a really good source for random
+numbers and the size of the cyphertext is much much bigger than the
+plaintext... anywhere between 1.5 to 10X depending on the security level
+you chose. :)  (And it's a symmetric key cypher, CBC only...  If I can
+figure out a way to turn it into a PK system, it would really be
+usefull...) 
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    |Prying open my 3rd eye.  So good to see |./|\.
+..\|/..|sunder@sundernet.com|you once again. I thought you were      |/\|/\
+<--*-->| ------------------ |hiding, and you thought that I had run  |\/|\/
+../|\..| "A toast to Odin,  |away chasing the tail of dogma. I opened|.\|/.
+.+.v.+.|God of screwdrivers"|my eye and there we were....            |.....
+======================= http://www.sundernet.com ==========================
+
+
+
+
+

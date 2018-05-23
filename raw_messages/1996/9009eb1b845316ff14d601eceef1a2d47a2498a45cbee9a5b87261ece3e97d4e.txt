@@ -1,0 +1,115 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Wed, 11 Dec 1996 00:14:43 -0800 (PST)
+To: wichita@cyberstation.net
+Subject: Re: Another problem with IPG algorithm
+In-Reply-To: <Pine.BSI.3.95.961211010624.11832A-100000@citrine.cyberstation.net>
+Message-ID: <199612110810.CAA00508@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+wichita@cyberstation.net wrote:
+> On Sun, 1 Dec 1996, Igor Chudov @ home wrote:
+> > Don and others,
+> > 
+> > At the heart of IPG algorithm there is a pseudo-random number generator
+> > which generates values of A(JV). (see http://www.netprivacy.com/algo.html)
+> > 
+> >        DO
+> >          JV=JV+1
+> >          IF JV=53 THEN JV=0
+> >          A(JV)=(A(JV)+B(JV)) MOD C(JV)
+> >        UNTIL A(JV)<16384
+> > 
+> > Note that if B(JV) and C(JV) in a triplet (A(JV), B(JV), C(JV)) are not
+> > mutually prime, they will generate very few numbers and not a whole set
+> > 0-16383. For example, if C(JV) is 20000, and B(JV) is 10000, and initial
+> > A is (for example) 57, the only two numbers that this triplet will
+> > generate will be 57 and 10057.
+> > 
+> > This refutes Don Wood's claim that the distribution of results
+> > approaches even. Even if only ONE triplet is such as I described (and it
+> > is VERY likely to happen statistically), the distribution will be
+> > skewed.
+> > 
+> > Don, what do you think about it?
+> > 
+> > igor
+> > 
+> Igor, 
+> 
+> Also included in the more detailed explanation is the set of As, Bs, and
+> Cs that are used. Either the B or a C is prime in all instances,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^ see below
+> I would agree with you if that was not the case. All 16384 numbers, 0
+> through 16383, are always generated. In addition of course, the numbers
+> between 16384 and each of the Cs are also generated but not used. 
+
+If only B is required to be a prime, that is incorrect. See below.
+
+
+> Thus each of the C(JV) values are operating at different speeds and
+> produce a staccato, meaning in this case, something that is discontinious
+> or disjointed. However, the sum of series approaches an even distribution
+> in the almost precisely same manner as a true random number generator
+> approaches an even distribution. Thus over short frames variance is great
+> but over long frames, the frequency of occurrence tends to approach a
+> perfectly even distribution.
+> 
+> Also, keep in mind, that the values are never used directly - they are
+> only used as a variable for a three dimensional table lookup, where all 
+> three of the 4096 element tables are constantly changing depending upon
+> the the sum of the A(JV) variables combined with the initial settings,
+> which were initally determined determined by the user generated key, and 
+> other related information.   
+> 
+> Also, remember that the order and the actual As, Bs, and Cs used are also
+> randomly arrived at by using the user defined key, 256 bytes or 8192
+> bytes.
+> 
+> There is a lot more revealed at the web site. If you have further
+> interest, I would provide you, Igor, with source code for the 
+> algorithm, subject to a binding NDA. I think you will be suprised if
+> you examined it in detail.
+
+Thanks for your response, Don. I appreciate that we are able to talk 
+about cryptography because it is interesting.
+
+Re: triplets. It seems that even if only one number in each triplet (B
+or C) must be prime, as you said, we are still not guaranteed that the
+PRNG will be "good".  For example, suppose that B is a prime around,
+say, 10000, and C is 2*B.  In this case, the problem would still be the
+same.
+
+I agree that since lookup tables are used, the output for the XOR
+engine would be more obscure than if the output of the PRNG was used
+directly. This obscurity, however, does not imply that the resulting
+XOR key data would be free of biases that I described.
+
+There is a possibility that the biases could be exploited.
+
+Take the extreme case: suppose that by an extreme stroke of bad luck
+the output of your PRNG is only 11252 and 1. This may happen if B=11251
+and C=11251*2 (I am too lazy to check if 11251 is a prime, but you get 
+the idea) for all triplets, and all A=1. Would the three tables DIFF, etc.
+be able to "randomise" the output? I doubt that, although can't say for
+sure right now.
+
+As for the code, I can sign the NDA *if* it is reasonable, but I can
+only read your code if it is written and commented well. The problem is,
+suppose I read your code and find a weakness. What do I do next since my
+NDA forbids me from quotinbg relevant parts of the code?
+
+Again, I am far from a professional cryptographer and would not be
+able to do even a half-decent review. The comments that I make are
+my attempt to find weaknesses in your algorithm.
+
+I suggest that you hire a professional cryptographer with an academic
+degree and ask him/her/it to produce an independent evaluation. It will
+be worth more than my comments.
+
+	- Igor.
+
+
+
+

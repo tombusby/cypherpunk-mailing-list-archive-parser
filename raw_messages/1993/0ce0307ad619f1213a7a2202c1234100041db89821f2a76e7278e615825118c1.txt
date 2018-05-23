@@ -1,0 +1,43 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Thu, 11 Mar 93 23:38:53 PST
+To: cypherpunks@toad.com
+Subject: Re:  HIDE: embedding msgs into snd & graphics
+In-Reply-To: <9303120259.AA03718@sting.Berkeley.EDU>
+Message-ID: <9303120738.AA15498@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I don't know if you actually know GIF format (I don't) but I know that you'd
+> have to do some reasonably intelligent churning of the data.  For one, it's
+> just not going to be as easy as dropping a noise bit from each n-byte set;
+> GIF format is fairly compressed as I understand.
+
+What you'd want to do is uncompress the byte stream, twiddle the low
+bits, and LZW it back up.  Well, that's easy enough.  The problem is
+that GIFs are colormapped, and the map need have no coherence
+between entries 8 and 9.  Even optimally arranged (a non-trivial
+task; looks like the salesman travels colorspace...), that low bit
+is probably going to be significant enough to munge things visibly.
+What you'd have to do is remap the file to 128 colors, duplicate
+them in the colormap, and encode your message in the choice of
+identical entries.  Unfortunately, most images look bad enough
+mapped to 256 colors, and will degrade further in 128.  Though I
+suppose nobody really wants to look at the image anyway...
+
+Your compression is also going to die.  This may provide a quick way
+to scan for this technique, and finding a redundant colormap is a
+dead giveaway of either secrecy or stupidity.  You could fix that by
+tweaking twin colors slightly, adding a bit of visible noise.
+
+I think color images, as opposed to mapped, would be the way to go
+for steganography.  More room, and nobody expects them to compress.
+
+>     -J
+
+	 PGP 2 key by finger or e-mail
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

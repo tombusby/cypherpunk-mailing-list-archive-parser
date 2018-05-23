@@ -1,0 +1,89 @@
+From: Randall Farmer <rfarmer@HiWAAY.net>
+Date: Wed, 19 Nov 1997 12:11:17 +0800
+To: 3umoelle@informatik.uni-hamburg.de
+Subject: Re: Stylometry
+Message-ID: <Pine.OSF.3.96.971118211117.5311A-100000@fly.HiWAAY.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Here (here being at the bottom of the message :) is the code for the stylometry
+program. Note that I specified that the stylometry also involved a calculator
+-- that's because the shell script only processes your data to get the numbers
+you need out; the tough part is still up to you. 
+
+After it runs, you have 
+
+A. a file, ./counts, containing wordcounts like so. (The first line is the
+ever-present quirk, which occurs because I have yet to master sed.)
+
+1689 
+ 550 THE
+ 344 AND
+ 316 TO
+...
+
+and B. Output to the screen, like so:
+
+[wc/uwc]
+      1738     12561     77775 <-- Lines/words/bytes for the original file
+      2557      5113     31226 <-- First part is the number of *different*
+                                   words used in the document, ignore the rest.
+[word counts] <-- A juicy excerpt from the counts file
+ 550 THE
+ 344 AND
+ 316 TO
+ 271 A
+ 195 OF
+[punc frequency: comma/period/hyphen/quote/semi]
+584 <-- Number of commas
+1536 <-- Periods
+79 <-- Dashes
+315 <-- Double-quote marks
+10 <-- Semicolons
+[and/or/but as sentence-splitters]
+24 <-- Occurrences of "and," (including comma -- that's the point)
+12 <-- "or,"
+7 <-- "but,"
+
+There are too many things you can calculate from this output for me to
+enumerate (although the ratios of words to periods, commas, semicolons, and
+conjunctions as sentence splitters are rather useful...compare two or three of
+a known author's documents to find his/her characteristics, then compare that 
+to your unknown and see if you've got a match). 
+
+[Note that the whole sed mess is supposed to be one line]
+
+#!/bin/sh
+# prep: Prepares a text for analysis
+
+sed "y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/;s/[^A-Z']/ /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;y/ /\n/;"<$1|sort|uniq -c|sort -rn>./counts
+
+echo [wc/uwc]
+wc<$1
+wc<./counts
+echo [word counts]
+grep -wie "the" -e "and" -e "to" -e "a" -e "of" < counts
+echo [punc frequency: comma/period/hyphen/quote/semi]
+grep -c ","<$1
+grep -c "."<$1
+grep -c "-"<$1
+grep -c \"<$1
+grep -c "\;"<$1
+echo [and/or/but as sentence-splitters]
+grep -c "and,"<$1
+grep -c "or,"<$1
+grep -c "but,"<$1
+
+---------------------------------------------------------------------------
+Randall Farmer
+    rfarmer@hiwaay.net
+    http://hiwaay.net/~rfarmer
+
+
+
+
+
+
+

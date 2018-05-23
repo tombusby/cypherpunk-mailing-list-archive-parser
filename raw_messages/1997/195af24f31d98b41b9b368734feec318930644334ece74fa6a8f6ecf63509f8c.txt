@@ -1,0 +1,41 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 19 Feb 1997 00:42:06 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: PGP key compromise with multiple independent encryptions of same message?
+In-Reply-To: <3307FA3F.7B0B@coe.woodbine.md.us>
+Message-ID: <3.0.1.32.19970218233359.04736c50@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:27 AM 2/17/97 -0500, David Coe wrote:
+>If I were to PGP-encrypt the same exact message to a number of
+>different people, each copy with that person's public key, would
+>I be making it easy (or easier) for one (or a group) of those
+>recipients to compromise another recipient's private key?
+
+If you're doing it as N separate messages, you're using 
+N separate IDEA session keys; IDEA's strong enough that's no risk,
+especially since they'll be using separate Initialization Vectors.
+If you use the multiple-recipient capability, which uses one copy
+of the message encrypted with one session key, and separate headers with
+the session key encrypted with each public key.  If PGP didn't take 
+precautions to prevent it, there are attacks on RSA which can be used
+when you encrypt the same message with different RSA keys.  However,
+PGP pads the session key with different random padding for each
+session-key-encrypted-with-public-key header, so they're different messages,
+so there's no risk there either.
+
+So don't keep worrying about it; use whichever is more convenient.
+(But it was worth worrying about once. :-)
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

@@ -1,0 +1,35 @@
+From: pgut001@cs.auckland.ac.nz (Peter Gutmann)
+Date: Tue, 20 May 1997 21:59:29 +0800
+To: juriaan_massenza@ctp.com
+Subject: Re: Question: RC5 assembly code?
+Message-ID: <86413522220879@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I have the source code for RC5 encryption algorithm, but it is in C, well it
+>is still cool since it is "portable" but I am actually looking for a PowerPC
+>assembly code for the same, or at least for the Key Expansion, Encryption and
+>Decryption routines.
+>
+>The "formula" for RC5 is pretty interesting and looks like is made to be
+>implemented in Assembler.
+ 
+Not if it's x86 assembler.  On the Pentium each rotate uses 4-5 non-pairable
+cycles, so rotates are very slow (each rotate is the equivalent of (in the best
+case) 8-10 normal instructions, so the two rotates in an RC5 round are the
+equivalent of 16-20 other instructions).  According to Intel shifts and rotates
+have been optimised on the PPro so they're slight faster than on the P5, but I
+haven't looked at the details yet.  I haven't tried to formulate the RC5 core
+in asm yet (because of the patent - what good is it writing code which noone
+can use?) but on Intel hardware it's certainly going to be a lot slower than it
+looks (the much more complex CAST core is faster than just the rotates from the
+RC5 core).  This is kind of unfortunate, because it's a nice algorithm.
+ 
+Peter.
+ 
+
+
+
+
+

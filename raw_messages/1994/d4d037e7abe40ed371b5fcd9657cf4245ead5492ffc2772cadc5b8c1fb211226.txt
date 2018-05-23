@@ -1,0 +1,109 @@
+From: nobody@shell.portal.com
+Date: Wed, 6 Apr 94 11:21:22 PDT
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <199404061820.LAA29011@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Since people are talking about new remailer features, can I suggest
+another one - how about single-use (or limited use) anonymous return
+addressess (ARAs) ? There are quite a few situations I can envisage where 
+I might want to give an anonymous return address to someone that could
+only be used a limited number of times, or for a limited period of
+time (e.g. in the medium term, buying something over the network from a 
+company with digicash, but not wanting to receive junk mail from them
+afterwards).
+
+How I'd see it working is this : You'd send a message to a remailer
+requesting an anonymous address token, along with the email address
+to send to, the number of uses you want and the time period (perhaps 
+up to some maximum set by the operator of the remailer). In the future, 
+you'd also send some digicash in payment for the token, the value based 
+on the number of uses and time limit.
+
+The remailer would then create an encrypted token containing an id
+number and the address, either signed or with an attached random
+number. The id, number of uses and expiry date would be stored in a
+database, along with the random number if you were using that for
+authentication. The remailer would then mail the token (probably
+using an anonymous return address) to the requester. The database
+shouldn't need to be very large if only details of the outstanding
+tokens are stored.
+
+BEGIN NOTES 
+  I'm not sure whether it would be better to store the address in
+  the token or in the database, but I suspect that storing it in
+  the token is better since it avoids the possibility of anyone
+  getting hold of a copy of the database and reading all the addresses
+  stored in there. However, if it's in the token then if all keys of
+  all remailers used are compromised, you can follow the entire chain
+  even after the token is used up, whereas if it was deleted from the
+  database the chain would be broken forever. Perhaps a mixture of 
+  mechanisms in the remailers would be best. 
+
+  Another option might be to keep the address completely seperate, so
+  the token would merely indicate whether the message should be sent
+  to the address specified in the ARA, not for a specific address that
+  the token was requested for.
+END NOTES
+
+After the ARA had been sent to someone and they used it to reply to
+the sender, the remailer would recognize the token, and decrypt it
+to get the real address, database id and authentication. If the 
+authentication was valid and the time/usage limit not exceeded, then it
+would forward the message to the email address enclosed (which
+presumably could be another ARA), otherwise it would just ignore the
+message.
+
+Obviously using only a single remailer would require you to trust the
+operator to limit usage correctly, however chaining several limited
+use addresses will solve any problems if one remailer is trustworthy.
+
+
+Example:
+
+Message to remailer might be something like (comments in {}, -- shows
+begining and end of messages) :
+
+--
+Request-Token 5 {uses} 14 {days} ARA {or email address}
+
+{ standard PGP-encrypted ARA goes in here }
+
+Request-Token-End
+
+::
+Request-Remailing-To: remail@foo.com
+
+{ARA to send token to via remail@foo.com goes here}
+--
+
+The remailer would create something like :
+
+--
+Limited-Use-Token: 00000001/F4870921 (ID/random authentication)
+
+{ARA or Request-Remailing-To: goes here}
+--
+
+This would then be encrypted with the remailer's public key, attached to
+the end of the original message (after the Request-Token line was stripped
+off), then fed into the remailer as usual. The sender would create the ARA
+using this token, and forward it to whoever they wanted to communicate 
+with.
+
+When a message using the ARA came back, it would be decrypted as usual, 
+and if the token line was valid the database would be checked for 
+timed expiry, updated to indicate another use, then if valid, after 
+the token line was stripped off the message would be remailed as usual.
+
+If noone else does this in the next few months then I may hack it into
+a remailer once I have my own machine to run one off.
+
+
+
+
+
+

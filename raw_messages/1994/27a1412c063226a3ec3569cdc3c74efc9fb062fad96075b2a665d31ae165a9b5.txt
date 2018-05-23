@@ -1,0 +1,51 @@
+From: Eli Brandt <ebrandt@jarthur.cs.hmc.edu>
+Date: Fri, 27 May 94 14:41:11 PDT
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: (fwd) Re: NSA Helped Yeltsin Foil 1991 Coup
+In-Reply-To: <9405272110.AA11485@snark.imsi.com>
+Message-ID: <9405272141.AA23574@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> You are correct that in extremely weird cases you are screwed. Such
+> cases are nearly IMPOSSIBLE to produce in practice. Anyone out there
+> want to claim that DES and IDEA are inverses? I'll bet a lot that they
+> aren't. Although in THEORY you are correct, in PRACTICE
+> superencipherment wins.
+
+It's pretty easy to screw up subtly and not know it.  Given that we're
+discussing how to get encryption more secure than the KGB's best, I
+think assuming that DES and IDEA's strengths combine additively, or
+necessarily combine at all, is a mistake.  (They don't have to be
+inverses (they clearly aren't) to be weak -- meet-in-the-middle?)
+Unless there is some theory to this effect, or at least some dramatic
+hand-waving...
+
+In any event, XOR-splitting is no less secure, and is much more
+tractable theoretically.  It does require a higher-rate random source
+than is needed just for key generation.  (Though if you're willing to
+wager that the NSA can't factor fast, you could use the BBS PRNG)
+And it requires linear ciphertext expansion.
+
+Just to make it explicit what I'm talking about:
+take your message A.  let A1=A
+generate a random string X1, with |X1|=|A|.
+let A1 = X1 xor A1; let A2 = X1
+generate another random string, X2
+let A2 = A2 xor X2; let A3 = X2
+etc.
+Then send (E1(A1), E2(A2), ... , En(An)), where the Ei's are distinct.
+
+Recipient decrypts to get A1, ... An, and calculates
+   A1 xor A2 xor ... xor An 
+	= (A xor X1) xor (X1 xor X2) xor ... xor (Xn-2 xor Xn-1) xor (Xn-1)
+telescoping,
+	= A
+
+   Eli   ebrandt@hmc.edu
+
+
+
+
+

@@ -1,0 +1,43 @@
+From: Bill Sommerfeld <sommerfeld@orchard.medford.ma.us>
+Date: Wed, 20 Sep 95 05:25:33 PDT
+To: jsw@neon.netscape.com (Jeff Weinstein)
+Subject: Re: My Day
+In-Reply-To: <43oquc$70f@tera.mcom.com>
+Message-ID: <199509201218.MAA00433@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A couple comments on using the time as a seed:
+
+Any system running NTP will let you know its clock to within a couple
+ms; some folks have gotten NTP accuracy down to the high hundred
+microseconds on real-time systems..
+
+Any entropy you get from sampling the system clock will have to come
+from the low-order bits of the tv_usec, or equivalent, and you'll only
+get a few bits per sample.
+
+Getting real entropy from mouse movements under X may be tricky,
+because the X server goes out of its way to compress mouse movement
+reporting and to buffer events sent to the client ("X is an exercise
+in avoiding system calls").  You'll probably get less entropy than you
+might think.
+
+>   the second 32bit seed is the "tick count", which I'm told is the number of
+> milliseconds since windows started.
+
+A 32-bit ms-resolution counter wraps roughly every 50 days.  Very few
+Windoze PC's stay up that long :-).
+
+In a long-term active attack, the tick count can be estimated by
+periodically pinging the system under attack, noticing when it goes
+off the air and then back on again, and using that as a base value for
+the tick count search, so the tick count probably only adds a factor
+of somewhat less than 2**10 to the keyspace, not 2**32..
+
+					- Bill
+
+
+
+

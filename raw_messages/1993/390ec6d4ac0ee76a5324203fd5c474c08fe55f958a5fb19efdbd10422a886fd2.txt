@@ -1,0 +1,87 @@
+From: Stanton McCandlish <mech@eff.org>
+Date: Fri, 22 Oct 93 07:23:16 PDT
+To: cypherpunks@toad.com
+Subject: Clipper chip stuff (fwd)
+Message-ID: <199310221419.AA02752@eff.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Forwarded message:
+
+> Could you forward this to cypherpunks for me?  Walter is a technoid and
+> happened to be one of the plaintiffs in Steve Jackson Games (e-mail user on
+> Illuminati).  I'm hoping one of the 'punks might be able to comment to him
+> on his theory -- it sounds interesting to me, but I'm not technical enough
+> to know if its got any merit.  Thanks.
+> 
+> >Date: Thu, 21 Oct 93 18:05 EDT
+> >From: Walter Milliken <milliken@BBN.COM>
+> >Subject: Clipper chip stuff
+> >To: ssteele@eff.org
+> >
+> >Hi Shari -- it's been a while....
+> >
+> >I know you're probably not the right person to talk to about Clipper
+> >chip stuff, but I figured you could forward this and tell me who is.
+> >
+> >Basically, I think I see NSA's backdoor in the whole scheme.  Probably
+> >other people have noticed this too, but in case they haven't (and I
+> >haven't seen any comment on these lines on comp.org.eff.talk), I figured
+> >I'd point it out.
+> >
+> >The trick isn't necessarily in the algorithm (which I don't know, of
+> >course).  I think it's in the key generation process.  I read Dorothy
+> >Denning's description as posted to comp.org.eff.talk the other day, and
+> >decided it sounded fishy.  Why are the secret per-chip keys generated
+> >from the chip serial number (which is observable by anyone with the
+> >law-enforcement key)?  To escrow keys, all you need is to 1) associate a chip
+> >serial number with a secret key and 2) split the secret key into two,
+> >unusuable parts for the escrow agents.  I can't see any reason why the
+> >secret key isn't just a random number (or rather the XOR of two random
+> >numbers, one for each escrow agent).
+> >
+> >Instead, we've got this complex algorithm for converting the chip serial
+> >number into the chip secret key.  Thus, if you know the chip serial
+> >number, the key generating algorithm, and the initialization states for
+> >the key generator (provided by the two escrow agents) *you can compute
+> >the chip secret key*!  (Or so it appears on a very superficial reading.)
+> >
+> >I suspect you could dispense with knowing the initialization states, if
+> >you were NSA and could obtain any chip from the same batch -- you open
+> >the chip up (I'm sure *they* know how to do that), extract its secret
+> >key, and reverse-engineer the initialization data.  (This last step is
+> >non-trivial, but I'd be surprised if NSA couldn't do it -- it's a
+> >variant of known-plaintext attack.)  It's also possible that NSA may
+> >*supply* the initialization states, or an algorithm for generating them,
+> >or at least advice on how to pick them.  After all, it's their game,
+> >they get to make the rules....
+> >
+> >In any case, I can see no way that using the *observable* chip serial
+> >number to help generate the chip secret key can in *any* way improve the
+> >security of the system.  You'd be much better off just sticking any old
+> >random number into the chip as a secret key, and just noting it down
+> >with the associated chip serial number in the escrow files.  Personally,
+> >I think I'd use a non-algorithmic mechanism for generating random keys
+> >-- perhaps a truly random number source, such as atomic decay processes.
+> >There's only one of these things -- it can afford to get fancy.
+> >
+> >
+> >Disclaimer: I'm not a cryptography expert, so it's possible I'm missing
+> >something here.  Possibly factoring in the chip serial number makes it
+> >harder to crack secret keys if you somehow manage to obtain a few chips
+> >from the same batch and open them.  But it certainly seems suspicious to
+> >me....
+> >
+> >---Walter
+
+
+-- 
+-=> mech@eff.org <=-
+Stanton McCandlish     Electronic Frontier Foundation Online Activist & SysOp
+"A nation that is afraid to let its people judge the truth and falsehood of
+ideas in an open market is a nation that is afraid of its people." -JFK
+NitV-DC BBS 202-232-2715, Fido 1:109/? IndraNet 369:111/1, 14.4V32b 16.8ZyX
+
+
+

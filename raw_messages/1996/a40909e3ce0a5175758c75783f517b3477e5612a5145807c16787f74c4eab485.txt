@@ -1,0 +1,35 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Sat, 13 Apr 1996 05:55:45 +0800
+To: perry@piermont.com
+Subject: Re: Protocols at the Point of a Gun
+In-Reply-To: <199604111740.NAA21264@jekyll.piermont.com>
+Message-ID: <199604112313.TAA23689@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Perry E. Metzger" writes:
+>Scott Brickner writes:
+>> Anyway, you computer creates the IP packet, but then sends it to your
+>> ISP's router.  That router *always* makes changes to the packet header
+>> because it must decrement the time-to-live field and recompute the
+>> header checksum.
+>
+>There is a trivial trick for making the decrement TTL/change checksum
+>operation very fast, based on noting how a decrement would change the
+>checksum. Most very high speed routers attempt to avoid doing ANY
+>processing of the packets at all beyond this, and IPv6 has no header
+>checksum partially in order to reduce this overhead further. Forcing
+>routers to do more work is a Very Very Bad Idea.
+
+As I pointed out in a private note to Perry, it's not the high-speed
+routers that have to change the packets.  They typically are between
+the sort of ISPs that would get "network common carrier" status, and
+could rely on the options added (or not) by the other side.  It's only
+when the packet crosses the border from outside the "common carrier"
+net to inside that the header needs changed, and that's usually at a
+terminal server, not a "very high speed router".
+
+
+
+

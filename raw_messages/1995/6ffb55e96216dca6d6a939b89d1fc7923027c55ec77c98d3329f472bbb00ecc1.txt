@@ -1,0 +1,109 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 4 Aug 95 10:02:55 PDT
+To: cypherpunks@toad.com
+Subject: Re:  Java and Safe-TCL security
+Message-ID: <199508041701.KAA10421@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The safe-tcl mailing list has not been active for a few months.  I think
+a lot of interest has transferred to Java.  One problem is that safe-tcl
+was oriented around email, so it lacks facilities for accessing web
+pages.
+
+I agree with Ray that the security of safe-tcl leaves something to be
+desired.  I implemented a safe-tcl mail filter which would automatically
+run incoming mail scripts which were in safe-tcl format.  This would be a
+generalization of a remailer, so that users could write scripts which
+would determine when the remailing would occur, etc.  However I ran into
+a number of problems, particularly related to persistent storage (e.g.
+disk file access).  This is a hard problem for a "safe" system to solve.
+
+One solution is to just forbid it, but beyond that you need to have rules
+about how much disk space a script can use, whether they can access each
+other's space, etc.  There are some nice applications if they can do so,
+for example the telescript model where two software agents come together
+and exchange some information.
+
+Another tricky issue is if you are going to let the script talk to the
+outside world via email or tcp connections.  How do you prevent abuse of
+this feature (sending junk email, or connecting to a web page and
+entering bogus data into a form)?  But again, without this capability the
+script is pretty much limited to drawing pretty pictures on your screen,
+which isn't very useful.
+
+Here is one message I sent to the safe-tcl list earlier this year
+describing some of these problems in a little more detail.  Note that
+there were also several bugs in the implementation which left security
+holes, things being checked in the wrong context and such.  This is
+similar to what Ray was citing.
+
+Hal
+
+> From owner-safe-tcl@CS.UTK.EDU  Fri Feb 10 22:30:35 1995
+> X-Resent-To: safe-tcl@CS.UTK.EDU ; Sat, 11 Feb 1995 01:22:02 EST
+> Date: Fri, 10 Feb 1995 22:21:28 -0800
+> From: Hal <hfinney@shell.portal.com>
+> To: safe-tcl@CS.UTK.EDU
+> Subject: setconfigdata and delivery time
+> Status: R
+> 
+> The spec appears to allow delivery-time scripts to do setconfigdata.
+> This is a mechanism for a script to store persistent data.  One application
+> would be a telescript-like interaction between scripts.  Some data could
+> be stored by one script and later read by another.  More interesting, a
+> script could even store some script, perhaps some or all of itself, into this
+> persistent store.  That script could then be read and eval'd by a later
+> script.  This way scripts could in effect call subroutines in each other,
+> providing somewhat similar functionality to telescript's procedure calls
+> between agents.
+> 
+> At activation time the user gets asked whenever a script does
+> getconfigdata, although oddly not when a script does setconfigdata.
+> Also, the .safetcl.conf file is written on any getconfigdata after the
+> user has supplied or confirmed a database value.  This will have the
+> side effect of writing out any setconfigdata values which have been
+> previously set by the script.
+> 
+> At delivery time the current implementation will not ask the user since
+> there is no user to ask, which causes the writing out of the config data
+> base never to happen.  So there is actually no way for a delivery time
+> script to set a persistent value right now.  It would be easy to change
+> the code to allow delivery time scripts to set persistent values with
+> setconfigdata.
+> 
+> However, this does open up a possible avenue for abuse.  There is
+> presently no limit on how much data is written with setconfigdata.  And
+> actually if the idea above were used where scripts put themselves into
+> the database for later running then the database could legitimately be
+> quite large.  The problem would arise if a script abused this capability
+> by filling the disk with junk database entries.
+> 
+> Maybe something is needed analogous to AutoConfirmMailHook to determine
+> whether a given SafeTcl_setconfigdata should be able to go out to the
+> disk.  It would want to be given the data as input and possibly also
+> the size of the current database.  Maybe there should be a counter of how
+> many times the current script has written to the database (or perhaps the
+> hook could retain this information itself).
+> 
+> Two other points: as mentioned before the use of the database to retain
+> "system" information conflicts with its use for this purpose.  If
+> database entries like "mailer" or "external-site" are changed and saved
+> to .safetcl.conf, that could break later invocations of swish.  I think
+> this system data should be somewhere else (or else there needs to be
+> another form of persistent store for scripts).
+> 
+> Secondly, the code right now checks the SafeTcl_evaluation_time
+> variable in the restricted interpreter to decide whether it should ask
+> the user.  This is not reliable as the untrusted script could change
+> SafeTcl_evaluation_time.  In other places the code checks
+> SafeTcl_InterfaceStyle and if it is empty then it doesn't ask.  That
+> seems safer.
+> 
+> Hal Finney
+> hfinney@shell.portal.com
+
+
+
+

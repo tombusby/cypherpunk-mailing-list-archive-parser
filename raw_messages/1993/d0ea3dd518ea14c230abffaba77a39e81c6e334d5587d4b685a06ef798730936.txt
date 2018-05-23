@@ -1,0 +1,197 @@
+From: Marc Horowitz <marc@MIT.EDU>
+Date: Fri, 22 Jan 93 23:40:06 PST
+To: pfarrell@cs.gmu.edu (Pat Farrell)
+Subject: Re: perl scripts for PGP
+In-Reply-To: <9301221257.AA10121@cs.gmu.edu>
+Message-ID: <9301230738.AA01650@deathtongue.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Marc,
+>> when you were here in DC, you mentioned some perl scripts that processed
+>> PGP output. Can you please send me a copy?
+
+yeah, and I'm cc'ing cypherpunks, since I think you all might be
+interested, too.
+
+This script has three functions.  All take the output of pgp -kvv as
+input.
+
+1) it "inverts" a pgp file, listing all the keys signed by a given
+key, as compared to giving all the keys which have signed a given key.
+
+2) given -kvv output (and it can merge several files of input
+automatically, since it hashes on key id), it lists all the keys which
+you (or any other key) have a path of signatures to, and the length of
+the shortest such path.  So, the specified key has a path length 0.
+All keys signed by that key have a path length 1, all keys signed by
+those keys have path length 2, etc.
+
+3) Optionally, it will list one of these paths for each key you can
+reach.  There may be many paths, so this is only for interest; to
+enumerate all paths would be painful.
+
+The most interesting use for this script is to see what your "radius"
+is (maximum distance to any key), and to see how big your "world" is.
+Needless to say, I wouldn't trust keys which have a long path length
+too much, if at all.  There are 155 keys in my "world" (out of a
+keyring of about 350).  My current radius is 7.  Tom, if you're in
+Boston anytime, my radius would decrease to 5 if I signed your key.
+That would be cool :-)
+
+		Marc
+
+#!/afs/athena/contrib/perl/perl
+
+#
+# $Id: pgputil.pl,v 1.7 1993/01/23 07:29:27 marc Exp $
+#
+
+## pgputil.pl. Copyright 1993, Marc Horowitz <marc@mit.edu>
+## 
+## This program may be freely redistributed and used as long as the RCS
+## Id, copyright, and this message are left intact.  It may also be used
+## as the basis for other programs, as long as this program is
+## acknowledged in the code and documentation, and it is made clear that
+## the new program is a derivative work, and not the original.  Although
+## not required, it would be nice if any modifications were sent back to
+## me.
+
+$save = "";
+
+sub next {
+    local($ret);
+
+    return() if !defined($save);
+
+    while(1) {
+	$_ = $save || <>;
+	$save = "";
+	if (! $_) {
+	    undef $save;
+	    return($ret);
+	} elsif (/^\s/) {
+	    $ret .= $_;
+	} elsif ($ret) {
+	    $save = $_;
+	    return($ret);
+	} else {
+	    $ret = $_;
+	}
+    }
+}
+
+sub parsekvv {
+    local($keyid,$ring,$lastpub);
+
+    while($_ = &next()) {
+	if (/^Key ring:\s+'(.*)'$/) {
+	    $ring = $1;
+	} elsif (m!^pub\s+\d+/([0-9A-F]+)\s+\d+/\d+/\d+\s+!) {
+	    $lastpub = $1;
+	    $publine{$lastpub} = $_;
+	    ($pubindent{$lastpub} = $_) =~ s!\d{4}/\d\d/\d\d!$&  !;
+	} elsif (/^sig\s+([0-9A-F]+)/) {
+	    $keyid = $1;
+	    $sigindent{$keyid} = $_;
+	    ($sigline{$keyid} = $_) =~ s/^(sig\s+[0-9A-F]{6})\s\s/$1/;
+	    $siglist{$keyid} .= $lastpub." " if $siglist{$keyid} !~ /$lastpub/;
+	}
+    }
+}
+
+sub findsigned {
+    local($level,@from) = @_;
+    local($tmp,@next);
+
+    foreach $hash (@from) {
+	next if (defined $depth{$hash});
+
+	$depth{$hash} = $level;
+	for $nexth (split(' ',$siglist{$hash})) {
+	    push(@next,$nexth);
+	    $signedby{$nexth} = $hash if !defined $signedby{$nexth};
+	}
+    }
+
+    if (@next) {
+	&findsigned($level+1,@next);
+    }
+}
+
+($zero = $0) =~ s!^.*/([^/]+)$!$1!;
+
+sub usage {
+    die  "usage: $zero signators [ file ... ]\n"
+	,"       $zero recurse [ -v ] <keyid> [ file ... ]\n";
+}
+
+sub signators {
+    &parsekvv();
+
+    print "Type bits/keyID   Date       User ID\n";
+
+    foreach $hash (keys %siglist) {
+	next if ($sigline{$hash} =~ /Unknown signator/);
+
+	print $sigline{$hash};
+	foreach $pubhash (split(' ',$siglist{$hash})) {
+	    print $pubindent{$pubhash};
+	}
+    }
+}
+
+sub recurse {
+    for (@ARGV) {
+	if (/^-v/) {
+	    $verbose++;
+	} else {
+	    push(@newargv, $_);
+	}
+    }
+    @ARGV = @newargv;
+    $keyid = shift(@ARGV);
+
+    if ($keyid !~ /^[0-9A-F]{6}$/) { &usage; }
+
+    &parsekvv();
+    $signedby{$keyid} = "";
+    &findsigned(0, $keyid);
+
+    foreach $pubhash (keys %depth) {
+	$out{sprintf("%02d%s",$depth{$pubhash},$pubhash)} = 
+	    sprintf("%2d %s",$depth{$pubhash},$publine{$pubhash});
+    }
+
+    foreach $k (sort keys %out) {
+	print $out{$k};
+
+	if ($verbose) {
+	    $sig = $signedby{substr($k,2,6)};
+
+	    while($sig) {
+		($x = $pubindent{$sig}) =~ 
+		print "   ",$x;
+		$sig = $signedby{$sig};
+	    }
+	}
+    }
+}
+
+
+## dispatch
+
+$cmd = shift(@ARGV) || &usage();
+
+if ($cmd =~ /^s/) {
+    &signators();
+} elsif ($cmd =~ /^r/) {
+    &recurse();
+} else {
+    &usage();
+}
+
+
+
+

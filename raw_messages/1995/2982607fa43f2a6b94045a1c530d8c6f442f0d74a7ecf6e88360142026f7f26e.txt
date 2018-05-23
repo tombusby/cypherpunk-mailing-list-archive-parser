@@ -1,0 +1,55 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Sun, 5 Feb 95 16:45:30 PST
+To: perry@imsi.com
+Subject: Re: The SKRONK protocols (version 0.6)
+In-Reply-To: <9502060008.AA03105@snark.imsi.com>
+Message-ID: <199502060048.TAA19441@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>
+>Matthew J Ghio says:
+>> sdw@lig.net (Stephen D. Williams) wrote:
+>> 
+>> > UDP won't get through most firewalls.
+>> 
+>> I'm working on a program that gets around this.  It creates a IP tunnel
+>> by setting up a SLIP interface on a encrypted TCP stream and routes
+>> packets through that.  It's not completely finished but it does work. 
+>> Send me mail if you want it.
+>
+>Pardon but... why? Whats the reason for wanting to do this?
+>
+>If a firewall has been set up to stop UDP, then it should stop UDP. If
+>the firewall has not been set up to stop UDP, or has a mechanism like
+>the experimental versions of "socks" currently being played with that
+>relay UDP, then there is no reason to want to do the above. I don't
+>really understand what the idea is here.
+>
+>Perry
+>
+
+Actually, tunneling through a telnet connection on an application-level
+firewall does have its place, especially when the firewall's
+granularity of authentication is designed only to bind authorized
+people to telnet connections.   This way, the firewall need only
+enforce a very simple access control model (which is easier to
+verify is working correctly) and need make very few authentication
+decisions on a per-packet basis.
+
+The down side (which is why I don't do this myself) is that you
+have to be careful that the external end of the tunnel does not
+forward IP packets from the rest of the net and is otherwise
+reasonably secure, or one such connection is enough to eliminate
+any security benefits the firewall might otherwise have offered.
+It's not clear there's much a telnet firewall can do to prevent
+tunnels, however, so we might as well at least make them secure as
+we can.
+
+-matt
+
+
+
+

@@ -1,0 +1,51 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Tue, 24 Oct 95 21:40:12 PDT
+To: Jon Mittelhauser <jonm@netscape.com>
+Subject: Re: Does your software?
+In-Reply-To: <308D0DA4.7ED@netscape.com>
+Message-ID: <Pine.SOL.3.91.951024210756.18616A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 24 Oct 1995, Jon Mittelhauser wrote:
+
+> Dr. Frederick B. Cohen wrote:
+> 
+> > Yet it services more than one request per minute, 24 hours, 7 days, and
+> > has done so without denial of services, corruption, or leakage since its
+
+> I really tried to resist but....
+> 
+
+Thanks for saving me from the temptation but I guessed you were so taken 
+aback by the performance claims that you missed the most amazing claim: 
+an httpd that is proof against Denial Of Service. I'd love to know how 
+Dr. Fred does this, since DoS is believed impossibly to defend against 
+for unauthenticated TCP...
+
+The usual DoS attack is to send a stream of connection-initiating SYNs to 
+the target port, and never ACK the returned SYN. This fills up the listen 
+queue, and jams the port. As long as you can generate SYNs faster than 
+the TCP implementation times out the older pending requests, the port is 
+jammed (modulo a small window of, er, invunerability between one of your 
+SYNs timing out and its replacement turning up). 
+
+Ob Crypto:
+
+  Has anybody thought about running Photuris over a TCP connection to do 
+application-level key-exchange? The cookie stuff isn't really needed in 
+this application, but it's still quite a nice wheel.
+
+Simon
+
+ -----
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

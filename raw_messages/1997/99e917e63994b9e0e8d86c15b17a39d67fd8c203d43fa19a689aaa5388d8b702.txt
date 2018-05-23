@@ -1,0 +1,44 @@
+From: tzeruch@ceddec.com
+Date: Tue, 24 Jun 1997 06:06:24 +0800
+To: Steve Schear <azur@netcom.com>
+Subject: Re: Sources for stego images, was re: Laying PipeNet
+In-Reply-To: <v03102804afd38b324730@[10.0.2.15]>
+Message-ID: <97Jun23.180055edt.32257@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Sun, 22 Jun 1997, Steve Schear wrote:
+
+> >That's the major problem with images, you need to generate your own.
+> >Unless you fancy writing an image enhancement system, and analyse the
+> >algorithms in existing systems to ensure that randomness is
+> >introduced.
+> >
+> 
+> There are plenty of Net-cams watching traffic or sunsets around the world.
+> Since these images tend to change a bit from frame to frame they could
+> cheaply and reliably provide the sorts of images which are ideal for stego.
+> I'm not sure if you can frame-grab from such a changing Web page with the
+> current browser features, but this should be a significant hurdle.
+
+Or, set up your own webcam "to watch your coffee pot twice a minute" or
+something. Merge the crypto stream through the gifs after tweaking the
+brightness and contrast to avoid 0 and 255 (a light fixture with a pattern
+of 254/255 values gets suspicious, and is not from thermal noise - a
+"problem" with monochrome quickcams for night photography).
+
+Then do something like
+
+  lynx -source webcam.x.y/images/coffee.gif | destegodecrypt >>reconstruct
+
+every 30 seconds (with some kind of dropout correction).  [lynx is a
+textmode browser that works well for these types of things].
+
+Or even an AVI for both video and sound stego.
+
+
+
+
+

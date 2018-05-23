@@ -1,0 +1,39 @@
+From: Thomas Grant Edwards <tedwards@src.umd.edu>
+Date: Thu, 24 Aug 95 15:24:31 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Re: brloop not working
+In-Reply-To: <"swan.cl.cam.:242090:950824214413"@cl.cam.ac.uk>
+Message-ID: <Pine.SUN.3.91.950824181938.22646H-100000@thrash.src.umd.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 24 Aug 1995, Piete Brooks wrote:
+
+> That's the problem -- "brclient -dklLtssl" failed to return any keys,
+> [ congestion of the server :-((( ]
+> so brutessl was called with just the "-" which brloop put there.
+
+I see that can happen, but there is also:
+
+++ brclient -dklLtssl
+++ brclient -AlLtssl
+++ read a
+++ read a
+++ nice -20 brutessl - 2977 d42f 1
+usage: brutessl [-q] <filename> <checksum> <start segment> <no of segments>
+       brutessl [-q] -r <filename> [<no of segments>]
+       brutessl [-q] -t [<hours>[:<minutes>]]
+++ echo
+
+Where apparently I did get d42f, but brutessl 1.02 choked - I am going to 
+take the advic of the other poster and add the "--" to the command.
+Again this is on a Linux box.  I suggest that other Linuxers check their 
+logfile for this behaviour.
+
+-Thomas
+
+
+
+
+

@@ -1,0 +1,33 @@
+From: Eric Fogleman <Eric.Fogleman@analog.com>
+Date: Wed, 27 Jan 93 14:51:10 PST
+To: thug@phantom.com
+Subject: Limiting "white" noise runlength
+Message-ID: <9301272248.AA18636@ack.adstest.analog.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mr. Thug,
+
+In talking about "white" noise, you mentioned:
+
+> Yes I do think the idea of making a "more random than random" stream
+> by filtering out long runs of 0's or 1's weakens the the key stream
+> in theory, but in practical use it strengthens it, because if the stream
+> is left alone, runs of 500 bits of 0's or 1's can come through, and any
+> fool can then extract plain text using XOR in this area of the cyphertext.
+> LZW compression of the plaintext helps, but I feel that it is far better
+> to reduce the possibility of a key stream containing long runs of 0's or
+> 1's, than to leave it alone.
+
+Why not feed back the previously encrypted bits to perform the
+"present" encryption (something like cipher block chaining) to keep
+this from happening?  Then any particular encrypted character will
+depend on *all* previous characters and break up runs of "plaintext".
+That seems much better than un-whitening your white noise...
+
+Eric Fogleman
+
+
+
+

@@ -1,0 +1,52 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Fri, 12 Mar 93 21:06:58 PST
+To: cypherpunks@toad.com
+Subject: Re:  HIDE: embedding msgs into snd & graphics
+In-Reply-To: <9303120852.AA03893@sting.Berkeley.EDU>
+Message-ID: <9303130506.AA18442@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> And once you try to hide data in a lossy encoding scheme, you run
+> into a lot (though not all) of the problems you have with colormaps.
+
+I think it's even worse... with unlossy compression, you can frob
+the uncompressed bits and just lose compression.  With lossy, you
+can't do that, because your message will be smeared away.  And
+frobbing the compressed stream will produce ghastly artifacts.
+
+But not all images will be lossily compressed.  I find that JPEG,
+for example, usually introduces too much gunk to be useful.
+Certainly, sending an LZW TIFF should be above suspicion for quite
+some time.
+ 
+> It would be a lot easier to hide data in an image if one had a control-image
+> (the original) as well as the altered-image (the one holding the message),
+> but this defeats half the niftiness of trying to do things this way.
+
+Yeah, this is just a cheesy OTP.  Not much point, really.
+
+I've been thinking about the GIF case; the "optimize for colormap
+cyclic continuity" technique looks like it will produce better
+images than the "crunch to 128 colors".  Since I have to write some
+annealing code for a neural-net trainer, maybe I'll repackage it for
+colormap optimization and see what the results look like.  If you
+wanted minimum visible crud, you could start with a true-color pic,
+find the colormap, order it, and dither down -- rather than adding
+white noise to pre-existing dithering.
+
+You know, I think I've been taking the graphics-weenie approach to
+this.  Who cares how the image looks?  Who cares if it's even an
+image?  Just take your damned PGP file, ^=0xff it, and rename it
+"hotbabe.gif".  uuencode and mail.  The NSA is not going to be
+viewing every picture you send, I hope.  This fails on "plausible
+deniability", I guess.
+
+>     -J.
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

@@ -1,0 +1,57 @@
+From: Bill Sommerfeld <sommerfeld@orchard.medford.ma.us>
+Date: Mon, 24 Jul 95 05:27:19 PDT
+To: perry@imsi.com
+Subject: Re: Netscape the Big Win
+In-Reply-To: <9507231958.AA00910@snark.imsi.com>
+Message-ID: <199507241221.MAA00651@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+R$ wrote:
+> > I have serious concerns about whether the DNS stuff will really scale.
+> > It's gonna blow out DNS server memory use, and the bigger packets means
+> > a *lot* more TCP (vs UDP) activity.
+
+Perry wrote:
+> I'm not that worried. HESIOD has already shown that you can afford to
+> store really mongo databases in the DNS, and with caching I suspect
+> the TCP activity isn't going to be over very wide distances for the
+> most part. 
+
+Perry's right.
+
+With a fairly current BIND (named), MIT stores on the order of 100-200
+bytes of data per Athena user for ~25000 users.  MIT's been doing this
+for years; for the longest time, they were using ~1 MIPS Vaxstation
+II's with ~9MB of memory as DNS servers.  
+
+1024 bit RSA public keys are ~128 bytes, as are digital signatures.
+If we allow framing and similar stuff to expand the size of the data
+to 150 bytes per key/signature, and if each user had a signed key in
+the DNS, this would roughly triple the amount of data in the DNS.
+
+This Is Not A Problem.
+
+I haven't looked at the CPU load needed to compute the signatures, but
+that takes place off-line, not on-line.
+
+					- Bill
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.1
+
+iQCVAwUBMBOQTbT+rHlVUGpxAQEwrgP9HRftK+uw1zDQuLEy8uCe58QHwVXNXJTy
+8fxoK5+k7d56/k55l6yVjTrBUnSCRZibukQLididjnkDr3P7Qv3cdafkkSxxTY/5
+PMeDL3lYZ2GhjNBkVvRt554b1iL/Gaq/ckbwTpVvcMeUeN0HqWvYMEXnqTIzye8u
+1i9kqo6ENiw=
+=fqe9
+-----END PGP SIGNATURE-----
+
+
+
+

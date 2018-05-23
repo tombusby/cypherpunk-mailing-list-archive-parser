@@ -1,0 +1,48 @@
+From: "Robert A. Rosenberg" <hal9001@panix.com>
+Date: Tue, 11 Jun 1996 17:23:03 +0800
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Anonymous return addresses
+In-Reply-To: <199606082329.QAA14538@jobe.shell.portal.com>
+Message-ID: <v03007102ade2846cf37a@[166.84.254.3]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 16:29 -0700 6/8/96, Hal wrote:
+
+
+>There is no large amount of traffic needed, as each server only sends an
+>amount of data equal to one message.  The individual servers do not get
+>any information about which message the requestor wants (other than that
+>it is one of the 50).  Only by colluding and XOR'ing their bit strings
+>can they figure that out.  The same kind of collusion is needed to trace
+>a sent message using two remailers, so the security is similar to what we
+>get sending messages.
+
+If the message is split into more than one part (to meet the message size
+requirement) there is some potential leakage to each server of what message
+is being requested. If User a requested 3 messages, then they MAY be
+requesting all three parts of a 3 part message (or 2+1). If a record is
+kept of the number of requests over time, then there can be some regression
+checking based on the ID (ie: If the number of new messages for ANx in the
+DB matches the number that User Y requests in the current session). I may
+be in error with this thought but it looks like a possible problem.
+
+>Messages would have a finite lifetime and would expire and be removed
+>from the database after a while.  The authors propose breaking the
+>database up into batches with a fixed number of messages, but I don't
+>fully follow the reasoning behind this.  I guess it reduces the load on
+>the server when it does its XOR's.
+
+This can also affect the "attack" I speculated on above since it can "leak"
+more info. Multi-part messages (or multiple messages to the same recipient)
+which are retrieved in one session can be correlated between the groups
+(ie: User Y asked for 5 messages [Selected from Groups 1&5] and ANx is the
+one AN? that has the requested number of messages in each of the Groups
+[ie: 3 from G1 and 2 from G5]).
+
+
+
+
+
+

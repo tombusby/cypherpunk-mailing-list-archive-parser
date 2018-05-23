@@ -1,0 +1,62 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Wed, 20 Sep 95 20:38:49 PDT
+To: cypherpunks@toad.com
+Subject: Random Number State
+In-Reply-To: <9509202150.AA08164@toad.com>
+Message-ID: <Pine.SOL.3.91.950921113535.21127D-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Some some ramblings on the RNG seeding issue, comments welcome.
+
+I'm sort of in the position of Netscape in that I have an SSL library 
+that needs good random numbers for both RSA key generation (soon DH)
+and SSL sessions.
+While most of the discussions have been how to generate random data, one 
+solution I will probably follow is that when any 'semi-random' data is 
+generated, make sure to save this for seed data the next time the
+application starts.  I have faith in the RNG capabilites of my RNG (based 
+on MD5) and my RAND_seed() routine only 'adds' to the RNG state (about 
+1k's worth is kept).  I can continue to 'mix' the RNG state at any point in 
+time.  My RND_seed() xors into the existing state, it does not overwrite.
+
+Because my SSL/encryption library contains 'everything', I have the
+ability to put calls to my RNG_seed() routine in places like when I 
+decrypt a private key.  I can pass both the password (if the key was 
+encrypted) and the private key 
+into the RNG state (making sure any data that goes into the RNG state 
+can not be determinied if a 'core' file is generated).
+I will probably also put the time() into the RNG state whenever an 
+SSL_connect or SSL_accept is made (I think I do already).  I may also put in 
+select data that has been read from the remote host
+While most of this data can be determined by watching 
+network activity, if it is just a delta to the initial random 
+state it is somewhat more useful.
+
+The first time use 'x' runs the application they are made to 'generate' 
+some reasonable random data.  For all subsequent executions of the 
+program, any more semi (psuedo?) random data generated can be mixed in 
+with the initial random data.  The profile of the usage of the 
+application would end up determining the random data to use.
+
+I feel it is a bit much to try to generate good random data every time 
+an application is run.
+
+I believe this is the type of aproach PGP uses (I have not looked at the 
+code).
+
+eric
+PS  I also do some 'evil' things in that I load 'garbage' bytes from the 
+    stack into my RNG state whenever the RNG is called.  It may not be 
+    random, but I bet it is hard to determine from the outside the 
+    running program :-)  It can only help :-).
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

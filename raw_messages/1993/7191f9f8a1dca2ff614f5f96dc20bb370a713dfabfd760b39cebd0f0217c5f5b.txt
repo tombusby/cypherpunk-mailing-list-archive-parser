@@ -1,0 +1,44 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Wed, 7 Apr 93 12:39:02 PDT
+To: cypherpunks@toad.com
+Subject: Real-time BBS Encryption??
+In-Reply-To: <01930407174710/0005857625DC2EM@mcimail.com>
+Message-ID: <9304071935.AA26846@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Re: encrypting modem links
+
+>I'm wondering if there is a way to do this with PCs?  
+
+Yes, with difficulty, and not transparently.
+
+>Is there a way to encrypt a remote users entire connection with
+>the BBS, so that they would have to have a special term program to access
+>the system?  
+
+For PC's, replacing the terminal software is really the best way.
+There is no effective abstraction of serial port hardware in the PC
+world.  The int 0x14 driver in the BIOS was rampantly defective, and
+MSDOS does not provide a standard interface.
+
+As a result, almost all comm software on PC's talks to the serial port
+directly.  Now in MS Windows, there is abstraction for ther serial
+ports, but I don't know how easy it is to insert a device layer.
+
+>It would be best if the user only had to load a device driver
+>or something so that they wouldn't all have to use the same comm program.
+
+It might be possible, using a 386, to make a driver that acted as if
+it were hardware but actually did encryption.  Ick.  Reliability and
+cross-program compatibility would be shit.  And it would have to be
+made compatible with whatever else was taking over the 386.
+
+Remember: I hate DOS.
+
+Eric
+
+
+
+

@@ -1,0 +1,86 @@
+From: Marc Horowitz <marc@MIT.EDU>
+Date: Sun, 29 Nov 92 13:27:17 PST
+To: cypherpunks@toad.com
+Subject: crypto dongle design problems
+Message-ID: <9211292126.AA22394@deathtongue.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A few comments on "Detailed Scenario of Dongle Usage":
+
+>> So, you walk up to ANY terminal directly connected to a host, or to a
+>> terminal server, or a personal computer of any kind connected through a
+>> modem, or borrow someone's laptop connected to a cellular modem.
+
+As several people have pointed out, terminals are passe'.  In general,
+my mail never goes over a serial line.  Here at MIT, most people have
+unix machines on their desks.  Mail is composed on the unix machine,
+sent via ethernet to the mail hub, and received via POP or NFS from
+the mailhub.  To make life worse, often, the machines are in public
+clusters where anyone can log in.  And, (sit down here), the root
+password for these public machines is well known.  (The servers' root
+passwords are a closely guarded secret.)  So, for me, the
+crypto-dongle is almost completely useless. 
+
+>> Call up, or telnet, dial up a bbs, or connect through any other means,
+>> to your host, and log in.
+
+Except IP.  One of my machine at work runs SLIP over its serial port.
+What am I supposed to do now?
+
+>> Any time an encrypted message is displayed whose public key ID matches
+>> one of the private keys on your keyring, the dongle temporarily buffers
+>> the message it into its RAM, flashes the "decrypt" LED, while
+>> decrypting the message. 
+
+Someone else mentioned this, but I didn't understand your response.  I
+read mail in emacs, a full-screen editor.  it displays the first
+screenfull, and I hit space to scroll down.  Does the dongle recognize
+emacs and hit space, or what?
+
+>> Now, press the "encrypt" button on the dongle.  It presents you with a
+>> simple line editor, that works with any terminal or terminal emulation,
+>> but is reasonably easy to use (something like most bbs-es use for
+>> composing messages).  You type your message, or if it was prepared
+>> ahead of time on the local equipment, you transmit the text.
+
+So, I'm trusting the local equipment with my private message.  Even if
+I'm only "typing directly to the serial port", how do I know if my
+friend's borrowed laptop has been (maybe unknowingly) modified to
+store the data?
+
+Similar problems arise with all the other sample applications you
+describe.
+
+More personal comments:
+
+I've had several years of experience designing large-scale systems
+incorporating security features.  One of the most valuable lessons
+learned is that security and privacy must be designed into a system
+from the beginning, not added later.  Ease of use comes from design,
+not hacks, which inevitably fail.
+
+My view of a useful crypto-dongle is more like Phil's.  A device with
+one serial port, which stores my private keyring.  It has functions to
+list the keys it has (names and hashes, not keys), to decrypt a
+message (while displaying some external indication of having done so),
+and to sign a message (again, with display).  Programs would have to
+be modified to use the dongle to do the appropriate very sensitive
+crypto stuff, and I can do the DES or other work on my desktop
+machine.  I forsee the dongle being made of a well-known CPU or MCU
+(easily verifiable), an EPROM (software), a static RAM (long-term,
+encrypted storage of keys), a DRAM (short-term cleartext storage and
+buffering), a UART, an input keypad of some sort, a small (say 1x20
+LCD display for simple output, and perhaps a special chip for the
+math.  Sources to the EPROM would be available, of course.  Paranoid
+people could burn their own chip (assuming they trusted the programmer
+:-).  Yeah, this isn't much use on a dumb terminal, but dumb terminals
+aren't of much use nowadays, anyway.
+
+		Marc
+
+
+
+
+

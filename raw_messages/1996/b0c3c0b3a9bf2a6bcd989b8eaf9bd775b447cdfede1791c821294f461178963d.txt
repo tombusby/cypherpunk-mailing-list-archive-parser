@@ -1,0 +1,38 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 24 Jan 1996 16:10:33 +0800
+To: cypherpunks@toad.com
+Subject: Re: An IDEA whose time has come (Notes from the RSA Conference)
+Message-ID: <199601240749.XAA22962@ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:52 AM 1/22/96 -0800, Jonathan Zamick <JonathanZ@consensus.com> wrote:
+> Right now I'm trying to convince Ascom to develop a
+> crippled version of IDEA to simply give away if anyone wants it for export.
+> (Like most of the folk here, I don't see a 40 bit key as very valuable, but
+> it is useful for companies which don't have contacts in Europe.)
+
+A crippled version is easy - generate a 128-bit random key, make 88 bits
+available as salt, leaving 40 hidden bits.  The problem is how to make the
+salt-bits available without interfering with applications and protocols.
+If you wanted a 64-bit crippled version, most applications need 64 bits
+of IV anyway, so you could use 64 bits of salt for that, leaving 64 more.
+To do a 40-bit version, you _could_ use 64 bits of salt and wire down the
+other 24 bits into a well-known pattern instead of choosing them randomly.
+That's three characters of ASCII, and I'd suggest "NSA" as the obvious
+pattern :-)
+
+So generate your 128-bit random number, replace the first 24 bits with "NSA",
+copy the 64 bits into the IV, and use it for your key.
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, Pager/Voicemail 1-408-787-1281
+#
+# "Eternal vigilance is the price of liberty" used to mean us watching
+# the government, not the other way around....
+
+
+
+
+

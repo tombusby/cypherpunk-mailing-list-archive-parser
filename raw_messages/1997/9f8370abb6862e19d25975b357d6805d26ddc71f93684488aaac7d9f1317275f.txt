@@ -1,0 +1,91 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 31 Oct 1997 02:17:02 +0800
+To: mark@unicorn.com
+Subject: Re: PGP Employee on MKR
+In-Reply-To: <878217099.27123.193.133.230.33@unicorn.com>
+Message-ID: <199710301714.RAA03038@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Marc Grant <mark@unicorn.com> writes:
+> stewarts@ix.netcom.com wrote:
+> 
+> > Not true - you can't implement CMR without a mail enforcer unless
+> > you can stop your employees from using non-CMR versions of PGP,
+> > which is nearly impossible.
+> 
+> No, you can't enforce corporate snooping without a mail enforcer. You can
+> meet the corporate demands which PGP claim to be supporting without a
+> mail enforcer. There's a difference.
+> 
+> The only real benefit of CMR over the alternate systems suggested is that
+> the corporation can snoop on all email sent to their employees. 
+
+You can build more secure alternatives even for corporate mesage
+snooping.  Key escrow is better, or placing proxy keys on the server
+to convert a copy of the message to the company snoop key.
+
+> Yet PGP Inc have claimed on several occasions that this is not their
+> intention.  Odd, that.
+
+One PGP employee explained the perceived user requirement:
+
+Scenario #1: employee is away from desk (holiday, out of office, off
+sick) and mail arrives which is marked URGENT -- what now?
+
+Scenario #2: employee quits jon in a huff, refuses to divulge
+passphrase, lots of queued encrypted email -- what now?
+
+Scenario #3: employee dies, lots of email queued, what now?
+
+Well some people have argued that it's not a big deal, just get the
+sender to re-send encrypted to a different person.
+
+Whatever.  Anyway the argument against CMR is not that it allows
+companies to read employees mail when addressed to a company use email
+address encrypted to a company use key -- that seems reasonable
+enough for some applications. 
+
+The problem with CMR is that it's a) a security flaw, b) it is open to
+abuse by governments.
+
+Scenario #4: user forgets passphrase
+
+which is arguably the most likely and frequently occuring failure is
+badly addressed by PGP Inc with pgp5.5 -- the key is lost.  Their
+recovery from this failure is to generate a new key, and have the
+company decrypt anything which needs to be read.  This is messy
+because encrypted materials can be scattered everywhere (they use the
+same key for storage as for email)... on the disk, write once CD
+archives, tapes, inside ZIP archive files, etc.  And to do the job
+properly all of these need to be decrypted by the corporate recovery
+czar and re-encrypted to the users new key.
+
+Simplest solution is simply to have a copy of the users key, or store
+a copy on the disk in a form the recovery agent can recover ready for
+the user to type in a new passphrase.
+
+
+You can still have separate personal use keys -- the user forgets the
+passphrase for these at his own peril and has his own backup mechanism
+(copy written down at home hidden somewhere, or whatever, or simply
+not recoverable at all).
+
+And signature keys should not be recoverable -- generate a new one and
+have it re-certified.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

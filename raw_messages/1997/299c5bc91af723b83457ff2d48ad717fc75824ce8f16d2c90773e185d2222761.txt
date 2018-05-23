@@ -1,0 +1,39 @@
+From: Bill Frantz <frantz@netcom.com>
+Date: Tue, 21 Oct 1997 15:11:53 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Interactive Programming - Self-modifying code
+In-Reply-To: <199710201628.LAA08124@einstein.ssz.com>
+Message-ID: <v0300782bb071f9608678@[207.94.249.37]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 5:24 PM -0700 10/20/97, phelix@vallnet.com wrote:
+>I would think that self modifying code would play havoc with today's
+>pipelined and superscalar processors (if s&m code would even work on such
+>beasts).  Then they're those OS's that won't allow you to muck with code
+>space.  However, I guess it will always have a place in the embedded world.
+
+All OSes have a form of self modifying code which fetches programs (as
+data) from disk and then executes them (as programs) in memory.  They need
+a way to flush the data cache so the instruction cache can read it.
+
+The place where it becomes expensive in modern processors is when the
+processor has seen a word as an instruction, and then you want to change it
+and have the new value again interpreted as an instruction.  The way to
+"legitimately" do this varies by processor.  IBM mainframes detect it
+automagically and "do the right thing".  SPARCs require a special "flush"
+instruction to clean out the processor I-cache/pipeline.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | Internal surveillance      | Periwinkle -- Consulting
+(408)356-8506     | helped make the USSR the   | 16345 Englewood Ave.
+frantz@netcom.com | nation it is today.        | Los Gatos, CA 95032, USA
+
+
+
+
+
+

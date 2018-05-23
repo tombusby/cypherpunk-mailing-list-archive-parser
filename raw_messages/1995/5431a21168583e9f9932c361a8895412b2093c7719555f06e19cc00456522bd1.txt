@@ -1,0 +1,105 @@
+From: Johnathan Corgan <jcorgan@aeinet.com>
+Date: Tue, 7 Feb 95 19:29:22 PST
+To: weidai@eskimo.com
+Subject: RE: a new way to do anonymity
+Message-ID: <Chameleon.4.01.950207192939.jcorgan@comet.aeinet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>This is what I wrote:
+
+>> Imagine a server that allows you to open a 
+>> low bandwidth (let's say around 100 cps, in order to reduce costs)
+>> link-encrypted telnet session with it, and provides you with a number 
+>> of services, for example a link-encrypted talk session with another 
+>> user.  You'll need to maintain the link 24 hours a day to defend 
+>> against statistical analysis, and of course you can chain a number of 
+>> these servers together in a way similiar to chaining remailers.
+
+There are many, many analogies you can draw about a network of this type
+to an ATM (asynchronous transfer mode) network.  By simplifying just slightly
+from what you describe to only include an encrypted, switched-pipe methodology,
+you now have a "cloud" type network with service entry points that are defined
+by a pair of byte streams (one in each direction).
+
+The switched path could be set up and torn down dynamically by the user by
+interacting with the "switch" at each point to select the next hop the 
+encrypted byte stream will follow.  Of course, just like in remailer chaining,
+the data that indicates which hop to follow is encrypted with the data in a
+form only the switch can decrypt.  Alternatively, once a path is set up between
+switches, it can be assigned a virtual path identifier that has only local
+significance at each hop, with the switch performing a lookup to forward
+packets and substituting a new path number with significance at the next hop.
+
+The above description is pretty unclear, I think, but many of these concepts 
+have been fleshed out to a significant amount of detail in ATM circles.
+
+Fixed length data packets (at the encrypted telnet level) also make it very
+easy to aggregate individual circuits into higher bandwidth pipes that
+connect server to server.  With these continuously running with cover traffic,
+individual circuit establishment is much more immune from traffic analysis.
+Cover traffic is substituted with real traffic as necessary, up to the bandwidth
+of the pipe.
+
+To summarize, what has been described is a method to establish a "network within
+a network", using encrypted telnet, to provide a connection oriented, unreliable
+packet switched link layer protocol.  Sounds remarkably similar to IP (except
+for the connection oriented portion of it.)
+
+What can you do with a network like this?  By layering a TCP process on top of 
+this "Pipe-Net" IP like service, any of the standard TCP based application 
+protocols can function between two end point systems, such as SMTP, FTP, HTTP,
+etc.
+
+What is so neat about this is that it could probably be done in user space,
+and since the packet based protocol is defined as unreliable, switches could
+come and go, with some sort of switch-to-switch protocol that propagates route
+availability.
+
+Eric, you could probably chew on the trust implications of all this.
+
+Perry, I'm sure all the IPSP/SSL/SOCKS/whatever stuff you know so well could
+provide a lot of building blocks for this type of thing.
+
+Wei, your traffic analysis treatment of this sort of thing would go a long way
+toward uncovering weaknesses and determining operational requirements and 
+limitations.
+
+Tim, what massive social effects would it have if this type of network service
+were to become widely deployed? :)
+
+At first glance, this Pipe-Net idea doesn't seem to take a lot of rocket science; 
+it seems that most of the components or algorithms are are already in use, just 
+in a very different way.
+
+I can think of a number of problems already, however.  Spamming.  Bandwidth
+limitations.  Complexity of client and switch software.  Standards.  Flow
+control.
+
+In other works, all the stuff the ATM forum is already dealing with :)
+
+Come to think of it, has anyone thought of something like this before?
+
+==
+Johnathan Corgan       "Violence is the last refuge of the incompetent."
+jcorgan@aeinet.com                    -Isaac Asimov
+WWW:                     ftp://ftp.netcom.com/pub/jc/jcorgan/home.html
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLzg6ME1Diok8GKihAQEBygP/do7MnM2Ha/b3nYNeVb/7mpJqAwgke3D6
+VlyhtVjxTM2tn42Voz47BtwTMiR+zkiwI5Ha3EQs/fpJGY7x69YGY+arGXAn/VsI
+Xq7/onQd/LOv8JAjrxrgH2gLTCmfs57+sLJXqghHmSrxgothsK8XRLY1HDoYDfai
+EgiNUmMTXEM=
+=ENYC
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

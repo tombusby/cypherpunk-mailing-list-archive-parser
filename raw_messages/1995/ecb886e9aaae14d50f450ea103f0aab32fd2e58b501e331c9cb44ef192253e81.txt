@@ -1,0 +1,41 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Sun, 29 Oct 1995 02:26:39 +0800
+To: Paul Koning               1695 <pkoning@chipcom.com>
+Subject: Re: Linux security issues
+Message-ID: <199510281804.LAA14320@netcom15.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>Actually keeping the pass phrase out of swap space is fairly easy (although
+>>I havn't looked at the PGP code to see if it actually does this).
+>>...
+>>However, the pass phrase is not the only dangerous information.
+>>...
+>>N.B. This problem affects all virtual memory operation systems.
+>
+>Not all of them.  In at least one (VMS) you can pin pages in physical 
+>memory,
+
+Good point.  Too bad the invocations of pinning aren't portable.  Maybe in
+the next POSIX.
+
+>Actually, any OS that does I/O directly to user pages has that capability in 
+>the kernel...
+
+All the OSs I am familar with pin the pages only for the duration of the
+I/O operation.  After the I/O has completed, the page can be swapped out. 
+What you really need is to pin the page in memory (with an implicit
+contract with your OS that it won't be written to swap space while it is
+pinned), put the sensitive information in the page, use the information,
+wipe the information, and un-pin the page.
+
+I wonder if NSA has built a virus to collect PGP keys?
+
+Bill
+
+
+
+
+
+

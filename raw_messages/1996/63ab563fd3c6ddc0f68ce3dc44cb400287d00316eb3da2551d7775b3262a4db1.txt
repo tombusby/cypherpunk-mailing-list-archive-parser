@@ -1,0 +1,74 @@
+From: Jeremiah A Blatz <jer+@andrew.cmu.edu>
+Date: Fri, 15 Nov 1996 10:13:21 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Mounting Crypted directories on Multiuser Machines.
+In-Reply-To: <199611150654.AAA01811@smoke.suba.com>
+Message-ID: <0mX=9z200YUe0_o5E0@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+snow <snow@smoke.suba.com> writes:
+<sniup description of user directories>
+>        and inside each directory they have:
+>  
+>        /home/usr1/html/
+>                  /files/
+>                  /.login    
+>                  /.usr1crypt
+>  
+>       such that /.usr1crypt gets mounted at _login_ time as a crypted file
+>  system under /files.
+
+Umm, I guess you could make mount setuid root or something. Is this
+just a linux thing? But wait, there's more.  
+
+>       Or am I missing something more basic? 
+
+Yup.
+
+>       It would seem that running something like this would do 2 things.
+>    
+>       1) It would be much more difficult to prove that a service provider 
+>          knew what files a user was keeping lying around because unless
+>          the user was logged in, not even the Sysadmin could "peek" at the
+>          files.
+
+There's nothing to prevent root from grabbing your password when you
+log in. Root can see *everything.*
+
+>       2) Provide the user with greater privacy. Users could keep PGP keys 
+>          on the system without much risk, and as long as access was either
+>          thru the console, or thru something like ssh, you should be rather
+>          safe. 
+
+If a user on the system has your password, they can edit your .login
+to give them your filesystem password. If they have the root password,
+well, you're screwed.
+
+AKAIK, the only benefit od encrypted drives is that the sysadmin
+cannot be forced to reveal the contents of the drive (5th amendment
+and all). You could do the same thing on a multiuser system by having
+one encrypted partition, and making symlinks from each user's
+directory to their directy in the encrypted drive. This would be a bit
+more efficient, I think.
+
+Jer
+
+"standing on top of the world/ never knew how you never could/ never knew
+ why you never could live/ innocent life that everyone did" -Wormhole
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQB1AwUBMoyyeckz/YzIV3P5AQGrQwMAr+mOugO6IlmlXdOZzTKXHF/+gZCf5ZJe
+qVan7XukQ/2xS1/kchSgnXJt5m00jDuwh/onfCblhb2eOKUP4+Wum93U9vXfEuxW
+LJp6Za2S2xCK3oMa1InZtSGGFJkPFs6t
+=HyQ2
+-----END PGP SIGNATURE-----
+
+
+
+

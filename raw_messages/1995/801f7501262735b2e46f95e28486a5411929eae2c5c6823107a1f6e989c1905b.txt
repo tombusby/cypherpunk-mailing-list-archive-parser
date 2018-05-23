@@ -1,0 +1,33 @@
+From: Paul Koning               1695 <pkoning@chipcom.com>
+Date: Fri, 27 Oct 1995 22:55:15 +0800
+To: Cypherpunks mailing list <cypherpunks@toad.com>
+Subject: Re: Linux security issues
+Message-ID: <30911745@mailer2>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Actually keeping the pass phrase out of swap space is fairly easy (although
+>I havn't looked at the PGP code to see if it actually does this).
+>...
+>However, the pass phrase is not the only dangerous information.
+>...
+>N.B. This problem affects all virtual memory operation systems.
+
+Not all of them.  In at least one (VMS) you can pin pages in physical 
+memory,
+i.e., prevent them from being written to disk.  Actually, any OS that does 
+I/O
+directly to user pages has that capability in the kernel; in the case of VMS
+(and possibly others, I don't know) it also exists as a system service that
+applications can invoke.
+
+This solves the problem: you can pin a suitable number of pages, and put
+your sensitive data buffers there.
+
+     paul
+
+
+
+

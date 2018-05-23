@@ -1,0 +1,156 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sat, 30 Nov 1996 13:30:14 -0800 (PST)
+To: ericm@lne.com (Eric Murray)
+Subject: Re: IPG algorithim
+In-Reply-To: <199611302118.NAA12825@slack.lne.com>
+Message-ID: <199611302127.PAA14989@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Eric Murray wrote:
+> 
+> 
+> 
+> I have translated the IPG algorithim's "engine" to C, to generate
+> some random values from it for testing purposes.  It does not
+> look very random in either the xnoisesph program or the DIEHARD
+> test battery.   However I may well have misinterprested Mr. Wood's
+> description (his writing is, as Mr. Chudov points out, difficult to
+> understand) or written my code incorrectly.  Here it is, play
+> with it yourself.  To my untrained eye the lack of randomness
+> in what's essentially a stream cipher would be disturbing.
+> However I am not a cryptoanalysist so I do not know to
+> what extent this weakens the cipher.
+
+Thanks for an interestnig approach to testing (see below).
+
+> The IPG description does not say (but implies to me) that
+> the various tables that are to be filled in by "random" values must
+> be filled in by PRNGs that are seeded with the same seeds by
+> each of the party that knows the key.  Otherwise the "encryptor
+> streams" that are generated will be unrelated and decryption will not
+> be possible.  To make my test work I have used the simple rand()
+> function to fill in the tables.
+
+A good point.
+
+> Corrections are welcome.
+
+see below.
+ 
+> 
+> #include <stdio.h>
+> 
+> /* a C translation of the IPG "EUREKA" algorithim's "engine".
+> ** This is supposed to produce random numbers for the IPG
+> ** "encryptor stream".
+> ** See http://www.netprivacy.com/ for the original description.
+> ** Eric Murray  ericm@lne.com  This code placed under GNU copyleft.  */
+> 
+> /* machine-dependent stuff, change to suit different platforms: */
+> typedef unsigned char byte;
+> typedef unsigned short uint16;
+> 
+> 
+> /* tables: */
+> uint16 A[53];
+> uint16 B[53];
+> uint16 C[53];
+> 
+> 
+> int init_table(uint16*table, uint16 min, uint16 max)
+> {
+> 	/* IPG specifies no algorithim for producing the "random"
+> 	** initial values in the ABC tables, but it's obvious that
+> 	** it requires a PRNG that's somehow seeded from the "key".
+> 	** I've just used rand() here.  In UNIX rand() called with no
+> 	** seed is supposed to seed itself with 0. */
+> 	int i;
+> 	int count, r;
+> 
+> 	for(i = 0; i < 53; i++) {
+> 		table[i] = min + (rand() % (max - min));
+> 	}
+> }
+> 
+> main(int argc, char **argv)
+> {
+> 	uint16 jv;
+> 	int argcnt, i, n, count, diehard, nelem;
+> 
+> 	diehard = 0;
+> 	argcnt = 1;
+
+how about doing randomize()?
+
+> 	if (argc >= 2) {
+> 		if (strncmp(argv[argcnt],"-d") == 0) {
+> 			diehard++;
+> 			argcnt++;
+> 		}
+> 	}
+> 	if (argc > argcnt - 1 ) {
+> 		n = atoi(argv[argcnt]);
+> 		fprintf(stderr,"Generating %d values\n",n);
+> 	}
+> 	else {
+> 		n = 2000;
+> 	}
+> 
+> 	/* seed tables: */
+> 	fprintf(stderr,"Seeding:  A");  fflush(stderr);
+> 	init_table(A,0,65535);
+> 	fprintf(stderr," B");  fflush(stderr);
+> 	init_table(B,0,12227);
+> 	fprintf(stderr," C");  fflush(stderr);
+> 	init_table(C,16384,20361);
+> 	fprintf(stderr,"\n");  fflush(stderr);
+> 
+> 	/* generate n values: */
+> 	for(; n > 0; n--) {
+> 		/* jv is "random" (where's it seeded from?) */
+> 		jv = (uint16)(rand() % 53);
+> 
+> 		/* count limits the number of traverses to 53^2 so we don't get stuck */
+> 		for(count = 0; count < 2809; count++) {
+
+2809 is a too small limit. For example, if ALL B == 1, A == 16385, and 
+C == 20361, the loop may need (20361-16385) passes to get to the < 16384
+value.
+
+Again, if all A = 16385, all B = 0, all C = 16386, the loop will never 
+end with a correct A (your code reflects that).
+
+> 			jv++;
+> 			if (jv == 53) jv = 0;
+> 			A[jv] = (A[jv] + B[jv]) % C[jv];
+> 			if (A[jv] < 16384) break;
+> 		}
+> 		if (count == 2809) fprintf(stderr,"Oops.\n");
+> 		else {
+> 			if (!diehard) {
+> 				printf("%d\n",A[jv]);
+> 			}
+> 			else {
+> 				/* print output in DIEHARD required format:
+> 				** actually since we have 16-bit ints and DIEHARD
+> 				** wants 32-bit ints, we print 20 per line instead of 10 */
+> 				if (nelem++ > 19) {printf("\n"); nelem = 0;}
+> 				printf("%4.4x",(unsigned int)A[jv]);
+> 			}
+> 		}
+> 	}
+> }
+> 
+> 
+
+You are also bringing a good point that Chi-squared tests are not
+sufficient to make any conclusions about usefulness of this particular
+pseudo random number generator.
+
+	- Igor.
+
+
+
+

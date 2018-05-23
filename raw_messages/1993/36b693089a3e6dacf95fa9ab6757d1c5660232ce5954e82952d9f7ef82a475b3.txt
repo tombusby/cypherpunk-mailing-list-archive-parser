@@ -1,0 +1,52 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 18 Jun 93 08:44:38 PDT
+To: cypherpunks@toad.com
+Subject: fast des
+In-Reply-To: <9306180042.AA03435@anchor.ho.att.com>
+Message-ID: <9306181540.AA22168@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>To put this in a cost-per-solution context, if you amortize over 5 years,
+>that's about 4000 solutions, so that's a bit under $10K per solution.
+
+Here are a few assumptions that lower this estimate for the NSA.
+
+-- The NSA has it's own fab and design facilities.  If you assume you
+want a few dozen or hundred DES cracking boxes, you can afford a fair
+bit of money on design; the design cost per chip drops.  The more of
+these you have, the lower the cost per solution.
+
+-- The amortization period is longer than 5 years.  From what I have
+heard, the NSA just keeps running most every machine it owns.
+
+-- The possibility of a trap door which gives hints about exhaustive
+search should not be ruled out.  Suppose, for example, that all
+combinations of 16 bits exhibited flat distribution as 16-grams, but
+that certain combinations of 22 bits did not.  Just to find these
+correlations might be an infeasible problem, but to exploit them would
+not be.  Drop your cost estimates by 2^6 in the above example if true.
+
+-- There will be different machines designed for attacks on different
+types of intercepts.  Known plaintext, probable plaintext, known
+ASCII, etc.  The recognition circuitry on each of these is different
+and custom design would reduce silicon costs significantly.
+
+-- If you use micropipelines, you can keep the encryption circuitry
+constantly full, as opposed to putting in a new value after the old
+one pops out.  If this technique is not already being used, divide
+cost by 16, the number of rounds of DES.
+
+-- One can design circuitry to test multiple ciphertexts on the same
+key at some savings in chip cost.  Not useful for encryption, but
+useful for cracking.  Call this a factor of 1.5 to 2.
+
+-- Wafer scale integration could yield some savings in die cost and
+packaging.  
+
+Eric
+
+
+
+

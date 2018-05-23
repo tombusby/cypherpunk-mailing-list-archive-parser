@@ -1,0 +1,75 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Tue, 4 May 93 14:31:52 PDT
+To: jthomas@access.digex.net (Joe Thomas)
+Subject: Re: tripple des
+In-Reply-To: <Pine.3.05.9305041723.A14495-b100000@access.digex.net>
+Message-ID: <9305042131.AA28472@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > 
+> > Crypto question:
+> > why was the following chosen for tripple DES :
+> >    EN(DE(EN(data,k1),k2),k3);   
+> 
+> In fact, "triple" DES goes three times through the engine, but only uses
+> two keys:
+> 
+>      EN(DE(EN(data,k1),k2),k1)
+> 
+
+hmm...  I am using d3des which I had assumed uses 'tripple-DES'.
+at any rate,  I used the Ddes() function, printed its output,
+then used the des() function 3 times and prined its output.  They
+matched up which suggests that d3des uses the method I posted at
+the top.  
+
+
+> My understanding is that this was chosen for hardware implementations
+> because it is equivalent to single DES when k1 = k2.  This is important,
+> of course, when some people you want to talk to are still using single DES
+> and the hardware is hard to reconfigure.
+interesting.  Wouldnt the first scheme do the same?  for k1=k2, and
+k3 = any key ?
+(or k2=k3 and k1 = any key)
+
+> Joe
+> --
+> Joe Thomas <jthomas@access.digex.net>           Say no to the Wiretap Chip!
+
+
+-- main.c, compares Ddes output and des output ---------
+#include "d3des.h"
+unsigned long enkey[96],dekey[96];
+unsigned long e1[32],e2[32],e3[32];
+unsigned long d1[32],d2[32],d3[32];
+
+main()
+{
+  char *a,b[100],*k,*k1,*k2,*k3;
+
+  strcpy(b,"this is a test");
+  k="testing123423456789212345678";
+  k1="testing1";
+  k2="23423456";
+  k3="78921234";
+  deskey(k1,0); cpkey(e1);
+  deskey(k2,1); cpkey(d2);
+  deskey(k3,0); cpkey(e3);
+  des3key(k,0); cp3key(enkey);    /* set up long keys , encrypt */
+  des3key(k,1); cp3key(dekey);    /* decrypt */
+  use3key(enkey); Ddes(b,b);      /* encrypt b */
+  write(1,b,16);
+  use3key(dekey); Ddes(b,b);      /* decrypt b */
+  write(1,b,16);
+
+  usekey(e1); des(b,b);
+  usekey(d2); des(b,b);
+  usekey(e3); des(b,b);
+  write(1,b,16);
+}
+
+
+
+

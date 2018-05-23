@@ -1,0 +1,67 @@
+From: Eric Murray <ericm@lne.com>
+Date: Tue, 21 Oct 1997 23:49:10 +0800
+To: Michael.Johnson@mejl.com
+Subject: Re: SMTP Encryption Extension
+In-Reply-To: <3.0.3.32.19971021082737.00928b20@localhost>
+Message-ID: <199710211535.IAA01241@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Mike writes:
+> 
+> Ariel Glenn wrote:
+> >So data kept on the filesystem has to be protected and it has to be
+> encrypted when it is sent out to the browsing (legitimate) user. 
+> 
+> But you can do that already with standard software. Just encrypt the disk
+> with CFS and the web server with SSL. Nothing needs to be invented to solve
+> your problem. All the popular browsers already have SSL running.
+> 
+> Which leads to another idea, couldn't we encrypt SMTP by running it over
+> SSL as a web server cgi? If 99% of Internet traffic is web browsing and we
+> are trying to hide our email, then why not make the email look like web
+> browsing?
+
+
+You don't need to run it through a CGI.  There's a port defined for
+SMTP-over-SSL:
+
+ssmtp           465/tcp    ssmtp
+
+(from the IANA assigned port numbers document of feb '97)
+
+The problem with SSL is that it only protects the pipe, not the mail
+that's being transported.  Mail is a store-and-forward scheme.
+It's stored on the local disk and forwarded to the next hop.
+Often that's not the recipient, but is a mail exchange or a firewall
+gateway.  Then the MX or firewall forwards the mail on to the next
+hop, etc.
+
+(note that a CFS partition, in order to be used by a mail transport, would
+need to be mounted at all times, and therefore would be available to
+an attacker who gained root on the mail transport host)
+
+If your mail goes to an intermediate MX site, it'll sit in the clear on
+the disk there until its sent to its final destination.   Even if all
+mailers supported ssmtp, the mail would not be secure.
+
+Email really needs to be individually encrypted instead of using
+encrypted pipes.  If you want to protect all email (an excellent
+idea), build a mail transport which automatically encrypts each
+outgoing mail in the key of the recipient (or recipients's mail
+transport).  It's not that hard to do, I build a 'pgpsendmail' for
+a former employer.  Most of the effort was in figuring out where in
+sendmail to put the hooks to pgp.
+
+
+
+-- 
+Eric Murray  Chief Security Scientist  N*Able Technologies  www.nabletech.com
+(email:  ericm  at  lne.com   or   nabletech.com)          PGP keyid:E03F65E5
+
+
+
+
+

@@ -1,0 +1,60 @@
+From: jthomas@mango.mitre.org (Joe Thomas)
+Date: Mon, 1 Mar 93 09:25:01 PST
+To: cypherpunks@toad.com
+Subject: A novel (?) return address idea
+Message-ID: <9303011721.AA02070@mango>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It seems clear now that the default behavior of the anon.penet.fi  
+remailer (generating only one anonymous ID per user, and anonymizing  
+all messages to other anon users with that ID) is inadequate.  At the  
+same time, Julf argues persuasively that users have come to expect  
+that their replies to anonymous Usenet articles will be anonymized.   
+The current na/an address workaround is okay, but I think we could do  
+better.
+
+Here's my scheme:
+
+When a user first mails to or through a penet-style remailer, the  
+remailer software will automatically allocate an ID for the sender's  
+return address, as usual.  _But_, it will keep this number secret, in  
+an internal database.  Let's consider this ID to be a binary number.   
+The remailer appends to this ID number some "salt" bits (random bits,  
+perhaps with some time-stamp info to guarantee that the same salt  
+bits are never applied twice, if the RNG is weak).  This collection  
+of bits is then encrypted with a secret key only the remailer knows  
+(note: this should _not_ be the secret half of a public/private key  
+pair, for reasons that should become clear).  The encrypted bit  
+string is converted by a uuencode/armourtext process that produces  
+characters that will be legal for an e-mail address.  This is then  
+used for a return address.
+
+When someone wants to reply to an anonymous message or post, the  
+remailer decrypts the address, ignores the "salt" bits, looks up the  
+anonymous ID in its database, and sends it on to the desired  
+recipient.  
+
+
+The advantage of this scheme is that no two messages will have the  
+same return address, and no information about the sender can be  
+gleaned from the return address; yet the remailer can allow replies  
+to every message without keeping any more records than it does under  
+the current version.
+
+A couple disadvantages could be running out of bits for the return  
+address, and adding more encryption work for the remailer.  You'd  
+definitely have to own the machine, and implement some, er, different  
+mailing software, since you'd have to accept mail for users with any  
+random name whatsoever.  And, of course, this method is only useful  
+for penet-style remailers, not cypherpunk/mixnet remailers which  
+should not remember anything about messages that pass through.
+
+What do you all think about this for a "Mark II" anon.penet.fi?
+
+Joe
+
+
+
+

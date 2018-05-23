@@ -1,0 +1,34 @@
+From: jazz@hal.com (Jason Zions)
+Date: Fri, 16 Sep 94 12:17:57 PDT
+To: cypherpunks@toad.com
+Subject: Re: if this is RC4
+Message-ID: <9409161917.AA28174@jazz.hal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Decompilation would not preserve the original style.
+>
+>Of course it would. If a symbol table was present, you'd even end up
+>with the same variable names.
+
+Decompilation would not preserve stylistic things like indentation and brace
+usage. With optimized compilers, it's getting pretty hard for a decompiler
+to actually figure out the original input source statement. The result of a
+decompile, when again compiled, may indeed produce the same object; but the
+original and decompiled source code may look radically different.
+
+The RC4 source code contains at least one example of a coding idiom that
+would almost certainly decompile differently. In a couple instances, the
+posted alleged-RC4 source takes modulo-256 of a particular value. A compiler
+would in almost all cases emit code which did a simple logical-AND with
+0xff; when decompiled, the C code would reflect that logical-AND rather than
+a mod-256 operation.
+
+It looked like real source to me, rather than decompiled.
+
+Jason
+
+
+
+

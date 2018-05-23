@@ -1,0 +1,97 @@
+From: Matthew Ghio <ghio@myriad.alias.net>
+Date: Sun, 7 Apr 1996 16:00:47 +0800
+Subject: Re: Was Cohen the first?
+In-Reply-To: <35960405162553/0005514706DC3EM@MCIMAIL.COM>
+Message-ID: <199604070321.TAA02171@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The following concerns the history of computer viruses.  While an
+important issue in computer security, this has no direct relevance to
+cryptography, so skip this message if you're looking for crypto...
+
+---
+
+> What's up? I asked. The 17-year-old snickered. Doom was ahead for all Apple
+>II owners.  "Don't engage in casual disk-copying with strangers," he said.
+> "You might catch an operating-system virus."
+
+One interesting fact is that after the release of DOS 3.3 in 1980, the Apple
+II operating system was unchanged for several years, until Apple released a
+completly rewritten operating system (ProDOS) in 1984.  During this period,
+hackers disassembled DOS 3.3 and its internal functions and data structures
+became well-known.  The Apple II ROM contained a debugger/disassembler,
+which allowed the operating system to be disassembled and experimentally
+modified while it was resident in memory.  In addition, several companies,
+including Beagle Brothers and Quality Software, published extensive
+information on DOS 3.3, which had been obtained through reverse-engineering.
+
+Apple DOS behaved very predictably: it was always loaded at the same
+location in memory, and when it formatted a disk, always wrote the operating
+system into the same location on the first three tracks of the floppy disk.
+This allowed the development of object code patches to the DOS kernel which
+would work reliably because almost everyone was running identical copies of
+DOS.
+
+It also made it easy to write viruses.  The simplest was to attach a call to
+the sector-write subroutine at the end of the catalog command.  This only
+took about 16 bytes of code.  (Wouldn't that have made a neat .sig for you
+modern-day perl hackers?)  Whenever the user issued the catalog command
+(which gave a list of files, like the unix ls command) it would write out
+that page of memory onto the dos image on the disk, thus infecting the disk.
+This was entirely benign unless you tried to use a disk with a different or
+modified operating system, in which case the patch would not apply cleanly,
+and would likely make the disk unbootable.
+
+Despite this, the Apple II never became a popular virus-writing platform.
+There are several possible reasons for this, but one of the main ones is
+that few Apple II users had hard disks.  On the IBM PC, it was easy for a
+virus to get on the hard disk, then systematically infect every floppy disk
+put into the system.  Apple II users, in contrast, often booted from
+floppies, and often rebooted when switching to a different software package,
+thus purging the virus from memory.  (Pressing control-reset on the Apple II
+keyboard would always pull the reset line on the CPU, so it wasn't possible
+to trap the interrupt like it is possible to trap ctrl-alt-del on the PC.)
+
+A couple bits of interesting virus trivia: Joe Dellinger, then an undergrad
+at Texas A&M, set out to write the "perfect" virus, that is, one that would
+silently replicate without causing harm, just to see how far it would
+spread.  The virus added a tag to the end of the boot sector which read:
+GENxxxxxxxTAMU, where xxxxxxx was the generation counter.
+
+A destructive virus called "CyberAIDS", appeared in 1988.  I just looked
+this one up in an old magazine article, and, when the virus destroyed a
+disk, it printed, among other drivel:
+             DISTRIBUTED BY
+       Worshippers of Pat / [WOP]
+          The Kool/Rad Alliance
+  The Robert Dole Presidential Campaign
+I wonder if Bob Dole appreciated the free advertising.  (Also remember
+that this was in 1988!)
+
+Modern operating systems make kernel-patching viruses like the simple
+ten-byte hacks effectively impossible since the operating system is less
+predictable with respect to its memory usage, people upgrade more
+frequently, and many experienced users compile their own kernel.
+Modern protected-mode operating systems are also making boot-sector viruses
+obsolete as well.  That leaves executable file viruses.  
+
+By the late eighties, hard disks were becoming fairly standard equipment,
+and the "CyberAIDS" virus mentioned above attached itself to executable
+files.  Filesystem security and read/execute-only memory pages on Unix
+systems make writing effective viruses of this type quite difficult.
+Unfortunately, Microsoft's lax attitude toward security allows viruses to
+persist on their operating systems, and have made Bill Gates very popular
+with the virus writing groups.  In addition, the lack of filesystem security
+in Windoze makes the shared libraries, and key system files, prime targets
+for malicious code.
+
+Still, as the famous login hack demontrates, it's not impossible to write a
+unix virus, if you can get control of the compiler/linker.  It's just that
+there are other methods of hacking unix systems (ie buffer overruns) which
+provide a more immediate return on the investment of time for the hacker.
+
+
+
+

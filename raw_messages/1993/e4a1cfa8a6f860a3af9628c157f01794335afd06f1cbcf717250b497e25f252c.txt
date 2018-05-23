@@ -1,0 +1,44 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Tue, 9 Nov 93 12:53:13 PST
+To: kinney@ucsu.Colorado.EDU>
+Subject: Re: Cyphergurus: Advice needed
+In-Reply-To: <199311091643.AA11260@ucsu.Colorado.EDU>
+Message-ID: <cgs09Ly00awQE_d0gh@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Will Kinney <kinney@ucsu.Colorado.EDU> asked for advice on the following:
+
+> I'm writing a Macintosh encryption application (nearing completion),
+> which, when it encrypts a file, changes its file type and creator so
+> that the encryption program will be launch when the file is
+> double-clicked. I have to save four pieces of information about the
+> original plaintext: file type, creator, data fork length, and resource
+> fork length. These are placed in a resource in the encrypted file. 
+>
+> What I'd like to get opinions on is _should I encrypt this header
+> information_, since its format will be known to an attacker and, in
+> many cases, its contents easy to guess? My inclination is to leave it
+> plaintext, since the worst that can happen if a file type is known is
+> the same type of attack that would _always_ be possible with an
+> encrypted header.
+
+So what you're saying is that you don't want to encrypt the header
+because it has a known format which would allow a cracker to surmize
+certain info about the plaintext which would facilitate decryption, but
+you don't want to leave the header in plaintext because it would convey
+information about the file format which would facilitate breaking the
+code.
+
+Solution: Perform a one-way hash of the data file and use the result of
+the hash to encrypt the header.  Then encrypt the file.  This means that
+the file would have to be decrypted before the header could be decoded. 
+Breaking the code would therefore be more difficult because the file
+format would not be known.
+
+By the way, what encryption algorythm are you using?
+
+
+
+

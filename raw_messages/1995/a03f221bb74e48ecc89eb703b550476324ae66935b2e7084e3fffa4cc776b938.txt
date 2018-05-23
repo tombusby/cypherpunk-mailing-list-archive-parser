@@ -1,0 +1,97 @@
+From: Nathan Zook <nzook@bga.com>
+Date: Thu, 9 Feb 95 04:03:49 PST
+To: cypherpunks@toad.com
+Subject: Lucky primes--third time's the charm?
+Message-ID: <Pine.3.89.9502090512.B21224-0100000@lia.bga.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+ 
+The algorithm I posted the second time works, (nice improvement, eh?) but
+is likely to take several thousand years to complete.  And when it does, we
+can expect weak primes.  The enhancement I propose should fix that.
+ 
+ 
+As I recall, PGP uses 0x10001 for its e.  It does so in order to be able to
+easily determine that e is a primitive root of unity in Fp.  Since we are
+assuming that the p we actually work with is prime, we have: n^p = n mod p
+ie: n^((p-1)*i+1) = n mod p.  So we want ed = (p-1)*i+1, ie: 
+((ed-1)/i)+1 = p.
+ 
+Let 2*x be the target number of bits in the modulous.  We then look for two
+primes with approximately x digits such than d (for each prime in turn) is
+small.  We know that ed = (p-1)*i+1, so we search for small i's that work.
+d = ((p-1)*i+1)/e, so for a given p, d will be small iff i is small.
+ 
+But in general, the calculation to invert e is long.  We therefore fix ed--
+that is our n1--and hope for a small i that works.  If none work, we
+increment d and try again.
+ 
+Once we have a p that gives us a small d, we then count the 0's in d,
+hoping for a high count.  If we don't get it, we increment d.
+ 
+***
+ 
+That is what my previous algorithm did.  Of course, we can expect a halt
+exactly when d ends with a bunch of 0's, followed by a few spare bits.
+B-A-D bad.
+ 
+The solution, though, is easy: pick a random high-0 d.  Multiply it by
+0x10001 to get ed, and search for small i's.  If you fail, increment d.
+Doing so won't affect the number of 0's in d by much, and we expect a prime
+fast enough that cumlatives won't be a problem, either.
+ 
+***
+Let 2*x be the target number of bits in the modulous.
+GetPrime twice.
+ 
+GetPrime:
+Let d be a large random number with x-15 bits.
+ 
+If d has too many 1's, pick digits at random and 0 them until d is
+sufficiently 0-rich.  This would include room for extra 1s to appear as d
+is incremented.
+ 
+Let n1 = d * 0x10001
+Let t2 be n1 mod 8, t3 be n1 mod 9, t5 be n1 mod 25, t7 be n1 mod 49.
+ 
+Loop:
+For i = 2 to 7
+ If n1 = 1 mod i and (n1-1)/i + 1 is not a multiple of {2,3,5,7}
+/* This can be done very fast, and eliminates most canidates. */
+ 
+    If (n1-1)/i + 1  is prime, record and exit Loop.
+/* This would be the long test in RSAREF, or Miller-Rabin. */
+ 
+    EndIf
+ EndIf
+Next
+d++
+n1 += 0x10001
+EndLoop
+EndGetPrime
+ 
+By keeping track of various quantities, we can eliminate all multiprecision
+divisions except for the original one needed to get the t's and the first
+n1/i's, and doing increments instead.
+ 
+Nathan
+ 
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+ 
+iQEVAwUBLzmnanmgMs8UcStNAQECpQf6Ag8PUhiHySvv/lK8dIsmJhknKCuDR0Fi
+dVT0oVnTijmz1mdX0a6tlhnXyrj+oO4sYLCsej03e+685HZSd5orCYMsMXI/12SU
+f8PUVbKK7g/tDFYFah0se7cFL4kvQXwnOYDdzmfVnguW82QDDuS0iSssG42mqUKD
+e0QH1jZKxMK+usRF53P0Bui7goNfk7MkN2hI/ShMQggywcDQHYRX/d3QHkhZp6iG
+P7rJrW2aRxHYQT9MtiSpOv64Ae1JvmJk4DLXYMhXOSQet8xntRTnm4FIoVStBRmb
+dTnOj0d//dHyYWWEVKKFz0GoepnglxjQ0/k3PAKvVgPV5DWzn3xFJQ==
+=PzTo
+-----END PGP SIGNATURE-----
+
+
+
+
+

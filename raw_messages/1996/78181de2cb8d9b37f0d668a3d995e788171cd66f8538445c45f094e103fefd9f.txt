@@ -1,0 +1,83 @@
+From: "Jon Leonard" <jleonard@divcom.umop-ap.com>
+Date: Sat, 31 Aug 1996 03:56:14 +0800
+To: cypherpunks@toad.com
+Subject: Re: MUD anyone?
+In-Reply-To: <ae4b16e901021004256d@[205.199.118.202]>
+Message-ID: <9608301627.AA09337@divcom.umop-ap.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Tim May wrote:
+> I second many of the comments about the difficulties in coding a reasonably
+> plausible game or MUD for exploring list ideas.
+
+["Crypto Anarchy Game." value and difficulties stuff snipped]
+
+> Coding nearly any of the core cryptographic concepts for use in an online
+> game, even without a real crypto core (e.g., using other trust mechanisms)
+> is likely to be almost as big a job as actually coding the concepts for
+> real-world use. Could be very educational, and a useful dry run for later
+> real-world reification of concepts, but by no means easy.
+
+I don't think it's quite that hard, so I tried to implement asymetric key
+cryptography:
+
+20 minutes, to write and debug:
+
+(d encrypt (l (message key)
+              (l (n) (if (= key n) message))))
+
+(d makekey (l () (d dkey ())
+                 (l (n) (if (!= dkey ()) (encrypt n dkey)
+                                         (set dkey n)))))
+
+(d keypair (l () (d a (makekey)) (d b (makekey)) (a b) (b a) (list a b)))
+
+(d keys (keypair))
+
+(d p "Squeamish Ossifrage")
+(d c ((car keys) p))
+(c (cadr keys))
+"Squeamish Ossifrage"
+(c (car keys))
+()
+
+It relies on a few features of my MUD language, namely that functions
+are opaque datatypes, and that any two calls to l (short for lambda)
+return objects distinct to !=.
+
+> I'm not trying to discourage anyone. Go for it! But it's a _big_ project.
+
+It is a big project, but the big part is writing the MUD, not adding the
+crypto-anarchy stuff to it.  I'm writing a MUD anyway, and have been off
+and on for over a year.  Mark Grant's message made me think about what it
+would take to add the features I wasn't already planning on.
+
+I'm still interested in ideas as to what primitives I should fake.
+
+> And as Jim Bell noted, there are all sorts of costs which are not properly
+> accounted for. I would not, for example, expect anything interesting to
+> emerge out of the simulation of "assassination politics" in such a game, as
+> the costs, dangers, moral issues, and whatnot are not properly
+> accounted-for in such a MUD-type simulation. (No more so than in a fantasy
+> role-playing game, where characters die routinely...)
+
+After I think about it more, I realize that a MUD simulation can't show
+that something like "assassination politics" wouldn't work.  At best it
+can show that it does or doesn't work in that particular environment,
+leaving open the question of what key difference between MUD and reality
+might change the result.  Still, it would be interesting to see how it
+worked, or why it didn't.
+
+I apologize for my earlier comment that presupposed that it would fail.
+
+[snip]
+
+> --Tim May
+
+Jon Leonard
+
+
+
+

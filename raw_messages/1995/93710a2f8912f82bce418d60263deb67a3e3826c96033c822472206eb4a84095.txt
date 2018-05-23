@@ -1,0 +1,61 @@
+From: Peter Monta <pmonta@qualcomm.com>
+Date: Sat, 4 Nov 1995 16:29:32 +0800
+To: cypherpunks@toad.com
+Subject: Re: Sources of randomness
+Message-ID: <199511040804.AAA03552@mage.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry Metzger writes:
+
+> > [ radioactive vs. other ]
+>
+> I didn't contend that its inferior. I contended that its difficult to
+> distinguish from sources of electronic interference and is easy to get
+> wrong.
+
+Point taken; it sounds like I misread your post a bit.  Certainly
+it's better to have a robust implementation than a delicate one,
+but let me argue how hard it might be to get electronic sources
+wrong.
+
+> ...
+> Someone can gimmick a zener diode or get it "wrong" a lot more easily
+> than they can get a radation event wrong.
+
+But how wrong is wrong?  Unless the design is catastrophically bad,
+a zener source is going to give you zener noise plus some slight
+admixture of interference.  Say the designer is extremely careless
+and there's deterministic interference 20 dB down.  I don't see
+how even that matters cryptographically---the resulting loss in
+entropy will be millibits per sample.
+
+Perhaps there ought to be a couple of standard random-bit-source
+implementations, say at the CMOS-standard-cell and board-subsystem
+levels, that are widely vetted and trusted (and used!).  But it's
+mostly a solved problem, seems to me.
+
+A radioactive source might be okay at the board level (though probably
+costlier than its electronic counterpart), but it'd be a pain to
+integrate, and it might disturb the rest of the chip.  (I'd like to
+have a get_random_bit instruction as part of a microprocessor, for
+example.)  Also if you want a high rate of random bits, you need many
+decay events, whereas for electronic sources the corresponding
+bandwidth is free---Johnson and shot noise are flat to 1 THz or so.
+
+Interestingly enough, zener diodes and particle detectors are a lot
+alike.  Zeners, if they're avalanching, already have some internal
+gain; each electron crossing the junction gets so hot it knocks
+off other electrons, and there's a chain reaction.  Particle detectors
+take the ion trail in a suitable environment and make a nice
+big pulse out of it with a similar chain-reacton effect (though
+the fancier kind will give you the actual amount of charge).
+
+Cheers,
+Peter Monta   pmonta@qualcomm.com
+Qualcomm, Inc./Globalstar
+
+
+
+

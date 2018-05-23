@@ -1,0 +1,64 @@
+From: jpb@gate.net
+Date: Mon, 9 Jan 95 22:54:53 PST
+To: pstemari@erinet.com (Paul J. Ste. Marie)
+Subject: Thoughts on Data Havens
+In-Reply-To: <9501100322.AB12220@eri.erinet.com>
+Message-ID: <199501100630.BAA10057@hopi.gate.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Re: 
+> At 07:25 PM 1/9/95, dfloyd@io.com wrote:
+> > ... Of course, the DH will be hidden by a good remailer (anon.penet.fi), but
+> >it is trivial to use traffic analysis to find where the DH lies.  Just
+> >monitor traffic from/to the remailer and do a series of store/retrives.
+> >Then for confirmation, forge a mail from the dh site to the remailer with
+> >the password (obtained from sniffing) to yourself. ...
+
+This is a known weakness of the wizvax style remailers.  It is a shame that
+they are so easy for naive users to use - while I like the idea of an easy
+to use remailer, I have to shudder at how many people think that they are
+a secure system, especially when the reason they use them is usually because
+of a very real fear of the possible consequences if their lifestyle becomes
+public.
+ 
+> Hmm, hmm.  Using c'punk remailers with encrypted send blocks fixes one 
+> problem, especially if the c'punk mailers do some sort of file splitting and 
+> reassembly along the lines of what happens to IP packets that are too large 
+> for a given link.  What would also help would be a mechanism for randomly 
+> varying the encrypted send-to block.  The password replay attacks can be 
+> fixed by encrypting the transmitted password along with a timestamp/sequence 
+> number.
+
+Post a new PGP key and encrypted address block weekly to alt.data.havens,
+alt.2600, or a stegoed picture to alt.binaries.pictures.whatever.  If you
+are limiting usership, perhaps an autoencrypting majordomo list. 
+
+If you do decide to go the steganography route, keep in mind that users
+on other platforms will want to use your DH and pick your stego program
+accordingly.  As a Mac user, few things irritate me as much arj and zip
+files on ftp sites.  gzip is a pain also, but at least I can un-gzip in
+my shell account before downloading.
+
+> One problem that remains would be a trail left by the increased traffic 
+> to/from a DH vs a normal user.  That could only be fixed by a multitude of 
+> DH sites.
+
+One way of solving the traffic analysis problem is to have the DH account
+also act as a remailer.  It would also be a good idea to only allow DH
+commands to be executed if the encrypted (mandatory) control message arrived
+from another remailer account - people knowledgeable enough to be using a
+dh will probably not mind if they are "forced" to route traffic through
+the remailer network - anyone paranoid enough to be a client is going to
+tack your address block on the end of a long chain they created themselves.
+As an added security measure, when a valid control message is received,
+an identical length stream of random garbage should then be encrypted and
+passed into the remailer pool.  This would be easier if remailers supported
+some sort of bit sink command to trash a message rather than pass it along.
+
+Joe Block <jpb@gate.net>
+No man's life, liberty or property are safe while the legislature is in session.
+
+
+

@@ -1,0 +1,122 @@
+From: doug@netcom5.netcom.com (Doug Merritt)
+Date: Fri, 3 Sep 93 21:17:15 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer Reliability
+Message-ID: <9309040413.AA23647@netcom5.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+sameer@netcom.com (Sameer Parekh)
+>install-script I can add this little feature. Which newsgroup? Should
+>someone create an alt.remail? How exactly would it be implemented? I'm
+>thinking that simply the user would do:
+> [...]
+>	And the remailer would post to alt.remail:
+
+There are two problems here. One is that the remailer exposes itself
+and defeats traffic analysis avoidance.
+
+The other is a standard transaction processing sort of problem; the
+posting to alt.remail might fail even though all else worked.
+
+Although I've dealt with transaction processing problems, it's a tricky
+area, and I don't have a good text on the subject. Any recommendations?
+
+b44729@achilles.ctd.anl.gov (Samuel Pigg) said:
+>By breaking a message into pieces and sending them via different paths
+>to the same destination ("path forking"), this can only make traffic
+>analysis easier, because all the pieces lead to the same destination,
+>and you can follow any of them to get to the anonymous recipient.
+
+Depends on how it's done. As stated this analysis implies that traffic
+analysis is *always* possible, since after all, the message must somehow
+make it to its destination. In other words, I disagree.
+
+Traffic analysers will have access to only some limited subset of
+information. If a certain kind of blind remailing with multiple pathways
+is practiced, then traffic analysis can be statistically defeated. The
+bad guys might sometimes know that X sent a message somewhere.
+Other times they might know Y received a message. Only improbably
+(under ideal implementation circumstances) would powerful bad guys own
+so many machines & networks that they would be able to deduce both
+sender and recipient, and even then, if traffic were heavy (as it will
+be in some years), it would be a statistical rather than certain deduction.
+
+(This of course raises the (no doubt old-hat) problem that no single
+remailer can be trusted, since it might be in the hands of the NSA or
+KGB or something. In fact, since the NSA is famous for doing their job
+well, this list must have NSA watchers, no question, even without paranoia,
+and if I were them I'd be experimenting with remailers even now, to keep
+up with trends. We'll never know how many remailers are trustworthy,
+so we'll have to use statistical schemes to make compromise unlikely.)
+
+This is all standard parallel remailing stuff. Add to this the possibility
+that the different remailing paths may contain message fragments rather
+than full messages, and it doesn't really change the security relative to
+full message parallel remailing...unless it's done badly.
+
+Badly would mean that some remailer is the one that finally recombines
+fragments prior to final delivery. Better is if the recipient's host does the
+recombination (and I worry about *that*, too).
+
+This needs to be done in conjunction with other standard cypherpunk fare,
+of course. The major design problem I've had is not with security, it's
+with fault tolerance. Statistical fault tolerance is available, but I
+prefer leaving that kind to the underlying base systems and networks,
+and trying to find a top level algorithm that is 100% guaranteed to either
+work or report failure, so long as the host systems/networks don't fail
+undetectably. A handshake ACK of receipt would help, except that it might
+not get back even if the original reached its destination.
+
+Which is why I'm starting to think I need to research transaction
+processing more thoroughly; some years back I'd heard that a centralized
+server was still state of the art for 100% fail-safe/soft operation. Is this
+still the case? If so, then we'll have to fall back on probabilistic
+fault-tolerance, to avoid issues of central authority compromise.
+
+>follow them all), as only one will arrive there and the rest would die
+>after a number of remailer hops.
+
+This is actually less safe than an approach which requires multiple
+pieces to arrive via multiple paths. Bad luck might leave your one
+path completely in the hands of bad guys (posing as cypherpunks, let's
+say).
+
+>I really think that non-deterministic "smart messages" are the way to
+>go here.
+
+This I agree with; but the way that is done is critical.
+
+>A simple command language for the remailers would allow
+>the header construction software already being worked on by
+>ebrandt@jarthur.Claremont.EDU (CRM) and others to use tricks
+>like this to defend against attacks. 
+
+Cool. More info?
+
+>	The defense complexity would be a function of the users'
+>header construction software and needs. People who need "minimal"
+>anonymity would have simpler anonymous address blocks, as compared to
+>those who require "serious" anonymity, and the remailers themselves
+>would have a lighter load (not having to implement very serious
+>security for *all* messages-- just those that need it).
+
+Strongly agree.
+
+BTW I consider this emphasis on batch mail to be short sighted. I'm
+designing for interactive cyberspace. I have a complete algorithm in
+mind, except I think it still needs some more OLTP wisdom added in.
+
+People have been telling me for a long while that I should hook up
+with cypherpunks; seeing traffic over the last week since I joined
+shows me why I heard that from so many sources. Tip of the hat to y'all;
+this is a much juicier forum than I had guessed.
+
+I only hope I can continue weathering the storm of heavy traffic, on
+top of other email lists. :-)
+	Doug
+
+
+
+

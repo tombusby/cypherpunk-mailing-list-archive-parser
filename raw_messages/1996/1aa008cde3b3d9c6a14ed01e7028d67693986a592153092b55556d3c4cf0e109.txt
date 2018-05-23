@@ -1,0 +1,43 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Sat, 20 Apr 1996 15:55:02 +0800
+To: Adam Shostack <adam@lighthouse.homeport.org>
+Subject: Re: Dictionary searching code
+In-Reply-To: <199604200102.UAA10156@homeport.org>
+Message-ID: <Pine.SOL.3.91.960419200322.14381A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 19 Apr 1996, Adam Shostack wrote:
+
+> 
+> 	Does anyone have some code that will search a dictionary, and
+> tell me *quickly* if an arbitrary chunk of text is in the dictionary?
+> Pre-indexing steps are fine, as is using big chunks of disk for hash
+> tables.  The point of course, is to check arbitrary possible plaintext
+> that a test decryption produces.
+
+You could try using isite (see http://www.cnidr.org/), which is a pretty 
+cool search engine, and should work well enough, and the patrie structure 
+could make restarts really fast . 
+
+The real answer to your question depends almost entirely on the machine
+you wish to run it on- is memory not a problem? If so, tries may be your
+best bet, though you may have bad cache interactions. Otherwise, you might
+be best going for a probabalistic approach and using hash table to elimate
+definite non-matches, then an AVL-Tree or similar for confirmation. If you
+just use a single bit for each hash-table datum, you can afford to make
+the table pretty sparse
+
+Simon
+---
+They say in  online country             So which side are you on boys
+There is no middle way                  Which side are you on
+You'll either be a Usenet man           Which side are you on boys
+Or a thug for the CDA                   Which side are you on?
+  National Union of Computer Operatives; Hackers, local 37   APL-CPIO
+
+
+
+
+

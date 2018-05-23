@@ -1,0 +1,48 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 17 Jul 1996 01:14:14 +0800
+To: Christopher Hull <nozefngr@apple.com>
+Subject: Re: CookieScan 0.0 rev 0
+Message-ID: <199607160449.VAA02710@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 04:34 PM 7/15/96 -0800, Chris Hull wrote:
+>Do y¹all think there might be an interest in a 
+>utility which would allow the user to deal with 
+>browser cookies?
+
+There might, but it's a difficult problem, and 
+implementation-dependent and doesn't always tell you much.  
+While your browser may store cookies in a disk file to use 
+between sessions, by the time the cookie gets
+filed on disk, it's long since cooled down and may have been
+written over multiple times.  The interesting time to detect cookies
+is when they arrive - this means either watching the network data
+stream for cookies (non-portable, unless you use a cookie-proxy,
+which is the obvious way to implement it), or else grubbing around
+in the browser's memory (highly non-portable, unless you're
+modifying the browser source.)  
+
+The "doesn't always tell you much" is because cookies often
+seem to contain encrypted or hashed data that isn't meaningful
+to the browser-user, only to the cookie-originators.
+
+The cute trick you can do with cookies, which is probably used by
+advertising sites such as doubleclick.com, is for the web page owner
+to include an IMG which is an href to a CGI program at a cookie company.
+The CGI program is able to look at the HTTP_REFERER variable,
+which tells what page you were last on, and can therefore create
+or use cookie information that tracks where you've been between companies
+(e.g. Alice can contract with Cookies Inc. to tell if you've been
+to Bob's site recently, if Bob also uses Cookies Inc.)
+
+#				Thanks;  Bill
+# Bill Stewart +1-415-442-2215 stewarts@ix.netcom.com
+# http://www.idiom.com/~wcs
+#				Re-delegate Authority!
+
+
+
+
+

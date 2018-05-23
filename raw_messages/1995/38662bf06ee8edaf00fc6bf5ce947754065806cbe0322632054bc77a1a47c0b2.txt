@@ -1,0 +1,52 @@
+From: Carl Ellison <cme@TIS.COM>
+Date: Wed, 23 Aug 95 15:31:19 PDT
+To: Andrew.Spring@ping.be
+Subject: Re: Random Hiss from Mac mike
+In-Reply-To: <199508232105.OAA27566@comsec.com>
+Message-ID: <9508232228.AA17098@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Wed, 23 Aug 1995 19:09:35 +0100
+>From: Andrew.Spring@ping.be (Andrew Spring)
+
+
+
+>I've been looking at using the Mac's Sound Input Manager for hardware RNG.
+
+[...]
+
+>I suspect there's much less entropy in that signal than even this estimate,
+
+[...]
+
+>Does anybody have any experience/advice in this area?
+
+I would try injecting noise and seeing how well you can control the output
+signal.  I would also do a Fourier transform of the output and look for
+cyclic behavior -- then see how the frequency spectrum can be modified by
+turning machinery on and off, turning radios on and off, ....
+
+You can also try various compression algorithms to see how much entropy
+they claim to see.
+
+When that's done, you can then use some of my ranno conditioning code,
+free on the net (although written for UNIX, for now):
+
+	http://www.clark.net/pub/cme/html/ranno.html
+
+I especially like running a pseudo-random stream through ranM and then a
+hash, to obliterate any patterns which might sneak past your analysis.
+
+ - Carl
+
++--------------------------------------------------------------------------+
+|Carl M. Ellison    cme@acm.org    http://www.clark.net/pub/cme/home.html  |
+|PGP: E0414C79B5AF36750217BC1A57386478 & 61E2DE7FCB9D7984E9C8048BA63221A2  |
+|  ``Officer, officer, arrest that man!  He's whistling a dirty song.''    |
++----------------------------------------------------------- Jean Ellison -+
+
+
+
+

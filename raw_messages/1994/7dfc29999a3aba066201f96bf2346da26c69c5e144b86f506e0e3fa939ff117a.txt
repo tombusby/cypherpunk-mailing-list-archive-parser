@@ -1,0 +1,60 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Tue, 27 Sep 94 15:02:23 PDT
+To: dcwill@ee.unr.edu (Dr. D.C. Williams)
+Subject: Re: Mandatory email verification
+In-Reply-To: <199409272123.OAA09324@python>
+Message-ID: <199409272201.SAA12209@spl.bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+DC Williams writes:
+
+| Is anyone aware of a way to modify sendmail to require a verified digital
+| signature for all mail sent? This subject came up after a discussion
+| of the possible repercussions of forged email through port 25.
+| Even a good PGP user can't use manual encryption on a message-by-
+| message basis as a defense for false mail attribution. For example,
+| someone forges a defamatory message and signs your name to it. The
+| recipient brings it to public attention and you try to claim "it doesn't
+| have my PGP sig, therefore I didn't send it". The obvious counter is that
+| you purposely failed to sign it to preserve your plausible deniability.
+| The only way this would work is if the system you're on won't accept
+| mail unless accompanied by a digital signature, which would allow the
+| user to claim innocence if it wasn't his sig. The mailer would also have
+| to check the sig to ensure that it belongs to an authorized user on the
+| system to prevent people from creating one-time keys just to appease the
+| mailer and prevent their real sig from being used. Running this version
+| of "SIGmail" (<-- note flashy new marketing name) on your system would
+| seem to be a reasonable defense against claims of false attribution.
+| 
+| Has anyone done any work along these lines? Is there an obvious fault
+| with a system which would operate in this manner?
+
+	Design areas to be worked out:
+	Will the system drop such mail silently, or return it to the
+sender?  Will the messages returned to sender be signed by the mail
+system?  If so, will they contain any reference to the message sent?
+How will you protect the keys used for signing?  If the 'bounce'
+messages aren't signed, a great way to generate flamage would be to
+send messages to the user claiming that his recent mail was not
+properly signed, causing him to send another copy, annoying the hell
+out of all the recipeints.
+
+	I'd like to close this message by saying that mandatory
+signing is not a good idea.  People will generate a low security key,
+and leave it totally unsecured.  The way most folks with a clue deal
+with forged mail is they see the writing style is different, the
+person is advocating a new & different position, or the mail is just
+random flammage.  Most folks regularly disregard this sort of thing as
+children playing with a new toy.  Requiring the use of signatures for
+all mail is silly.
+
+Adam
+
+
+
+
+
+
+

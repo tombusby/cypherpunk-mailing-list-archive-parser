@@ -1,0 +1,59 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Wed, 28 Aug 1996 04:42:29 +0800
+To: adam@homeport.org (Adam Shostack)
+Subject: Re: Code Review Guidelines (draft)
+In-Reply-To: <199608270158.UAA24640@homeport.org>
+Message-ID: <199608271620.LAA10933@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Adam Shostack wrote:
+> 
+> A few weeks back, I posted a request for source code review
+> guidelines.  I got about 50 me-toos, but no guidelines.  So I wrote
+> some I think are decent.  They're still in draft format.  I'd
+> appreciate feedback & commentary on them.
+> 
+> http://www.homeport.org/~adam/review.html
+> 
+
+Thanks for an interesting paper.
+
+In part " V.Code (Security Issues)/3.Data Checking" you say the following:
+
+`` Data coming in to Acme Widgets should be checked very carefully for
+        appropriateness. This check should be to see if the data is what
+        is expected (length, characters). Making a list of bad
+        characters is not the way to go; the lists are rarely complete.
+        A secure program should know what it expects, and reject other
+        input. (For example, if you are looking for an email address,
+        don't check to see if it contains a semi-colon or a newline,
+        check to see if it contains anything other than a [A-Za-z0-9._]
+        followed by an @, followed by a hostname [A-Za-z0-9._].)''
+END QUOTE
+
+That is not entirely correct. An email address is much more than
+that, it can contain "!", several "@" characters (not next to each other
+though), "%", and so on. x400 mail addresses (?) can contain "/", "=",
+and all emails can have "+" and "-" and "_" in them. 
+
+Some of the valid email addresses are
+
+user_name@company.com
+alex+@pitt.edu
+mi%aldan.UUCP@algebra.com
+user%host.domain@anon.penet.fi
+host1!host2!user
+
+Look at your sendmail.cf file for a humongous amount of 
+email parsing rules.
+
+Thanks for an excellent document though, I put a link to it from my
+intranet page.
+
+	- Igor "Code Obscurity Creates Job Security" Chudov.
+
+
+
+

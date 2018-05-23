@@ -1,0 +1,100 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Mon, 13 Nov 1995 18:57:34 +0800
+To: "Dietrich J. Kappe" <goedel@tezcat.com>
+Subject: Java's verifier (was Re: Java insecurity - long - argumentative - you are warned.)
+In-Reply-To: <v01510103acc4ce7ca31a@[206.1.161.4]>
+Message-ID: <Pine.SOL.3.91.951108225902.10149A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 7 Nov 1995, Dietrich J. Kappe wrote:
+> 
+> This "checking," as any comp-sci undergrad will tell you, amounts to solving
+> the halting problem for the java interpreter. While this is possible for a
+[...]
+> If you can write a checker that works in a reasonable amount of time, I'll
+> write a turing machine simulator that'll do something nasty if the input
+> machine halts. Then we'll split the fame and fortune for solving the 5 state
+
+Yeah, but when you graduate, they let you in to the real secret- if a 
+problem is NPC or Undecideable, either use some wild guesswork (oops, 
+heuristic), or try solving enough of the problem to be usable. 
+
+The java verifier not only terminates, but runs in time linear to the 
+size of the program to be verified. This is because the verifier doesn't 
+really calculate whether a program is safe or not; it determines whether 
+it can prove that the program is safe or not. It's possible to generate 
+sequences of bytecodes that do not perform unsafe accesses, yet which are 
+still rejected by the verifier because they violate it's requirements.
+
+The verifier can be considered to be an abstract interpretation over the 
+depth and type-state of the operand stack. If the state is known before 
+an instruction, it is always known after that instruction, and if there 
+is more than one way to arrive at an instruction, each control path must 
+arrive at that instruction with the same typestate.
+
+Examples (not real JavaVM, but similar)
+
+	load-int  <int>	== push an int onto the stack.
+			before: ...
+			after : ...,int
+
+	load-float <flt>== push a float onto the tack
+			before: ...
+			after: ...,float
+		
+	add-int		== pop two ints off the stack, push sum onto stack
+			before: ...,int,int
+			after:  ...,int
+
+	blt <val><add>  == pop an int off the stack, compare to val, and 
+			      jump to address add if int is less than val
+
+			before:  ...,int
+			after:	 ...
+
+	jmp <add>	== jump to adddress add
+			before: ...
+			after: ...
+
+VALID
+	load-int  1	; stack = (int)
+	load-int  1	; stack = (int), (int)
+	add-int		; stack = (int)
+
+INVALID
+	load-int 1	; stack = (int)
+	load-float 1.0	; stack = (int) (float)
+	add-int		; error, stack != (int), (int)
+
+VALID
+	load-int 2	;stack = (int)
+	blt 1, a  	;stack = null
+	load-int 3	; stack = (int)
+	jmp b		; stack = (int)
+    a	load-int 1	; stack = (int);
+    b 	load-int 4	; stack = (int) (int)
+	add-int		; stack = (int)
+
+INVALID
+	load-int 2	;stack = (int)
+	blt 1, a  	;stack = null
+	load-float 3	; stack = (float)
+	jmp b		; stack = (float)	
+    a	load-int 1	; stack = (int);	
+    b 	load-int 4	; stack = ERROR (float || int)
+	add-int		; stack = (int) ERROR
+
+This last example is invlaid, even though it's possible in this case to show 
+dynamically that the program will always arrive at b with an int on the 
+stack; there are still two control paths that arive at b, one with an 
+int, the other with a float.
+
+I hope this makes sense
+
+Simon
+
+
+
+

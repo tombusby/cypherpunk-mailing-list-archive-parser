@@ -1,0 +1,54 @@
+From: Matt Blaze <mab@research.att.com>
+Date: Mon, 30 Jan 95 21:48:38 PST
+To: norm@netcom.com (Norman Hardy)
+Subject: Re: ESP Unix encrypted session protocol software
+In-Reply-To: <ab536a4f010210046459@DialupEudora>
+Message-ID: <9501310546.AA09683@merckx.info.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>At 10:02 AM 1/30/95, Matt Blaze wrote:
+>....>As for the alternatives, I think the picture is pretty bleak, to tell
+>>the truth.  The cryptographically sound way to prevent spoofing is
+>>with authentication of the agreed key.  But for the remote host to
+>>authenticate itself, it has to have a secret signature key.  Where to
+>>store it?  A typical machine, especially a multi-user, unattended server
+>>simply has no safe place to store keys.
+>....
+>There would be on a secure "multi-user, unattended server". They are not
+>easy to come by and they arn't really Unix. I don't get on my soap box very
+>often but I couldn't resist your execelent opportunity. I think that
+>security requires good crypto and good OS security. There are Orange book
+>rated systems that are rated to run hostile software in the same machine
+>with Top Secret information.
+>
+>
+
+Sure, but as you point out in your second sentence, systems that are
+secure enough for secret storage aren't exactly "typical" of what's out
+there on the Internet.  And even an Orange book A rated system has to
+be kept locked up, under guard and administered properly if you want to
+be sure that the secret data stored on it remain secret.
+
+The vast majority of unattended "server" machines in my online life are
+neither located in well-controlled environments (especially considering
+backup tapes) nor administered particularly well.  I'm not sure that
+persistent signature keys stored on such hosts provide much extra
+assurance of machine identity beyond what already comes from their
+answering to the expected IP address (which is hardly saying much, of
+course).  I think better than expecting the world to switch over to
+cumbersome, multilevel secure OSs is to equip such servers with
+inexpensive tamper-resistant cryptographic modules that never reveal
+their secrets.  At least then you're guaranteed that there can be only
+one instance of a machine's identity out there at a time, and have some
+hope of detecting the theft of the key material.  (There may be some
+hope on this front.  PCMCIA crypto modules like the NS iPower card are
+beginning to hit the market already, and products like that may well be
+commonplace by the time host authentication protocols start to be
+deployed for real on the Internet.)
+
+
+
+

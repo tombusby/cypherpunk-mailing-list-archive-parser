@@ -1,0 +1,108 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 25 Oct 1997 01:48:02 +0800
+To: mark@unicorn.com
+Subject: a day in the life of a pgp5.5 user (Re: PGP Employee on MKR)
+In-Reply-To: <877707423.648.193.133.230.33@unicorn.com>
+Message-ID: <199710241640.RAA03688@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Mark Grant <mark@unicorn.com> writes:
+> aba@dcs.ex.ac.uk wrote:
+> > We didn't say: "don't have disaster recovery for stored data."  (Well
+> > I didn't and I don't think Mark did either).
+> 
+> Yep. While there are much better options, I think PGP's CMR would be a
+> tolerable short-term solution for stored data. The problem is that it's
+> not for stored data, it's for email (or so 'Commerical MESSAGE Recovery')
+> would imply.
+> 
+> Note that solely using CMR for stored data would not require that the CMR
+> 'feature' be built into freeware or personal versions of PGP, but only into
+> the corporate version. That in itself would be a big win.
+
+PGP 5.5 currently has CMR for stored data AND comms data (if you set
+it up to have CMR).  CMR for stored data only is much safer from
+government abuse.
+
+
+I think even CMR for just stored data is kind of dumb in that it
+doesn't work very well.
+
+Consider a day in the life of a typical Joe Luser (who can't remember
+a password to save his life).
+
+He's been using this spiffy new pgp5.5 (or your suggested 5.6 with CMR
+storage recovery, but with no CMR message recovery).. he has PGP
+encrypted files scattered everywhere.  On backup tapes in the
+fire-proof safe, on floppies, on the disk, on the disk inside `.zip'
+files `.tar' files, on the optical duke box (full of write-once worm
+CDs), etc. etc
+
+He forgets his password (for the third time that month).  He needs all
+those files back _now_ because there's a deadline, and there's going
+to be serious shit flying if it doesn't get finished.
+
+So now what?
+
+The admin has to come along and recover them all for Joe.  He'll be
+there for the duration if he's got to re-encrypt half of the 2Gb disk
+(it'll be _slow_ with public key crypto, which PGP Inc insists on
+using even for single user storage applications, but we'll save up
+that rant for another post).  Could easily take an hour or so before
+he's through.  Probably he'll miss some because they are inside `.zip'
+files, etc.
+
+And then half an hour after the admin has finished Joe Luser will
+accidentally delete that important report.  Then the admin gets called
+in again because Joe remembered he had another backup of it inside a
+zip file, which he can't read because it's encrypted to his old key.
+
+
+Key recovery would be simpler.  Just encrypt the private half of Joe's
+key with the Admins key.  Leave it on Joe's disk, or chuck a copy in
+the company safe.  Then when Joe has another memory lapse, the admin
+can be done in 5mins.
+
+That means that the company could now read stuff on Joe's disk.  PGP
+Inc seems to view this prospect with horror as if it is a privacy
+invasion.  But that's what CMR in pgp5.5 used for storage allows too.
+I can't see that it makes much difference how the company gets access
+-- they can read all the data either way.
+
+(If Joe has some private files he can encrypt them with another
+key.  A progressive crypto vendor would include facilities for
+separate keys, some recoverable, some not.)
+
+And frankly the company is in a much better to snoop through the
+workstations files anyway; Joe's technically clueless, they own the
+machine, they installed the software, they have access to the machine
+when he's not there.
+
+Not much you can do against that threat.
+
+PGP sees that threat, and it's response is to implements CMR?  Somehow
+it is ok to read data if the users key never gets revealed to the
+company?  Can't see that it makes much difference personally, the data
+is the interesting stuff, keys are just random numbers.
+
+But at the same time with CMR for message recovery the recovery
+information is being sent over the wire.  Now why would you want to
+send recovery info over the wire?  To make the attacker's job easier?
+Jeeze.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

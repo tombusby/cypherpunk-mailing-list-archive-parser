@@ -1,0 +1,48 @@
+From: "Geoffrey C. Grabow" <gcg@pb.net>
+Date: Sun, 4 Aug 1996 16:37:48 +0800
+To: cypherpunks@toad.com
+Subject: WARNING: SecureDrive & PartitionMagic
+Message-ID: <2.2.32.19960804064926.006b59d0@mail.pb.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It seems rather obvious now, but since I learned the hard way, I figured
+that I'd save the rest of you from a painful experience.
+
+I have one HD of 1.2gb.  I created a 50mb partition at the end of the drive
+using PM and encrypted it with SD14b.  I ran out of room on the secured
+partition and wanted to enlarge it.  I used PM to shrink the primary
+partition a little, and to enlarge the secured partition.  When I shrank the
+primary, the free space on the drive appeared between the two partitions.
+To enlarge the secondary, I moved it to the free space, then enlarged it on
+the right.  This was BAD!  PM did its thing, but no matter what I did after
+that, I couldn't get the secured partition to a usable state.  I ended up
+formatting the secured partition to recover.  
+
+After some playing, it seems that PM tries to "re-align" the data on the 2nd
+partition when you move left.  That's where things get screwed up.  I tested
+a few combinations, and found that everything works fine if you decrypt the
+partition before moving/resizing, then re-encrypt after.
+
+Just some friendly info.  
+
+ 
+                                                     G.C.G.
+
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ | Geoffrey C. Grabow       |      Great people talk about ideas.       |
+ | Oyster Bay, New York     |     Average people talk about things.     |
+ | gcg@pb.net               |      Small people talk about people.      |
+ |----------------------------------------------------------------------|
+ |     PGP 2.6.2 public key available at http://www.pb.net/~wizard      | 
+ |          and on a plethora of key servers around the world.          |
+ |   Fingerprint =  A6 7B 67 D7 E9 96 37 7D  E7 16 BD 5E F4 5A B2 E4    |
+ |----------------------------------------------------------------------|
+ | That which does not kill us, makes us stranger.   - Trevor Goodchild |
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+

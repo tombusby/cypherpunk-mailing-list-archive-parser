@@ -1,0 +1,60 @@
+From: Hallam-Baker <hallam@ai.mit.edu>
+Date: Fri, 13 Sep 1996 09:07:44 +0800
+To: cypherpunks@toad.com
+Subject: Re: [Long] A history of Netscape/MSIE problems
+In-Reply-To: <517brn$lu7@life.ai.mit.edu>
+Message-ID: <3238962F.1372@ai.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Some comments:-
+
+1) Netscape were using BSafe but Kipp unhooked the ergodicity testing
+code which is meant to detect inadequate random number generation
+methods.
+
+Netscape got full access to Bsafe in return for 1% of Netscape stock.
+
+
+2) Most serious concern was not the 40bit part. That was simply the US
+govt making the security a joke and there was nothing that Kipp or
+anyone else could do about it.
+
+More serious were the structural problems, SSL cannot be used across a
+firewall (unless the admin is a twit) because it is entirely opaque. SSL
+is not very good as an authentication only option.
+
+There is no facility for escrow of keys - another essential feature if
+you are to use it inside a corporation. If I am the CIO of IBM I'm not
+having the company secrets go out the door via some encrypted stream I
+can't read. Similarly banks and nuclear power stations have a legit need
+to snoop on their own lans.
+
+
+3) Microsoft proposed PCT because they wanted to force Netscape to make
+SSL an open standard rather than one Netscape could tweak as they liked
+and freeze Microsoft out of the picture. Quite how they would imagine
+that anyone would want to ever do such a thing...
+
+
+4) The initial weakness exposed in SSL was that integrity attacks had
+not been considered at all. It took a while to explain that this was in
+fact a more pressing concern than confidentiality in many applications.
+The SSL.v2 integrity was not actually bound to a particular site. Simon
+Spero produced a rather nice proxy server which allowed one to reroute
+URLs but keep the key intact. (ie connect to foobar.com and get the
+netscape home page).
+
+There was a long list of security holes in SSL, PCT plugged a good
+number of them and SSL v3 plugged a few. The overall design never gave
+me confidence however. Like much Netscape stuff they start with an
+over-simple view of the problem spec and then try to solve problems by
+adding extra ornaments.
+
+
+		Phill
+
+
+
+

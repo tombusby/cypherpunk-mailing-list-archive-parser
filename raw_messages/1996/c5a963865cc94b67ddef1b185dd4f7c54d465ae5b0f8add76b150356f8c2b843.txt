@@ -1,0 +1,37 @@
+From: Steve Reid <steve@edmweb.com>
+Date: Sat, 16 Nov 1996 20:26:12 -0800 (PST)
+To: "Mark M." <markm@voicenet.com>
+Subject: Re: PGP3.0 & ElGamal
+Message-ID: <Pine.BSF.3.91.961116193436.193B-100000@bitbucket.edmweb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Yes, but I believe 3DES has an effective key length of only 112 bits.
+>> Of course, even this is more than sufficient for a long time to come. 
+> 3DES can have an effective key length of 168 bits if 3 keys are used
+> instead of two.  There are no security problems that I know of from 
+> using 3 keys. 
+
+The Meet In The Middle attack (MITM, not to be confused with Man In The
+Middle) is a time-memory tradeoff that works against any multiple
+encryption. 
+
+Triple encryption:
+ciphertext = encrypt(k3, decrypt(k2, encrypt(k1, plaintext)))
+plaintext  = decrypt(k3, encrypt(k2, decrypt(k1, ciphertext)))
+
+An MITM attack, as I understand it, works by decrypting from one end and 
+encrypting from the other...
+
+Step 1- decrypt(x3, ciphertext) for every possible x3, and store all the
+results. This requires 2^56 operations and 2^56*8 bytes (550 petabytes?)
+of memory when done against 3DES. Quite a lot, but it might be doable. 
+
+Step 2- decrypt(x2, encrypt(x1, plaintext)) for every possible x1,x2. 
+This require 2^112 steps with 3DES. If the result you get can be found in
+the table built by step 1 then you've figured all three keys. 
+
+
+
+

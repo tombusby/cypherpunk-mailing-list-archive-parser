@@ -1,0 +1,63 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 12 Dec 94 14:46:36 PST
+To: andrew@riskdev.ml.com (Andrew Brown)
+Subject: Re: extra dashes in PGP-related blocks?
+In-Reply-To: <9412122203.AA05754@nottingham.riskdev.ml.com>
+Message-ID: <9412122245.AA17251@hodge-podge.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+To: andrew@riskdev.ml.com (Andrew Brown)
+cc: jrochkin@cs.oberlin.edu (Jonathan Rochkind), cypherpunks@toad.com
+Subject: Re: extra dashes in PGP-related blocks? 
+
+> but is a remailer (or pgp) smart enough to take the output from checking
+> a signature and run pgp over it again?  is it going to know to take something
+> and pass it through pgp until pgp can't do anything with it any more? i think
+> that's the problem that jrochkin was addressing.  he has a pgp encrypted
+> message and then signs it and then wants to mail it to a remailer so that the
+> remailer can decrypt the message but it won't ecause the encryption is
+> nested...
+
+Why would it have to?  A plain remailer takes the input you give it,
+and replays it to the output.  It doesn't modify the message in any
+way, so there is no problem.
+
+A remailer that signs a message should take what you send it (no
+matter _HOW_ you sent it), sign that message wholesale, and then send
+out the signed message.  This means that if you send it a PGP-signed
+message, the output message will have two signatures -- the outer
+signature being the signing remailer, and the inner signature (which
+is quoted by PGP at the remailer) is the signature on the original
+message.
+
+This is the correct behavior, and _SHOULD NOT_ be changed.
+
+An anonymizing remailer _might_ want to take the output of a PGP
+message and pass that into the output, but that is a different
+function altogether.
+
+I dont understand why a plain remailer should have to know anything
+about PGP if it is just doing remailing, and in any case it should
+never have to verify a PGP-signed message, unless that is the purpose
+of the remailer.  And even if that IS the case, it should only unwrap
+the OUTERMOST wrapping from PGP -- it *SHOULD NOT* recursively try to
+collapse the PGP armors.  That is NOT a remailer's job.
+
+- -derek
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQBuAwUBLuzSYzh0K1zBsGrxAQGR3gLDBxPn9cmWWvWwyRdlcYUlRs5LqMHjMkRa
+lmOggyb2QmFS1+vEqJ2a1oUxdLJHzNcH4JxjBplDKASmG19Ixvkt1nIjkwGi3yzN
+J02drrVGYJqs426qnQhxI8E=
+=B6In
+-----END PGP SIGNATURE-----
+
+
+
+

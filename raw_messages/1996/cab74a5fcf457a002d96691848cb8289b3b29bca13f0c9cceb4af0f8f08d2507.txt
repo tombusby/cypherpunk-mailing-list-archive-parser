@@ -1,0 +1,39 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 2 Aug 1996 02:34:02 +0800
+To: cypherpunks@toad.com
+Subject: Re: Cracking RC4/40 for massive wiretapps
+In-Reply-To: <199608011151.HAA07754@unix.asb.com>
+Message-ID: <199608011445.HAA06675@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+RC4 is a stream cypher, so it produces a random stream which is XOR'd
+with the plaintext to produce the cyphertext (and vice versa).  With the
+old SSL there were spots of known plaintext, but I don't know if that is
+the case now.  If you do have some, then you can recover the output of
+the cypher.
+
+5 bytes (40 bits) of output should generally determine the key.  So you
+could build a massive lookup table indexed by the output which produces
+the key.  This would have 2^40 entries (indexed by output values) each
+of which was 5 bytes long (key values).  This would take approximately
+5K gigabyte disks plus some PC's to attach them to.  Total cost, one to
+a few million dollars, perhaps a bit less if you get them wholesale!
+(The task of constructing the table is left as an exercise for the
+reader.)
+
+Then given that you know output you can quickly find the key.  No
+search is involved, you just go to the PC which holds the range of
+output values you are interested in, and do a single disk access.
+
+Note that the known plaintext doesn't have to be contiguous, any five
+bytes will do.  With fewer known bytes you can do a similar thing but
+have a list of possible keys which can generate that set of output
+bytes.
+
+Hal
+
+
+
+

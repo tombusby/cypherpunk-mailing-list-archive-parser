@@ -1,0 +1,60 @@
+From: aba@dcs.exeter.ac.uk
+Date: Tue, 8 Aug 95 10:12:08 PDT
+To: samman@cs.yale.edu ("Rev. Ben")
+Subject: Prime Number Gen's.
+Message-ID: <15295.9508081711@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"Rev. Ben" <samman@cs.yale.edu> writes on cpunks:
+> Does anyone know of where I could get source, royalty free, in the US for 
+> a good Prime Number Generator?
+
+GNU code sounds like it would fit the royalty free bill.
+
+Try the GNU multi-precision library: gmp-1.3.2.tar.gz from all good
+GNU sources.  I get my stuff from ftp://src.doc.ic.ac.uk/gnu/ if you
+don't have a GNU ftp site to hand.
+
+There's a function
+
+	int mpz_probab_prime_p(mpnum, SURETY)
+
+which returns true if the prime passes SURETY probablistic prime tests.
+
+I think if it passes say 25 tests, then there will be less than a
+1/2^25 chance that it is not prime.
+
+Also, on:
+
+	http://dcs.ex.ac.uk/~aba/rsa-keygen.html
+
+I've got some code Aggelos Keromitis <kermit@forthnet.gr> wrote using
+the GNU mp library for generating RSA keys, it uses the probab_prime
+function, like this:
+
+        while (!mpz_probab_prime_p(&p, 25))     /* Find a prime */
+          mpz_add_ui(&p, &p, 1);
+
+Where p is a random starting point.  Ie just add one and repeat.  It
+would be faster to check for some more obvious things like even nos,
+etc.  But it seems to work well enough, and generates working RSA
+keys.
+
+Adam
+--
+HAVE *YOU* EXPORTED RSA TODAY? --> http://dcs.ex.ac.uk/~aba/rsa/
+--rsa--------------------------8<-------------------------------
+#!/bin/perl -s-- -export-a-crypto-system-sig -RSA-3-lines-PERL
+$m=unpack(H.$w,$m."\0"x$w),$_=`echo "16do$w 2+4Oi0$d*-^1[d2%Sa
+2/d0<X+d*La1=z\U$n%0]SX$k"[$m*]\EszlXx++p|dc`,s/^.|\W//g,print
+pack('H*',$_)while read(STDIN,$m,($w=2*$d-1+length($n)&~1)/2)
+-------------------------------8<-------------------------------
+TRY: rsa -k=3 -n=7537d365 < msg | rsa -d -k=4e243e33 -n=7537d365
+
+
+
+
+

@@ -1,0 +1,106 @@
+From: Paul Foley <mycroft@actrix.gen.nz>
+Date: Tue, 26 Nov 1996 03:41:54 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Provably "Secure" Crypto (was: IPG Algorithm Broken!)
+In-Reply-To: <Pine.LNX.3.94.961126020057.2424A-100000@random.sp.org>
+Message-ID: <199611261141.AAA03817@mycroft.actrix.gen.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 26 Nov 1996 03:39:35 +0000 (GMT), The Deviant wrote:
+
+   On Mon, 25 Nov 1996, Dana W. Albrecht wrote:
+
+   > so often, I refer to systems for which rigorous mathematical proof that 
+   > "there are no shortcuts" exists.  To my knowledge, no such systems, with 
+   > the exception of a real one-time pad, exist today.  However, I also 
+
+   As I have argued many times, that is correct.  OTP, with real random
+   numbers, and no-reusage, etc, etc, is the only "perfect" cryptosystem, and
+   even it has its problems (like key exchange, for instance).
+
+The only one known at this time, not necessarily the only one
+possible.  Are you aware of some proof that no other cryptosystem can
+be secure (in the way Dana talks about)?
+
+   > Rigorous proofs of the non-existence of an algorithm are not new.  
+   > Neither are rigorous proofs that any algorithm which can solve a given 
+   > problem requires a minimal running time.  Or, in an even stronger sense, 
+
+   Hrmmm... I seem to see a problem (namely Moore's first law) in assigning
+
+There's a Moore's second law?
+
+   anything a "minimal running time".  Perhaps "minimal instruction count"
+   would be more suited to your example.  Because if you're talking about
+   time, it essentially boils down to "the longer something takes the less
+   time it takes".
+
+"Minimal running time" doesn't really mean time in hours.  Obviously
+hardware gets faster all the time.  It means complexity -- O(n^2)
+takes more time than O(log(n)), regardless of how fast your hardware
+is.  In other words, if takes f(x) time units, but the units are
+arbitrary.
+
+"Minimal instruction count" is pretty meaningless (change the
+instruction set to arrive at any figure you like).
+
+   > that a particular known algorithm for a given problem is indeed a 
+   > (provably) optimal algorithm for that problem.
+
+   Never happen.  It just won't.  As a rule, there's _always_ a faster way.
+
+But there _are_ such proofs ("reductio ad absurdum".  Assume this is
+_not_ the best algorithm.  Then there is some better algorithm.
+Figure out some properties this better algorithm must have.  Something
+like "1 == 2" comes up, therefore there is no such better algorithm.)
+
+Of course you can do it (whatever "it" is) faster with faster
+hardware, or maybe better implementation.  And there are sometimes
+special-case shortcuts...(a OTP has innumerable "weak keys" -- all
+'0's being the most obvious -- of course it's _possible_ that your
+random pad just happens to transform your real message into valid
+English text, but I doubt this argument would save you from the firing
+squad :-) The chance of generating an all-'0' pad ((1/n)^x, n=range of
+values in pad, x=number of blocks (characters) in message) is a lot
+better than the chance of getting some unrelated-but-meaningful text
+as output (I don't even know where start on that one -- it's the
+"monkeys in the British Museum" scenario))
+
+   > Turning once again to cryptography, there is presumably an "optimal" 
+   > algorithm for factoring a "general" number in the "worst" case.  Of 
+
+   Ok, now I have to pose a question: If cryptographers actually beleive
+   this, why continue to search for a faster one.
+
+Because no-one's found the optimal solution yet (or at least not
+proved that it is optimal).
+
+   > "optimal" algorithm.  Worse case bounds on running time for currently 
+   > known algorithms can certainly be produced, but no one currently knows 
+   > if these are the best algorithms.
+
+   Again I say, there's _always_ a faster way.
+
+But you're arguing "faster" in terms of clock time (which is obviously
+true, but not necessarily useful).  Something that takes O(n^2) time
+can be done in arbitrarily short clock time (given fast enough
+hardware), but is still slower than something that takes O(log(n))
+time.  If you make n big enough, the O(n^2) calculation may not be
+worth doing, while the O(log(n)) calculation is still fairly fast (in
+reality, of course, you'd prefer something that takes much longer than
+n^2).
+
+-- 
+Paul Foley <mycroft@actrix.gen.nz>       ---         PGPmail preferred
+
+	   PGP key ID 0x1CA3386D available from keyservers
+    fingerprint = 4A 76 83 D8 99 BC ED 33  C5 02 81 C9 BF 7A 91 E8
+----------------------------------------------------------------------
+Christ:
+	A man who was born at least 5,000 years ahead of his time.
+
+
+
+

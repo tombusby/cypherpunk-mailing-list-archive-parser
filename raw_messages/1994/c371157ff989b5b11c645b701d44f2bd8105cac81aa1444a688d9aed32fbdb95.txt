@@ -1,0 +1,66 @@
+From: cactus@bb.com (L. Todd Masco)
+Date: Wed, 24 Aug 94 14:42:38 PDT
+To: cypherpunks@toad.com
+Subject: Re: Using PGP on Insecure Machines
+In-Reply-To: <m0qdImM-0004EcC@khijol.uucp>
+Message-ID: <33gf5d$fi3@bb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <m0qdImM-0004EcC@khijol.uucp>,
+Ed Carp [Sysadmin] <khijol!erc@apple.com> wrote:
+>At the risk of repeating myself, what's the problem with wrapping PGP in 
+>a shell script?  Works for me - see a previous mailing, complete with 
+>wrapper scripts.  I can send either encrypted or just signed email 
+>without especially noticing it.
+
+Okay, I'm the Evil NSA Sysadmin from hell.  I want to collect all the
+ info available on my users.  The NSA gives me $50 per keypair, snitch
+ money.  Or I just like to be able to read all your mail, and would like
+ to have the option of, at some point, forging something from you.
+
+So, I replace the shells on machines under my control with programs that
+ invoke something like tee(1) to split stdin and stdout to files and then
+ execs the intended shell.  For good measure, I overwrite the process
+ entry in the running kernel.
+
+So I now have a files of every keystroke you type, and if I'm clever about
+ how I do it (I will be), I can correlate them with the stdout.  I just
+ search for "pgp" and bingo: I've got your passphrase.
+
+Since I'm root, getting your keyfiles is trivial.  
+
+Your keys are toast, and you don't even know it.  There are a gazillion
+ other ways the ENSFH could have done this: monitoring your /dev/tty vector
+ in the kernel would be far more subtle, for example.  The key thing to
+ remember is that the computer isn't your tool: it's the tool of the people
+ with root.
+
+Not only that, but I don't even have to steal your keys: the plaintext will
+ exist at some time, and I can trap that -- by only twinning your stdio.
+ 
+The network security is almost as important, since there are probably many
+ more malicious people outside your machine than inside.  So, if you're
+ running UNIX, you'd damn well trust everyone with root, run a logging
+ /bin/login, be behind a firewall, replace the crypt that passwd uses with
+ some transformation, put shadow passwd files in place, make crypt log
+ usage and place appropriate monitoring software to watch the logs, monitor
+ the machine from another machine behind your firewall, and a host of other
+ things.
+
+Security is not easy -- Tim's point is that you can't get it by just
+ running some package;  If you think you can, you're fooling yourself
+ and everytime someone puts on a securer-than-thou-because I run PGP air,
+ they're showing themselves to be totally clueless.
+
+This is all very rudimentary -- come on, you've got to be paranoid where
+ security is concerned.  There are many vectors of attack and you've only
+ got to miss the one that someone tries to lose big.
+-- 
+L. Todd Masco  | "Large prime numbers imply arrest."  - Previously meaningless
+cactus@bb.com  |   grammatically correct sentence.  Now...
+
+
+
+

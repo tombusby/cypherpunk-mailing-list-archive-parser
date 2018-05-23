@@ -1,0 +1,67 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Fri, 5 Aug 94 20:37:35 PDT
+To: cypherpunks@toad.com
+Subject: Remailer ideas
+In-Reply-To: <3778@aiki.demon.co.uk>
+Message-ID: <9408051709.AA14763@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim Dixon analogizes between the Internet and remailer networks.  The
+analogy has some merit, but yet breaks down badly with the very first
+point:
+
+      *	all packets should be acknowledged
+
+This is not the way the Internet works.  IP, Internet Protocol, is
+unreliable.  TCP, the reliable stream protocol, does not acknowledge
+individual packets but rather advancement along a sequence.  The
+lesson is that reliable delivery should be built on top of unreliable
+delivery.
+
+Here the analogy breaks down on technical grounds.  With TCP, the
+destination knows the source, yet in a remailer network this may not
+be the case.  A good first cut, though, would be to forgo reliable
+delivery for remailer-created pseudonymity and work out a reliability
+mechanism for regular correspondents.  In this case the source _is_
+known, it's just that it's not shown on the outside of the message.
+
+Further, in email, there's currently no notion of a connection.  Email
+message are much more like datagrams than bit streams.  In order to do
+reliable delivery, there would have to be persistent state information
+on each side of the communication.  If I send a message for the first
+time to a party and there's no reply, I cannot conclude whether the
+message was not delivered or whether the message was delivered and not
+answered.
+
+Connection-oriented email would be much more complicated than the
+current systems.  It is, perhaps, time for email to become more
+complex.  
+
+      *	messages should be broken down into packets which are routed
+	   independently
+
+Length quantization is necessary for security in the face of total
+network monitoring.  Multiple quanta may be warranted in the case of
+high volume, which is certainly not the case right now.  So this point
+holds.
+
+      *	users should communicate with trusted gateways
+
+This point is only half true, because the analogy only subsumes one
+kind of trust.  For remailers there is both trust in delivery and
+trust in silence, the destruction of the message and information about
+it.  On the Internet the only trust required is delivery; there is not
+a desiderata in the design (although it's certainly in some people's
+minds) that packet monitoring _not_ be possible.
+
+      *	the gateways should frequently exchange routing information
+
+Again, this works for trust in delivery but not for trust in silence.
+
+Eric
+
+
+
+

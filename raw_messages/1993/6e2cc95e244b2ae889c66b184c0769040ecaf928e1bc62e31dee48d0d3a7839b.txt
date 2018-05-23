@@ -1,0 +1,168 @@
+From: peter honeyman <honey@citi.umich.edu>
+Date: Mon, 31 May 93 20:10:26 PDT
+To: tcmay@netcom.com (Timothy C. May)
+Subject: Re: Clipperpunks Write Code?
+In-Reply-To: <9305312100.AA22836@netcom3.netcom.com>
+Message-ID: <9306010310.AA14901@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>                 If "Cypherpunks write code", how much code has been written
+> lately?
+
+this is not a major hack, but a fun one.  i've never been big on the details
+of pgp's trust model, with "trusted", "sort of trusted", etc.  the keys
+i trust most are those i have signed.  by extension, what i want to know is
+the "signature distance" of a given key.  so here's my hack, a shell script
+that uses pgp and pathalias to compute signature distance.  here's a sample:
+
+  reno:; ./pgpwho hughes@soda honey
+  peter honeyman <honey@citi.umich.edu>
+  Phil Karn <karn@qualcomm.com>
+  Tom Jennings <tomj@fido.wps.com>
+  Eric Hughes <hughes@soda.berkeley.edu>
+
+actually, it's much more verbose than that, but that will change.
+so far, i find the script useful.  here it is.
+
+	peter
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#!/bin/sh
+# usage: pgpwho [ who [ me ] ]
+
+# @(#)pgpwho	1.1 93/05/31
+# public domain.   send comments to honey@citi.umich.edu.
+
+case $# in
+0)	argwho=
+	arglocal=;;
+1)	argwho=$1
+	arglocal=;;
+2)	arglocal=$2
+	if [ "$1" != "-" ]; then
+		argwho=$1
+	else
+		argwho=
+	fi;;
+*)	echo usage: pgpwho [ who [ me ] ]
+	exit 1;;
+esac
+
+find kvv pain reach -size 0 -exec rm -f '{}' ';' >/dev/null 2>&1
+
+if [ ! -r kvv ]; then
+	kvv=
+else
+	kvv=`find kvv -newer $PGPPATH/pubring.pgp -print`
+fi
+
+case "$kvv" in
+kvv)	echo "kvv is up to date";;
+*)	echo "dumping keys (pgp -kvv) ..."
+	pgp -kvv > kvv;;
+esac
+
+if [ ! -r pain ]; then
+	pain=
+else
+	pain=`find pain -newer kvv -print`
+fi
+
+case "$pain" in
+pain)	echo "pain is up to date";;
+*)	echo "massaging kvv into pain (pathalias input) ..."
+	cat kvv | awk '
+		$1 == "pub" {
+			num = split($2, bitskeyid, "/");
+			if (num != 2) {
+				print "???", $0
+				next;
+			}
+			nkeys++;
+			keyid = bitskeyid[2]
+			user = "";
+			for (j = 4; j <= NF; j++)
+				user = user " " $j
+			userid[keyid] = user;
+			}
+
+		$1 == "sig" {
+			if ($2 != keyid)
+				print $2, keyid, "(1)"
+		}
+
+		END {
+			for (i in userid)
+				print "#", i, userid[i];
+		}
+	' > pain;;
+esac
+
+while :; do
+	if [ -z "$arglocal" ]; then
+		echo -n "what is your pgp id? "
+		read arglocal
+	fi
+	grep -i "^pub.*$arglocal" kvv | tee tmp
+	case `wc -l < tmp|sed 's/ //g'` in
+	0)	echo $arglocal not found, try again;;
+	1)	break;;
+	*)	echo too many matches for id $arglocal, please narrow it down;;
+	esac
+	arglocal=
+done
+local=`awk '{print $2}' tmp | sed 's/.*\///'`
+
+while :; do
+	if [ -z "$argwho" ]; then
+		echo -n "who? "
+		read argwho
+	fi
+	grep -i "^pub.*$argwho" kvv | tee tmp
+	case `wc -l < tmp|sed 's/ //g'` in
+	0)	echo $argwho not found, try again;;
+	1)	break;;
+	*)	echo too many matches for $argwho, please narrow it down;;
+	esac
+	argwho=
+done
+who=`grep "^pub" tmp | awk '{print $2}' | sed 's/.*\///'`
+
+if [ ! -r reach ]; then
+	reach=
+else
+	reach=`find reach -newer pain -print`
+fi
+
+case "$reach" in
+reach)	echo "reach is up to date";;
+*)	echo "running pathalias ..."
+	pathalias -l $local -c pain 2>xxx-errs | tee xxx | awk '$1 < 10000 {print}' > reach;;
+esac
+
+echo "searching for $who ..."
+
+grep "	$who	" reach | sed -e 's/.*	//' -e 's/%s//' -e 's/!/ /g' > tmp
+case `wc -l < tmp|sed 's/ //g'` in
+0)	echo no signature path to $who
+	exit 1;;
+1)	;;
+*)	echo weird error
+	exit -1;;
+esac
+
+set `cat tmp`
+
+grep "^# $local" pain | sed -e 's/..........//'
+for i in $*; do
+	grep "^# $i" pain | sed -e 's/..........//'
+done
+
+rm -f tmp
+exit
+
+
+
+

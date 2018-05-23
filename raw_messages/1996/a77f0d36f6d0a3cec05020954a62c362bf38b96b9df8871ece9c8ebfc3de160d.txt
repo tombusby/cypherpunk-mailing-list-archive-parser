@@ -1,0 +1,65 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 14 Mar 1996 12:11:54 +0800
+To: cypherpunks@toad.com
+Subject: Re: PGP reveals the key ID of the recipient of encrypted msg
+Message-ID: <199603130447.UAA07749@ix3.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>On Mon, 11 Mar 1996 savron@world-net.sct.fr wrote:
+>> I began testing PGP  a few days ago ( I'm a PGP newbie ) and I found 
+>> that it gives out the key ID of an encrypted message . From this you 
+>> can get the  identification of the recipient of the message , if it's 
+>> someone who has publicaly  distributed his  key (keyserver , homepage 
+>> ...) . So even if you are unable to decode the message you  can find 
+>> who is the recipient of a given message . I think this is a big 
+>> privacy problem .
+
+How much of a problem it is depends on the application you're using PGP for,
+but yes, it's a concern.  There's a program called "stealth" by "Harry Hastur"
+which lets you remove or hide this information, as well as hiding most of
+the PGP headers.  (There are some aspects of PGP file structure that are
+difficult to hide, at least without doing almost as much work as PGP
+was already doing, and I don't know if it adjusts for the mathematical
+properties of RSA-encrypted data which make it possible to identify the
+public key over some number of messages.)
+
+When the new PGP 3.0 comes out, there will be some support for
+shorter keyIDs (which isn't perfect, but for instance a 4-bit keyID
+would let you not try to decrypt 15/16ths of the messages,
+while not really fingering you as the recipient.)
+
+Also, if you have someone you frequently correspond with on some topic
+(perhaps a mailing list) and want to be able to send them messages that
+don't identify them, have them generate a public key they use just for 
+that application.  You can send your request by anonymous remailer,
+and they can send you a reply by anonymous remailer or post to
+alt.anonymous.messages.  This still permits traffic analysis 
+(nobody knows who keyid 0x12345678 is, but they know you sent him
+ten messages in the last month.)
+
+>> The problem is carried along when you encrypt a message for multiple  
+>> recipients , you get the key IDs of all the recipients and same 
+>> problem as above .  I think something like 'blind email copy' should 
+>> be used , because the recipients don't have to know the identity of 
+>> each other .
+markm@voicenet.com  replied:
+>You could just encrypt a message to different key ID's seperately, rather than
+>in one pass of PGP.  The would have the effect of Bcc.
+
+Yep.  That was the original PGP approach (i.e. "do nothing special"), and
+multiple-recipients were added as an efficiency measure.
+#--
+#			Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215 pager 408-787-1281
+# "At year's end, however, new government limits on Internet access threatened
+# to halt the growth of Internet use.  [...] Government control of news media 
+# generally continues to depend on self-censorship to regulate political and
+# social content, but the authorities also consistently penalize those who
+# exceed the permissable."  - US government statement on China...
+
+
+
+
+

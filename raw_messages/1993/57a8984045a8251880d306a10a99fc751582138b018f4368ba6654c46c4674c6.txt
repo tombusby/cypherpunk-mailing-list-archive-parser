@@ -1,0 +1,51 @@
+From: charliemerritt@BIX.com
+Date: Thu, 7 Oct 93 15:29:21 PDT
+To: cypherpunks@toad.com
+Subject: Weak Keys? explained
+Message-ID: <9310071823.memo.44198@BIX.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+No, I did not mean I can find the spares of a well constructed key.
+And yes, the best key has at least one spare.
+What I meant was, if I were the NSA and wrote the keygen for
+a crypto system I could guarantee that each key would have
+a huge number of spares.  Enough, that if I were the NSA I
+could find them.
+
+How to generate a weak RSA key:
+
+	Start with a prime R
+	S=R*2
+
+L1	If S+1 is prime then P=S+1
+	If S+1 Not prime S=S* next_odd_number   (3,5,7,9,11...)
+		Loop to L1
+   else
+
+L2	If S+1 is prime then Q=S+1
+	If S+1 Not prime S=S* next_odd_number
+		Loop to L2
+   else
+
+	N=P*Q   #spare keys => 2*R					
+
+In the example I gave R was 101  p=1+(101*2*3)  q=1+(101*2*2*3)
+                      spare keys=606
+
+There are many BETTER ways to make a keygen that will produce keys
+the author can break.  RSA has no government trap door, but
+I, and certainly the NSA can write a keygen that makes trap-doored
+keys.  Ones YOU can't break, but I can, knowing my secret.
+
+My example was a put-down of Denning's assurance that skipjack
+is good.  RSA is good, skipjack MAY be good.  Look out for
+booby trapped keys.
+
+
+
+
+

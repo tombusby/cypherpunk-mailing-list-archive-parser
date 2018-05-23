@@ -1,0 +1,43 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Mon, 3 May 93 00:07:51 PDT
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <9305030707.AA14920@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I am using the d3des package.  So far I have been using the
+normal DES routines.  I have recently decided to use the
+tripple-DES routines but the documentation ( == *.c and *.h )
+didnt seem too clear on the point.  From what I understand
+so far it seems that   Ddes()  is used for both double
+and triple encryption (???) for 64bits in 64bits out.
+
+this is the test code I did,  it works, I'd just like to
+know for sure if it is using triple des (3*56 bit keys).
+
+thanx.
+
+
+#include "d3des.h"
+unsigned long enkey[96],dekey[96];
+
+main()
+{
+  char *a,b[100],*k;
+
+  strcpy(b,"this is a test");
+  k="testing123423456789212345678";
+  des3key(k,0); cp3key(enkey);    /* set up long keys , encrypt */
+  des3key(k,1); cp3key(dekey);    /* decrypt */
+  use3key(enkey); Ddes(b,b);      /* encrypt b */
+  write(1,b,8);
+  use3key(dekey); Ddes(b,b);      /* decrypt b */
+  write(1,b,8);
+}
+
+
+
+

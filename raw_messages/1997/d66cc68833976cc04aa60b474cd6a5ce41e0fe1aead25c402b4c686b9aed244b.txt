@@ -1,0 +1,71 @@
+From: stewarts@ix.netcom.com
+Date: Wed, 10 Sep 1997 04:02:55 +0800
+To: "Nobuki Nakatuji" <cypherpunks@toad.com
+Subject: Re: Gao's Chaos Cryptosystem Algorithim
+In-Reply-To: <19970909041824.464.qmail@hotmail.com>
+Message-ID: <3.0.3.32.19970909083021.0069266c@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There has been work like this done before, though I don't have references
+handy.
+Check Schneier's "Applied Cryptography".  It hasn't been very successful -
+the output of the system looks very random, but you can predict each value
+from the last, so known plaintext attack kills it.  And even if the
+mathematics are strong, the implementation can be weak.
+
+At 09:18 PM 9/8/97 PDT, Nobuki Nakatuji wrote:
+>P(i) Plaintext,C(i) Ciphertext,K(j) Key,Ch(i) Chaos signal,
+>L Irrational number
+>
+>P(),C()-->Manage in byte,Length supposing that n byte.
+>K()-->Character line from ASCII CODE,Length supposing that m.
+>
+>Ch(n)
+>begin
+>Xn+1=aXn(1.0-Xn)
+>return Xn+1
+>end
+
+How long are Xn and Ch(n)?  Double (64-bit IEEE floating point)?
+Is 0<Ch(n)<1 ?  (I assume yes...)
+How long is L (since a true irrational is infinitely long)?
+Is L part of the key, or shared by everybody?
+
+>f(K)
+>begin
+>w = Sigmaj strtoul(K(j))j
+>delay=int(w/L)
+>return(double)(w/L-delay)
+>end
+
+How is f(K) used?  Initialize Ch(0)?  
+What is strtoul?  String to Unsigned Long?
+If size(w) == ul == 32 bits, you only have a 32-bit key, too weak.
+If size(w) == 64 bits, maybe you have a chance.
+Be sure each piece of K(j) is long enough - adding a bunch of
+short numbers together does not produce a long number.
+An MD5 hash would be much better.
+
+>1.K input
+>2.delay generato
+>3.Ch(i) generato
+>4.P(i) acquire
+>5.C(i)=P(i) XOR Ch(i+delay)
+>6.C(i) output
+
+How do you XOR a plaintext byte with (double) Ch(i)?
+Do you really just use 1 byte of the Ch(i)?  Then you may have a chance.
+If you use all the bits of Ch(i), then known plaintext lets you
+take C(i) XOR P(i) == Ch(i), which lets you generate Ch(i+1)....
+You may not know the key, but you don't need to if you know the function.
+
+
+
+
+
+
+
+

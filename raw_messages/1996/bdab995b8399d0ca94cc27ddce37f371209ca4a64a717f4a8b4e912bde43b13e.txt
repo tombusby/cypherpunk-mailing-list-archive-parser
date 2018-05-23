@@ -1,0 +1,29 @@
+From: SINCLAIR  DOUGLAS N <sinclai@ecf.toronto.edu>
+Date: Thu, 22 Feb 1996 20:01:04 +0800
+To: cypherpunks@toad.com
+Subject: IPG OTM expansion
+Message-ID: <96Feb21.173106edt.9978@cannon.ecf.toronto.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I have a guess as to IPG's "OTP" expansion algorithm.  The clue is the
+prime wheels.  It reminded me of something I read in Kahn that was originally
+done with paper tape.
+
+Take two random streams, A and B.  Their lengths are relatively prime.  Let's
+use 1000 and 999.  An expanded stream C is computed thus:
+
+C[i] = A[i % 1000] ^ B[i % 999]
+
+C thus does not repeat until 999000 values have gone past.  Using more than
+two relatively prime wheels will produce very large streams.  The key,
+of course, is that *the entropy does not increase*.  I am sure that this
+sort of expansion is vulnerable to attack.  It certainly does not warrant
+the name OTP.
+
+Am I close, Ralph?
+
+
+
+

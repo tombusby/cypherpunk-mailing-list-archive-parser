@@ -1,0 +1,51 @@
+From: hal@alumni.cco.caltech.edu (Hal Finney)
+Date: Fri, 29 Jan 93 09:54:50 PST
+To: cypherpunks@toad.com
+Subject: OTP Generators
+Message-ID: <9301291755.AA08021@alumni.cco.caltech.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Douglas Sinclair asked about the earlier discussion re the use of 
+radiation to generate true random numbers for one time pads.
+
+The problem, as I recall, was with the quantity of bits needed.  OTP's 
+eat bits like crazy.  People have talked about filling CD-ROM's or other 
+optical media with hundreds of megabytes or even gigabytes of random 
+numbers.
+
+Now, the problem is how long it will take to produce that much random 
+data.  A few bits per second won't be fast enough.  Suppose you wanted 
+to produce 100 megabytes per day (which would take over a week to create 
+a gigabyte).  That requires about 10,000 random bits per second.
+
+Now, your detector is not going to be 100% efficient.  Only a certain 
+fraction of the emitted particles are going to be detected.  So you will 
+need more decays than this, possibly many more.
+
+Also, relying on a half-life calculation in which we wait a certain time 
+interval, and see if there is a decay or not, won't be that accurate.  
+If your time is off a little, it could bias the results.
+
+Tim May posted the best (IMO) fix for this.  You collect bits in pairs; 
+discard 00 and 11; for each 01 output a 0, for each 10 output a 1.  This 
+way even if there is a bias where, say, 60% of the bits are 0's and 40% 
+are 1's you still get 50-50 0's and 1's out.  This means you get about 1 
+output bit for each 4 inputs, so you have to increase the necessary 
+decay rate by a factor of 4.
+
+So, the needed particle emission rate is 40,000 divided by the 
+efficiency of your detector.  Perhaps Douglas could get some efficiency 
+figures from his father, and judge whether this rate of radiation 
+emission would be safe.
+
+Hal Finney
+74076.1041@compuserve.com
+
+{.
+
+
+
+
+

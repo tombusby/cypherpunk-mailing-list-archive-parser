@@ -1,0 +1,38 @@
+From: eli+@gs160.sp.cs.cmu.edu
+Date: Tue, 22 Oct 1996 15:37:56 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: [DES] Criteria for Key Recovery target.
+In-Reply-To: <+cmu.andrew.internet.computing.coderpunks+YmPCtHi00UfAI10Mcw@andrew.cmu.edu>
+Message-ID: <199610222237.PAA04951@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Russell Holt writes:
+>BTW, does anyone have references to statistical comparisons of key
+>searches in "real world" settings? Eg, random starting locations
+>versus random keys .. etc..
+
+E(time) with all trial keys distinct: 
+        1/N Sigma^N i = N/2 = 2^55.
+E(time) for random trials:
+        1/N + (N-1)/N (1 + E(time))
+        so E(time) = N = 2^56.
+
+Centralized keyspace handling is a clear lose, IMO.  The RC4-40
+project had server problems; scaling up by another 2^16 would be
+non-trivial.  Then there are problems with malicious searchers,
+corrupt servers, flaky networks... all this for a factor of two?
+(And, admittedly, the reduction in variance.)
+
+To rain on the parade a bit, what this discussion says to me is that
+most applications of DES are safe from net cracking for a few years
+yet...
+
+-- 
+   Eli Brandt
+   eli+@cs.cmu.edu
+
+
+
+

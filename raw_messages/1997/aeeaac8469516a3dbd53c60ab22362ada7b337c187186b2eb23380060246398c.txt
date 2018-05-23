@@ -1,0 +1,47 @@
+From: Bill Frantz <frantz@netcom.com>
+Date: Sun, 21 Dec 1997 15:28:21 +0800
+To: "Johnson, Michael P (Mike)" <cypherpunks@Algebra.COM>
+Subject: RE: ECB, CBC, CFB, OFB
+In-Reply-To: <c=US%a=_%p=Stortek%l=LSV-MSG06-971221014643Z-85371@lsv-bridge.stortek.com>
+Message-ID: <v03110768b0c265a36289@[207.94.249.114]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 5:46 PM -0800 12/20/97, Johnson, Michael P (Mike) wrote:
+>>Somebody asked:
+>>>Can somebody more experienced than I am explain the strengths and weaknesses
+>>>of these encryption modes as applied to CAST, IDEA, DES, and Blowfish?
+>>
+>>>              ecb    Electronic codebook mode
+>>>                     c[i] = f1(K, p[i])
+>>>                     p[i] = f2(K, c[i])
+>
+>This is the weakest mode. Patterns in the plain text tend to cause
+>repeated blocks in the output, causing some information leakage. This
+>mode is really only suitable if you have exactly one block or less to
+>encrypt or if random access at the block level is critical. An error in
+>the ciphertext or plaintext only affects one block, as long as bit count
+>integrity is maintained.
+
+It should be point out that ECB is also subject to some spoofing attacks.
+Blocks from one message encoded with a particular key can be substituted
+for blocks in a different message encoded with the same key.  In a banking
+system, this attack might allow the attacker to change the transaction
+amounts.
+
+With any mode, encypherment is not a substitute for a message
+authentication code.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | One party wants to control | Periwinkle -- Consulting
+(408)356-8506     | what you do in the bedroom,| 16345 Englewood Ave.
+frantz@netcom.com | the other in the boardroom.| Los Gatos, CA 95032, USA
+
+
+
+
+
+

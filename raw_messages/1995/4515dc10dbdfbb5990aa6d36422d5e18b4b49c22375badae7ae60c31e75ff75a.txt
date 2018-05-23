@@ -1,0 +1,77 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Wed, 27 Sep 95 02:37:36 PDT
+To: cypherpunks@toad.com
+Subject: Re: getting netscape to support the remailers
+In-Reply-To: <9509261805.AA22239@cs.umass.edu>
+Message-ID: <199509270937.FAA20543@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ 
+> sameer writes:
+> > 	I think that in order to get netscape to support the remailers
+> > the remailers will have to:
+> > 
+> > A) Support S/MIME
+> > B) Have a documented protocol, MIME-related
+> > 
+> > 	Did Ray Cromwell do some work towards MIMEifiying the
+> > remailers? My impression of his work back when he posted was that it
+> > trusted the remailers too much, but perhaps my memory is flawed-- in
+> > any case his work may be helpful towards developing a remailer
+> > standard, which could then help get support incorporated into
+> > MIME agents.
+
+  Yes, a while ago I was working on this, but I dropped it as people
+didn't seem interested. It was part of my whole "Remailer 2.0" proposal
+(before mixmaster was written)
+
+  I was studying ways to make it easier for mail readers to interact with
+remailers, in particular, messages which were split, padded, packetized,
+and sent along separate chains. All this without some kind of special 
+client. I wanted to use the multipart/partial part of MIME to have
+the pieces combined at the recipient end and decoded using an
+application/remailer or application/pgp type. (this was also
+before PEM was worked on) So I had a lot of work to do in standardizing
+stuff. I started working on a remailer which combined those facets,
+and also
+
+1) a remailer network which had strong authentication between remailers
+so that untrusted remailers could not get in the network (web of trust
+for remailers)
+2) my virtual handle idea
+3) strict addressing for virtual handles on the remailer network
+(e.g. set up an explicit chain to anonymous bob by mailing to
+remailer1#remailer2#....#remailerN#anonymous_bob. Also, if you add
+a '*' in the path, it means for the remailer to choose a random
+remailer as the next in the chain)
+4) padding, packetizing, delayed delivery, creating artificial traffic to 
+   thwart traffic analysis
+5) a built in keyserver and "list of active remailers" server. 
+   The list of active remailers server would also contain flags
+   for each remailer detailing what it supports and special
+   flags like if the machine is multiuser, single, firewalled, offline (UUCP 
+   connection only), etc. I wanted as standard, that every remailer
+   could serve keys or atleast tell you what other remailers were active
+6) socket connection for commanding the remailer so that you can bypass
+   sendmail logging and get error/status on the message
+7) direct SMTP delivery bypassing local sendmail logging
+
+
+
+I wanted to use multipart MIME to allow remailers in a network
+to be run from user accounts in such a way that they wouldn't accidently get
+mail intended for the remailer and they wouldn't have to bear
+responsibility for the mail sent (only the whole machine would, as it would
+be delivered via SMTP direct, not sendmail, so no local logs)
+
+Nevertheless, like many things, I completed about 60% of it and it got
+put on the back burner never to emerge. Mixmaster came along and I 
+figured there's no point continuing.
+
+ 
+-Ray
+
+
+

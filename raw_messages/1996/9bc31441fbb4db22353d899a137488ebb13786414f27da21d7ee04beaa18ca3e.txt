@@ -1,0 +1,54 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 5 Jan 1996 06:29:13 +0800
+To: cypherpunks@toad.com
+Subject: Re: 2047 bit keys in PGP
+Message-ID: <199601040811.AAA27453@ix12.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Are you sure it's a bug in the DOS version? When I did a pgp -kg in my 
+>> UNIX shell (US version 2.6.2) I also entered 2048 bits and it too 
+>> created a 2047 bit key instead.
+
+There are some versions that can only do 2047; there are others that have
+some sort of bug dealing with keys over some number like 2032, so if you're
+doing a new key around that size, 2000 might be safer.
+
+Looking at the distribution of keysizes on the MIT key server was interesting;
+there are a lot of unique or lightly-used values besides the popular 
+384, 510, 512, 768, 1024, 2047, 2048....  Something to think about if you're
+concerned about traffic analysis and anonymity.
+
+>> Why is there a limit to the size of the key anyway? It's too bad PGP 
+>> doesn't support any size key (within reason).
+
+By the time the Bad Guys can factor 2047-bit keys cheaply, you'll have
+more serious problems to worry about, which may fundamentally change
+your assumptions about cost-effective cracking and the amount of
+security you need to provide.  Remember that 1024 is currently way
+beyond crackable, so interesting theoretical things will have to
+happen before even that much is at risk.
+
+Also, there are a _lot_ of things around that tend to get 128-bit
+MD5 calculations in them - don't get overoptimistic about anything
+that pretends to be stronger than that.  (IDEA's 128-bit keys are
+about as tough as 3000+bit RSA keys, and anything limited to 128 bits
+is going to be in that general ballpark.)  PGP's random number stuff
+_is_ stronger than that, but that's still a fundamental limit.
+
+As a separate issue, programs do their calculations in data structures which
+have _some_ sizes to them.  They could be assigned dynamically, but
+large-and-static isn't that bad, and PGP was originally for DOS anyway;
+if that's the least evil thing you find in the code, be happy :-)
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, Pager/Voicemail 1-408-787-1281
+#
+# "The price of liberty is eternal vigilance" used to mean us watching
+# the government, not the other way around....
+
+
+
+
+

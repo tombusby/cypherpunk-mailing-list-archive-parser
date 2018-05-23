@@ -1,0 +1,56 @@
+From: Tatu Ylonen <ylo@cs.hut.fi>
+Date: Thu, 9 Nov 1995 08:33:11 +0800
+To: karn@qualcomm.com
+Subject: Re: Photuris Primality verification needed
+In-Reply-To: <199511080146.RAA22568@servo.qualcomm.com>
+Message-ID: <199511081833.TAA10801@soikko.cs.hut.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Well, since we already require 56-bit DES in ESP in the interests of
+> promoting basic interoperability, wouldn't a 512-bit prime be
+> similarly sufficient?
+
+*NO*, because you have to break the 56-bit DES separately every time,
+whereas doing the precomputation for the 512 bit prime is a one-time
+job.  Once anyone has done the precomputation, *all* communications
+will be open to whoever is in possession of the database.
+
+I think there is good reason to believe that if the 512 bit prime is
+allowed, it will be widely used, and even if it is found breakable, it
+will not be easily changed (just think about the experience with Sun's
+"secure" rpc, and how quickly their primes have been changed - and it
+still has much narrower deployment than what is hoped for ipsec).
+
+Let me include below a message I sent to Bill Simpson.  
+
+> If it is kept, the commercial vendors will probably start using it
+> as default because it is faster than the others, and the state
+> department will pressure them to do so.  Then we are again left with
+> too weak aprotections (in other words, pseudo-security which makes
+> people believe they have protection, when they actually don't).
+> After the precomputation, it is apparently cheap enough to crack the
+> exchange that it can be done on a mass scale to all exchanges
+> between a very large number of hosts.  I find this very harmful, as
+> it again provides no protection against mass surveillance.  We are
+> already too close to an Orwellian society.
+
+The remarks there apply equally well to organized criminals, large
+corporations, and hostile governments.  Or, suppose some group manages
+to get access to enough idle time, computes the database, and posts it
+on the Internet.  I for one would be willing to contribute CPU time on
+machines where I have access to help such a group, because I think it
+is better that it is widely known and publicized when there is little
+security and privacy.
+
+Including the provision for the 512 bit prime is *HARMFUL* and
+*DANGEROUS*.  Export control is not really an issue here, because if
+companies in the United States cannot provide secure networking,
+there are other companies in the world that can.
+
+    Tatu Ylonen <ylo@cs.hut.fi>
+
+
+
+

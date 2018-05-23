@@ -1,0 +1,33 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Thu, 27 Jan 94 12:37:42 PST
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: remailer multiple paths?
+In-Reply-To: <9401271557.AA08940@paycheck.cygnus.com>
+Message-ID: <9401272036.AA25208@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: "Mark W. Eichin" <eichin@paycheck.cygnus.com>
+> You'd need a good way of breaking up the message; if you were
+> encrypting already, it'd probably do well enough to put byte x into
+> message (x mod n) where you're sending n messages. (You could even
+> slice it at the bit level, but that's a little harder to do in a
+> trivial script...) 
+
+It would be easy enough to split the message by XOR into as many
+pieces as you wish.  This would be much more secure than an
+every-nth-byte division, though it would increase total traffic
+correspondingly.  Taking into account the non-ideality of the
+remailer net, using m-of-n secret sharing would be more reliable.
+
+It's not clear to me that this buys you much, though.  Encrypting
+the message end-to-end will suffice to keep it private.  What
+remailers do for you is impede traffic analysis.  Sending your
+message in n pieces gives a traffic watcher n chances.
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

@@ -1,0 +1,29 @@
+From: Jason Zions <jazz@hal.com>
+Date: Thu, 17 Jun 93 14:13:23 PDT
+To: cypherpunks@toad.com
+Subject: re: fast des
+Message-ID: <9306172113.AA10922@jazz.hal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>>Usually the limiting factor is examining the <ostensibly> decrypted data
+>>for statistically significant patterns indicating that you have the
+>>correct key.  
+>
+>If you know that your plaintext is 7-bit ASCII, then you can reject if you
+>see too many 8th bits set. [ ... ]  Hint for implementors: don't allow such
+>easy bit correlations in your plaintext.
+
+Run your plaintext through compress first; remove the compress header; then
+encrypt. Compression will screw up character frequencies (and use all eight
+bits) enough to make automated detection of a successfully-broken encryption
+really darn hard. Especially if you keep changing compression technology
+each message.
+
+Jazz
+
+
+
+

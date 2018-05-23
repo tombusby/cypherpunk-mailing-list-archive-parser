@@ -1,0 +1,74 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Fri, 4 Aug 95 07:59:58 PDT
+To: perry@piermont.com
+Subject: Java and Safe-TCL security (was Re: Java, Netscape, OpenDoc, and Babel)
+In-Reply-To: <199508041310.JAA02958@panix4.panix.com>
+Message-ID: <199508041459.KAA11345@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> strick at Jihad writes:
+> > Perry -- do you have the same basic objection to Safe-TCL that you do
+> > do to Java?  I would think so.
+> 
+> I do, but not as strongly. The language is much more constrained and
+> actually does have a lot of the evil bits ripped clear out (or at
+> least they could be ripped out.)
+
+  The same applies to Java. Anything can be ripped out of Java by removing
+the classes with the "native" methods on the local side. The class loader
+will barf at an object that references a class that doesn't exist. In fact,
+since that class contains the only way possible to access that privelege
+(it encapsulates all the nasty unix system calls you don't want to allow)
+there is no way for the untrusted code to call for instance, open(),
+because it doesn't know the address of it. Java does compile-time
+emasculation. (the compiler I'm speaking of is the Java compiler which
+must be run from the shell. The compiler is not a part of the browser)
+
+
+Now Safe-TCL has another mode of failure altogether. First of all, the way
+the interpreter is made "safe" is to take a fully working tcl interpreter
+(with full priveleges) at run time, and use TclDeleteCommand() to remove
+offending commands. Safe-TCL is not emasculated at compile time, but at
+run time. Now what if this removal-of-dangerous-commands process fails
+sometime, or fails to remove just a single command, because of say, a
+fence-post error, and that command just happens to be 'exec'?
+Furthermore, two interpreters are created, a "safe" one and an "unsafe"
+one. It is very possible for a programmer to accidently pass the pointer
+to the wrong interpreter. You should be nervous of an unsafe interpreter
+ever existing at all.
+ 
+
+Lastly, "declareharmless" allows priveleges to be added to Safe-TCL at
+run time, vs Java which only allows that by recompiling Java classes.
+If by any means, a trusted interpreter ever gets to execute this command,
+all is lost.
+
+
+One last comment: Java is a language specification, not an implementation
+specification. Sun wants Java to be a free and open language with other
+vendors creating compilers and runtime environments. Whether or not
+the Java runtime executes in a separate process space, chrooted(), etc
+is an implementation detail. In fact, I'm not totally sure that Hotjava
+doesn't do this already. Implementation details are not documented in
+the Java papers available at the Java home page.
+
+
+You have to read more than just the Java whitepaper to get an estimation
+of its security. 
+
+-Ray
+  
+
+
+ 
+ 
+
+ 
+
+
+
+

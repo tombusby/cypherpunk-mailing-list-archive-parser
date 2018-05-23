@@ -1,0 +1,32 @@
+From: Lou Poppler <lwp@mail.msen.com>
+Date: Fri, 1 Sep 95 09:15:52 PDT
+To: "Robert A. Rosenberg" <hal9001@panix.com>
+Subject: Re: SSL search attack
+In-Reply-To: <v02130508ac6c2efca958@[166.84.254.3]>
+Message-ID: <Pine.BSD/.3.91.950901121028.7561A-100000@conch.aa.msen.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 1 Sep 1995, Robert A. Rosenberg wrote:
+
+> I see nothing wrong with the concept of being allocated an initial chunk
+> and having the scan software attempt to ACK it when 50% of it has been
+> searched. A successful ACK would allow the releasing of a new chunk (in
+> response) equal in size to the returned chunk. A failure of the Server to
+
+The ACK process and the allocation process are separate, and should 
+remain so.  They run on different servers, and they run as separate 
+processes in the unix version of brloop.  A little tweaking of brloop 
+could allow pre-fetching of the next segment to search, without any 
+effect on the ACK process.  I dislike the idea of a client sending an ACK 
+before it has searched the entire segment.
+
+::::::::::::::::::::::::::::::::::::::
+:: Lou Poppler  <lwp@mail.msen.com> ::   No animals were harmed in the
+::      http://www.msen.com/~lwp/   ::   production of this message.
+::::::::::::::::::::::::::::::::::::::
+
+
+
+

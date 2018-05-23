@@ -1,0 +1,67 @@
+From: "Paul S. Penrod" <furballs@netcom.com>
+Date: Fri, 24 May 1996 12:18:28 +0800
+To: cypherpunks@toad.com
+Subject: Re: Floating Point and Financial Software
+In-Reply-To: <v02140b01adca741015f0@[17.128.203.188]>
+Message-ID: <Pine.3.89.9605231627.A7497-0100000@netcom18>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Thu, 23 May 1996, Martin Minow wrote:
+
+> A 64-bit floating point number (i.e., C double) should be suitable for
+> financial software under the following conditions:
+> 
+> -- Money must be represented in integral units (cents, not dollars and
+> cents).
+> 
+> -- The maximum value to be computed must be less than about 10^17. This
+>    includes intermediate values.
+> 
+> -- Addition, subtraction, and multiplication by an integer are the
+>    only operators.
+> 
+> Under the above conditions, there should be no loss of precision.
+> 
+> However, when division is required (as in currency conversion
+> or interest rate computation), one must be careful to control
+> round-off error. For example, a mortage payment schedule might
+> be computed using true (non-exact) floating-point arithmetic, with
+> the last or first payment adjusted to cover any residual error.
+> (You might want to re-read Donn Parker's book on computer crime,
+> paying special attention to the "salami" method of embezzelment
+> by accumulating round-off errors in a private account.)
+
+Yes, I suppose we could revive the urban legend about the programmer at 
+SW Bank in Houston who did this slight of hand for 18 mos and then split 
+the country.
+
+But there is a simpler method to avoid the problem entirely. There is 
+suffcient horsepower in uP's these days to support "long hand" division 
+and multiplication. Granted it takes some extra grey matter to write the 
+routines, but once done, you can vary the amount of precision to whatever 
+you desire and not have to worry about accuracy.
+
+The only penalty you pay for is time. If you need the accuracy, you'll 
+gladly give the time, or put more horsepower in the box.
+
+> 
+> Note that not all financial computation needs to be done with "to
+> the penny" accuracy: even our own dearly beloved IRS allows
+> (indeed, encourages) us to compute our tax declaration using
+> a whole-dollar round-off method.
+> 
+> Martin Minow
+> minow@apple.com
+> 
+> 
+> 
+> 
+> 
+
+
+
+

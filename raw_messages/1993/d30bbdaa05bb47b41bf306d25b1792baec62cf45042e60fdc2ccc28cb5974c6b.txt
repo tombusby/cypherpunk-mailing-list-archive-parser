@@ -1,0 +1,37 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Tue, 26 Jan 93 19:29:55 PST
+To: cypherpunks@toad.com
+Subject: weak point of PGP implementation
+In-Reply-To: <Pine.3.05.9301261648.A20494-b100000@stein2.u.washington.edu>
+Message-ID: <9301270327.AA17865@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matt mentions three potential weaknesses in PGP: RSA key length, the
+IDEA cypher, the pass phrase.  Let me add:
+
+4. The random number generator used to make session keys.  If this is
+weak, then an opponent might be able to guess them feasibly.  This attack
+does not require breaking the underlying cryptography.
+
+5. Weak random numbers for RSA key generation.  If the numbers in the
+random number pool are not as random as they should be, then one might
+simply simulate the prime generation algorithm and compile a table of
+potential PGP primes.  Simply running trial division on this list
+versus a storehouse of public keys might reveal common factors.  Even
+running Euclid's algorithm to find g.c.d.'s on a such a storehouse
+versus itself might produce factorizations.
+
+From my quick reading of genprime.c, the PGP key generation algorithm
+searches sequentially from a random starting point.  Thus it will tend
+to find primes that are preceded by large blocks of composite numbers.
+This alone reduces the search space some, possibly considerably.
+
+Has anybody measured how good the keystroke timings are, anyway?
+
+Eric
+
+
+
+

@@ -1,0 +1,78 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 29 Apr 1997 19:15:07 -0700 (PDT)
+To: John Young <jya@pipeline.com>
+Subject: Re: Fax Security Program
+In-Reply-To: <1.5.4.32.19970427175927.0075b2f8@pop.pipeline.com>
+Message-ID: <3.0.1.32.19970429184138.0063fb50@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:59 PM 4/27/97 -0400, John Young wrote:
+>The TV show "Computer Chronicles" Saturday featured
+>various comm security products, one of which used a fax 
+>encoding system with unusual capabilities to transmit color
+>images, condensed text (say, a 30-page doc encoded
+>on a single fax page) or any other digital data as visual
+>clutter.
+...
+>We missed the name of the product and would appreciate
+>hearing from anyone who did, or who knows of the product.
+
+There was a long discussion / flamewar about a product like this
+a year or three ago; you can check the archives.
+This system sounds a bit more interesting than the one
+that someone was touting the last time, but essentially 
+any system like this will have a subset of the following steps
+0) Scan and digitize the original into a file, if it's not already online.
+1) Compress the file (often combined with Step 0.)
+2) Encrypt the file
+3) Represent the file as a bunch of bits, possibly pixels (needs to add enough
+	redundancy to recover from errors in Steps 4 and 5,
+	and government-mandated anti-fax-spamming citizen-identification :-)
+4) Transmit the pixels using fax or modem or Internet protocols
+5) Print onto paper and rescan (if receiver isn't a computer)
+6) Recover the encrypted compressed file from the pixel representation
+7) Decrypt the file, if encrypted
+8) Decompress the file
+9) Print onto paper, if desired.
+
+Regular fax machines, and many scanners, combine steps 0 and 1;
+regular fax skips steps 2, 3, 5, 6, and 7.
+If the original is already a file, or is a more complex picture than G3 fax,
+most products will use some proprietary representation, or maybe G4.
+One snake-oil product used "Visual Encryption", which meant that they
+represented the file as blocks of pixels, shuffled the pixels in some
+not-blazingly-secure manner that had enough redundancy for error recovery,
+and transmitted that.  
+
+Alternatives: 
+1) If you wanted to, you could do the pixel-representation before the 
+encryption, and use strong encryption, but then you'd either need
+to transmit directly to a computer instead of a fax machine or risk
+major lossage from printing and rescanning, and you'd be encrypting far more
+bits than you really need to, for no particular benefit -
+unless your pixel-representation is a simple black/white pixel per bit
+(i.e. you skipped the error correction or did it on the raw data.)
+2) You could use a fax or modem to transmit the data as analog sound,
+digitize and encrypt the sound, and transmit that over a modem or internet.
+This has the advantage that you can use a regular fax machine and
+it doesn't need to know you're playing with the audio, though if you
+do it crudely you need to transmit a lot more bits,
+unless you're using an ISDN connection which was already bits.
+2a) You could "digitize" the sound by recognizing it as fax/modem tones and
+demodulating into the original pixel-representation bits.
+This can save you bandwidth (especially if you transmit your vanilla-9600-bps
+fax signal over a 28.8kbps modem.)  Of course, if you were going to pay
+to do that anyway, you probably should have just encrypted the data
+on a PC and transmitted it by modem anyway instead of messing with Faxes.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

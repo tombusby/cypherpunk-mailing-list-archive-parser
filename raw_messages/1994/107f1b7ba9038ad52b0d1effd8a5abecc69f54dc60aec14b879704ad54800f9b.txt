@@ -1,0 +1,73 @@
+From: Jim choate <ravage@bga.com>
+Date: Fri, 17 Jun 94 16:06:01 PDT
+To: cypherpunks@toad.com
+Subject: Some observations on xMODn...
+Message-ID: <199406172305.SAA21693@zoom.bga.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+I propose to clarify with a little mathematics as best I can what I
+was, and am, asking...
+
+To those this material appears obvious too please feel free to delete.
+
+As I understand it MOD is a function which returns the remainder of a 
+number (x) when divided by another number (n). As an example:
+
+5mod3=2    ie 3 will go into 5 a single time and there will be a left over
+              of 2.
+
+11mod3=2   ie 3 will go into 11 a total of 3 times and there will be 2
+              left over.
+
+I propose there is a periodicity in the mod function:
+
+n        0  1  2  3  4  5  6  7  8  9  10  11  12
+
+nmod5    0  1  2  3  4  0  1  2  3  4  0   1   2
+
+this can be simplified into a generic formula for a sequence:
+
+       rem = (kn)+i  |big #          |big #
+                     |               |
+                     |i=0            |k=0
+
+What this formual does is give you the sequence of any given remainder
+for xmodn.
+
+In a generic algorithm it appears as such:
+
+     n = some number
+     for k = 0 to "some really big number"
+          for i = 0 to "some really big number"
+               rem=(k*n)+i
+          next i
+     next k
+
+From p.282 on Schneier the RSA encryption algorithm is given as:
+           e
+     c  = m (mod n)
+      i    i
+
+In my notation this reduces to:
+
+     rem = (kn)+i  |          |
+                   |          |
+                   | n=0      |i=0
+
+What I am asking is that since the numbers we are looking at are  very 
+large there should (to the way I am thinking at the moment) some means
+of detecting a sequence of patterns of periodicity related to the difference
+between the actual key and the key we just select randomly. 
+
+Specificaly what I am asking for is some reference to some work in this area.
+I don't know what it is called, it doesn't appear in any books that I have 
+looked at.  
+
+Thanks for any help you may be able to provide...
+
+
+
+
+

@@ -1,0 +1,36 @@
+From: "Robert A. Rosenberg" <hal9001@panix.com>
+Date: Thu, 31 Aug 95 21:58:44 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Re: SSL search attack
+Message-ID: <v02130508ac6c2efca958@[166.84.254.3]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 07:33 8/31/95, Piete Brooks wrote:
+> I am against pre-fetching of the next chunk, as I believe it should not be
+>        necessary (I'll review that after Hal3) and it tends to increase NOACKs
+
+I see nothing wrong with the concept of being allocated an initial chunk
+and having the scan software attempt to ACK it when 50% of it has been
+searched. A successful ACK would allow the releasing of a new chunk (in
+response) equal in size to the returned chunk. A failure of the Server to
+accept the ACK would trigger a retry at set intervals (such as 75% and 100%
+or 60/70/80/90/100%) until the Server responds. Thus the scanner is always
+in possession of a Full Sized Chuck to scan (so long as the Server accepts
+an ACK before the 100% done mark) and temporary failures will not stop the
+process of a scanner as currently happens.
+
+Note: All this does is alter the size of the initial chunk granted and
+allow the scanner to report partial progress and reset the scanned range
+back to the original chunk size (ie: The Scanner never has more than the
+designated assigned chunk size at any time - it just gets refreshed in
+pieces [thus allowing overlap of scanning with getting a new range to scan]
+in lieu of all at once [which has a failure to accept the ACK as a bottle
+neck in uninterrupted scanning]).
+
+
+
+
+
+

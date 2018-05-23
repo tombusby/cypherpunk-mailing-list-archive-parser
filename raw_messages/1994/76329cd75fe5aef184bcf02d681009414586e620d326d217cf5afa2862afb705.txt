@@ -1,0 +1,56 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Wed, 27 Jul 94 09:10:24 PDT
+To: rjc@powermail.com (Ray)
+Subject: Re: Cryptosplit note
+In-Reply-To: <199407271401.KAA01527@powermail.com>
+Message-ID: <199407271609.MAA07999@freud.bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+|    It uses rand() when it needs random numbers for the
+| coefficients of the polynomial. I don't know what kind of
+| security risk that poses, but it really should be using something
+| better.  Where can I get Blum-Blum-Shub source or documentation on the
+| algorithm?
+
+rand() produces really bad random numbers.  Dose anyone have code for
+Mac/dos/unix that figures out how to use the 'better' PRNG that the
+vendor ships with ifdefs & stuff?  (On Unix, I use random(3) for bad
+random numbers, on the Mac I use the toolbox Random().  I dont code on
+pcs.
+
+Adam
+
+
+-- 
+Adam Shostack 				       adam@bwh.harvard.edu
+
+Politics.  From the greek "poly," meaning many, and ticks, a small,
+annoying bloodsucker.
+
+
+to do is to choose
+a Blum modulus N = P*Q where P and Q are both equal to 3 mod 4, and of about
+the same size.  Choose a random initial seed S and set X0 = S*S mod N.
+Then repeatedly iterate X(i+1) = Xi * Xi mod N.  Use the low-order
+log2 ( log2 ( N ) ) bits of Xi as the output of the PRNG; for N of 1000 bits
+this means you get 10 bits per iteration.
+
+For the cryptosplit application (nice program, BTW) you could use a fixed
+pre-computed suitable N.  Then the only hard part is to seed X0.  Maybe you
+could use a combination of a hash of the input file and the time of day;
+that should be pretty safe although it might be subject to a known-plaintext
+attack (where they think they know what you've split up, and they just want
+to verify it).  You could add a switch for the user to throw in a random
+string as additional seeding material.
+
+The only other problem then is adding an MP package.  A lot of Unix systems
+come with libmp, or you could use Gnu or even pgptools.
+
+Hal
+
+
+
+

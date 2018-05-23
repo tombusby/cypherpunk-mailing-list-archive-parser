@@ -1,0 +1,54 @@
+From: dan@milliways.org (Dan Bailey)
+Date: Fri, 8 Dec 95 21:46:21 PST
+To: llurch@networking.stanford.edu
+Subject: Re: Windows .PWL cracker implemented as a Word Basic virus
+Message-ID: <199512090547.FAA21624@pop01.ny.us.ibm.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 8 Dec 1995 19:51:55 -0800 you wrote:
+
+>
+>Also, does NT use the same algorithm for saving network passwords?
+>
+No, but they're doing something that makes me very uncomfortable:  As
+I read this, they're hashing the password and some other user
+information using MD4 then doing some proprietary permutations on
+that.  Given their record with security, I'd rather they used straight
+MD4, rather than throwing in something that we can't analyze.
+						Dan Bailey
+
+From the Microsoft Knowledge Base article Q102716
+
+Storage of the Passwords in the SAM Database
+--------------------------------------------
+ 
+User records are stored in the security accounts manager (SAM)
+database. Each user has two passwords with which it is associated: the
+LAN Manager compatible password and the Windows NT password. Each
+password is stored doubly encrypted in the SAM database. The first
+encryption is a one-way function (OWF) version of the clear text
+generally considered to be non-decryptable. The second encryption is
+an encryption of the user's relative ID (RID). The second encryption
+is decryptable by anyone who has access to the double-encrypted
+password, the user's RID, and the algorithm. The second encryption is
+used for obfuscation purposes.
+[snip]
+The Windows NT password is based on the Unicode character set, is case
+sensitive, and can be up to 128 characters long. The OWF version
+(called the Windows NT OWF password) is computed using the RSA MD-4
+encryption algorithm, which computes a 16-byte "digest" of a variable
+length string of clear text password bytes.
+ 
+ 
+
+***************************************************************
+#define private public						dan@milliways.org
+Worcester Polytechnic Institute and The Restaurant at the End of the Universe
+***************************************************************
+
+
+
+
+

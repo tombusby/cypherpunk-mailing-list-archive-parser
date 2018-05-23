@@ -1,0 +1,115 @@
+From: abostick@netcom.com (Alan Bostick)
+Date: Tue, 19 Nov 1996 11:49:05 -0800 (PST)
+To: ph@netcom.com
+Subject: Re: Playing Cards - Caution!
+In-Reply-To: <v02140b00aeb6e056bb78@[192.0.2.1]>
+Message-ID: <EMgky8m9Lkmb085yn@netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Note: I haven't read Diaconis's work; just some reports of it in the news
+section of SCIENCE more than ten years ago, so people should take what
+I say with more than a grain of salt.
+
+
+In article <v02140b00aeb6e056bb78@[192.0.2.1]>,
+ph@netcom.com (Peter Hendrickson) wrote:
+
+
+> A few days ago I suggested that playing cards are a good source
+> of entropy.  This was based on claim by Persi Diaconis which
+> was quoted in The Economist.
+> 
+> I've researched the claim and I now believe it would be wise not to
+> use playing cards as a source of entropy for cryptographic
+> applications.
+> 
+> A fully random deck of 52 cards has about 225 bits of entropy.  That
+> means that each riffle shuffle introduces about 32 bits of entropy.
+> Intuitively, that seems like a lot of entropy for one riffle shuffle.
+> I've tried a few riffle shuffles with a sorted deck.  While hardly
+> scientific, the level of randomness does not look like 32 bits.  Most
+> of the time the cards alternate.
+
+
+Thirty-two bits of randomness in a space that is 225 bits wide leave
+room for an awful lot of order.
+
+Here is a (surely oversimplified) model of a less-than-perfect riffle
+shuffle:  the deck is divided into two equal stacks, and the shuffler
+typically introduces some number k of "errors" that result in a pair
+of adjacent cards in the shuffled deck being exchanged (compared to 
+a perfectly-shuffled deck).  In a fifty-two-card deck there are fifty-one
+possible pairs to exchange.  log2(51) = 5.67, so we get 5.67 bits of 
+entropy for each exchange, if the exchanges are distributed uniformly
+through the deck.
+
+How many exchanges are needed to get 32 bits of entropy?  That would
+be 32/5.67 , or 5.64 .  In other words, to inject that much entropy into
+the deck, only about six shuffling errors need to occur in the shuffle.
+The vast remnant of the deck is going to be ordered, in the order that
+comes from a perfect shuffle. We would expect to see, as you observe,
+most of the cards in the deck alternating suit after one riffle shuffle.
+
+
+> 
+> The claim that 7 riffle shuffles of a deck of 52 cards will bring
+> the deck to a state of near randomness appears in this book:
+> 
+> Diaconis, Persi "Group Representations in Probability and Statistics"
+> Hayward, California: Institute of Mathematical Statistics, 1988.
+> ISBN 0-940600-14-5
+> 
+> The section "An Analysis of Real Riffle Shuffles" begins on page 77.
+> 
+> A model is presented which Diaconis believes is similar to how people
+> shuffle in real life.  What is troubling from a cryptographic point of
+> view is that there is little empirical evidence to back this up.  What
+> is more, Diaconis mentions that there is some variation in shufflers.
+> A neat shuffler will be less random.  (Side note: The Economist claims
+> Diaconis can execute 8 perfect shuffles in less than a minute.  This
+> means the deck is returned to its original order!)
+
+Mathematics does not rely on empirical evidence. ;-)
+
+But bear in mind that Diaconis is a stage magician as well as a statistician,
+and surely has a lot of direct personal experience with shuffling cards.
+> 
+> The study of randomness in cards looks much harder to me now.  Also,
+> flaws which may be exploitable for financial reasons when real money
+> is on the table may have to be substantially more dramatic than the
+> flaws required to exploit, for instance, an alleged one-time pad.
+
+Do bear in mind that, unless you distill its entropy through hashing,
+a randomly-ordered deck of cards is going to show a lot of seemingly
+non-random properties if you try to use it as a one-time pad.  Most
+obviously, because each card in the deck is dealt once and only once,
+there must of necessity be correlations between cards dealt early in
+the deck and cards dealt later.  (Card-counters at blackjack tables
+make their money by exploiting these correlations.)
+
+> 
+> Here's why I now prefer dice: Dice are simple.  Each die throw can be
+> made to be quite independent of all other die throws.  Even loaded dice
+> may be used by throwing them repeatedly and adding the results mod the
+> number of sides to the die.  Dice which are suspect may be studied by
+> repeated throwing.  Non-independence can be more easily studied as
+> it can be assumed that a throw of the die is, at most, related only
+> to the previous throw and none before.
+
+The randomness of rolling dice is much more easy to interpret than that
+of dealt cards.
+
+Alan "Roll me and call me your tumbling dice" Bostick
+
+-- 
+Alan Bostick               | You know those chemicals women have in them,
+                           | when they've got PMS? Well, men have those very
+mailto:abostick@netcom.com | same chemicals in them *all the time*.
+news:alt.grelb             |           Margaret Atwood, THE ROBBER BRIDE
+http://www.alumni.caltech.edu/~abostick
+
+
+
+

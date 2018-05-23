@@ -1,0 +1,48 @@
+From: Derek Atkins <warlord@Athena.MIT.EDU>
+Date: Fri, 23 Apr 93 03:39:31 PDT
+To: William Stephen Kish <wk0x@ANDREW.CMU.EDU>
+Subject: Re: encrypted telnet
+In-Reply-To: <IfptDyW00axa40yUsP@andrew.cmu.edu>
+Message-ID: <9304231039.AA08262@snorkelwacker.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill..  There are a couple of problems with your scheme.
+
+1) You have to have this daemon already running on host B.  I.e., you
+still need to have had (at one time) access to run this daemon.
+Basically, this means that you (or someone) has to have had root
+access to BOTH hosts A and B to set this up.  Unless this becomes
+supported software, you can't guarantee that....
+
+2) How do you do key distribution?  If you use Kerberos, then you need
+to have root access on host B.  Otherwise, you need some way to
+securely get the encryption key from A to B....
+
+3) How do you deal with multiple encryptions?  If you have more than
+one client who wants to use this program, you have to trust a single
+process (unless you run out of inetd, which requires #1) with all the
+different keys for all the different users!
+
+Basically, you're better off using ktelnet/ktelnetd to do this.  In
+either case you have the same problem with modifying the workstation.
+
+Please, don't let this discourage you, but I think you might want to
+think this through a little more before you jump the gun!
+
+Have a Nice Day!!! :-)
+
+-derek
+
+PGP 2 key available upon request on the key-server:
+	pgp-public-keys@toxicwaste.mit.edu
+--
+  Derek Atkins, MIT '93, Electrical Engineering and Computer Science
+     Secretary, MIT Student Information Processing Board (SIPB)
+           MIT Media Laboratory, Speech Research Group
+           warlord@MIT.EDU       PP-ASEL        N1NWH
+
+
+
+

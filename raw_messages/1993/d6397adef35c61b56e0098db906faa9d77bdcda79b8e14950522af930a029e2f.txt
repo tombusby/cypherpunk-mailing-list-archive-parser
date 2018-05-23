@@ -1,0 +1,33 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Mon, 17 May 93 09:07:36 PDT
+To: cypherpunks@toad.com
+Subject: Double encryption
+In-Reply-To: <9305171347.AA19553@enet-gw.pa.dec.com>
+Message-ID: <9305171604.AA28888@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Re: group properties of ciphers, speaking of E1 D2 E3 DES mode:
+
+>Back in the early days of DES, it was not known if DES encryption 
+>followed by another DES encryption formed a group.  That's why triple
+>DES encryption was designed to use an intermediate DEcryption (not encryption)
+
+That's not at all the reason.  One of the properties of groups is that
+inverses exist.  If an inverse existed to DES encryption, then to
+every encryption key K, there would correspond some unique other
+encryption key L, such that that encryption by L was the same as
+decryption by K.  Thus if DES formed a group, mixing inverses would
+have no effect.
+
+The reason for the inverses is for backward compatibility.  By setting
+all the keys equal to each other, its the same as a single DES.  If
+you encrypt EEE, you can't get backward compatibility since no DES key
+yields the identity function.
+
+Eric
+
+
+
+

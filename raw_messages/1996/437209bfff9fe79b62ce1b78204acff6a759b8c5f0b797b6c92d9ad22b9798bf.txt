@@ -1,0 +1,74 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Wed, 5 Jun 1996 16:32:39 +0800
+To: ravage@ssz.com (Jim Choate)
+Subject: Re: Remailer chain length?
+In-Reply-To: <199606011336.IAA11002@einstein.ssz.com>
+Message-ID: <199606050357.WAA29773@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Jim Choate wrote:
+
+| > I don't think multiple remailers at the same site help anything.
+| > 
+| 
+| I agree completely. If traffic analysis is going to be done on a single box
+| it isn't going to matter how many remailers are there.  The monitor will
+| simply grab them all. At this point it simply maps them thusly:
+
+|       incoming message > remailer #1 > .... > remailer #n > outgoing
+| 
+| 
+| That this really maps to is obvious:
+| 
+| 
+|       incoming message > remailer #1-#n > outgoing
+
+	Analyzing the traffic through three remailers is more
+difficult than analyzing the traffic through one.  One remailer with
+three N messages per day is more secure than an equivilant remailer
+with N mesasges.
+
+[much good thought deleted.]
+
+|         5. Automaticaly limits spamming unless a remailer allows cloning
+|            AND all recipients share a commen private key.
+
+	Or unless the remailer mails to a mail to news gateway.
+
+|         6. It maps 1:1 onto the physical remailer model with the same limits
+|            on information at each stage. This allows one to directly apply
+|            the current history of precedence involving anonymity and
+|            physical remailers.
+
+	With physical remailers, you can open the inner envelopes and
+read the message, leaving the end user to wonder where the post office
+lost the message.  With 'real' remailers, the lost message can't be
+read, only not delivered.
+
+
+| This is the basic model that the Austin Cypherpunks are working on at the
+| currrent time. The big problem we have right now is determining if the body
+| is actualy encrypted. We have done some basic tests of encryption-spoofing
+| using pgp and it is looks to be a thorny problem. It simply is not trivial
+| to look at a block of characters and determine if they are actualy
+| encrypted. You can't rely on the wrapper around the data put there by the
+
+	I'm not sure I see why this matters?  If you check that the
+message is not obviously readable, why not assume that its well
+encrypted?  You're rarely required to contort yourself to ensure your
+customers are obeying the law (weaponsmiths, cryptographers, and banks
+excepted.)  
+
+Adam
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

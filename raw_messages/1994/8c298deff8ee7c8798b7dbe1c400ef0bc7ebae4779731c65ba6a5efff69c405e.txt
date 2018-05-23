@@ -1,0 +1,35 @@
+From: nobody@rebma.rebma.mn.org
+Date: Sun, 15 May 94 21:13:19 PDT
+To: cypherpunks@toad.com
+Subject: Rabin decryption
+Message-ID: <199405160309.WAA12357@rebma.rebma.mn.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+How do you do Rabin decryption?
+
+In the Rabin PK system, your modulus is a Blum integer, a number n of
+the form p*q, where p and q are primes equal to 3, mod 4.  According to
+Schneier, p. 289, encryption is done by C = M^2 mod n.  On the next page,
+he gives four possible square roots of C:
+
+M1 = C^((p+1)/4) mod n
+M2 = p - C^((p+1)/4) mod n
+M3 = C^((q+1)/4) mod n
+M4 = q - C^((q+1)/4) mod n
+
+These formulas don't work.  Also, note the "p -" and "q -".  This is
+suspicious.  If M^2 is C, then (n-M)^2 is also C.  I suspect M2 and M4
+should have "n -" instead.
+
+Try p=7, q=11, n=77.  (p+1)/4 is 2, (q+1)/4 is 3.  Try M=50, so C=36.
+M1 = 64; M2 = 20; M3 = 71; M4 = 17.  None of these are the original
+M, and none of them is a square root of 36.
+
+Anybody know the right way to do square roots mod a Blum integer?
+
+
+
+
+

@@ -1,0 +1,51 @@
+From: monty.harder@famend.com (MONTY HARDER)
+Date: Mon, 4 Sep 95 17:47:53 PDT
+To: CYPHERPUNKS@toad.com
+Subject: maximizing cryptographic return
+Message-ID: <8B072A1.00030003E8.uuout@famend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+VZ> this list are aware of the idea that good encryption is often used
+VZ> to send a low-bandwidth session key, which is then used to encrypt
+VZ> that session using a less sophisticated but less computationally-demanding
+VZ> algorithm. hence you seem to have good security at a computational
+VZ> price that is less than encrypting everything with the secure protocol.
+
+  Why must this process be limited to two levels?
+
+VZ> I wonder if some very cheap algorithms, in terms of computation time,
+VZ> could be used for the "on the fly" encryption of the voice using those
+VZ> bit. would XOR with the pad be totally out of line?
+
+  The RSA could be used by the caller to precompute the session key to
+send to the reciever. The session key (IDEA or whatever) could be used
+to send "subsession keys" which are actually parameters for the PRNGs
+(use at least two, with different periodic characteristics, and XOR them
+together) that create the pad for your XOR.
+
+  The subsession size should be chosen so that very little "clearvoice"
+is transmitted in each subsession. Perhaps a bit of randomness is in
+order here, as well. Along with the PRNG parms, a length field, within
+certain absolute limits. Now the spook doesn't even know where one
+subsession ends, and the next begins.
+
+  Add to this the use of a (lossy?) compression engine that can run with
+little power, and a simple microcontroller (or several cheaper ones in
+parallel-I can see one master for the session and subsession key
+management and several slaves to handle the on-the-fly (en)(de)cryption
+itself) should be able to do the job, fitting the subsession key
+exchange in right along with the cyphervoice.
+
+  Ideallly, we could have a box that could pull its power from the phone
+line, and take touch-tone control inputs.
+
+
+ * Long, long ago, in a tagline far far away...
+---
+ * Monster@FAmend.Com *    
+
+
+
+

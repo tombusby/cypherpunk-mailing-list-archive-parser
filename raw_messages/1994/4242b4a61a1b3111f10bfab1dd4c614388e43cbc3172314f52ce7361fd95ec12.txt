@@ -1,0 +1,61 @@
+From: exabyte!smtplink!mikej@uunet.UU.NET
+Date: Fri, 4 Mar 94 08:44:18 PST
+To: cypherpunks@toad.com
+Subject: How to clear sign messages with PGP (FAQ)
+Message-ID: <9402047628.AA762802615@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> How do you get those great signatures on your posts?
+> 
+> I've been trying to do this with PGP, but I only get a signature file. This
+> file seems to be a binary file or just a signature. I'll use a command
+> like: pgp -s filename.
+> 
+> Perhaps your using a shell?
+
+No, I just use this MS-DOS batch file called sign.bat:
+
+pgp -sta +clearsig=on %1
+
+The %1 expands to the first argument on the command line.  To sign a text
+file called toscott.txt, I just give the command
+
+sign toscott.txt
+
+When you get a message signed like that, you should be able to verify the
+signature by simply executing pgp on the file you get (provided you have my
+key -- it is on the key servers, available by finger mpj@csn.org or
+mpjohnso@nyx.cs.du.edu, ftp://csn.org/mpj/mpj4.asc, or on my BBS
+(303-938-9654):
+
+pgp frommpj.txt
+
+For more pgp tricks, see the FAQ ftp://netcom.com/gbe/ (echoed on
+ftp://csn.org/mpj/public/pgp/) or on the Colorado Catacombs BBS.
+
+                  ___________________________________________________________
+ |\  /| |        |                                                           |
+ | \/ |o|        | Michael Paul Johnson  Colorado Catacombs BBS 303-938-9654 |
+ |    | | /  _   | mpj@csn.org   ftp csn.org \mpj\README.MPJ for access info.|
+ |    |||/  /_\  | aka mpjohnso@nyx.cs.du.edu mikej@exabyte.com              |
+ |    |||\  (    | m.p.johnson@ieee.org CIS 71331,2332    VPGP key by finger |
+ |    ||| \ \_/  |___________________________________________________________|
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.4
+
+iQCVAgUBLXdfdj9nBjyFM+vFAQEkDAQA0sp3qwbXBcp9F4LhtHaLCtag0LKXR1XQ
+6hlNsE+M5KIZzLBYcQirlMY0qQKeKwXg9SE3kPs/m/hBySsGbFMqVh0OBSVNjT8a
+9QizZB2MZQg+oh91eyNq+Ys5SG04TeOCQtW5UtKdqD4Pe+Teb7UIJxbCq+gGaQ0O
+Ba1dF1DC8/4=
+=6W/G
+-----END PGP SIGNATURE-----
+
+
+
+

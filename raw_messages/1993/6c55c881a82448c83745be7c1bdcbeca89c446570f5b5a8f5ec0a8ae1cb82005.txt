@@ -1,0 +1,38 @@
+From: smb@research.att.com
+Date: Fri, 21 May 93 14:26:25 PDT
+To: Stanton McCandlish <anton@hydra.unm.edu>
+Subject: Re: cypto + compression
+Message-ID: <9305212126.AA27376@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 OK well if you encrypt a compressed file, there are bound to
+	 be lots more new redundencies created in the encryption
+	 process (unless it is something like ROT-13).  Why not
+	 compress this AGAIN, squeezing more space out o
+
+Actually, you've got it backwards.  A decent encryption algorithm,
+including DES, generates something with very little redundancy,
+and hence which cannot be compress further.
+
+$ compress </vmunix >vmunix.Z
+$ des -e -k foo <vmunix.Z >vmunix.Z.des
+des: WARNING: using software DES algorithm
+$ compress <vmunix.Z.des >vmunix.Z.des.Z
+-rwxr-xr-x  1 root      1875490 Jan  7 16:59 /vmunix
+$ des -e -k foo </vmunix | compress >vmunix.des.Z
+des: WARNING: using software DES algorithm
+$ ls -l /vmunix vmunix*
+-rwxr-xr-x  1 root      1875490 Jan  7 16:59 /vmunix
+-rw-rw-r--  1 smb        794374 May 21 17:17 vmunix.Z
+-rw-rw-r--  1 smb        794376 May 21 17:18 vmunix.Z.des
+-rw-rw-r--  1 smb       1066555 May 21 17:18 vmunix.Z.des.Z
+-rw-rw-r--  1 smb       2538235 May 21 17:21 vmunix.des.Z
+
+As you can see, compressing after encrypting *increases* the size of
+the file.
+
+
+
+

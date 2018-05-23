@@ -1,0 +1,54 @@
+From: Berzerk <berzerk@xmission.xmission.com>
+Date: Sat, 16 Jul 94 16:35:51 PDT
+Subject: Re: Hashed hash
+In-Reply-To: <Pine.3.89.9407161315.B9512-0100000@Tux.Music.ASU.Edu>
+Message-ID: <Pine.3.89.9407161720.A18856-0100000@xmission>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Sat, 16 Jul 1994, Ben Goren wrote:
+> So, my question: for any of the popular hash algorithms H(m), is it known if 
+> there is or is not an algorithm I(m) such that I(m)=H(H(m))? Are the hash 
+> algorithms groups or not?
+I too would be interested in this, but would also wory about the hash 
+functions "converging" to one value.  Unless the function G(i) is one on 
+one, and not a group, this not good.  [G(i): G=H(m;i) i=H(m)] You could 
+loose information in in the G phase of hashing, and shoot yourself in the 
+foot.  What is wrong with the folowing two stratigies.:
+
+1)
+let I(key,block) be Idea(key, block)
+    N be the number of iterations.
+ 
+and Si be a non-strong, simple sequence, like from a LCG.
+do I(S1,I(s2,i(s3,..........,i(sN,m);
+for however many times, then hash it.
+
+2) 
+use a salt value, n. with n%N not equal to 0;
+do 
+ {
+  m=i(s1,previous m)
+ and 
+  n=i(n,previous n)
+  
+  
+ } untill (n%N=0)
+
+Number 2 has the added bonus of working with true random numbers for n, 
+so if you wanted to inclose the value of n in some encryption you have no 
+plaintext.
+
+If you keep this to 8 bits or so, you could use feal-4 instead of idea:-)
+
+I asked a similar question about hash functions and have recieved no 
+replies.
+
+Roger.
+
+
+
+

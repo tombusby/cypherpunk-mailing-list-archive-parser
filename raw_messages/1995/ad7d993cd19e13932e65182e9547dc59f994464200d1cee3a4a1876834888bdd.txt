@@ -1,0 +1,47 @@
+From: pstemari@erinet.com (Paul J. Ste. Marie)
+Date: Fri, 13 Jan 95 22:08:55 PST
+To: Ben Goren <cypherpunks@toad.com
+Subject: Re: How do I know if its encrypted?
+Message-ID: <9501140600.AA07244@eri.erinet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:07 PM 1/13/95, Ben Goren wrote:
+> ... Alice hashes her file and uses that hash as the key to encrypt the file.
+>She sends the file to Dave, and sends the original hash when she wants it
+>back. Dave decrypts, and confirms the hash. 
+>
+>Unfortunately, this still doesn't quite close the loop--Dave knows the
+>contents of the file once Alice sends the key. It does, however, make it
+>very difficult for Dave to know anything about Alice's file. ... 
+
+This seems overly complicated.  If Dave has a known public key, then Alice 
+should be able to hash her file, sign the hash, encrypt (the hash, her 
+public key, and the file) with Dave's public key, and (anonymously) sends 
+the result to Dave's (encrypted) address.  Dave then decrypts, verifies the 
+sig, and stores the file, hash, and PK together, indexed by the hash.
+
+When Alice wants the file back, she signs (the hash and her encrypted return 
+address), encrypts the result with Dave's key, and sends it off.  Dave 
+decrypts the request, fetchs the public key based on the decrypted hash, 
+verifies the signature, encrypts the file with Alice's provided public key, 
+and sends it back to the encrypted return address. 
+
+To avoid Dave's knowing the file contents, Alice can encrypt it before the 
+described protocol and decrypt it afterwards.  The protocol is subject to a 
+replay attack, but the result of the replay would cause the file to be sent 
+to the original sender and not to the replayer.
+
+The signed hash in the first step prevents people from spamming Dave with 
+files that have Alice's public key.  Alice only requires an encrypted 
+address and public key for Dave, and Dave validates the retrieval request 
+against the public sent in the first step.
+
+    --Paul J. Ste. Marie
+      pstemari@well.sf.ca.us, pstemari@erinet.com
+
+
+
+
+

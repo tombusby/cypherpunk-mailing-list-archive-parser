@@ -1,0 +1,57 @@
+From: jim@suite.suite.com (Jim Miller)
+Date: Fri, 13 Sep 1996 16:51:08 +0800
+To: cypherpunks@toad.com
+Subject: really undetectable crypto
+Message-ID: <9609130234.AA06200@suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Most everybody on the list is familiar with the technique of hiding  
+encrypted messages in the LSBs of image files.  Personally, I would not  
+use such a technique because don't I believe it's really undetectable.  I  
+assume, without proof, that the LSBs of images files have statistical  
+properties that are sufficiently different from encrypted data that a  
+clever person could determine whether or not an image file contained an  
+imbedded encrypted message.
+
+Fortunately, there are other steganographic techniques that, I believe,  
+are undetectable.  The trick is to hide your encrypted bits in other  
+encrypted bits.
+
+trick #1)   Let's say you want to send a short encrypted message via a  
+communications channel that only allows cleartext messages with optional  
+MD5 message hashes.  You can construct cleartext messages, via  
+trial-and-error, such that the first 4 or 8 bits (or more, if you have the  
+time) of the MD5 hash match the first 4 or 8 bits of your encrypted  
+message.  You can pre-compute all the required cleartext messages in  
+advance, and then send them one after another.  The recipient of the  
+cleartext messages can reconstruct the encrypted message by gathering  
+together the first 4 or 8 bits of each MD5 hash.
+
+Since the bits in an MD5 message hash are presumably cryptographically  
+random, there should be no way to tell if some of the bits combine to make  
+an encrypted message.
+
+trick #2)  Let's say you are allowed to use 40 bit encryption, but nothing  
+stronger.  As in trick #1, you can pre-compute plaintext messages such  
+that the first 4 or 8 of the bits in the output of the government-approved  
+40 bit encrypted data match the first 4 or 8 bits of your hidden encrypted  
+message.
+
+trick #n) see above.  Any communications channel that allows you to send  
+*any* bits that are cyptographically random can be used to send arbitrary  
+encrypted messages.
+
+Jim_Miller@suite.com
+
+
+P.S. The pre-computed plaintext messages don't have to be garbage  
+messages.  You can probably make an innocent-looking message produce the  
+desired bits by adding extra whitespace or typos.
+
+
+
+
+

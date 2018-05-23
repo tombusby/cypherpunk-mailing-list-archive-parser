@@ -1,0 +1,58 @@
+From: Damien.Doligez@inria.fr (Damien Doligez)
+Date: Sat, 26 Aug 95 03:34:18 PDT
+To: cypherpunks@toad.com
+Subject: SSL trouble
+Message-ID: <9508261034.AA15406@couchey.inria.fr>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Let us call "sequential search" an algorithm that remembers which keys were
+tried and avoids trying them again, and "random search" an algorithm that
+just tries keys at random without bothering to check.
+ 
+The sequential search has the following problems:
+ 
+1. The server is badly overloaded.
+It is vulnerable to a variety of active attacks:
+2. "result hoarding" attacks: finding the result and reporting it "not found".
+3. "dilution" attack: allocating some search space and not sweeping it.
+4. plain old "denial of service" attack: deliberately overloading the server
+   with bogus communications.
+5. And of course all of the above in their "buggy software or hardware"
+   versions.
+ 
+The random search has none of them:
+attacks 1 and 4: there is no server to overload
+attacks 2 and 3 are no worse than simply refusing to participate in the search,
+because the rest of the computation is independent of what any one party is
+doing.
+ 
+The main drawback of the random search is that the expected running "time" is
+the size of the key space instead of half the size for the sequential search
+("time" here is the number of keys to try before finding the right one).
+ 
+In practice, because of server overload, our machines don't seem to be working
+more than half the time, so the random search could be actually faster than
+the sequential search.  Even if it isn't, I think doing twice as much work
+is a good trade-off for protection against all attacks, and no more network
+or server problems, and no more allocation hassles for off-line users.
+ 
+Four more remarks:
+* I get the factor of two by assuming that the algorithm is "pick a segment at
+  random, look for the key in it, pick a new segment at random, and so on".
+  I suspect that sequential searching from a random starting point would be
+  much worse in the case of many independent searchers.
+* I hope there's no bug in my math.
+* Another drawback is that the worst-case running time is infinite (but it is
+  infinitely unlikely).
+* Of course, we need a good PRNG, but that's essentially what RC4 is.
+
+In conclusion, I think random searching is the way to go.  It's even better
+than Monty's pre-allocation with quad-coverage.
+ 
+-- Damien
+
+
+
+

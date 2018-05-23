@@ -1,0 +1,83 @@
+From: sdw@lig.net (Stephen D. Williams)
+Date: Wed, 12 Jul 95 13:54:24 PDT
+To: ylo@cs.hut.fi (Tatu Ylonen)
+Subject: Re: ANNOUNCEMENT: Ssh (Secure Shell) remote login program
+In-Reply-To: <199507121916.WAA06662@shadows.cs.hut.fi>
+Message-ID: <m0sW9UK-0009ydC@sdwsys>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> > ssh, while an obvious name, already collides with a nice shar decoder and
+> > a different kind of secure shell from CFS.
+> 
+> Ssh has already been registered with IANA (Internet Assigned Numbers
+> Authority) as the name of the service.  I would rather not change it
+> without a compelling reason.  It is also easy to obtain from rsh by
+> replacing the r by s (which also makes for scp, sshd, and in future
+> maybe also sdist).  It is my understanding that CFS is in rather
+> limited use (especially outside the US), and the ssh shar extractor is
+> not widely used either (neither can be found from the archie database
+> at archie.funet.fi).  IETF has a thing called Site Security Handbook
+> that they abbreviate SSH, but it is probably sufficiently different
+> not to be confused.
+
+I agree as the collisions aren't too bad (except in my /usr/local/bin...).
+
+> > Of course support for S/Key and tokens/hand held authenticators would be
+> > useful additions for some situations (although inferior to RSA...).
+> 
+> True.
+> 
+> The agent protocol can currently be used to forward a connection to
+> any program (which can mean device) that can perform RSA
+> authentication.  New authentication methods can be compatibly added
+> later.
+> 
+> S/Key can be used by making skeysh you login shell.  Then you will
+> first be asked for a normal password (if any), and then for the
+> one-time password.  I did not want to incorporate skey functionality
+> directly into the software, because it is not clear to me if the
+> arrangements in use (file names, formats, algorithms) have stabilized
+> yet.  Also, there is less need for skey as no passwords are
+> transmitted in the clear.
+> 
+> > Integration with TCP/NFS and/or client-server CFS would be fantastic.
+> > (One local CFS server acting as a secure client over tcp to a remote
+> > CFS server.)
+> > Remote encrypted mount of an encrypted partition...
+> 
+> Maybe, *maybe*, TCP/IP port forwarding could be used for this?  (I
+> don't know what CFS does because I have never seen CFS.)
+
+I was actually contemplating a modification to CFS to support a
+tunneled TCP based NFS related operation.
+
+CFS, like other specialized NFS servers, talks to NFS clients like
+the normal NFS server, but runs on a different RPC port (so you can
+run several types of NFS servers).  CFS encrypts directories that 
+can be attached and detached without changing the NFS mount.
+
+It occurred to me that it wouldn't be too tough to have one CFSD
+open a TCP/socket connection to another CFSD and pass file access
+requests instead of implementing them locally.  The encryption
+of the ssh link and the on disk encryption of CFSD should be a 
+good combination.
+
+I've been compiling under Linux and have had a number of autoconfiguration
+errors.  I'll produce a simple-minded patch shortly.
+(Thinks I'm cross-compiling, have some include files I don't, don't
+have waitpid/wait3, collision with stdc crypt/random defs, etc.)
+
+>     Tatu
+
+sdw
+-- 
+Stephen D. Williams 25Feb1965 VW,OH (FBI ID) sdw@lig.net http://www.lig.net/sdw
+Consultant, Vienna,VA Mar95- 703-918-1491W 43392 Wayside Cir.,Ashburn, VA 22011
+OO/Unix/Comm/NN       ICBM/GPS: 39 02 37N, 77 29 16W home, 38 54 04N, 77 15 56W
+Pres.: Concinnous Consulting,Inc.;SDW Systems;Local Internet Gateway Co.;28May95
+
+
+

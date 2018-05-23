@@ -1,0 +1,58 @@
+From: henry strickland <strick@osc.versant.com>
+Date: Sat, 5 Jun 93 14:04:37 PDT
+To: hkhenson@cup.portal.com
+Subject: Re: DISKREET--Norton
+In-Reply-To: <9306050727.1.2868@cup.portal.com>
+Message-ID: <9306052112.AA29094@versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+# From: hkhenson@cup.portal.com
+# Subject: Re: DISKREET--Norton
+# 
+# , it would seem
+# to me that this would varify Norton doing DES per the book.  Have
+# I missed something?
+
+DES defines an encryption algorithm, but not how it is deployed
+in an environment. 
+
+Questions I would have:
+
+    --  Is the key that the user types in used DIRECTLY as a
+	8-ASCII-character DES key?  If you don't type 8 characters
+	for the key, how is it padded?
+
+    --	Does it use CBC mode, or what?
+
+    --	Where does it get an initialization vector?
+
+    --  Assuming CBC or some other chaining mode, is an entire file
+	encrypted as a single unit?  Or is each file block encrypted,
+	beginning with a quickly-determined initialization vector, 
+	and what are they?
+
+    --  If the length of the file is not a multiple of 8 bytes (the 
+	DES cyperblock size), how is the boundary condition handled?
+
+    --  Are filenames encrypted?  How?  Other directory information?  
+
+If the source to Norton were not published, but rigorous specs were
+available that could be verified by trying it an a bunch of files,
+and if one can account for all bytes on disk that change when the
+package is used (so that we know it is not escrowing keys or doing
+anthing stupid with them), then I might feel comfortable about
+the product.
+
+I don't think this is unreasonable to ask.  It would particularly
+make me feel safe about the problems we heard described earlier, where
+someone was unable to decrypt files.   If I can deploy and use my own
+decryption mechanism to doublecheck Norton, then it's more likely
+my own fault if I cannot recover some file.
+
+						strick
+
+
+
+

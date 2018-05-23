@@ -1,0 +1,79 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 7 Jan 95 18:40:47 PST
+To: cypherpunks@toad.com
+Subject: Re: Latency Costs of Anonymity
+Message-ID: <199501080241.SAA13329@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: Wei Dai <weidai@eskimo.com>
+> [My idea for ATM mixes]
+> The problem here is that you'll have to do a RSA operation on EACH 
+> packet.  Pretty hard on the CPU...
+
+Yes, good point.  It might be possible to use a stream model where the
+separate packets which make up a stream use the same conventional key.
+This allows the various packets which make up a stream to be identified
+as such by outsiders, but still if there are a large number of virtual
+streams going through the network at one time it should be possible to
+confuse the streams pretty well.  ("I've got a crazy idea.  Let's cross
+the streams!" -- Ghostbusters).  Then you only need to do the RSA work
+at setup time, and you need a fast streaming cypher during the
+conversation.  This is how the streaming-packet encryption models like
+IPSP or Netscape's SSL seem to work.
+
+> > I think it may be more useful rather than speaking of "true" anonymity
+> > to think of factor-of-N anonymity.  This reflects the bandwidth costs.  I
+> > would guess that, if you have a packet-based video converencing system,
+> > that today you could probably get factor-of-2 anonymity with custom
+> > hardware, and perhaps even more than that.
+> 
+> I'm not exactly sure what you mean by "factor-of-N".  I only used "true" 
+> to distiguish it from "trivial" anonymity (such as using a pay phone).  
+> Of course, anonymity, like security, can only be relative.
+
+By "factor-of-N" I meant anonymity where you can only pin the source of
+a message down to one of N possibilities.  It appears to me that many
+of the costs will be a function of N.  It will be relatively easier to
+cloak your source as one of say 50 possibilities than to make it any of
+one in a million.  This is why I suggested that factor-of-2 anonymity
+would be the easiest.  The DC-Net concept would allow two users to
+share a cryptographically strong pseudo-random stream, and each of them
+to XOR their video output with the random stream; then these modified
+outputs from each of them are themselves XOR'd together to produce the
+joint output.  As long as only one sends at a time, the resulting
+stream is their output, but it is impossible for an outsider to
+determine which one is sending.  The hardware requirements seem quite
+modest and perhaps would be adequate today even for video.
+
+> [My points about limitations on suitability of anonymity]
+> 
+> This is all very true.  I guess I'm just lamenting the loss of my ealier,
+> more naive dream that one day everyone will be anonymous (read
+> pseudonymous), and that physical and digital identities will be totally
+> seperate. 
+
+I don't think we would really expect everyone to be anonymous all of the
+time.  In our personal lives, with friends and family, it doesn't seem
+appropriate to expect anonymity (although my earlier quotes from Greg
+Bear's sci fi story suggest differently).  But still I think that for
+people who desire it and are willing to pay the prices, anonymity would
+indeed be available in many or most electronic communications.  So if
+that is your desire you should be able to achieve it.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLw9Q1xnMLJtOy9MBAQEhPwH+KSYD4KhA1HOUxqOzdb2WdMuq0i1XTFzH
+fKMnejTqlKVbFfEnQqfHukwKpH5nFpuN7towJ1o98aGqT1ACxbSjpQ==
+=2mxw
+-----END PGP SIGNATURE-----
+
+
+
+

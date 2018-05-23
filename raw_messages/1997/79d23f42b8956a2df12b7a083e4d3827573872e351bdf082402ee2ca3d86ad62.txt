@@ -1,0 +1,50 @@
+From: Jeremey Barrett <jeremey@veriweb.com>
+Date: Fri, 31 Jan 1997 17:49:09 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: pgpfingerd
+Message-ID: <199702010149.RAA27079@descartes.veriweb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+For what it's worth, I wrote a very short fingerd that fetches _only_
+a user's .pgpplan file, should it exist. Else it just exits. Someone
+may have already done this, so be it. This was mostly for my own use,
+but if anyone wants the code, feel free to use it. It's available from
+my home page ( http://www.veriweb.com/people/jeremey/ ).
+
+After calling getpwnam() on the username supplied, it calls setuid() with
+the uid of the user being fingered. It ignores any finger options and
+attempts to parse them out. It's possible I missed some. After setuid(),
+it attempts to open a file called .pgpplan in the directory (pw_dir)
+returned by getpwnam(). If this is not a _regular_ file, it exits, i.e.
+no symlinks. Then it shoves the file out over stdout (this assumes it
+was invoked by inetd). That's it.
+
+I've only compiled it on Linux and BSDI, but it doesn't do anything very
+odd, so it should compile fine on other Unix platforms.
+
+- -- 
+=-----------------------------------------------------------------------= 
+Jeremey Barrett                                  VeriWeb Internet Corp.
+Senior Software Engineer                         http://www.veriweb.com/
+
+PGP Key fingerprint =  3B 42 1E D4 4B 17 0D 80  DC 59 6F 59 04 C3 83 64
+=-----------------------------------------------------------------------=
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.4, an Emacs/PGP interface
+
+iQCVAwUBMvKgyy/fy+vkqMxNAQHqKgQAqxKiAzcOUDx9ThN5D6OHwuyUE1WlCtXr
+EVjg0d19fhafiTGO3HwAFbk8zxtzs/YMtSJ4a5nbALQTUxVBF/749DboXU+IS37l
+urB7MjBb0mB7+4IDmmR/iFEJa/U/mlTWZiLZ7JOq2Y7GtuqDmGgN3Z/T+K0loQvl
+7Qn1x8aHXlI=
+=RxZM
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,41 @@
+From: Mike Ingle <inglem@adnetsol.com>
+Date: Wed, 28 Feb 1996 22:32:45 +0800
+To: cypherpunks@toad.com
+Subject: PGP to PC mail integration
+Message-ID: <199602280818.AAA00108@cryptical.adnetsol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mail user interface integration remains the biggest barrier to
+widespread PGP use. As long as it's inconvenient each time you want to
+send a mail message, people won't use it. Existing efforts to fix this
+are usually mail-program specific (elm-pgp port, some Pegasus and
+Eudora hacks) and/or not terribly convenient (ViaCrypt and similar
+win-pgp front ends). It seems to me that people are attacking this
+problem from the wrong end of the pipe.
+
+Almost all internet mail programs (Eudora, Pegasus, Netscape, Exchange
+client with Internet mail, you name it) talk to a POP server and an
+SMTP server. They allow you to specify the hostnames of each.
+
+Instead of messing with user interfaces, you set the POP and SMTP
+addresses of your mail program to "localhost". You run locally a Visual
+Basic program that sits on ports 110 (POP) and 25 (SMTP) listening for
+connections. The VB program is configured with the addresses of your
+real SMTP and POP servers, and acts as a proxy.
+
+When your mail program retrieves POP mail, it goes through the VB
+program, and the VB program decrypts any PGP mail it sees. When it
+sends mail, the VB program encrypts any mail it has a PGP key for the
+recipient of.
+
+Once this is set up, the user burden is near zero, and it works with
+any winsock-based mail program. What do you think of the idea?
+
+						Mike
+
+
+
+
+

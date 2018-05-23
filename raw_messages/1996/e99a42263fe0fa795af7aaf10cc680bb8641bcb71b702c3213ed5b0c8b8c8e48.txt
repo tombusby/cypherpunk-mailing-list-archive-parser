@@ -1,0 +1,70 @@
+From: jamesd@echeque.com
+Date: Tue, 2 Apr 1996 07:44:44 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Chaumian ecash without RSA
+Message-ID: <199604021544.HAA26145@dns2.noc.best.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:10 AM 3/31/96 -0800, David Wagner wrote:
+> The bank picks a secret value k, and publishes g^k.
+>
+> To withdraw a coin, Alice picks an x, sets
+>	y = x | hash(x),                [  | is concatenation  ]
+> chosen so that y is in G.  Alice chooses a random secret blinding factor b,
+> sends to the bank
+>	A->B: y g^b,
+> and the bank returns
+>	B->A: (y g^b)^k,
+> debiting Alice's account.
+>
+> Note that this is a (blinded) Diffie-Hellman key exchange with public
+> exponentials g^k and y g^b; the bank returns the exchanged "secret".
+>
+> Alice unblinds this value, computing
+>	z = (y g^b)^k (g^k)^{-b}
+> and now c = (x,z) is a coin in the digital cash system.  Note z = y^k.
+>
+> We use the traditional online clearing protocol; to deposit the coin, a
+> shop S sends
+>	S->B: x, z.
+> The bank checks to make sure the coin hasn't already been spent, and then
+> computes
+>	y = x | MD5(x),
+> checking whether y^k = z. 
+
+Two irritations with this protocol:
+
+1:  A coin is almost twice the size of a coin in the RSA protocol
+
+2:  Nobody except the bank can verify that a coin has face validity.
+
+The second point is more serious than you might think, as most of 
+us want to see a world where everyone is his own bank and his own 
+credit rating agency, as well as his own publisher.
+
+It will obstruct contracts of the form "Anne promises to provide 
+numbers with certain cryptographic properties, provided Bob provides
+numbers with certain cryptographic properties."
+
+With RSA crypto cash, Anne can construct a blinded unsigned coin, 
+and ask Bob to have it signed.  For this to be reasonably convenient
+and practical, we need to have locally verifiable signatures.
+
+For computer mediated management of contracts, transactions, and 
+credit ratings, we need contracts such that all intermediate 
+transactions can be reduced to locally verifiable cryptographic 
+protocols.
+ ---------------------------------------------------------------------
+              				|  
+We have the right to defend ourselves	|   http://www.jim.com/jamesd/
+and our property, because of the kind	|  
+of animals that we are. True law	|   James A. Donald
+derives from this right, not from the	|  
+arbitrary power of the state.		|   jamesd@echeque.com
+
+
+
+
+

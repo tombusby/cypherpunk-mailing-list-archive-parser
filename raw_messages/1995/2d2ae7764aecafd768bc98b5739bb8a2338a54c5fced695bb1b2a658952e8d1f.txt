@@ -1,0 +1,82 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Thu, 9 Nov 1995 08:10:01 +0800
+To: Frank Andrew Stevenson <frank@funcom.no>
+Subject: Re: True Random (short c-source)
+In-Reply-To: <Pine.SGI.3.91.951108165325.25592A-100000@odin>
+Message-ID: <199511081613.LAA00447@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+What you are doing, basically, is using the processor execution time
+loops to measure jitter in the return of the value of clock(). I don't
+know how clock() works but I would venture to guess that the jitter in
+more predictable than you think.
+
+.pm
+
+Frank Andrew Stevenson writes:
+> I have written a short random number generator which appears to produce
+> reasonable random numbers even in DOS, at the heart of the code is the
+> short function fGetRand, the amount of entropy derived from this
+> function varies from >1 to >>6 depending on system load, I haven't
+> made any effort to whiten it at all. I am not making any claims about
+> its usefulness. I am only trying to demonstrate the ease at which
+> good random number may be obtained. Any comments and analysis will be
+> mostly welcome, the source is hereby placed in the public domain:
+> 
+> I have used WATCOM10 to compile and test under DOS/WIN95, where
+> clock is running at 18hz. I have also tested on IRIX with impressive
+> results.
+> 
+> --- START ----
+> #include <time.h>
+> #include <stdio.h>
+> 
+> int   fGetRand (void);
+> 
+> main (void) {
+>    long vCount;
+>    FILE *out;
+>    int byte;
+>    int tick;
+> 
+>    out=fopen("random.bin","wb");
+>    if(out==NULL) {
+>       printf("cant write to file random.bin\n");
+>       exit(1);
+>    }
+> 
+>    for(vCount=1;vCount<=512;vCount++) {
+>       tick=fGetRand()&0x01;
+>       byte=byte+byte+tick;
+>       if((vCount & 0x7)==0) fputc((char)byte,out);
+>       fputc((char)tick,out);
+>    }
+> 
+>    fclose(out);
+> }
+> 
+> 
+> int   fGetRand (void) {
+>    int count;
+>    clock_t tick;
+> 
+>    tick=clock();
+>    while(tick==clock()) count++;
+> 
+>    return (count);
+> }
+> ----- END -----
+> 
+> PGP encrypted mail preferred, finger for key.
+> The above views are ONLY endorsed by BoggleMind Inc. (not to be confused
+> with MindBoggle Ltd.)
+> 
+> 
+> 
+
+
+
+

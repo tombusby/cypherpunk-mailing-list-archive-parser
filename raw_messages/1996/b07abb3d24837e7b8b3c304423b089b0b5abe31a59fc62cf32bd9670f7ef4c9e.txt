@@ -1,0 +1,46 @@
+From: Mike Fletcher <fletch@ain.bls.com>
+Date: Sat, 25 May 1996 15:29:27 +0800
+To: cypherpunks@toad.com
+Subject: Re: Alternative to remailer shutdowns...
+In-Reply-To: <19960524.1408058.1225D@kermit.aatech.com>
+Message-ID: <9605250258.AA00973@outland.ain_dev>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>     There are hundreds of machines littered around the net that
+> dont bother adding "received" headers to mail.
+[ . . . ]
+> Another possibility is that rather than operating remailers at all, maybe 
+> we should be operating non-logging smtp hosts that dont add received 
+> headers. Building a client to take advantage of these servers would be 
+> trivial (i wrote one last night, and i am not proficient in C) and it 
+> could be argued that the situation was not created intentionally to allow 
+> anonymous messages, merely to preserve disk space and bandwidth.
+
+	You really don't even need a client.  RFC822 defines a method
+for bouncing mail through another server.  Just use
+
+"user%final.dest.com@laxly.configured.org" 
+
+as the address and laxly.configured.org will send it on to
+user@final.dest.com.  
+
+	Wonder what would happened if the sendmail in the
+(Linux|NetBSD|your favourite i386 UNIX) distributions came cofigured
+to not add Received: headers by default . . . .  Probably would make
+diagnosing bounces hell, but it would make a lot of remailer-chain
+tail ends.
+
+	Anyone tried out whitehouse.gov to see if it's adding
+Received:'s or not yet? :)
+
+---
+Fletch                                                     __`'/|
+fletch@ain.bls.com  "Lisa, in this house we obey the       \ o.O'    ______
+404 713-0414(w)      Laws of Thermodynamics!" H. Simpson   =(___)= -| Ack. |
+404 315-7264(h) PGP Print: 8D8736A8FC59B2E6 8E675B341E378E43  U      ------
+
+
+
+

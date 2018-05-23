@@ -1,0 +1,47 @@
+From: "John A. Thomas" <B858JT@UTARLVM1.UTA.EDU>
+Date: Mon, 20 Jun 94 11:14:42 PDT
+To: cypherpunks@toad.com
+Subject: Hardware RNG's
+Message-ID: <9406201814.AA21421@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Pat Farrell and others have been discussing hardware random-number
+generators.  Since I've built such devices, I thought I'd put in my
+opinions.
+
+I used a reverse-biased transistor junction for the noise source.  The
+noise is amplified by a three-stage op-amp circuit with about 60 dB of
+voltage gain in the passband and a 3-dB bandwith of 10 Hz - 3 KHz.
+A spectrum analyzer shows the noise is random, with no frequencies standing
+out more than others.
+
+The analog noise feeds an op-amp comparator wired as a zero-crossing
+detector.  The output is a logic level which switches randomly, but on
+average, on and off about 50% of the time, respectively.  This logic level
+gates a 5 MHz TTL oscillator, producing bursts of pulses of random length.
+These pulses are counted by an 8-bit counter, producing random 8-bit
+numbers.  The outputs of the counter are latched and read through a PC
+bi-directional parallel port.  Allowing the slowest changing bit to turn
+over 10 times between samples suggests a maximum sampling rate of 1000
+bytes/sec.
+
+The chi-square test and the runs tests on these samples show very good
+statistical properties.  For large samples (> 100,000 bytes), there seems
+to be a slight predominance of "one" bits (e.g.  0.6% difference).  This is
+probably due to some factor in the sampling process which I haven't figured
+out yet.  Anyway, exclusively-or'ing successive samples together removes
+this bias.  I'd appreciate any ideas about this.
+
+I don't know what practical use this device has, except for those who need
+one-time pads, but it was fun to hack up and test.
+
+John A. Thomas
+b858jt@utarlvm1.uta.edu
+75236.3536@compuserve.com
+PGP key available on request
+
+
+
+

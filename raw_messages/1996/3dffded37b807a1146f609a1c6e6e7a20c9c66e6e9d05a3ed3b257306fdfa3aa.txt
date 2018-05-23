@@ -1,0 +1,67 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Fri, 15 Nov 1996 11:48:54 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Playing Cards
+In-Reply-To: <v02140b03aeb239f7c4bb@[192.0.2.1]>
+Message-ID: <Pine.LNX.3.95.961115143422.813B-100000@gak.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Fri, 15 Nov 1996, Peter Hendrickson wrote:
+
+> (My apologies to those who are seeing this twice.  I sent it
+> yesterday but it does not seem to have made it through.)
+> 
+> A number of us have been concerned about how PGP generates entropy.
+> Striking the keyboard beats using time as a source of random numbers,
+> but the degree of entropy is not well understood.  Are there machines
+> where - for some reason - the keyboard strikes fall into some sort
+> of pattern?
+> 
+> And that's just when you are generating your public/private key pair.
+> What happens when you are just generating 128-bit keys for individual
+> messages?  Where is the entropy coming from?  I don't understand
+> completely, but somehow PGP collects entropy from the system and then
+> runs it into IDEA and then uses the numbers from the output.  When the
+> program is not running, a pool of this data is kept in randseed.bin.
+
+PGP uses the hash of the message to preprocess the randseed.bin file and
+postprocesses it with the session key.  It uses the randseed.bin file as
+a PRNG to generate the session key.
+
+> We already know it's a problem because it is hard to understand what
+> it is even doing, much less determine if it is consistent with sound
+> engineering practice.
+
+PGP uses a variation of ANSI X9.17 for key generation.  This is considered to
+be a secure method.
+
+Mark
+- -- 
+finger -l for PGP key
+PGP encrypted mail prefered.
+
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQEVAwUBMozI/CzIPc7jvyFpAQG+NAgAvPWsnTb7S/ohtHcyQG8DCaSlKtHt+FMF
+4qtLNtBzi8Y27WRtl9HHojdgYGVxuT45e4W9r3WOtLjaMkrYPdIKUcxSABkhr3Zd
+03pfVePg/ws3p+ynmpInMj8vr3lAYPlcFp5cPJdKl8WhZTSxXFCQ92q7xckzoW5S
+J9iUiIgnYf8n7qcfNSQI9rVw2d3Dv6rccqdYtfNA+UUe6jlwIbooITZ89EhVHWzw
+2BTZF+xOVenK058uQQFIzU99Bkaz35Hl3CC41TX/Ka2CZXBhAzjD++xtcapu1PE7
+moEzKde5cgYZ+R1d7TZwvudkAtdlx7xo4GDfxI5O+KR+FOyDNqMdoQ==
+=JTNn
+-----END PGP SIGNATURE-----
+
+
+
+
+

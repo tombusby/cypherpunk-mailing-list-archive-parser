@@ -1,0 +1,94 @@
+From: Jim Choate <ravage@EINSTEIN.ssz.com>
+Date: Fri, 30 Oct 1998 17:27:53 +0800
+To: cypherpunks@EINSTEIN.ssz.com (Cypherpunks Distributed Remailer)
+Subject: Re: Random array (fwd)
+Message-ID: <199810291908.NAA20468@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Forwarded message:
+
+> Date: Thu, 29 Oct 1998 17:33:29 +0100
+> From: Anonymous <nobody@replay.com>
+> Subject: Re: Random array
+
+> A couple responders have said there is no SWAP_TIMES
+> which would work. But I don't understand why the
+> following wouldn't work:
+> 
+> First of all, make sure that x and y can't be equal, since
+> there's no point in swapping an element with itself. This
+> should add a negligible amount of time.
+> 
+> 	x=getrand();
+> 	do
+> 		y=getrand();
+> 	while (x == y);
+> 
+> Now, simply calculate how many SWAP_TIMES it would take for it
+> to be equally as likely that an element would not be touched as
+> it would to land in its original spot.
+> 
+> (255/256)^(t*2) = 1/256
+> 
+> or
+> 
+> t = ln(1/256)/(2*ln(255/256))
+> 
+> or
+> 
+> 708.3955
+> 
+> 
+> Another anonymous wrote:
+> 
+> In the following snippet of pseudo-code, what should the value of               
+> SWAP_TIMES be to make the array A[] random, assuming                            
+> that getrand() returned a truly random integer between                          
+> 0 and 255                                                                       
+>                                                                                 
+> A[256];                                                                         
+>                                                                                 
+> for(i=0;i<SWAP_TIMES;i++){                                                      
+>         x=getrand();                                                            
+>         y=getrand();                                                            
+>         swap(A[x],A[y]);                                                        
+> }                                                                               
+>                                                                                 
+> Thanks
+> 
+
+Actualy the optimal value is even easier to calculate.
+
+Given an initial array, A(m), and the desire to randomly swap the contents
+until there is sufficient entropy to pass the various statistical tests
+leaves us with:
+
+Given m initial element and we are swapping them two at a time then we
+need to execute at most m/2 swaps to randomize the array.
+
+So, the optimal SWAP_TIMES ends up being, in this case, 128.
+
+This of course doesn't touch on the new rule above about testing for x=y.
+In which case you could simply do it over again. Now given that there are
+m elements and the odds of selecting any given one is 1/n and the odds of
+selecting it twice at one time is 1/n^2.
+
+
+    ____________________________________________________________________
+ 
+       To know what is right and not to do it is the worst cowardice.
+
+                                                     Confucius
+
+       The Armadillo Group       ,::////;::-.          James Choate
+       Austin, Tx               /:'///// ``::>/|/      ravage@ssz.com
+       www.ssz.com            .',  ||||    `/( e\      512-451-7087
+                           -====~~mm-'`-```-mm --'-
+    --------------------------------------------------------------------
+
+
+
+

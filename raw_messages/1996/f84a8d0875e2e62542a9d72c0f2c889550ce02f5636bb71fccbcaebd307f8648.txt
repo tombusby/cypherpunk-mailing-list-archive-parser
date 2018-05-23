@@ -1,0 +1,44 @@
+From: Steven L Baur <steve@miranova.com>
+Date: Fri, 2 Feb 1996 23:07:14 +0800
+To: cypherpunks@toad.com
+Subject: Re: Unix swapfile security issues...
+In-Reply-To: <199602010730.XAA09785@infinity.c2.org>
+Message-ID: <m2hgxakbh1.fsf@miranova.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> "Anonymous" == Anonymous  <mixmaster@alpha.c2.org> writes:
+
+Anonymous> I'm working on a unix application where I want to store a
+Anonymous> key in memory and don't want it to get written out to a
+Anonymous> swap file.  If the key is in any of the application's
+Anonymous> memory pages, it could be swapped out at any time, and
+Anonymous> potentially left in the swap file when the computer is
+Anonymous> turned off.
+
+That's only a problem if physical security doesn't exist at the
+console.  No operating system (or monitor) can overcome the lack of
+that.
+
+Anonymous> But, what if the program creates a pipe() and writes the
+Anonymous> key into it, then reads the key out when necessary?  A pipe
+                             ^^^^^ ^^^ ^^^ ^^^
+
+In which case it's in memory and can be paged or swapped.
+
+Anonymous> has a 4K buffer, but that buffer is in the kernel's memory,
+Anonymous> not in the application's pages.  Could a kernel buffer get
+Anonymous> written out to a swapfile?
+
+Depending on how the kernel is written, bringing down the machine
+could result in a dump of kernel memory being written to the swap
+device anyway.
+
+-- 
+steve@miranova.com baur
+Unsolicited commercial e-mail will be proofread for $250/hour.
+
+
+
+

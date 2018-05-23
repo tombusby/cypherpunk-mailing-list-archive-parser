@@ -1,0 +1,41 @@
+From: smb@research.att.com
+Date: Mon, 26 Jul 93 04:16:19 PDT
+To: mdavis@pro-sol.cts.com (Morgan Davis)
+Subject: Re: Secured E-mail standard?
+Message-ID: <9307261116.AA08492@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 Has a proposal been made to officially adopt a header field in
+	 standard Internet mail messages that would essentially include
+	 security signature information?  Something like:
+
+		 X-Security-Type: PGP 1.0 X-Security-Code:
+		 asdui&Dh1daOFajsFNOA...etc.
+
+	 These generic field names would allow for various types of
+	 security methods.  Most important, would make it a lot easier
+	 for smart e-mail systems to recognize secured e-mail, with the
+	 option of allowing the user to filter out such fields when
+	 reading text.  The current scheme of having to "frame" the
+	 content (plain text) and add the PGP signature is
+	 distracting.
+
+This won't fly for several reasons. 
+
+First, X- implies a non-standard header.  Second, in the Internet world
+PEM is on the standards track, and it uses a PGP-like encapsulation.
+(More precisely, many facets of the PGP appearance were taken from PEM.)
+PEM does provide for various security mechanisms, I should note, not
+just the current RSA+DES.  Finally, the scheme which you label ``distracting''
+(and I agree) was adopted because there's simply too much information
+to put into headers in any comprehensible fashion, and to really
+do the job properly requires an encoded (and hence unreadable) plaintext
+of the message, independent of the encryption or signature algorithms.
+(These folks worried, and rightly so, about character sets, gateways
+that would add or drop trailing blanks or tabs, etc.)
+
+
+
+

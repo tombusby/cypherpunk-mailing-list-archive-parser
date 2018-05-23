@@ -1,0 +1,83 @@
+From: Pierre Uszynski <pierre@shell.portal.com>
+Date: Sun, 29 Oct 1995 05:17:32 +0800
+To: cypherpunks@toad.com
+Subject: Re: Anonymity: A Modest Proposal
+Message-ID: <199510282018.NAA21600@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+kelso (kelso@netcom.com) suggested:
+[Let's split the message, get both parts independently to the
+end-recipient and let him sort it out]
+
+Thomas Grant Edwards (tedwards@Glue.umd.edu) continued:
+[Well, let's just get it there still encrypted]
+
+I'll continue in this direction:
+
+My understanding is that it is a Good Thing for the last stage remailer
+to be able to claim:  "I received high entropy stuff. There is no way I
+could tell what it was. I just forwarded it. I just make sure I do not
+forward low entropy stuff."  Furthermore, it would help everybody if
+end-recipients were somehow able to signal whether they are or are not
+willing to read clearly anonymous material (and are suckers for
+pseudonyms :-)
+
+The problem is that it is currently the last stage's responsibility
+to decipher most messages, and it is very difficult (at best) to go
+back and modify all mail and news readers so their user can shield
+himself from anonymous stuff.
+
+We could however provide servers that make it "Very Easy" or at least
+easier for the end-recipient to make sense of split or still encrypted
+email messages:
+
+(In broad lines, depending on the remailer type.)
+The end-recipient may receive one encrypted message, or k split parts of
+a message that say, prominently at the top (ni the message body so that
+braindead mail readers show it to their users):
+
+"If you are the end-recipient for this email message, you can get it
+decrypted by forwarding it as is to a Handyserver such as
+handyserver@well.known.site.  Don't worry about formats, the server
+knows what to do. If you received several such messages, forward all of
+them one by one or together. They may all be parts of one message. The
+server remembers parts for a week, while waiting for more parts, and
+will respond when done."
+
+Now, we need a way for this to work for the end-recipient but not for
+the last stage remailer. How about the message sender sending, through
+the remailer network, to the Handyserver (How about Johnnyserv as an
+other possible name :-), the decryption key, the end-recipient email
+address and name, and the first few bytes of the encrypted messages.
+The Handyserver authenticates service requests with some heuristic
+based on name and email, and knows which key to apply based on the
+message's first few bytes. That's extremely weak authentication but it
+usually takes no effort by the end-recipient and the last stage
+remailer can now say "I cannot attempt to get all my traffic through
+Handyservers. Not only it would be very time consuming, but I would
+have to illegally forge the recipient's address and the Handyserver
+would forward the decrypted version directly to the end-recipient
+anyway." The Handyserv can also keep a list of tokens publically posted
+for the sender to be able to confirm whether his message was or was not
+decrypted (that's an acknowledgement for a successful transmission
+through the remailer system, too.)
+
+In summary, the Handyserver provides a "mild" function: Its logs could
+permit the identification of the last stage remailer, but so what, the
+end-recipient had this info already. The last stage remailer now is
+safer.  And the end-recipient has to choose and voluntarily get the
+message decrypted.
+
+That could take care of email. Maybe something similar is possible for
+news (more or less the way rot13 worked, way back then, in the good old
+times when it was deemed sufficient to protect sensitivities.)
+
+Pierre.
+pierre@shell.portal.com
+
+
+
+

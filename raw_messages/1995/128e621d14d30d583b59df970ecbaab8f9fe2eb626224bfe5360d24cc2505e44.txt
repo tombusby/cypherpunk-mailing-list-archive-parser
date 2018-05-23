@@ -1,0 +1,56 @@
+From: "Lawrence C. Stewart" <stewart@OpenMarket.com>
+Date: Thu, 12 Oct 95 14:16:21 PDT
+To: rah@shipwright.com (Robert Hettinga)
+Subject: Re: (fwd) checkfree/cybercash diff
+In-Reply-To: <v02120d10aca3190df3c1@[199.0.65.105]>
+Message-ID: <199510122116.RAA11126@arctic.openmarket.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> But I cannot find any difference between cybercash wallet and checkfree wallet.
+> Is it behind the open part of the tech information?
+
+Probably we should wait for Donald Eastlake (Cybercash) or someone from
+Checkfree to chime in here, but here's my understanding:
+
+History:
+	Cybercash has a client application, which currently handles credit
+cards, and will add support for EFT payments.  The Checkfree app talks
+to the Cybercash gateway to the financial nets, via merchant software.
+
+	Checkfree/Spyglass/V-One/Tandem demo'd a "Wallet" at Spring
+Internet World, which currently handles credit cards, and will add support
+for bill-payment and/or check-writing, via Checkfree's service.
+
+My understanding of the technical similarities/differences:
+
+	The credit card handling is essentially the same as iKP/STT/SEPP, etc.
+however, I think Cybercash's sytem hands off the card number to the
+Cybercash Server and then deals in handles, while the Checkfree system
+stores the card number encrypted on the PC, and passes it along each time.
+If this is true, it makes the Cybercash system reasonably resilient to off-line
+local password guessing attacks.
+
+	A feature of the Checkfree thing is that it comes pre-loaded
+with a whole bunch of public keys of gateway operators (current and 
+prospective).  As gateway operators come on line, they are assigned a key
+from the pool.  This makes it "open" to multiple gateway operators.
+The implementation I saw had only a 4-digit PIN protecting the local
+card-storage file, so it is not terribly secure against anyone who gets
+access to the PC.  Obviously a pass-phrase would help a lot here.
+
+My understanding of the techno-politics:
+
+	Cybercash will adopt STT/SEPP for credit cards, abandoning its own
+wire protocol.  Both Checkfree and Cybercash will share the client app, and
+add their respective support for EFT, micropayments, and check-writing.
+
+-Larry Stewart
+Open Market Inc.
+
+
+
+
+
+

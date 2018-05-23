@@ -1,0 +1,66 @@
+From: "Wei Dai" <weidai@eskimo.com>
+Date: Mon, 6 Feb 95 17:23:00 PST
+To: cypherpunks@toad.com
+Subject: a simple explanation of DC-Net
+Message-ID: <199502070122.AA01568@mail.eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+The DC-Net is not very easy to understand.  I'll try to explain the most
+important parts of the concept as simply as I can.
+
+Let's say there are a number of participants in a DC-Net.  Each
+participant shares a different one-time pad with each of several other
+participants.
+
+At most one participant can send one bit through the DC-Net per "round".
+How does this work?  For each round i, a participant takes the i-th bit
+of all the one-time pads that he has and XORs them together.  If he
+doesn't want to send a bit, he just broadcasts the resulting bit to
+every other participant.  If he DOES want to send a bit, then he
+broadcasts the XOR of that resulting bit and the bit he wants to send.
+When everyone has done this, each participant takes all of the bits that
+has been broadcasted, and XORs them together.  This last action produces
+the output of the DC-Net for the i-th round.
+
+Suppose for the first round nobody wants to send a bit.  Since each one-
+time pad is known by 2 participants, the first bit of each pad has been
+XORed into the final output twice.  Since anything XORed by anything
+twice equals itself, these two XORs cancel each other out.  And since
+nothing else has been XORed into the output, the output must equal 0.
+
+If one participant wanted to send a bit, however, then something else
+HAS been XORed into the output.  Since all the bits from the one-time
+pads cancel out, the output equals the bit he wanted to send.
+
+Wei Dai
+
+P.S.  I realize someone has probably written something like this
+already, but I hope this explanation helps someone who is still
+puzzled.  If nothing else, it serves as a sanity check on my own
+understanding.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLzbKfTl0sXKgdnV5AQGTpwQAtGe5zl91MgA/ayzBGo/DLXh7NyTDSw00
+h/qZZxh2U9HoNFLHMMiHV64PYE8poJlCH8kLDY+XZlv1phoiBtMnc2AehN5XVJmr
+YCQ77rH9vp6yk6SZ5F7HV/UNIIQj6TkW806OZP7LlgUrXWPZdCSYGPh7n60J4TkD
+RaspzTgFcUk=
+=ml6y
+-----END PGP SIGNATURE-----
+
+E-mail: Wei Dai <weidai@eskimo.com>   URL: "http://www.eskimo.com/~weidai"
+=================== Exponential Increase of Complexity ===================
+--> singularity --> atoms --> macromolecules --> biological evolution
+--> central nervous systems --> symbolic communication --> homo sapiens
+--> digital computers --> internetworking --> close-coupled automation
+--> broadband brain-to-net connections --> artificial intelligence
+--> distributed consciousness --> group minds --> ? ? ?
+
+
+
+

@@ -1,0 +1,56 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Wed, 18 Oct 95 09:13:22 PDT
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Anonymity: A Modest Proposal
+In-Reply-To: <Pine.3.89.9510180431.A22347-0100000@netcom4>
+Message-ID: <199510181613.MAA01473@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Modemac writes:
+> The basic idea for this system goes like this:
+>  
+>      1) A person writes a message and encrypts it with PGP.
+>      2) That person then posts his message to the "anonymous messages"
+>         newsgroup.
+>      3) A remailer scanning the newsgroup picks up the message,
+>         decrypts it, strips the headers and makes it anonymous, and
+>         sends it to its destination.
+
+Just for the record, I'll note this is a fairly old idea (cf. the 
+Cyphernomicon, news:alt.anonymous, news:alt.anonymous.messages, etc.)
+
+[...]
+> A "token" (like the token ring of IBM fame) would be passed back and
+> forth between all of the Cryptoclients in the remailer network, so
+> that only one remailer would be "active" at any given time.  This
+> token would be passed back and forth at random, so no one would know
+> exactly which remailer is being used to anonymize a message.
+
+I don't see how this is possible given widespread RFC 822 compliance. 
+Any given message must be sent from some particular address. I see two 
+main options:
+
+(1) The remailed-message is sent as a single message from a single remailer.
+    That remailer is subject to various sorts of pressure if the remailed-
+    message offends its recipient.
+
+(2) The remailed-message is sent as several messages from several remailers.
+    The recipient's MDA reassembles the fragments into the remailed-message.
+    Any or all of those remailers are subject to pressure if the remailed-
+    message offends the recipient.
+
+Either way, at least one remailer is subject to pressure for sending a 
+specific piece of email.
+
+(If the token is passed around randomly, then it might be more difficult for 
+an adversary to predict which remailer will send the _next_ message. However,
+adversaries such as Cof$ are interested in assailing remailers that have
+_already_ sent messages, due to the content of those messages. They can tell 
+which remailer sent _past_ messages, which is what they need.)  
+
+-Futplex <futplex@pseudonym.com>
+
+
+

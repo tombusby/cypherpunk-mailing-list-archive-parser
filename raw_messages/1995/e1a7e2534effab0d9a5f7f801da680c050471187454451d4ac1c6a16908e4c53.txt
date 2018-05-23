@@ -1,0 +1,46 @@
+From: tomw@orac.engr.sgi.com (Tom Weinstein)
+Date: Fri, 6 Oct 95 12:12:42 PDT
+To: cypherpunks@toad.com
+Subject: Re: Certificate proposal
+In-Reply-To: <9510021553.AA13756@tis.com>
+Message-ID: <199510061829.LAA04524@orac.engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <DG0EzA.Gs5@sgi.sgi.com>, Hal <hfinney@shell.portal.com> writes:
+> tomw@orac.engr.sgi.com (Tom Weinstein) writes:
+
+>> Um, just a wild guess, but... your credit card number maybe?  (Well,
+>> okay, its hash.)
+
+> I may not have been clear: the certificate I was referring to was the one
+> from Egghead, the one which I will use to make sure that I have a valid
+> key for Egghead.  Such a certificate would of course not have my credit
+> card number; it would probably have some information related to Egghead.
+> My rhetorical point was that information would most plausibly be a NAME
+> by which I would refer to Egghead.  I am still trying to understand how
+> these proposals to take names out of the picture will apply to a
+> commonplace situation like this one.
+
+Yes, it seems I misunderstood you.  There would have to be some binding
+between the key of the merchant and some identifying information that
+would allow the user to verify the merchant's identity.  This could take
+the form of a True Name for the merchant and a trusted CA.  Another
+approach would take the form of an FQDN, an IP address and a trusted CA.
+In this case the software would have to verify that the FQDN and IP
+address match the URL and DNS lookup, respectively.  Unfortunately, this
+also requires that any time the IP address changes that the merchant get
+a new certificate.  Also, the CA must be checked to verify that the
+certificate hasn't been revoked, or you run the risk of an attacker
+getting the old IP address.
+
+Does anyone see any other options?
+
+-- 
+Sure we spend a lot of money, but that doesn't mean    |  Tom Weinstein
+we *do* anything.  --  Washington DC motto             |  tomw@engr.sgi.com
+
+
+
+

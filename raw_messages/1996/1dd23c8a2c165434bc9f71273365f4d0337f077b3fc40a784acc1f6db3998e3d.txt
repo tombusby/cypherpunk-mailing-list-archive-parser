@@ -1,0 +1,50 @@
+From: Nelson Minar <nelson@santafe.edu>
+Date: Wed, 6 Mar 1996 16:59:38 +0800
+To: cypherpunks@toad.com
+Subject: Steganography idea: CU-SeeMe
+In-Reply-To: <9603041921.AA08825@bilbo.suite.com>
+Message-ID: <199603060734.AAA00178@nelson.santafe.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The thing that bothers me about existing steganography code I've seen
+is that it all uses uncommon communication channels to hide data. For
+instance, the "hide data in a picture" programs: useful, up to a
+point, but how often do I send pictures to other people? I think to be
+effective, methods need to be employed that exploit existing, well
+used communication channels.
+
+So here's one idea I've had as a place to hide a channel: network
+video, in particular CU-SeeMe video streams. CU-SeeMe is a lowtech
+network video application, people running Windows and Macs with a $99
+camera and a PPP stack can send about 2fps (160x120) to each other
+over the Internet. Times I've used it, bandwidth is about 8kbits/sec
+(I'm on a modem).
+
+So here we have a reasonably high bandwidth channel, person to person,
+that is already being used a lot on the net. How easy would it be to
+borrow a few bits to hide the secret message? Because the image
+quality is low (4bpp or 6bpp grey), and definitely nonrandom, you'd
+need to be more subtle than just borrowing the low bit.
+
+I think the answer could be found in image processing algorithms.
+Spreading a bit out across various pixels would nice, as would some
+sort of adaptive algorithm that identifies part of the image that's
+safe to hide data in. It's not good enough that the image with hidden
+data looks the same to the eye: it has to be statistically identical
+to undoctored streams.
+
+The biggest barrier to this I see is that the CU-SeeMe protocol itself
+is proprietary, and the only existing free code I know of that does it
+doesn't work very well (version 3.0 of a Unix reflector: buggy, now
+very old). Of course you have to emulate the normal software 100%
+correctly, or the Men in Black will see you're using stego tools.
+
+
+I should remark that the subliminal channel stuff in digital
+signatures is a really beautiful example of steganography.
+
+
+
+

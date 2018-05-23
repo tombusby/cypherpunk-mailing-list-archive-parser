@@ -1,0 +1,50 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Wed, 11 Aug 93 15:47:27 PDT
+To: cypherpunks@toad.com
+Subject: Re: Secure voice software issues
+Message-ID: <9308112238.AA05820@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+karn@qualcomm.com (Phil Karn) sez-
+ 
+> ...Finding a path through the PGP "web of
+> trust" back to a trusted public key that the other party already has
+> may be tricky. This is one thing that is much easier with a simple
+> tree a la PEM, as you simply give the path back up to a common, shared
+> root. 
+> 
+> I'm not sure how to do this with PGP. ...
+
+Maybe this is a good service for a key server to perform.
+
+Are there cases where you would want to endorse a key *privately*?
+I.e., tell certain people only that you've met someone?
+
+> If you first do Diffie Hellman and then immediately use the session
+> key it generates to conventionally encrypt the rest of the protocol,
+> including any RSA public key exchanges, this has the added benefit of
+> denying passive eavesdroppers any information that would identify the
+> parties to the call. The best an *active* eavesdropper (conducting a
+> man-in-the-middle attack against Diffie Hellman) could do is to trick
+> the parties into revealing their RSA public keys, and thus their
+> identities.  But the parties would quickly discover this at the
+> signature step, before the voice conversation actually starts.
+
+What if you prepare RSA key pairs in advance in your computer's 
+(phone's) spare time, then use one per conversation (at least for the 
+initializing)?  You would encode your public key with the session 
+private key, and a conventional key with your private key, in advance.
+That would save time at the start of the conversation (although, to 
+decode his keys would take two regular RSA steps.)
+
+Am I wrong, or is Diffie-Helman only useful when you *don't* have
+a way of verifying who each other are?
+
+-fnerd@smds.com
+quote me
+
+
+
+

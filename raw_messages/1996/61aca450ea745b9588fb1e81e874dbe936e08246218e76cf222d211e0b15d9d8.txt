@@ -1,0 +1,39 @@
+From: "Douglas R. Floyd" <dfloyd@io.com>
+Date: Mon, 9 Sep 1996 08:33:21 +0800
+To: varange@crl.com (Troy Varange)
+Subject: Re: What the NSA is patenting
+In-Reply-To: <199609080449.AA28514@crl11.crl.com>
+Message-ID: <199609082159.QAA13284@xanadu.io.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> Burning the floppy would seem to solve the problem.  Lock sensitive
+> data in RAM away from disks except for burnable floppies.  I guess
+> linux can be configured to keep sensitive data in a RAM filesystem,
+> keeping it from being synced or flushed.
+> 
+
+Currently, I am hacking up a prototype of an armored keysigning box using
+an old 386.
+
+This box signs/decodes incoming E-mail as long as the key switch is in the
+correct position.  The key remains in /dev/ram0, and is encrypted, as well
+as stored in a .au file.  For one of the keys, I am using a hacked des
+program that reads a file off a floppy for the TDES key before copying the
+PGP key into the ramdrive.
+
+What I plan to do is write software so that multiple floppies are needed
+to load the key into the RAM filesystem, and to "lock" the machine.
+
+After the key is loaded, all network daemons are killed except smail, and
+all gettys are killed.  This makes it hard for someone locally to get to
+the RAM drive.  If the box is rebooted, or turned off -- bye bye RAM
+drive.
+
+
+
+
+
+

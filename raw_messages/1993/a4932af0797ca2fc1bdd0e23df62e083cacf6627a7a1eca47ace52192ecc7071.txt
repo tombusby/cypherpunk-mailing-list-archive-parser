@@ -1,0 +1,45 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 23 Apr 93 08:17:14 PDT
+To: cypherpunks@toad.com
+Subject: encrypted telnet
+In-Reply-To: <YfpxBQq00axaQNkl1g@andrew.cmu.edu>
+Message-ID: <9304231513.AA05622@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>2) How do you do key distribution? 
+
+Derek asks this, and suggests using Kerberos.  WSK responds by saying
+that you could encrypt a session key with PGP and send it.
+
+WSK replies properly that kerberos is a lot of overhead to get
+running, but his proposed solution is missing forward secrecy.  If the
+PGP key is ever compromised, then all recorded prior traffic will be
+available to read.
+
+The solution is to use Diffie-Hellman key exchange.  I'm not going to
+explain the details of the algorithm right here, right now, but I'll
+tell you it's salient properties.  Each party makes a random number,
+applies a one-way function with very special properties, and sends it
+to the other.  Then each party takes their secret number, combines it
+with the number they were sent, and makes a new (arbitrary) number
+which will be the same on both sides.  This number cannot be derived
+from the publicly transmitted data.  (The very special function is
+exponentiation in a finite field; those with sufficient math
+background may consider figuring out the details "a problem left to
+the reader.")
+
+Encrypting session keys with PGP is suggested often enough that this
+qualifies as a legitimate FAQ.  I'll write up a description of this
+protocol next week if no one has one already written.
+
+As a design principle, every live end-to-end session should use D-H to
+make session keys.  Only when you don't have interactivity should
+session keys be encrypted with a public key.
+
+Eric
+
+
+
+

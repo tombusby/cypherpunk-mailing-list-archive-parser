@@ -1,0 +1,61 @@
+From: Jay Campbell <edge@got.net>
+Date: Mon, 9 Oct 95 16:43:16 PDT
+To: Kevin L Prigge <cypherpunks@toad.com
+Subject: Re: HTTP anon proxy pointers
+Message-ID: <199510092356.QAA23573@you.got.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:00 PM 10/9/95 -0500, Kevin L Prigge wrote:
+>I seem to recall that someone was working on an anonymous http
+>proxy a couple months ago. Pointers would be appreciated. Thanks.
+
+We had discussed this at the last Bay Area Cypherpunks meeting (BTW,
+when/where is the next??), and came to the conclusion that it would be
+technologically simple, but load inefficient, to implement in a large scale
+at this point.
+
+The main problem with anonymous http (or telnet, talk, etc) lies in the
+sheer amount of information being transferred, and the even larger amount of
+noise an anonymous site would have to generate to defeat traffic analysis. A
+mail message is usually under a few K, but with these larger systems you
+move into the multiple meg realms; to hide a single individual's (ie,)
+3K/sec stream, a provider would have to generate many times that in cover
+traffic. We can force traffic to the user from network speeds to slow down
+to modem speeds, but that doesn't help the inbound crunch at all. Web sites
+don't generally generate much inbound traffic, but when coupled with dialups
+(such as in my case) this could lead to bad service to the local modem users.
+
+The good news is, with multiple anon redirectors bouncing traffic between
+them to further confuse an attacker, the number of users can grow an order
+of magnitude without any additional load, since the streams are hiding in
+the midst of other streams and far less random cover traffic needs to be
+generated.
+
+Software-wise, an anonymous http scheme could be implemented with a standard
+proxy server with remote host access restrictions and log analysis tools to
+charge the appropriate individuals for their usage (a la anon email postage
+stamp rolls). Down the road, cover traffic, ecash payment, encryption, and
+other nifty toys can be added.
+
+If anyone on this list is in need of anonymous http right now (even to
+tinker with it) I'd be willing to set up a free-use proxy, as long as you
+don't bring our server or our pipe to their knees. Mail me (privately if you
+wish) with the individual IPs/names of the hosts you'd be coming in from -
+no blanket domain names, please, unless they're your own personal network.
+If I see enough interest I'll have a proxy up by next week.
+
+Have I missed anything?
+--
+   Jay Campbell - Regional Operations Manager
+   -=-=-=-=-=-=-  Sense Networking (Santa Cruz Node) 
+   edge@got.net   "Shoot the Fruit Loop"            
+ 
+"On the Information Superhighway, I'm the guy 
+  behind you in this morning's traffic jam leaning on his horn."
+
+
+
+
+

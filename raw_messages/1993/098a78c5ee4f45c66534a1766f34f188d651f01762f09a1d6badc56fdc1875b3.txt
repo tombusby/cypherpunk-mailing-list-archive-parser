@@ -1,0 +1,46 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Fri, 10 Sep 93 14:02:51 PDT
+To: cypherpunks@toad.com
+Subject: Re: Crack DES in 3.5 hours for only $1,500,000!
+Message-ID: <9309102054.AA26212@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: gnu@toad.com (John Gilmore)
+>Message-Id: <9309100913.AA23487@toad.com>
+>Subject: Re: Crack DES in 3.5 hours for only $1,500,000! 
+>Date: Fri, 10 Sep 93 02:13:32 -0700
+
+It feels like you're jumping to conclusions, John.  At 40 bits of key, I
+don't care how strong an algorithm is.  I can have my network of
+SPARCstations try all keys.  NSA chip technology doesn't enter into that
+analysis.
+
+Meanwhile, on the death of DES -- what we know is that there's a known
+plaintext attack, given the right hardware.
+
+What I've recently heard called a pre-whitening (XOR with PRNG before the
+DES) wipes out the known plaintext.  The PRNG doesn't need to be that
+strong.  It's protected by DES and vice versa -- Chinese-puzzle style.
+
+Of course, my personal favorite DES variant remains:
+
+	compress|des|tran|des|tran|des
+
+but if you're really paranoid, you could change it to:
+
+	compress|xor|tran|des|tran|des|tran|des
+
+since xor and tran are so cheap.  [des in any mode you prefer -- eg.,
+cbc or cfb -- IVs kept secret, of course.]
+
+[For those not reading sci.crypt, tran is an (up to) 8KB transposition
+with PRNG keyed from the histogram of the first block of bytes -- code
+posted to sci.crypt, mailed by me or avbl by ftp from scss3.cl.msu.edu.]
+
+ - Carl
+
+
+
+

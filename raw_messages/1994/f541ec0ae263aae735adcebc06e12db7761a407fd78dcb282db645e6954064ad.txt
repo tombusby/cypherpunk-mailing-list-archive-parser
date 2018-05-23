@@ -1,0 +1,41 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Mon, 5 Dec 94 18:49:21 PST
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: fixed code
+Message-ID: <199412060248.VAA04314@bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	The procmail stuff I sent yesterday was slightly broken.  It
+seems that keyservers respond well to 'mget 36E61FB1', but not 'get
+36E61FB1'
+
+	To auto retrieve keys, use these two procmail recipies:
+
+# auto key retreival
+:0BW
+* -----BEGIN PGP
+KEYID=|/usr3/adam/bin/sender_unknown
+
+# I have an elm alias, pgp, points to a keyserver
+:0ac
+|elm -s"mget $KEYID" pgp
+
+
+sender_unknown
+
+#!/bin/sh
+# sender_unknown returns a keyid, exits 1 if the key is known
+OUTPUT=`pgp -f +VERBOSE=0 +batchmode  -o /dev/null`
+echo $OUTPUT | egrep -s 'not found in file'
+EV=$? 
+if [ $EV -eq 0 ]; then 
+	echo $OUTPUT | awk '{print $6}' 
+fi
+exit $EV
+
+
+
+
+

@@ -1,0 +1,58 @@
+From: Bill Frantz <frantz@netcom.com>
+Date: Mon, 20 Jan 1997 08:26:27 -0800 (PST)
+To: cryptography@c2.net
+Subject: Server Authentication
+Message-ID: <199701201626.IAA12835@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I recently came aware of an interesting problem in server authentication.
+I.e. How does a browser plugin validate the server it is working for.
+There are many reasons for a plugin to want to validate its web server
+including contractual relations, but the one that most appeals to me is
+that the plugin provides access to confidential data which is used in an
+application distributed between the client machine and the server.  Since
+the data is confidential, the plugin doesn't want to send it to just any
+server who can serve up a web page in the correct format, so it needs to
+authenticate the server.
+
+Now the obvious way to validate the server would be through the
+certificates exchanged when the SSL session was set up.  (I am assuming a
+SSL session here because you shouldn't send confidential data over a
+non-encrypted link.)  However, I haven't found an API where the plugin can
+discover the certificate used by the server, so it appears you have to roll
+your own.
+
+Rolling your own seems to come up against the problem mentioned by the
+IPSEC people, i.e. if you separate authentication and encryption the places
+you can end up are:
+
+(1) Encrypted and authenticated.
+(2) Encrypted but not authenticated.
+(3) Not encrypted and subject to a man in the middle authentication attack.
+(i.e. If an IP router can route your authentication packets, so can one
+running Mallory's special code.  In the case above, the hostile server acts
+as a router for authentication.)
+(4) Unauthenticated and unencrypted.
+
+Does anyone have a solution to this authentication problem?
+
+Are signed applets discriminating enough to differentiate between different
+validated hosts and adjust local permissions differently (at the file level
+at least) for each?  (Or is it more like, "Oh this applet is from
+marketspam.com which is signed by the US Post Office, it can read or write
+anything on the machine."  Yea, right :-( )
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | Client in California, POP3 | Periwinkle -- Consulting
+(408)356-8506     | in Pittsburgh, Packets in  | 16345 Englewood Ave.
+frantz@netcom.com | Pakistan. - me             | Los Gatos, CA 95032, USA
+
+
+
+
+
+
+

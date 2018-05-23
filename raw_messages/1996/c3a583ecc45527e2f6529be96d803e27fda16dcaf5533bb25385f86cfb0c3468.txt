@@ -1,0 +1,41 @@
+From: iagoldbe@calum.csclub.uwaterloo.ca (Ian Goldberg)
+Date: Sat, 27 Jan 1996 07:51:38 +0800
+To: cypherpunks@toad.com
+Subject: Re: Crippled Notes export encryption
+In-Reply-To: <199601242303.SAA14589@amsterdam.lcs.mit.edu>
+Message-ID: <4e6j28$g49@calum.csclub.uwaterloo.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199601242330.SAA08632@toxicwaste.media.mit.edu>,
+Derek Atkins  <warlord@MIT.EDU> wrote:
+>> How did kerberos avoid this?  The "bones" distribution of kerberos
+>> without crypto was not regulated by ITAR, right?
+>
+>Kerberos didn't leave the crypto plugable.  The bones distribution
+>removed not only the crypto routines but also the calls to the crypto
+>routines.  It would be hard to call that "pluggable".  It took a lot
+>of work for someone down under to replace all those crypto calls!
+>
+OK; so what if I have code that says:
+
+RNG_GenerateRandomBytes(buf, size);
+Hash(outbuf, buf, size);
+/*
+ *  It would be really nice if outbuf were RSA-encrypted
+ *  with (expon,modulus) at this point and the result placed in
+ *  outbuf2, but we have to do the following instead:
+ */
+    for(i=0;i<hashsize;++i) outbuf2[i] = ~outbuf[i];
+fwrite(outbuf2, hashsize, 1, fp);
+
+
+Would the above code be export-restricted because it contained wishful
+thinking about how nice it would be to use encryption?
+
+   - Ian "Maybe I should just go back to Canada..."
+
+
+
+

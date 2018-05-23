@@ -1,0 +1,72 @@
+From: Mark Aldrich <maldrich@grctechs.va.grci.com>
+Date: Fri, 23 Feb 1996 01:27:29 +0800
+To: Adam Shostack <adam@lighthouse.homeport.org>
+Subject: Re: pcmcia
+In-Reply-To: <199602221313.IAA09759@homeport.org>
+Message-ID: <Pine.SCO.3.91.960222100744.19971A-100000@grctechs.va.grci.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 22 Feb 1996, Adam Shostack wrote:
+
+> P.J. Ponder wrote:
+> 
+> | obligatory crypto comment: has anyone looked at the iPower card and 
+> | gotten one to play with? Where else could one get a PCMCIA card that was 
+> | programmable and had a little memory on it? How hard would it be to make 
+> | one - in other words, what could we get the cost down to for an 
+> | encrypting pcmcia card? there couldn't be much to it, really, could there?
+> 
+> 	I got one, its very badly documented; theres some source in
+> Visual basic for windoze.  I haven't had time to track down real docs
+> so I can do anything.  Anyone know who I can call to get real
+> documentation?
+> 
+
+We've been doing some work with the thing and have actually got a crypto 
+product built for a customer.  Some things to know:
+
+1.  It' unbelievably slow.  Key generation on this things takes an order 
+of magnitude longer than what you see in the "average" PC environment.  
+Encrypt/decrypt times are equally extended, but aren't that obnoxious if 
+5-20 second/'average' e-mail message lag times don't torque your user.
+
+2.  Buy the PersonaCard API Developer's Kit or you're hosed.  It's the 
+only real source of relevant data.  It's got Visual C++ source in it, 
+etc.  You also can then contact Nat-Semi with questions.  You can order 
+the thing (I think it's around $100, but I'm not sure) from:
+
+iPower Technical Support
+iPower Business Unit
+National Semiconductor Corporation
+1090 Kifer Road, Mail Stop 16-225
+Sunnyvale, CA 94086-3737
+
+3.  The drivers suck.  They appear to be essentially a "protocol stack" 
+that gets loaded into memory (LOTS of memory) and then they conflict with 
+just about everything.  Lock ups are common.  These things have to load 
+in sequence, before anything else, or they won't work.  We have not been 
+able to get them to peacefully coexist with any other PCMCIA drivers, nor 
+with such things as CD-ROM drivers or tape backup drivers.
+
+Summary:  A fun thing to play with, interesting toy, but probably not 
+something you can actually make useful (yet).
+
+Enjoy.
+
+------------------------------------------------------------------------- 
+|So, I went walking through the street.   |Mark Aldrich                 | 
+|I saw you strung up in a tree.           |GRCI INFOSEC Engineering     | 
+|A woman knelt there, said to me,         |maldrich@grci.com            | 
+|Hold your tongue, man, hold your tongue. |MAldrich@dockmaster.ncsc.mil | 
+|_______________________________________________________________________| 
+|The author is PGP Empowered.  Public key at:  finger maldrich@grci.com |
+|    The opinions expressed herein are strictly those of the author     | 
+|         and my employer gets no credit for them whatsoever.           | 
+-------------------------------------------------------------------------
+
+
+
+
+

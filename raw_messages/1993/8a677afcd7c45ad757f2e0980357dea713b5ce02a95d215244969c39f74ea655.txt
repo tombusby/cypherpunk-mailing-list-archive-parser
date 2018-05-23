@@ -1,0 +1,55 @@
+From: wcs@anchor.ho.att.com (Bill_Stewart(HOY002)1305)
+Date: Mon, 2 Aug 93 18:21:33 PDT
+To: cme@ellisun.sw.stratus.com
+Subject: Re:  Encrypted BBS?
+Message-ID: <9308021921.AA11320@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> >	Would it be at all possible, given today's present state of
+> >cryptography, to run a bbs in a totally encrypted form?  If so, are there
+> >any software packages out there that accomplish this at some level?
+
+You've got to think about what threats you're trying to protect against.
+
+- Confiscated Machine - this can be done today with commercial products, a no-brainer.
+	You keep the disk in encrypted form, either using software or 
+	a hardware-assist DES board, and it's automatically handled by your
+	disk drivers using a boot-time secret-key password.
+	Neither your users nor your BBS sofware knows any difference.
+	(Obviously you also want to decrypt your backup floppies.)
+
+- Wiretapping - there are tons of possible solutions, at varying amounts of work.
+	you can either do this with public or secret-key approaches,
+	and you can use a shared secret key, separate secret keys,
+	session keys set up using secret or public keys, etc.
+	Most of these methods affect the BBS sofware itself,
+	though you could use an encrypted telnet or other comm program instead,
+	presumably in conjunction with the encrypted disk.
+
+	A solution that requires a little more integration is to have the users 
+	upload the files encrypted (using random keys), and upload the
+	keys (encrypted) and have the host recrypt them with the readers
+	public or private keys, either at upload or download time,
+	or perhaps on a batch basis during idle time.
+	You could probably adapt PGP to retain the initial key for each file,
+	and only re-encrypt the key when a user wants to download it,
+	instead of re-encrypting the whole file.
+
+- Untrusted users - if there may be narcs on your box, you've got to give
+	the users control over who can access what messages they create.
+	If the users trust *you*, you can use some sort of password-based system;
+	some existing BBSs presumably provide this, and you can even hack
+	Usenet to do it (for non-NNTP use, anyway) using Unix groups;
+	this allows groups of users who trust each other but not other users.
+
+- Untrusted Sysadm - if *you* may be a narc :-), your users can include 
+	PGP-encrypted messages in their postings, and there's not much
+	you can do about it :-)  This somewhat solves the untrusted-user
+	problem as well, though it makes the closed user group bit more annoying.
+
+			Bill Stewart
+
+
+

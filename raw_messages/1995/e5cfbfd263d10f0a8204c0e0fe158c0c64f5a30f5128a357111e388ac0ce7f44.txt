@@ -1,0 +1,65 @@
+From: wlkngowl@unix.asb.com
+Date: Thu, 28 Dec 95 12:26:14 PST
+To: cypherpunks@toad.com
+Subject: ANNOUNCE: NOISE.SYS random sampling device for DOS v0.2Beta
+Message-ID: <199512282034.PAA25370@UNiX.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+Re: NOISE.SYS Random Sampling Device Driver for DOS (v0.2-Beta):
+
+I've finally gotten a usable version of NOISE.SYS written.  The beta
+is ready for semi-public release and review.  If you're interested in
+testing it or examing the code, email me at <wlkngowl@unix.asb.com>
+
+It's only a prototype version.  I do not know any strong methods of
+testing random data.  If anyone is willing to help on that part or
+point me in the right direction, it would be appreciated...
+
+What this driver does:
+
+When loaded, it hooks onto the keyboard interrupt (0x09) and collected
+fast timings between keystrokes.  It can also be easily configured at
+compilation to sample other interrupts, as well as collect "seedling"
+keystrokes upon initialization.
+
+It sets up a character device called RANDOM, that when polled takes
+the earliest collected bytes from the random pool (size can be adjusted),
+combines them with a count-word based on the number of samples collected
+plus the number of times the driver has fetched data from the pool,
+transforms it using the Secure Hash algorithm, and outputs the bits from
+the hash.
+
+It's only a prototype: this version doesn't check to see if the pool is
+"empty" at the moment.
+
+Features: written in 386 assembler, takes under 2k of memory and can be
+loaded from the command line using a utility like DEVLOD.  Also under
+GPL, so you've got the source-code to play with.
+
+Comments and criticism from crypto-gurus would be greatly appreciated.
+Reply if you'd like me to send a copy.  (Important Q: is this software
+covered under ITAR?!?)
+
+- --Rob <wlkngowl@unix.asb.com>
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMOL8gNscUKerH0gxAQHNlAP/eZChSaAEg3go/vxfm9Z0Af5Dfa4WBDhh
+SfbbpsYfymSkxFbU7bHUfRMFHk+Uy57AeGMUxXkgml7KO8cxyOPS6yVDcNWf6Z9W
+OeXtXRAFBWRn3CblT1sQzl5YCEG93YBZS9ZkbTsN4rgTcpo15QY8vG5BJCEgfP9f
+9XHn5VGSkVo=
+=jaNN
+-----END PGP SIGNATURE-----
+
+
+
+
+

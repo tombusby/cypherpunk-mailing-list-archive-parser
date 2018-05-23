@@ -1,0 +1,36 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Wed, 1 May 1996 12:03:35 +0800
+To: perry@piermont.com
+Subject: Re: The Joy of Java
+In-Reply-To: <199604292245.SAA10827@jekyll.piermont.com>
+Message-ID: <199604301749.NAA11738@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Perry E. Metzger" writes:
+>Scott Brickner writes:
+>> I don't understand what you mean by "insufficiently powerful".  It's as
+>> expressively powerful as most high-level languages, and computationally
+>> Turing equivalent.  It's lack of power seems entirely in the performance
+>> arena, which may be solved, eventually.
+>
+>Java applications can't save files to disk or use data files on
+>disk. If you were, for instance, buying two CPU weeks of idle time on
+>some machines, you would need stuff like checkpointing or the ability
+>to save intermediate results.
+
+It is false that Java applications "can't" save files to disk.  Java
+has no I/O facilities, exactly like C and C++ have none.  Any I/O
+capability must be provided in external functions.  The applet
+environment doesn't include file I/O functions, but it can be easily
+added in a reasonably safe way (filesystem object only allocates a fixed
+region of real disk space, applets are charged to use it, after the
+"rent" is gone, the blocks are freed, etc.)
+
+Java applications may also send checkpoint data or intermediate results
+back "home", even in the current environment.
+
+
+
+

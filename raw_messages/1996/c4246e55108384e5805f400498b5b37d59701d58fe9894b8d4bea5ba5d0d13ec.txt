@@ -1,0 +1,35 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Fri, 9 Aug 1996 14:56:40 +0800
+To: nozefngr@mail.apple.com (CTH)
+Subject: Re: Basic Unix Hacking
+In-Reply-To: <199608082320.QAA17952@scv2.apple.com>
+Message-ID: <199608090225.VAA10861@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+CTH wrote:
+> Is there a way to get a .plan file to execute shell script when
+> it is read by finger??
+> 
+> I'm sure this is an old question, but it seems there must
+> be a way.
+> 
+> echo \"date\"  or some damn thing that will execute as opposed
+> to printing.
+
+use a named pipe for your plan: 
+
+$ cd $HOME
+$ /bin/mv -f .plan .plan.old
+$ mknod .plan p
+$ (date > .plan) &
+$ finger `whoami`@0
+
+or use "masterplan" program available from the net.
+
+But IMHO, all this activity is a WASTE of time.
+
+
+
+

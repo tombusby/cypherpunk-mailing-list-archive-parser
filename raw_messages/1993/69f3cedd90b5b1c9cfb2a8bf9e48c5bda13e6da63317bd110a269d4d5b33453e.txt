@@ -1,0 +1,56 @@
+From: jimn8@netcom.com (Jim Nitchals)
+Date: Fri, 3 Dec 93 00:08:45 PST
+To: an4914@anon.penet.fi
+Subject: Re: Nitch (also re: steganography)
+In-Reply-To: <9312022326.AA15269@anon.penet.fi>
+Message-ID: <199312030807.AAA06846@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+an4914@anon.penet.fi writes:
+> 
+> Terribly sorry to frighten you, Jim.  Nitch is a (very) little-known
+> nickname of mine from quite some time ago.  There are probably only
+> five people who ever knew that it had been given to me.
+> 
+> Funny name collision.  I never expected it.  Hope you don't get fired.
+
+Fired?  Hehe.. I'd sincerely expect more from my employers than to
+get upset at something I post to a mailing list.
+
+Thanks for the reply.  Now.. to increase the signal-to-noise ratio a
+bit.. (hopefully a few people on the list read this one anyway) there
+was a mention of using the LSB of a picture for steganography, and the
+ensuing difficulty in hiding the results.
+
+An idea I've had is to hide the data as the exclusive-or of several
+LSB's within the image.  There are two problems with using the LSB
+of *every* pixel: the obvious distribution of 1's and 0's, and the
+resulting loss of compressability of the resulting image.
+
+A 320x200 image can hold 8,000 bytes of data in the LSB, which is
+probably more capacity than most messages need.  If instead we use
+1 bit of steganographic data for 8 pixel LSB's, the capacity is
+still about 1K, and it should be easier to hide the steganographic
+signature because only 1 LSB out of 8 needs to be changed if the
+parity is wrong.
+
+If using GIF or other lossless encoder, we can tweak LSB's in ways
+that actually *reduce* compressed file size.  As long as we're
+tossing out the LSB as usable picture information, let's get some
+benefit from it.
+
+Assuming matching JPEG encoders and decoders on the sending and
+receiving end, a JPEG image could theoretically store steganographic
+data by tweaking the quantized DCT coefficients until they matched
+the desired steganographic output.  The extra beauty here is that
+not all JPEG decoders are built the same, so the output may not
+be bit-for-bit the same.  Decoding the steganographic data would
+require not only a knowledge of the algorithm, but a matching JPEG
+decoder as well.
+
+
+
+
+

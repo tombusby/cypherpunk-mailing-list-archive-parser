@@ -1,0 +1,42 @@
+From: pierre@shell.portal.com (Pierre Uszynski)
+Date: Sat, 6 Nov 93 20:12:48 PST
+To: cypherpunks@toad.com
+Subject: Re: some newbie DC-net questions
+Message-ID: <9311070412.AA14773@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+> 
+> > 3) What happens when two members of a "table" attempt to transmit at the
+> > same time?  How is this case handled?
+> 
+> They will get a collision.  If an even number of members transmit at once
+> then the bit will be the opposite of what each expects to see, if an odd
+> number then it will be an undetected collision.  There are fairly standard
+> protocols for backdown on distributed broadcast networks.
+> 
+
+Actually, it seems to me undetected collisions are not as likely as this
+makes it appear: Every person trying to transmit is monitoring
+at the same time to make sure the message they transmit does appear in
+the "sum of differences". If you tried to transmit and any bit comes out
+wrong, it's that there was a collision. Only an odd number of completely
+identical messages transmitted at the same time would appear as one
+un-collided message. Of course, if you are only considering very short
+messages (like 1 bit answers to questions) you are looking for trouble...
+but if you are sending around longer messages similar to email, then
+un-noticed collisions are unlikely because messages include signatures
+and such.
+
+When you detected that your message collided, typically, you stop
+transmitting. You then decide on a random time delay, wait for that
+duration and try again if the way is clear (all zeroes carrier).
+
+Pierre.
+pierre@shell.portal.com
+
+
+
+

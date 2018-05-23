@@ -1,0 +1,49 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Tue, 30 Apr 1996 15:30:24 +0800
+To: steve@edmweb.com (Steve Reid)
+Subject: Re: PGP and pseudonyms
+In-Reply-To: <Pine.BSF.3.91.960429000141.11364B-100000@kirk.edmweb.com>
+Message-ID: <199604292347.SAA21881@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+	The solution is to store your keys on an encrypted filesystem,
+such as Cryptdisk or CFS.  Thus, possession of the keyrings does no
+good, because they're encrypted.  I've found that leaving PGP on the
+encrypted partition makes me less likely to get error messages like
+'keyring unavailable,' and I do get the obvious: pgp: Command not
+found
+
+
+Adam
+
+Steve Reid wrote:
+
+| > > I suppose a temporary fix would be to not use an ordinary PGP passphrase,
+| > > but rather encrypt the whole secring.pgp file. Decrypt it when you need
+| > > it, and be very careful to properly clean up when you're done.
+| > Huh?
+| > Just use multiple secring.pgp files, and toggle PGPPATH. What's the
+| > problem? 
+| 
+| You don't understand the problem we're concerned about... The problem is,
+| the "real" person is in posession of the pseudonym's secret PGP key, and 
+| PGP doesn't try to hide that fact.
+| 
+| Suppose John Doe is using the pseudonym "Evil Bastard". Naturally, he has
+| a PGP key for his Evil Bastard identity. Now suppose someone gets into his
+| computer. This person would be able to find Evil Bastard's secret key. 
+| Fortunately, the snoop would not be able to use the key, since it would be
+| encrypted with a secure PGP passphrase. However, they would still be able
+| to use the command "pgp -kvv secring.pgp", and that shows the key ID of
+| each secret key. 
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

@@ -1,0 +1,40 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Thu, 24 Feb 94 19:15:13 PST
+To: cypherpunks@toad.com
+Subject: Sending encrypted stuff to non-PGP users.
+Message-ID: <9402250314.AA14972@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+PGP already lets you do almost what you want.
+The pgp -c option does conventional crypto, using IDEA, and prompts you
+for a passphrase to encrypt it with.  (You can look at the code to see
+if it crunches it with MD5 or just uses the first 16 bytes / 128 bits.)
+To decrypt, you just do pgp -d filename.
+This lets anybody who has the PGP binaries on their machine decrypt it,
+even if they haven't bothered setting up public and private keys.
+If they use DOS, and either you're located in an encryption-tolerant country
+or they're located in your country, you can send them the binary if they want.
+
+If this is too big, you can shred apart the PGP source and do a version with
+just the IDEA decryption stuff, leaving out the patent-sensitive RSA code
+and most of the fancy help and file-handling stuff.
+
+Of course, if you *still* really want something that's widely executable
+for people who don't want to install crypto code on their machines,
+you could write yourself an IDEA-decryptor in PostScript (tm) and let them
+print the file on their laser printer.  A tad slow, but......
+(Yes, they'll need some way to input the passphrase; editing the file works
+but leaves traces around.  You'll think of something user-friendly if you're
+that perverse :-)
+
+		Bill
+# Bill Stewart  AT&T Global Information Solutions, aka NCR Corp
+# 6870 Koll Center Parkway, Pleasanton CA, 94566 Phone 1-510-484-6204 fax-6399
+# email bill.stewart@pleasantonca.ncr.com billstewart@attmail.com
+# ViaCrypt PGP Key IDs 384/C2AFCD 1024/9D6465
+
+
+
+

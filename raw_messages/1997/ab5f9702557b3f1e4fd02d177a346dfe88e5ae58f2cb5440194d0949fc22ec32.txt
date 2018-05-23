@@ -1,0 +1,101 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 31 Mar 1997 22:57:29 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: remailer spam throttle
+In-Reply-To: <199703281917.TAA03495@server.test.net>
+Message-ID: <3.0.1.32.19970331225622.00633a98@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:46 PM 3/28/97 EST, Dimitri wrote:
+>That's a good idea, but it'll take up a lot of disk space at the
+>machine running the remailer.  Right now, remailers that provide
+>latency don't keep an e-mail for more than about 12 hours. Once
+>you start keeping them around for a few days (a reasonable grace
+>period for a first-time user), it's a lot more disk space.
+
+Typical remailers carry maybe 100-500 messages/day;
+typical messages run 1-20KB unless they're pictures or warez.
+	(Yes, I'm making these numbers up....)
+That's about 1-10MB/day of traffic.  If you keep it 7 days,
+that's up to 70 MB storage, which you'd probably keep in /tmp
+to avoid backups and maybe avoid disk quotas.
+If you're running it on your own desktop machine, that's small;
+it's a bit large for a laptop, and whether it's reasonable for an
+ISP shell account depends a lot on your ISP's policies and disk quotas
+(and /tmp clearing policies.)
+
+>Suppose a LEA wants to search the computer hosting the remailer.
+>They come across a bunch of encrypted files.
+>The operator has to convince the LEA that they don't have the means
+>to decrypt the e-mails or even to figure out who they're from.
+>That just may be close to contempt of court. 
+
+But you don't have to explain it to the LEA - you may have to
+explain it to a court, but you get to bring along a lawyer.
+It's not contempt if you're telling the truth (that you can't decrypt it.)
+
+On the other hand, if you're using a two-part key (one sent to the
+recipient, one kept in transient memory on your machine plus in your head),
+you _do_ get to explain to the judge why you're refusing to testify,
+and why the ECPA protects the privacy of all the messages that
+may be revealed if you release your half of the key,
+and why you need sworn testimony from the LEAs about exactly which
+messages they've eavesdropped besides the ones addressed to their target,
+and about why giving them the key would violate the privacy of
+the recipients of those other messages so they can't have it,
+but you also refuse to decrypt the ones for the victim yourself,
+at least without a direct court order (as opposed to a mere warrant) -
+_then_ you'll have the opportunity to get close to contempt of court :-)
+
+>Say, you might be asked to 
+>explain how you generate the "random" keys so they can be recreated.
+
+If the "random" key includes a part you know as well as a part
+the user knows, and the user's part not only includes a hash of
+the message (so you need to know the contents of the message to
+recreate the session key) but also the usual things like the
+system clock to the microsecond and the contents of the rand pool,
+and maybe a few hits from /dev/random - then it's perfectly fine
+to tell them.
+
+>IMO, the 'net has changed from what it used to be a few years ago.
+>One can no longer send e-mail to an unknown recipient and hope that
+>they're willing to accept anonymous e-mail. 
+I'd agree, but from the first anonymous remailers open to the public
+there were people who didn't like receiving anonymous mail :-)
+
+>unless the remailer knows that the recipient took some positive
+>action to indicate that s/he has a clue (such as, added a key to a
+>keyserver), their anon mail should be immediately discarded and
+>they should instead get a note:
+
+That's an interesting approach - a bit extreme, but the main cypherpunks
+applications for anonymous remailers are things like whistleblowing
+(which can be posted to the net or emailed to people like Foo Inspectors
+who _ought_ to be willing to accept anonymous mail) and potential
+co-conspirators (who _ought_ to be willing to accept it if they're
+interested in co-conspiring), and of course yourself under various aliases.
+
+>> > Right now, there's a very large number of addresses in the key servers.
+>> > Instantly making them into a list of addresses that accept anon mail
+>> > will make it hard (hopefully infeasible) for the LEAs to investigate
+>> > everyone willing to accept anon e-mail as a suspect in sending it.
+
+A nice touch.
+
+>> To solve this problem you need to do a ping message, "please reply
+>> with this nonce to be blocked".
+Yep.
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

@@ -1,0 +1,59 @@
+From: jpp@markv.com
+Date: Fri, 9 Jul 93 23:15:55 PDT
+To: cypherpunks@toad.com
+Subject: Secure comm program, Sockets + LINK
+In-Reply-To: <9306090653.AA23961@triton.unm.edu>
+Message-ID: <9307092314.aa24145@hermix.markv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+  Supose you opened up a socket on the local machine.  And that you
+ran your usual telnet to connect to it.  The program listening on the
+local socket would be responsible for running one end of a 'LINK' like
+secure protocol.  It would connect to either the remote telnet socket,
+or a special purpose socket at the remote end.  There either you can
+use a pipe to a pty (standard telnet -> login shell -> LINK -> pty),
+or in a special socket through LINK out the telnet socket.  (There is
+an obvious extention with multiple hops through LINK-socket programs
+which should provide the same kind of anonymity that is provided by
+the CP remailers.)
+
+  In this way, the data passing over the (presumed unsecure) net
+connection (which might well be slip) is encrypted.  I am presuming
+that both the local and remote kernels are 'secure' enough that you
+would want to use them.
+
+  The upside is that you get to use 'comercial grade' telnet==comm
+programs.
+
+  Of course this stratagy is no use for folks who don't have sockets
+on both ends of the channel.  It is also likely to be obsoleted as
+soon as secure-ip gets out.  Some ambitious sole might want to try the
+analogous stratagy where a local pseudo-serial-device is created in
+software, thus again getting 'comercial grade' comm==telnet programs.
+
+  I sugest this stratagy, because it is one I am concidereing under MS
+Windows.  I have a telnet which is acceptable, I have slip, and I have
+the source to LINK, so...
+
+(local-telnet) --kernel--> (local-LINK-SOCKET) ----unsecure-network---+
+                                                                      |
+                  (remote-telnet) <--kernel-- (remote-LINK-SOCKET) <--+
+                                                                      |
+(remote-pty) <--kernel-- (remote-LINK) <--kernel-- (remote-telnet) <--+
+
+  Infact it would be nice to see some socket (perhaps 32?) become the
+standard for the secure telnet service.
+
+  Meanwhile, I did peruse the LINK source and am a little unhappy with
+the actual protocol used in setting up the secure channel.  It is only
+authenticated in one direction, rather than both (as I understand
+it).  I would like to see two way authentication, and (perhaps)
+Diffe-Helman key exchange.
+
+j'
+
+
+
+

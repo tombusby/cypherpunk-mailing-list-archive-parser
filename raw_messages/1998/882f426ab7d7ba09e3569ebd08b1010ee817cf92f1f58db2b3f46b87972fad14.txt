@@ -1,0 +1,51 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Tue, 24 Nov 1998 03:24:49 +0800
+To: fod@brd.ie
+Subject: how to insert plausibly deniable back-doors (Re: Is Open Source safe? [Linux Weekly News])
+In-Reply-To: <36595F29.C39B997A@brd.ie>
+Message-ID: <199811231837.SAA14774@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+I reckon an easy and plausibly deniable way to insert a backdoor is to
+purposefully make the software vulnerable to buffer overflow (the good
+old unchecked gets(3) type of bug, of which a new one is found weekly
+in sendmail).
+
+Then send the target an encrypted spam or whatever which their program
+decrypts, and in the process exploits the buffer overflow and allows
+you to execute arbitrary code, which you use to patch the binary, or
+install a keyboard sniffer or whatever.  Works better with DOS/windows
+-- with no protection -- you could format the disk if you wanted.
+unix a bit more tricky, but doable nonetheless -- enough OS security
+vulnerabilities to send along a program to obtain root, and then patch
+the binary.
+
+Nice and deniable too, if someone finds the vulnerability, you go
+`whoops!' and remove it.
+
+I spent a few hours examining pgp263i for buffer overflow
+opportunities, but found no exploitable opportunities in that quick
+search.
+
+Areas where things almost work from offerflow is fixed size buffer for
+storage of -----BEGIN BLAH----- lines, and I did wonder about the
+decompression code also -- quite hairy, and undefined behaviour may
+just be obtainable with the right carefully corrupted message sent in.
+
+This exercise ought to be done on pgp5.x and 6.x.  I have spent some
+time looking at the code in general -- yuck -- OO overdone, very hard
+to read due to the many many levels of inheritence and so on, you
+really need to run it under a debugger to even figure out what would
+happen half the time.  I think I preferred pgp263 for readability and
+clarity.  Werner Koch's GNUPG gets an A+ for coding clarity also --
+way better than either pgp2.x and pgp5.x.
+
+Adam
+
+
+
+

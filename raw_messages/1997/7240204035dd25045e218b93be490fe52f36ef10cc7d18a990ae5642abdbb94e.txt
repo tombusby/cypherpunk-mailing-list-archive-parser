@@ -1,0 +1,257 @@
+From: iang@CS.Berkeley.EDU (Ian Goldberg)
+Date: Wed, 13 Aug 1997 11:05:30 +0800
+To: cypherpunks@cyberpass.net
+Subject: sendhotmail, version 1.2
+In-Reply-To: <19970807192254.40.qmail@zipcon.net>
+Message-ID: <5sqrsc$c8k$1@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Here's version 1.2 of sendhotmail.
+
+Now the only configuration option in the perl script itself is the location
+of a config file.  That file should have the following form (you should change
+the pathnames of the local files, of course):
+
+---8<--- sample config file ---8<---
+## The URL from which to fetch the current list of active proxies
+Proxy List URL: http://www.publius.net/~remailer/proxy_list.txt
+
+## The file in which to cache the above list
+Proxy List Cache File: /home/iang/sendhotmail/proxy_list.txt
+
+## How many days to cache the proxy list
+Proxy List Cache Age: 1
+
+## The file containing the list of hotmail accounts
+Account List File: /home/iang/sendhotmail/accountlist
+---8<--- sample config file ---8<---
+
+Also, you'll need a list of valid hotmail account names/passwords in the
+account list file to which you pointed, above.  This file contains a number
+of lines, each of the form "login:password".  For example:
+
+---8<--- sample accountlist file ---8<---
+ldeliverer:xxxx
+---8<--- sample accountlist file ---8<---
+
+sendhotmail now picks a proxy and hotmail account at random.  I'll try to
+keep the proxy list relatively up-to-date, and you need to keep your
+account list up-to-date (in case Hotmail shuts one down, or something).
+
+The perl program will "die" if something unexpected happens (such as the
+proxy it chose didn't work, or the hotmail account was suddenly invalid).
+Just try running it again (future versions will likely automatically
+retry with different random choices for the proxy and the hotmail login).
+
+   - Ian
+
+#!/usr/bin/perl -w
+
+##
+## sendhotmail: pipe an RFC822 mail message into this, and it will send it
+##              out from a hotmail account via an HTTP proxy
+##
+## Program by Ian Goldberg <ian@cypherpunks.ca>
+##
+
+use LWP;
+
+$uadirect = new LWP::UserAgent;
+
+## The filename of the configuration file
+$configfile = '/home/iang/sendhotmail/config';
+
+## Read the config file
+open(CONFIG, $configfile) or die "Cannot open $configfile: $!\n";
+while(<CONFIG>) {
+    next if /^\s*$/o;
+    next if /^\s*\#/o;
+    next unless /^([^:]+):\s*(.*)$/o;
+    $value = $2;
+    $name = "\L$1\E";
+    $name =~ s/[^a-z0-9]//iog;
+    $config{$name} = $value;
+}
+close(CONFIG);
+
+## Get the proxy list
+$proxylisturl = new URI::URL ($config{'proxylisturl'} ||
+		'http://www.publius.net/~remailer/proxy_list.txt');
+if (defined $config{'proxylistcachefile'}) {
+    ## Check if the locally cached copy is new enough
+    $maxage = $config{'proxylistcacheage'} || 1;
+    if (! -e $config{'proxylistcachefile'} ||
+	    -M $config{'proxylistcachefile'} > $maxage) {
+	## Fetch a new copy
+	$request = new HTTP::Request('GET', $proxylisturl);
+	$request->header(Pragma => 'no-cache');
+	$response = $uadirect->request($request);
+	$body = $response->content;
+	$newfname = $config{'proxylistcachefile'}.".new.$$";
+	open(CACHE, ">$newfname") or die "Cannot write $newfname: $!\n";
+	print CACHE $body;
+	close(CACHE);
+	rename($newfname, $config{'proxylistcachefile'}) or
+	    die "Cannot rename $newfname: $!\n";
+    }
+    ## Read the proxy list
+    open(CACHE, $config{'proxylistcachefile'}) or
+	die "Cannot open $config{'proxylistcachefile'}: $!\n";
+    @proxylist = grep (s/\n// && /^[^#]/, <CACHE>);
+    close(CACHE);
+} else {
+    ## Just fetch from the net
+    $request = new HTTP::Request('GET', $proxylisturl);
+    $request->header(Pragma => 'no-cache');
+    $response = $uadirect->request($request);
+    @proxylist = grep (/^[^#]/, split("\n", $response->content));
+}
+
+@proxylist = ('secure.escape.ca:80') if $#proxylist == -1;
+
+## Get the account list
+if (defined $config{'accountlistfile'}) {
+    open(ACC, $config{'accountlistfile'}) or
+	die "Cannot open $config{'accountlistfile'}: $!\n";
+    @accountlist = grep (s/\n// && /^[^#]/, <ACC>);
+    close(ACC);
+}
+
+@accountlist = ('ldeliverer:xxxx') if $#accountlist == -1;
+
+sub escapetext {
+    my $t = $_[0];
+    $t =~ s/([\000-\037\200-\377\{\}\|\\\^\[\]\`\"\<\>\:\@\/\;\?\=\&\%\.\#])/"%".unpack('H2',$1)/eg;
+    $t =~ s/ /+/g;
+    $t;
+}
+
+sub getaddrs {
+    my @addrlist = split(/,\s*/, $_[0]);
+    my ($a, $ra);
+    my @r;
+
+    foreach $a (@addrlist) {
+	$ra = '';
+	if ($a =~ /\<(.*?)\>/) {
+	    $ra = $1;
+	} else {
+	    $a =~ s/\(.*?\)//g;
+	    $a =~ s/\".*?\"//g;
+	    $ra = $1 if $a =~ /(\S+\@\S+)/;
+	}
+	push (@r, $ra) if $ra ne '';
+    }
+    join(', ', @r);
+}
+
+## Parse the incoming mail.  We need to put the To, Cc, and Bcc headers
+## into a simple format that hotmail can understand.
+
+$header{'to'} = '';
+$header{'subject'} = '';
+$header{'cc'} = '';
+$header{'bcc'} = '';
+$curheader = '';
+while(<STDIN>) {
+    last if /^$/;
+    chomp;
+    if (/^\S/) {
+	## Start a new header
+	if (s/^To:\s*//io) {
+	    $curheader = 'to';
+	    $header{'to'} .= ', ' if $header{'to'} ne '';
+	} elsif (s/^Cc:\s*//io) {
+	    $curheader = 'cc';
+	    $header{'cc'} .= ', ' if $header{'cc'} ne '';
+	} elsif (s/^Bcc:\s*//io) {
+	    $curheader = 'bcc';
+	    $header{'bcc'} .= ', ' if $header{'bcc'} ne '';
+	} elsif (s/^Subject:\s*//io) {
+	    $curheader = 'subject';
+	} else {
+	    $curheader = '';
+	}
+    }
+    if ($curheader ne '') {
+	s/^\s*//;
+	$header{$curheader} .= ' ' if $header{$curheader} ne '';
+	$header{$curheader} .= $_;
+    }
+}
+$header{'to'} = &getaddrs($header{'to'});
+$header{'cc'} = &getaddrs($header{'cc'});
+$header{'bcc'} = &getaddrs($header{'bcc'});
+$msg = &escapetext(join('', <STDIN>));
+
+## Choose a proxy and account at random
+
+srand(time ^ $$);
+$proxy = $proxylist[int rand ($#proxylist+1)];
+($login, $passwd) =
+    $accountlist[int rand ($#accountlist+1)] =~ /^([^:]*):(.*)$/;
+
+## Begin hotmail-specific magic
+
+$ua = new LWP::UserAgent;
+$ua->proxy('http', "http://${proxy}/");
+
+$url = new URI::URL 'http://www.hotmail.com/cgi-bin/password.cgi';
+$request = new HTTP::Request('POST', $url);
+$request->header(Pragma => 'no-cache');
+$request->content("login=${login}&curmbox=ACTIVE");
+
+$response = $ua->request($request);
+$body = $response->content;
+$body =~ /\<\s*form\s+[^>]*action=\"(.*?)\"/io or die "Cannot log in";
+
+$url = new URI::URL $1, $url;
+$body = $';
+$body =~ s/\<\s*\/form\s*\>.*//;
+$body =~ /\<\s*input\s+[^>]*name=\"disk\"\s+value(=\"(.*?)\")?/io or die "Cannot give passwd";
+$disk = $2 || "";
+
+$request = new HTTP::Request('POST', $url);
+$request->header(Pragma => 'no-cache');
+$request->content("passwd=${passwd}&frames=no&disk=${disk}&curmbox=ACTIVE&login=${login}&js=no");
+$response = $ua->request($request);
+$body = $response->content;
+
+$body =~ /\<\s*area\s+[^>]*href=\"(\/cgi-bin\/compose.*?)\"/io or die "Cannot compose";
+$composeurl = new URI::URL $1, $url;
+$body =~ /\<\s*area\s+[^>]*href=\"(\/cgi-bin\/logout.*?)\"/io or die "Cannot compose";
+$logouturl = new URI::URL $1, $url;
+
+$request = new HTTP::Request('GET', $composeurl);
+$request->header(Pragma => 'no-cache');
+$response = $ua->request($request);
+$body = $response->content;
+
+$body =~ /\<\s*form\s+[^>]*action=\"(.*?)\".*?\>/io or die "Cannot send message";
+$url = new URI::URL $1, $composeurl;
+$body = $';
+$data = '';
+while(1) {
+    $body =~ /^\s*\<\s*input\s+type=\"?hidden\"?\s+name=\"(.*?)\"\s+value(=\"(.*?)\")?\s*\>/io or last;
+    $name = $1; $value = $3 || ""; $body = $';
+    $data .= $name."=".$value."&";
+}
+$data .= "to=$header{'to'}&subject=$header{'subject'}&cc=$header{'cc'}&bcc=$header{'bcc'}&body=${msg}&Send.x=1&Send.y=1";
+
+$request = new HTTP::Request('POST', $url);
+$request->header(Pragma => 'no-cache');
+$request->content($data);
+$response = $ua->request($request);
+$body = $response->content;
+
+$request = new HTTP::Request('GET', $logouturl);
+$request->header(Pragma => 'no-cache');
+$response = $ua->request($request);
+
+
+
+
+

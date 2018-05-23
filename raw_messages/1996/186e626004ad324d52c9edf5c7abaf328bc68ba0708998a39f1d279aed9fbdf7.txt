@@ -1,0 +1,95 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 24 May 1996 02:13:24 +0800
+To: cypherpunks@toad.com
+Subject: Re: An alternative to remailer shutdowns
+Message-ID: <199605231304.GAA13631@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 03:05 PM 5/21/96 -0500, you wrote:
+>To make it easy, how about a two part MIME message with the key and the 
+>PGP-encrypted message.  The message text would be directions on opening 
+>it up, and breaking the "seal", which constitutes acceptance of the 
+>remailer terms...
+
+Is that really any different than delivering the message rot-13?
+One of the reasons people object to getting anonymous email is spam;
+sending "You have mail; pick up message-id #2718281828 by midnight tonight!"
+encourages you to go to some effort to pick up the message,
+so you'll be even more annoyed if it's spam.  Similarly, for hate-mail.
+
+PROPOSAL
+--------
+On the other hand, a pickup system could reduce directed spam,
+if people generally don't pick up remailer pickups unless they recognize
+the messageid, leaving the remailer system to people who actually
+want to communicate with each other anonymously, which _had_ been one
+of the original goals of remailer systems.  
+
+Protocol support requirements:?  We could build in a fancy header,
+or we could just use the Subject: line, which many remailers know
+how to paste in anyway, and let the remailer do a messageid.
+Response mechanisms should probably be an email message to the remailer
+        ::
+        Deliver-Message: 2718281828
+A secondary concern is handling multi-casts - should the remailer 
+create one copy for each recipient (secure, easy, space-wasteful),
+or should it try to get fancy and keep the message for N recipients or D days?
+Two ways to implement the fancy version are to keep a flag that says
+not to delete the article upon receipt, while the normal behavior deletes it,
+or to use different keywords for picking up delete-after-pickup and shared
+messages.
+
+NEGATIVES
+---------
+The big negatives with this approach are that it doesn't support PGP-encrypted
+messages, since they don't easily fit into one line, while they also encourage
+people to forget that the header of their message will be delivered insecurely.
+But it's probably close enough for non-anti-government work.
+
+Of course, it also doesn't do chaining; that either needs to be implemented
+by recognizing well-known remailers and forwarding directly instead of
+pickup, or
+by using a standard message format, so other remailers could do pickup.
+It's probably worth doing both, to support other remailer types transparently
+and to allow remailers to use pickups without having to be well-known.
+Adding automatic remailer registration is easy, but requires care to avoid
+spammers
+falsely registering victim@wherever.com as a remailer and then spamming.
+
+SPAM POSSIBILITIES
+------------------
+That still allows 1-line spams like 
+        Subject: <Expletive Deleted>!  You <perjorative deleted><ethnic slur
+deleted>!
+or      Subject: Our new Remail-Spam(tm) system lets you fit 1015 characters
+in a Subject:                       line, just like this one, so your whole
+message can fit through those
+                anti-marketing filters!  You can MAKE M0NEY REAL FAST
+building your downline -
+                send e$1 of Bank Foo ecash to the top three addresses in the
+Cc: line
+but at least it cuts down on the annoyance level.  
+
+It also supports messages like
+        Subject: Secrets of the Scientologists for Sale!  Pick up message for 
+                free sample and price list!  Operate your own Thetan today!
+which permit direct-e-mail spams, or as some people prefer to call them,
+marketing opportunities.  An interesting security/legality wrinkle is that
+if somebody is trying to multicast-publish unencrypted contraband data,
+it's sitting around in the mail-pickup spool, it can be seized by Bad Guys /
+courts / sheriffs / etc.  As with most remailers, there's also a risk that
+outgoing unicast mail could be seized while in the spool, which is higher
+for a pickup system because the data may be in the spool longer.
+
+
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+# goodtimes signature virus innoculation
+
+
+
+
+
+

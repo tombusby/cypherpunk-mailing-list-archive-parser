@@ -1,0 +1,48 @@
+From: uk1o@rz.uni-karlsruhe.de
+Date: Wed, 15 Oct 1997 08:57:24 -0700 (PDT)
+To: patton@sysnet.net (Matthew Patton)
+Subject: Re: ipnat problems continued
+In-Reply-To: <l03110706b06b487e1e49@[206.142.16.66]>
+Message-ID: <199710151308.HAA03204@mroe.cs.colorado.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello!
+
+According to Matthew Patton:
+> I've tried varios purmutations of the map rules to no positive effect.
+> map ppp0 192.168.1.0/24 -> 206.142.xx.yy/32 portmap tcp/udp 10000:20000
+> repeat except substitute   ^^^^^^^^^^^^^ with 0.0.0.0 or ppp0. Neither works.
+
+> I ran tcpdump on ppp0 on the gateway and sure enough, the box is sending
+> down the modem link 192.168.1.10 (the particular LAN host trying to
+> initiate an outside connection) as the source IP. Now if everything were
+> correct shouldn't it be the IP addr of the local end of the PPP link as
+> hosted on the gateway box? (ie 206.142.xx.yy)
+
+> ipnat -l has never once shown any indication of active connections.
+> Either nat is seriosly not working under stock v2.1 (anyone prove it does
+> work?) or there are some undocumented and not exactly obvios dependencies
+> with regard to kernel options.
+
+Do you have
+  option IPFILTER
+and perhaps
+  option IPFILTER_LOG
+set?
+
+> [...]
+
+> BTW, how come kernal option IPNAT isn't documented ANYWHERE? It's not even
+> in the ALL file.
+
+Because it's integrated with the IPFILTER (option IPFILTER).
+
+Besides: ipnat(1), ipnat(4), ipnat(5)...
+
+Regards, Felix.
+
+
+
+

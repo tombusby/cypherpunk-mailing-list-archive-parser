@@ -1,0 +1,133 @@
+From: nobody@shell.portal.com
+Date: Sat, 1 Oct 94 15:15:20 PDT
+To: cypherpunks@toad.com
+Subject: FWD: Safe-Tcl meets PGP!!!!
+Message-ID: <199410012214.PAA14345@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This is from the Safe-Tcl list, which discusses a variant on tcl which
+provides a "safe" subset of capabilities appropriate for letting incoming
+mail bring in programs which can run autonomously on your computer.  I
+mentioned this a few weeks ago and I've been on the list, although I haven't
+looked at it in much detail.   Nathaniel Borenstein is very active in
+the email community so this may turn out to be an influential technology.
+He is using PGP to authenticate incoming messages and grant them more
+privileges as appropriate:
+
+> From hfinney@shell.portal.com Sat Oct  1 13:30:26 1994
+> Date: Sat,  1 Oct 1994 15:44:46 -0400 (EDT)
+> From: Nathaniel Borenstein <nsb@nsb.fv.com>
+> Subject: Safe-Tcl meets PGP!!!!
+> Cc: Marshall Rose <mrose@dbc.mtview.ca.us>,
+>         John Ousterhout <John.Ousterhout@eng.sun.com>,
+>         Philip Zimmermann <prz@acm.org>,
+>         Trent Jaeger <jaegert@engin.umich.edu>
+> 
+> For over a year now, people have been asking me about extending safe-tcl
+> to make use of digital signatures so that it can grant more powerful
+> capabilities to programs from trusted senders.  My position all along
+> has been "the hooks are there, but nobody has put all the pieces
+> together." 
+> 
+> Today, after a message from Trent Jaeger that got me to thinking about
+> this again, I took a new look at the situation, the first time I'd done
+> so since becoming a regular PGP user.  It turns out -- amazingly enough
+> -- that integrating these technologies was almost trivial!  I am happy
+> to report that I now have integrated safe-tcl, pgp, the Internet Draft
+> on MIME/PGP, and metamail, to do "the right thing".  Best of all -- you
+> don't need to compile anything, the "hooks" all work. 
+> 
+> With this hack -- which works for all metamail-based mail readers, and
+> which I expect will be easy to replicate for mhn and others -- I believe
+> that Safe-Tcl now has the last bit of functionality where Telescript was
+> previously superior.  We now have a completely open platform for sending
+> around programs with differential capabilities dependent on the level of
+> trust that the receiver has in the sender. 
+> 
+> Getting this working is trivial.  The assumption here is that you have a
+> message with a content-type of "application/pgp; format=mime" which,
+> when after its signature is checked (and after it is decrypted if
+> necessary) contains a MIME entity with a content-type of either
+> "application/safe-tcl" or "multipart/enabled-mail" (or some other
+> multipart, with one of these two types nested inside it somewhere).  The
+> basic scheme is to make the PGP-smart process put signature information
+> into an environment variable, PGP_SIGNATURE, which is then checked by
+> the safe-tcl interpreter.  Obviously, if you implement this, you want to
+> make sure that you don't usually have PGP_SIGNATURE set in the process
+> you use to read your mail! 
+> 
+> Anyway, to make this work there are two steps: 
+> 
+> 1.  In your .safetclrc file, add the following: 
+> 
+> catch { 
+>     global SafeTcl_Services 
+>     set SafeTcl_Services(authentication) $env(PGP_SIGNATURE) 
+> } 
+> 
+> This will ensure that SafeTcl_Services is set properly if the
+> PGP_SIGNATURE variable is set. 
+> 
+> 2.  Configure your mail reading tool so that it understands
+> application/pgp and text/pgp, and sets the PGP_SIGNATURE variable.  For
+> metamail-based systems, this consists of adding the following mailcap
+> lines: 
+> 
+> text/pgp; decode-pgp %s ; needsterminal 
+> application/pgp; decode-pgp %s  mime; needsterminal; \ 
+>     test=test %{format}  = mime 
+> application/pgp; decode-pgp %s ; needsterminal 
+> 
+> and then installing the "decode-pgp" script on your search path.  That
+> script is a twelve-line shell script: 
+> 
+> #!/bin/csh -f 
+> set viewprog=cat 
+> if ($#argv > 1) then 
+>     set viewprog=metamail 
+> endif 
+> set prog="pgp" 
+> set infile=$1 
+> pgp $1 -o /tmp/outputfile.$$ |& tee /tmp/shotputfile.$$ 
+> set PS=`grep "Good signature" /tmp/shotputfile.$$ | sed -e "s/Good
+> signature from user//"` 
+> setenv PGP_SIGNATURE "$PS" 
+> $viewprog /tmp/outputfile.$$ 
+> rm /tmp/*putfile.$$ 
+> 
+> I think that's all you need to do!  If I'd known it was going to be this
+> simple I would have done it months ago!  
+> 
+> As an example of how to USE this facility, you can put the following
+> code in your .safetclrc: 
+> 
+> proc readsharedfile {nm} { 
+>     set fd [open $nm r] 
+>     set result [read $fd] 
+>     close $fd 
+>     return $result 
+> } 
+> catch { 
+>   if {[regexp "nsb@nsb.fv.com" $SafeTcl_Services(authentication)]} { 
+>       declareharmless readsharedfile 
+>   } 
+> } 
+> 
+> In this case, if you get a safe-tcl program that is signed (and,
+> optionally, encrypted) by ME, and I'm on your keyring, it will be able
+> to read any file YOU can read.  Otherwise, the readsahredfile procedure
+> will be undefined in the restricted interpreter. 
+> 
+> Pretty cool, eh?  I encourage folks to try it out.  -- Nathaniel 
+> 
+> PS -- Assuming no problems turn up, I will probably put "decode-pgp" and
+> the relevant mailcap entries in the next metamail release, and will
+> build the few lines that set SafeTcl_Services based on PGP_SIGNATURE
+> into the stuff done automatically in the next safe-tcl release.  --
+> Nathaniel 
+
+
+
+

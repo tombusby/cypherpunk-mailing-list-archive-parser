@@ -1,0 +1,68 @@
+From: Eric Messick <eric@parallax.com>
+Date: Fri, 15 Jan 93 01:40:12 PST
+To: cypherpunks@toad.com
+Subject: Re: Details on return envelopes (padding)
+Message-ID: <9301150753.AA29918@parallax.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal writes:
+> I did spot one possible problem.  Remailer &V sends to &W an address
+> field that looks like:
+> 
+> Addr: w(B), w(Sw, Qw, C, &X, x(C), x(...), pad)
+> 
+> but I don't think &V has enough information to create the 2nd item here.
+> The reason for the A, B, etc. keys is, I think, to allow new padding to
+> be done as the message gets passed between each pair of remailers.
+> I think that may need to be used here as well.  &V can't put padding into
+> the w(Sw,...) block.
+
+It may not be at all obvious or intuitive, but &V *CAN* put padding
+into the w(...) block.  I'm no longer trying to do this (see my
+previous posting), but it could still be useful in some situations, so
+I'll try to explain it more clearly.
+
+PGP uses binary structures for all of this, but I'm going to pretend
+that it's all ascii, just so we can see what's going on easier.  That
+block w(...) looks something like this:
+
+CTB: RSA			<-- that's *C*ypher *T*ype *B*yte
+Length: 12345 bytes
+Key_ID: w
+IDEA_key: RSA(w, random_key)
+CTB: IDEA
+Length: 12315
+	<random initialization bytes and cypher check>
+	CTB: Plain Text
+	Length: 12300
+	Here we have 12300 characters.  Note that all of the lines
+	that are indented are encrypted with random_key using
+	the IDEA cypher.
+	...End of the encrypted text.
+
+
+To add padding to this, simply append some cryptographically strong
+random bytes to the end, and adjust the unencrypted lengths by that
+much.  No one can tell that your new bogus lengths don't match the
+length on the plaintext packet without actually being able to see the
+plaintext packet length field.  The decryptor believes the plaintext
+packet length, and automatically throws away the bogus bytes that were
+decrypted.
+
+While writing this, I realized that when I tested this, I may have
+only changed the outermost length.  It is possible (but I think it is
+highly unlikely) that PGP would get sick if you changed the second
+length value.  Since I no longer need to do this, I don't have any
+incentive to check this out again.  It's not that difficult, but I
+hate editing binary files...
+
+
+-eric messick
+
+
+
+
+

@@ -1,0 +1,123 @@
+From: Mike Duvos <enoch@zipcon.net>
+Date: Tue, 24 Jun 1997 09:24:08 +0800
+To: coderpunks@toad.com
+Subject: Re: A better DES challenge
+In-Reply-To: <199706232004.QAA11706@nsa.research.att.com>
+Message-ID: <199706240115.SAA07994@zipcon.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Matt Blaze <mab@research.att.com> writes:
+
+ > I'm not a big fan of cipher ``challenges'' in which a prize
+ > is awarded to the first person who discovers the key that
+ > produces some plaintext/ciphertext pair.  The effort
+ > required to produce a solution tends to grossly overstate
+ > the actual difficulty of searching the keyspace, since
+ > invariably the winner uses the idle time on general-purpose
+ > computers, which are poorly-optimized for use as keysearch
+ > engines.
+
+Really.  It appears that the DESCHALL frivolities actually
+enhanced the reputation of DES, fluffy press releases by C2 and
+Security Dynamics notwithstanding.
+
+ > A more basic problem with challenges is that even when they
+ > are solved they don't really provide convincing proof that
+ > the keyspace was actually searched.  For example, in the
+ > recent 56-bit RSA DES challenge, RSA has no way to prove
+ > that it didn't ``leak'' some hint about the solution to the
+ > winner. (I hasten to point out that I'm not suggesting that
+ > anything like this actually happened, only that a skeptic
+ > might raise the possibility, against which RSA has no real
+ > way to defend itself).
+
+This is a problem which I have been pondering in recent days. How
+would someone in the future demonstrate that they have broken
+DES, now that the RSA DES Challenge is behind us, and trusted
+parties offering to generate and keep secret ciphertext/plaintext
+pairs are no where to be found.
+
+It would seem to me that the best way to demonstrate that one has
+broken a block cipher without releasing ones algorithm would be
+to generate and publish some key collisions, in which a
+ciphertext/plaintext pair is mapped by more than one key.
+
+If one encrypts plaintext with a known key to generate
+ciphertext, cryptanalysis of the resulting ciphertext/plaintext
+pair for a key other than the one used to generate it should be
+comparable in difficulty to cryptanalysis of a
+ciphertext/plaintext pair provided by a trusted third party.
+
+The ability to generate such collisions at will clearly
+demonstrates that one can calculate keys from
+ciphertext/plaintext pairs.
+
+ > A better challenge, then, would be one in which even the
+ > challenger doesn't know the solution in advance (or would
+ > have had to itself search the keyspace or otherwise
+ > cryptanalyze the cipher in order to find it).  For example,
+ > a challenge for a one-way collision-intractable hash
+ > function could simply ask for an example of a collision, or
+ > could ask for the inversion of some well-structured output
+ > (such as all zeros).
+
+A step in the right direction.  We should develop ways of
+demonstrating cryptanalysis which do not require one person to
+solve a problem provided by another person without the
+possibility of collusion.
+
+[snip]
+
+ > Recall that there are 2^56 DES keys that each select a
+ > different permutation of the 2^64 codebook entries.  We
+ > expect that there's about a 1/2^8 chance that there exists a
+ > DES key that converts any given plaintext block to any given
+ > ciphertext block.
+
+ > My challenge is to find a key such that a ciphertext block
+ > of the form <XXXXXXXX> decrypts to a plaintext block of the
+ > form <YYYYYYYY>, where X and Y represent any fixed eight-bit
+ > byte value repeated across each of the eight bytes of the
+ > block.
+
+ > Observe that I'm actually posing 2^16 different challenge
+ > plaintext/ciphertext pairs, each with about 1/2^8
+ > probability of having a solution, where groups of 2^8
+ > challenges can be searched for simultaneously.  Each
+ > challenge may have no solution key, exactly one solution
+ > key, or more than one solution key, but it is very likely
+ > that there is at least one solution key to at least one of
+ > them (in fact, one could expect to find about 2^8 solutions
+ > overall, assuming DES produces good pseudorandom
+ > permutations).
+
+I like this.  It is somewhat cleaner than the key collision trick
+suggested above.
+
+ > I will award a grand prize of 56 bits (seven (7) US
+ > dollars) to the first person to provide a solution key. (The
+ > challenge ends when first key is found).  While the prize
+ > money is admittedly trivial (this is out of my own pocket,
+ > after all), I hope it will serve as ``seed money'' that
+ > encourages others to add their own prizes to a growing pot.
+
+Let me know when the money reaches $10k.
+
+ > Of course, I cannot be completely sure whether there exist
+ > any solutions at all.
+
+If there were to be no solutions at all, given the alleged
+pseudorandomness of DES, this would probably be an even more
+interesting result than solving the problem posed.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     enoch@zipcon.com   $    via Finger                       $
+
+
+
+
+

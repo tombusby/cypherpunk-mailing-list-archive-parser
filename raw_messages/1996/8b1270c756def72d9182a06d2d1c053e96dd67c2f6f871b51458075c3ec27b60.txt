@@ -1,0 +1,57 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 13 Mar 1996 17:05:39 +0800
+To: cypherpunks@toad.com
+Subject: Re: Remailer passphrases
+Message-ID: <199603130737.XAA22807@ix15.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Bill Frantz writes:
+>> One of the reasons classical (government) crypto users change keys
+>> frequently is to minimize the amount of data compromised by a broken key. 
+>> We keep hearing about NSA decrypting 20 year old cyphertext and showing
+>> more of the workings of the atomic spy rings operating in the 40s and 50s. 
+
+The NSA's decryption of old cyphertext that's been publicized, other than
+World War II cyphers such as Enigma and Purple, has primarily been
+Russian "One Time Pads".  OTPs are perfectly secret - if they're made with
+real random numbers and only used once, which the Russians were sloppy about.
+Minimizing exposure is good.
+
+perry@piermont.com replied
+>Signed Diffie-Hellman key exchanges have the property known as
+>"Perfect Forward Secrecy". Even if the opponent gets your public keys
+>it still will not decrypt any traffic for him at all -- it just lets
+>him pretend to be you. Thats one reason why protocols like Photuris
+>and Oakley use the technique.
+
+DH key exchange is really only Exponentially Good Forward Secrecy,
+and in its primary use (exchanging keys for symmetric-key algorithms)
+the system is at best Good Enough Forward Secrecy.  The difference
+between exponentially good and perfect is exponentially small,
+which is fine if your keys are long enough.  On the other hand,
+cracking a symmetric-key algorithm is generally the weak link,
+unless you're using 112-bit or better secret keys, and even 112s
+might be crackable during the lifetime of the current universe.
+
+How much information leaks if you reveal (say) 128 bits of a 
+1024-bit Diffie-Hellman key?  Does it tell you anything at all
+about any of the remaining 896 bits?  Is it safe to use 8 slices
+of the 1024-bit key if 7 are revealed?   Does RSA have the same
+problem?  This is partly an efficiency hack (cutting the number
+of big slow calculations by 8) and partly a question of other
+uses one might make of the bits, such as stealthing PGP headers.
+#--
+#			Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215 pager 408-787-1281
+# "At year's end, however, new government limits on Internet access threatened
+# to halt the growth of Internet use.  [...] Government control of news media 
+# generally continues to depend on self-censorship to regulate political and
+# social content, but the authorities also consistently penalize those who
+# exceed the permissable."  - US government statement on China...
+
+
+
+
+

@@ -1,0 +1,34 @@
+From: WinSock Remailer <winsock@rigel.cyberpass.net>
+Date: Sun, 19 Jan 1997 22:12:49 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Sandy and the Doc
+Message-ID: <199701200612.WAA01713@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bill Frantz <frantz@netcom.com> writes:
+
+> I hope if such a system is set up, people who use it will realize that
+> email is not 100% reliable.  Just because algebra.com sent mail to
+> toad.com, doesn't mean that toad.com actually received it.  A small
+> fraction of a percent of these messages will be lost.
+
+Failing something catastrophic like a disk failure or a host down for
+more than a week, this should not be the case.  Almost every site
+running sendmail has the Os ("SuperSafe") option set.  That means
+sendmail will not respond to a "." at the end of a DATA command with
+SMTP code 250 until it has written the incoming message (and queue
+info) to disk and called fsync.  Thus, you may get 2 copies of a
+message, but mail messages should not just disappear regularly at all,
+even if the network goes down or a machine crashes.
+
+Non-sendmail MTA's tend to be even more strict about this, not even
+allowing this behavior to be disabled.
+
+
+
+
+
+

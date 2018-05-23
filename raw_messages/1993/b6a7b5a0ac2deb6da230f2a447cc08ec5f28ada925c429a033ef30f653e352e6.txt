@@ -1,0 +1,57 @@
+From: Mike Johnson <exabyte!smtplink!mikej@uunet.UU.NET>
+Date: Fri, 26 Feb 93 01:20:53 PST
+To: newsham@wiliki.eng.hawaii.edu
+Subject: scheme
+Message-ID: <9302251625.A02767@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> This encryption scheme uses XOR to encrypt data 1 character
+> at a time.  Because of this it is suitable for protocols
+> where you need to send single bytes (or less) at a time.
+> Examples of this would be interactive ascii.  Also it
+> is easily applicable to crippled lines like 7 bit lines.
+> This is because if the plaintext is 7 bits you can send
+> just the 7 bits after the XOR.  Even more general you can
+> use it to encrypt any size at a time, down to single bits
+> if you just have 1 bit to send immediately and dont want
+> to wait for more data to become applicable.
+
+> Ok.  So what are its disavantages?  Syncronization, as
+> soon as synchronization is gone thats it, its all over.  Each
+> block of 'pad' is generated from previous plaintext,  if you
+> cant figure out the previous plaintext you are lost.
+>
+> Notice it uses a hash() function,  this could be anything, ie
+> DES,  or perhaps a one way function (no unhash() is ever needed).
+> The algorithm is fairly simple, the beginning is a bit wierd
+> and could have been done several ways.  The first 8 bits in
+> this implementation are used for synchronization.
+> ...(source code omitted)
+
+If you use DES, you are just using a variation of DES in cipher
+block chaining mode.  If you use some other hash function, your
+cipher is as weak as the hash function.  If you use key bytes
+directly to XOR with, and never reuse key material, you have a
+variation of the one time pad (which is good, but takes LOTS of
+key material).  If you reuse key material when XORing it directly,
+you have a weak cipher vulnerable to a known plain text attack.
+
+There is nothing really new here...
+
+For more info on this, if you have a PC and a modem, you can call
+a BBS at 303-938-9654, download CRYPTMPJ.ZIP, and read THESIS.DOC
+in that file.  Perhaps one of you could put this file at an ftp
+site for wider distribution?  The stuff in that file about data
+compression is kind of out of date, but the cryptographic
+information (including some source code) might be of interest to
+some others in this group.
+
+Mike Johnson
+mikej@exabyte.com
+
+
+
+
+

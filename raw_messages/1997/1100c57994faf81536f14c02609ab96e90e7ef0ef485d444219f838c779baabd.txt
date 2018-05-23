@@ -1,0 +1,41 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Wed, 24 Dec 1997 13:32:28 +0800
+To: David Honig <cypherpunks@Algebra.COM>
+Subject: Re: Question on CFB variant with c[i-N]
+In-Reply-To: <3.0.5.32.19971222091025.007aee10@otc.net>
+Message-ID: <3.0.3.32.19971223200714.00700484@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>>>>>              cfb    Ciphertext feeback mode
+>>>>>                     c[i] = f1(K, c[i-1]) ^ p[i]
+>>>>>                     p[i] = f1(K, c[i-1]) ^ c[i]
+
+>>Suppose instead of c[i-1] you use c[i-N] where N is say 10.
+
+> Wouldn't the size of your IV have to grow as N grows?
+
+Depends on your threat model; you could use the same IV for all c[i<1].
+The main reason to do that sort of interleave is to simplify
+parallelizing the hardware for speed while retaining
+approximately the same security as regular CFB.
+
+You might have some minor security gain because there's less
+correlation between p[i] and p[i-N] than p[i-1],
+so it's harder to guess things that might help,
+but you might have a minor security loss because you're
+only mushing together 1/N as much stuff, and you're
+more likely to implement something incorrectly :-)
+
+
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

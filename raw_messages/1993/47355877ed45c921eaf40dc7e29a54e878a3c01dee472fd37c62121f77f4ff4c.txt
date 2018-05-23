@@ -1,0 +1,50 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 28 Oct 93 22:22:43 PDT
+To: cypherpunks@toad.com
+Subject: Re: Paranoid
+In-Reply-To: <199310290500.AA09296@Menudo.UH.EDU>
+Message-ID: <9310290522.AA11750@toxicwaste.MEDIA.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Does PGP compress the text before it is encoded?
+
+Yes.  It uses the zip algorithm (I think) as its compression engine.
+
+> Does this allow a cracker to search for the compression's signature
+> after every attempt?
+
+Every attempt?  You mean every attempt at encryption?  Well, yes and
+no.  Yes, there is a semi-known plaintext inside the encrypted data.
+It is unknown if this can help an attacker.
+
+> Is there a checksum that a cracker could use to test for success after
+> every attempt?
+
+The only checksums are the ASCII-armor checksums, and the MD5 hash
+which is inside the RSA signature.  Other than these, there are no
+checksums.  Neither of these can be used to aid an attacker.
+
+> Would using UUENCODE on the text and deleting the "begin/end" lines
+> before encrypting it have a synergistic effect on the difficulty of
+> cracking a secret key from that particular message?
+
+This would give an attacker even MORE of a plaintext attack, since
+this will create lines of 64 characters, starting with an "M", which
+gives a regular pattern to the plaintext.
+
+> Is there an easy way to generate keys larger than 1024 bits?
+
+No.  However given current technology and assuming no significant
+breakthroughs in factoring algorithms, a 1024 bit key wont be broken
+for over a million year (significantly more, if I recall).
+
+Hope this helps.
+
+-derek
+
+
+
+
+

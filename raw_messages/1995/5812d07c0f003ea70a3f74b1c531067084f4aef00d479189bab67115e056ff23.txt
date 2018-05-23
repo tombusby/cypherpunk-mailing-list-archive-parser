@@ -1,0 +1,77 @@
+From: monty.harder@famend.com (MONTY HARDER)
+Date: Thu, 10 Aug 95 20:38:33 PDT
+To: CYPHERPUNKS@toad.com
+Subject: If only Vxxxx Fxxxxx had used encryption....
+Message-ID: <8AEE4DC.0003000301.uuout@famend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ C'punks:
+
+                [Wait!  This =is= crypto-related!  I promise!]
+
+  Heard on the news today that Bernard Nussbaum said he had done
+"nothing irregular" in going through Vince Foster's effects immediately
+after his demise, in order to secure "sensitive information".
+Presumably, Nussbaum's contention is that some of the information in
+Foster's possession was covered by attorney-client privelege, and
+therefore the Authorities had no right to take it into possession.
+
+                 (IANAL-Comments from those who are?)
+
+  Anyway, this case got me to thinking: If Vince had kept all his
+"sensitive" things encrypted, and never written down the passphrase,
+then the data would effectively have died with him. In this case, lack
+of key escrow is not a bug, but a feature!
+
+  Then I thought some more - that the whole Key Escrow thing needs to be
+rethought: Instead of escrowing the private key, we need to develop
+better key management techniques for multiple recipients.
+
+  For example, if Alice is an attorney representing Carol Client, Bob
+and Ray are partners in Alice's firm, which uses escrow agent E; and A,
+B, C, R and E are the public keys (and A'... are the private keys) of
+our dramatis personae:
+
+  Carol sends her message to Alice as usual, generating the session key
+S, and encrypting it S'=A(S).
+
+  Whenever Alice recieves a message, after decrypting the session key
+[S= A'(S')] she adds to it an additional S"= E( B(S) ) and S"'= E( R(S)
+) or some other construct which involving Shamir Sharing or whatever.
+The details of the protocol(s) can be worked out after the basic premise:
+
+       There is no reason for anyone to give up the "master key" to all
+     of their business, when the minimal overhead in storage space for
+     adding an escrowed =session= key will suffice.
+
+  PGP needs a mechanism to handle "detatched session keys", so that our
+escrow agent can, upon notification by Bob and Ray that Alice has [died
+| left the firm], process the whole package of S" and S"' back into B(S)
+and R(S), so that Bob and Ray can carry on their work. Just as with a
+detatched signature certificate going to a notary, the detatched session
+key does not give the escrow agent any knowledge of the content of the
+message itself.
+
+  Another option is to put the whole creation of S" and S"' on to Carol,
+which requires a public key that specifies E and {B, R}, as well as the
+particular escrow protocol involved. This could be tricky to implement.
+
+  Also, Carol needs to be able to specify to Alice that she is retaining
+a copy of the communication, encrypted to self, and therefore Alice need
+not escrow the session key for this particular message.
+
+
+  Comments?
+
+
+
+ * "All authority belongs to the people"
+-Thomas Jefferson
+---
+ * Monster@FAmend.Com *    
+
+
+
+

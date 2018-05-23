@@ -1,0 +1,30 @@
+From: jp@jep.pld.ttu.ee (Jyri Poldre)
+Date: Mon, 20 Jun 94 08:28:12 PDT
+To: cypherpunks@toad.com
+Subject: PC RND generator based on physical  random
+Message-ID: <9406201523.AA21364@jep.pld.ttu.ee>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+What you need is natural source of random. I have used clocking
+higher speed quarz generator with
+lower speed (10 x is ok ) unstable frequency oscillator  
+and then taken parity of the result (4-5 bits is enough for most situations, depends of cource on distribution of LF generator values) . Variable Freq. 
+oscillator  is RC and higher quarz. Now as we are not willing to 
+give up card slot (and PCB board area ands so on ) for just RND generator
+maybe it is good to find existing source of random in PC itself. 
+So - do we have RC generator in PC? YES. We have 4 of them, to be exact.
+Most of us do not make much use of these ports, because most games do not support them correctly. But anyhow, joystick ports are there. IO card costs 10$ if you have not already got one. So I propose scheme for PC RND generator:
+1. Make LF generator using Joystick ports
+2. Use HF oscilltor of PC clock ( Program Execution, if any interrupts occur,
+   it is no problem).
+3. Find out the distribution of LF oscillator and calculate the needed Parity
+   filter size. 
+   ( By parity filter I concider parity values of N last bits)
+4. Use it    
+
+
+
+

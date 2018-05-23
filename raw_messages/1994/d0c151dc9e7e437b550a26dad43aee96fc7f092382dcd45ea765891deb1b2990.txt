@@ -1,0 +1,50 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 7 Sep 94 08:28:55 PDT
+To: cypherpunks@toad.com
+Subject: Re: AIDs testing and privacy
+In-Reply-To: <199409070814.DAA23167@chaos.bsu.edu>
+Message-ID: <199409071528.IAA20160@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim Hart <hart@chaos.bsu.edu> writes:
+>Challenge: is a crypto protocol possible with the following 
+>properties: the doctor writes and signs the prescription,
+>and it is not transferable, but the patient doesn't need to
+>show ID to the pharmacist to fill the prescription?
+>I don't want pharmacists, and whoever else they share the info
+>with (insurance companies?  investigators? potential blackmailers?), 
+>keeping track of what drugs I take.
+
+Let me point out that nothing stops you from filling the prescription
+and then giving the drugs to someone else, so it would seem that a doctor
+who would be willing to cooperate in any such protocol should also be
+willing to make the prescription out to a pseudonym.
+
+Chaum's "blinded credential" system is intended to solve exactly this kind
+of problem, but it requires an extensive infrastructure.  There has to be
+an agency where you physically identify yourself.  It doesn't have to know
+anything about you other than some physical ID like fingerprints.  You and
+it cooperate to create pseudonyms of various classes, for example, a
+"go to the doctor" pseudonym, and a "go to the pharmacy" pseudonym.  These
+pseudonyms have a certain mathematical relationship which allows you to
+re-blind credentials written to one pseudonym to apply to any other.  But
+the agency uses your physical ID to make sure you only get one pseudonym of
+each kind.
+
+So, when the doctor gives you a prescription, that is a credential applied
+to your "go to the doctor" pseudonym.  (You can of course also reveal your
+real name to the doctor if you want.)  Then you show it at the pharmacy 
+using your "go to the pharmacy" pseudonym.  The credential can only be shown
+on this one pseudonym at the pharamacy, but it is unlinkable to the one
+you got at the doctor's.  (It would be possible to encode information in
+the credential about which doctor wrote it, which would help track abuse,
+although that would obviously make it easier to link up your pharmacy and
+doctor visits.)
+
+Hal
+
+
+
+

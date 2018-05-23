@@ -1,0 +1,73 @@
+From: Vincent.Cate@FURMINT.NECTAR.CS.CMU.EDU
+Date: Fri, 3 Jun 94 01:47:55 PDT
+To: cypherpunks@toad.com
+Subject: Mosaic / CEB / CypherEssay Archive and List
+Message-ID: <770631019/vac@FURMINT.NECTAR.CS.CMU.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I think that Mosaic pages are the way to go these days.  These
+are not hard to write and they are very nice to use.  For some 
+interesting examples of what can be done, check out some of the 
+existing cypherpunk mosaic pages:
+
+   ftp://soda.berkeley.edu/pub/cypherpunks/Home.html
+   ftp://ftp.u.washington.edu/public/phantom/cpunk/README.html
+   http://www.quadralay.com/www/Crypt/Crypt.html
+   http://digicash.support.nl
+   ftp://furmint.nectar.cs.cmu.edu/security/README.html
+   http://pmip.maricopa.edu/crypt/cypherpunks
+
+I think it would be good to have a "cypherpunks-essay" mailing list
+that was not moderated but people only sent essays that they thought
+were good enough to be archived.  For starters, people can just
+CC: mail to "vac+cypheressay" and it will get dropped into a separate
+file in:
+
+ ftp://furmint.nectar.cs.cmu.edu/security/cypheressay
+
+My "vac+cypheressay" was done with one line in my .maildelivery
+and a short shell script I call "save-numbered".  Both are below
+(note the A.I. methods used to moderate mail).
+
+Having a "cypherpunks-essay" mailing list on the same machine as 
+"cypherpunks" could be nice for folks who want a lower volume group.
+Could have mail to it also go to cypherpunks, and Reply-To: also 
+go to cypherpunks.  
+
+   -- Vince
+
+
+Addr vac+cypheressay  pipe R /usr/vac/bin/save-numbered  /usr/anon/security/cypheressay
+
+
+#!/bin/csh -f
+#
+# This is not totally safe as it is not atomic.  If two messages
+# came at the same time there is a chance one would get lost.
+# For a low volume list this will not be a problem.
+
+cd $1
+
+umask 022
+
+set current = `cat num`
+  @ next = $current + 1
+echo $next > num
+
+cat >> $next
+
+# Moderator says no reply messages
+grep "Re:" $next
+if ($status == 0) then
+    /bin/rm $next
+endif
+
+
+
+
+
+
+

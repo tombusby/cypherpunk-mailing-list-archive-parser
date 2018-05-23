@@ -1,0 +1,199 @@
+From: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Date: Wed, 23 Feb 94 22:28:38 PST
+To: Matt Thomlinson <phantom@u.washington.edu>
+Subject: Re: STEALTH OCEANS
+In-Reply-To: <Pine.3.89.9402232030.A25029-0100000@stein3.u.washington.edu>
+Message-ID: <Pine.3.89.9402240021.C2157-0100000@delbruck.pharm.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Wed, 23 Feb 1994, Matt Thomlinson wrote:
+
+> I'd say having a TSR "hideit.com" loaded into high memory (installed size:
+> xxxx bytes) watching INT (whatever) would be a pretty good clues that
+> someone trying to determine that you were using a program to protect areas
+> of your disk would look for. Perhaps you could try and hide this, too; in 
+> any case, you address TSRs later...
+> 
+
+Again, no TSRs are necessary.  Having a simple, common utility on hand is 
+all that is needed.
+
+> > > > Simple.  You would take note of the starting address of the file.  And, 
+> > > > the length of the file.
+> > > 
+> > > how do you control individual writes? 
+> > 
+> > With a standard direct disk read/write utility.
+> 
+> uh, I don't have one. Do you?
+> 
+
+Sure!  Norton's Disk Editor!  I think that it may be limited to doing
+everything manually, one sector at a time, though.  I'm not a big MSDOS user,
+so I can't direct you to a more convenient utility, but I'm sure they're 
+out there.
+
+> I'm NOT talking about how to recover areas of your disk (you could use 
+> something like Norton Utilities to pull the noise file off the disk). 
+> What I'm trying to understand is how you plan to keep that area of your 
+> disk off limits. 
+> 
+
+You don't keep anything off limits.  If an intruder uses the standard OS 
+(instead of the proper utility) to write to your disk, he might erase 
+your data.  That is not a problem!  He's doing you a favor by destroying 
+the evidence.
+
+You, on the other hand, know better.  Thus, you will always use the 
+utility to write to the free sectors of the disk.  You will have no 
+problem, assuming you keep track of where your data is.
+
+> Like it or not, programs and OSs (if you can call Windows an OS) write to 
+> disk. Lots. Everywhere. How do you keep it from fragmenting the disk 
+> immediately and overwriting the space (whose address you have written 
+> down on that sheet of paper next to your computer?)
+> 
+
+You use a floppy disk that is only accessed by your utility, which 
+bypasses DOS (and Windows, which is DOS based).  You keep your disk 
+write-protected at all other times.
+
+> Try running windows with a temp swapfile. Run photoshop for windows (it 
+> writes its' own tempfile on the drive). Save a file from Word for Windows 
+> and try and control where it goes.
+> 
+
+That's correct.  But this is only the case when you are letting DOS write 
+to disk for you.  If you use _direct_ (ie. _not_ DOS) disk writes, you can
+specify which sectors you write to!
+
+> 
+> I'm not saying these problems can't be solved; I _am_ saying that what 
+> has been proposed thus far doesn't adequately address this (if you're 
+> looking at this as a genuine way to hide your data).
+> 
+
+I disagree.  I do admit that the more security you want, the more complicated
+the issue gets.  At the simplest level, all you have to do is delete your
+"noise" file.  This is a solution to hiding "noise" files that is 
+available to everyone.  Problems crop up only when your opponent is 
+determined, knowledgable, and capable.  Although more effort will be 
+required, I believe that the system I've outlined will prevent even the 
+most determined opponent from finding evidence even of the existence of your
+"noise" files.
+
+> 
+> > > vs. where your data is kept. Authorize each write by hand? (PROGMAN.EXE 
+> > > is attempting to write to cylinder 12, track 14. Authorize (y/N)? ) 
+> > 
+> > Disable authorization.  Most DOSs allow direct writes without 
+> > authorization anyway.
+> 
+> No, no. We _need_ to protect the noise area. 
+> 
+
+All the protection that is neccessary is that of your keeping track of
+the location of your files.  Just don't write back to those sectors 
+again, unless you want to overwrite your data.
+
+> how? change the FAT? TSR? My example above was an attempt to try and
+> understand what a TSR you might build would have to ask, every single time
+> a regular write to disk was performed. (to protect your deleted noise
+> file).
+> 
+
+Once again, NO TSR IS NECESSARY!  In fact, it is detrimental, for the reasons
+that I have outlined in my previous messages.
+
+> 
+> > You need _not_ have a TSR with the location.  If you keep track of the 
+> > address/length yourself, the problem is eliminated.  The whole
+> 
+> except for the fact that your computer will overwrite your data (which, 
+> in fact, is *deleted* space, waiting to be written over) in the meantime.
+> 
+
+Only if you use standard DOS disk writes.  Bypass DOS and your problem is 
+solved.
+
+
+> > be a more elegant solution.  Otherwise, store your "noise" files 
+> > sequentially, on a floppy that you use only for storing encrypted data.  
+> 
+> Ah, a floppy? this makes 10 times more sense. With a floppy you wouldn't 
+> have haphazard writes to disk (as you do with your harddrive). 
+> 
+
+Exactly.
+ 
+> sure. two choices:
+> 
+> 1) We must protect our noise data.
+> 	Keep it in a location on disk, keep a TSR in memory to protect
+> that area from writes. 
+> 
+> 2) We don't protect our noise data. 
+> 	Keep our data in a location on disk, keep the spots on paper, and 
+> hope that by the time we need to retreive it, the data hasn't been 
+> written over. 
+> 
+> I sure wouldn't want to count on 2), and it seems as if 1) defeats the 
+> purpose.
+> 
+
+Are you forgetting the floppy+direct-disk-writes solution?  Choice 2 makes
+sense!
+ 
+> >  1 split the "noise" file into smaller parts which would be interspersed 
+> >    randomly among the other deleted grabage.  This would make for a less 
+> >    conspicuous disk; as, there are, normally, truely random sections of 
+> >    the disk along with the not-so-random sections.  Your bits of noise-file
+> >    will fit right in!
+> 
+> not bad. One thing to consider: we've moved all of our data to the end of 
+> the disk, anyway; we'd still have most of our important data at the end 
+> of the disk, which still might look conspicuous statistically.
+>
+
+Moving all the data to the end of the disk was not a suggestion made by me.
+I agree that it would be rather silly.
+ 
+> >  2 use a steganorgraphy utility to embed the "noise" file in a section
+> >    of the other not-so-random garbage (as some people currently use those
+> >    same utilities to embed their PGP files in GIFs), and then delete it.
+> >    (Owning a stegonagraphy utility would, of course, be as conspicuous
+> >     as owning PGP.  So the same precautions would have to be applied.)
+> 
+> not bad. Takes (8 times?) more space, but should work.
+> 
+
+Two choices:
+ 
+ Space sacrificed for security.  
+
+ Or, security sacrificed for space.
+
+> 
+> Do you understand my objection to keeping track of the files' location by 
+> hand? It isn't that keeping track of the location/length of the file is 
+> hard, or retreiving it is tough; the problem is keeping the OS, etc from 
+> overwriting it in the meantime. 
+> 
+
+I understand.  However, your objection doesn't make sense in light of the 
+above conclusions.
+
+
+Thanks for your prompt replies, though!  Keep 'em coming!
+
+Sergey
+
+
+
+
+
+

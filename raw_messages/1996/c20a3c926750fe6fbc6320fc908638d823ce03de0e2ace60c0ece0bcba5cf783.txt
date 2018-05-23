@@ -1,0 +1,83 @@
+From: Matthew Ghio <ghio@myriad.alias.net>
+Date: Tue, 22 Oct 1996 12:27:20 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: IP spoofer
+Message-ID: <199610221926.PAA27382@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Assuming that this was I troll, I took this to private mail.  Since
+there is some relevance to computer security and anonymity I am
+forwarding it back to the list.  Here is my reply to him:
+
+
+>>> Anyone got a good IP spoofer that can spoof the whole domain?  The 
+>>only
+>>> shit I can find is those shitty ones that spoof the first part of 
+>>the
+>>> IDENTD which is possible to do in mIRC if you use it.  Oh yeah, it 
+>>has to
+>>> be for Win95.  Yes I know that no one likes win95 but I dont have a
+>>> choice....I'll tell about that later.
+>>
+>>You're kidding, right?
+>>
+>>Either that or you need to find out who is forging mail from you. :)
+>>
+>Why would i be kidding...what forging mail....
+
+
+Well, you posted to a mailling list about cryptography and asked a
+silly question about IP spoofing.  Smells like a troll.  Apparently
+others thought so too; I guess I was the only one silly enough to
+respond.
+
+"...what forged mail..."
+Well, your whole post was about forging the sender...
+
+
+Now, to answer your question:
+
+In order to do a successful IP spoofing, you must either gain access 
+to the routing mechanism for one or more non-local IP addresses, or
+spoof a DNS (Domain Name System) server.  To send packets with a
+forged IP address generally requires substantial ability to modify
+the behavior of the local TCP stack.  Since Win95 does not provide
+such functionality via the winsock.dll interface, and the source
+code to the tcpip module is not available, in order to use Win95 for
+such purposes would necessitate rewriting and replacing a
+substantial portion of the IP-networking code.  Since you expressed
+no interest in doing so, I assumed you were joking when you said
+that you wanted to use Win95.  On operating systems which provide an
+interface for the user to insert raw packets into the local tcp/ip
+stack, ip spoofing is much more practical.  Please see the post I
+made to the list about a month ago on the subject of IP Tunneling.
+I included two scripts, written under the Linux Operating System,
+which serve to give you a non-local IP address (using ssh as the
+tunneling transport mechanism).  I assume that this would be
+sufficient for the purpose you intend.  You will, however, need to
+find a cooperative network administrator from whom to borrow an IP
+address.
+
+The other option is DNS spoofing.  The simplest form of this is to
+only forge the reverse-dns lookup.  This requires access to the
+reverse-dns server, or merely suffient information about it to forge
+packets from it.  (eg information obtained using a packet sniffer on
+the local ethernet)  This method is fairly widely known and
+practiced.  For this reason, most servers now check the reverse-dns
+against a forward-lookup, so you are unlikely to succeed at doing
+this.  It might also be possible to engage in a denial-of-service
+attack (such as a packet flood) in order to prevent the reverse-dns
+lookup.  This is, however, of limited utility since the IRC server,
+if it accepts a connection without a reverse-dns entry, would
+publicly display the numeric address, which anyone could then
+independently look up, or do a traceroute on.
+
+I hope this answers your questions about IP spoofing.  In the future,
+please try to familiarize yourself with the ongoing list discussions,
+as this will encourage people to take your questions more seriously.
+
+
+
+

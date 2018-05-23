@@ -1,0 +1,51 @@
+From: Alex Strasheim <cp@proust.suba.com>
+Date: Fri, 1 Mar 1996 14:20:26 +0800
+To: perry@piermont.com
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <199602292135.QAA18937@jekyll.piermont.com>
+Message-ID: <199603010154.TAA05515@proust.suba.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> In the end, we are probably going to need something in the way of key
+> servers, which may (or may not) imply either a new type of URL or
+> something other than a URL to do retrieval off of.
+
+Sorry for the stupid questions, but I want to make sure I'm on the same 
+page as the rest of you.  Correct me where I'm wrong --
+
+The idea to have a distributed database (like DNS?) that allows you to
+retrieve keys with query strings similar to urls.  So if you wanted to do
+a secure telnet to host.foobar.com, you'd submit something like
+"telnet://host.foobar.com" to the key server, and it would give you back a
+key.  If you wanted to send mail to me, you'd submit something like 
+"mailto://alex@suba.com".  Etc.
+
+The key distribution system wouldn't address the problem of trust
+directly, but the key you'd get back from the server would contain
+information that you could use to verify it.  Suppose I get signed email 
+from Perry.  The signature would contain something like 
+"mailto://perrry@piermont.com" -- I could use that to get Perry's key to 
+verify the signature.  Along with Perry's key I'd probably get a 
+signature from some entity that vouches for his key, maybe a piermont.com 
+key.  I could follow the chain up until I hit an entity I trust.
+
+
+If this is correct, I have a question:
+
+What's the advantage of using this url type system instead of "fully
+qualified" certificates, ie., attaching all the keys and signatures to the
+object?  Doesn't the give and take with the key servers more than wipe out
+the advantage of the smaller data object?
+
+Does the win come from solving the revocation problem?
+
+
+Finally, does anyone know if anything's been happening with Matt's key
+management project? 
+
+
+
+
+

@@ -1,0 +1,111 @@
+From: Raph Levien <raph@cs.berkeley.edu>
+Date: Mon, 6 May 1996 03:48:47 +0800
+To: "Timothy C. May" <tcmay@got.net>
+Subject: Re: PGP, Inc.
+In-Reply-To: <adb18549030210045691@[205.199.118.202]>
+Message-ID: <318CBD1E.333AE622@cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Timothy C. May wrote:
+> 
+> (I've been missing some e-mail, for various reasons, including a 20 MB
+> mailbomb from some German critic of my views, but I think I would've seen
+> this discussed more than I have.)
+> 
+> Phil Zimmermann is apparently forming a Bay Area company, to be known as
+> PGP Inc., with venture funding from one of the Seybold clan, according to
+> an article by Simson Garfinkel in today's SJMN. (Which says the
+> announcement was actually made last Tuesday....)
+> 
+> Jonathan Seybold, Dan Lynch (a founder of Cybercash), Tom Steding
+> (ex-Novell) are some of the names involved. Initial products will include
+> PGP and PGPfone.
+> 
+> No mention of programmers, jobs available, etc., except that they "will
+> begin hiring shortly."
+> 
+> And the connection with ViaCrypt and RSADSI seems unclear to me.
+
+   I doubt that the new company will have any connection with ViaCrypt.
+It's been well known for quite some time that relations between Phil
+Zimmermann and ViaCrypt have been, well, strained. I have no idea about
+RSADSI.
+
+> Anybody else have any more information?
+> 
+> If this whole thing is a spoof, it made it into the SJMN.
+
+   Word of this has been buzzing for a few months. I first heard about
+it at Sandy's party, for instance, and then there was that (somewhat
+distorted) Usenet post by Vesselin Bontchev.
+
+   Having a PGP Inc. could be either fantastic or a disaster. Phil has
+shown remarkably bad business judgement in the past, so hopefully they
+have installed real managers and will allow Phil to take a figurehead
+role, which is one thing he's fairly good at.
+
+   The main problem with PGP has been that there just haven't been
+enough people working on it. The PGP development process isn't very
+conducive to volunteers, either. I know I'm not the only one who joined
+the team, enthusiastic to get 3.0 off the ground, only to leave shortly
+thereafter, frustrated by lack of progress, lack of clear direction, and
+a design that was growing increasingly more complex without solving some
+of the most basic problems for users.
+   Since Derek has joined the team, things are a little better, although
+I still feel that there just isn't enough humanpower on the team. An
+influx of money may very well change that. Let's hope so.
+
+   Meanwhile, the biggest threat against PGP is S/MIME. In the time that
+the PGP team farted around trying to define an API for 3.0, the S/MIME
+people (starting more or less from scratch), came up with a new message
+format, significant improvements to the X.509 certification hierarchy,
+got major support from many, many vendors, and got the damn thing
+implemented. S/MIME products will begin shipping early this summer.
+
+   Recently, I've been spending more or less equal amounts of time in
+the PGP and S/MIME worlds. The difference is startling. S/MIME gives the
+impression that it's _happening._ From PGP, I mostly get the message,
+"wait for 3.0, when that comes out it will solve your problems."
+   The corporate world must feel this just as intensely as I do. For a
+typical example of PR journalism that nonetheless captures the feelings
+of the people in corporations who are actually deploying crypto, see:
+
+      http://www.deming.com/press/cw040896.htm
+
+   The final paragraph reads:
+
+   "Observers say SMIME's capabilities will let it replace software
+   based on the PGP code, which is widely used. Unlike SMIME, which uses
+   a structured certificate heirarchy, PGP relies on pre-certification
+   of clients and servers for authentication, a limitation SMIME doesn't
+   face."
+
+   The gravest weakness of S/MIME, on the other hand, is the fact that
+it defaults to 40-bit encryption, without any way of automatically
+upgrading the quality. I estimate that this will result in a few percent
+of all S/MIME messages being encyrpted with anything better. This
+estimate is based on deployment figures from SSL. For example, Sameer
+Parekh determined that 94.5% percent of the accesses to his SSL-enabled
+Web server used 40-bit encryption. There are two reasons to believe that
+S/MIME will do even worse. First, SSL _does_ have an automatic
+negotiation mechanism to select the best cipher, which S/MIME lacks.
+Second, most SSL servers deployed are configured for 128-bit ciphers,
+thus it is only necessary that one client has 128-bit encryption for
+that to be selected. However, for S/MIME, both the sender's and the
+receiver's clients must have 128-bit encryption. If _either_ one is
+"export grade", then 40-bits must be used.
+   Thus, it's a reasonable guess that almost all S/MIME messages that
+pass through the wires will offer "virtually no protection," to quote a
+phrase from a paper co-authored by the principal designer of S/MIME's
+encryption algorithms
+(http://www.bsa.org/policy/encryption/cryptographers.html).
+
+   Best of luck for PGP Inc.
+
+Raph
+
+
+
+

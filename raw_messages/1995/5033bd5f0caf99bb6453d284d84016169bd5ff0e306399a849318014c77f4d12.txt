@@ -1,0 +1,76 @@
+From: aba@dcs.exeter.ac.uk
+Date: Mon, 17 Jul 95 13:41:49 PDT
+To: hayden@edu.msus.mankato.krypton
+Subject: Re: RC4 crack
+In-Reply-To: <Pine.ULT.3.91.950717151714.25405B-100000@krypton.mankato.msus.edu>
+Message-ID: <20191.9507172036@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> I remember when RSA129 was being done, the program you have you manually 
+> get a start location, and then email transparent any results that it 
+> got.  The program that doled out areas to search would base those on what 
+> had already been mailed in.  I don't know the details of how exactly that 
+> worked, however.
+
+Yeah it's quite like that except we're going for sockets, and an SMTP
+style protocol.  That way people can write other apps to the protocol,
+for instance Andy Brown has an SSL bruter and key management s/w for
+NT, and he plans to interface to the 'master' software via this socket
+protocol, allows intermixing, so some people will be running direct
+IP, others with PCs or behind firewalls will be running via the WWW
+interface which also talks the SMTP style stuff to the master, and it
+would be possible if desired to write an email gateway to the socket
+protocol for interacting with the master.
+
+Also the socket protocol (blame Piete for this clever stuff, and most
+of the socket protocol design) is planned to work with arbitrary
+levels of masters, so you can start a local master say on your local
+network, the local master requests keys of the 'big master', and doles
+them out to 'slaves' running on each cpu you have.  When all it's
+slaves have acked the keyspace it has drawn out from the big master,
+it'll ack that bigger keyspace with the bigmaster and draw out some
+more keyspace.
+
+> But, if the program could be written in such a way that it was all 
+> automatic, mailing in results and automatically (maybe via a telnet 
+> port?) getting the information about what to search, that would be most 
+> nice. 
+
+Yep a telnet port is it for both reporting and getting keys, also the
+WWW interface to the same.
+
+> I'd basicly like to be able to start the program, nice it, slam it
+> in the background, and forget about it.
+
+Right, niceing seems to be one option another is to suspend it whilst
+people are directly logged in, Kevin and some others have tools for
+this kind of thing.  Also there was a similar ultra-nice batch job
+suspender which came with RSA129, which we might pinch/combine.
+
+The problem with nicing is that most unix schedulers don't seem to
+know what nice means,.. you still get a noticable slow down on
+interactive jobs on SGI boxes even if you've got it npri -h 150, and
+even though the bruterc4 (and the bruteSSL too) have tiny resident
+core sizes).  Also we thought there should be an hours of play option
+so you can tell it (the slave) when it is allowed to hammer the
+machine, say 6pm - 7am or whatever.
+
+So, yes the idea that you can slam it in the background and forget it
+is a very nice one as it ensures max resource usage.  Also it would
+allow us to setup a semi-permanent key cracking ring, with slaves that
+can support cracking both SSL and RC4, plus whatever anyone else adds
+later, you would get to install a new "ability" then your machine
+would say know how to do relations for a RSA-512bit or whatever.
+
+Interesting to see how many MIPs can be mustered en masse for this
+kind of app.
+
+Adam
+
+
+
+
+

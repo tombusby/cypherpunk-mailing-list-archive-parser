@@ -1,0 +1,58 @@
+From: "Scott Bence" <SBENCE@imt.tstc.edu>
+Date: Thu, 20 Jan 94 11:39:53 PST
+To: cypherpunks@toad.com
+Subject: Re: AI code speed up !!!!
+Message-ID: <F5852A6A65@imt.tstc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I don't know what (if) I read this in any books or mags.  I would 
+recommend MacTutor(name may have changed)  I had read it all through 
+college and worshiped it.  You can find it at *the Book Stop* if you 
+know where on is.  You can benchmark you routines fairly easy. Before 
+you call your function get the ticks off the clock then again 
+afterwards, then get the difference.
+ie
+   ...
+   start=GetTicks();   /* I think this was call, check the toolbox */
+   foobar();
+   total_time=GetTicks()-start;
+   ...
+
+One more thing, I left out another optimization kludge.  Try to 
+reduce the number of calls outside your function by moving the code 
+it is calling to inside the function.  This reduces the associated 
+overhead of jumping (jsr $xxxx).
+
+Also, if you have to go through the "toolbox" check into the
+function GetTrapAddress(). Do this for Moveto(x,y) and then you can 
+bypass the entry point of the toolbox and go directly to the routine 
+in ROM.  This should shave off 5%-15% on the execution of toolbox 
+calls.  DO NOT HARD CODE THE ADDRESS IN YOUR PROGRAM!  YOUR PROGRAM 
+WILL DIE A HORRIBLE DEATH ON ANY OTHER MODEL! Use GetTrapAddress().
+
+Hope all this helps. Let me know how things work for you.
+
+
+
+> Bence, > 
+
+> I saw your list of recommendations for code speed-up on the mac.  I'm
+> currently learning how to program the mac, make tool-box calls, etc.  and
+> I found the list interesting.  Is there book of information like that, or
+> is this just stuff picked up in the trade?  Let me know when you get a chance.
+> 
+> -john.
+> jdblair@nextsrv.cas.muohio.edu
+> 
+#include <std_disclaimer.h>
+----------------------------------------------------------------------
+------ Scott Bence * Texas State Technical College @ Waco, Texas -----
+--- Computer Networking & Systems Administration * sbence@tstc.edu --- 
+----------------------------------------------------------------------
+ 
+
+
+
+

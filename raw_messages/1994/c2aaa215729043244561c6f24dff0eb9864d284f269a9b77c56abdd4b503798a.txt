@@ -1,0 +1,31 @@
+From: Benjamin Cox <thoth+@CMU.EDU>
+Date: Mon, 11 Apr 94 06:12:17 PDT
+To: rjc@gnu.ai.mit.edu (Ray)
+Subject: Re: Zero Knowledge Authentication and StrongBox
+In-Reply-To: <9404110643.AA14883@geech.gnu.ai.mit.edu>
+Message-ID: <0heIlu200iof0H1Gg0@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> encrypted secret keys, unless of course Knuth means "given a 
+> SQRT box, by feeding it lots of numbers and getting the resulting
+> SQRT, one can determine the factorization of its internal modulus."
+
+I don't know whether that's what he means or not, but it's true.  In a
+mod(pq) system, every number with square roots has four of them.
+Given two of these that don't add up to 0 (mod pq), you can find a
+factor of pq by GCD(pq, sqrt1+sqrt2).
+
+Example: pq = 15, a = 1.  Square roots are 1, 4, 11, 14.  Choose two
+of these: 1+11 = 12.  GCD(15, 12) = 3, which is a factor of pq.
+
+This can be proved using the Chinese Remainder Theorem.
+
+__
+Ben Cox					thoth+@cmu.edu, thoth@netcom.com
+
+
+
+
+

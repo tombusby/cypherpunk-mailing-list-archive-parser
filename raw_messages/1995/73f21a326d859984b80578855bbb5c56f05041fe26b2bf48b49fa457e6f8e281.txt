@@ -1,0 +1,41 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Thu, 21 Sep 95 17:19:30 PDT
+To: iang@cs.berkeley.edu
+Subject: Re: XDM has the same problem as netscape ?!
+In-Reply-To: <43s1j7$nd3@calum.csclub.uwaterloo.ca>
+Message-ID: <UAA01743.199509220019@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <43s1j7$nd3@calum.csclub.uwaterloo.ca>, Ian Goldberg writes:
+>In article <9509210631.AA18308@sfi.santafe.edu>,
+>Nelson Minar <nelson@santafe.edu> wrote:
+>>Last time I looked, the MIT-MAGIC-COOKIE-1 scheme used in X11R4 had
+>>the same problem: the random seed was based on the current time to the
+>>microsecond, modulo the granularity of the system clock. I think I
+>>figured that on my hardware, if I could figure out which minute the X
+>>server started (easy with finger), I'd only have to try a few
+>>thousand keys or so. Caveat: I never actually proved the idea.
+>
+>Wow.  I just checked, and Nelson's right.
+[...]
+
+Of corse you can do what I have been doing for years:
+
+$cookie=`good-source-or-random-hex-strings`
+xauth add $DISPLAY MIT-MAGIC-COOKIE-1 $cookie
+xinit ~/.xinitrc $DISPLAY -- $server :$port -auth $XAUTHORITY
+
+(assuming you set the various variables correctly)
+
+This will allow you to gennerate your own cookies rather then
+relying on MIT.  (I actually have C code to set the cookie dirrectly,
+since I don't really care to have it visable to ps, even breifly).
+
+Unfortunitly X will blat the "secret" out in the clear every time you
+make an X connection, so it still isn't very good.
+
+
+
+

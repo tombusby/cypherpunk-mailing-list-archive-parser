@@ -1,0 +1,50 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Fri, 11 Aug 95 03:57:29 PDT
+To: cypherpunks@toad.com
+Subject: Re: IPSEC goes to RFC
+Message-ID: <9508111056.AA09426@elysion.iaks.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> sdw@lig.net (Stephen D. Williams) wrote:
+> 
+> > I really like the idea of using DNS for (public I assume) keys...
+
+
+
+ghio@cmu.edu (Matthew Ghio) wrote:
+ 
+> I don't.
+> 
+> Public keys in the DNS is a bad idea because it makes it difficult to
+> update the database, especially in large organizations.  When a host's
+> key is issued or changed then they would have to get the nameserver
+> admin to change it for them.  This could become a major problem/
+> inconvenience for many, many people.  The host should be able to give
+> its own key in response to a query.  That key could, of course, be
+> signed by any number of trusted signators to guarentee authenticity.
+
+
+I also like the idea of DNS-based public key distribution, but
+what Matthew said is true. 
+
+What about this:
+
+Let the DNS-Server export the address of a machine which runs the
+public-key-database for this domain, similar to the MX record for
+the mailserver.
+
+If you need the public key for a person identified by the email
+address or for a host identified by hostname or IP address, you
+could ask the DNS server where to get the public key.
+
+The database host could run any program suitable to local requirements
+and export public keys with a certain protocol...
+
+Hadmut
+
+
+
+

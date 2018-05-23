@@ -1,0 +1,191 @@
+From: Kent Crispin <kent@bywater.songbird.com>
+Date: Mon, 20 Oct 1997 14:55:37 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: why we are arguing for more resistant variants
+In-Reply-To: <19971019100620.06593@bywater.songbird.com>
+Message-ID: <19971019234203.23585@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Sun, Oct 19, 1997 at 07:15:00PM +0100, Adam Back wrote:
+> 
+> Kent Crispin <kent@bywater.songbird.com> writes:
+> > On Sun, Oct 19, 1997 at 10:25:08AM +0100, Adam Back wrote:
+> > > Also I must raise the point that it is not a lone stand.  Other people
+> > > are arguing against PGP Inc's CMR proposal, and are arguing for more
+> > > GAK resistant variants, and alternatives.  
+> > 
+> > Apparently for some internal reason you must raise the point, but it
+> > is irrelevant.  I said your *proposals* were vaporware, not your
+> > motivations.  It is, as I have said, a waste of time (and yes, mental
+> > masturbation) to argue about motivations. 
+> 
+> Motivation is irrelevant.
+
+Good.  We agree, and can therefore move on.
+
+> You made one contribution in this area in your last post.  Keep up the
+> technical contributions, and scenario likelihood evaluations.
+> 
+> > > However the biggest point of all is that: communications keys are more
+> > > valuable to any attacker (government, unscrupulous little brother, or
+> > > industrial spy) than storage keys.
+> > > 
+> > > I would be interested to see any one willing to burn their
+> > > reputational capital refuting that simple point.
+> > 
+> > *Long term* communication keys.  Nobody is going to burn reputation
+> > capital on that point because it's obvious, and really doesn't need to
+> > be argued.  
+> 
+> If it doesn't need to be argued, why does pgp2.x and pgp5.x use long
+> term communication keys? 
+
+
+History.  Backward compatibility.  Time pressures.  And a design for
+short term communication keys for email does not yet exist -- not from
+you, not from anyone.  [Your CDR proposal uses *long term*
+communication keys.]
+
+These seem pretty compelling reasons to me. 
+
+Just because something is desirable doesn't mean it is practical, or 
+even possible.  
+
+[...]
+> 
+> Surely the most straight forward way to provide recovery for email
+> archives is to archive the emails encrypted to a storage-only key,
+> with this key escrowed in some way?  You then don't need to recover
+> email in transit -- you don't even have a copy of it.
+> 
+> This is clearly more resistant to government abuse.  Do you disagree?
+> 
+> (The above paragraph is basically all my CDR proposal is .. it seems
+> straight forward, intuitive, more secure; I went through and countered
+> your previous objections to worked example #1, you did not reply to
+> those counter-points).
+
+I did not because you presented it as a throwaway, with statements to
+the effect that you already knew it was defective but you were
+presenting it anyway.  Besides, in all honesty I did not find your
+counterarguments very compelling, and I was content to wait until I 
+saw a "real" proposal.  If I have a chance, though, I will go back 
+and address that...
+
+BTW, perhaps you remember a fairly long thread sometime back where I 
+discussed the pros and cons of a "keysafe" model for data recovery 
+keys? 
+
+> > Furthermore the point applies just as well to current PGP keys.  The
+> > *only* additional vulnerabilities of CMR come from 1) the volume of
+> > data makes it a more interesting target and 2) the management of the
+> > CMR key(s) may be problematic.
+> 
+> You missed a couple:
+> 
+> 3) the goverment will love to get come ask for your CMR key because it
+> protects all past emailed ciphertext
+> 
+> 4) some governments (eg France) will probably ask for one of the CMR
+> keys to be theirs
+
+I include both of those under my number 1.
+
+> > However, in a large organization the management of *user* keys is
+> > problematic, as well, and management of the CMR key(s), on balance,
+> > will probably be better.  So the additional vulnerability of CMR comes
+> > from the fact that it makes a lot of data accessible from one key. 
+> > This vulnerability could be reduced by having multiple CMR keys -- the
+> > accounting dept has one, the CEO has one, and it is the same as his
+> > private key that is not escrowed anywhere, etc etc etc.
+> 
+> Yes.  Several people have suggested this.  Also secret sharing is
+> being considered by PGP Inc for the next version I think.
+> 
+> > [Is it true that the private key associated with a CMR public key 
+> > could simply be discarded, rather than escrowed, and everything would 
+> > still work? -- except that you couldn't recover anything, of course...]
+> 
+> I would think so.  This would argue for updating the CMR
+> communications key as frequency as is practicable to minimise danger.
+                        ^^^^^^^^^frequently?
+
+?I don't see the connection.  My point was that you can generate a key
+pair, throw away the private key, and use the public key as the CMR
+key.  Perhaps you could just use random bits in the correct format for
+the public key, and never generate a key pair at all.  This would meet
+external requirement of having a CMR key, but it would be meaningless,
+since the missing private key could never be used to decrypt anything. 
+Thus, though externally an organization (say an ISP) would be
+complying with a regulation, in fact it would be impossible to 
+recover any email anyway...
+
+In any case, I presume the "danger" you refer to is the danger that 
+someone will snarf the CMR key.  Changing it frequently will reduce 
+the number of compromised messages if any given key is compromised.  
+(Of course, the CMR keys will have to be preserved forever in a 
+little database of some sort -- if you change them often, that 
+database will be large...)
+
+> (Same argument as update requirements for user communications keys).
+> Hal Finney discussed this requirement of matching expiry frequency on
+> comms keys & corresponding CMR keys a few messages back.
+
+> 
+> > A more interesting argument is as follows: what is the real level of
+> > security needed for the business communications that will be covered
+> > by CMR? It seems obvious that the level of security required, on
+> > average, is really quite low.  Note that businesses send all kinds of
+> > important documents through regular mail, only protected *gasp* by
+> > PAPER ENVELOPES. 
+> 
+> This suggests that Tim May is right, and the simplest solution is to
+> store the decrypted received emails in clear on the disk.  Most of the
+> companies are in fact storing on disk.
+
+It is the MUA that uses PGP (Eudora, Mutt, whatever) that decides how
+to store the decrypted files, not PGP.  PGP decrypts the files and
+gives them to the MUA, which displays them to the user.  The MUA has
+the option of storing it encrypted or not, as delivered, or with 
+another key.  PGP isn't in control, it's the MUA, isn't it?
+
+> > Anyway, Adam, I anxiously await the paper you are working on that 
+> > gives the real details of your proposals.  I'm sure it's readability 
+> > will be vastly improved if you religiously avoid the use of the word 
+> > GAK :-)
+> 
+> Could you provide a less emotive suitable alternative word which I can
+> use as a replacement to describe government communications key
+> grabbing attempts?  GACK is what Carl Ellison proposed as a more
+> accurate way to express "Goverment Access to Communications Keys" than
+> terms such as "key escrow", "key recovery", which are government
+> coined terms.  PGP Inc themselves being mostly cypherpunks and
+> pro-privacy people use the term GACK also.
+> 
+> GACK seems a pretty good acronym to me, accurate, descriptive.  Are we
+> getting goverment-correct now as well (as politically-correct)?  So
+> that we must not use terms which are offensive to governments?
+>
+> (I will attempt to avoid negative political comments about PGP Inc's
+> implementation, and phrase in terms of constructive criticisms though,
+> and perhaps this was your point given my earlier outbursts in this
+> regard; perhaps you can help proof read for this).
+
+Whatever.  It does strike me that you seem to have difficulty in
+maintaining composure whenever the term comes up, your prose gets
+hasty, with missing words and odd syntax, and I suspect that your
+usually razor-sharp edge suffers as well....  :-)
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

@@ -1,0 +1,38 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Tue, 8 Feb 94 13:07:09 PST
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: Clipper Side-step
+In-Reply-To: <9402081756.AA28824@wavefront.wti.com>
+Message-ID: <9402082106.AA16501@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> How about this as a way to stump Clipper?
+[...]
+> Encrypt data/message/information/recipe/whatever into the low-bits of
+> the sound bite.
+
+The low bits would probably be destroyed just by transmission over
+your average voice line.  Worse, Clipperfones will compress the
+input speech before encryption.  The only respectable audio
+compression algorithms are lossy, and they will assuredly stomp on
+your low bits.  Nor can you expect other modulations to survive
+(e.g. the "data --> 212A --> Clipper --> 212A --> data" approach).
+
+Given knowledge of the audio model used, you could take your data
+stream and put it through the decompressor end.  The resultant
+audio would be invariant under the lossy compression/decompression.
+
+/--  sender  --\ /----          Clipper phone          ----\  /--  rcvr  --\
+data->decompress->compress->encrypt,send,decrypt->decompress->compress->data
+      \--   (cancel)   --/			  \--   (cancel)   --/
+
+This would probably end up being manufacturer-specific and a real
+pain.  Subverting a Capstone-based datacomm device would be easier.
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

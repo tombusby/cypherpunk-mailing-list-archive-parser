@@ -1,0 +1,59 @@
+From: root@extropia.wimsey.com (Anonymous)
+Date: Mon, 31 May 93 22:09:02 PDT
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <199306010527.AA00963@xtropia>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+As shown in Karl Barrus's very useful monthly postings, several people are
+running remailers that include encryption.  This gives users the ability to
+send messages for which the destination is not visible even to someone
+monitoring their outgoing messages.  By chaining through two or more
+remailers, no one site can see the mapping between source and destination. 
+
+There is a big potential security weakness with most of these systems that
+people should be aware of.  In order to run the decryption program
+(currently PGP) automatically, the pass phrase must be provided for the
+remailer's secret key.  This means that the pass phrase has to exist, in
+the clear, in the scripts which implement the remailer. 
+
+Anyone who has root privileges on the machine which is running the remailer
+therefore can get access both to the remailer's secret key file, and to the
+pass phrase that unlocks it.  Even momentary acquisition of this power is
+enough to capture the secret key. 
+
+Unfortunately, many of the encrypted remailers are running on multi-user
+systems over which we have only limited control.  I believe that Miron's
+"Extropia" remailer is running on his personal system, so he should be
+relatively immune to this attack.  But I think the others are all
+vulnerable. 
+
+People should be aware of this when using the remailers.  (This limitation
+is one reason I made my remailer keys only 512 bits; I felt there was
+little point in going to 1024 bits since the security of the remailer key
+can be broken so easily.) 
+
+Until more of us are able to acquire personal Unix boxes it might be wise
+to include the Extropia remailer as part of a remailing chain for messages
+whose security we care about.  Perhaps Karl could add a notation in his
+remailer lists about which machines are public and which are private.  
+
+Hal  
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.2
+
+iQCVAgUBLAqxy6gTA69YIUw3AQG8TgP/eZNHVKw39VQWFK9reR9dFu36yIZtQQ/f
+wDKfvAPgkzCHxTIv3xrATCpVXd5CCbhWFLgi0/HSD2CV8uwVp5HOenjYnUu0AAZR
+kV2JYNJ2F2pAajnYnI5hkvDvnm9SUOC4JtNM7lLlNeJVf5hXsMw1YYkEDQfDPafr
+Yjs8AFodQUw=
+=5V+X
+-----END PGP SIGNATURE-----
+
+
+
+

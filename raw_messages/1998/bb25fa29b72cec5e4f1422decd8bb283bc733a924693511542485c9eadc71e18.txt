@@ -1,0 +1,139 @@
+From: Sunder <sunder@brainlink.com>
+Date: Tue, 22 Sep 1998 19:32:39 +0800
+To: Jim Choate <ravage@einstein.ssz.com>
+Subject: Re: Stego-empty hard drives... (fwd)
+In-Reply-To: <199809221938.OAA06031@einstein.ssz.com>
+Message-ID: <360840E8.7C1AC239@brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jim Choate wrote:
+
+> We're not discussin stego, we're discussing hidden disk partitions, not
+> hiding data in the lsb of of existing observable disk partitions or
+> something similar.
+
+Steganography is the art of hiding data.  Hiding disk partions IMHO falls
+under this.  Hiding data in the LSBits of bytes is only an EXAMPLE of stego, it
+doesn't define stego.  Even the subject of this message says Stego Empty hard
+drives conforming to this definition.
+ 
+> > Who the fuck is gonna run a tempest scanner on your notebook again?  Let's
+> 
+> Considering the cost of such a scanner (a few $10k/ea.) and assuming such
+> masking technology were to become commen place I doubt if very many
+> customs checkpoints at major transfer hubs wouldn't have them.
+
+Why would they implement it when they can simply have their software scan the
+BIOS code if that's what they feared?  It may cost them $10k each, but it'll
+cost them millions to design and scan every notebook type on the planet, and
+then they'll have to get their hands on newer models as soon as they hit the
+market.  You're talking about a project that's bigger in magnitude than the
+NSA.
+ 
+> > Why would you need to collect BIOSes?  You only need to modify a single BIOS -
+> > the one on >YOUR< notebook.  The camouflage code would be a few hundred bytes
+> > at most unless you do something overly elaborate.
+> 
+> I suspect it would be several k actualy since it is going to have to
+> include the encryption code, device drivers, wedgers, etc.
+
+Why should YOUR BIOS need to contain encryption code or device drivers for that
+matter?  All it needs to do is to HIDE the existance of the extra partition. 
+You modify every INT 13 functions to look for the track number being beyond a
+certain value.  As rusty and as fucked as my x86 code is this shows the general
+idea:
+
+You patch your BIOS by replacing a few bytes of code with CALL's and NOP's. 
+Maybe 4-8 bytes at most to modify.  The routine that checks for the track range
+is only several bytes:
+
+
+Somehwere in INT13 code:
+            blah
+            blah
+            blah
+            CALL biospatch
+            NOP ; to fill in the overwritten code to the next opcode
+
+
+biospatch  PUSH AX         ;save the register if you need it
+           MOV AX,switch   ;get the value of the hack switch switch
+           JE  popbye
+           POP AX
+           CMP AX,1234 ;or whatever register or whatever value
+           JLE bye
+deny       MOV AL,FAIL ;some reg and some value that says error, likely AL
+           RET
+           
+popbye     POP AX
+bye        ;insert the code that you overwrote with your CALL to this patch
+re           
+           RET
+
+
+Homework: Someone please take this code, optimize it for size and build a TSR
+patching INT 13 that JIM can install and run under DOS.
+
+Whoop... that takes less than 25 bytes of code to implement for each of the INT
+13 functions.  If you don't believe me, run debug and type in some similar
+code.  All it needs to do is to check if the hack is in place, if so, check the
+cylinder/track # being accessed.  If it's bigger than your limit, return an
+error, otherwise allow it.  Where's the big fucking several K of code there?
+
+A few more lines of code to implement the hidden switch code and you're set. 
+Maybe modify the routine that checks for ESC to skip the memory check or DEL to
+enter the setup, what another 25 byte patch?
+
+Once you find out where the bios does it's checksum, you NOP that entire
+section out, or recalculate the checksum yourself if you want to be anal. This
+doesn't add any extra bytes.
+
+Or if you're truly insanly paranoid, modify the bios password routine so that
+if you type in a certain password it toggles the hacked mode on or off.  Maybe
+a 100 byte patch at most.
+
+> A disassembler isn't a a debugger. All a disassembler does is convert the
+> hex to symbols (see frankenstein for an excellent design).
+
+Semantics.  I can use debug to disassemble a ROM bios and trace through it.  It
+does the fucking job.  Sure, it doesn't translate symbols or do anything fancy,
+but it's enough to do what >THIS< project requires.
+  
+> > One thing all you fine folks are forgetting is that there are MANY types
+> > of notebooks out there.
+> 
+> With only a few dozen BIOS'es driving the whole kit and kaboodle.
+
+Yeah, and each of those hundreds of types of notebooks have their own MODIFIED
+BIOSES with various patches and flash updates.  Good luck collecting a copy of
+EVERY version of EVERY bios for EVERY brand of notebook made in various
+countries with various languages, options, and other permutations.
+ 
+> They're new, they will learn from their mistakes and it won't take long.
+> After all, they have your tax dollars to use...
+
+Yeah, yeah, yeah, next thing you'll tell me is that they'll start to stick
+people in MRI machines to scan for drugs.  Sure, you can do whatever you like
+if you've got infinite resources.  Show me someone who does.
+
+Look if your threat model is some bloke in an airport with a shrink wrapped
+floppy, even a shit solution will fool him.  If your threat model is ten orders
+of magnitude more fascist, then they very likely won't even let you carry a
+notebook.
+
+-- 
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|       Sunder       |Prying open my 3rd eye.  So good to see |./|\.
+..\|/..|sunder@sundernet.com|you once again. I thought you were      |/\|/\
+<--*-->| ------------------ |hiding, and you thought that I had run  |\/|\/
+../|\..| "A toast to Odin,  |away chasing the tail of dogma. I opened|.\|/.
+.+.v.+.|God of screwdrivers"|my eye and there we were....            |.....
+======================= http://www.sundernet.com ==========================
+
+
+
+

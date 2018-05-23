@@ -1,0 +1,36 @@
+From: Bill Sommerfeld <sommerfeld@orchard.medford.ma.us>
+Date: Thu, 15 Sep 94 10:11:53 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: thoughts on RC4
+In-Reply-To: <199409151546.IAA02879@jobe.shell.portal.com>
+Message-ID: <199409151705.NAA00703@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I wonder if the NSA would approve it?  I think it was Bill Sommerfield
+> who pointed out that it was a little curious that NSA approves RC4 with a
+> 40 bit key when hardware-assisted search like the DES key cracker would
+> appear to be impractical.
+
+Actually, I'm not sure that it's that impractical, but I don't know a
+heck of a lot about VLSI or hardware design.  A fully pipelined chip
+would require significantly more more chip area than the DES cracker,
+but you probably don't need that.  I'm pretty sure you could make a
+blazingly fast, non-pipelined, chip with a "key setup" unit and then a
+"trial encrypt" unit which run in parallel; you clock the key setup
+unit 256 times to set up the key, then the key gets fed to the trial
+encrypt unit where it gets tried against the known
+plaintext/ciphertext pair..
+
+Back of the envelope calculation: massively parallel RC4 cracker.
+	2**16 chips, cycled at 2**23 hz (8Mhz; fairly conservative),
+	one trial every 2**8 cycles per chip.
+	-> 2**31 trials per second.
+	-> with this hardware, you can break 40-bit RC4 in 256 seconds
+	on average (512 seconds worst case).
+						- Bill
+
+
+
+

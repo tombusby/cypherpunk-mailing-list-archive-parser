@@ -1,0 +1,62 @@
+From: Eric Murray <ericm@lne.com>
+Date: Thu, 10 Apr 1997 16:03:08 -0700 (PDT)
+To: adam@homeport.org
+Subject: Re: Internet security code said vulnerable to hackers
+In-Reply-To: <199704102105.QAA24800@homeport.org>
+Message-ID: <199704102301.QAA03947@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Shostack writes:
+> 
+> Robert Hettinga wrote:
+> 
+> |   	 ATLANTA, April 9 (Reuter) - The new security protocol for
+> 
+> |   	 Steve Mott, senior vice president of electronic commerce
+> |   and new ventures for MasterCard International, said it could
+> |   take hackers as little as a year to break the industry's
+> |   standard encryption code, which is supposed to render
+> |   credit-card numbers unreadable to outsiders on the Internet's
+> |   World Wide Web.
+> 
+> 	The security problem with SET is not its crypto, but its
+> complexity, which makes it impossible to determine if the thing is
+> secure or not.  Its also a nightmare to implement, and was supposed to
+> be ready six months ago.
+
+
+"Security through incomprehensibility".
+
+
+Set's problem, or one of them anyhow, is that it uses ASN.1.  ASN.1
+is useful for some things, but it really sucks as a description of
+a protocol.  It is incredibly complex and figuring out the actual
+contents of a given message is very difficult.   There is little description
+in the SET documents of the protocol itself; the definition is pretty much
+left up to the ASN.1.
+The ASN.1 by itself often fails to describe what is in an object, i.e.
+a gkThumb is an object of type CertThumb, which is defined in ASN.1 as:
+
+CertThumb ::= SEQUENCE {
+ digestAlgorithm   DAlgorithmIdentifier -- (sha1)--,
+ thumbprint        Digest
+ }
+
+But the ASN.1 doesn't say what data is hashed in the Digest.
+So you have to flip back to the text and hope there's a description
+of what is hashed.   Sometimes there is, sometimes there isn't.
+
+
+BTW, Set was the name of an old Egyptian god, the one who slew Osirius.
+Brewers' Dictionary of Phrase and Fable says under the entry for Set that he
+"came to be regarded as the incarnation of evil".
+
+-- 
+   Eric Murray  ericm@lne.com  Network security and encryption consulting.
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+
+

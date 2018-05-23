@@ -1,0 +1,131 @@
+From: b44729@achilles.ctd.anl.gov (Samuel Pigg)
+Date: Fri, 3 Sep 93 22:15:35 PDT
+To: cypherpunks@toad.com
+Subject: Remailer Reliability
+In-Reply-To: <9309040413.AA23647@netcom5.netcom.com>
+Message-ID: <9309040511.AA07959@achilles.ctd.anl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> On Fri, 3 Sep 1993 21:13:47 PDT, doug@netcom5.netcom.com (Doug Merritt) said:
+
+	Doug> sameer@netcom.com (Sameer Parekh)
+>install-script I can add this little feature. Which newsgroup? Should
+>someone create an alt.remail? How exactly would it be implemented? I'm
+>thinking that simply the user would do:
+> [...]
+>	And the remailer would post to alt.remail:
+
+	Doug> There are two problems here. One is that the remailer
+	Doug> exposes itself and defeats traffic analysis avoidance.
+
+Not necessarily. If the "post this message to alt.remailer" command
+for a smart message were executed via splitting off another message
+with its own encrypted header and path through the remailers to an
+anonymous posting service. (as suggested by miron@extropia.wimsey.com)
+
+	Doug> The other is a standard transaction processing sort of
+	Doug> problem; the posting to alt.remail might fail even
+	Doug> though all else worked.
+
+I agree this could certainly be a problem (esp. executed as above.)
+
+	[..]
+
+	Doug> b44729@achilles.ctd.anl.gov (Samuel Pigg) said:
+>By breaking a message into pieces and sending them via different paths
+>to the same destination ("path forking"), this can only make traffic
+>analysis easier, because all the pieces lead to the same destination,
+>and you can follow any of them to get to the anonymous recipient.
+
+	Doug> Depends on how it's done. As stated this analysis
+	Doug> implies that traffic analysis is *always* possible,
+	Doug> since after all, the message must somehow make it to its
+	Doug> destination. In other words, I disagree.
+
+No I'm not implying that. But there really isn't any way doing that
+could make such an analysis *harder*, as by splitting pieces of the
+message off, you have multiple parts all going to the same
+destination.  This gives the attacker redundant paths to follow,
+and if the attacker can trace *any* message, he can discover
+the identity of the recipient. There would be no "dead-ends" for
+the attacker. (when I say "follow" I don't necessarily mean follow
+in a literal sense, but any traffic based statistical analysis.)
+
+	Doug> This needs to be done in conjunction with other standard
+	Doug> cypherpunk fare, of course. The major design problem
+	Doug> I've had is not with security, it's with fault
+	Doug> tolerance. Statistical fault tolerance is available, but
+	Doug> I prefer leaving that kind to the underlying base
+	Doug> systems and networks, and trying to find a top level
+	Doug> algorithm that is 100% guaranteed to either work or
+	Doug> report failure, so long as the host systems/networks
+	Doug> don't fail undetectably. A handshake ACK of receipt
+	Doug> would help, except that it might not get back even if
+	Doug> the original reached its destination.
+
+I agree this is the major problem, with the current state of the
+remailers, but it may not be a problem with a stable remailer web and
+an "anonymous address server" (see my long laborious boring posts
+regarding this from about a week ago.)
+
+>follow them all), as only one will arrive there and the rest would die
+>after a number of remailer hops.
+
+	Doug> This is actually less safe than an approach which
+	Doug> requires multiple pieces to arrive via multiple paths.
+	Doug> Bad luck might leave your one path completely in the
+	Doug> hands of bad guys (posing as cypherpunks, let's say).
+
+I don't think so. This way there is only one (or a few) paths that
+actually would lead to the recipient, and many "blind alleys" for an
+attacker to follow. With the multiple-pieces-same-destination scheme
+*any* one path would be enough to determine the recipient.
+
+>I really think that non-deterministic "smart messages" are the way to
+>go here.
+
+	Doug> This I agree with; but the way that is done is critical.
+
+>A simple command language for the remailers would allow
+>the header construction software already being worked on by
+>ebrandt@jarthur.Claremont.EDU (CRM) and others to use tricks
+>like this to defend against attacks. 
+
+	Doug> Cool. More info?
+
+I'm not saying that CRM actually uses a command language (it can't--
+nothing has been agreed upon/worked out yet!) but tools like CRM
+would be able to use a remailer command language to tailor the
+message's (or anonymous address block's) anonymity protection.
+See that same long, boring post I made about a few suggestions
+for what such a language could contain/be useful with.
+
+>	The defense complexity would be a function of the users'
+>header construction software and needs. People who need "minimal"
+>anonymity would have simpler anonymous address blocks, as compared to
+>those who require "serious" anonymity, and the remailers themselves
+>would have a lighter load (not having to implement very serious
+>security for *all* messages-- just those that need it).
+
+	Doug> Strongly agree.
+
+	Doug> BTW I consider this emphasis on batch mail to be short
+	Doug> sighted. I'm designing for interactive cyberspace. I
+	Doug> have a complete algorithm in mind, except I think it
+	Doug> still needs some more OLTP wisdom added in.
+
+A remailer command language could include instructions to
+specify how long to hold this message (possibly to be combined
+with some remailer batching functions.)
+
+	[..]
+
+Sam Pigg                                  dt1acaa@cfraix.cfr.usf.edu
+samp@renoir.cftnet.com        <or>       b44729@achilles.ctd.anl.gov
+PGP Key Fingerprint: ED A7 49 33 65 90 9A BD A4 E4 C5 92 5A 00 BC 6C
+
+
+
+

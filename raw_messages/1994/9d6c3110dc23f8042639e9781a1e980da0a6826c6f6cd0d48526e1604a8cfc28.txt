@@ -1,0 +1,48 @@
+From: Phil Karn <karn@unix.ka9q.ampr.org>
+Date: Sat, 6 Aug 94 00:25:55 PDT
+To: cypherpunks@toad.com
+Subject: fast 386 DES code figures
+Message-ID: <199408060726.AAA00390@unix.ka9q.ampr.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To see if software DES could really be made acceptable in a IP
+security protocol, I've been bumming cycles out of my old DES code.
+
+I've completely translated the encrypt and decrypt routines to
+assembler, with no calls or jumps inside either routine.  I picked up
+Richard Outerbridge's seriously clever initial and final permutation
+algorithm from Schneier, along with a few of his other tricks.
+
+The bottom line: about 38,373 encryptions/sec (2.456 megabits/sec) on
+a 50 Mhz Intel 486 running in 16-bit real mode. This includes the
+overhead of the C loop that calls the encrypt function and prints a
+status line every 10,000 loops.
+
+The code would probably run faster if assembled and run in 32-bit
+native mode, as this would eliminate a lot of 1-clock operand size
+prefixes (I do many 32-bit operations).
+
+Oh, by the way, if I eliminate the permutations the speed goes up to
+about 42,986 encryptions/sec (2.751 megabits/sec), an increase of
+about 12%. That says I should be able to do triple-DES at about 13,777
+blocks/sec (881.7 kbit/sec) although I haven't tried it yet.
+
+What still bugs me is that Schneier lists the speed of one commercial
+DES implementation as 40,600 encryptions/sec on a 33 Mhz 486.  I just
+don't see how that's possible without using a lot more memory for
+lookup table space (I use only 2K, which is nice in a DOS
+environment).
+
+In any event, this should be enough for a T1 link (half duplex) as
+long as too many cycles aren't needed for things like routing
+packets. :-)
+
+Phil
+
+
+
+
+
+

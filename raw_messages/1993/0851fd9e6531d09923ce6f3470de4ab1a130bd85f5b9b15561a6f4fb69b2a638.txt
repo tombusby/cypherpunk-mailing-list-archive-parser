@@ -1,0 +1,41 @@
+From: Brad Huntting <huntting@glarp.com>
+Date: Tue, 30 Nov 93 09:32:12 PST
+To: m5@vail.tivoli.com (Mike McNally)
+Subject: Re: Cryptosplit 2.0
+In-Reply-To: <9311301342.AA25298@vail.tivoli.com>
+Message-ID: <199311301731.AA06857@misc.glarp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Brad Huntting writes:
+> If I remember coorectly it's KerberosV uses an MD5 hash of /dev/mem.
+> 
+> Still, probably not 128 bits worth of entropy.
+
+Mike responds:
+> Gee, that seems pretty amazing.  On a typical workstation, there's a
+> heck of a lot going on; in the megabytes of data in /dev/mem I'd think
+> it quite unlikely that there's a practical way to predict or recreate
+> a configuration.
+
+Well, Assuming I was just creating a key and not doing something
+else at the same time, it would be pretty easy to predict what
+processes were running.  It has about 6000 pages of physical memory.
+From knowing what processes are running, you could probably narrow
+down the pages they would have in memory to at most half again that
+number.  This gives you mabey 9000 choose 6000 posiblilitys for
+what process memory looks like.  That gives about exp(3000*ln(7000))
+or 2^37k posiblilities...  I suppose that is more than 128 bits.
+
+So if you cant predict which pages will land where in memory (which
+may be a false assumption), this is probably a good method for
+getting a random number on a unix box.
+
+
+brad
+
+
+
+

@@ -1,0 +1,60 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 21 Oct 1996 01:31:14 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: [crypto-philo]OTP or DES?
+Message-ID: <199610210830.BAA16727@dfw-ix5.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 02:45 AM 10/20/95 -0500, walrus <walrus@tcgcs.com> wrote:
+>I would argue that the security of an OTP is
+>derived not from the fact that it really is secure, but from the fact that
+>it is claimed to be an OTP.  
+
+The meaning of "Security" depends on your threat model.
+Are you worried about
+- having your message noticed?
+- having your message decoded?
+- being able to deny a possible decoding of your message?
+
+Whether your message noticed or not depends a lot on the environment;
+in some places "pure noise" is not noticeable, while in others it
+really stands out (posting it to a text newsgroup, for instance.)
+If you simply remove the "----- BEGIN PGP" etc. headers/trailers from a PGP
+message,
+it's still got a well-defined format, including magic numbers indicating
+what kind of data is in each block, block length indicators, etc.
+They're both noticeable to someone who's trying to find them and
+strong evidence that something is a PGP message.  That's why there's a
+Stealth-PGP, though even it's not perfect.
+
+As far as "Secure" meaning "They can't decode the message",
+if you use a One-Time-Pad more than once, you can lose (viz. VENONA.)
+If you use a pad that's not true random numbers, but is some simple
+LFSR or LCM PRNG, or some random English-language book, it's pretty easy
+for skilled cryptanalysts to decode it.
+
+If you use something that has a well-defined structure as a pad,
+and the Bad Guys notice your message and decode it, it's not credible
+to say "oh, no, it's just a one-time pad, the fact that there's
+one chance in 2**168 of that particular series of random numbers
+matching the output of triple-DES shouldn't influence you any, Judge"....
+You're gonna go to jail.    
+
+What gives you deniability with OTPs is that they _can't_ produce a 
+meaningful message that's any more probable than any other meaningful 
+message of the same length, so you can argue that it really says
+"BUY MORE" instead of "RUN AWAY" or "ATTACK!!" and even if they guess
+you're lying, they can't tell what the true message was.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk
+  Imagine if three million people voted for somebody they _knew_,
+  and the politicians had to count them all.
+
+
+
+
+

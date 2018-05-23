@@ -1,0 +1,62 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 6 Oct 1997 16:08:02 +0800
+To: eb@comsec.com
+Subject: Re: Secure phone
+In-Reply-To: <199710032326.QAA19691@comsec.com>
+Message-ID: <199710060125.CAA03034@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Eric Blossom <eb@comsec.com> writes:
+> >Each party reads off a series of digits displayed on their screen.  Out
+> >loud.  To each other.  Over the secure phone.
+> >
+> >The MITM attacker can't duplicate the hash on both ends, because a hash of
+> >the public keys used to make the connection are different between the
+> >MITM's public key and the real public keys.
+> 
+> In addition, to keep life even more interesting, prior to exchanging
+> the public exponentials g^x and g^y, commitments (hashes) to those
+> values are exchanged...  If the commitments don't match the final
+> values, the protocol terminates.  
+
+I can't see that this prevents MITM either.
+
+Eve, the attacker, just sends commitments to the values she would have
+sent in performing the MITM were there no commitments.
+
+Still falls back to a belief that a well resourced attacker can't
+splice audio in real time.
+
+Say (for example) if someone smuggled me one of your phones, and I
+called up Tim.  The only protection I'd have is recognizing Tim's
+voice after hearing him speak breifly years ago.  (American accents
+sound similar to me).
+
+On the other hand, using persistent key public key crypto, Tim has
+been signing his posts recently, and I have an ancient public key of
+his stashed away which his new key is signed with.  If we were able to
+construct a protocol to bolt on top of the reading of hashes, we could
+have much greater protection against MITM.
+
+To answer the other poster who opined that you had no business saying
+things to people who's voices you don't recognize: nonsense.
+
+We're saying things all the time to people who's voices we've _never_
+heard with PGP.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

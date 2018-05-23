@@ -1,0 +1,60 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Sun, 24 Nov 1996 15:49:56 -0800 (PST)
+To: The Deviant <deviant@pooh-corner.com>
+Subject: Re: IPG Algorith Broken!
+Message-ID: <199611242349.PAA02899@netcom6.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At  2:16 PM 11/24/96 +0000, The Deviant wrote:
+>On Sat, 23 Nov 1996, Bill Frantz wrote:
+>> I thought Shannon proved one-time-pads to be unbreakable using information
+>> theory.
+>
+>Different ball game.  OTP isn't "unbreakable" .  OTPs are secure because
+>no matter what key you use, it _will_ decrypt, so your plaintext is still
+>hidden simply because it could decrypt to whatever the person trying to
+>decrypt it wants it to.  Its not that its unbreakable, its that its
+>breakable in _so many ways_.  
+
+I think we differ on the definition of "unbreakable".  A quick stab at my
+(admittedly very vague) definition includes the inability of the analyst to
+determine (by the structure of the plaintext) that he has a correct
+decryption.
+
+When I look in AC2, Schneier uses "break" in many ways.  Let me evaluate
+OTP against his taxonomy of attacks:
+
+Ciphertext-only:   Unbreakable
+Known-plaintext:   Unbreakable, since the pad is never reused
+Chosen-plaintext:  Unbreakable, ditto
+Adaptive-chosen-plaintext: Unbreakable, ditto
+Chosen-ciphertext: This attack doesn't seem to apply
+Chosen-key:        This attack requires that the OTP doesn't have 
+                   1-bit-of-entropy/bit which implies it isn't an OTP.
+Rubber-hose:       Since any decryption is equally plausable, OTPs are
+                   resistant to this attack.  OTOH, it means they may 
+                   keep beating you even after you've given them the
+                   correct decryption.
+Purchase-key:      This attack seems the only way to break an OTP.
+ 
+If you accept Purchase-key as a valid attack, and it certainly has worked
+in many real-life situations, then no system is "unbreakable" and there is
+not any point in using the term.  If you leave it out of the valid forms of
+attack, because all systems are vulnerable to it so it doesn't help in
+selecting a cryptosystem, then the OTP is "unbreakable".
+
+How do you want to define "unbreakable"?
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | The lottery is a tax on    | Periwinkle -- Consulting
+(408)356-8506     | those who can't do math.   | 16345 Englewood Ave.
+frantz@netcom.com |       - Who 1st said this? | Los Gatos, CA 95032, USA
+
+
+
+
+
+

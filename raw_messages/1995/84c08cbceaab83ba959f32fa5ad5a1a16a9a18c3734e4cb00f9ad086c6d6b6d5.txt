@@ -1,0 +1,114 @@
+From: Mark Murray <mark@grondar.za>
+Date: Tue, 31 Oct 1995 07:36:57 +0800
+To: "Theodore Ts'o" <tytso@MIT.EDU>
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+Message-ID: <199510302148.XAA00832@grumble.grondar.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>    Something I didn't mention earlier; we felt that letting the unwashed
+>    masses read /dev/*random was not a good idea, as they could deplete
+>    the pool of entropy all to easily for attack purposes. 
+> 
+> That should be a system administration issue.  If someone wants to make
+> /dev/random readable only by root at their site, that's their business.
+> I don't see any point in trying to enforce that in the kernel code.
+
+Is not in the kernel, this is just the permissions on /dev/*random.
+
+> I don't agree that restricting read access is useful.  First of all, if
+> the pool of entropy is depleted, someone who tries to obtain entropy by
+> reading /dev/random will know that they didn't get enough entropy.  So
+> assuming a program that actually checks return values from system calls,
+> this is at worse a denial of service attack, and there are much easier
+> ways of performing those srots of attacks: "while (1) fork()", for
+> example.
+
+Hmm. Lemme think about this...
+
+> Secondly, making /dev/random only readable by "privileged programs"
+> means that people won't be able to compile their own version of PGP that
+> can take advantage of the random number generator.  Instead, they would
+> have to use a setuid version of PGP, and I'm quite sure PGP wasn't
+> written such that it would be safe to turn on its setuid bit.  
+
+How about SetGID? We were going for 660 root.kmem.
+
+> Finally, even if you did have trustworthy applications which you could
+> setuid and only allow those programs to have access to /dev/random,
+> someone who repeatedly ran those applications could still end up
+> depleteing the pool of entropy.
+> 
+> So in the general case I would advise that /dev/random be left world
+> readable, since you *do* want general user programs to have access to
+> high quality random numbers.  
+
+Ponder... I'll put this forward.
+
+> Again, /dev/random can be set to whatever permissions the system
+> administrator wants.  Secondly, writing to /dev/random merely adds
+> randomness to the pool, via the mixing algorithm.  It won't actually
+> permit people to *set* the state of the pool, and assuming that the
+> state of the pool is not known before the write operation, writing to it
+> won't allow the user to know what the state is after the write
+> operation.
+
+What happens if some attacker does:
+
+for (;;) {
+	write_to_devrandom(NULL);
+	check_to_see_if_state_is_crackable();
+}
+
+? "Gut feel" suggests to me that large ammounts of "predicted" input might
+be worse than the normal sort of system noise you have been using.
+
+> And, for race condition reasons, something which I need to implement
+> soon is an ioctl(), usuable only by root, that simultaneously updates
+> the entropy estimate *and* submits data to be mixed into the pool.  (Why
+> this is necessary should be obvious after a few minutes thought.)
+
+Clue me in - I'm not quite with you? :-)
+
+>    Are you sure about this? The stochastisity if this would be pretty
+>    hefty. Not only would our attacker have to get the _time_ that the
+>    interrupt occurred (if it interrupted our machine), he would then have
+>    to process in brute-force mode all possible times in his error range.
+>    What is more, more interrupts are coming in...
+> 
+> I didn't say that it would be trivial for an attacker to do this, but
+> it's certainly *doable*.  Some of the network traffic analyzers that
+> have been made available (I think Sandia National Labs has one that does
+> this), records down to millisecond accuracy when a packet was sniffed on
+> the network.  
+
+Is this millisecond accuracy quantifiable in terms of bits of entropy?
+if so, the ethernet is surely safe?
+
+> For this reason, people shouldn't really trust initializing PGP's random
+> number generator over a network connection, since it is possible for an
+> adversary to obtain very high quality timings of when your telnet or
+> rlogin packets appeared on the network, and hence be able to guess
+> (within some error range) what the interkeyboard timings which PGP used
+> to initialize its random number generator.
+> 
+> The adversary might have to try a large number of possibilities, but if
+> the number of possibilities is less than a brute-force search, you
+> definitely have a weakness --- a fact which Netscape learned to its
+> embarassment a few weeks ago.
+
+Again, if you can quantify the number of possibilities into bits of entropy,
+your code is good. Depending on current technology, this may have to change.
+
+M
+
+--
+Mark Murray
+46 Harvey Rd, Claremont, Cape Town 7700, South Africa
++27 21 61-3768 GMT+0200
+Finger mark@grumble.grondar.za for PGP key
+
+
+
+

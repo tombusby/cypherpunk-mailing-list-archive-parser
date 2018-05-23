@@ -1,0 +1,53 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sun, 6 Mar 94 11:21:28 PST
+To: cypherpunks@toad.com
+Subject: Truly Stealthy PGP (algorithm)
+Message-ID: <199403061922.LAA26901@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(I'm having a bit of trouble with my mail UA; all of my saved messages on
+this thread keep disappearing, so I apologize for a slight lack of
+continuity here.  I'm having to work solely from memory of the earlier
+discussion.)
+
+If I understand Eric's general idea, we would keep trying session keys
+under a set of rules which would lead to the desired statistical
+distribution of the encrypted key.  Here is an algorithm which would work.
+(I hope I am remembering the notation Eric used correctly.)
+
+Let L be the next power of 256 above the modulus n.  Let t be the integer
+part of L/n, so that L = n*t + s with s in [0,n).  Call the PGP IDEA session
+key SK, and the encrypted version of that m = SK^e.  Now do these steps:
+
+1) Pick a random SK in [0,n).
+2) RSA-encrypt it to form m = SK^e mod n.
+3) Choose a random k in [0,t].
+4) Calculate the "stegged" encrypted key as M = m + k*n.  This will be
+uniform in [0,(t+1)*n) if m is uniform in [0,n), which I think it is.
+5) if M is not in [0,L) (i.e. if M >= L) then go back to step 1.
+6) Otherwise store M as a raw binary number taking log base 256 of L bytes.
+
+The idea is that once we get M uniform in [0,(t+1)*n) we can make it
+uniform in [0,L) simply by rejecting those candidates which were too high.
+This will only happen if k=t and m>=s.
+
+Now, it seems to me that the worst case for rejection is when n=L-1, in
+which case t=1, s=1, and almost one-half of all initial SK choices will
+be rejected.  Following Eric's reasoning, this would be an effective loss
+of one bit of key length, from say 1024 to 1023, which is tolerable.
+(Eric actually suggested that as many as two bits could be lost, but I
+don't see that happening with this algorithm.  It doesn't really matter
+anyway because both 1 and 2 are so small.)
+
+Using this algorithm with the current Stealth PGP would produce a
+"truly stealthy" version which I think would be indistinguishable from
+random bytes without access to the receiver's private key.
+
+Hal
+
+
+
+
+

@@ -1,0 +1,55 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 5 May 94 22:11:47 PDT
+To: cypherpunks@toad.com
+Subject: Lady Ada's Cryptophone
+Message-ID: <199405060512.WAA15752@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Lady Ada writes:
+
+> - -- Diffie-Hellman for key exchange
+> - -- Triple DES for data encryption
+> - -- RSA for digital signatures/identity verification
+>                 
+> Rationale: 
+>     Unlike encryption protocols designed for email,
+> a phone system will need to exchange public keys
+> bidirectonally at the beginning of every call, and
+> the existance of an insecure two-directional link can
+> be assumed.  Diffie-Hellman is perfect for this application.
+> The alternative, RSA, would require either generation of
+> new keypairs at call time, which is very slow, or the
+
+Diffie-Hellman can be quite slow as well, depending on the size
+of the exponents.  It involves calculating x**y, twice, where x
+and y are about 512 to 1024 bits.  Some variants have the exponent
+yl be smaller, around 140 bits, but if strong primes are used for
+the modulus the exponent will be large like this.  And the Chinese
+Remainder Theorem speedup used by PGP when RSA signing would not
+be applicable here.  So calculating a DH key exchange could take
+many times longer than an RSA signature by PGP.  This takes about
+fifteen seconds on my old PC; doing a DH key exchange might take a
+minute.
+
+>    Each phone shall have a button (hard or soft)
+> which can be pressed by the caller at any time.  Pressing
+> it will cause a new TDES key to be generated and exchanged.
+> [Should it generate a new n and g for D-H, or just create
+> a new x and demand a new Y?]  Paranoid users can press
+> this button every few seconds if they wish.  (In my
+> humble opinion, even a single-DES phone is quite secure
+> if it has this feature.)
+
+It might be possible to compute the DH in the background while the
+conversation is going on, but if the computer is also compressing,
+uncompressing, encrypting and decrypting at the same time, that's
+not going to be easy.
+
+
+
+
+
+
+

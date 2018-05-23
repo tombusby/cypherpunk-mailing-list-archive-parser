@@ -1,0 +1,99 @@
+From: die@die.com
+Date: Mon, 11 May 1998 13:55:42 -0700 (PDT)
+To: Sunder <sunder@brainlink.com>
+Subject: Re: [Fwd: 3Com switches - undocumented access level.]
+In-Reply-To: <Pine.BSF.3.91.980509032901.17424A-100000@mcfeely.bsfs.org>
+Message-ID: <19980511165629.B17830@die.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, May 11, 1998 at 10:50:17AM -0400, Sunder wrote:
+> Dave Emery wrote:
+> 
+> >         This is not that uncommon.   We implemented such a backdoor in a
+> > router I worked on the design of some years ago.   The magic password
+> > was a function of the model and serial number of the machine (not as I
+> > remember a very strong hash either), and different for all boxes.  We
+> > (or rather the marketing and support people) felt that leaving a
+> > customer who forgot his password with no option but reset the router to
+> > its factory defaults was more undesirable than providing a potential
+> > attack point for  sophisticated hackers and spooks 
+> 
+> This is still unexcusable.  It would have been just as simple to include a
+> hidden reset switch in a pannel somewhere that would zap all the passwords
+> on the router without zapping the config, and maybe send some alarms out
+> via SNMP incase it wasn't something that was wanted.
+
+	It took a great deal of earnest debate to get any kind of reset
+switch implemented at all - they cost some amount of money and room in
+the box, and there were those who held that having a switch there could
+invite nervous diddlers to reset the machine causing a crash.   So having
+several was harder to sell.  We eventually settled on two, one which would
+reset to defaults when pressed at the same time as the other which simply
+rebooted.   The need to reset a box whose configuration was terminally 
+screwed up to factory defaults was acutely felt by the support people, 
+who had to pay a lot to swap out or service onsite a box that someone had
+misconfigured so it wouldn't talk to its serial ports (which was
+unfortunately possible).
+
+	I don't think those of us who were not happy with the backdoor
+would have been much happier with a switch that just magicly reset
+passwords, since that would have allowed someone with a moments
+unguarded physical access to the box in a wiring closet somewhere to get
+in (perhaps hours later from a safe haven via the network) without
+necessarily causing a  disruption that might be noticed and investigated
+(and not everyone back then had reliable SNMP management and alarms
+running).  The solution we chose forced someone with that kind of
+transient physical accesss to completely take the machine off line for
+minutes or hours while restoring the configuration which was much
+likelier to be observed (and required the intruder know the old
+configuration in the first place).  We felt this made our reset switches
+less of a hazard from 30 second quicky attacks - attacks much easier
+to pull off than having enough time connected to the box on a terminal
+or laptop to restore the old configuration. 
+
+> 
+> 
+> >         I suspect that a large fraction of alarms, security systems,
+> > pbxs and the like incorperate such backdoors for precisely the same
+> > kinds of reasons - it is simply too catastrophic to reset everything
+> > if someone forgets the password.   I know several commercial Unixes
+> > had such backdoors in them for emergency access years ago, and wouldn't
+> > be overwhelmingly surprised if some current OS's still have magic backdoors.
+> 
+> That doesn't mean that the ankle biters won't find them.  For example, I could
+> put a sniffer on the network coming into the router and call up tech support
+> and say "Hi" I lost my password, here's my IP address, help, help.
+> 
+	No doubt.   Generally there was some minimal effort to ensure
+that the person calling tech support was legit (callbacks, lists of
+contact names and so forth) but there is probably little doubt that a
+clever social engineer could perhaps have gotten a box password that
+way - although there would certainly have been a trail left that could
+have been followed.   For the paraniod we encouraged use of dial up
+modems on the console port rather than network access.
+
+
+> I can then do the same thing a week later with the same router incase the
+> hash is time dependant, and then later with another router with a different
+> serial number, and I'll have much info to get started on how your hash works.
+> 
+> Piece of cake.
+> 
+	Calling up for emergency help with lost passwords was
+fortunately not a very common occurance, and generally was noted and
+investigated. While our hash wasn't wonderful, I don't think it would
+have been easy to obtain enough password/router pairs by calling tech
+support to break it that way.  Would have been much easier to obtain a box
+and disassemble the code.   And that would have left no trail.
+
+
+-- 
+	Dave Emery N1PRE,  die@die.com  DIE Consulting, Weston, Mass. 
+PGP fingerprint = 2047/4D7B08D1 DE 6E E1 CC 1F 1D 96 E2  5D 27 BD B0 24 88 C3 18
+
+
+
+
+

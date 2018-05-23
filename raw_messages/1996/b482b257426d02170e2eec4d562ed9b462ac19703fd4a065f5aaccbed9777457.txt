@@ -1,0 +1,56 @@
+From: Nelson Minar <nelson@media.mit.edu>
+Date: Sat, 21 Dec 1996 16:34:07 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Running code on a machine you don't trust (was Re: Executing Encrypted Code)
+In-Reply-To: <v02140b00aedf4a134af2@[192.0.2.1]>
+Message-ID: <cpag20z1kp8.fsf@hattrick.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ph@netcom.com (Peter Hendrickson) writes:
+> At the last meeting references were made to processors which only
+> execute encrypted code.  Decryption occurs on chip.
+> If each chip has a unique public/secret key pair, and executes
+> authenticated code only, there are some interesting implications.
+
+Yes, interesting indeed. It would also partially solve a problem I've
+been thinking about: how can I safely run code on a machine that I
+don't trust?
+
+I'm working on some mobile agent / distributed computation research.
+The basic model is that I send an agent to a server (say, a Java
+interpreter) running somewhere. A lot has been written about security,
+how to protect the server from malicious agents.
+
+But what about protecting agents from malicious servers? Possible
+threat models include servers that steal an agent's propietary code
+and data or servers that deliberately misexecute the agent's code. The
+latter threat model is under serious consideration with the
+distributed DES cracking project that's being designed now.
+
+The ultimate solution is trusted hardware on the server end. I think,
+for a variety of reasons, this is really unlikely to be widly
+deployed. But bringing the trusted hardware needed down to just a
+black-box CPU that decrypts on the fly is a neat idea.
+
+Other ideas include obfuscating code (protects against theft),
+splitting up your computation across multiple machines (spread the
+risk of theft), independently verify the results of remote
+comptuations (protects from spoofing), or build some reputation
+mechanism for servers (so bad guys are identified). None of these
+solutions is very satisfying.
+
+I suspect that really guaranteeing safety to mobile agents is
+impossible, or at least very difficult, without trusted hardware. But
+I'm not 100% sure. There are some interesting notes in Applied Crypto
+2nd about performing computations on encrypted data (p.540). These
+algorithms seem to be of very limited application. Or are they?
+
+If anyone has any thoughts on this issue, I'd love to hear them. If
+you send to cypherpunks, please also mail me privately as I'm going
+offline for a few days..
+
+
+
+

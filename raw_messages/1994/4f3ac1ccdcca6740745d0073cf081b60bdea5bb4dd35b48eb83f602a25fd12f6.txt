@@ -1,0 +1,36 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 2 Jun 94 17:01:18 PDT
+To: Mike Ingle <MIKEINGLE@delphi.com>
+Subject: Re: Faster way to deescrow Clipper
+In-Reply-To: <01HD2TUJI8NC95Q50V@delphi.com>
+Message-ID: <9406030001.AA00327@squeamish-ossifrage.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike:
+
+> The attack posted here uses a brute-force search to find a phony LEAF
+> which has a valid checksum. Instead, why not just initialize the chip
+> with a session key and get the LEAF. Reset the chip and initialize it
+> with a different session key, but send the first LEAF instead of the
+> second one. The LEAF would look good unless you tried to decrypt the
+> session key. The wrong-IV problem would remain. The NSA should have
+> designed the Clipper so that, if the IV was wrong, the chips would not
+> accept the LEAF. They also should have used a much larger (32-bit or
+> even 64-bit) checksum.
+
+Because if *your* key really generates the LEAF, then they have your
+ID in the LEAF, no matter if it is sent properly or not.  They might
+not be able to decrypt the communications, but they still get your ID.
+
+If you randomly generate a LEAF that works, odds are that the
+decrypted value will not be your ID.  (If you could consistently
+choose random blocks such that your ID appears when it is decrypted, I
+would say that you have found a hole in Skipjack :-)
+
+-derek
+
+
+
+

@@ -1,0 +1,104 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 23 Oct 1997 04:42:37 +0800
+To: jon@pgp.com
+Subject: Re: PGP 5.5 CMR/GAK: a possible solution
+In-Reply-To: <3.0.3.32.19971022113904.00bca690@mail.pgp.com>
+Message-ID: <199710221948.UAA05752@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Jon Callas <jon@pgp.com> writes:
+> At 03:02 AM 10/22/97 -0700, mark@unicorn.com wrote:
+>   [CMR tagged keys description]
+> 
+> You have it mostly right. There's a tag in a self-signature that says,
+> "please encrypt to this other key, too." The only time you are required to
+> encrypt to Alice's other key is if you and Alice share the same additional
+> key (and not always even then).
+
+"Not required to encrypt to CMR key" but "mail will bounce which
+doesn't encrypt to CMR key" seems like a fairly small distinction to
+me.  So you don't have to encrypt to the CMR key, but if you don't the
+message won't get there?  (Of course only when strict flag is set on
+policy enforcer, and user id on key you are sending to has CMR request
+tag).
+
+Sort of like: you can dial the phone number wrongly if you want, it's
+your choice (to avoid phone tap).
+
+And yes you can bypass it, if you're technical, but most people
+aren't.  And the bypass can be detected if anyone is checking.
+
+>    So PGP's "everything private unless you choose to make it public" system
+>    seems backwards. Surely what we really need to meet these customer demands
+>    is an "everything public (within the company) unless you choose to make it
+>    private" system? That is, all mail to my department inside the company
+>    should be encrypted to a department key, shared by all members, *unless*
+>    it is confidential, in which case it should *only* be encrypted to me. 
+> 
+> This is certainly possible with the system, and in fact easier to implement
+> than anything else.
+
+Sounds like a simpler interim solution, if that's what CMR reportedly is?
+
+>    The effect of this is that if someone wants to send email about an urgent
+>    bug and I'm out at lunch, any of my co-workers can read that mail. But if
+>    they want to send *me* mail about confidential inter-company negotiations,
+>    the co-workers could decrypt the outer layer of the message, but would be
+>    blocked by the inner layer encryption to my personal key. 
+>    
+>    As I see it, this system is simple, solves the problems which PGP claim
+>    they need to solve without creating the snooping problems Tim and others
+>    have discussed, cannot easily be adapted to GAK ('This message is to be
+>    encrypted to the FBI public key. If it is confidential, click here to
+>    superencrypt to the recipient's personal key'), and won't require a
+>    massive change to the PGP source code. 
+> 
+> This is exactly CMR. The only thing that Business 5.5 does is automatically
+> add the department for you, and put up the recipient dialog so it can be
+> taken off. Congrats.
+
+It's close, but not quite the same.
+
+The major distinction is that Mark wasn't proposing leaving recovery
+information sticking out on email traffic going over the Internet in
+the form of CMR extra recipients.  (Also Mark wasn't proposing
+bouncing mail which didn't meet requirements)
+
+I you have a policy enforcer set to allow all mails through (no strict
+setting), then what Mark described does sound similar at first glance,
+but there is actually a very significant difference: there is no
+message recovery concept: just emails are encrypted to who they're
+meant to be sent to.  (In one case the individual, in the other case
+the department).
+
+The outer encryption layer I don't think actually adds anything in
+this case (other than potentially extra security if the individual's
+passphrase is poor).
+
+
+Given that, couldn't the same be achieved with 0 modifications?  Have
+different keys, some shared, some not.
+
+sales@acme.com
+fred@acme.com
+jane@acme.com
+
+with sales@acme.com key shared between sales manager and sales
+persons?
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

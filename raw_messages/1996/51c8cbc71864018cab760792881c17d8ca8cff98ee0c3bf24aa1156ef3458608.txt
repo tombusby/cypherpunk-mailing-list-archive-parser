@@ -1,0 +1,53 @@
+From: cmca@alpha.c2.org (Chris McAuliffe)
+Date: Tue, 12 Mar 1996 13:26:54 +0800
+To: savron@world-net.sct.fr
+Subject: Re: PGP : what to do when a user ID has multiple RSA keys
+In-Reply-To: <199603110740.IAA06248@storm.certix.fr>
+Message-ID: <199603120044.QAA09080@eternity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[To: savron@world-net.sct.fr]
+[cc: cypherpunks@toad.com]
+[Subject: Re: PGP : what to do when a user ID has multiple RSA keys ]
+[In-reply-to: Your message of Mon, 11 Mar 96 07:25:59 GMT.]
+             <199603110740.IAA06248@storm.certix.fr> 
+
+>My DOS version of PGP 2.6.2 came with a built in PUBRING.PGP 
+>containing two keys ( 1024 and 512 size ) with the same user ID .
+>For testing  purposes I wanted to encrypt a message with the 512 
+>length key , but only the 1024 size key could be used .
+
+>How can I select the right key , apart from making a clone 
+>PUBRING.PGP with only the key I want to use ?
+
+You can specify by the keyid. Do a pgp -kvv:
+
+	$ pgp -kvv cmca@alpha.c2.org
+	Type bits/keyID    Date       User ID
+	pub  1024/6C87FFA5 1996/02/06 Chris McAuliffe <cmca@alpha.c2.org>
+	1 matching key found.
+
+Now do the encryption
+	$ pgp -e 0x6C87FFA5 file
+
+Note the '0x' prefix on the keyid
+
+Chris McAuliffe <cmca@alpha.c2.org> (No, not that one.)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBMUS+3IHskC9sh/+lAQF8jgP+LdUjgTnfv5k4KsOwEuvPmVsw/V/G3jdD
+pyNwOQNtytjSDcGBobspmU4rcx1DObToitJqjzr74G1ytGkrr4wHRS4FWIy3Ea3U
+YgrmEhkviJT7B4Ix/vQcrKZJsn2+ZGML6VyVmWr3ehkEMo20UfjIheeTNUSq2OPL
+rO9LmZiFyhs=
+=MSju
+-----END PGP SIGNATURE-----
+
+
+
+

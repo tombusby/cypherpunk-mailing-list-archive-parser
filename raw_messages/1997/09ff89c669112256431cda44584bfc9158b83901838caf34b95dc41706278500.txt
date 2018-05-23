@@ -1,0 +1,73 @@
+From: Andy Dustman <andy@CCMSD.chem.uga.edu>
+Date: Thu, 27 Mar 1997 08:24:34 -0800 (PST)
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: remailer spam throttle
+In-Reply-To: <3.0.1.32.19970327001712.0065b100@popd.ix.netcom.com>
+Message-ID: <Pine.LNX.3.94.970327105022.9176l-100000@neptune.chem.uga.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 27 Mar 1997, Bill Stewart wrote:
+
+> Andy's model of a remailer in which the remailer sends the recipient 
+> a delivery notice with a disclaimer/waiver/etc. and the recipient returns
+> it to pick up the message raises the level of politeness and lowers
+> the amount of surprise compared to current remailers, so it's a 
+> potentially big win.  If I start up a remailer again some year,
+> other than a middleman, it'll definitely need this kind of feature.
+> Building the positive public reputation of remailers and remailer
+> operators is a critical part of keeping the remailer system running,
+> at least as much as convenient, widely-deployed software.
+
+Well, I hope to have something for you soon. I've been too busy over the
+last few months to work on it, but that may be changing. I'll make an
+appropriate announcement when it's ready.
+
+> For posting to Usenet, the "we have an anonymous posting, anybody want it"
+> approach doesn't sound highly practical, though it could be done,
+
+I mentioned this in another post, but USENET posts would simply have the
+disclaimer and not a delivery notice.
+
+> There's also the problem of publishing acceptable newsgroup lists,
+> since failing messages silently is unfriendly to users, but 
+> there's a traffic analysis problem (Bad Guys can watch who fetches
+> remailer use policies and build up their dossiers.)
+
+I've made stats/keys/help for dustbin available via WWW at
+http(s)?://porky.athensnet.com/~dustman/dustbin. The truly paranoid can
+use https://www.anonymizer.com.
+
+I have considered the possibility of auto-encrypting to recipients: 
+Encrypt using the recipient's public key if it is on the remailer's
+keyring or on the key server (which I can quickly check via http). Two
+problems: What if the user generates a new key? Some mechanism needs to
+exist for the user to inform the remailer, since it already has a key on
+its keyring and won't check the server. And: Malicious users can put
+phoney keys on the keyserver so the real user gets encrypted stuff that
+they can't decrypt.  Solution: Keys need to be verified by magic cookie
+exchange before they are used. Users mail their public keys to the
+remailer, perhaps even through a remailer chain. The software gets their
+e-mail address from the key ID, sends them an encrypted magic cookie, the
+user decrypts with their secret key, mails it back to the remailer (signed
+and encrypted). For a very low-risk remailer (more risky than middleman,
+perhaps), you could require all recipients to supply PGP public keys
+before delivering messages, an interesting twist on "PGP only" :). This
+would be great for nym chains, not so great for other things, though the
+remailer could resort to middleman operation in the case of recipients who
+haven't supplied keys. Dustbin does something related already: If the
+recipient is a known remailer, it doesn't chain; otherwise it selects a
+remailer to chain through. (Note: I don't consider a USENET group a
+"recipient".)
+
+--
+Andy Dustman / Computational Center for Molecular Structure and Design / UGA
+You can have my PGP public key by sending mail with subject "send file key".
+You can have my PGP secret key when you pry it out of my cold, dead neurons.
+http://charon.chem.uga.edu/~andy    mailto:andy@CCMSD.chem.uga.edu    <}+++<
+
+
+
+
+

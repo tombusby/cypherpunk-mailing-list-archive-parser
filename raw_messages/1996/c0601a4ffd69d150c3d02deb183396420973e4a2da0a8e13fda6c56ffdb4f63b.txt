@@ -1,0 +1,116 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 13 Apr 1996 02:06:40 +0800
+To: shamrock@netcom.com (Lucky Green)
+Subject: Re: Protocols at the Point of a Gun
+Message-ID: <199604111939.MAA14774@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There are serious technical problems with the suggestion that labelling packets
+as "Adult" or "Child" using IP options and filtering at ISPs for censorship.
+
+IP works on a per-machine basis (technically, a per-network-interface basis,
+though for most client machines that's the same thing.)  That means that a 
+web or nntp server including some "Adult" material and some "Child" material
+either needs
+a way for an application process to communicate this to the network drivers,
+or needs to label all packets as "Adult" to avoid the politically incorrect risk
+of mislabelling a packet as "Child" when it's not.  The standard TCP/IP API 
+programming interface software on Windows, Mac, and Unix machines doesn't
+provide 
+for applications to _tell_ the network drivers about IP options, so even if
+IPng had censorship features added, the applications couldn't use it.
+(There are a few military multi-level security versions of Unix that give
+you more flexibility for this sort of thing, but they tend to provide
+mandatory security so you _can't_ send a packet marked "UNCLASSIFIED" from a
+"TOP SECRET" session.)  
+
+Another problem is that it only addresses single-user client machines,
+rather than multi-user operating systems such as Linux, which has a million
+or so
+users out there.  The model works fine when you treat a PC as a fancy version of
+a dumb terminal, but a machine shared by multiple users (whether many at one
+time,
+or one at a time) uses a single connection to support all of them - that
+means you
+can't have censored material available to the child and uncensored material
+available to the parent unless the networking software can pass the censorship
+labels on to the application program - but again, the standard operating system
+interfaces (developed over many years by thousands of The Free World's finest
+developers :-) don't have a way to implement it, because it was never a
+design goal.
+
+Trying to implement censored sessions at a transport level instead has its
+own problems.
+First of all, TCP provides reliable sessions; censoring packets based on IP
+labels
+in the middle of a transaction means that TCP will retransmit until the
+packet gets
+through or it gives up and drops the connection, so any "Adult" packets would
+dump a Registered Child out of the browser, even if they were unintentional
+(e.g. from an Adult who labels all packets "Adult" to avoid being liable for
+mistakes,
+or packets from Europe that were default-labelled by a service provider to avoid
+having to read them all, or from the Library of Congress Online Edition if
+the Librarian
+labels each packet correctly.)  On the other hand, UDP packet exchange,
+which doesn't
+use sessions, would require validating the user's ID and authorization on
+each packet.
+
+Furthermore, if the censorship information is carried at the transport level,
+or at a higher level (i.e. headers in the message itself), the only way the
+ISP's routers, which work at the IP level, can censor packets is to perform the
+equivalent of the Post Office steaming open envelopes before delivering them
+to your house, and refusing to deliver them if there's a child living in the
+house
+and the letter either contains a bad word or is written in a language the
+Post Office doesn't understand, such as Finnish or Japanese or PGP.
+ 
+
+At 04:03 PM 4/10/96 -0700, Lucky Green wrote:
+>At 9:48 4/10/96, Duncan Frissell wrote:
+>>We know that governments would like to impose things like the Simple
+>>Tax Transfer Protocol on the Net as well as Is A Person (and Is A Minor)
+>>Protocols.
+>
+>There is one thing about the proposed minor flag addition to IP that I
+>don't understand. [No, I am not surprised by this. Mandatory authorization
+>to establish a connection and an "Internet Driver License", probably in the
+>form or a smart card are coming].
+>If my computer creates the IP packet, what is there to prevent me from
+>modifying the value of the "Minor/Adult" flag at my leisure?
+
+If you create outgoing packets that are labelled "Minor", and contain
+"Restricted to Government-Certified Adults Only, and No Felons or
+Foreigners Allowed" material, you can get busted for it.
+So you have to either restrict all your outgoing packets to be labelled 
+"RtG-C Adults O,aNFoFA", or else make sure all the material you transmit
+passes the "Government-Approved-for-Minors, Foreigners, and Victorian
+ladies" filter.
+
+On the other hand, if you don't log in to your ISP with a
+"government-certified adult,
+non-felon, non-foreigner, politically stable, not-a-Commie-or-Jew" id,
+it'll block any packets not approved for you.  Any news or web server will also
+have refuse to send any "Adult"-labelled material to you if the requests
+arrived on a "Kid"-labelled connection - this means that either the server
+machine
+will have to only carry Kid-approved traffic, or only talk to Adults,
+or add an "Adult" label to all outgoing packets whether marked "Kid" or not,
+or else it will have to break protocol boundaries by passing IP-layer
+information
+up to the application.
+
+
+
+
+
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

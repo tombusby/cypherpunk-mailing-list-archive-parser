@@ -1,0 +1,66 @@
+From: cort@ecn.purdue.edu (cort)
+Date: Thu, 24 Feb 94 17:01:16 PST
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <9402250101.AA05179@en.ecn.purdue.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+              Kinda-Fair-Secret Message Passing
+                           -OR-
+                  Self-Decrypting Messages
+
+
+I have an IDEA.  It may have already been thought of....
+
+Problem:
+  - PGP is great, but like so many infant technologies,
+    encryption programs are not quite "turnkey".
+  - Many people do not have PGP installed.  I want to send
+    messages to some of these people.  (Oh, I know, a true
+    geek doesn't bother to communicate with PlaintextPunks!)
+
+Solution:
+  - Securely encrypted messages with programmable "key
+    question" and "response key" for self-decryption.
+
+Scenario:
+  Fred wants to send a message to Ida.  Fred is a cypherpunk
+  and is quite proficient with PGP.  However, Ida is not
+  set up with PGP and does not desire to learn PK cryptography.
+  Fred and Ida know each other (or something about each other).
+
+  Fred sends a self-decrypting message to Ida in an executable
+  file.  Ida simply receives the file and executes it.  (This
+  is analogous to self-extracting zip files.)
+
+  When the file is executed, it will ask Ida a question that Fred
+  has set up (with her in mind).  This question will ideally be
+  answerable only by Ida.  If Ida answers correctly, her response
+  will form a key to decrypt the message.
+
+I have thought a bit about the implementation.  It seems that
+it may be pretty simple to do using PGP Tools.  The passphrase
+recognition could use a one-way function (MD5?).  IDEA could
+be the encryption algorithm.  RSA is not needed.
+
+The tricky part is providing an executable file while providing
+a little bit of instruction at the front of this file (to instruct
+the recipient to down-load and execute).
+
+Also, it seems that an assumption of recipient platform (e.g. DOS,
+Unix, etc.) may be necessary.  Uuencoding or similar ASCII/binary
+conversion may be required.
+
+Comments?  Would someone do this?  Does it already exist?
+
+It would be a nice augmentation to the PGP package!
+
+Cort.
+-- 
+cort@cc.purdue.edu
+
+
+
+

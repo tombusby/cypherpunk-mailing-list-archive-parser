@@ -1,0 +1,157 @@
+From: Raph Levien <raph@c2.org>
+Date: Thu, 23 Nov 1995 04:59:14 +0800
+To: Carl Ellison <cme@TIS.COM>
+Subject: Re: Design proposal: crypto-capable generic interface
+In-Reply-To: <9511221840.AA24587@tis.com>
+Message-ID: <Pine.SUN.3.91.951122111513.7498C-100000@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Wed, 22 Nov 1995, Carl Ellison wrote:
+
+> >Date: Wed, 22 Nov 1995 10:11:00 -0800 (PST)
+> >From: Raph Levien <raph@c2.org>
+> >Subject: Re: Design proposal: crypto-capable generic interface
+> >Message-Id: <Pine.SUN.3.91.951122094209.29001A-100000@infinity.c2.org>
+> 
+> 
+> 
+> >   In restrospect, "daemon" was a poor choice of words to describe my
+> >proposal. "Slave process" gets the idea across much better, 
+> 
+> I'm a great fan of programming by cooperating processes -- but I still
+> worry when it comes to crypto.  What we need to do, if we want real
+> security, is hold all the crypto secrets (therefore the crypto itself) in a
+> device (PCMCIA card?)  in the physical posession of the user.  The
+> cooperating-process model could make that easier -- but, if designed wrong,
+> it could call for the device to give up a secret to be sent by IPC over to
+> the slave process.
+
+   What I am getting from you is "worry." This does not convince me. I
+want solid technical criticism. Sorry for being so harsh, but that's how I
+feel. 
+
+   In fact, I propose that the security of the "slave process" model is
+_better_ than the realistic alternatives. Without it, the application
+stuff (for example, displaying pretty MIME content) and the crypto stuff
+must share an address space. A bug in the application stuff could corrupt
+or compromise the crypto data structures. As we have seen demonstrated
+several times, it is just not practical to build large, complex
+applications which are worthy of the highest level of trust. Factoring it 
+into two processes helps.
+
+   Tokens are nice, but I think there's a lot to be said for software 
+solutions as well. At the very least, I don't consider the existence of 
+tokens to be an argument that software crypto systems shouldn't be built.
+
+> >> >						 This requires that
+> >> >keys have some nonforgeable names, which is unfortunately not a
+> >> >feature of PGP 2.6.2. S/MIME will do it just fine, if you buy into the
+> >> >Certifcation Authority (<wink> at Nick Szabo).
+> >> 
+> >> Public keys, if that's what you're talking about, have perfectly good
+> >> nonforgeable names -- themselves.  They are unique.  They are the proper
+> >> name which can collect all the attributes of that key which are of interest
+> >> (e.g., permission to spend $, name of a human who knows the private key,
+> >> attributes about that human, etc.).
+> >
+> >   Ok. But public keys have one serious disadvantage: their size. 
+> [...]
+> 
+> >   I propose using the MD5 hash of the whitespace-free MOSS 
+> >representation of the public key, in hex. It's simple enough to be 
+> >described in one sentence, but does everything I want.
+> 
+> That sounds fine -- but why deal with a text MOSS representation?  It's the
+> modulus which is unique -- so just hash the binary bytes of the modulus,
+> MSB first.  There's no need to force anyone checking a key to have all the
+> MOSS printing software in the loop.  You might also consider using SHA
+> instead of MD5 -- but that adds to the character count on your business
+> card.  [I printed up my own business cards with PGP fingerprints for my 2
+> primary keys -- and it took up about 1/4 of the card, in a readable font.]
+
+   I would accept SHA as a reasonable alternative.
+
+   Using the modulus alone is not good enough. A bogus key with the same 
+modulus and a different exponent could be used to mount a 
+denial-of-service attack. Note that the PGP 2.6.2 key fingerprint scheme 
+suffers from a similar problem; since the sizes of the modulus and 
+exponent fields are not included in the hash, it is possible to generate 
+bogus keys with the same fingerprint. Specifying the key size and 
+fingerprint together is, however, unforgeable.
+
+I looked at the MOSS representation of the key (I'm talking PK's here
+only, not all the X.509 stuff). I don't think it would be that hard to
+code. 
+
+> >   Note that PGP 2.6.2 does _not_ allow the use of a public key as the 
+> >name of a public key, unless you do a horrible hack such as replace the 
+> >pubring.pgp file with the one public key of interest.
+> 
+> PGP keyring structures do use the key as its own name, I believe.  The
+> UserID is a separate entity, associated with the stand-alone key.  A
+> signature applies to a pair (UserID,Key).
+
+   I was referring to the interface that PGP presents to the outside 
+world, not its internal keyring structures. These issues come up whenever 
+using PGP from the command line, or trying to interface it with other 
+applications.
+
+> If I could change the PGP keyring structure, I'd add a new entity -- an
+> Attribute block -- a string and my key ID, with a signature on the
+> Attribute+ObjectKey.  This can be done today with the UserID and signature
+> -- and I've even tried it.  It works, but PGP is used to accessing keys by
+> the text in a UserID field and that's not appropriate.  The Attribute would
+> give a statement I'm prepared to stand by, giving testimony about the key
+> being signed or the person who has demonstrated the ability to sign
+> something I've verified with that key.
+
+   I understand that Matt Blaze's forthcoming "Policymaker" will do all 
+this and more.
+
+> We might need to add something like MOSS's aliases, for my use only, to let
+> me access keys.  If I know someone as Bobby -- that's an association in my
+> own head -- not applicable to anyone else.  When I access him by that
+> alias, that's for my use.  Therefore, only I should define it and only I
+> should sign the association.  This is what I'd use instead of PGP's
+> UserID blocks -- alias blocks.
+> 
+> I commend TIS/MOSS's aliases to people's study.  The MOSS guys have used
+> the alias structure not only to define nicknames of importance only to me
+> but also to define crypto-lists (like mailing lists).
+> 
+> Needless to say, the assignment of aliases needs to be protected.  An
+> attacker mustn't be allowed to slip a new alias and/or new key into your
+> ring -- especially if it's a crypto-list definition.
+
+   This is fine, but it's one more thing to manually maintain. How is the 
+user going to verify that the alias is really right? This is another 
+place where a 32- (or 40-) hex digit unique name would come in handy.
+
+> >   Thanks for the suggestion. However, my concerns are with 
+> >implementation and deployment, not research.  I am perfectly willing to 
+> >consider cryptographic algorithms to be black boxes that do what they say 
+> >they will. I think the charter exists to start a new list. John Gilmore 
+> >has already offered to start a "coderpunks" list on toad.com. Shall we 
+> >take him up on it?
+> 
+> My suggestion is that if you want this limited in content, it'll have to be
+> moderated.
+
+   I agree that a moderated list would be better, but I do not have the
+time do it myself.
+   One suggestion that I think is very good is to moderate on the basis 
+on the basis of sender, rather than message. The best way to do this 
+would be to keep a keyring of "approved" senders, and match the signature 
+of each message against the keyring. As I say, I'm not volunteering, but 
+if somebody else was so moved, I think it would be a valuable service.
+
+Raph
+
+
+
+
+

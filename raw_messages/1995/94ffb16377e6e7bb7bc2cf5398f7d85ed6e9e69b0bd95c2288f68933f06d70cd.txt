@@ -1,0 +1,149 @@
+From: aba@dcs.exeter.ac.uk
+Date: Wed, 13 Sep 95 07:28:22 PDT
+To: ab411@detroit.freenet.org
+Subject: Re: Scientology tries to break PGP - and
+Message-ID: <759.9509131426@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Why would they use your copy of the program to decrypt the file?
+> They could just use a version that lacked this 'feature'.  Of
+> course, they still couldn't get at the real plaintext unless you
+> gave them the key, but you are right back to the same old standoff
+> where they say, "Give us your key," and you (try to) say, "No."
+
+I agree, you can't rely on them using your doctored program, it must
+be resilient to them having a copy of all of your software, and their
+own fresh copies of software, and a backup of each copy before
+starting, and still provide pluasible deniability.
+
+Here's an idea to do just that, perhaps something which could be added
+to a future PGP.
+
+I reckon this is what you'd do:
+
+% pgp -es duress
+% pgp -es msg
+% stealth < msg.pgp > msg.stl
+% cat msg.stl >> duress.pgp
+% pgp +makerandom=1234 noise
+% cat noise >> duress.pgp
+% pgp -a duress.pgp
+% mail someone < duress.asc
+
+The pgp +makerandom=<size> <file> is an undocumented feature of pgp >
+2.6 (not sure exactly when it got added, Colin Plumb pointed it out
+when I asked him about ran nos for stealth).
+
+So what this means is that you are using PGP it's self to hide a
+stegoed message.  This would be good for the guy from FACTnet
+(forgotten his name) who just got hit by the CoS, he could hold out
+for a while, then give up his key, the duress message would appear,
+and the real message would be explained by having a script to do this
+on his HD, and having long since burned the disk with a script to do
+the above on it:
+
+% pgp -es msg
+% pgp +makerandom=4567 noise
+% cat noise >> msg.pgp
+% pgp -a msg.pgp
+% mail someone < msg.asc
+
+ie the idea is that you pad your message to a fixed size for the
+express purpose of hampering traffic analysis (of the type of my,
+Alice did have a lot to say to Bob that day).  It would be even better
+cover if the thing had gotten sent through a remailer, as this kind of
+thing is expected of type I remailer traffic (before mixmaster which
+does the packetizing for you).
+
+So the duress message really looks like this:
+
++---------+---------------------------+--------------------+--------+
+| pgp hdr | IDEA encrypted duress msg | stealthed real msg | noise  |
++---------+---------------------------+--------------------+--------+
+
+the IDEA block has a length field, but you can increase the length
+without damage to include the following stealthed stuff as the
+underlying stuff which is IDEA encrypted will know it's length on
+decryption, and the following junk will just be discarded.
+
+So, Alice and her secret key ring (encrypted) gets nabbed by the
+Charlie (CoS?), and coerced into divuling her passphrase.
+
+And if and when it is noticed that the message was longer than it
+ought to be (CoS that smart? substitute the NSA and they'd notice for
+sure), Alice explains away the junk on the end by pointing them to the
+fact that all of her messages where exactly (say) 16k long, and that
+she was using a the noise only script, and that the message really is
+this:
+
++---------+---------------------------+-----------------------------+
+| pgp hdr | IDEA encrypted duress msg | noise                       |
++---------+---------------------------+-----------------------------+
+
+Having this built-in to PGP provides plausible deniablity as you have
+no extra software which might look incriminating unless you managed to
+dispose of it first, if it comes as stock.  Even as a standalone it
+would be feasible, but you'd need to be careful to hide the first
+script, maybe on an encrypted drive or something.  This is not good
+tho as you ideally want nothing left, just a standard pgp
+implementation, and they have no way to prove anything, they can be
+suspicious, but suspicion can't put you in jail, and if you say there
+is no message, only random junk for padding purposes to foil traffic
+analysis this would be plausible, especially if they really had
+captured a whole load of 64k messages.
+
+You really need to use stealth2 for that, as stealth1.x gives the game
+away for determined attackers, but for stealth2, I need some
+cryptographic opinions on whether this is secure:
+
+	0 < x < N
+
+N is RSA modulus, and converting that to a number x' in the range:
+
+	0 < x' < 2^(int(log2(N) + 1) + 64)
+
+(ie the next power of 2 over N multiplied by 2^64)
+
+and the transformation supplied by:
+
+	x' = N * f(MD5(x)) + x
+
+where f(y) is a function which converts from range 0 <= y < 2^128 to a
+range 0 <= f(y) < scale.  Scale some constant defined in terms of N,
+and n other randomisation.
+
+Is that safe?
+
+x is random, and will be different even for a repeat encryption of the
+same file, as PGP is using a random IDEA session key.
+
+So are there any brute force attacks on that which would be cheaper
+than attacking 128 bit IDEA?  PGP's random number generator also makes
+extensive use of MD5, so I'm taking the use of MD5 as secure as a
+given.
+
+If it is thought to be dangerous for some reason (it is after all some
+kind of signature on it's self, presume that you know N, and x' but
+not x, the question is can the equation be brute force reversed in a
+less than 128 bit brute force attack.  I'm neglecting to consider the
+rand() calls, which I'm not expecting to add security, but are just a
+mechanism to stir the value with to get more random nos, as
+occasionally the alogrithm needs more than one, if the first fails,
+etc.
+
+The other approach, presuming that you can get to the data before they
+can, is to use secure drive, and securely wipe (or physically destroy
+- data on floppy) the encrypted key.  Then you can give your
+passphrase without concern.  Could land you in trouble for destruction
+of evidence or some such tho, so innocent, plausible deniability would
+be better.
+
+Adam
+
+
+
+
+

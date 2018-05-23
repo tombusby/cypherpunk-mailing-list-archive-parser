@@ -1,0 +1,56 @@
+From: jthomas@kolanut.mitre.org (Joe Thomas)
+Date: Wed, 16 Jun 93 06:08:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: REMAIL: X-TTL and X-Discard
+Message-ID: <9306161306.AA09342@kolanut>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal wrote: 
+
+> 
+
+> What is needed to make X-TTL useful is for the remailer to choose another
+> remailer as its destination, and ideally to encrypt the message before
+> sending it.  This way X-TTL can be used to insert a random remailer path of
+> n hops in the middle of a sender-constructed remailing path.  This leads to
+> a system where the remailer decrypts an incoming message, reads the X-TTL
+> value, decrements it, re-encrypts the message for the next remailer in the
+> chain, and sends it.  The X-TTL value is never exposed to outsiders.
+> 
+
+> At one point I wrote a modification to my remailer to cause it to
+> encrypt any message which it sent to another remailer which supported
+> PGP.  But I decided that this didn't really help security enough to
+> be worthwhile.  It would be much better to encourage users to encrypt
+> their messages themselves in a nested fashion so that no remailer sees
+> any more information than the bare minimum necessary.
+
+Rolling your own encryption wrapper for the remailer chain you're sending  
+through is a Good Thing, but your modification would be useful if you think of  
+the cypherpunk remailer network as a "back end" for an anonymous/pseudonymous  
+server like Julf's.
+
+Ideally, a pseudonym server will only keep an encrypted remailer chain for a  
+user's return address (along with the unencrypted adress of the first remailer  
+on the chain).  The nymserver _doesn't_know_ what remailers are in the chain,  
+so it can't encrypt the message with each of their public keys.  But if the  
+server can include a header line inside the encryption envelope that tells the  
+remailer to encrypt with the next remailer's key, we can be sure that an  
+adversary is still unable to match up incoming and outgoing messages.
+
+Setting up a pseudonym server with this kind of encrypted return address is  
+good, of course, if you're worried about its database being seized.  Without  
+the cooperation of each remailer in the chain, the database doesn't give an  
+adversary anything useful.
+
+And since now we've got TTL as another use for a next-step-encryption feature  
+in the remailers...  I'd better go get those remailer scripts and a UUCP feed  
+for my new Linux box.
+
+Joe
+
+
+
+

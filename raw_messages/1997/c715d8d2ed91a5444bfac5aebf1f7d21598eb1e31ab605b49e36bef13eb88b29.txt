@@ -1,0 +1,131 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 14 Dec 1997 08:33:29 +0800
+To: schear@lvdi.net
+Subject: Re: remailer hashcash spam prevention
+In-Reply-To: <v03102800b0b87ebad87a@[208.129.55.202]>
+Message-ID: <199712140012.AAA03831@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Steve Schear <schear@lvdi.net> writes:
+> I disagree that the best way to implement hashcash is solely via the SMTP
+>  mechanism.
+
+It is nicest to implement the blocking at the SMTP agent if this can
+be done in a privacy preserving manner, because it reduces the
+bandwidth consumption for users, and reduces the complexity of their
+local software -- they only need to generate hashcash for outgoing
+mail.
+
+> Almost any efficient hashcash mechanism will require some sort of history
+>  file, or "invited list," to allow mail lists and those we have corresponded
+>  with to continue to do so w/i having to supply hashcash each time.  This
+>  list contains information which might have privacy implications and so
+>  should not be stored at the ISP, which can be forced to reveal such info
+>  w/o the knowledge of the client.
+
+See my post to Bill Stewart with 
+
+	Subject: supeona immune postage free list
+
+I think you can construct ways to allow the ISP to reject messages
+without postage, and to allow frequent users to be exempt, and to do
+this such that there is no invited list which becomes a juicy target.
+
+> If 'open' list policies were changed so that anyone could post if they
+>  supplied enough hashcash for each mailing list recipient for their first 1
+>  or 2 posts, and thereafter no longer needed to supply hashcash (sort of
+>  minimum reputation capital), it might eliminate hit-and-run or throw-away
+>  account SPAMers without offering too high a hurdle to new or infrequent pos
+> ters.
+
+That is an interesting thought.  Well the interesting thought is that
+it gives us a way to block spam at the list server, because a) the
+spammer has to overcome the hurdle you described, and b) the list
+operator could punish spammers who started spamming once getting over
+the hurdle by blocking them.  The usual trick of switching to a
+different address, or a remailer would not work because they would
+still have to generate a new hashcash coin as the list operator could
+block the coin.
+
+I would however think that a large denomiation coin made out to the
+list server would make more sense than generating lots of coins for
+all of the list subscribers.
+
+However there is a nasty side to the above, in that it encourages the
+list operator to censor posts he considers spam.
+
+It would be simpler and I think tend to less encourage censorship to
+introduce a third party filtering service such as Ray Arachellian's,
+and the other one, which had an option to have only spam filtered out.
+
+At this moment in time the spam content on mailing lists I am on is
+very low.  I get much more in email.
+
+Doubtless this would change when spammers discovered that email spam
+is too CPU expensive to use.
+
+Also hashcash really doesn't work well for USENET.  NoCeM's are cool
+things for USENET, a distributed ratings system, and I understand can
+be configured to work for mailing lists also.
+
+> Since most popular email clients allow plug-ins (e.g. Eudora) or extensions
+>  via Java/ActiveX, providing hashcash functionality via a plug-in and the
+>  java generators you propose would provide a simple mechanism to test its
+>  effectiveness w/o needing to involve the IETF.  
+
+You can do a lot with local SMTP and POP3 proxies.
+
+There are a couple of java ones around.
+
+Anyone know if there is code available to do SMTP and POP3 proxying?
+
+I am told by one subscriber to look at TIS firewall toolkits imap
+program.
+
+> The shortcoming of a
+>  plug-in approach is that few newbies will know of it or install it and will
+>  therefore have to wait till its built into the new release of whatever
+>  client they use or until some or all of the features are supplied by their
+>  ISP, 
+
+Yes, this problem is the motivation for trying to work out ways that
+as much as possible could happen at the ISP side for less technical
+users, and even for technical users, I know few people are interested
+to install new software.
+
+Also ISPs often seem more concerned about spam abuse than users.
+
+> allowing those calling regulation to continue to blow their horns. 
+>  However, if after a successful cypherpunk beta we could get the major email
+>  client companies (Netscape, M$ and Qualcomm) to include our plug-ins with
+>  all their new updates and offer them for free download from their Web
+>  sites, it could quickly steal the CAUCE folk's thunder.
+
+It would be cool if we could pull that one off.
+
+Do we have anyone on list who is familiar with eurdora, qualcomm and
+netscape plugins who would like to interface a hashcash library to
+these systems?
+
+Anyone who can write java applets want to implement a java hashcash
+library?  (Should be easy.. jdk1.1.3 includes a sha1 function ... I am
+not sure if this is included with netscape 4 or not, but there are
+also numerous sha1 native java codes around, www.systemics.com being
+one).
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

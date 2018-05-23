@@ -1,0 +1,42 @@
+From: aba@dcs.exeter.ac.uk
+Date: Thu, 24 Aug 95 14:14:54 PDT
+To: trei@process.com ("Peter Trei")
+Subject: Re: SSL CHALLENGE: ALERT! probable misallocation of keys?
+Message-ID: <13538.9508242114@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Trei <trei@process.com> writes on cpunks:
+> My suspicion - and let me apologize in advance if I'm wrong - is
+> that Mr. Thomas thinks he's allocated himself 50,000 keys, whereas
+> he's actually got 838,860,800,000.
+
+A quite plausible theory, hadn't thought of that.
+
+> You've reserved 3/4 of the keyspace, and you're going to screw up the 
+> search unless you have an NSA-sized data center.
+> 
+> I suggest we assume this is an error, and remove the block from the
+> reserved list so that it can be re-allocated.
+
+Piete's server is more reslient than that!
+
+What happens is that when it reaches FFFF, it'll start doling out yet
+unacked keys on the assumption that they were mistakes, or that they
+were slow machines, or WWW doled ones which the user forgot to ack.
+
+This is better for speed reasons also, as it means everybody gets
+something to do right up to the end, there'll be a mad scrabble at the
+end where multiple people are working on the same keyspace, as it
+wraps around the remaining unacked bits of key, but the 1st person to
+ack gets credited for it, and that way it gets done as quickly as
+possible.
+
+Adam
+
+
+
+
+

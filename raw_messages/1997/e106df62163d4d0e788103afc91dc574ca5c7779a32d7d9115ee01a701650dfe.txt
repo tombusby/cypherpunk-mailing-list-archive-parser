@@ -1,0 +1,186 @@
+From: amp@pobox.com
+Date: Sun, 3 Aug 1997 06:04:49 +0800
+To: kent@songbird.com>
+Subject: Re: RSA - the song
+In-Reply-To: <199708011035.LAA01061@server.test.net>
+Message-ID: <Chameleon.870554820.amp@ampugh.mcit.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Interesting.
+
+Now for the obvious question, can you convert midi back to text?
+
+Looks like a new way to hide encrypted messages.
+
+amp
+
+------------------------
+  From: Kent Crispin <kent@songbird.com>
+  Subject: RSA - the song 
+  Date: Sat, 02 Aug 1997 12:02:26 -0700 
+  To: cypherpunks@cyberpass.net, coderpunks@toad.com
+
+
+> On Fri, Aug 01, 1997 at 11:35:02AM +0100, Adam Back wrote:
+> [...]
+> > 
+> > print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+> > )]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+> > 
+> > > I dug out a midi interpreter I wrote a number of years ago, 
+> > > and it is indeed trivial to modify it to read any text as input.  
+> > > Unfortunately, I wrote that long before the midi file spec was 
+> > > finalized, and the hardware I wrote it for is also long gone.  But 
+> > > it's probably not much work to get file output working again...and 
+> > > the thought of a general text-to-midi translator is rather 
+> > > entertaining -- I could play this entire mail message through it, for 
+> > > example... It would definitely make better music if some rhythmic 
+> > > variation was part of the coding, but that would make it a little 
+> > > harder to make an automatic decoder...
+> > 
+> > I'd find it most cool to hear an audio file of the above.
+> 
+> Well, I generated a midi file that encodes music which in turn is a 
+> direct algorithmic encoding of your program.  I didn't have a 
+> convenient way to go to a direct sound file, but midi players are 
+> very widely available -- any recent pc with a sound card will have a 
+> "multimedia midi jukebox" or something like that.  And there are 
+> probably free ones on the net -- I didn't look.  The midi file will 
+> be a mime attachment to this message.  It's also at 
+> 
+> 	ftp://songbird.com/pub/rsa.mid 
+> 
+> For aesthetic reasons I modified the encoding from the simple one
+> mentioned earlier, and, rather than try to modify one of my earlier
+> midi programs, I just hacked this one out from other sources.  The
+> program will actually encode any binary data into a piece of music. 
+> 
+> I think that musically the piece is actually somewhat interesting -- I
+> kind of like it.  Like the source text, it is rather dense.  But if
+> you listen to it a few times patterns and phrasing will appear.  It 
+> sounds like reasonable avante garde music, actually -- something a 
+> college radio station might broadcast to the world late at night...
+> 
+> The program is really rather trivial, so rather than describing the 
+> encoding, I am just appending it to this message.
+> 
+> --------------------------------------------------------------------
+> /*
+>     dtom -- convert data to midi
+>         dtom midifile <datafile
+>             or
+>         datasource | dtom midifile
+> 
+>         convert standard in to a midi representation of the data, and
+>         write it to a standard midi file.  The midi data is designed
+>         to so that the sound produced will permit decoding by a pitch
+>         to midi device.  Two things are done to increase the musical
+> 	interest:  First, the notes are selected from a diatonic 
+> 	scale, instead of a chromatic.  And second, the rhythm is 
+>         also varied algorithmically -- any decoding from the sound 
+>         should ignore all rhythmic variation.
+> 
+> 	Code uses "midifilelib" from Tim Thompson & Michael 
+> 	Czeiszperger, and is cobbled from one of their examples.
+> 
+> */
+>     
+> 
+> #include <stdio.h>
+> #include <ctype.h>
+> #include "midifile.h"
+> 
+> #define ROOT 36
+> 
+> FILE *fp;
+> 
+> /* offsets for three octaves of diatonic major scale */
+> int scale[] = {0,2,4,5,7,9,11,12,14,16,17,19,23,24,26,28,29,31,33,35,36};
+> 
+> mputc(c) { return(putc(c,fp));}
+> 
+> int writetrack(track)
+> int track;
+> {
+>     int note_duration;
+>     int rest_duration;
+>     int high_nybble;
+>     int low_nybble;
+>     char c;
+>     char n1[2];
+>     char n2[2];
+> 
+>     mf_write_tempo((long)100000);
+> 
+>     while( (c = getchar()) != EOF ) {
+> 
+>         high_nybble = (c>>4) & 0xf;
+>         low_nybble  = c & 0xf;
+> 	
+> 	/* low note */
+>         n1[0] = scale[low_nybble]+ROOT;	/* note number */
+>         n1[1] = 64;                     /* velocity */
+> 
+> 	/* high note */
+>         n2[0] = scale[high_nybble]+ROOT+scale[16];
+>         n2[1] = 64;
+> 
+> 	/* shouldn't happen */
+> 	if( n1[0] >= n2[0] ) printf("warning -- voice crossover!\n");
+> 
+> 	/* note_duration needs to be long enough for pitch detectors */
+> 	note_duration = 120*((c&15) + 4);
+> 	rest_duration = 120*(((c>>5)&3));
+> 
+>         if(!mf_write_midi_event(rest_duration,note_on,1,n1,2)) 	return(-1);
+>         if(!mf_write_midi_event(0,note_on,1,n2,2))		return(-1);
+> 
+>         if(!mf_write_midi_event(note_duration,note_off,1,n1,2))	return(-1);
+>         if(!mf_write_midi_event(0,note_off,1,n2,2))		return(-1);
+>     }
+> 
+>     return(1);
+> } /* end of write_track() */
+> 
+> main(argc,argv)
+> char **argv;
+> {
+>     if( !(fp = fopen(argv[1],"w")) ) exit(1);
+> 
+>     Mf_putc = mputc;
+>     Mf_writetrack = writetrack;
+>     mfwrite(0,1,480,fp);
+> }
+> 
+> ---------------------------------------------------------------------------
+> 
+> 
+> -- 
+> Kent Crispin				"No reason to get excited",
+> kent@songbird.com			the thief he kindly spoke...
+> PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+> http://songbird.com/kent/pgp_key.html
+> 
+
+---------------End of Original Message-----------------
+
+------------------------
+Name: amp
+E-mail: amp@pobox.com
+Date: 08/02/97
+Time: 16:46:07
+Visit me at http://www.pobox.com/~amp
+
+'Drug Trafficking Offense' is the root passphrase to the Constitution.
+
+Have you seen 
+http://www.public-action.com/SkyWriter/WacoMuseum
+------------------------
+
+
+
+
+

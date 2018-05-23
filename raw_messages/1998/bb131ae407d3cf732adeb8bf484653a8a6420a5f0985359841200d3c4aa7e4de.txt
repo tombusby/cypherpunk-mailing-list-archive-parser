@@ -1,0 +1,72 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 18 Jan 1998 22:40:22 +0800
+To: matt.barrie@stanford.edu
+Subject: Re: (eternity) Eternity as a secure filesystem/backup medium
+In-Reply-To: <3.0.5.32.19980117194905.008024e0@pobox1.stanford.edu>
+Message-ID: <199801181320.NAA00296@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+[horrible line wraps btw. 100 chars to the line! I reformatted.]
+
+Matt Barrie writes:
+> Since documents cannot be retracted or re-encrypted you really have
+> to assume that someday they will be broken. This really turns the
+> notion of what crypto to use for encrypting eternity documents into
+> an upfront question of "how long do I want this information to be
+> secure?". 20 years? 50 years?  100 years?
+
+There are 3 distinct threats.
+
+1. communications crypto used by the author in submitting the document
+   is broken
+
+2. the eternity architecture contains encrypted documents to frustrate
+   attempts to locate documents, and to hide the contents of documents
+   from individual servers
+
+3. communications crypto used to request and deliver documents is
+   broken thus revealing the readers identity
+
+For threat 1. the attacker needs archives of old communications which
+could potentially be eternity submissions.  (I say potentially because
+they could be steganographically encoded).  It is probably reasonable
+to assume that the NSA has a full historic archive of USENET.  Also it
+is probably reasonable to assume they have a historic archive of all
+inter remailer traffic.
+
+For threat 2. it seems feasible to upgrade this security over time, in
+that documents could be super encrypted with newer ciphers when
+vulnerabilities are found in older ciphers.  No protection for
+historic access requests, but at least we can adapt to protect new
+requests.
+
+For threat 3. again newer ciphers can be used as attacks are found.
+
+
+So it is useful to design upgrade paths for ciphers into the protocols
+where possible.
+
+Other approaches we could take are to use very conservative cipher key
+sizes and protocols combining multiple ciphers in ways which gives us
+the security of the best of the ciphers.
+
+For example:
+
+	R = random, C = 5DES( R ) || blowfish-484( M xor R )
+
+Where 5DES is say E-D-E-D-E with 5 independent DES keys.
+
+Constructs to combine in strong ways hash functions, macs, symmetric
+and asymmetric ciphers would be useful.  Is there much research in
+this area?
+
+Adam
+
+
+
+
+

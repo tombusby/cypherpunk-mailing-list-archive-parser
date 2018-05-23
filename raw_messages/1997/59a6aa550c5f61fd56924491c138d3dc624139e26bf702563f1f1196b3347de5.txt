@@ -1,0 +1,47 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 20 Jan 1997 02:45:26 -0800 (PST)
+To: azur@netcom.com
+Subject: Re: GSM crypto upgrade? (was Re: Newt's phone calls)
+In-Reply-To: <v02140b00af086e8ed0db@[10.0.2.15]>
+Message-ID: <199701170904.JAA00524@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Steve Shear <azur@netcom.com> writes:
+> For voice calls, it is not possible to merely insert a more secure crypto
+> function (e.g., IDEA) inside the less secure A5 crypto, unless the GSM base
+> station's protocol is aware the subscriber unit is using the more secure
+> crypto.  Otherwise, when the GSM base station unwraps the A5 encrypted data
+> stream, which it assumes will contain digitized voice packets in the clear,
+> it will not find what its looking for and will be unable to convert the
+> packets to a circuit-switched voice signal.
+
+The circuit-switched voice signal is digital also, and the voice
+packet payload is transferred byte for byte into the circuit switched
+link right?  So to insert IDEA encryption inside the A5 layer, you'd
+need to packetize the IDEA ciphertext so that it conforms to the voice
+packet spec (to fool the unwrapping the GSM station performs into
+thinking the packets are voice packets).  Is that possible?  Is the
+packet switched protocol non-error corrected?  (ie Is packet dropping
+expected?)  If so you need to use an IDEA mode which does not rely on
+previous packets.
+
+> If, as I have previously stated, the subscriber instead uses the data port
+> of his instrument and establishes a data link with his payload protected by
+> the more the secure crypto this is entirely feasible.
+
+If the above is infeasible.  Probably this is a more practical
+approach anyway, as the data port has been already engineered to solve
+some of problems that would be encountered, and you would be
+duplicating effort.
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

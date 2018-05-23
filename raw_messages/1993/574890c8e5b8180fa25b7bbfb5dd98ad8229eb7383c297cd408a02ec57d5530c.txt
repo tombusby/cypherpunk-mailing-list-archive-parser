@@ -1,0 +1,40 @@
+From: sommerfeld@orchard.medford.ma.us (Bill Sommerfeld)
+Date: Fri, 10 Dec 93 08:59:30 PST
+To: jim@Tadpole.COM
+Subject: Re: small memoryspace DES?
+In-Reply-To: <9312101606.AA11702@chiba.tadpole.com>
+Message-ID: <199312101654.LAA00425@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The DES implementation I'm most familiar with (the DES library core
+written by Dennis Ferguson) uses moderately large (by your standards)
+read-only tables.  The IP and FP tables are each 256*4 bytes (2Kbytes
+total); the expanded S boxes are 8*64*4 bytes (another 2K bytes), and
+the key schedule code uses a 48*4 byte table and two 4*64*4 byte
+tables (another 2K+).  It's optimized for 32 (and larger) bit
+processors, but it probably wouldn't be all bad on a 16 bit system.
+
+The expanded key schedule uses 8 bytes per round times 16 rounds, or
+128 bytes per currently active key (1/8 of your available memory).
+
+However, only 48 bits of key schedule are actually needed per round (8
+subfields of 6 bits each), so you could (at the cost of some speed,
+probably a penalty of 50% to 100% or so) compress the schedule down to
+96 bytes if it really mattered to you..
+
+You could also compute each round of the key schedule as you needed it
+(discarding it on the fly) reducing the memory needed per key to 8
+bytes of "persistant" storage and a little bit more dynamic memory
+when actually doing the encryption.. of course, performance goes down
+the tubes if you do this unless you only use each key once..
+
+
+
+
+
+
+
+
+

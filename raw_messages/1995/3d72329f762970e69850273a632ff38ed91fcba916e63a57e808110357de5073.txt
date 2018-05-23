@@ -1,0 +1,67 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 14 Sep 95 22:34:01 PDT
+To: cypherpunks@toad.com
+Subject: Why ecash is traceable
+Message-ID: <199509150532.WAA08865@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There has been considerable discussion on sci.crypt and on the 
+cypherpunks list about the fact that currently proposed digital cash is 
+"traceable", or to put it another way, that there is no payee anonymity.  
+This is an annoying asymmetry, where the payor is protected more than 
+the payee.  But there is a fundamental reason for this, which I want to 
+explain here.  It is not just perversity on the part of digital cash 
+designers.
+
+The problem is that there is a conflict between the desire for payee 
+anonymity and the need to prevent double spending.  And preventing 
+double spending is far more important, since without that the cash would 
+be worthless.  Here is how the conflict occurs.
+
+Suppose Alice has a piece of digital cash which she wants to spend with 
+Bob.  She goes through some protocol and transfers data to him.  Bob, 
+then or later, sends some resulting data to the bank and gets his 
+account credited.  Now if Alice spent that same coin with Charlie, we 
+need to have the bank find it out.  When Charlie deposits his data with 
+the bank, and the bank compares that with what Bob sent in, there must 
+be a red flag that goes up.
+
+The fundamental requirement of preventing double spending implies that
+Bob's and Charlie's data, when sent to the bank, has some correlation
+which will identify the fact that they both come from the same coin.
+It doesn't matter exactly what the form of this data is, or how it has
+been blinded and stirred, but if double spending is to be detected
+there must be a correlation which the bank can see.
+
+But this correlation is what makes the coin traceable.  Suppose Alice is 
+paying a coin to Bob via an anonymous network, and she and the bank 
+are going to try to figure out who he really is.  She goes through the 
+payment transaction, and Bob sends his resulting data to the bank.  
+Before doing so, though, Alice simulates a payment of the same coin to 
+Charlie.  Charlie doesn't actually have to be involved, Alice can just 
+go through what she would have done if she had spent the coin elsewhere.  
+The result of this simulated payment has been shared with the bank.
+
+Now, when Bob deposits his data, the bank compares it with the data 
+Alice sent, the result of her simulated spending of the same coin.  By 
+the argument presented above, Bob's deposit will be flagged.  It will 
+correlate with the data Alice sent in since this will be the equivalent 
+of a double-spending.  So when Bob makes the deposit he can be linked to 
+the specific coin payment which Alice made, and his anonymity is lost.
+
+It would seem that any system which is capable of detecting double-
+spending just from the information which the payees send in to the bank 
+would be vulnerable to this.  Systems which use tamper-proof observer 
+chips to prevent double spending beforehand can avoid it, but of course 
+if someone breaks an observer the whole cash system might crash.  In 
+general it does not look like payee anonymity is possible without giving 
+up other very important features.
+
+Hal Finney
+hfinney@shell.portal.com
+
+
+
+

@@ -1,0 +1,56 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Wed, 13 Mar 1996 14:25:57 +0800
+To: rittle@comm.mot.com
+Subject: Re: FCC & Internet phones
+In-Reply-To: <9603120137.AA17060@supra.comm.mot.com>
+Message-ID: <199603120321.WAA05010@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Loren James Rittle wrote:
+
+| >Most
+| >presumably use a mix of a UDP data connection and tcp for control
+| >functions.
+| 
+| OK, everything after the IP header is encrypted.  I don't even know
+| which protocol is in use.
+
+	Are you willing to play Mallet?  Drop IP packets, and look for
+duplicates.  Those are TCP.  (IPSEC might handle this, but I bet there
+will be broken implementations that save time by resending.)
+
+| >They all consist of high volume, long duration connections
+| >(or data flows in the case of UDP.)  Many probably use a standardized
+| >destination port.
+| 
+| OK, everything after the IP header is encrypted.  I don't know
+| which port is in use.
+
+	Which doesn't change the nature of the data, which is:
+
+	Alice sends long (3-60 second) heavy flows to Bob.
+	Alice's flow stops, Bobs picks up.
+	repeat.
+
+| In short, assuming IPSEC, the data stream cannot be easily found.
+| Slightly different assumptions led to a radically different outcome.
+
+	First, assume a can opener.  :)
+
+	Actually, I'll bet you I can pick out your encrypted data for
+the common case, which will continue to be a modem, which can't handle
+heavy back traffic flows for the sake of hiding who is speaking.
+
+Adam
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

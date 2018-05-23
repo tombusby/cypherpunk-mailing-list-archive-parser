@@ -1,0 +1,51 @@
+From: Justin Card <Wyntermute@worldnet.att.net>
+Date: Fri, 30 Aug 1996 17:30:09 +0800
+To: cypherpunks@toad.com
+Subject: Re: Elliptic Curve Y**2 = x**3 + a * x**2 + b
+In-Reply-To: <199608291905.PAA16350@rootboy.interactive.visa.com>
+Message-ID: <3225228C.4290@worldnet.att.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tom Rollins wrote:
+> 
+> Hello all,
+> 
+> I have a math question concerning implementation of elliptic
+> curve systems. In coding some elliptic curve source, I
+> need to pick a random point on the following elliptic
+> curve in field F_p where p is a prime number.
+> 
+>        Y**2 = x**3 + a * x**2 + b
+>        where 4a**3 + 27b**2 is not equal to 0 mod p
+> 
+> In selecting a random point, I pick a random value for
+> x in the range 0 < x < p, compute the right hand side
+> of the equation and find myself needing to take the
+> square root for the two solutions.
+
+I can't remember the elliptic curve system well, but if the parameters
+of the curve are not standard for everyone (which I am afraid they are)
+one method is to pick the point first, then solve for the a & b.
+
+If this is not the case, finding the square root may be nice or tricky.
+
+if p=3 mod 4, then the sqrt is
+X^(P+1) mod P, where X is the number you are trying to find the sqrt
+of.  It can be extended to X=5(mod 8) and a few others, but I'm not sure
+how.  There is also a form for X=1 mod 4,but I can't find reference to
+it. Hope this helps
+
+-- 
+  Wyntermute   
+     -----BEGIN GEEK CODE BLOCK-----
+     Version: 3.1
+     GE d@ s++:+ a? C++++ UL++ P+ L++ E W+++ N+++ o? K--? w !O M-- V?
+PS+++
+     PE++ Y+ PGP++ t+++ !5 X+++ R++* tv++ b+++ DI++ D++ G++ e h r- !y 
+     ------END GEEK CODE BLOCK------
+
+
+
+

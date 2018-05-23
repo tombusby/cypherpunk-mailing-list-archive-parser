@@ -1,0 +1,49 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Thu, 26 May 94 09:19:11 PDT
+To: David C. Taylor <dct@python.cs.byu.edu>
+Subject: Re: dispersed DES
+In-Reply-To: <9405261520.AA23568@uu6.psi.com>
+Message-ID: <9405261559.AA25189@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Good point about the source of the appended bytes. The reason I think it might
+>be more secure is that the length of the appended segment is less than the
+>length of the key on each pass, so it would seem to be the equivalent of a
+>one-time pad for those relying on the appended bytes to get the key.  That is 
+ my
+>only basis for not worrying about wekening effects.  Any holes?
+>
+>dct@newt.cs.byu.edu
+
+Let me see if I understand your scheme: you prepend 4 unpredictable
+bytes to the data before running through each single des cycle.  What do
+you do with the 4 bytes from each cycle that are shifted into the end of
+the datastream?  Is the datastram vulnerable to independent search there,
+too?
+
+Assuming the 4 bytes really are unpredictable, and assuming you deal with
+both "ends" of the stream, there doesn't seem to be an *obvious* attack
+that allows independent search for each of the 2 or 3 des keys.  There
+was a paper in Eurocrypt this year (that I haven't seen yet) that
+discusses some not-so-obvious properties of multi-cipher modes that may
+reveal another attack, however.
+
+If you don't think you've weakened 3-des, now the question is whether you've
+strengthened it (or otherwise improved it).  Your method doesn't seem to
+increase the complexity of a brute force attack on the 112 (or 168) bits of
+3-des key material.  In fact, you may have actually increased the number of
+bits of key material (if the decryptor has to know extra secret bytes in order
+to recover the ends of messages) that the good guy has to manage without
+increasing the work factor for the bad guy.
+
+3 des is plenty strong, and if you don't trust or otherwise don't want
+to use 3-des, it's not clear that this offers an improvement.
+
+-matt
+
+
+
+

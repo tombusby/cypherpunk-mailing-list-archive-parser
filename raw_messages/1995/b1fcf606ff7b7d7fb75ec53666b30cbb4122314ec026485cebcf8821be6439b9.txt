@@ -1,0 +1,46 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 31 Jul 95 16:54:53 PDT
+To: jfmesq@ibm.net (James F. Marshall)
+Subject: Re: Public Key Confusion
+In-Reply-To: <199507312339.XAA100594@smtp-gw01.ny.us.ibm.net>
+Message-ID: <199507312354.TAA02802@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+When you want to sign a key, you should use "pgp -ks".  You should
+never clearsign a public key -- it buys you absolutely nothing other
+than saying that "I saw this key at some point, and this message
+(which is a public key block) came from me".  
+
+Have you signed your own key using "pgp -ks"?  Have you extracted your
+key (using "pgp -kxa") since you signed it?  Or did you only extract
+it before you signed it?  This would be the cause of the confusion.
+
+If you sign a key, the signature gets attached to the key certificate.
+However you do not need that signature in order to _use_ the key.  So,
+people to whom you gave your key without a signature can still use
+that key, it just doesn't have your signature on it.
+
+As for the keyserver, it _ONLY_ accepts keys; if you clearsign your
+key before you send it, then you are not sending a key, you are
+sending a message that contains a key.  This is not the same thing.
+That is why the keyserver rejected it.
+
+> Should I just stop distributing the .asc version and only let people
+> have the longer version extracted from my public keyring?  Is that the
+> properly signed copy?
+
+If you performed the pgp -ks, then you should re-perform the pgp -kxa
+and distribute the newly extracted key.
+
+I hope this answers all your questions.  All of this, and more, should
+be explained in the PGP Documentation which is included with PGP.
+
+Good Luck.
+
+-derek
+
+
+
+

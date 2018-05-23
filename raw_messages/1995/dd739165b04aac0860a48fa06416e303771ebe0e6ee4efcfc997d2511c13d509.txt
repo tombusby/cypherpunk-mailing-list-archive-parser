@@ -1,0 +1,48 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Wed, 13 Dec 1995 13:49:58 +0800
+To: hfinney@shell.portal.com (Hal)
+Subject: Re: Time-based cryptanalysis: How to defeat it?
+In-Reply-To: <199512130144.RAA08950@jobe.shell.portal.com>
+Message-ID: <9512130320.AA22567@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> From: futplex@pseudonym.com (Futplex)
+> > I don't understand why Kocher's point is correct. For example, why do the
+> > times diverge with the following modification of the modexp algorithm on
+> > pg.2 of the abstract ?
+> > 
+> > 	Algorithm to compute R = y^x mod n:
+> > 		Let R_0 = 1.
+> > 		Let y_0 = y.
+> > 		For i = 0 upto (bits_in_x - 1):
+> > 			Let M = (R_i * y_i) mod n.
+> > 			Let R_(i+1) = (bit i of x) * M  +
+> > 					(1 - (bit i of x)) * R_i.
+> > 			Let y_(i+1) = (y_i)^2 mod n.
+> > 		End.
+> 
+> I posted a similar idea on sci.crypt, but later I realized that Paul Kocher
+> is right.
+> 
+> Your algorithm works OK for the first iteration.  The amount of work is
+> pretty much constant regardless of whether bit 0 of x is 0 or 1.
+> However, at the end of that iteration R_1 will have one of two
+> different values depending on that bit 0 value.  And, the attacker can
+> know these two values, and if he controls y he can even choose them
+> (they will be either y or 1).
+
+I think that a lot of chosen plaintext attacks work regardless of timing
+analysis.  For example, there is a well known chosen plaintext attack
+against the RSA.  The deeper issue is that all of the efficient
+algorithms for modular exponentiation take more time for 1s than for 0s. 
+So the way to get security is to sacrifice efficiency (a widely known
+but rarely proven reality).
+
+-> See: Info-Sec Heaven at URL http://all.net/
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+
+

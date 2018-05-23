@@ -1,0 +1,52 @@
+From: Rodney Thayer <rodney@sabletech.com>
+Date: Tue, 11 Feb 1997 06:12:00 -0800 (PST)
+To: linux-ipsec@clinet.fi
+Subject: question on setting up for ipsec/linux
+Message-ID: <199702111412.GAA19386@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I have 0.4 compiled and loaded on my 2.0.27 system.
+
+I have configured an FTP Software client appropriately for treating the
+Linux box as a tunnel for a far-end destination machine.   I try doing a
+ping of the far machine.  The FTP client sends a packet to the Linux box.
+Lan tracing and the printfs on the master console of the Linux box seem to
+indicate that the packet really did go to the linux box.  However, what
+happens is:
+
+- the Linux box sends a "protocol unreachable" back to the FTP client.
+- the printf's on the console (a line starting with "ipsec_esp" new ip
+packet" shows the incoming PING packet
+
+Now I run AH (MD5) and ESP (DES) and the fact I see a fully decrypted PING
+packet on the Linux console is quite promising because that seems to prove
+I got the SPI's and keys and such configured correctly.
+
+I have checked the documentation that came with the release and the one
+thing I did not see was the message "ipsec_tunnel: tunnel: version v0.2b2".
+
+I suspect I have managed to NOT configure some tunnel thing and the IPSEC
+code itself is working properly.  I suspect I have somehow misconfigured it
+such that, after the nice pretty IP packet is unwrapped from the ISPEC
+headers, it is not properly injected into the protocol stack properly.
+
+I'd be happy to read the source code to work on this but I'm not sure where
+to start looking.  The missing message comes from ipsec_tunnel.c  I know
+from tests sending it invalid SPI values that I really am executing parts
+of that file.
+
+
+
+
+               Rodney Thayer <rodney@sabletech.com>       +1 617 332 7292
+               Sable Technology Corp, 246 Walnut St., Newton MA 02160 USA
+               Fax: +1 617 332 7970           http://www.shore.net/~sable
+                           "Developers of communications software"
+
+
+
+
+
+

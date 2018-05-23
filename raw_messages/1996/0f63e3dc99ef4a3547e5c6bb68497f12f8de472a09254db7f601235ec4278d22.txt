@@ -1,0 +1,61 @@
+From: nobody@replay.com (Anonymous)
+Date: Fri, 18 Oct 1996 12:17:04 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: [NOISE::SECURITY] Disabled ports in Navigator
+In-Reply-To: <3.0b36.32.19961017221127.00691b88@gateway.grumman.com>
+Message-ID: <199610181916.VAA25926@basement.replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Rick Osborne <osborne@gateway.grumman.com> wrote:
+
+> I was thinking about how to fix a sendmail program for our server when the
+> (most likely unoriginal) thought cam to me:  why not use your web broser as
+> a telnet tool?  You could embed CRLFs into the request field and the
+> receiving program would just throw the GET /[etc] out like I messed up or
+> something.  I could then add subsequent logins & commands to my heart's
+> content (or the string length of that particular browser's request field).
+> Being behind a firewall, I tend to think of these things. The only problem
+> would be with the fact that no EOL is ever sent, but with a good browser
+> that displays as content is streamed, you wouldn't have to worry about that.
+> 
+> Like I said, I doubt it's original because when I tried to do it in
+> Navigator I get a
+> 
+> Sorry, Access to the port number given has been disabled for security
+> reasons.
+> 
+> error dialog.  I got this for all of the obvious ports (21,25,110, etc).
+> 
+> I only have 3.0 on my machine, so I don't know if it works with previous
+> versions.  MSIE3 doesn't disable the ports, but it doesn't start displaying
+> anything (it suffers from the stupidity of not displaying as it streams).
+> 
+> Has anyone else personally tried this?  My original idea was to see my home
+> email, with something like:
+> 
+> http://mail.here.com:110/user%20me%0D%0Apass [... etc]
+> 
+> Any comments, suggestions, etc?
+
+This was discussed a bit here on the list when Netscape first did it, which
+was in either v2.01 or v2.02.  At the time, I thought about writing a patch
+to fix the problem, but decided there was really little purpose in trying
+to talk http to sendmail, so I didn't bother.
+
+In any event, the blocking is in netscape itself and not in the proxy
+server, so you could just telnet to your proxy on port 80, and issue the
+commands to connect to whereever you want.
+
+You could also look for a program called webex, it's a cgi script which
+generates html forms on the fly, allowing you to read your mail in your
+web browser.
+
+I feel I should point out that accessing your mail in an unencrypted
+fashion, through a possibly untrusted proxy server is quite insecure and 
+not generally advisable.
+
+
+
+

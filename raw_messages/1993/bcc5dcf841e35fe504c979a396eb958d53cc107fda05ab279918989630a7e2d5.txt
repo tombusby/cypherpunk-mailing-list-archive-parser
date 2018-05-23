@@ -1,0 +1,36 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Thu, 22 Apr 93 11:42:26 PDT
+To: hughes@soda.berkeley.edu (Eric Hughes)
+Subject: Re: non-cypher related question on audio analysis
+In-Reply-To: <9304221700.AA00422@soda.berkeley.edu>
+Message-ID: <9304221842.AA08140@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> After you know something, remember this: The FIR filter is the same
+> mathematically as a FFT, multiplication by a filter window function,
+> and an inverse FFT.  As I recall, you can process multiple FIR's in
+> parallel.
+
+you can do two FFT's by using the fact that:
+
+  FFT( x(t) + j y(t) ) =  Z(w)
+
+then X(l) = 1/2 ( Z(l) + Z*(N-l))
+and  Y(l) = 1/2j (Zl) - Z*(N-l)) 
+
+Where x(t) <-> X(w)
+      y(t) <-> Y(w)
+
+N is the length of both arrays
+j is sqrt(-1)
+Z* is the conjugate of Z (a+jb <-> a-jb )
+
+
+
+
+
+
+

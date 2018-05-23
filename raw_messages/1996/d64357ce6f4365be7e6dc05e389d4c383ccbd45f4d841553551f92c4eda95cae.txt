@@ -1,0 +1,224 @@
+From: "Dave Emery" <die@pig.die.com>
+Date: Sat, 27 Jan 1996 14:15:22 +0800
+To: jimbell@pacifier.com (jim bell)
+Subject: NOISE NOISE NOISE - clocks and other irrelevance
+In-Reply-To: <m0tfyb0-00090XC@pacifier.com>
+Message-ID: <9601270540.AA10607@pig.die.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> 
+> A peripheral I've long wanted to see, commonly available:  ACCURATE  time, 
+> broadcast to the millisecond/microsecond/nanosecond, available from sources 
+> as varied as TV VIR's, FM subcarriers, and other sources, available as an 
+> easy input (via a peripheral card) to a computer.
+
+	The only technology that I'd trust to be useful much below
+10-100 ms is GPS.   The others are unlikely to be controlled well enough
+at the source to be trusted.  Current TV broadcasting, for example,
+usually involves multiple passes though digital frame stores and time
+base correctors  - most homes get the signal via cable which itself
+involves significant uncontrolled delays  (juat the thermal changes
+in propagation delay  in a long CATV cable and amplifier chain due to weather
+changes run into the many microseconds).
+
+	And humans beings being as imperfect as they are, it is hard to
+beleive that making sure that the time being broadcast is really kept accurate
+is going to be a priority when most people use it for purposes that require
+plus or minus a few seconds timing.
+
+> 
+> I have a 12-year-old Heathkit "Most Accurate Clock" that I assembled myself, 
+> and had the foresight to install it with its computer  interface option. 
+> (receives 5, 10, or 15 MHz signals broadcast from Boulder, Colorado, 
+> containing "exact" time.) 
+> 
+> While I've never taken the time to connect it to my PC, it provides 
+> (through an RS232 jack) correct time with a rated accuracy of about 5 
+> milliseconds, as I vaguely recall. (Even has a dipswitch setup on the bottom 
+> to tell it how many 500 mile increments you are away from WWVB... corrects 
+> for delay to a first order of magnitude.)
+> 
+	WWVB is the 60 khz broadcast (which is more accurate due to more
+stable propagation) . the  HF ones are WWV.  Commercial time receivers
+are available that work off the 60 khz time code (very narrow bandwidth
+ASK), but the 60 khz is most used as a standard frequency for long
+term tracking of error in local standards.
+
+> (BTW, if anybody knows how to easily connect it to the pc, or has the 
+> appropriate software, please tell me  The task isn't difficult from a 
+> hardware standpoint; it's just RS-232 serial ASCII timecode at about 9600
+> bps which 
+> either continuously retransmits or on request.  The problem is the software:
+
+	If you run unix there are some quite sophisticated programs that
+can use this specific clock (connected to a serial port) that allow sync
+to the full accuracy possible at good times of day (around 1 ms).   The
+programs also allow time distribution to other computers on a network -
+thus their name  - ntp - which stands for network time protocol (and the
+network time program that implements it). This protocol and the various unix
+programs that implement it are quite widely used on commercial LANs and
+the Internet to sychronize time amoung unix workstations, servers, and
+bridges and routers.  Current implementations are capable of tracking
+clock oscillator error on a system and adjusting the time periodically
+to compensate for the frequency error of the clock and even to predict
+(polynomial approximation) the change in frequency error with time.
+
+	The man behind much of this (at least the early research) is
+Dave Mills who used to be at louie.udel.edu which hosted a ftp
+site for the programs.   An archie search will reveal where they
+are kept now, and there is a newsgroup (comp.protocols.time.ntp) for this
+which no doubt has a substantial faq file about this. 
+
+	
+>  How, exactly, do I INTERFACE such a serial input to the existing computer/RTC 
+> combination? (Don't tell me to plug it into an unused serial jack!  I'm not 
+> stupid. I'm not a  programmer, and I don't play one on TV! (I know 
+> gates, flops, op amps, A/D, D/A, microprocessor hardware design, even some 
+> Z-80 assy language, RF,  and I've programmed in Fortran, Basic, APL, Algol, 
+> PL/1, Pascal, LISP, but not recently and I don't enjoy it!)
+> 
+> 
+
+	I suspect that by this point there are several windoze/DOS  programs
+to sync a PC to ntp time on a network, and perhaps even a program that will 
+accept input from a Heath clock ... although the initial ntp code was
+written for unix on Suns.
+\
+
+> (Then again, there are those "Receptor" watches which have (at least) similar 
+> accuracy, which as I understand it work on FM subcarrier principles.)
+
+	Yes they use the RDS broadcast on the 57 khz subcarrier for this.
+Of course there is no certainty the station has the clock set accurately.
+> 
+> 
+> Technology has now supplanted this old monstrosity:  Even with CHEAP GPS 
+> receivers, they put out time which is rated in accuracy to well better than 
+> 1 microsecond, and probably better than 200 nanoseconds even with S/A turned 
+> on, and probably 100 nanoseconds with S/A off.  Once GPS receivers contain 
+> equally cheap DGPS receivers, they'll be able to tell you your location to 
+> about 1 meter and corresponding time accuracy, about 3 nanoseconds.
+> 
+	Yup.   And ntp can use several cheap gps products available to sync
+a unix clock to high accuracy.
+
+> I'm not particularly familiar with TV VIR signals, but I'd imagine they are 
+> timecoded, or at least they COULD be without a lot of effort.  Resolution 
+> would be FAR better than 1 microsecond, and accuracy would be primarily 
+> limited by knowledge of your location compared to the xmitter.
+> 
+	Could be is the operative word here,  Many tv program
+distribution signals carry frame time codes in the VIT, but who put them
+there, how accurately they reflect local time  and where in the delay
+chain (before or after the satellite for example) they get inserted is
+not well controlled.   Nor is there a standard for the format that
+addresses the needs of end users rather than broadcast production, or
+any particular effort to ensure that a signal is reliably present in the
+over the air transmission.
+
+	Once many years ago (seventies)  the NBS (not NIST yet) tried to
+get the TV networks to clock themselves with high accuracy rubidium
+standards as a means of distributing standard frequency and time. But
+technology has made this meaningless as most tv signals are now
+distributed via satellites that move around several kilometers in a day
+and clocked into multiple layers of frame stores (often delayed more
+than a second)  in digital switching and processing gear and clocked out
+with different clocks that often are not very accurate and not in any
+way locked to the incoming network.
+
+	TV stations could be made to maintain a local clock sync'd to
+GPS and use that to do the final level of clocking out before feeding
+the transmitter and could thus ensure that some reference point in some
+frame happened at an exact time, but given that a user who can see a TV
+signal can probably see GPS signals and can do the same timekeeping himself
+for a couple hundred bucks it hardly seems worth it any more.  I do
+expect that time codes with modest accuracy (few tens of ms at best)
+will become common as part of the Starsite (or whatever they call it
+now) program guide distribution on PBS, simply because this has defined
+a format that can conveniantly contain time messages multiplexed with
+other data and the box displays the time.  DSS and VC-II both also have
+this capability, but of course the uncertainty of the satellite delay
+limits accuracy and neither has provisions for providing time to other
+devices.
+
+
+> MITM attacks would be far more difficult if both ends of the data 
+> conversation agreed on the "exact" time, and could detect transmission 
+> delays and CHANGES in transmission delays.  While it would be possible to 
+> locally spoof the accurate timecode, a cheap version of a "disciplined 
+> oscillator" (which any GPS receiver is going to have, anyway) would detect 
+> such short-term spoofing trivially.
+> 
+
+	See my public comments on this.
+
+
+
+> Occasionally, I've speculated on whether it might be useful to be able to 
+> synchronize (or, at least, KNOW) to the PHASE of the 60 Hz power grid.  
+> True, I know that the HV grid is 3-phase and most people won't know which 
+> phase they're on anyway, but that wouldn't change (at least not frequently!) 
+> , and I would imagine that 
+> it might be  useful.  You wouldn't necessarily know which CYCLE you're on, 
+> either, but again that might be compensated for somehow.  If  your computer 
+> were talking, locally, to another computer at 4100 baud (? whatever) (7 bits 
+> per symbol(?); equals 28.8kbps) you could "easily" agree on a particular cycle 
+> relationship, which is going to be essentially constant over a distance of a 
+> few tens or even hundreds of miles.
+> 
+	This is possible, but I bet the variations in phase in the local
+distribution system due to power factor, choice of phase to use, propagation
+time through transmission lines and substations and so forth would
+mean that phase as observed at two distant sites was rather random
+and maybe even subject to shifts over time as load conditions varied.
+
+> What I DON'T know (and some HV transmission engineer will probably be able 
+> to tell me, hint hint!) is how STABLE this phase is across the entire 
+> country?  I realize that this will probably depend on who'se shipping excess 
+>  power to whom at the moment, But I'd imagine the variability will be 
+> distinctly limited.
+> 
+	I've seen some discussions about this, but don't know a reliable
+answer.  I do know that the frequency is only 60 hz on the average over
+a day and actually wanders up and down quite a bit more than one might
+expect as load on the system varies.  I did some measurements of this 22
+years ago while debugging some PDP-8E system software I wrote that that
+ran a frequency counter (the ratio kind that was very accurate on low
+frequencies) and found the diurnal variations surprisingly large and
+quite interesting.  I've not repeated the experiment since but suspect
+that they still allow the frequency to wander in response to load conditions.
+
+> The biggest attraction of such a system is that the interface would probably 
+> be trivial:  Getting it from the P/S is out because they didn't anticipate 
+> such a thing.  The easiest interface might be an AC wall xformer with a 
+> rectifying limiter and slicer  (Okay, maybe just a resistor and a diode, 
+> possibly with the addition of a comparator for precision), driving a 
+> readable pin on an otherwise-unused RS-232 interface.  (Possibly 
+> installed similar to a dongle.)  Appropriate software (yucch!) would read 
+> the square waves, and record the phase at any one time.  Such information 
+> could be used to verify the relative synchronization between two different 
+> computers, although it would be necessary to identify particular phases, as 
+> I mentioned before.
+> 
+	One could certainly do this, but there are subtlies ... some
+places and institutions generate their power locally (and few if any
+users know this or know whether or not they are on the grid), UPS
+systems are common and wander off of the grid during a power fail,
+and many buildings have all three phases floating around wall outlets,
+even wall outlets close to each other so such acts as moving plugs
+around might very well change the phase.  And power systems switch
+phase correction capacitors in and out from time to time as power
+factor of large loads varies.  My guess is that to synchronize much
+below a ms would be hard, and that random losses and jumps of sync would be
+common enough to require lots of special treatment in software.
+
+						Dave Emery  N1PRE
+						die@die.com
+
+
+
+
+

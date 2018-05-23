@@ -1,0 +1,60 @@
+From: Norman Hardy <norm@netcom.com>
+Date: Sat, 14 Dec 1996 12:32:16 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Magic Numbers in MD5
+In-Reply-To: <v02140b01aed7e51544ac@[192.0.2.1]>
+Message-ID: <v03007800aed8afa18c27@DialupEudora>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 9:15 PM -0800 12/13/96, Peter Hendrickson wrote:
+>I am curious where some of the magic numbers in MD5 originated.
+>
+>First, we have the four chaining variables, A, B, C, and D which
+>are initialized with apparently random numbers.  Are they as
+>random as they look, or are they carefully chosen?
+>
+>Second, we have the t_i values.  Schneier's first edition says this:
+>
+>"In step i, t_i is the integer part of 4294967296xabs(sin(i)), when
+>i is in radians.  (Note that 4294967296 is 2^32.)"
+>
+>Does abs(sin()) have some properties that are especially conducive to
+>strengthening MD5 or is it just a function to generate mildly random
+>numbers?  If the latter, wouldn't the algorithm be stronger if it was
+>used with completely random numbers?
+>
+>Peter Hendrickson
+>ph@netcom.com
+
+Perhaps random numbers would be stronger but they would not be manifestly
+random.
+MD5's formula for t_i precludes the possibility that the definer of MD5
+chose the numbers
+accoriding to some undisclosed principles that would allow him a trap door.
+
+The following code computes the magic numbers without requiring trig functions:
+
+static word si[64];
+static int md5init()
+{double c1=0.5403023058681397, s1 = 0.8414709848078965;
+int j; double a=1, b=0;
+for(j=0; j<64; ++j)
+ {double p = a*c1 - b*s1, q = a*s1 + b*c1;
+  a=p; b=q;
+  {union{double d; struct{int high; int low;} fx;} z;
+   z.d=(fabs(b)-1.1e-10)+1048576;
+   si[j] = z.fx.low;
+ }}}
+
+An alternative would have been to let t_i be MD4(i) or SHA(i).
+
+Using SHA to define MD5 would have required collusion between Rivest
+and NSA to allow for a trap door. Even then it would have been very difficult.
+
+
+
+
+
+

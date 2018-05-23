@@ -1,0 +1,60 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Sat, 6 Aug 94 13:56:16 PDT
+To: Adam Shostack <adam@bwh.harvard.edu>
+Subject: IPv6 Security (was Re: RemailerNet)
+In-Reply-To: <199408061739.NAA05213@bwh.harvard.edu>
+Message-ID: <9408062056.AA18737@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Adam Shostack says:
+> An aside: Does anyone care to share thoughts on IPng's security
+> features?
+
+I'm the person assigned to edit/write the drafts for IPSP, which is to
+be the successor to swIPe, and portions of which will be mandatory
+parts of conformant IPv6 security. (Now that the decision on which
+protocol is to be IPng, the politically correct name for IPng is
+"IPv6").
+
+The basic technique of packet encapsulation for security, which is the
+basis for SP3, NLSP and swIPe, is being adopted, although the packet
+format is being radically simplified even from that of swIPe,
+consisting mainly of an SAID (what swIPe calls a "Policy Identifier).
+Authentication and opaque cryptographic encapsulation formats are to
+be slightly different for technical reasons.
+
+The IPSP definition is (nearly) nailed down. The hard part, key
+management, which is the layer that goes on top of IPSP, is still
+being intensively discussed. I expect there will be extensive battles
+there still to come, particularly on the naming of authenticated
+entities -- to tell you how shaky things are there, no real proposals
+are yet in draft RFC form. The one thing there is widespread agreement
+on is that the DNS should be used to store keys, although this will
+likely require extension of the maximum size currently permitted for
+RRs in the DNS (512 bytes as defined right now.)
+
+It is my hope that a unified IKMP (internet key management protocol)
+and IPSP will provide sufficient functionality that no other security
+mechanisms will be required for authenticating and securing remote
+connections on the internet, and any telnet, ftp, finger, or anything
+else that anyone does can be transparently made secure simply by
+setting administrative requirements on the authentication and
+encryption level needed by connections. Security of store-and-forward
+traffic, like electronic mail and routing information, will still
+require seperate mechanisms -- I hope the basic keys for those
+mechanisms will be stored in the same way with the same naming, for
+instance, and that most of the mechanisms will be shared.
+
+It is also my hope that all trust mechanisms will be based on
+web-of-trust rather than certification heirarchies, although that is
+another speculation.
+
+Perry
+
+
+
+
+

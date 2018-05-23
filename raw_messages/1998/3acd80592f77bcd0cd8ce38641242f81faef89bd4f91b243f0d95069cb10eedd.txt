@@ -1,0 +1,44 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Fri, 20 Feb 1998 16:20:49 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Dealing with Spam, Part 2
+In-Reply-To: <2358.199802181427@cronus>
+Message-ID: <3.0.5.32.19980220001517.008a6300@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 02:27 PM 2/18/98 +0000, T.G.Griffiths@exeter.ac.uk wrote:
+
+>Mark@unicorn.com makes a good point about MailGuard.
+>If A and B both run MailGuard, and neither is on the
+>other's allowed list, do you get an infinite bounce
+>when A mails B or does the prog. get around it? I can
+>think of a couple of ways, but what does MailGuard do?
+
+The classic implementations of systems like that do
+one of three things
+0) Don't think, leading to infinite mailbounces
+	(often caught in testing, since it's very bad.)
+1) Prevent loops, but there's no way to communicate
+2) Prevent loops, and recognize mail from other MailThingies,
+	which makes it easy for Spammers to forge.
+
+If you get fancy, you can probably work something like
+	Receive message
+	Send and record Alice-cookie ->
+			<-- Reply with Alice-cookie and new Bob-cookie
+	verify Alice-cookie and accept message
+	Reply to Bob-cookie
+			--> Verify Bob-cookie for future use
+
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

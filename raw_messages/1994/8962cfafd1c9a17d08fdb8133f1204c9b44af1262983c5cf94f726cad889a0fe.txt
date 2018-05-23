@@ -1,0 +1,80 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 8 Aug 94 20:47:47 PDT
+To: cypherpunks@toad.com
+Subject: Re: RemailerNet v0.2
+In-Reply-To: <4309@aiki.demon.co.uk>
+Message-ID: <199408090347.UAA24150@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I'm glad to see Jim's description of his RemailerNet v0.2.  I still
+have a few questions, though.
+
+What is the goal of the RN as far as defeating traffic analysis?  Is it
+just to get messages from one "gateway" to another?  Or is there also
+a desire to prevent traffic analysis from one non-gateway end user to
+another?
+
+What are the allowed capabilities of the opponent?  Can he watch all of
+the links?  Can he subvert some gateways?
+
+Does every user expose the source and destination information of his
+messages to the initial gateway?  What other information is sent by the
+user to the RN?
+
+Are there any limitations on the information which spreads through the
+RN?  E.g. are gateways allowed to send source/dest information
+along with the messages?
+
+Here are some questions related to Jim's specific points:
+
+>1.6 the order of dispatch of packets is randomized
+For 1.5 you defined what randomized means.  What does it mean here?
+
+>1.7 on average, all gateways are required to send and receive the same
+>    number of packets per unit of chronological time
+Do you mean that all gateways send the same number of packets per time
+all the time?  E.g. all gateways send 100 packets per hour all the time
+
+>1.8 the dispatch randomization function adjusts the average latency
+>    and the distribution of latencies so that the preceding commitment
+>    is met, introducing noise packets as required
+This could be accomplished by adding no latency at all during times when
+the incoming traffic load happens to equal the desired internal traffic
+level.  But presumably some latency is actually used to provide reordering.
+What rule would determine how much latency would be used in that case?
+
+>1.10 gateways are required to exchange the same number of packets in
+>     any session
+What is a session?  Do you mean, during every session exactly (say) 1000
+packets will be exchanged, or do you mean, during any session the
+number of packets exchanged by each gateway will equal the number ex-
+changed by every other gateway (but this number may vary from session to
+session)?
+
+>2.4 message delivery is reliable, in the sense that the destination
+>    gateway will report delivery of incomplete or damaged messages
+>    to the gateway
+To which gateway?  The source gateway?
+
+>4.2 where gateways are operated by users, the requirement that gateways
+>    should exchange the same number of packets per unit time would be
+>    weakened in some as yet unspecified way
+Why do this?
+
+>5.1 in either case, users may have accounts with gateways and may be
+>    charged for usage
+What gateways would be in a position to charge users?  Only the source
+gateway?  The destination gateway?  Others in between?
+
+>6.0 RN gateway software should be available only from trusted sites by FTP
+What are you trying to prevent by this, and what would happen if someone
+wrote his own version of the RN software?
+
+>7.1 established gateways would be encouraged to rate new gateways
+What kind of information would be available to them to create the ratings?
+
+
+
+

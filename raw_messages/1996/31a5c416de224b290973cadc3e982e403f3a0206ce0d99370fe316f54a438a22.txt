@@ -1,0 +1,42 @@
+From: Mike Fletcher <fletch@ain.bls.com>
+Date: Sun, 21 Jan 1996 21:29:03 +0800
+To: cypherpunks@toad.com
+Subject: Re: Hack Lotus?
+In-Reply-To: <199601200222.VAA01246@jekyll.piermont.com>
+Message-ID: <9601202044.AA15816@outland>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > If they're nasty, they'll check on the receiving side as well, to
+> > ensure that the LEAF and/or the espionage-enabling key have not been
+> > patched in the sending 'International' version.
+> 
+> Nearly impossible. Why? Because they can only include the public key,
+> and not the private key, of the GAK authority in the code. You can
+> encrypt the three bytes of key, but it is very hard for a receiver
+> other than the govvies to read them. There is no shared secret
+> information or private information available, ergo, they can't check
+> their LEAF equivalent.
+
+	If the 3 GAK bytes are derived from the key & the secret key,
+couldn't it be done this way:
+
+	* sender creates 64-bit session key K
+	* sender encrypts K with recepient's public key (say P_r(K))
+	* sender encrypts top 3 GAK bytes w/GAK key
+
+	The recipent can verify the GAK bytes by using it's copy of
+the GAK key on the top bytes of the session key.  If the encrypted
+GAK bytes match what was sent, then they're valid.  No need to have
+the secret key.
+
+---
+Fletch                                                     __`'/|
+fletch@ain.bls.com  "Lisa, in this house we obey the       \ o.O'    ______
+404 713-0414(w)      Laws of Thermodynamics!" H. Simpson   =(___)= -| Ack. |
+404 315-7264(h) PGP Print: 8D8736A8FC59B2E6 8E675B341E378E43  U      ------
+
+
+
+

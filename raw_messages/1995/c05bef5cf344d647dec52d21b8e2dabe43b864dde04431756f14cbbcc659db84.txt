@@ -1,0 +1,56 @@
+From: Yih-Chun Hu <yihchun@u.washington.edu>
+Date: Mon, 2 Oct 95 14:22:16 PDT
+To: "Rev. Mark Grant" <mark@unicorn.com>
+Subject: Re: One-Time-Pad generation from audio device
+In-Reply-To: <Pine.3.89.9510021627.A14466-0100000@unicorn.com>
+Message-ID: <Pine.OSF.3.91j.951002141954.21670A-100000@saul1.u.washington.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 2 Oct 1995, Rev. Mark Grant wrote:
+
+> 
+> Over the weekend I hacked up a one-time-pad generator from the random 
+> number code I've been writing for Privtool, which uses noise from the 
+> audio device to generate random numbers.
+> 
+> The code basically reads in a 512-byte block from /dev/audio, then takes
+> the MD5 of that block to generate 16 bytes of the OTP. The raw audio data
+> I'm getting is not particularly random and will compress by 3:1 using gzip
+> or compress, so I'm assuming that using a 32:1 ratio here via MD5 will
+> give a truly random output (it's certainly uncompressible).
+
+I wouldn't bet on it. I did a similar hack with perl, with a much more
+conservative 5 seconds to 32 bytes. That didn't cut it, when I ent'ed the
+result it gave 6 bits of entropy / 8 bits of output.
+I do recall posting it here.
+
+> 
+> Before I release the source code to the Net, can anyone give me any good
+> reasons to believe that this won't produce physically random output, or
+> make suggestions on how to test, or improve, the generated output ? There's
+> a #define which can be used to easily increase the amount of data fed into
+> the MD5, but at the moment it will only generate about 1 MB per hour on a
+> Sparcstation (limited by the audio input rate), so I don't want to
+> increase that if I don't have to. 
+
+Um.. I would try to generate bits quickly, then securely, so for example
+you get a 2k buffer and do it 5 sec / 128 bits. Then slow down and overwrite
+the buffer and give warnings if the user wants to use the bits too early.
+
+> 
+> 	Mark
+> 
+> 
+> 
+
++---- Yih-Chun Hu (finger:yihchun@cs.washington.edu) ----------------------+
+| http://www.cs.washington.edu/homes/yihchun     yihchun@cs.washington.edu |
+| http://weber.u.washington.edu/~yihchun         yihchun@u.washington.edu  |
++--------------------------------------------------------------------------+
+
+
+
+
+

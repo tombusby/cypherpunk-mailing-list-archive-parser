@@ -1,0 +1,68 @@
+From: Ryan Lackey <rdl@mit.edu>
+Date: Mon, 19 Jan 1998 19:11:30 +0800
+To: Lucky Green <shamrock@netcom.com>
+Subject: Re: RSA hardware
+In-Reply-To: <3.0.2.32.19980119015700.0073e558@netcom10.netcom.com>
+Message-ID: <199801191102.GAA01363@the-great-machine.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+Lucky Green:
+> The more I think about it, the less sense it makes to me to use a dedicated
+> hardware accelerator. I have seen $3,000 hardware accelerators that are
+> outperformed by a PP200. The nCipher device is excellent. 100 1024 bit RSA
+> signing a minute for $5,000. How much would be a nice multi-processor Alpha
+> that does about the same number of signings? Or just a stack 10 of Pentiums?
+> 
+> Before buying an accelerator, make sure to do the math. Eric Young posted
+> timings for various common CPU's a while back.
+
+Keep in mind that there are metrics other than just keys per second for
+comparison.  Often, hardware devices are certified RED/BLACK isolation
+devices, TEMPEST certified, tamper-resistant, etc.  They are also usually
+easier to maintain than software systems on GP hardware.
+
+Also, the major consumers of such devices, the government/military, spend
+a *lot* more on hardware/software/user maintenance than any cypherpunk.  Their
+computers are usually TEMPEST certified, etc., so their curve is a lot
+higher up.
+
+Assuming efficient markets, the reason so few of these devices are sold
+outside the military is that they're overpriced except for those in
+the same situation as the military. though :)
+
+I've been thinking of buying a wicked-fast FPGA prototyping board and
+making my own coprocessor.  There are some really nice gate arrays, and
+David Honig has some fairly wonderful plans for how to use them for
+things like Blowfish, etc.  I've mainly concentrated on high-speed
+symmetric ciphers, but they'd be applicable to RSA/DH, I believe.  For
+one blowfish implementation, the limiting factor (assuming key setup
+can be done efficiently) is the PCI bus, I think.
+- -- 
+Ryan Lackey
+rdl@mit.edu
+http://mit.edu/rdl/		
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBNMMyzKwefxtEUY69AQGruwgAgsJTym5TsaFLVGgBXQQpUYwd8Ar2lquU
+SFM9F1LYLTQjcBIlzh9h3cQdfE2sOkpjENmVGqUvPhyZLwRAC5eWfHL8H/y0giIW
+9Y+1xYY1pY3t/O7w5WgYDwye1fzbL5KDz4XEYKX830LWjShfAZhQxahzLbZd+qnd
+Z6KpjSnylTb9YSp+i5rafgk/i8GnjqFdv5925reexzFBhy/FQi3xwweJWxeRWa+o
+tNX4G/D7W2r1Lq4Z6Yxbk3dTDddif26UTE12M8EENhhlr/6VCO0zGI59VePUC55w
+ZeqgUDGviqe/il1EUMIKUfNdSYBJ0Ur5T4TL2lVYDPrZ6q4KjnHPjA==
+=9ejF
+-----END PGP SIGNATURE-----
+
+
+
+
+

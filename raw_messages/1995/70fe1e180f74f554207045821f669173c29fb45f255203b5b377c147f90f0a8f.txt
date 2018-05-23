@@ -1,0 +1,98 @@
+From: Bryce Wilcox <wilcoxb@nagina.cs.colorado.edu>
+Date: Fri, 15 Sep 95 21:35:39 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Why ecash is traceable
+In-Reply-To: <199509150532.WAA08865@jobe.shell.portal.com>
+Message-ID: <199509160435.WAA26877@nagina.cs.colorado.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hal <hfinney@shell.portal.com> wrote:
+>
+> But this correlation is what makes the coin traceable.  Suppose Alice is 
+> paying a coin to Bob via an anonymous network, and she and the bank 
+> are going to try to figure out who he really is.  She goes through the 
+> payment transaction, and Bob sends his resulting data to the bank.  
+> Before doing so, though, Alice simulates a payment of the same coin to 
+> Charlie.  Charlie doesn't actually have to be involved, Alice can just 
+> go through what she would have done if she had spent the coin elsewhere.  
+> The result of this simulated payment has been shared with the bank.
+> 
+> Now, when Bob deposits his data, the bank compares it with the data 
+> Alice sent, the result of her simulated spending of the same coin.  By 
+> the argument presented above, Bob's deposit will be flagged.  It will 
+> correlate with the data Alice sent in since this will be the equivalent 
+> of a double-spending.  So when Bob makes the deposit he can be linked to 
+> the specific coin payment which Alice made, and his anonymity is lost.
+
+
+So Alice/TheBank are able to tell that the nym whom Alice gave the coin to
+is the same as the nym who deposited it.  If Bob has a pseudonymous
+account at the bank, and it was the same pseudonymous account that he used in
+the transaction with Alice, then they haven't learned anything new, but if he
+wants to use one pseudonym when dealing with Alice and another to deposit the
+coin he got from her then he has problems.
+
+
+That's the extent of the damage, right?  Seems like it can be prevented by
+laundering the coin through a single pseudonym first.  That is:  Bob receives
+the coin from Alice, calling himself "CyberBob".  He deposits the coin with
+the bank as a one-time-nym "Nym#2837004", then he has that nym withdraw the 
+same amount of money from its account (closing out the account) and transfers
+it to the nym which will actually keep the money, "NormalBob".  He destroys 
+the new blinding factors after the temporary nym has withdrawn the coin, 
+he deposits the coin with the bank as "NormalBob", and now he is in the clear.
+
+
+Am I missing anything?
+
+
+If Bob's transaction with Alice was actually pseudonymous rather than
+anonymous then he can just deposit the coin using the same pseudonym and they
+haven't learned anything new.  Once he has done that he can safely transfer
+the money to any other nym of his with no risk (except for traffic analysis,
+physical surveillance, yadda yadda yadda).
+
+
+So current (DigiCash "ecash") Chaumian protocol leads to complete 
+anonymity/pseudonymity (there oughta be a word for that.  
+"self-nym-control"?) in the case that pseudonymous accounts are allowed at
+the Bank.
+
+
+Now one could move this "double-blinding" (isn't that phrase already in 
+use?) trick into the cash protocol itself, possibly gaining a performance 
+win.  DigiCash is apparently aware of this possibility, but (rightly) 
+doesn't consider it important to develop right now.
+
+
+Regards,
+
+Bryce
+
+signatures follow:
+
+
+                                    +                                           
+      public key on keyservers      /.      island Life in a chaos sea        
+      or via finger 0x617c6db9      /           bryce.wilcox@colorado.edu     
+                                    ---*                                     
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Auto-signed with Bryce's Auto-PGP v1.0beta4
+
+iQCVAwUBMFpTOfWZSllhfG25AQHndAQAuOfz4Fohl3e/4Q3eUKKY2nZNG+TdDQEN
+FvW1q1KAuGTeGJoNmL6qD4xkV1wXuT7UScN/7BwU+8SsIh3B5Cb834saGsCTjNtb
+8EV2zsYqzdJkJ3DuDHQw785gqrNPokug4KPP4LRMt5N+PnPRTAWnq6PRibegsg86
+ypFcUOVbLTU=
+=K+5k
+-----END PGP SIGNATURE-----
+
+
+
+

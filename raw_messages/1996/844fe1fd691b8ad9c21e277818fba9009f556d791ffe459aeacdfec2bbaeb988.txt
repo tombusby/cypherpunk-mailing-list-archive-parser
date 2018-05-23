@@ -1,0 +1,64 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 3 Feb 1996 18:19:56 +0800
+To: cypherpunks@toad.com
+Subject: Crypto suggestion - re: Fatal Flaws in Credit Cards
+Message-ID: <199602030951.BAA12301@ix2.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Nathaniel's written about the "fatal flaw" in any system that
+involves typing credit card numbers into your computer being that
+they're easy for a keyboard-sniffer or similar cracker to recognize.
+An obvious work-around for this (and for many of the problems with
+Social Security / Taxpayer ID numbers) is to use some sort of smartcard
+that generates one-shot numbers that the credit card company (or tax thugs)
+can map back to the "real" owner's ID.  The downside of this approach
+is that you need a lot of bits to support it, since you have to accomodate
+the expected number of users * the average uses/user + overhead,
+and that may (for credit cards) be annoyingly long to type in
+(though fine for electrical-interface cards, or cards that display
+their numbers as barcodes for a wand reader, or whatever.)
+
+Some potential algorithms:
+1) public-key - 512 bits isn't really enough (cracking it doesn't necessarily
+        let you charge to everybody's Visa number, but it does let you
+        figure out what everybody's is), and that's already too long.
+
+2) data-base of randomly generated numbers - the would do ok for SSNs;
+        give everybody a dozen or two, and let them get more if
+        they want.  That wouldn't even require a smartcard, but it
+        would tend to require a SSN card that you don't lose,
+        since you probably won't remember the dozen long numbers on the back.
+        This would of course require redesigning all those databases
+        that know an SSN is 9 digits long - I view this as a Good Thing,
+        especially since it may get people to stop using them as database keys.
+
+        Is it practical for credit cards?  Ten billion customers times
+        a million uses each is 16 digits; I suppose that's not much longer
+        than current card numbers, though each card company would need to
+        keep track of more numbers.  You'd probably cache a hundred or a
+thousand
+        in the card, and update the card every couple of years?
+
+3) Some kind of hash or secret-key encryption of a constant (your "real"
+card number)
+        and a random number?  This would still be susceptible to brute-force
+        search (10**20 not being an exceptionally large number), and you'd
+        need an algorithm with either zero or a very low probability of
+        collisions.  A secret-key version would require a tamper-proof card
+        to reduce probability of theft, and I'm not sure I believe in
+        tamper-proof cards, even if you have a lot of keys and a salt
+        that tells the credit-card company which key to use.
+
+Any other suggestions?
+        
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, Pager/Voicemail 1-408-787-1281
+# http://www.idiom.com/~wcs
+
+
+
+
+

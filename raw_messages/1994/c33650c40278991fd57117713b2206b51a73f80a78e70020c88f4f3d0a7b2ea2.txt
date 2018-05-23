@@ -1,0 +1,48 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 28 Dec 94 12:04:44 PST
+To: cypherpunks@toad.com
+Subject: Re: Are 2048-bit pgp keys really secure ?
+Message-ID: <199412282004.MAA04125@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+One thing to keep in mind is that other things can go wrong than
+Carmichael-like numbers in finding false primes.  You can get hardware
+errors.  Here is my estimate of the chance of an undetected memory parity
+error.
+
+Let us suppose that a 8 MB PC uses parity protection per byte and gets
+one parity error per year of operation.  This is just a guess but I have
+occasionally seen parity errors on PC's and I certainly don't use them
+full time 24 hours a day for a year!
+
+So the chance of a particular byte getting a parity error in a particular
+one-minute period (approximately the time for a key generation) is 1/(8M
+* 365 * 24 * 60) or about 2E-13 (2 times 10 to the minus 13).  The
+chances of 2 parity errors, which would then be undetected, would be the
+square of this, or about 6E-26.  During key generation let us just look
+at the data and say that there are about 256 bytes in the active working
+set at any time, so the chance of an error in an important byte is about
+1.4E-23.
+
+So if your chance of the Fermat test failing is much less than about
+10^-23 then you would do better to invest in a more expensive PC than in
+improving the test.  And of course there are other hardware failure modes
+as well, which should increase this threshold.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLwGdahnMLJtOy9MBAQGolwIAzZFbwVx0pqLV3MgQrBYOWELISIsVgj5g
+BywmOcdqDZiqPAi+gTqR4C/zZQnHgLnnsxDH45OBcaVDHv8D4uSvjQ==
+=6YIb
+-----END PGP SIGNATURE-----
+
+
+
+

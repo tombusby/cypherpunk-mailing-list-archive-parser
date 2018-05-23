@@ -1,0 +1,151 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 6 Mar 1996 09:26:41 +0800
+To: cypherpunks@toad.com
+Subject: Re: (Fwd) Gov't run anon servers
+Message-ID: <199603052231.OAA03761@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: mccoy@communities.com (Jim McCoy)
+> 
+> Hal Finney writes:
+> [...]
+> > And even then the information is in memory.  An attacker who could
+> >gain root privileges (and let's not pretend that the NSA can't do that)
+> >can dump memory and later comb it for the key information.
+> >
+> 
+> "Security is economics"  -E. Hughes
+> 
+> The point is not to make a system which is absolutely, positively, no
+> doubt about it, secure against any attacker.  If cypherpunks could do
+> this they would be working for defense contractors and others who make
+> certified systems.  The objective is to make a system which is difficult
+> to attack, one which costs the attacker time/money.  After securing
+> a host against the obvious attacks one can turn to the esoteric ones
+> such as you present: move the key to kernel memory and remove tools
+> for accessing or manipulating that area, run the memory-space encrypted
+> and do not let it dump the contents to disk, etc.  Systems which
+> have been certified to high Orange book levels already exist, so there
+> are obviously solutions to the problems you present.  The tools and
+> tricks of these systems just need to be migrated into systems which
+> people actually use.
+
+I was speaking of present conditions.  If and when proven-secure Unix
+systems start being used as remailer servers on the net then it may be
+worthwhile having a larger key.
+
+The point is that there is no advantage in strengthening an element of
+the system which is not its weakest link.  Factoring my remailer keys
+of 510 bits is not, I am sure, the easiest ways of finding the secret
+keys.
+
+> Then remember that remailers gain strength in numbers.  The more
+> remailers you chain your message through the better your chances of
+> passing through a single node which is not compromised, at which
+> point your message has been "mixed."  As long as it is easier for
+> someone to create new remailers than to break existing remailers
+> we are winning.
+
+It's not clear that this is the case, though, is it?  What is the rate of
+creation of new remailers?  It doesn't seem that high to me.  We can't
+know how quickly they are being broken, but it is just a matter of
+getting root privileges on the remailer machine.  From what I hear of the
+capabilities of experienced hacker/cracker types, it is very possible
+that remailers are being broken faster than they are being created.  Of
+course, there is no way to know.
+
+> >My point remains that strong keys are pointless for remailers which run
+> >on Unix systems connected to the net.
+> 
+> "Insisting on perfect security is for people who do not have the
+> balls to live in the real world"  -paraphrased from M. Shaefer
+> 
+> You give far too much credit to the potential attackers.  One advantage
+> that unix systems connected to the net have over your hypothetical
+> PC at home is the advantage of persistence, what is the point of
+> running a remailer if it is never up, or only up when you need to use
+> it?  Traffic analysis of that particular node becomes a pretty easy
+> task :)
+
+I meant that the home PC system would have an ongoing connection to the
+net, perhaps in the form of periodic uucp or POP connections.  By using
+batching, traffic analysis would be no easier for such a system than for
+any other.
+
+> The unix hosts running remailers also have the advantage in
+> that they have been subjected to attack for quite a while now and
+> most of the obvious problems (and some of the non-obvious problems)
+> have been fixed.
+
+I am not sure what you mean by this.  My experience is that new CERT
+advisories come out every few months which represent security holes big
+enough to steal remailer keys.  The most recent one, out just a couple
+of weeks ago, is a bug in sendmail and maybe some other programs which
+could allow remote users to get root access if they have access to a
+DNS server:
+ftp://cert.org/pub/cert_advisories/CA-96.04.corrupt_info_from_servers
+
+Even if a remailer host operator is on the ball and fixes each one as
+it is announced, he still was vulnerable before the announcement was
+made.  In many cases these bugs are found by hackers who exploit them for
+bad purposes before the good guys figure out what they are doing.
+
+Suppose a reasonably large prize of several hundred or a few thousand
+dollars were offered for someone who could break in and steal the key
+of some remailer on a net-connected Unix system.  Wouldn't you agree
+that the prize would be claimed before too long?
+
+> A strong key on such a host is better than a weak key, so why not
+> make systems as strong as you can?  The only way to have a completely
+> secure computer is to encase it in concrete, cut any network connections,
+> and drop it into the ocean; OTOH the only thing you have created in this
+> case is a fairly unique boat anchor.  You are beginning to sound like
+> the people who claim that the NSA can crack any encryption system, not
+> because they have any proof but just because they extrapolate their
+> limited knowledge into the unknown and mix in a bit of paranoia.
+
+No, my point is that it doesn't really help to strengthen something which
+is not the weakest link in the chain.  My rationale for having a short
+key is that it more accurately reflects my estimate of the degree of
+security provided by my remailer.  Actually probably an even shorter
+length than 510 bits would be appropriate, maybe something more like 300
+or 400 bits.  Going to a 1000 bit key would probably mislead people into
+thinking that they only way an attacker could trace their message would
+be by using a zillion mips-years of computing power or something.
+
+> >Recall that my original comments were in connection with the claim that
+> >the government was running most of the remailers.  As I said, I still
+> >think that is absurd when it would be so much easier to simply steal
+> >their keys.
+> 
+> But the point is that it is _not_ easier to steal the keys.  It is
+> much easier to put up a remailer than to attack an existing remailer,
+> this is why the remailer system is winning the battle of security
+> economics.  By putting up its own remailers a potential attacker
+> probabalistically diminishes the number of systems which they must
+> break.
+> 
+> jim
+
+Yes, I think I misstated my point here.  My real point was that large
+keys are inappropriate.  Maybe you are right that it is easier to start
+up a remailer than to break one.  On the other hand, unless you also break
+the ones you don't run, you (as a LEA) are not in a position to
+accomplish your presumed goal, which is to track criminal messages to
+their source.  So in practice I think they would try to break remailers,
+and again I am sure they will not do so by factoring keys, even for
+mine.
+
+It's also my personal impression that remailers are not mostly run by
+LEA's, just on the basis of the occasional postings I have seen by
+remailer operators here.  Frankly I doubt that remailers are enough of a
+problem to be worth the effort on the part of a LEA to run one and deal
+with all of the hassles.  But this may change in the future.
+
+Hal
+
+
+
+

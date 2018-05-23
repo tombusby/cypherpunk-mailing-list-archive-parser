@@ -1,0 +1,99 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Fri, 27 Oct 1995 11:36:14 +0800
+To: Jiri Baum <jirib@cs.monash.edu.au>
+Subject: Re: A secure cryptosystem with a 40-bit key?
+In-Reply-To: <199510260221.MAA29674@molly.cs.monash.edu.au>
+Message-ID: <199510261908.PAA22358@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jiri Baum writes:
+>How about the numerical cmavo? You'd want to encode numbers. And you
+>don't want people to know they are numbers, because they could
+>count the digits (to get order of magnitude). Same for spelling cmavo.
+
+I agree.  There are some cmavo with enough meaning to warrant some encoding.
+
+Ok, for numbers we take our original 40 bit (or whatever) key and, by
+convention, run it through a md5 to produce the key used for the next
+digit.  By writing all numbers with 20 digits (padding zeros on the
+front or back as desired) magnitude (and/or precision) is hidden.
+
+>How about the tense system? You'd want to encode that because it could
+>give important hints to locations (and times). Then again you could
+>probably avoid using the "a little to the north and a long way east" tense
+>altogether...
+
+I'm not sure it gives anything away.  The cryptanalyst would only know
+that there's a location, not anything important about the location, since
+it could be padded with "null" direction and temporal operators.
+
+And the tense selma'o could probably be treated as a single group for
+encoding.  They're only semantically different, not syntactically.  You'd
+end up with more confusing cyphertext, but that's no real problem unless
+you're trying to hide the fact that you're encoding --- for which you
+could stego the cyphertext in a rant generator.
+
+>How about the attitudinals?
+
+There are enough that encoding them as a group hides their meaning.
+
+>> The selma'o that only have one member are especially meaning-free, as
+>> they're typically elidable terminators and such.
+>
+>Like I said, I only glanced at it, but how about NAI and GAI?
+>
+>...
+>> >Yes, but the grammatical structure itself may reveal heaps.
+>> >(Except for trivial statements.)
+>> 
+>> In a natural language this might be true, but in Lojban the grammar's
+>> regularity eliminates much of this information.
+>...
+>
+>I'm not sure I'd agree here. I suspect you are overestimating the regularity
+>of lojban grammar (then again maybe I'm underestimating...).
+
+I think you're underestimating because you're discarding the effect of
+having a cypher which can arbitrarily substitute gismu and rafsi.  With
+my original examples of "Attack at dawn" vs "Party 'til you puke", there's
+nothing to relate the items.  A long sequence of similarly simple statements
+wouldn't add anything.  Increasing the complexity of the statements makes
+it more difficult to find a false key, but the regularity of Lojban should
+give you enough leeway to do it.
+
+You'd probably want to avoid really complicated bridi, but these sorts of
+things tend to appear more in literary works than in ordinary communication.
+
+>> There are also problems due to ambiguity.
+>
+>Yup. If it's really a problem - ambiguity in language has been with us
+>for a long time and nobody minds much. But I guess you wouldn't want
+>arbitrary ambiguity in your text (you could have an interactive coder
+>which immediately alerts you to all alternative meanings). Or you could
+>put marks into your text to separate the word parts (like some beginner
+>Esperanto books do) thus eliminating the problem.
+
+I had in mind the sort of ambiguity that comes from "Time flies like an
+arrow", in which any of the first three words could be the verb.  A
+computer translator would have to know which to conjugate and which to
+decline.
+
+>> The even bigger inconvenience with natural laguages comes in defining
+>> the codebook.
+>...
+>
+>I'm sure you could easily find wordlists giving the "first X" words of
+>Esperanto - you could just standardize on one of them.
+
+Yep, but it would have to be part of the cryptosystem's definition, as
+opposed to the language's.
+
+>Mi esperas ke tio cxi sencas...
+
+.o'anai mi na cusku fi la .esperantos.
+
+
+
+

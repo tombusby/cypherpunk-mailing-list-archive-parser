@@ -1,0 +1,45 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Wed, 29 Jul 1998 23:45:25 -0700 (PDT)
+To: David Honig <cypherpunks@toad.com
+Subject: Re: encrypted FM radio hiss
+In-Reply-To: <3.0.5.32.19980727110437.007b8100@m7.sprynet.com>
+Message-ID: <3.0.5.32.19980729164034.008dc100@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:04 AM 7/27/98 -0700, David Honig wrote, about (Real, not Pseudo) RNGs:
+>Poor RNG ----> XOR ----> BlockCipher ----> improved RNG?
+>                 ^                    |
+>                 |____________________|
+>The output of a good block cipher in feedback mode will pass Diehard tests,
+>though it is not crypto-secure.
+>From an information theoretic perspective, in the above scheme, you are
+>slowly adding entropy to the output stream, at a rate determined by the
+>actual number of bits/iteration and the bits/symbol of your poor random
+>numbers.
+
+It's an interesting problem, and I doubt there's a consensus on strength,
+in particular, on how much randomness is left after you take a
+random sample out of the system.  I'd feel much better if you
+also ran the output through a keyed hash before giving it to anyone
+(e.g. run pairs or triples of 64-bit blocks plus a private salt through MD5.)
+With a perfectly strong RNG, the output should also be perfectly strong,
+though with a weak RNG, the block cypher does add some correlation.
+
+You definitely should trash the initial outputs, until you've added
+enough bits of real randomness that the block chaining step has
+probably accumulated a whole block's worth of randomness.
+Otherwise, the first round of block cypher is an ECB on a small
+set of input data (e.g. 64 possible values of one 1 and 63 0s
+fed into a DES cracker.)
+
+
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+

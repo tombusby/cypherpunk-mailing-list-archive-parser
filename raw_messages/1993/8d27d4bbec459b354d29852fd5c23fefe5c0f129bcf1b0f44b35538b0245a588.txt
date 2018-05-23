@@ -1,0 +1,49 @@
+From: peb@PROCASE.COM (Paul Baclace)
+Date: Fri, 20 Aug 93 15:01:17 PDT
+To: HAHN@lds.loral.com
+Subject: Re: genetic algorithms for crypto analysis
+Message-ID: <9308202159.AA04543@banff.procase.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Using a GA to drive a brute force key search would certainly not help:
+the fitness surface has a needle in a haystack (spike).  This kind of
+problem has been identified as "unlearnable" by theoreticians like 
+Valiant at Harvard.
+
+However, using a GA to drive a more intelligent cryptanalysis that has
+partial results *would* help.  It seems that cryptanalysis benefits from 
+human assistance due our excellent abilities at recognition of partial
+solutions.  Because of this, a GA could help automate the cryptanalysis
+process.
+
+(My knowledge of cryptanalysis ends at the Enigma machine breaker cbw
+(crypt breakers workbench in comp.sources.unix archives) which uses an
+interative process where partial results are visible and are used to guide
+new guesses.  The Enigma machine does state-machine substitution, but 
+no diffusion/mixing/scrambling; lack of the latter makes visual 
+recognition much simpler.  Since DES uses scrambling, I'm not sure whether
+partial results are possible.)
+
+>  I recall reading (I think in Sci. Am.) that a theory under investigation
+>  now as to why nature has sexual reproduction as part of its repertoire
+>  is that this gives a solution-seeking population a better opportunity to
+>  located spikey solutions.
+
+Crossover of the genome is the key part of "avoiding hill-climbing" and it the 
+key ingredient to Holland's proof of a super-linear speedup (thus "violating"
+Amdahl's Law of parallelization never attaining a linear speedup) otherwise 
+known as implicit parallelism.  Holland's proof of this in the '70s opened 
+up research in GAs because of this attractive feature.  [Note that it requires
+certain assumptions about independence and stasis of the bits in the genome
+to make the proof tractable, but the hope is that this will still be useful
+for real problems.]
+
+Paul E. Baclace
+peb@procase.com
+
+
+
+

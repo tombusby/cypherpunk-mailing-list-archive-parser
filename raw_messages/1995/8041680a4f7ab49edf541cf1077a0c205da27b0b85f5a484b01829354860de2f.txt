@@ -1,0 +1,47 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Mon, 25 Sep 95 09:56:22 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Re: Decompiling Netscape
+In-Reply-To: <199509221732.NAA17523@clark.net>
+Message-ID: <9509251604.AA28123@cfdevx1.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+    From: Ray Cromwell <rjc@clark.net>
+    Date: Fri, 22 Sep 1995 13:32:57 -0400 (EDT)
+
+       Anyone want to lend me a hand in finding and disassembling the
+    routine responsible for the buffer overflow in Netscape? Or atleast
+    tell me how you did it. (I hope it wasn't done by single stepping thru 
+    functions in GDB) I missed the whole Netscape RNG decompilation
+    thread. You could win a T-shirt for your help!
+
+Under Unix, you can use objdump, e. g.
+
+ % objdump -d netscape
+
+ netscape:     file format a.out-sunos-big
+
+ No symbols in "netscape".
+ Disassembly of section .text:
+ 00002020 clr  %fp
+ 00002024 ld  [ %sp + 0x40 ], %o0
+ 00002028 add  0x44, %sp, %o1
+ 0000202c sll  %o0, 2, %o2
+ 00002030 add  4, %o2, %o2
+ 00002034 add  %o1, %o2, %o2
+ . . .
+
+This should work wherever other GNU utilities work.  objdump is part
+of GNU binutils.
+
+--
+Rick Busdiecker                        Please do not send electronic junk mail!
+ net: rfb@lehman.com or rfb@cmu.edu    PGP Public Key: 0xDBD9994D
+ www: http://www.cs.cmu.edu/afs/cs.cmu.edu/user/rfb/http/home.html
+ send mail, subject "send index" for mailbot info, "send pgp key" gets my key
+
+
+
+

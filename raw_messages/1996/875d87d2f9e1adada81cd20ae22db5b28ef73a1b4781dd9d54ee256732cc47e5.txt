@@ -1,0 +1,83 @@
+From: Carl Ellison <cme@cybercash.com>
+Date: Wed, 3 Jul 1996 10:42:40 +0800
+To: cypherpunks@toad.com
+Subject: Re: Self-signed certificates
+Message-ID: <2.2.32.19960702215220.002ff23c@cybercash.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's some trouble-making I'm doing on another list (one that believes in
+X.509 certs and CAs).... :)
+
+ - Carl
+
+>Date: Tue, 02 Jul 1996 17:34:46 -0400
+>To: Greg.McPhee@Software.com (Greg McPhee)
+>From: Carl Ellison <cme@cybercash.com>
+>Subject: Re: Self-signed certificates 
+>Cc: ssl-talk@netscape.com
+
+>
+>At 01:51 PM 7/2/96 -0700, Greg McPhee wrote:
+>>>
+>>>If you have encountered an old friend of yours on the net and want to make
+>>>sure that you can exchange keys with her without some active eavesdropper
+>>>getting in the path and substituting keys, then a CA's cert is probably
+>>>worthless to you.  [I have a paper at this month's USENIX Security Symposium
+>>>on this subject.]
+>>
+>>I want to understand why the "CA's cert" above is worthless.  Assuming the
+>>"CA's cert" is a self signed certificate identifying a CA, then is it
+>>worthless because it is an untrusted CA, or because my old friend and I
+>>don't have personal certificates signed by this CA?
+>>
+>>Couldn't wait for the paper :-)
+>
+>OK -- at the risk of boring the list... :)
+>
+>There are many definitions for "identity".  In this one case, I'm using the
+>example of an old friend.  We meet again on the net and want to trade keys,
+>for private communications.  Much of the loose talk over the years about
+>certificates says that if she and I have certificates from a good CA, then
+>we can be assured we aren't being spoofed.  That statement isn't true.
+>
+>To state it more formally, a CA's certificate in this case is neither
+>necessary nor sufficient.
+>
+>The CA binds a key to *its name for a person* -- trying to make that name
+>globally unique and meaningful -- but all it can promise is to make the name
+>unique.  It can't promise to make it meaningful *to me*.  The CA is not
+>aware of my existence, much less of what I know about each person in the
+>world.  There might be 100 certificates for "Sue Robinson" -- with various
+>other information to distinguish them from one another -- but when I knew
+>her she was going under the name of Laura and I have no clue what her other
+>distinguishing information is.  I had lost touch with her.
+>
+>I could ask her, over the net, and she would tell me all those new bits of
+>information.
+>
+>Trouble is, I need an authenticated channel to her in order to be sure I'm
+>not being spoofed while she tells me her SNail address (or whatever makes
+>her cert unique).  I can't get an authenticated channel without the cert.
+>Impasse.
+>
+>Thus the cert from the CA is not sufficient.
+>
+>It is also not necessary.  The paper I'm presenting gives a protocol with
+>which Sue and I can use our shared memories (what makes us old friends in
+>the first place and, in a real sense, the *true* definition of "identity")
+>to prove to each other that there is no eavesdropper over a confidential
+>channel we create.  Once we've done that, we then we can tell each other our
+>keys and each issue a cert for the other's key.  At that point, we have
+>certified keys for each other without involving a CA.  What's better, I have
+>her certified key from a "CA" I can trust above all others -- myself.
+>
+>[QED]
+>
+> - Carl
+
+
+
+
+

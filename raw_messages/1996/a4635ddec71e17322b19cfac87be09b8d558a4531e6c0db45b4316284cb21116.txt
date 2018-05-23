@@ -1,0 +1,70 @@
+From: lull@acm.org (John Lull)
+Date: Sun, 21 Jan 1996 12:29:31 +0800
+To: Wei Dai <weidai@eskimo.com>
+Subject: Re: HAVAL (was Re: crypto benchmarks)
+In-Reply-To: <199601202200.RAA09207@UNiX.asb.com>
+Message-ID: <31017081.19731341@smtp.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Wei:
+
+I didn't see your original post, but did see Deranged's response.  I
+would be interested to see whatever you come up with.
+
+On Sat, 20 Jan 1996 16:57:07 +0000, Deranged Mutant
+<WlkngOwl@UNiX.asb.com> wrote:
+
+> > The biggest problem I have with HAVAL now is that with 4 or 5 passes the
+> > transform functions are larger than 10k even with compiler optimzation for
+> > size.  Since the Pentium L1 instruction cache is only 8k, this makes HAVAL
+> > with 4 or 5 passes extremely slow.  Do you have ideas how I can fit the 
+> > transform functions into L1 cache?
+> 
+> You might do some creative optimization to use more registers than it 
+> does.  I haven't looked at it in a while.  The code was so huge and 
+> slow compared to optimized MD5 and SHS that I have up using it for an 
+> unfinished encrypted file system.
+
+The reference implementation is TERRIBLE for small caches.  You can
+shrink it significantly, however, by simply looping 4x across code
+that does the basic round operation for each of the 8 rotations --
+something like:
+
+  for( i = 4; --i; )
+  { FF_1(t7, t6, ...);
+    FF_1(t6, t5, ...);
+    FF_1(t5, t4, ...);
+    FF_1(t4, t3, ...);
+    FF_1(t3, t2, ...);
+    FF_1(t2, t1, ...);
+    FF_1(t1, t0, ...);
+    FF_1(t0, t7, ...);
+  }
+
+The basic macro for this is almost unchanged from the reference
+implementation.
+
+You can shrink it even further by, instead of coding the basic macro 8
+times for each round, writing a round step that works on an array of 9
+words (out of an array of 16), using 8 words as input and producing
+the ninth as output.  You then have a two-level loop that invokes this
+4x8 times, walking your working set 1 element in the array each time,
+and every 8 passes moving the 8 current variables back where they
+belong.
+
+The first pass through the loop, you use elements 15..8 as input, and
+produce element 7.  The second pass, you use elements 14..7 as input,
+and produce element 6, etc.  After 8 passes, you move elements 7..0
+back up to 15..8, and start the inner loop over.
+
+Alternatively, you can begin with an array of 40 words (only 8 of
+which contain data), use a single loop that invokes the basic
+processing 32 times, walk your working set 1 word each time, and only
+move the working set back where it belongs at the end of the full
+round.
+
+
+
+

@@ -1,0 +1,91 @@
+From: markh@wimsey.bc.ca (Mark C. Henderson)
+Date: Thu, 29 Apr 93 11:13:13 PDT
+To: cypherpunks@toad.com
+Subject: Re:  Tough Choices: PGP vs. RSA Data Security
+Message-ID: <m0nod4q-00017NC@van-bc.wimsey.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> All he has to do is let us pay a licence fee for pgp.  What's the advantage
+> to him in asking for a different piece of code that uses RSAREF and DES
+> instead of Phil's code and IDEA?  I can't see it, except that using DES
+> blows away the security of the program...
+With respect to this, putting another symmetric cipher into RSAREF is a 
+simple matter. I've done it for triple DES (3 key EEE version). Once
+(and if) we get permission from RSADSI to distribute it, it will go
+into the RIPEM distribution. I don't see any reason why we couldn't
+plug in IDEA. If you look at the RSAREF code you'll see that it would
+be technically very easy.
+> 
+> No, I think this suggestion should be put down now, or we'll splinter and
+> give them exactly the divide-and-conquer opening they're looking for.
+
+Problems with RSAREF/RIPEM:
+1. Use of RSAREF/RIPEM in support of a commercial enterprise is 
+prohibited without paying a licence fee. Note that they can get 
+you on copyright violations rather than patent infringement 
+if you break the RSAREF licence agreement. My bet is that it makes 
+enforcement a much simpler matter (you might say, especially in Canada).
+Note that personal use on a commercial system is OK.
+
+2. One needs to get permission every time one wants to modify RSAREF in
+any substantial way. 
+
+3. The pseudo random number generation is suspect, especially if we're 
+considering using symmetric cipher keys of > 64 bits. Essentially at 
+most 2^128 distinct sequences of pseudo random numbers can be generated. 
+2^128 is a big number, but on the other hand it does make one wonder whether
+it is worth adding a scheme which uses 192-24 bits of key material.
+It isn't that I know how to break it, but on the other hand, it wouldn't
+surprise me if someone could compute, in less time than it would take
+to try 2^128 possibilities by brute force, some smaller number of 
+possibilities for the encryption key given the IV which is output 
+in plaintext in a RIPEM message. Call me paranoid.
+
+4. We need something better than 56 bit key DES (said it before).
+
+5. export problems.
+
+6. RIPEM currently has no way to handle certificates or sign other people's
+public keys. This is, of course, serious.
+
+Good things:
+1. One can use it for non-commercial purposes in North America.
+
+2. Performance of RIPEM is considerably better than the original RSAREF
+code. The DES routines have been replaced. Furthermore a lot of platform
+specific improvements have been made to the large integer operations.
+The point being, that performance is similar to PGP.
+
+3. The promise of PEM compatibility. (People are working on getting
+some support for certifificates into RIPEM.)
+
+
+The real point is that if we put our considerable resources behind something
+like RIPEM or 'legal' PGP and we had RSADSI's cooperation in terms of 
+permission to modify, improve and update RSAREF then we could almost
+certainly have a high quality legal personal public key encryption program
+with the features we want, in a few months.
+
+It is a compromise. PGP is already done and is a very impressive
+software package. It certainly has a better feature set than RIPEM.
+It has been exported, so the export control issue is not a serious one.
+
+I do think the optimal solution (for both RSADSI and us) is to get some 
+sort of scheme into place where PGP could be used legally for a licence 
+fee (either per key or per person). Perhaps the folks at RSADSI could
+sign keys as PAID (but not necessarily authenticated) for US$50. They
+would certainly make some money in the process.
+
+Mark
+
+-- 
+Mark Henderson
+markh@wimsey.bc.ca
+RIPEM key available by key server/finger/E-mail
+  MD5OfPublicKey: F1F5F0C3984CBEAF3889ADAFA2437433
+
+
+
+

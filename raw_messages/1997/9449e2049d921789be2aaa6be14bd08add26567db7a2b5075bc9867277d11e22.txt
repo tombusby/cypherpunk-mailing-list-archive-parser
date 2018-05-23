@@ -1,0 +1,65 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 10 Aug 1997 02:49:33 +0800
+To: rah@shipwright.com
+Subject: pgp -c undetectable change to ciphertext? (was Re: Hipped on PGP)
+In-Reply-To: <v0311070eb01223e4cd77@[139.167.130.248]>
+Message-ID: <199708091742.SAA02232@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Ian Grigg <iang@systemics.com> writes:
+> [Gary Howland gives talk at HIP on technical PGP flaws, 0xDEADBEEF etc]
+>
+> And for the record, whilst Gary's attack to change conventionally
+> encrypted files without detection was unknown to the PGP team at the
+> moment, we can be sure that it will be addressed.
+
+Hmm.  Change pgp -c files you say.  Lets see... do you mean this:
+
+% echo hello world > junk
+% pgp -c +compress=off -zfred junk
+% sed 's/....$/adam/' < junk.pgp > junk2.pgp
+% pgp -zfred junk2.pgp
+% cat junk2
+hello woøP?t
+
+That much is obvious.
+
+(pgp doesn't complain or even notice the above btw ... there is no
+checksum and so you can just garble the file, if you so wish, and pgp
+won't complain).
+
+Or did Gary find a way to undetectably modify ciphertext without
+turning off compression?
+
+Could you or he elaborate on your attack?  
+
+Eternity server code is using pgp -c (but with compression on), and
+some remailer reply blocks (presumably with compression on), so it
+could be relevant if you've come up with an attack which works with
+compress=on.
+
+If you're using PGP with compress=on, then I suspect your chances of
+undetectably modifying the ciphertext and still coming up with
+something which is a valid compressed packet is fairly low.  I wonder
+how low.  
+
+Probably not low enough cryptographically, if you were using this in a
+automated environment, where people could hit a server with garbled
+packets repeatedly until one happened to decompress, and pass the
+compression codes internal checksum.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,103 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 9 Oct 1997 06:55:21 +0800
+To: jad@dsddhc.com
+Subject: computationally infeasible jobs for MITMs (Re: Secure phone)
+In-Reply-To: <3.0.3.32.19971008132417.00b0c6d0@labg30>
+Message-ID: <199710082248.XAA01618@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+John Deters <jad@dsddhc.com> writes:
+> It would be easy enough to "trick" the MITM into exposing their
+> existance anyway, just by using digits that come up in conversation.
+> Humans would be able to come up with unique situations that the MITM
+> would find all but impossible to predict.  "Hey, Eric, I noticed
+> that the third digit of your IP address' second octet is the same as
+> the second digit of our exchange.  How's by you?"  A sudden dropout
+> of sound (or "accidental" loss of connection) while the MITM
+> recognizes the trap and tries to backpedal will be instantly
+> noticed.  Human protocols are resilient, whereas mathematical
+> protocols are precise.
+
+I wonder if we can come up with a way to formalise this technique and
+automate it.  I think it was James voiced something similar earlier in
+the thread.
+
+Using your example, the MITM faces a couple of problems: he has to
+think on his toes, and think real fast.  Perhaps he can't think fast
+enough.
+
+Second problem, perhaps if he doesn't speak soon enough, he will have
+blown it, because you are speaking continuously, and the second part
+of the sentence constructs a problem from information already stated.
+The first time the information is stated, the MITM doesn't have enough
+information to change it.
+
+Say he changed it to: "Hey eric I noticed the second digit..." (second
+instead of third), just in case this would help him.  Well he doesn't
+know what the challenge will be so he may just have created an
+impossible to spoof problem for himself.  (The second digit probably
+won't meet the challenge in the second part of the sentence).  So this
+would force the MITM to construct a replacement challenge which does
+match.  Given the short notice, and already decided first part, he may
+have difficulty constructing a plausible sounding challenge which
+meets his criteria.  "Is the ummm... square of your first digit".
+
+
+How about this for a computerised method to do something similar.  Aim
+of the game: to make the MITMs job computationally infeasible.
+
+Say that we leave some noise in the speech channel.  Some of it isn't
+really noise but encrypted data.  Say perhaps first stegoed packet is:
+
+	E(k1, nonce) = packet1
+
+and second stegoed packet is:
+
+	E(k2, nonce) = packet2
+
+and finally there is a mask which controls which bits of the noise are
+actually encrypted data, and which are parts of the actual message.
+
+Send this last:
+
+	E(k3, mask)
+
+Then send the three keys k1, k2, k3.
+
+Then check that the packets1 and 2 reconsituted according to the mask
+both decrypt to the same nonce.
+
+The idea is that because of the mask, the MITM doesn't know which bits
+to replace.  So he tries to construct his own challenge meeting that
+protocol.  Fair enough he can do this.  But he will degrade the voice
+quality because he will replace some more signal with noise.  Can we
+tune this protocol so that the recipient can detect the extra noise?
+
+Well, ok, if the recipient can detect the noise, surely the MITM can
+too?  Yes but, choosing different bits to reduce the noise isn't free,
+and the hope is that you can construct a system with an expensive
+noise estimation function which is agreed to as part of the protocol.
+So you find out 10 seconds into the conversation that there is a MITM.
+
+The MITM has to compute this noise function in real time, to avoid
+introducing lag.
+
+It's not very good, but I'm sending it along anway, so that perhaps
+y'all can improve on it,
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

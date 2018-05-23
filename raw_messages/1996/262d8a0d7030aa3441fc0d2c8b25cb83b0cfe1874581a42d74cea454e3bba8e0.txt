@@ -1,0 +1,59 @@
+From: John Young <jya@pipeline.com>
+Date: Fri, 25 Oct 1996 16:09:25 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: USAF Speech Subterfuge (fwd)
+Message-ID: <1.5.4.32.19961025230829.006d37c8@pop.pipeline.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+----- Forwarded Message:
+
+Date: 25 Oct 1996 10:48:12
+To: Recipients of conference <fastnet@igc.apc.org>
+From: james@bovik.org (James Salsman)
+Subject: speech subterfuge
+
+
+I have some indirect evidence that patent-related 
+activities of the U.S. Air Force may have intentionally 
+obscured the mathematical definition of "cepstrum" from 
+the mid-1970s, with literally tremendous implecations 
+for the computer speech processing industry (perhaps 
+billions of dollars in real economic damage by now), and 
+also harming current war reduction projects such as 
+automatic language translation systems.  The correct 
+definition was published in 1963 by Cooley and Tukey 
+(who also coined the term "bit".)  For those who care, 
+the Cooley-Tukey cepstrum is:
+
+  FFT( ln( | FFT( sample .* window ) | ) )
+
+And for speech processing, the definition is:
+
+  FFT( ln( melScale( | FFT( sample .* window ) | ) ) )
+
+(The "melody scale" atenuates frequencies atenuated by 
+the human ear.  N.B.: Both the resulting cepstral 
+magnitude and phase are significant, e.g., the result 
+is a vector of complex numbers.  Furthermore, only 
+the first few elements of the cepstral vector are 
+necessary for the formant envelope, while the exitation 
+(i.e., the harmonics) are encoded as a peak towards the 
+end of the vector.)
+
+The error has been to use the inverse Fourier transform 
+instead of the second (outside) FFT, which seems to be
+why researchers have been experimenting with the 
+(slightly) better Discrete Cosine Transform, from video 
+signal processing.
+
+Sincerely,
+:James Salsman
+
+----- End Forward
+
+
+
+
+

@@ -1,0 +1,61 @@
+From: "Robert A. Rosenberg" <hal9001@panix.com>
+Date: Fri, 1 Sep 95 21:38:36 PDT
+To: droelke@rdxsunhost.aud.alcatel.com (Daniel R. Oelke)
+Subject: Re: SSL search attack
+Message-ID: <v02130504ac6d39583ee9@[166.84.254.3]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 07:25 9/1/95, Daniel R. Oelke wrote:
+>>
+>> I see nothing wrong with the concept of being allocated an initial chunk
+>> and having the scan software attempt to ACK it when 50% of it has been
+>> searched. A successful ACK would allow the releasing of a new chunk (in
+>> response) equal in size to the returned chunk. A failure of the Server to
+>> accept the ACK would trigger a retry at set intervals (such as 75% and 100%
+>> or 60/70/80/90/100%) until the Server responds. Thus the scanner is always
+>> in possession of a Full Sized Chuck to scan (so long as the Server accepts
+>> an ACK before the 100% done mark) and temporary failures will not stop the
+>> process of a scanner as currently happens.
+>>
+>
+>The only way this can work is if the server is told it is a 50%/75%/etc
+>size ACK, and then latter the server is ACKed for the full 100%.
+>
+>Why?  Because what happens if the client dies immediately after doing
+>the ACK - maybe only 51% of that space has been searched, yet
+>the server has already seen an ACK for it.
+
+I thought that the ACK gives starting location and number of segments. If I
+get 500 segments and ACK at the 50% point I am sending an ACK for the
+Starting Point and 250 Segments (the unprocessed part would then ACK
+Start+250 for 250 when done) Just as of I had only gotten 250 in the first
+place and was also given the next 250 Segment Chunk (ie: I was "Next
+Requester" after my original allocation of 250).
+
+>IMO - a % ACK is to much complexity and extra work on the server,
+>which is already having trouble keeping up.
+
+No - It is the same load if you allow the first request to be twice the
+size of the subsequent requests. If you ask people to request 30 minutes
+worth of segments, there is no difference in load (if the Server responds
+to each ACK when first attempted) if they start each run with a 1 hour
+chunk (ie: 2X Chunk) and check in every 30 min to ACK a Chunk (and to get
+the one to be worked on in a half an hour [and when you are 30 minutes away
+from your shut down time, just ACK and do not request another chunk]) and
+just getting a X sized chunk at your initial connection.
+
+In the 2X method, you still have a X sized Chunk to work on for the next 30
+Minutes if the Server is ignoring your ACK attempt (and when that Chunk has
+been scanned you return both and get two more). This is hitting the Server
+once every 30 minutes and NOT pounding away at it until you get an ACK
+through (and more get more work) since you have no need for another chunk
+immediately (as you would with the X sized Chunk every 30 minutes method)
+and thus have no need to retry on a connect failure.
+
+
+
+
+
+

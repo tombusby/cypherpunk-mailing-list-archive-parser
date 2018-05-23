@@ -1,0 +1,41 @@
+From: Rich Graves <llurch@networking.stanford.edu>
+Date: Sat, 2 Dec 1995 10:43:45 +0800
+To: Laszlo Vecsey <master@internexus.net>
+Subject: Re: Windows95 "Security"
+In-Reply-To: <Pine.LNX.3.91.951201201911.32274A-100000@micro.internexus.net>
+Message-ID: <Pine.ULT.3.91.951201175232.2911G-100000@Networking.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 1 Dec 1995, Laszlo Vecsey wrote:
+
+> Where is the password data file kept?
+
+A separate password file is kept for each "user" in:
+
+  C:\WINDOWS\*.PWL
+
+.PWL files are weakly encrypted with the "default login" password. Once 
+you decrypt them, they contain cleartext passwords for every other 
+password-protected resource accessed by that user (network servers, 
+screen savers, dial-up networking, possibly .PWL-enabled encryption 
+utilities).
+
+Somebody supposedly posted code for decrypting .PWL files to sci.crypt.
+
+.PWL files are persistent, i.e., Joe "logs on," saves a couple passwords, 
+"logs off," then Judy comes by, hits Escape or various other trivial 
+tricks to avoid the need to "log on," picks up Joe's .PWL file, and 
+cracks it at her leisure.
+
+Each "user" also gets an unencrypted "profile" that gives all application
+preferences. 
+
+Anyone who treats Win95 as if it were a multiuser system is an idiot.
+
+-rich
+
+
+
+

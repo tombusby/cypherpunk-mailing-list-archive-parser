@@ -1,0 +1,65 @@
+From: daw@orodruin.CS.Berkeley.EDU (David A Wagner)
+Date: Wed, 28 Feb 1996 17:28:04 +0800
+To: ses@tipper.oit.unc.edu (Simon Spero)
+Subject: Re: fun with the web and security
+In-Reply-To: <Pine.SOL.3.91.960227233313.1545A-100000@chivalry>
+Message-ID: <9602280905.AA16242@espresso.CS.Berkeley.EDU.mammoth>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> This has been discussed a lot in the URI working groups since around 92. 
+> I think it's actually documented in the RFC
+
+Really?  Could you give me any pointers to read up on?
+
+I searched extensively at www.w3.org, and I did find the following
+excerpt in RFC1738 under Security Considerations:
+
+   A URL-related security threat is that it is sometimes possible to
+   construct a URL such that an attempt to perform a harmless idempotent
+   operation such as the retrieval of the object will in fact cause a
+   possibly damaging remote operation to occur.  The unsafe URL is
+   typically constructed by specifying a port number other than that
+   reserved for the network protocol in question.  The client
+   unwittingly contacts a server which is in fact running a different
+   protocol.  The content of the URL contains instructions which when
+   interpreted according to this other protocol cause an unexpected
+   operation. An example has been the use of gopher URLs to cause a rude
+   message to be sent via a SMTP server.  Caution should be used when
+   using any URL which specifies a port number other than the default
+   for the protocol, especially when it is a number within the reserved
+   space.
+
+I don't think this addresses exactly the same thing I was talking
+about-- I'm talking about a way to exploit arbitrary security holes,
+even against machines (normally) protected inside a firewall.
+
+It is interesting to see the caution above, though-- I was unaware of
+its existence.  I also found the following in the same RFC:
+
+   Care should be taken when URLs contain embedded encoded delimiters
+   for a given protocol (for example, CR and LF characters for telnet
+   protocols) that these are not unencoded before transmission.  This
+   would violate the protocol but could be used to simulate an extra
+   operation or parameter, again causing an unexpected and possible
+   harmful remote operation to be performed.
+
+which Netscape violates in the gopher: protocol.  However, I also note
+that the same RFC specifically addresses the gopher protocol in
+Section 3.4.9, and concludes that the client needs to decode embedded
+%-escaped newlines and send them as true newlines to the gopher server;
+thus, the RFC appears to be self-contradictory, as far as I can tell.
+Netscape follows Section 3.4.9.  Furthermore, I should point out that
+even if clients were changed so that they didn't unencode %-escaped
+newlines in URLs for the gopher: protocol, I believe sendmail bugs
+could still be exploited-- Ian has discovered a way to send arbitrary
+email messages with arbitrary headers to arbitrary hosts by abusing
+the mailto: URL, which should be sufficient to exploit several sendmail
+bugs behind a firewall.
+
+So was that what you were talking about, or was there more discussion?
+
+
+
+

@@ -1,0 +1,33 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 13 Aug 1997 15:46:38 +0800
+To: amp@pobox.com
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <Pine.SUN.3.96.970812111223.26326D-100000@beast.brainlink.com>
+Message-ID: <3.0.2.32.19970813003535.0068e9b4@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 05:37 PM 8/12/97 -0500, amp@pobox.com wrote:
+>So would that then be a possible weakness in encrypting to multiple 
+>recipients with PGP? Probably not, since the actual data is encrypted with 
+>idea.
+
+The actual data is encrypted with IDEA, but the identical IDEA key is 
+encrypted with each recipient's RSA key.  To avoid this attack,
+PGP uses random padding after the IDEA key (which makes the message
+encrypted with RSA different for each recipient, avoiding the trap.
+Since IDEA keys are 128 bits long, and RSA moduli are typically 384-2047,
+there's plenty of room for random noise in the format.)
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#   (If this is a mailing list or news, please Cc: me on replies.  Thanks.)
+
+
+
+
+

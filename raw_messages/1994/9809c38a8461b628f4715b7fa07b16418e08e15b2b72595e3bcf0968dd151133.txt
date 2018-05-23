@@ -1,0 +1,57 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 1 Sep 94 16:29:46 PDT
+To: cypherpunks@toad.com
+Subject: Re: Is the following digicash protocol possible?
+In-Reply-To: <199409012115.OAA16764@netcom8.netcom.com>
+Message-ID: <199409012329.QAA28368@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jamesd@netcom.com (James A. Donald) writes:
+
+>A question about offline digicash:
+
+>Is it possible to arrange digicash as follows:
+(I have rearranged James' two paragraphs)
+
+>If A, the original issuer, issus a unit of digicash to 
+>to B, and B gives it to C, and C gives it to D, and D,
+>gives it to E, and E cashes it with A,  --  and
+>C double spends it to D', who then gives it to E'
+>who then attempts to cash it with A, -- then A
+>will detect the double spending and rebuff the attempt,
+>E' will complain to D', and D', with information
+>supplied by E' and A, can then prove that C dishonorably 
+>double spent the money, without discovering that C gave 
+>the money to D, and hence without discovering that D 
+>gave the money to E.
+
+There are protocols to do essentially this, although they get
+rather complicated.  It is necessary for each person in the chain
+to have some knowledge of the person he is passing the money to,
+so that he can confirm that that person is in fact revealing something
+about himself that will incriminate him if he double-spends.  If all
+parties in the transactions are totally anonymous then there is no
+hope of tracking down a double-spender.
+
+>If A, the original issuer, issues a unit of digicash to 
+>to B, and B gives it to C, and C gives it to D, and D,
+>gives it to E, and E cashes it with A,  --  and
+>everyone colludes except C and D, it is impossible
+>to prove that C got this unit from D.
+
+My reading of Chaum's paper "Transferred Cash Grows in Size" is that
+if you have a system to satisfy the 1st paragraph, it cannot also satisfy
+this.  It appears that if B, E and the bank collude, and B knows he gave
+the cash to C and E knows that he got it from D, then they can tell that
+C gave it to D.  Basically B recognizes the money E got from D, with
+the bank's help.  Although Chaum wrote as though his results applied to
+any conceivable transferrable double-spending-detecting cash system,
+it wasn't clear to me how general his results really were.
+
+Hal Finney
+
+
+
+

@@ -1,0 +1,86 @@
+From: "W. Kinney" <kinney@spot.Colorado.EDU>
+Date: Mon, 9 Aug 93 10:21:45 PDT
+To: cypherpunks@toad.com
+Subject: PGP Bug?
+Message-ID: <199308091717.AA19879@spot.Colorado.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Cypherpunks --
+
+Looking at the code for doing conventional encryption in PGP, I've come across 
+something that doesn't look right. It's with the 10-byte header block that PGP 
+adds to the beginning of files -- 8 bytes of random data with the last two 
+bytes repeated to use for key verification.
+
+Indicating omissions by "[...]", the code in crypto.c looks like this:
+
+int idea_encryptfile(char *infile, char *outfile, 
+	boolean attempt_compression)
+{
+[...]
+	byte ideakey[16];                <------- KEEP AN EYE ON THIS BUFFER
+	struct hashedpw *hpw;
+
+[... a call to GetHashedPassPhrase to set the key]
+
+
+	/* Now compress the plaintext and encrypt it with IDEA... */
+	squish_and_idea_file( ideakey, f, g, attempt_compression );
+
+[...]
+}
+
+
+static int squish_and_idea_file(byte *ideakey, FILE *f, FILE *g, 
+	boolean attempt_compression)
+{
+
+[...]
+
+	idea_file( ideakey, ENCRYPT_IT, t, g, fsize(t) );
+
+[...]
+}
+
+
+static
+int idea_file(byte *ideakey, boolean decryp, FILE *f, FILE *g, word32 lenfile)
+{	
+[...]
+#define RAND_PREFIX_LENGTH 8
+
+[...]
+
+	if (!decryp)	/* encrypt-- insert key check bytes */
+	{	/* There is a random prefix followed by 2 key check bytes */
+
+		memcpy(textbuf, ideakey+IDEAKEYSIZE, RAND_PREFIX_LENGTH);
+                       ^^^^^^^^^^^^^^^^^^^^
+
+But ideakey is only a sixteen byte buffer! Looks like we're copying junk from 
+the stack here, instead of generating a strong random number to put in the 
+prefix...
+
+
+
+And now a question for the crypto gurus out there. The reason I came across the 
+above is because I'm adding conventional encryption to some Mac code I had 
+laying around, and I wanted to support PGP-format files. I had been thinking 
+about the problem of verifying decryption keys, and the solution I had come up 
+with to use in my code was to MD5 hash the plaintext when I encrypted it, then 
+encrypt the hash with the same key and store it in a resource to use as a key 
+verification block. When the file is decrypted, so is the verification block, 
+and all you have to do to verify the key is MD5 the plaintext again and compare 
+the new hash to the original hash. My question is, can anyone think of any 
+weaknesses with doing it that way? (I can still support PGP data formats if I 
+do...)
+
+
+                                  -- Will
+
+
+

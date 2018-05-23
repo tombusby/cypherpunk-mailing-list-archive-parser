@@ -1,0 +1,33 @@
+From: Derek Atkins <warlord@ATHENA.MIT.EDU>
+Date: Thu, 18 Jan 1996 13:03:43 +0800
+To: Eric Murray <ericm@lne.com>
+Subject: Re: A weakness in PGP signatures, and a suggested solution
+In-Reply-To: <199601180442.UAA15648@slack.lne.com>
+Message-ID: <199601180452.XAA26447@charon.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Your PGP-aware mail agent should add a line to the text to be
+> encrypted, consisting of a random number (hopefully very unguessable
+> and fairly random) and an RFC822 header:
+> 
+> X-PGP-nonce: b1de70694f5f0824f89cb3f09aece01d
+> 
+> and replicate that in the RFC822 envelope.
+> Put just the nonce value and not the header in the block to be
+> encrypted if you're concerned about assisting a known-plaintext attack.
+
+Actually, that doesn't work either -- if I wanted to forward the
+message you sent me to someone else to make them think that you sent
+it to them, I could just take the nonce and put that in the header of
+my forwarded message and it would match...
+
+No, you need to include the "to" and "cc" fields as well inside the
+signed message.  But again, the MUA should do this, not PGP.
+
+-derek
+
+
+
+

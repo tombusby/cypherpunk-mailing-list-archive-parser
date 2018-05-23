@@ -1,0 +1,89 @@
+From: Tim May <tcmay@got.net>
+Date: Thu, 5 Jun 1997 01:27:02 +0800
+To: Lucky Green <shamrock@netcom.com>
+Subject: Re: Who "invented" remailers?
+In-Reply-To: <v0310280cafba70127c0a@[207.167.93.63]>
+Message-ID: <v03102815afbb4f28e58c@[207.167.93.63]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 1:06 AM -0700 6/4/97, Lucky Green wrote:
+>At 06:27 PM 6/3/97 -0700, Tim May wrote:
+>>(There are important issues, discussed by several of us several years ago,
+>>and more recently by Wei Dai and Lucky Green, dealing with correlation
+>>analysis of messages sent and messages received...esentially pattern
+>>analysis.
+>
+>This type of analysis is unlikely to provide useful results for
+>high-latency systems such as remailers. However, this analysis can be very
+>fruitful on near real time systems such as ill-designed chained http
+>anonymizers.
+>
+>[Tim of course knows this, I just want to make sure that this is
+>universally understood.]
+
+Agreed, but there remains a risk even for conventional remailer uses. It
+all depends on latencies, numbers of messages, etc.
+
+Let us imagine Lucky and I are corresponding through a remailer network.
+Imagine the average latency, in total, is 2 hours. (Not unreasonable.)
+
+The kind of pattern analysis I'm talking about would look for "digrams"
+between my sending a message and Lucky receiving one.
+
+--Tim sends a message, a couple of hours later Lucky gets one.
+
+--then nothing, and Lucky gets nothing for several hours or more
+
+--Lucky sends a message and a couple of hours later Tim gets one
+
+--then nothing for several hours or more
+
+--Tim sends one, Lucky gets one a couple of hours later
+
+It all depends on:
+
+- how many other messages are being received by Lucky and Tim (PGP messages
+arriving from remailers, obviously, not just ordinary traffic, though
+ordinary traffic helps a bit)
+
+- the latencies, the longer the better (related to the above number)
+
+What I am picturing is a scatter plot of transmissions and receptions. I
+think an adversary with access to the sends and receives, even if encrypted
+(of course) could make some plausible deductions.
+
+He could certainly rule out some message pairs, e.g., Tim sends a message,
+but no message is received by, say, Perry. Or Perry sends a message, but
+this is not followed within statistically expected periods by messages
+received by, say, Duncan.
+
+So the "Tim-Lucky" digram might be "0. 6" and the "Tim-Perry" digram might
+be "0.003" and this would be useful in implicating likely comunicants.
+Throw in the reverse paths, e.g., the "Lucky-Tim" digram and the
+correlations could become quite strong.
+
+(Closely related of course to traffic analysis in general.)
+
+As we have been saying for years, there's a nice MS thesis in this for someone.
+
+--Tim May
+
+There's something wrong when I'm a felon under an increasing number of laws.
+Only one response to the key grabbers is warranted: "Death to Tyrants!"
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Higher Power: 2^1398269     | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Thu, 2 Jun 94 12:24:30 PDT
+To: smb@research.att.com
+Subject: Re: Matt Blaze's Clipper attack -- details
+In-Reply-To: <9406021901.AA22805@toad.com>
+Message-ID: <9406021924.AA02639@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+smb@research.att.com says:
+> The LEAF contains a 32 bit unit id, an 80-bit session key encrypted
+> with the per-device secret key, and a 16 bit checksum.  The whole thing
+> is encrypted with the family key.  The checksum field is based on both
+> the session key and the IV.
+
+I'll point out that Matt concluded this based on empirical analysis of
+LEAFs and IVs, no available documentation describes the nature of the
+checksum. (More kudo's to Matt).
+
+BTW, LEAF/IV pairs are manipulated by Tessera as a single operation. I
+suppose this is, in retrospect, a big hint.
+
+The observation that non-synchronized IVs pose little or no problem
+was also another "damn; that should have been obvious" that Matt
+picked up on and no one else got. I suppose the fact that the NSA
+folks mixed the IV into the checksum meant that they thought
+non-synchronized IVs would be more significant than they are.
+
+Perry
+
+PS Matt, you now have 14 more minutes of fame remaining. :-)
+
+
+
+

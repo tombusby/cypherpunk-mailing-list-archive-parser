@@ -1,0 +1,78 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Wed, 27 Jul 94 01:02:09 PDT
+To: jgrasty@pts.mot.com
+Subject: Re:  Encryption Algorithm for Pagers
+Message-ID: <9407270800.AA25030@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: jgrasty@pts.mot.com (Joey Grasty X3697 P6611)
+> I am looking for a simple encryption algorithm suitable for use in pagers.
+[small, fast, low CPU needs, small keys]
+
+> 5.  EXPORTABLE <-- yeah, I know
+
+Exportable is easy - you just need to get a *license*.  Since you're
+at Motorola, you're a big enough company to talk to NSA and have
+some clue of having them approve it, as long as you give them an
+algorithm simple enough for them to crack, or dependent on a 
+key you give them, or whatever.
+
+An alternative is to develop the code overseas and import it;
+I don't know where you're doing your pager hardware, but this
+does mean installing firmware overseas (not a major problem if you use
+flash eproms, though still annoying.)  But you can use any algorithm
+you want, and get to complain to the COmmerce Department about how
+your US firm had to use overseas labor because of hostile export laws.
+
+Also, exportable doesn't mean you import it to the country you want to
+sell it in; Singapore may not be willing to let you import there something
+that the NSA let you export from here, and China may not either.
+
+As far as protocols go, you need to look at your threat model -
+are you worried only about random eavesdropping, or do you want
+something secure enough the NSA can't crack?  Ron Rivests's RC2/RC4
+protocols are export-licenseable, as long as you limit them to
+40-bit keys, and are willing to license the code from RSADSI.
+It has the advantage that your data will probably be only readable by
+professionals for the next few years, though I don't know if it's small
+enough for your application; speed should be fine.
+
+On the other hand, the basic wimpy Linear Feedback Shift Register random 
+number stuff, while not highly secure, may be adequate for your needs;
+use a mode like 32-bit randoms of which you use the bottom 8 bits
+to XOR with your data, and start it with an initialization vector
+you send with the message so the address message isn't always constant
+for a given user.  
+
+I guess I really hate to suggest putting wimpy encryption
+in an important global system like a pager net, though it's better than
+the current totally non-private version.  The big advantage you have
+for current pager applications is that most messages are short,
+max 80 or 256 characters with averages probably 20 characters,
+so there's not much known plaintext (assuming you do the important
+step of using a 1-character abbreviation for the pager system's
+own phone number, which is otherwise transmitted on a large
+percentage of pages...)  On the other hand, you *do* have the known 
+plaintext of the pager address in each message, which is serious risk.
+
+Actually, Blum-Blum-Shub looks like it should be a fairly small
+program, but I don't know how long a number you need to use
+to make it reasonably secure - if it's in the 128-bit range you're fine.
+(it's probably less likely to be exportable than DES, I suppose :-).
+It's slow, but you may be able to pre-compute.
+
+Also, you can gain some efficiency by splitting up the pagers into
+128/256 groups, send an unencrypted group-id as the first byte, and 
+only decode if that matches.  That means you don't need to watch most 
+of the messages that go by, and have extra slack time to decode the messages
+in your buffer that may be meant for you while ignoring the rest; this 
+does imply that the transmitter would queue up messages so that
+messages from the same group don't go out within N messages of each other.
+
+			Bill
+
+
+
+

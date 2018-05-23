@@ -1,0 +1,73 @@
+From: Scott Brickner <sjb@austin.ibm.com>
+Date: Mon, 28 Aug 95 13:14:43 PDT
+To: Will French <wfrench@interport.net>
+Subject: Re: SSL trouble
+In-Reply-To: <199508262332.TAA26817@interport.net>
+Message-ID: <9508282013.AA15087@ozymandias.austin.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Will French writes
+>>>   Please don't do anything like this.  This will prevent
+>>> people like me who prefer the "random" method from
+>>> participating.
+>
+>> You can't use the random method if the CRACK is using a
+>> sequential search. It just doesn't fit!
+>
+>  Hehe...  I've always been a bit of a misfit.
+>
+>> You can't ACK something which has not been allocated to you.
+>
+>  But I could announce it on the list.
+
+Then what do you care about the group's procedures?  It doesn't
+"prevent you from participating" --- you *aren't* participating.
+You're attempting to solve the problem on your own.
+
+Statistically, the "random" methods are no different than everyone just
+working independently at solving the problem.
+
+I, too, don't recall my statistics well enough, but let me take a shot
+at it, and anyone who wants to, please check me...
+
+The probability of having failed to search a particular segment (the
+one with the key) after selecting k of n segments at random with
+replacement is (1-1/n)^k, whereas in a sequential search from a random
+starting point, (or, equivalently, random without replacement) the
+probability is k/n.
+
+Assume the segments are farmed out in 2^24 segments of 2^16 keys each
+(I don't recall what the current programs use).  In the sequential case,
+it's even money you'll find the key after searching 8,388,609
+segments.  In the random case, it's not even money until 11,629,080
+segments --- 39% longer.  It's when you're "unlucky" that the random
+case gets *much* worse.  To search 90% of the keyspace takes 15,099,495
+sequential searches, but 38,630,967 --- a 156% difference.
+
+Here's the table:
+
+% k-space	  random	sequential	percent
+searched	  method	  method	difference
+--------	----------	---------	----
+10		   1767657	  1677722	  5
+25		   4826505	  4194305	 15
+50		  11629080	  8388609	 39
+75		  23258160	 12582913	 85
+90		  38630967	 15099495	156
+99		  77261933	 16609444	365
+99.9		 115892899	 16760439	591
+
+Changing the segment size doesn't affect the results very much, as
+a table for 10 bit segments shows:
+
+50		 744261117	536870912	 37
+90		2472381916	966367641	156
+
+The random method is a little more than 1/3 worse in the typical
+case, but *lots* worse in the worst cases.
+
+
+
+

@@ -1,0 +1,149 @@
+From: "Robert A. Hayden" <hayden@krypton.mankato.msus.edu>
+Date: Wed, 19 Jul 95 10:26:42 PDT
+To: Cypherpunks Mailing List <cypherpunks@toad.com>
+Subject: TINSIGN:  Simple script for PGP signing messages in Tin 1.22
+Message-ID: <Pine.ULT.3.91.950719122403.1187B-100000@krypton.mankato.msus.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Howdy, me again.  In keeping with my wish to make PGP signing of 
+transmissions simple and commonplace, I've got another script for y'all.  
+This is for the Tin Newsreader.
+
+I hope you find it useful.
+
+Comments appreciated.
+
+============================================================
+
+#!/bin/sh
+
+# TinSign v1.0
+# Written by Robert A. Hayden <hayden@krypton.mankato.msus.edu>
+
+# Based in part on the PGP editor wrapper, Version 1.0 (editpgp)
+# Copyright (c) 1994, Mark Lewis <nostra@city.ac.uk>.
+
+# TINSIGN is a simple program that will allow you to automatically sign
+# your news messages composed with the TIN 1.2pl2 news reader.  It
+# may also work with other news programs, but it has not been tested.
+
+# INSTRUCTIONS FOR CONFIGURING TIN
+#
+# You need to define the following options in Tin.  This is done via 
+# editing the $HOME/.tin/tinrc file.
+#
+#	A)	start_editor_offset=ON
+#	B)	default_editor_format=<path to this script> +%N %F
+#		Example:  /users/foo/bar/tinsign +%N %F
+#	C)	default_sigfile=/dev/null
+#		NOTE:  	I have been unable to get my copy of tin to read 
+#			any file other than $HOME/.signature, no matter
+#			what this parameter is set to.  The solution I 
+#			found was to remove $HOME/.signature and create
+#			another file that is read in by defining the
+#			variable below.  You may want to experiment with
+#			this to find out what works best for you as this 
+#			might be a bug specific to our local compilation.
+
+# INSTRUCTIONS FOR CONFIGURING TINSIGN
+#
+# The PGP program must be in your path, and the PGPPATH environment
+# variable must be defined.  See the PGP documentation for details.
+#
+# In addition to PGP and the editor you define, TinSign also will use the 
+# following programs:
+#	awk
+#	cat
+#	echo
+#	egrep
+#	mv
+#	rm
+#	sleep
+#
+# Double check that the first line of this program points to sh.
+#
+# Execute the command "chmod 700 <path/to/tinsign>".
+#
+# Edit the SIGPATH and TINEDITOR variables to point at your signature
+# (if any) and the editor you wish to use for your Tin messages.  Default
+# signature will be the file .signature-tin in your $HOME directory.
+# Default editor is pico -z -t.
+#
+# Define SIGPATH=/dev/null if you do not have an ASCII signature to 
+# append.
+
+SIGPATH=$HOME/.signature-tin
+TINEDITOR='pico -z -t'
+
+# INSTRUCTIONS FOR USING TINSIGN
+#
+# When you compose a message, you will compose your message as normal.
+#
+# When you exit your editor (control-X in Pico), you will receive a 
+# prompt asking for your PGP passphrase.  Type this in.  
+#
+# At this point, if you have defined one, your ASCII signature will be 
+# appended to the message AFTER the digital signature.
+#
+# You will then be put into the Tin menu asking if you wish to edit your 
+# posting some more, quit the post (ie, abort it), or post it.
+
+### DO NOT TAMPER BELOW THIS LINE UNLESS YOU KNOW WHAT YOU ARE DOING ###
+
+# Define internal variables
+	filename=`echo $2 | cut -f$# -d' '`
+	tmpdir=/tmp
+
+#Run editor
+	$TINEDITOR +$1 $2
+
+# Split the headers from the body of the article
+        awk '{ print }; /^$/ { exit }' $filename > ${tmpdir}/tmp$$.hdr
+        awk 'body == 1 { print }; /^$/ { body=1 }' $filename > ${tmpdir}/tmp$$
+
+# Remove "--"
+	egrep -ve '^--$' ${tmpdir}/tmp$$ > ${tmpdir}/tmp2$$
+	mv ${tmpdir}/tmp2$$ ${tmpdir}/tmp$$
+
+# Sign the message
+	pgp -sat +comment="PGP Signed with TinSign 1.0" +clearsig=on ${tmpdir}/tmp$$
+	if [ $? -eq 0 ]; then
+	        cat ${tmpdir}/tmp$$.hdr ${tmpdir}/tmp$$.asc > $filename
+	else
+	    echo ""; echo "*Error in signing. Aborted."
+	    sleep 5
+	fi
+
+# clean up any files in temp space
+        rm -f ${tmpdir}/tmp$$.hdr ${tmpdir}/tmp$$.asc ${tmpdir}/tmp$$
+
+# append your ASCII signature to the message
+	echo " " >> $filename
+	cat $SIGPATH >> $filename
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: PGP Signed with PineSign 2.1
+
+iQCVAwUBMA1AZjokqlyVGmCFAQGv4QP/XB8BU91sU0KlzWTKkyZaW4j2KYKDzGin
+SgbFtdd9KdcoalhLU0myzOvMcpr3QAhAbaXN4Zq56IE/OYm5WL0MUJnJ6GF7kdEc
+F2r0vC9Nt7iZrWoG7LsqJrKrlLDp8eFhcWrpkwhH7trWA2jAjqHzof4Gy0fr8LD0
+Xc1KEPpQ+JA=
+=Jsj3
+-----END PGP SIGNATURE-----
+ 
+____        Robert A. Hayden      <=> Cthulhu Matata
+\  /__          -=-=-=-=-         <=>          -=-=-=-=-
+ \/  /  Finger for Geek Code Info <=> hayden@krypton.mankato.msus.edu
+   \/   Finger for PGP Public Key <=> http://att2.cs.mankato.msus.edu/~hayden
+
+
+
+

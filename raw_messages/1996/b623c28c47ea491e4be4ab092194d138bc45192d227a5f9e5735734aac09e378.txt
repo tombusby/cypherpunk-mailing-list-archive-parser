@@ -1,0 +1,43 @@
+From: Jack Mott <thecrow@iconn.net>
+Date: Sun, 30 Jun 1996 14:40:40 +0800
+To: cypherpunks@toad.com
+Subject: Hardware RNG
+Message-ID: <31D5D7CC.7E5C@iconn.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I just recently built a hardware RNG, I just wanted to see what you guys 
+think of it, here is how it works:
+
+	Got a geiger counter plugged into the game port
+	Weak radioactive source next to it (dont worry wont fry you)
+	Use a PRNG string to do create an RC4 S-box
+	Cycle through the S-box in a tight loop, each time checking to 
+see if the geiger counter got a hit, if it did, record that number in 
+the S-box as our first byte, do this 100 times, and we have 100 random 
+numbers.
+
+	With my radioactive source and geiger settings, you can grab 100 
+random numbers in about 8 seconds, and the S-box will make a complete 
+cycle between 1000 and 350,000 times between geiger hits, depending on 
+how long between hits.
+
+any thoughts? It seems to work well, no basic stat analysis reveals any 
+pattern, and physicists have backed me up on radioactive decay being 
+'the great randomizer'.
+
+seeya
+-- 
+thecrow@iconn.net
+"It can't rain all the time"
+
+RSA ENCRYPTION IN 3 LINES OF PERL
+---------------------------------------------------------
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

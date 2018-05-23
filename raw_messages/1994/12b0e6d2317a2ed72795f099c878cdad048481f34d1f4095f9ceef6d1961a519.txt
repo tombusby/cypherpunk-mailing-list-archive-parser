@@ -1,0 +1,151 @@
+From: nobody@qwerty.org
+Date: Tue, 1 Feb 94 22:55:29 PST
+To: cypherpunks@toad.com
+Subject: SuperPing1.2
+Message-ID: <199402020651.WAA05123@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This may not be elegant, but it works well in my account. It checks
+the entire Cypherpunk remailer network connections and is user friendly.
+
+-Xenon
+
+#!/usr/bin/perl
+# Change this to reflect where your system has perl.
+
+# SuperPing version 1.2: Ping Cyperpunk remailer connections.
+# Now pings in both directions, as I have learned they are NOT equivalent.
+# Brought to you by Xenon <na38138@anon.penet.fi>.
+# Thanks to Alan Barrett for teaching me some perl.
+
+# Warning: outputs ~40 e-mails at a time. May give "too many processes"
+# error towards the end if you haven't killed all of your stopped jobs.
+# Increase the sleep(sec) time if needed. 
+
+# Be careful. If mail bounces between any two remailers in either
+# direction, "Mr. Remailer Operator" will obtain a full mailbox! 
+
+# To test the program, comment out all the remailers in the list and add
+# YOUR address at least three times to the list of "remailers".
+
+# You MUST make a file called .PingFile that contains:
+#::
+#Request-Remailing-To: your.address
+#
+#Ping!
+#
+#-----Begin Test-----
+#Test
+#-----End Test-----
+
+# Will also function as a convenient method to shut down all remailers at
+# once by making .PingFile 500K instead of 1K. Not recommended if you
+# value your life ;-). 
+
+# List of remailers (not complete). Make any line a comment to remove that
+# line's remailer. cicada and pmantis are not meant for heavy traffic so I
+# have removed them. Soda is commented for no particular reason.
+
+@Rm = (
+"catalyst@netcom.com",
+"remailer@dis.org",
+"ebrandt@jarthur.claremont.edu",
+"remailer@merde.dis.org",
+"qwerty@netcom.com",
+"elee7h5@rosebud.ee.uh.edu",
+"hfinney@shell.portal.com",
+#"hh@soda.berkeley.edu",
+);
+
+#Nicknames for output and subject lines.
+
+@Nick = (
+"catalyst",
+"dis.org",
+"jarthur",
+"merde",
+"qwerty",
+"rosebud",
+"shell",
+#"soda",
+);
+
+# Select a marking character for this SuperPing session.
+@Mark = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O",
+"P","Q","R","S","T","U","V","W","X","Y","Z");
+
+srand(time);
+$M = $Mark[rand(26)];
+
+# Strings, since lines got too long below.
+# Obviously this could be written better using sendmail but I'm writing
+# perl code without KNOWING any perl.
+
+  $A = "(echo \"::\" ; echo \"Request-Remailing-To: ";
+  $B = " ; echo \"\" ; cat .PingFile) | mail -s \"$M.";
+
+# Send a "Ping!" between all combinations of two remailers, in both
+# directions. $Num is a count that ends up in the Subject line. Each number
+# is used twice, with a < and > telling which direction the mail went. Change
+# "system" to "print" to see the Unix commands being produced. 
+
+foreach $Sec (0..$#Rm) {
+    foreach $First ($Sec+1..$#Rm) {
+     $Num++ ;
+
+     $C = " $Nick[$First] > $Nick[$Sec]\" " ;
+     system "$A$Rm[$Sec]\"$B$Num$C$Rm[$First]";
+     print "$M.$Num $Nick[$First] > $Nick[$Sec]\n";
+     sleep(1) ;
+ 
+     $C = " $Nick[$First] < $Nick[$Sec]\" " ;
+     system "$A$Rm[$First]\"$B$Num$C$Rm[$Sec]";
+     print "$M.$Num $Nick[$First] < $Nick[$Sec]\n";
+     sleep(1) ;
+   }
+}
+
+
+# Output (with only catalyst, qwerty and rosebud checked) looks like this:
+
+# S.1 qwerty > catalyst
+# S.1 qwerty < catalyst
+# S.2 rosebud > catalyst
+# S.2 rosebud < catalyst
+# S.3 rosebud > qwerty
+# S.3 rosebud < qwerty
+
+# These are printed out as the program progresses and they also appear as
+# the Subject of each piece of mail.
+
+# alias g '(grep Subject: /usr/spool/mail/n/name | sort -t. +1 -n) | more'
+# will make the command "g" give a list of received pings, in order. /n/name
+# is your part of the mail spool. You should also check that the received
+# pings really came from the second remailer instead of getting short
+# circuited by the first remailer.
+
+# Sample output mail as received by a remailer:
+# 
+#From: Your name <your.address>
+#Message-Id: <numbers@your.site>
+#To: qwerty@netcom.com
+#Subject: S.1 qwerty > catalyst
+#Status: R
+#
+#::
+#Request-Remailing-To: catalyst@netcom.com
+#
+#::
+#Request-Remailing-To: your.address
+#
+#Ping!
+#
+#-----Begin Test-----
+#Test
+#-----End Test-----
+
+
+
+

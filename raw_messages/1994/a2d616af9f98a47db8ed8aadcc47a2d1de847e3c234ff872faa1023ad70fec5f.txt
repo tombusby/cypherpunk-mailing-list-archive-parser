@@ -1,0 +1,39 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Tue, 27 Dec 94 12:06:18 PST
+To: cypherpunks@toad.com
+Subject: Re: Are 2048-bit pgp keys really secure ?
+In-Reply-To: <9412271941.AA19596@elysion.iaks.ira.uka.de>
+Message-ID: <199412272106.NAA01249@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: danisch@ira.uka.de (Hadmut Danisch)
+
+   Usually a candidate number is send through a probabilistic prime test
+   which says either "No, not a prime" or "a prime with a probability of
+   at least 50% ". Usually this test is repeated 10 or 20 times, so after
+   passing this iteration the probability of having a prime number is at
+   least 1:2^10 or 1:2^20 . 
+
+The probability of a composite passing one trial is extremely small,
+much smaller than 50%.  _And_ the trials with different moduli are
+_not_ independent, so you just can't multiply the probabilities
+together.  Rather, you have to calculate a chain of conditional
+probabilities.
+
+There was a paper in the last seven or eight years on this.  I believe
+Pomerance was one of the authors.  Ask on sci.crypt for details.
+
+   I am also not
+   convinced yet of the Fermat test. Why not use a Rabin-Miller-Test ?
+
+Rabin-Miller would be better.  It would be instructive to examine the
+conditional probability that a composite number which fails
+Rabin-Miller passes Fermat.  I understand it's vanishingly small.
+
+Eric
+
+
+
+

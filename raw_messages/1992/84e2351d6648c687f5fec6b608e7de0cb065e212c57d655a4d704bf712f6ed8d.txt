@@ -1,0 +1,61 @@
+From: pmetzger@shearson.com (Perry E. Metzger)
+Date: Thu, 22 Oct 92 13:35:59 PDT
+To: gnu@cygnus.com
+Subject: Keystone
+In-Reply-To: <9210220637.AA20200@cygnus.com>
+Message-ID: <9210221929.AA16268@newsu.shearson.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: gnu@cygnus.com
+
+>We have a small project cooking, to use Diffie-Hellman key exchange
+>to choose a random key to encrypt Internet connections (telnet,
+>rlogin, ftp, smtp).  This same protocol can also be used over an
+>ordinary modem connection between a user's PC and a BBS, preventing
+>eavesdropping or wiretapping of that phone call.  It would also be
+>able to protect phone calls between a PC and a Unix timesharing system,
+>regardless of what networks lie in between, if we wrote a simple login
+>program that handled the modem protocol.  (It doesn't protect against
+>active re-routing of the call, e.g. by substituting another machine
+>for the BBS, but we could work on that as Phase II.)
+
+I would suggest that it be done during phase one. Spoofing attacks are
+very important things to guard against, and thanks to PGP there is a
+handy dandy set of code out there to steal from to provide for public
+key based authentication of the link. Indeed, I would go further and
+suggest that the protocol be designed so that it does not reveal the
+entities forming the link to outsiders (unless one end should
+intentionally advertise who it is, the assumption should be that both
+ends know who the other end is a priori). There is also a very good
+implementation of the IDEA cypher in PGP, which should run well as the
+conventional cypher for the link (although I would suggest having the
+protocol negotiate the cypher just in case IDEA gets replaced later
+on).
+
+I am very interested in seeing such a protocol standardized because I
+have another use for it -- secure telephones. Given modern DSPs to do
+and cheap V.32bis modems, excellent secure voice communications are
+feasable. The presense of code in the public domain to handle secure
+encrypted links could be easily dropped right in to this application.
+
+>(I suggest that the initial Diffie-Hellman handshake all be done in
+>ASCII encoding, no matter what the medium, so that the same protocol
+>can be used on all media, binary-transparent or not.)
+
+I agree that this should be a negotiated option in the protocol
+(prehaps with some sort of test done at the beginning of the link for
+line transparency), but I'm not sure it should be mandatory as that
+eighth bit get significant at times.
+
+>If anyone knows of a reasonably popular PC terminal emulator for
+>which source code is freely available and distributable, let us know.
+
+Kermit is the obvious choice.
+
+Perry
+
+
+
+

@@ -1,0 +1,107 @@
+From: Paul Foley <mycroft@actrix.gen.nz>
+Date: Tue, 22 Jul 1997 00:21:07 +0800
+To: cypherpunks@Algebra.COM
+Subject: Hashcash for Emacs
+Message-ID: <199707211554.DAA13787@mycroft.actrix.gen.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+;;; hashcash.el --- Add hashcash payments to email
+
+;; Copyright (C) 1997 Paul E. Foley
+
+;; Maintainer: Paul Foley <mycroft@actrix.gen.nz>
+;; Keywords: mail, hashcash
+
+;; Released under the GNU General Public License
+
+(defvar hashcash-default-payment 12)
+(defvar hashcash-payment-alist nil)
+(defvar hashcash "/home/paul/bin/hashcash")
+
+(require 'mail-utils)
+
+(defun hashcash-generate-payment (str val)
+  "Generate a hashcash payment by finding a VAL-bit collison on STR."
+  (let ((old-buffer (current-buffer))
+	(hc (get-buffer-create "*hashcash*"))
+	pos)
+    (set-buffer hc)
+    (erase-buffer)
+    (goto-char (point-max))
+    (call-process hashcash nil hc nil (concat "-" val) str)
+    (goto-char (point-max))
+    (re-search-backward "collision: ")
+    (forward-char 11)
+    (setq pos (point-marker))
+    (end-of-line)
+    (setq payment (buffer-substring pos (point)))
+    (set-buffer old-buffer))
+  (concat payment "\n"))
+
+(defun mail-add-payment (arg)
+  "Add an X-Payment: header with a hashcash payment for each recipient address
+Prefix arg means non-default payment amount.  Also uses hashcash-payment-alist."
+  (interactive "P")
+  (unwind-protect
+      (save-excursion
+	(goto-char (point-min))
+	(re-search-forward
+	 (concat "^" (regexp-quote mail-header-separator) "\n"))
+	(previous-line 1)
+	(let ((end (point-marker))
+	      (case-fold-search t))
+	  (goto-char (point-min))
+	  (while (re-search-forward "^\\(to\\|cc\\):" end t)
+	    (let ((to-line
+		   (mail-strip-quoted-names
+		    (buffer-substring (point)
+				      (progn
+					(if (re-search-forward
+					     "^[^ \t\n]" end t)
+					    (backward-char 1)
+					  (goto-char end))
+					(point))))))
+	      (while (not (equal "" to-line))
+		(let ((address (substring to-line
+					  0 (string-match "," to-line))))
+		  (if (string-match "," to-line)
+		      (setq to-line (substring
+				     to-line (string-match "," to-line)))
+		    (setq to-line ""))
+		  (while (eq 0 (string-match "[, \t]" to-line))
+		    (setq to-line (substring to-line 1)))
+		  ;; look up hashcash-payment-alist
+		  (let ((pay (assoc address hashcash-payment-alist))
+			(price (if (null arg)
+				   hashcash-default-payment
+				 (prefix-numeric-value arg))))
+		    (if pay
+			(if (eq 1 (length (cdr pay)))
+			    (setq price (car (cdr pay)))
+			  (progn
+			    (setq address (car (cdr pay)))
+			    (setq price (car (cdr (cdr pay)))))))
+		    (insert-before-markers "X-Payment: "
+					   (hashcash-generate-payment
+					    address price)))))))))))
+
+-- 
+Paul Foley <mycroft@actrix.gen.nz>  ---   PGP-encrypted mail preferred
+
+	   PGP key ID 0x1CA3386D available from keyservers
+    fingerprint = 4A 76 83 D8 99 BC ED 33  C5 02 81 C9 BF 7A 91 E8
+----------------------------------------------------------------------
+Note:  All email will be directed to my "junk" mailbox unless a 12-bit
+hashcash payment is attached on an X-Payment: header.  Send me mail
+with the subject "get hashcash info" for information.
+----------------------------------------------------------------------
+If there is a possibility of several things going wrong, the one that
+will cause the most damage will be the one to go wrong.
+
+
+
+
+

@@ -1,0 +1,64 @@
+From: Stephan Somogyi <somogyi@digmedia.com>
+Date: Fri, 29 Sep 95 12:34:44 PDT
+To: cypherpunks@toad.com
+Subject: STT is 40-bit for RC4, 56-bit for DES
+Message-ID: <v03003502ac91f470ee63@[198.93.25.66]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From the STT spec, page 73:
+
+6.8 CRYPTOGRAPHY
+
+A. Encryption
+
+Two bulk encryption algorithms are used in STT - RC4 and DES.
+
+1. STT uses RC4 encryption with 8-byte keys, of which 3 bytes are salt,
+in the clear. See the RC4Key entry under the Low Level Composites
+sub-section of this document. RC4 is a stream cipher; there are no pad
+bytes and the encrypted data is the same size as the plaintext data.
+
+2. STT uses the Cipher Block Chaining (CBC) mode of DES, as defined in
+Federal Information Processing Standard FIPS 81. The key is 8 bytes
+long, with each byte having a parity bit in position 0. Thus there are
+56 bits of random key. STT uses an all-zero byte Initialization Vector
+(IV). A maximum of 8 bytes of padding is applied to every plaintext
+message encrypted with DES to pad the message to a length that is a
+multiple of 8 bytes. Pad bytes have a value of
+
+      x = 8 - ((length of the plaintext) mod 8)
+
+and the number of pad bytes is also x. For example, if the plaintext
+message was 17 bytes long, then each of the 7 bytes of padding contains
+the value 0x07. If x is 0, then there are 8 bytes, each containing
+0x08. Padding is appended to the end of the plaintext before encryption
+and is stripped off after decryption.
+
+B. Signatures
+
+STT uses PKCS #1 Encryption block formatting for RSA signatures. Total
+length is 128 bytes for the signature (1024-bit modulus). The following
+is the plaintext:
+
+(TLV_SIGNATURE
+    (BYTE[20] HashOfData)    ;Hash of the data being signed
+    (BYTE 0)                 ;parser initializer
+    (BYTE[105] 0xff)         ;padding
+    (BYTE 0x01)              ;recom. for private key encryptions
+    (BYTE 0))                ;overflow protection for RSA
+
+C. Hashing
+
+All hashes in STT are 20-byte SHA hashes. See Federal Information
+Processing Standards FIPS 181 for the specification of SHA hashes.
+
+________________________________________________________________________
+Stephan Somogyi                Mr Gyroscope                Digital Media
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 11 Aug 94 09:49:21 PDT
+To: cypherpunks@toad.com
+Subject: Re: IDEA vs DES
+In-Reply-To: <199408110744.AAA20783@servo.qualcomm.com>
+Message-ID: <199408111648.JAA25239@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+According to my references, the PowerPC 601 does an integer multiply
+in 9 cycles (5 if the 2nd operand is 16 bits or less).  An integer
+divide takes 36 cycles.  Adds, etc. take 1 cycle.
+
+Floating-point multiplies take 1 cycle for single precision, 2 for double.
+However, they are pipelined, so if you need to use the results of the
+multiply on the next instruction, they will take 3 cycles.  Floating-point
+adds take 1 cycle, again with the results available in 3.
+
+There is a floating-point (but no integer) multiply-and-add instruction.
+It has the same timing as the multiply.
+
+Hal
+
+
+
+

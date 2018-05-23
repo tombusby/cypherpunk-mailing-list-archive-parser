@@ -1,0 +1,23 @@
+From: Ulf_Moeller@public.uni-hamburg.de (Ulf Moeller)
+Date: Sat, 27 Jan 1996 19:17:57 +0800
+To: cypherpunks@toad.com
+Subject: RSA in 4 lines of Scheme
+Message-ID: <m0tg81g-00009gC@ulf.mali.sub.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(define(RSA m e n)(list->string(u(r(s(string->list m))e n))))(define(u a)(if(>
+a 0)(cons(integer->char(modulo a 256))(u(quotient a 256)))'()))(define(s a)(if
+(null? a)0(+(char->integer(car a))(* 256(s(cdr a))))))(define(r a x n)(cond((=
+0 x)1)((even? x)(modulo(expt(r a(/ x 2)n)2)n))(#t(modulo(* a(r a(1- x)n))n))))
+
+                                    ;;;;
+                                    ;;;;
+
+(define c (RSA "The magic words are squeamish ossifrage" 5 114381625757888867669235779976146612010218296721242362562561842935706935245733897830597123563958705058989075147599290026879543541))
+(display (RSA c 45752650303155547067694311990458644804087318688496945025024737159778909096647814932594914301288138204957467016445183857236173773 114381625757888867669235779976146612010218296721242362562561842935706935245733897830597123563958705058989075147599290026879543541))
+
+
+
+

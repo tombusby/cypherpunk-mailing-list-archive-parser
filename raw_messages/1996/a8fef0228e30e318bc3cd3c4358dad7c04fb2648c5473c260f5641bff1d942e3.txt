@@ -1,0 +1,55 @@
+From: John Gilmore <gnu@toad.com>
+Date: Sat, 13 Jan 1996 18:09:40 +0800
+To: gnu@toad.com
+Subject: Re: Shimomura on BPF, NSA and Crypto
+Message-ID: <9601130957.AA19298@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tsutomu says the NSA is inept rather than inherently evil.  I think he
+concluded this because they declined to fund his work.  An ept and
+evil NSA would want Tsutomu on the payroll.
+
+Tsutomu's stealth version of the Berkeley packet filter did a lot more
+than modload into the kernel.  He was paid by the Air Force to design
+one that could patch itself into SunOS kernels invisibly, even into
+kernels with no modload support at all.  It had special code that
+would search through the kernel binary for references to the address
+of the Ethernet chip, and patch itself in during the very low level
+interrupt handling.  It was highly optimized so it wouldn't show up by
+loading down the machine, and it did things like decrement the
+interrupt counter so that even the extra interrupts caused by running
+the Ethernet chip in 'receive every packet on the wire' mode wouldn't
+be visible.  He talked about enhancements that would automatically
+forward packets of interest back out onto the Internet, so the whole
+shebang would hide in kernel memory, never visible to users, never
+running any processes or altering any files.  Think of it as Digital
+Telephony wiretap technology for the Internet.
+
+The idea was to design something that you could run on a machine
+without the owner ever finding out about it.  To break into that
+person's network.  It's a tool customized for crackers.  It's one
+of the tools that Mitnick was after when he broke into Tsutomu's
+machine.
+
+Tsutomu actually wrote and ran this stealth BPF code (as well as
+designing it) and got into a tiff with the Air Force.  They wanted the
+code, not just the design paper they'd commissioned.  He countered by
+offering to post the code to the net, with a copyright that let anyone
+EXCEPT the government use it, if they wouldn't pay him for the paper.
+I don't know how the situation was eventually resolved.
+
+Tsutomu has lots of glib rhetoric about how he just builds tools and
+they can be used for good or evil.  This tool is custom-designed for
+evil.  Maybe in wartime the Air Force will want to inflict evil on an
+opponent.  Or maybe instead they'll pass it to a latter-day J. Edgar
+Hoover.  Either way, it's evil.  It doesn't become good when you
+inflict it on someone you dislike.
+-- 
+John Gilmore                                    gnu@toad.com  --  gnu@eff.org
+        Don't introduce that Tsutomu to your girlfriend.
+
+
+
+

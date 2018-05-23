@@ -1,0 +1,63 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Wed, 11 Sep 1996 07:14:13 +0800
+To: Wei Dai <weidai@eskimo.com>
+Subject: Re: strengthening remailer protocols
+In-Reply-To: <Pine.SUN.3.95.960909120620.4743A-100000@eskimo.com>
+Message-ID: <9609101751.AA00594@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Wei Dai writes:
+>  How about a combination of the two?  Suppose Alice wants to
+>  anonymously post a message and get replies.  She generates a
+>  new RSA key, signs her post with it, and asks readers to send
+>  encrypted replies to a server.  Then periodicly she sends a
+>  one-time reply block to the server to retrieve the accumulated
+>  replies.
+
+I'd like to chime in and say that this is a really good idea.  Basically a  
+nymserver that holds onto incoming mail until an e-mail arrives from the nym  
+to retrieve it.
+
+How would mixmaster be able to support one-time reply blocks?  If the nym's  
+mailbox is larger than the mixmaster message size (pretty likely) and needs  
+to be split up, then more than one reply-block is going to be required.   
+Should the nym generate a big stack of reply-blocks/routing headers and send   
+them in with the retrieval request?  I suppose the server could fillup as  
+many mixmaster message parts as it had blocks, then append something like "15  
+more messages waiting (32,082 bytes - Two More Reply Blocks Required)" and  
+ship it off.
+
+Reliability is a problem with remailers... what happens now if a remailer in  
+your reply block goes out and you receive mail at your nym account?  Does it  
+just disappear?  With this system you could have a simple ACK protocol to  
+ensure reliable delivery of the mail.  A magic cookie would be appended to  
+your retrieved mail, which the server would then hold onto (it would still  
+count against your quota...).  The mail would be deleted once you sent back  
+an ACK with the magic cookie.
+
+Here is yet another good application for DigiCash.  The operator could offer  
+free accounts with very small mailbox quotas, or charge for bigger accounts.  
+ Message retrieval could also be charged, of course.  Another idea is that  
+the sender could affix postage if they wanted their message to be appended to  
+a full mailbox...
+
+A service like this is no different from something like pobox.com, except  
+that this service lets you pickup your mail through e-mail instead of POP.   
+So I don't think the operator would/should incurr any more liability for what  
+runs through the system than pobox.
+
+
+
+
+andrew
+
+p.s.
+It would also be a cool thing, IMHO, for nym servers to bounce back an  
+advertisement to everyone who sends mail to a nym....   A way to spread the  
+word.
+
+
+
+

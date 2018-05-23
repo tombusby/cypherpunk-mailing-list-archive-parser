@@ -1,0 +1,40 @@
+From: Mike McNally <m5@tivoli.com>
+Date: Sun, 15 Dec 1996 16:13:11 -0800 (PST)
+To: Bill Frantz <frantz@netcom.com>
+Subject: Re: ASM vs portable code [WAS: Re: Java DES breaker?]
+In-Reply-To: <199612131459.GAA06660@cygnus.com>
+Message-ID: <32B493D9.558F@tivoli.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Frantz wrote:
+>
+> In C, each separately compiled routine must re-load it from its
+> memory location because they can not coordinate register usage.
+
+There are such things as global optimizers that are quite capable of
+locating heavily-used global variables.
+
+> Another place where this global view of a program helps is in re-loads
+> after calling externally compiled routines.  The compiler must assume 
+> that the external routine has changed the variable 
+
+No, it's not true that it "must" do that.  There are optimizer systems
+that defer decisions until link time (the MIPS compilers for example).
+
+That said, it's probably the case that a hand-written DES routine
+could probably better a good optimizer; the size of the problem is
+pretty small.  On the other hand, I suspect a specially-tuned 
+optimizer that used (maybe; I'm making this up off the top of my
+head) some sort of genetic techniques could find faster code sequences
+than a human coder would.
+
+^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+Mike McNally -- Egregiously Pointy -- Tivoli Systems, "IBM" -- Austin
+mailto:m5@tivoli.com    mailto:m101@io.com    http://www.io.com/~m101
+^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+
+
+
+

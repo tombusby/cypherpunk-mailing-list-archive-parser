@@ -1,0 +1,42 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Thu, 24 Aug 95 13:41:18 PDT
+To: jered@MIT.EDU
+Subject: Re: SSL CHALLENGE: 0.11 borken?
+In-Reply-To: <199508242005.QAA03863@narn.atype.com>
+Message-ID: <"swan.cl.cam.:219400:950824204042"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>    I had several machines running brloop 0.03 and brclient 0.11, and
+> none of them appeared to be sending ACKs back to the server.
+
+The probability of getting an ACK back is indeed small :-((
+
+> Is this a known problem?
+
+yes -- this is why all the WWW pages and my messages to cypherpunks say
+"please get the latest code" ...
+
+> It might account for the large number of unACKed keyspaces.
+
+I fear so :-((
+
+> brloop 0.04 and brclient 0.12 seem to work well, however.
+
+Whew !
+
+brclient 0.13 is now out to try to track down the problem which is causing the
+comgestion ...
+
+It seems that old brloop's keep calling the server, and sending HELO, COMM and
+then QUIT (Greet, Introduce, Part) i.e. not actually do anything :-(
+[ Some only manage "HELO" or "HELO COMM" ]
+
+These systems are hammering the server, and I suspect are the cause of the
+congestion. I have added more logging to brclient 0.13, and it has caused the
+problem to disappear ...
+
+
+
+

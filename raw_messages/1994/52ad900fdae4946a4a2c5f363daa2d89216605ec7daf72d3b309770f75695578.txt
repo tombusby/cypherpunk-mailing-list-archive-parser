@@ -1,0 +1,60 @@
+From: Eric Blossom <eb@sr.hp.com>
+Date: Thu, 14 Apr 94 15:41:21 PDT
+To: strat@cis.ksu.edu
+Subject: Encrypted Telephones
+In-Reply-To: <199404140717.CAA14134@draconis.cis.ksu.edu>
+Message-ID: <9404142246.AA06261@srlr14.sr.hp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Steve Davis writes:
+
+> Timothy C. May writes:
+>
+> > Yes, several such projects are underway. Eric Blossom even showed a
+> > PCB of one at a Cypherpunks meeting, using an inexpensive DSP chip.
+>
+> So when will the schematics and part numbers be posted for all to see? ;-)
+>
+
+At this moment our primary efforts are on developing a family of
+extensible protocols for both encryption and voice across point to
+point links.  We indend to use existing standards where ever possible.
+
+We are currently planning on building on top of the RFCs for PPP (see
+RFCs 1549, 1548, and 1334).  The basic idea is to add a new Link
+Control Protocol (or possibly a Network Control Protocol) that will
+negotiate base and modulus and perform DH key exchange.  Some forms of
+Authentication are already supported by RFCs.  We're looking at
+others.
+
+The next layer up will perform an encrypted negotiation (using a fixed
+algorithm, perhaps Hellman-Pohlig) of the type of encryption to use
+for the session.  This includes algorithm and modes.  We are currently
+looking at 3DES or IDEA in OFB-64 or OFB-8.  This gives you a
+synchronous stream cipher that does not propagate errors.
+
+At this point, you have an encrypted tunnel.
+
+The next layer up will negotiate the voice protocol, and support for
+muxing data and voice.  On the voice front, we are looking at FED-STD
+1015 LPC-10eV55 (2400bps), FED-STD 1016 CELP (4800bps) and a couple of
+CVSD variants in the 13000 - 28800bps range.  There is a MILSPEC for
+CVSD.  CVSD has the advantage of being cheap to compute, but since the
+data rate is higher, your crypto demands are higher.
+
+For those of you unfamiliar with PPP, it provides a very nice
+framework for negotiating options across both ends.  The same
+automaton can be used for each layer, simplifying matters greatly.
+
+I'd welcome any comments or suggestions.  I'll probably have a
+complete draft available in a week or so.
+
+Stay tuned for further developments...
+
+Eric Blossom
+
+
+
+

@@ -1,0 +1,59 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Thu, 12 Jan 95 06:26:07 PST
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: time stamping service (again)
+Message-ID: <Pine.SUN.3.91.950112062429.3862C-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+My PGP based time stamping service is back online.  I took it 
+down a while ago thinking the folks at notary.com (Digital 
+Time-Stamp, Inc.) were going to release their commercial 
+time stamping product soon (it uses a more elegant protocol that
+doesn't require trust in the time stamper, but the algorithm
+is patented).  But I haven't heard anything from them 
+in a while.
+
+Anyway, it is now running as the following procmail recipe:
+
+:0 w
+* ^Subject: Time Stamp This Mail
+{
+PGPPASS=whateveryourpassphraseis
+:0 c w
+| (lockfile timestamp.lock ; pgp -fast +batchmode +force +verbose=0 \
++clearsig=off) > timestamp.out
+ 
+:0 a h
+| (formail -r -i 'Subject: Time Stamp Output';cat timestamp.out) | \
+($SENDMAIL -t ;rm -f timestamp.lock)
+}
+
+To use it, just send whatever you need time stamped to me with 
+the subject "time stamp this mail".
+
+BTW, can a procmail expert explain to me why the locallockfile 
+mechanism doesn't work with this recipe?  If I use :0 w : as 
+the first line, procmail will happily ignore the locallockfile 
+flag and proceed to munge up timestamp.out, so I have to do 
+the filelocking manually.
+
+Wei Dai
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLxU7Zjl0sXKgdnV5AQE1agP/TFGtHEUj6GUwEF1ISGLcUZ/T64Vs7BUJ
+PIcydYUDk/5AVPLS2F8r81oLLxDUzYFkVy/6uvhnj6Pvo17ZIx6ELhKNPLPVoLPL
+iklR9E7rmY2cRMQfuCPRYi10x4mD9yJcw0GmlQmgOqZS/HfQ30njrsAeDXBUNvA5
+SvFBaPKuOro=
+=NNoJ
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,68 @@
+From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+Date: Tue, 15 Jun 93 14:54:03 PDT
+To: nowhere@bsu-cs.bsu.edu (Chael Hall)
+Subject: Re: REMAIL: X-Discard header line added
+In-Reply-To: <9306151939.AA13767@bsu-cs.bsu.edu>
+Message-ID: <199306152153.AA08290@tramp.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+[...]
+> >paranoid).  This would make traffic analysis much harder because once the
+> >message enters the remailer system it bounces around so much; the remailers
+> >become a black box that deliver the message without really knowing anythign
+> >about it until the last phase of delivery.
+> 
+>      I'm not sure what you mean about bouncing it around to different
+> remailers, because if there are a lot of remailers, it could take a long
+> time before it finally gets to the appropriate one that can decrypt the
+> destination information (perhaps longer than the TTL and therefore it does
+> not get delivered).  With encryption, the remailers don't have to know the
+> recipient until the last phase anyway.  In addition, they may not know the
+> contents of the message either.
+
+I set the "breakout counter" at 10 and throw it into any port on the
+remailer web.  It bounces around 10 times and then the "deliver this damn
+message" flag gets tripped and the TTL counter starts.  The TTL counter is
+actually the number of hops from this point on that the message will
+traverse looking for someone who can decode the encrypted destination
+address before the message dies or is otherwise checked for problems.  It
+could take a long time to deliver the message, but time latency is another
+possible means of confounding traffic analysis.  What I was basically
+thinking was that the breakout counter tells the message how many times to
+randomly bounce around the internal structure of the remailer web (and
+hopefully becoming lost in the clutter) before it tries to find someone who
+can deliver it; the TTL would be used once the breakout counter had hit
+zero and would try to keep a message from bouncing around forever if there
+is an addressing problem.  
+
+This would obviously increase the complexity of the system and require a
+collection of remailers scattered across the net, but it seems to me to
+have the advantages of providing more security as the number of remailers
+grows and to allow bepopel to set up thier own forwarding and addressing
+that is independant of the remailer system (you generate your own
+destination certificates and can string together whatever you want in the
+destination, even another hop back into the remailer system.)  It may be
+overly complex, but it just seemed to me that it might offer the possiblity
+of truly untracable mail: two messages sent into the same entry port with
+the same destination certificates at the same time could end up coming out
+of two different exit ports on the black box depending on how they bounced
+around inside the system.
+
+If you want someone to be able to send you a reply to an anonymous message
+you give them a destination certificate that contains the destination you
+want the message sent to wrapped in various remailer pubkeys (one or more,
+it is up to you).  They do not need to know where the message is going,
+they just attach the certificate to thier message and drop it into _any_
+remailer and know that it will either get to the destination or get bounced
+back to them.  A distributed anonymous remailer system of sorts...  
+
+jim
+
+
+
+
+
+
+

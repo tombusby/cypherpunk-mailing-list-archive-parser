@@ -1,0 +1,57 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Thu, 2 Jan 1997 07:38:39 -0800 (PST)
+To: cypherpunks@toad.com (Cypherpunks)
+Subject: Re: "Cypher punks" display arrogance and stupidity in the new year
+In-Reply-To: <T2owZD2w165w@bwalk.dm.com>
+Message-ID: <199701021534.JAA20818@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Dr.Dimitri Vulis KOTM wrote:
+> 
+> ichudov@algebra.com (Igor Chudov @ home) writes:
+> 
+> > Dr.Dimitri Vulis KOTM wrote:
+> > >
+> > > Here's a neat trick: if you want to list a file with line numbers, try:
+> > >
+> > > grep -n "^" file
+> >
+> > cat -n works faster.
+> 
+> Did you time it?
+> 
+
+Yes, I wrote a prog that quickly prints a specified number of lines
+(see below). Then I piped the output of that program to cat -n and
+grep, respectively, and here's what I got:
+
+manifold::~/tmp==>./a.out 1000000 | /usr/bin/time cat -n > /dev/null
+1.32user 0.05system 0:01.62elapsed 84%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (46major+17minor)pagefaults 0swaps
+
+manifold::~/tmp==>./a.out 1000000 | /usr/bin/time grep -n '^' > /dev/null
+19.75user 0.04system 0:20.71elapsed 95%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (88major+26minor)pagefaults 0swaps
+
+
+The difference is about fifteen times.
+
+	- Igor.
+
+
+#include <stdio.h>
+
+main( int argc, char *argv[] )
+{
+
+  int n = atoi( argv[1] );
+
+  for( ; n; n-- )
+    putchar( '\n' );
+}
+
+
+
+

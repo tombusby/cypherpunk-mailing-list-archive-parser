@@ -1,0 +1,33 @@
+From: Alan Barrett <barrett@daisy.ee.und.ac.za>
+Date: Fri, 30 Sep 94 02:56:16 PDT
+To: Michael Handler <grendel@netaxs.com>
+Subject: Re: PGP hole
+In-Reply-To: <Pine.SUN.3.90.940930053444.11908A-100000@unix3.netaxs.com>
+Message-ID: <Pine.3.89.9409301129.D1189-0100000@daisy.ee.und.ac.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 	Yes, this was a deliberate design decision, most probably so the 
+> same code could be used to parse --- BEGIN PGP ENCRYPTED MESSAGE --- and 
+> --- BEGIN PGP SIGNATURE ---. However, this is a _huge_ security hole, as 
+> it allows the nearly-undetectable modification of PGP-signed messages.
+
+It's nowhere near undetectable.  When you ask pgp to check the signature,
+pgp writes the signed message to a file (or to stdout), and that output
+does not include the {header/junk/extra stuff} between the BEGIN line and
+the blank line. 
+
+I don't like this bug/feature, but I don't see it as a serious security
+problem for users who are aware of it.  I do think it could be a problem
+for users who are not aware of it, and who incorrectly assume that the
+"good signature" message means that the {header/junk/extra stuff} was part
+of the signed material. 
+
+--apb (Alan Barrett)
+
+
+
+
+
+

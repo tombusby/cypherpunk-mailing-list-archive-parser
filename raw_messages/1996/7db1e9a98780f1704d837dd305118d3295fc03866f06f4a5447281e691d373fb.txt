@@ -1,0 +1,64 @@
+From: janke@unixg.ubc.ca
+Date: Tue, 9 Jul 1996 09:47:42 +0800
+To: cypherpunks@toad.com
+Subject: Synchronization Attack on Pseudo-DC-net's
+Message-ID: <199607082122.OAA00405@clouds.heaven.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Here's an easy attack on a pseudo-DC-net that I thought up over lunch if
+the clients trust the server to be honest in telling both the round number
+and who is on.
+
+Let Stephanie be the person running the server, and let Alice and Bob be
+two users.  Let f(n) be the pseudo random function they share.   Assume
+that Stephanie knows their secret encryption key.  It is then possible
+for her to compromise their anonymity as follows: First Alice joins the
+net, and Stephanie tells her that it is round 100 and Bob is on. Alice
+sends a messages. Stephanie sends back some random junk to Alice to
+convince her that there was a collision.   Alice backs off for a few
+rounds. Stephanine now receives f(101), f(102), f(103), etc. and then tells
+Alice that Bob has left.  Alice leaves now. Later Bob joins. Stephanine
+tells him that it is round 101 and Alice is here. Bob starts talking right
+away, sending three message: f(101) xor M1, f(102) xor M2, and f(103) xor
+M3.   From this Stephanie is able to recover M1, M2, and M3 by xor'ing
+f(101), f(102), and f(103), which she has from before, back in. Bob has
+completely lost his anonymity! 
+
+Thus, it looks like trusting the server for both who is on and the round
+number is a bad idea! It might be possible to remove the need for a round
+number if the number of seconds since channel creation is used instead, and
+the clients are time synchronized. In that case running the pseudo-DC-net
+on top of UDP might be preferable to running it on top of TCP. 
+
+Can anyone think of an attack if the server is just trusted for a list of
+who is on? If there is one, I guess new clients could ask for signed
+messages of who is on: "It is 456 seconds since channel creation, and,
+I---Alice---am on. (signature)". That would complicate the protocol, of
+course, and cost Nancy---a new client---some time in verifying the
+signatures. 
+
+Good attacks so far! Keep 'em coming. :)
+
+Leonard Janke
+(pgp key id 0xF4118611)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3ia
+Charset: noconv
+
+iQEVAwUBMeF6nUMBIFf0EYYRAQGITQf/U0Wjpsyb7XpG6uCVFCPNaAYVIJpLeEyk
+Mxl6X/TQPhJFRclbRJwFoWfwH46M2le/QKHu6nFFjioyYbXofaLWqDeOa61XY5/c
+4law80/xxAg9IdzoQp4mAz6QOvToMCOlNE21MCL8YlPrrdhIL4MfAH9gpU8+Otui
+IH1S5VB7TGE6ttZEx18sKdBUxYeJeU4jrXb4Uj2HEN5inLrhJBic/fsZ0hZXjCAH
+5kbZLI8sf+leLyoW03qILeVl8jjYuPy/z16MsY2SDzJ3hFv8nngT9+fzVItX7sO2
+ngvqvyUW4SIWfK8XwRWUiMFW7i7gyMcKteSSEJBaEdOZNcGUvXY+5Q==
+=jmVk
+-----END PGP SIGNATURE-----
+
+
+
+

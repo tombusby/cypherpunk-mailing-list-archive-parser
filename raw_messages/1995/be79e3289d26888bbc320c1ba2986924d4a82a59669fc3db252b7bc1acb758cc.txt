@@ -1,0 +1,103 @@
+From: Michael J Gebis <gebis@ecn.purdue.edu>
+Date: Thu, 5 Oct 95 16:38:42 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSL telnet vs. SSH. Comparison?
+In-Reply-To: <199510051751.NAA03127@book.hks.net>
+Message-ID: <199510052338.SAA02892@purcell.ecn.purdue.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> Would somebody please compare for me SSL telnet vs. SSH in terms of
+> security, advantages, and disadvantages?
+> 
+I'm not answering your question, but if people are looking for secure
+telnet implementations, here's a list that I saved from a while back.
+It's a bit obsolete (for example, I think ssh is on version 1.2.0 now)
+but it will get people started.
+
+I've been using ssh for a while, and it's the ultimate in convenience.
+If you haven't tried it, give it a look.  (I make no claims about the
+security; hopefully, someone on the list will take a look and do an
+in-depth analysis. :)
+
+###BEGIN INCLUDED FILE###
+Thanks to everyone who responded to my posting regarding a `secure
+telnet' implementation:
+
+    Is there a (possibly free) implementation of something like a
+    "secure telnet"?  I'm looking for a way to login into a remote
+    system providing secure interactive communication between the two
+    hosts over (possibly insecure) Internet connections.
+
+Here's a summary of the implementations I am now aware of:
+* SSL 
+There is a free implementation of Netscape's SSL Protocol (Secure
+Socket Layer) by Eric Young named "SSLeay"
+<ftp://ftp.psy.uq.oz.au/pub/Crypto/SSL/>.  Eric Young is also the
+author of a popular DES Library.
+<ftp://ftp.psy.uq.oz.au/pub/Crypto/DES/>
+
+SSL provides a secure authentication and encryption basis on top of
+which application protocols like telnet, ftp, and http may be
+transparently added <http://home.netscape.com/info/SSL.html>.
+However, the RC4 encryption using a 40 bit key, which is employed by
+SSL, has recently been cracked with a brute force attack, see
+RISKS-17.27 <http://catless.ncl.ac.uk/Risks/17.27.html#subj1>.
+
+A modified version of telnet that uses SSL-based authentication and
+encryption is also available
+<ftp://ftp.psy.uq.oz.au/pub/Crypto/SSLapps/>.
+
+
+* Deslogin
+
+Deslogin by Dave Barrett <barrett@asgard.cs.colorado.edu> provides a
+network login service much like rlogin/rlogind.  Deslogin uses a
+`challenge-response' protocol to authenticate users.  Also, all data
+transmitted to and from the remote host in encrypted using the DES.
+Deslogin also includes a command-line program `cipher' for fast DES
+encryption. <ftp://ftp.uu.net/pub/security/des/>
+
+
+* SRA Telnet 
+
+This is a version of the SRA Telnet modified by the Technical
+University of Chemnitz.  A session key is negotiated using an
+uncertified Diffie-Hellman-Method and used for the encryption of UID
+and password.  The complete session text in encrypted with DES in CFB
+mode. <ftp://ftp.tu-chemnitz.de/pub/Local/informatik/sec_tel_ftp>
+
+
+* Ssh
+
+Ssh (Secure Shell) is a program to log into another computer over a
+network, to execute commands in a remote machine, and to move files
+from one machine to another.  It provides strong authentication and
+secure communications over insecure channels.  Among other features,
+Ssh is a complete replacement for rlogin, rsh, and
+rcp. <ftp://ftp.funet.fi/pub/unix/security/ssh-1.0.0.tar.gz>
+
+
+* Skey
+
+Bell Canada's `skey' free-ware implements a one-time password system,
+so that sniffers can get your ID and PW, but can't use the PW next
+time. <ftp://ftp.cert.dfn.de/pub/tools/password/SKey/>
+
+
+----------------------------------------------------------------------
+I provide this information in the hope that it will be useful, but
+with no claim of either completeness or correctness.  Thanks again to
+all who contributed to compile the above information.
+
+-- 
+    Jochen Schwarze
+    <jochen.schwarze@studbox.uni-stuttgart.de>
+
+###END INCLUDED FILE###
+-- 
+Mike Gebis  gebis@ecn.purdue.edu
+
+
+

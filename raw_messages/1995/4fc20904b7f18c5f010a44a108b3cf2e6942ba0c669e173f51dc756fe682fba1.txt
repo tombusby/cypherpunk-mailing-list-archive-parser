@@ -1,0 +1,154 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Wed, 3 Jan 1996 21:09:58 +0800
+To: Cypherpunks Lite <cp-lite@comsec.com>
+Subject: A weakness in PGP signatures, and a suggested solution (long)
+Message-ID: <199601030407.UAA12551@comsec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've been engaged in a lively debate with a few members of the cypherpunks
+mailing list about forgeries that are hard to repudiate even if PGP signatures
+are used. One of the participants suggested that I post a summary to
+alt.privacy.pgp and sci.crypt, which is just what I'm doing.
+
+(My apologies to the mail.cypherpunks readers who already saw much of
+this once.)
+
+I'll illustrate the problem with several scenarios of forgeries.
+(It's funny that earlier today I was showing a friend how easy it is to
+post forgeries. She seemed suitably impressed. :)
+
+Scenario 1:
+
+Bob once sent Carol an e-mail that looked like this:
+
+-----------------------------------------------------------------------
+From: Bob@boxb
+To: Carol@boxc
+Date: 25 Dec 1965
+Subject: Carol, we're history
+Message-ID: <111@boxb>
+
+----BEGIN PGP SIGNED MESSAGE----
+
+I no longer wish to go out with you. Merry Christmas!
+
+----BEGIN PGP SIGNATURE----
+Version 2.6.2
+
+12341234...
+
+----END PGP SIGNATURE----
+
+-----------------------------------------------------------------------
+
+Carol can forge an e-mail to Alice that looks like this:
+
+-----------------------------------------------------------------------
+From: Bob@boxb
+To: Alice@boxa
+Date: 25 Dec 1995
+Subject: Alice, we're history
+Message-ID: <222@bobb>
+
+----BEGIN PGP SIGNED MESSAGE----
+
+I no longer wish to go out with you. Merry Christmas!
+
+----BEGIN PGP SIGNATURE----
+Version 2.6.2
+
+12341234...
+
+----END PGP SIGNATURE----
+
+-----------------------------------------------------------------------
+
+We assume that it's easy for Carol to forge the RFC 822 headers to make it look
+like the e-mail came from Bob. That's why many of us use digital signatures.
+
+The signed portion of Bob's original e-mail did not state that the message is
+addressed to Carol (e.g., "Dear Carol"). Alice will probably verify that the
+signature matches Bob's private key and assume that the e-mail is authentic and
+has been sent to her by Bob. To repudiate the e-mail, Bob might have to point
+out that the "Received:" headers differ from his usual e-mails, without relying
+on PGP. In fact, the presense of his verifiable signature would create more of
+a presumption of authenticity of Alice's part.
+
+Scenario 2:
+
+Bob sends the same e-mail as above to Carol. David, a rogue sysadmin, gets
+a copy of the e-mail, forges the same e-mail as above to Alice.
+
+Scenario 3:
+
+Bob sends a signed e-mail to Alice. Alice sees it in her newsfeed, forges a
+Usenet article, makes it look like it came from Bob, and includes the body of
+Bob's e-mail as the body of the Usenet forgery. Usenet forgeries are easy.
+
+Again, if the signed text happens to be suitable, then Bob will have difficulty
+repudiating the forgery. He won't not be able to use the PGP signature, which
+will in fact verify. Hopefully, he'll be able to point out that the RFC 1036
+Path: header is different from his usual header (which may not be the case).
+Many Usenet readers would be unconvinced and Bob's reputation would be damaged.
+
+Scenario 4:
+
+Bob posts a signed Usenet article to alt.sex. Alice forges a usenet article in
+Bob's name to misc.kids, recycilng the signed body, which would probably be
+considered inappropriate for misc.kids. Same result as #3.
+
+Scenario 5:
+
+Bob posts a signed Usenet article to some innocuous newsgroup. Alice reposts
+the same body in a forgery in Bob's name. The forgery can be cross-posted to
+numerous "inappropriate" newsgroups ("velveeta"), or multi-posted ("spam").
+Certain rogue self-apponited net.cops forge cancels for all copies of Bob's
+article, including the original. (They are a bigger menace than the forgers :)
+
+(As several people know, I have been a victim of some of the above-described
+kinds of forgeries.)
+
+I think the underlying problem is that the way PGP signatures are used by most
+people, they validate a text, but allow it to be quoted out of context in an
+e-mail or Usenet forgery.
+
+I suggest to the kind folks working on PGP 3 that there should be a standard
+protocol to include within the signed portion the information on when and for
+whom this text is written: i.e. the list of e-mail recipients and/or Usenet
+newsgroups, which could be easily compared with the RFC 822/1036 headers of an
+e-mail/Usenet article. Perhaps there could be a new option for PGP to look
+_outside_ the signed block and match the headers with what's inside the block.
+For example, suppose the signature block says: this text was written by
+alice@zog.org, posted to alt.sex and alt.sex.banal and e-mailed to
+bob@masons.com. Suppose PGP is asked to check the signature in a file that
+purports to be a e-mail or a Usenet article and has some headers before the
+signed portion. If there is a list of To: recipients, and it includes someone
+other than the recipients listed within the signed block; or if there is a
+Newsgroups: header, and it includes newsgroups not listed within the signed
+portion; then the input is bogus. For compatibility with the existing software,
+if the signed block doesn't include this info, then this checking should't be
+done, of course.
+
+After I posted the above suggestion to cypherpunks, one very respected member
+of that list informed me that "the security multiparts standard (RFC 1848)
+includes a provision for signing the headers as well as the body of a message.
+The security multiparts can be used with PGP, and there is even an Internet
+Draft for it (draft-elkins-pem-pgp-02.txt), but there is not yet consensus for
+adopting this as a standard on the pgp-mime mailing list."
+
+I hope my examples will convince some that present practice of signing pieces
+of text which can be quoted out of context in a forgery is just not enough.
+
+We need to have an easy way to sign the headers without resorting to mine.
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+
+

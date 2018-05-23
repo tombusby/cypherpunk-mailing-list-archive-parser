@@ -1,0 +1,33 @@
+From: peter honeyman <honey@citi.umich.edu>
+Date: Sun, 20 Dec 92 07:56:42 PST
+To: yanek@novavax.nova.edu (Yanek Martinson)
+Subject: Re: Destroying Data (Re: Remailer Policies)
+In-Reply-To: <9212201344.AA26203@novavax.nova.edu>
+Message-ID: <9212201556.AA22792@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Make sure you don't think 'rm -rf /remailer-logs' actually destroys data.
+> It merely de-allocates the i-nodes.  You need to know which physical
+> device the filesystem is on, (let's call id /hdxxx) and then do
+> 'cat /dev/null > /dev/hdxxx' which overwrites with zeroes all data
+> on that partition.  
+
+not quite.  you need something like
+
+  dd if=/dev/null of=/dev/xxx bs=verybig conv=sync
+
+this will zero out every block on the disk.  but this is overkill --
+why not just apply this technique to the individual logs, zeroing
+out their data blocks?
+
+	peter
+
+ps:  is it certain that zeroing out the data blocks thoroughly destroys
+the data?  i've heard that a "shadow" of some sort may remain.
+
+
+
+
+

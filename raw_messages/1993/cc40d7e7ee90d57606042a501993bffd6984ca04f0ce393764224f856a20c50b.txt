@@ -1,0 +1,65 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 7 Oct 93 13:25:32 PDT
+To: cypherpunks@toad.com
+Subject: Re: Weak RSA keys, 2nd post
+Message-ID: <9310072023.AA06352@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+(sorry for posting this twice, but as I sent the previous message, line
+noise or something overtook me)
+
+It does appear that there can be multiple decryption keys, but with good
+choices of p and q, there will be only two.
+
+Whether or not "ed = 1 mod phi(n)" is a myth or not... depends.  Look at
+"Cryptography: an Intoduction to Computer Security" by Seberry and
+Pieprzyk.  On page 92, equation 3.9 gives the relation between encryption
+and decryption keys as "ed = 1 mod gamma(n)" where gamma(n) = lcm(p-1,q-1).
+Which is what the "F" function described before is.
+
+With proper choices of p and q, the d calulcated by the first forumla and
+the d calculated by the second will be the same.
+
+Of course, since you must know how to factor n to calculate the "spare" key,
+it isn't clear to me how it will help you decrypt a message.  With large
+enough properly chosen primes, it won't matter.  Solution: pick good primes.
+
+An example with better choices for p and q:
+
+p = 107; q = 167; n = pq = 17869
+phi(n) = (p-1)(q-1) = 17596
+e = 43
+
+Method 1: d = 43^-1 mod 17596 = 7775
+Method 2: lcm(p-1, q-1) = 8798      
+          d = 43^-1 mod 8798 = 7775 
+
+Either method: message M = 71
+               encrypted M' = 71^43 mod 17869 = 10073
+               decrypt = 10073^7775 mod 17869 = 71
+
+The "spare" key is 7775 + 8798 = 16573, which does indeed work.
+
+But again, I don't see how an attacker can use info about the existence of
+a second key.
+
+Karl L. Barrus <klbarrus@owlnet.rice.edu>
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLLR5CYOA7OpLWtYzAQH/FQP/a+/uxGaKIYKuWCNcP5e0aBGMjhVPnwlU
+cJxrDMSBQYcPHzMPafqXIdfIlNE/g7aB/0Fnnh2cB4MtwvsGiCOe/XGNUgrR+R+e
+X2LWBlQmQ4YBPRnGgXAejX8LkWTScexIrfcXLsps6REyJHVoJB/5gpLNflBnjW5C
+h8xTNoqknf4=
+=8y9+
+-----END PGP SIGNATURE-----
+
+
+
+

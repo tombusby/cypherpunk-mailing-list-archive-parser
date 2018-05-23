@@ -1,0 +1,104 @@
+From: die@pig.jjm.com (Dave Emery)
+Date: Tue, 9 Aug 94 23:24:53 PDT
+To: koontzd@lrcs.loral.com (David Koontz)
+Subject: Re: Satellite Cellphones
+In-Reply-To: <9408091909.AA15015@io.lrcs.loral.com>
+Message-ID: <9408100627.AA17861@pig.jjm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> Whats going to happen when direct satellite phone service becomes a
+> reality ( as in the joint Loral/Qualcomm effort ) ?
+> 
+> When one notes that it is difficult to impossible to prevent service
+> stealing in the cellular environment, how will it be prevented in
+> direct broadcast?
+
+	My understanding of both IRIDIUM and the Loral effort are that
+the satellite will be used to directly connect a remote user to a ground
+based MTSO (switch) which will actually route the call out over land
+lines or another satellite link.  This implies that the satellite is not
+being used as a classical bent-pipe repeater linking the transmitter of
+one satellite phone to the receiver of another, but rather as a space
+born cell-site linked to the MTSO via a separate radio system on a
+completely different frequency band not unlike the terrestrial microwave
+links that link most cell sites to the current MTSOs. 
+
+	This means that there is no way for a mobile satellite user to
+bypass the switch and use the satellite directly to relay his
+communications to another satellite phone, just as there is no way in
+the current analog AMPS/NAMPS cellphone system for a user on one
+cellphone to talk directly to another cellphone without going through a
+cell site relay and the MTSO switch.  Thus the switch can always serve
+as a gateway authenticating users, and providing billing and access
+control services. 
+
+	Even in the more advanced concepts in which the satellite actually
+does some measure of on-board switching between the mobile terminal
+uplinks and downlinks, this switching is almost certainly going to be
+controlled and managed from the ground even if the actual traffic path
+goes only through one or more satellites.   And hopefully, someone has
+already thought of the problem of a user of a satellite switched link
+having his direct satellite link taken over by a higher powered bad guy
+perhaps only for a few seconds to transmit a burst of data to
+a confederate monitoring the downlink.
+
+	Thus the problem of satellite phone access security is not very
+different from the problem of current terrestrial cell phone access
+security - namely that a remote user coming from somewhere out there
+and preporting to be a legitimate subscriber requests a connection
+over a very unsecure link subject to both easy monitoring and various
+kinds of spoofing.   Obviously this is a very natural place to apply
+cryptographic authentication technology such as zero knowlage proofs.
+
+	As most of you are no doubt aware, the problems with fraud in
+the current AMPS cellular system in the US are due to a very bad design
+decision 15-20 years ago to not use some form of strong encryption of the
+authentication exchanges between the mobile phone and the switch. 
+Instead all of these take place completely in the clear, including
+transmission of the ESN (electronic serial number) which is the only
+trully unique ID a cellphone contains.  Thus anyone with trivially
+simple equipment (basically a scanner and a PC and a very simple
+interface card) can determine the ESN and MIN (telephone number) of
+someone elses cellphone by listening in to its tranmissions and use
+these to make fraudulant calls charged to that number. 
+
+	Had the designers of the system simply cbc DES encrypted these
+messages under a fixed cell or system wide key, most of this fraud would
+have been too difficult for all but those with much better things to do
+with their time and resources to attempt (assuming some elementary 
+common sense in the design of the message formats to thwart simple
+replay attacks).
+
+	One suspects that these kinds of fraud in a cellphone system
+designed using the concepts well known now for proper crytographic
+authentication and resistance to spoofing and replay attacks would be so
+rare as to be unimportant compared to other losses.  In such a system
+security of the authentication information would no doubt be the major
+risk, as the designers of the European GSM system seem to indicate with
+their choice of a removable smartcard security module (token) that can be
+carried on one's person.
+
+> It might not be possible to detect unauthorized encryption schemes
+> without direct monitoring. Do the Feds think this is can be won?
+> 
+
+	I don't imagine it is ever possible to detect unauthorized 
+encryption without direct monitoring.   And for data transmission as
+opposed to voice, this is a very hard problem since some considerable
+fraction of data transmitted is such things as compressed binaries 
+and images and things in unusual formats which don't lend themselves to easy
+automatic recognition at low cost.
+
+							Dave Emery
+
+
+
+
+
+
+
+

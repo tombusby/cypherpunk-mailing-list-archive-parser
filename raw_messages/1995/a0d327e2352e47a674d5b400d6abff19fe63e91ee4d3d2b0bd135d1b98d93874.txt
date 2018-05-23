@@ -1,0 +1,40 @@
+From: rmtodd@servalan.servalan.com (Richard Todd)
+Date: Wed, 20 Sep 95 10:30:18 PDT
+To: sommerfeld@orchard.medford.ma.us
+Subject: Re: My Day
+In-Reply-To: <43oquc$70f@tera.mcom.com>
+Message-ID: <m0svSs1-00071JC@servalan.servalan.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In servalan.mailinglist.cypherpunks you write:
+
+>A couple comments on using the time as a seed:
+
+>Any system running NTP will let you know its clock to within a couple
+>ms; some folks have gotten NTP accuracy down to the high hundred
+>microseconds on real-time systems..
+
+Yeah, and even if it's not running ntp full time (just doing the ntpdate
+hack in cron), with any justice it's still within a second of real 
+honest-to-goodness WWV-and-friends time.  
+
+>Any entropy you get from sampling the system clock will have to come
+>from the low-order bits of the tv_usec, or equivalent, and you'll only
+>get a few bits per sample.
+
+Maybe not even that; does anybody know which of the popular machines 
+actually have microsecond timers, so that gettimeofday() actually returns
+continuously updated microsecond values in between clock ticks?  If you 
+don't have that, your entropy in those low order bits is definitely gonna
+be pretty slim, since you're basically measuring the entropy in the "drift"
+values ntpd is applying, which don't change very quickly.  I know BSDI 
+actually uses one of the peecee timer registers to implement a microsecond
+timer, so you actually get decent time resolution; dunno if the other 
+peecee *BSD releases do the same.
+
+
+
+
+

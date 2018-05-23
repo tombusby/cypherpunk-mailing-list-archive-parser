@@ -1,0 +1,42 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Mon, 25 Mar 1996 11:48:01 +0800
+To: cypherpunks@toad.com
+Subject: Re: protection on IoMega ZIP drives
+Message-ID: <199603250149.NAA26580@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Death rays from Mars made alano@teleport.com (Alan Olsen) write:
+
+>At 05:08 AM 3/23/96 +0000, Deranged Mutant wrote:
+>>On 23 Mar 96 at 3:00, Ed Carp wrote:
+>>
+>>> Has anyone tried SFS?  It should work on the zip drive, though I've not
+>>> tried it (yet)...
+>>
+>>If I recall some recent threads on alt.security.pgp (or sci.crypt?),
+>>SFS doesn't work on ZIP drives (since ZIPs use the parallel port...).
+>>
+>>[Or do ZIPs use Scuzzies and the people who had problems were just
+>>too lame to figure out that they had to load the driver before SFS?]
+>
+>There are two versions of the Zip drive.  One is SCSI and one is Parallel
+>faking scsi.
+>
+>The big problem is with the zip drivers.  There is some sort of
+>incompatibility between SFS and the zip drivers.  (I hacked on it for a
+>couple of hours with no luck.)  
+
+The Zip drives have a firmware bug in that they don't do anything if the
+(appropriately-named) FUA bit is set in SCSI requests, and then return a
+command complete status.  SFS 1.20 has a workaround for this problem.  It
+works with both SCSI and parallel-port versions.  Before anyone asks
+when it's due out, its the end of February, probably about the 60th of the
+month.
+
+Peter.
+
+
+
+

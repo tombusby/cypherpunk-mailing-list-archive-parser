@@ -1,0 +1,81 @@
+From: Jonathan Rochkind <jrochkin@cs.oberlin.edu>
+Date: Thu, 4 Aug 94 15:01:12 PDT
+To: jdd@aiki.demon.co.uk
+Subject: Re: Remailer ideas (Was: Re: Latency vs. Reordering)
+Message-ID: <199408042200.SAA07928@cs.oberlin.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>     *   Rochkind's stability-from-being-paid and web-of-trust notions
+ 
+I'm not sure I like being credited with the "stability from being paid"
+notion. I think there _is_ stability from being paid, but I think
+if the infrastructure depends on it, it's not a good infrastructure. 
+The system should be able to create a stable top-level infrastructure
+on top of an inherently instable environment, with remailers
+going up and down, and popping into existence, and dying. It should
+route around dead remailers, like the internet itself. 
+ 
+> Where email is used to transfer messages, the format used should be
+> a subset of that specified in the SMTP RFCs.  Restricting the structure
+ of the headers would simplify the remailer software at little cost
+ to the user.
+>
+> The use of alt.x groups to exchange gateway information does not seem
+> to add anything to this system; in fact it would seem to make it easier
+> to spoof the system.
+
+It _would_ make it easier to spoof the system, but I think it does add
+several very important things:
+1) New remailers can easily announce themselves to the remailernet.
+[Whether they are to be trusted or not should depend on pgp-signed keys
+and web of trust, but the newsgroup provides an way to announce yourself
+to the system, and have that announcment by automatically dealt with
+by all participating parties]
+2) Users (not people operating remailers, people using them) could make
+use of the newsgroup, to compile a database of remailers, and make long
+remailer chains. Users could have automated software doing this. 
+[again, taking account of web-of-trust through signatures].  Messages posted
+to the newsgroup could include information on whether the remailer is
+free, or whether ecash is charged, and the user's software could automatically
+take account of this, enclosing ecash certificates in the proper encryption
+blocks for for-profit remailers. (and reporting costs to user for approval,
+of course).  
+ 
+These are really two facets of the one problem, of allowing a user
+or remailer who has just arrived on the seen to quickly get a list
+of remailers, and make use of them, all automatically. That's sort of the
+super-set problem which encompasses the other two, and whose solution solves
+the other two.
+ 
+I don't think it's a coincidence that the newsgroup system solves these
+two problems at the expense of security (the newsgroup makes it easier
+to spoof).  I have a gut feeling that any solution which solves these problems
+is going to be at the expense of security. But I think these two problems
+need to be solved if we want to create an easy to use, low-human-maintance,
+infrastructure in a universe of hundreds of remailers.  
+ 
+The fact is, that even remailers exchanging mail _can_ be spoofed, if not
+quite as easily as the newsgroup idea. It seems to be a premise of cryptographic
+protocols and schemes, that you've got to assume a worst case and get a system
+working where even under the worst case, everything works. I think this
+is a good way to work, and that's why you've got to assume that if it can
+be spoofed, it will be spoofed. And you've got to build in a web of trust
+relying on cryptographically secure signatures, instead of relying on false
+security you get from thinking that it hasn't been spoofed just because
+it would be a little bit dificult to do so. Once you adopt this frame of mind,
+the newsgroup method is just as secure as the mail method (both can be spoofed,
+but you rely on web-of-trust to prevent spoofing from doing any harm), but
+the newsgroup method solves the two problems I brought up.
+ 
+I agree that it seems a good idea for the SMTP RFCs to be used to exchnage
+info, and we could post to the alt.remailernet newsgroup with articles
+that adhere to the SMTP RFCs, even though that isn't exactly what the
+those RFCs are intended for. Although we almost certainly need 
+some agreed upon standards in addition to the SMTP RFCs, because there
+is additional information we want to exchange.
+
+
+
+

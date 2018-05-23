@@ -1,0 +1,86 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 19 Jan 1997 05:31:18 -0800 (PST)
+To: paul@fatmans.demon.co.uk
+Subject: GSM crypto upgrade? (was Re: Newt's phone calls)
+In-Reply-To: <853575672.913148.0@fatmans.demon.co.uk>
+Message-ID: <199701161239.MAA00283@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Paul Bradley <paul@fatmans.demon.co.uk> writes:
+> Adam Back <aba@dcs.ex.ac.uk> writes:
+> > encryption system.  Anyone know how modular the design is, for instance if
+> > it would be possible to give a GSM A5 based cell phone a crypto upgrade
+> > using published electrical interface standards?  (I want one of those -
+> > Nokia phone with IDEA + 2048 bit RSA signatures + DH forward secrecy!)
+> 
+> My guess is that this would not work.
+> 
+> Does anyone know if when you use a GSM phone to call a landline 
+> number the cellphone<-> base station trafic is encrypted???
+> 
+> my guess is that only when you call GSM to GSM is the trafic 
+> encrypted and even then I would imagine each phone agrees a key with 
+> the base station for the network then the trafic between the base 
+> stations is cleartext. The only way, if this were the case, would be 
+> to write the code so that the headers and other network information 
+> like SIM ID number etc... were cleartext or just A5 to the network as 
+> standard and only the actual speech data was encrypted under 
+> something stronger. This approach could become troublesome, 
+> if I have time I`ll get hold of some GSM specifications and look at 
+> it more closely.
+
+All you've got to do is super-encrypt the IDEA encrypted traffic with
+the standard A5 hardware - the base station won't notice the
+difference.
+
+Schematically, standard GSM hardware:
+
+                       +-------------+
+      +-----------+    | compress/   |        +------------+
+  <-->| A/D & D/A |<-->| decompress  |<------>| A5 enc/dec |<-->
+      +-----------+    +-------------+        +------------+
+
+
+schematically, adding a super-encryption layer:
+
+                       +-------------+
+      +-----------+    | compress/   |        +------------+
+  <-->| A/D & D/A |<-->| decompress  |<-|  |->| A5 enc/dec |<-->
+      +-----------+    +-------------+  |  |  +------------+
+                                        v  v
+                                  +-------------+
+                                  | IDEA/RSA/DH |
+                                  +-------------+
+
+
+So the question was (addressed to anyone who knows anything about the
+electrical interfaces used in GSM) about standardisation of electrical
+interfaces -- for instace if the electrical interface between the
+voice compression/decompression IC and A5 IC were standardised, you
+could build a replacement voice codec IC which performed IDEA/RSA/DH
+as well as standard the voice codec function, and had the same pin
+out.  This IC would allow a wide range of GSM phones to be upgraded
+with minimal effort on the part of GSM phone manufacturers -- or even
+desoldered and replaced by end users, or crypto hardware company.
+
+However, there are several reasons why it would probably require
+proper integration into a GSM phone design:
+
+- keys tied to phone number memories
+- display of signature result on screen
+- PIN for phone's RSA signature keys
+- face to face key exchange
+- key revocation
+- generating new keys
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

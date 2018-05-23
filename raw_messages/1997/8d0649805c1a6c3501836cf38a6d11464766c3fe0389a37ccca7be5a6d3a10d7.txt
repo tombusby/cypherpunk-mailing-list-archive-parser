@@ -1,0 +1,33 @@
+From: jim@mentat.com (Jim Gillogly)
+Date: Sat, 15 Nov 1997 00:57:53 +0800
+To: aba@dcs.ex.ac.uk
+Subject: Re: smaller f00f.c
+Message-ID: <9711141643.AA18973@mentat.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Adam says:
+> Hey, challenge is on:
+> 
+> main(){int i=0xc8c70ff0;void (*f)()=&i;f();} /* f00fies 44 char */
+> main(){((int(*)())"\360\017\307\310")();}
+> main(){int i=0xc8c70ff0,(*f)()=&i;f();}
+> main(i){int(*f)()=&i;i=0xc8c70ff0;f();}
+> main(i){i=0xc8c70ff0;((int(*)())&i)();}
+> (*f)();main(i){f=&i;i=0xc8c70ff0;f();}
+> (*f)()="\360\017\307\310";main(){f();}       /* 38 chars */
+> 
+> Compiled with gcc.
+
+long main=0xc8c70ff0;	/* also gcc; 21 chars, and not my invention */
+Without the "long" you get a warning, but it compiles anyway... 16 chars.
+
+	Jim Gillogly
+	jim@acm.org
+
+
+
+
+

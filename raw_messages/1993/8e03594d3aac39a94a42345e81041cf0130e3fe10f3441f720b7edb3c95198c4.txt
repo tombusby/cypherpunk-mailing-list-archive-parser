@@ -1,0 +1,133 @@
+From: Peter shipley <shipley@merde.dis.org>
+Date: Fri, 9 Jul 93 10:42:12 PDT
+To: Mike Rose <mrose@stsci.edu>
+Subject: No Subject
+Message-ID: <9307082128.AA02549@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+
+
+I suppose this should be added to the the ftp site on soda.
+
+
+		-Pete
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3
+
+iQBVAgUBLDyRNHynuL1gkffFAQGWigH6A6/aLAoAtJElN++r0qyMyD+aWQTVr7FH
+gGb8C+4wNozzPAmr+wIpN0oBW7Cti7U1+G4oOW+FMQKdOljAyLJxQA==
+=cinp
+-----END PGP SIGNATURE-----
+
+
+
+;;
+;; 
+;; From: mpf@theory.lcs.mit.edu (Michael P. Frank)
+;; A quick summary:
+;; 
+;; Key	  Command name		Notes
+;; -------	  ------------------	----------------
+;; C-c p e   pgp-encrypt-region	Prompts for recipient's ID.
+;; C-c p d pgp-decrypt-region	The first time, prompts for your pass phrase.
+;; C-c p s	  pgp-sign-region	       Ditto. Uses CLEARSIG.
+;; C-c p S	  pgp-sign-and-encrypt-region  Doesn't use CLEARSIG. Encrypts also.
+;; C-c p v	  pgp-verify-region	       Checks signature (in a new window).
+;; C-c p p	  pgp-set-passphrase	Sets or changes PGP pass phrase.
+;; C-c p c	  pgp-clear-passphrase	Erases pass phrase.
+;; 
+;; Thanks are due to Bob Anderson <bs891@cleveland.Freenet.Edu> for
+;; writing a very helpful explanation of how to do the guts of these
+;; commands.  However, any bugs are my own.
+;; 
+;; Enjoy!
+;; 
+;; -Mike
+;; 
+;;;
+;;; Emacs Support for PGP
+;;;
+;;; People can see your PGP passphrase if:
+;;; * They watch over your shoulder as you type it. (It's not invisible.)
+;;; * They do "ps auxww" (SunOS) on your machine while you're
+;;;     decrypting/signing.
+;;; * They type C-h v *pgp-passphrase* in your emacs after you've
+;;;     entered your passphrase.
+;;;
+;;; Plus the system suffers from all the normal Unix and X-windows
+;;; security holes.
+;;; 
+
+(defun pgp-set-passphrase (arg)
+  "Prompts for PGP pass phrase."
+  (interactive "sPGP pass phrase: ")
+  (setq *pgp-passphrase* arg))
+
+(defun pgp-clear-passphrase ()
+  "Clears the PGP pass phrase."
+  (interactive)
+  (makunbound '*pgp-passphrase*))
+
+(defun pgp-encrypt-region (start end pgp-user-id &optional flag)
+  "Encrypt the region using PGP. Prompts for a PGP user ID.
+With prefix arg, puts result in serparate window.
+Noninteractive args are START, END, PGP-USER-ID, and optional FLAG."
+  (interactive "r\nsUser ID to encrypt to: \nP")
+  (shell-command-on-region start end (concat "pgp -fea " pgp-user-id)
+			   (not flag)))
+
+(defun pgp-decrypt-region (start end &optional flag)
+  "Decrypt the region using PGP. Prompts for the user's pass phrase,
+if not already known.  With prefix arg, puts result in separate window.
+Noninteractive args are START and END and optional FLAG."
+  (interactive "r\nP")
+  (if (not (boundp '*pgp-passphrase*))
+      (call-interactively 'pgp-set-passphrase))
+  (shell-command-on-region start end
+			   (concat "pgp -f -z \"" *pgp-passphrase*
+				   "\"")
+			   (not flag)))
+
+(defun pgp-sign-and-encrypt-region (start end pgp-user-id &optional flag)
+  "Sign and encrypt the region using PGP. Prompts for a user to
+encrypt to and a pass phrase, if not already known.
+With prefix arg puts result in separate window. 
+Noninteractive args are START, END, and PGP-USER-ID, and optional FLAG."
+  (interactive "r\nsUser ID to encrypt to: \nP")
+  (if (not (boundp '*pgp-passphrase*))
+      (call-interactively 'pgp-set-passphrase))
+  (shell-command-on-region start end (concat "pgp -safe " pgp-user-id
+					     " -z \"" *pgp-passphrase*
+					     "\"") (not flag)))
+
+(defun pgp-sign-region (start end &optional flag)
+  "Sign the region using PGP. Prompts for a pass phrase, if not already
+Known. With prefix arg puts result in separate window.
+Noninteractive args are START and END and optional FLAG."
+  (interactive "r\nP")
+  (if (not (boundp '*pgp-passphrase*))
+      (call-interactively 'pgp-set-passphrase))
+  (shell-command-on-region start end (concat "pgp -saft +clearsig=on"
+					     " -z \"" *pgp-passphrase* "\"")
+			   (not flag)))
+
+(defun pgp-verify-region (start end)
+  "Verify the signature on the text in the given region using PGP."
+  (interactive "r")
+  (shell-command-on-region start end "pgp -f"))
+
+(global-set-key "\C-cpp" 'pgp-set-passphrase)
+(global-set-key "\C-cpc" 'pgp-clear-passphrase)
+(global-set-key "\C-cpe" 'pgp-encrypt-region)
+(global-set-key "\C-cpd" 'pgp-decrypt-region)
+(global-set-key "\C-cps" 'pgp-sign-region)
+(global-set-key "\C-cpS" 'pgp-sign-and-encrypt-region)
+(global-set-key "\C-cpv" 'pgp-verify-region)
+
+
+

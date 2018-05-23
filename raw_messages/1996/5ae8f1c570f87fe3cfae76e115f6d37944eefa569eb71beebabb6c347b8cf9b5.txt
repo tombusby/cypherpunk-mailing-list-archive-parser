@@ -1,0 +1,67 @@
+From: stewarts@ix.netcom.com
+Date: Sat, 31 Aug 1996 18:40:51 +0800
+To: "Osborne, Rick" <OSBORRI@msmail.northgrum.com>
+Subject: Re: Real-time key server
+Message-ID: <199608310844.BAA00275@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 04:30 PM 8/27/96 DST, "Osborne, Rick" <OSBORRI@msmail.northgrum.com> wrote:
+>In my research into keyservers, I find that none of them are realtime. 
+> Sure, there are CGI interfaces to them, but that's not what I mean.  I was 
+>hoping for something along the line of a Finger or SMTP protocol, such that 
+>a client connects to a host (say, keyserv.northgrum.com) on a certain port 
+>(say, 5397) and goes through a realtime version of what is accomplished via 
+>email. [...]
+>Why?  Because:
+>1. I do not want to reinvent the wheel.
+>2. I would like to conform to existing standards.
+
+There are at least three shapes of wheel readily available.
+
+Some of the keyservers have had finger interfaces; there was one on
+wasabi.io.com for a while, though it may be inactive.  John Perry
+may know where to find source code for it?  Assuming you want PGP keys
+delivered in ASCII format, finger protocol should work just fine - you could
+easily enough hack your own fingerd server to live on the fingerd port,
+which gets PGP key files from a directory or database instead of from
+users' home directories, and run it on pgp.northgrum.com or whatever.
+You could even hack the existing finger code from {Free,Net}BSD,
+making sure to clean up any remaining sprintf()s and {*}get()s.
+
+Alternatively, a CGI query _is_ an easy way to do it, and there's
+existing code on the MIT keyserver that's blazingly fast.
+
+John Gilmore's SWAN project is using a DNS-based PGP key server;
+check out http://www.cygnus.com/~gnu/swan.html for more details.
+
+
+>Okay, I was told to not post to the list until I'd:
+>1. Lurked for a month,
+>2. Figured out who Detweiler was,
+>3. Found out about BlackNet and DC Nets,
+>4. Learned of at least three of David Chaum's innovations.
+>And at that point "[I] may be ready to post [my] first comments."
+>
+>Well, dammit, I can't wait that long.  I need help now.  I've only been on 
+>for 2 weeks, I have no clue who Detweiler is (other than the
+>welcome message I haven't heard two words about him/her/it), and I know 
+>enough to sound stupid about the other stuff.  But if you still think I'm 
+>worthy of listeneing to, then read on.
+
+Three out of four ain't bad, and Detweiler's been using his alias on
+the list for a couple of years and acting quite civilized :-)
+Some good reading sources are Bruce Schneier's book "Applied Cryptography"
+and Tim May's "Cyphernomicon" piece which is on the web somewhere.
+Also, asking for pointers to existing work does categorize you
+with the clueful minority.....
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	Reassign Authority!
+
+
+
+
+

@@ -1,0 +1,126 @@
+From: rah@shipwright.com (Robert Hettinga)
+Date: Sun, 1 Oct 95 14:02:34 PDT
+To: cypherpunks@toad.com
+Subject: N$ SSL vs M$ PCT
+Message-ID: <v02120d03ac94b0e71032@[199.0.65.105]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+--- begin forwarded text
+
+From: "John Hemming CEO MarketNet"  <JohnHemming@mkn.co.uk>
+Date:  Sun, 01 Oct 1995 20:36:31 PM PDT
+To: www-buyinfo@allegra.att.com
+Mime-Version: 1.0
+Subject: N$ SSL vs M$ PCT
+
+Having found that Micro$oft have produced a standards document
+about their alternative to SSL I was interested in comparing it to
+that written by Net$cape.
+
+The big question in my view is why did they produce a new
+proposal is it:
+
+a) Because they have found major flaws in the SSL protocol
+and wish to correct these (note the protocol not the implementation)
+
+or is it
+
+b) Because M$ want to "own" the Internet Security Software market
+and take the initiative off N$ who, notwithstanding their problems with
+implementation, have produced a working system.
+
+My personal view is that b) is the case.
+
+Comparison
+
+I have compared
+SSL V3 <draft-hickman-netscape-sl-01.txt>  (available at www.netscape.com)
+PCT http://www.microsoft.com/windows/ie/pct.htm <draft-microsoft-PCT-91.txt>
+Both have status of Internet Draft.
+I have implemented SSL V2 in a browser
+(ftp://193.119.26.70/mktnet/pub/horse.zip)
+and a server (https://alpha.mkn.co.uk/)
+I have not implemented and do not intend implementing PCT
+
+Both SSL V3 and PCT now involve a vast number of different alternatives
+for Ciphers most of these alternatives do not help in any practical sense
+and I have not compared the lists.
+
+PCT allows for supporting SSL as well by using a bit in the SSL version number
+to indicate PCT.  This means that servers can support both protocols. Clients
+cannot as the first message is sent by the client and there is no provision for
+SSL/PCT negotiation.
+
+Both PCT and SSL start with an initial session (GET or POST in wwwland) which
+establishes a master key and allow continuations of that key in later sessions.
+
+M$ use the following arguments in support of PCT:
+1. it is simpler.
+PCT uses longer messages with more fields in them.  It cuts out the final
+SERVER-FINISHED and CLIENT-FINISHED messages.  It puts some of the
+data in SSL into other records.  I quite like the verification in the
+CLIENT-FINISHED
+message which means that bad implementatations crash out at that point rather
+than putting rubbish into the higher level protocol.  However, I consider that
+in essence there is no real difference.  I, therefore, disagree with M$.
+
+2. Message authentication uses different keys to the encryption keys.  How
+this helps, apart from making implementation harder, I cannot quite fathom.  We
+should not be using this secure channel protocol for proper message
+authentication
+only.  The MAC (Message Authentication Code) is not what I would use for
+authentication from a legal and contractual background.  I prefer Digitally
+Signed
+Instructions.
+
+3. They say there is a security hole in SSL's client authentication.
+When the initial session establishing a session key uses (for example) 40 bit
+encryption. It does mean that subsequent sessions are also essentially just as
+insecure.  This is the case for PCT and SSL.  However, client authentication
+in SSL uses a digital signature using the client's private key.  To get hold of
+this requires something more than simply being man in the middle.  I think M$
+are well out of order on this one.
+
+4. They introduce a verify prelude field to make sure that the cipher type
+and other negotiations have not been tampered with.  I suppose this is a
+fair if disingenuous point.  If a "man in the middle" is tampering with your
+negotiations to make sure that you use a low level of encryption so that it
+can be cracked then your implementations should not be using such
+crippleware and cypherpunks will have cracked it ages ago.
+
+There is a point that should be made that servers and clients should really
+indicate the encryption cipher being used.  Both my client and server do.
+
+So in essence M$ make 4 arguments. Two are IMHO wrong.  One is
+irrelevant from a commercial perspective and the other one does not matter.
+
+In the end N$'s version is working.  M$ are probably coding like mad.
+
+The final formula to determine the result may be
+
+if (M$>N$) SSL+=PCT;
+
+where M$ and N$ are measured in US Dollars.
+
+(MarketN£t is a UK company independent of both M$ and N$ although
+N$ were helpful in debugging the interoperability of my early essays into
+SSL for which I am grateful.)
+
+--- end forwarded text
+
+
+-----------------
+Robert Hettinga (rah@shipwright.com)
+Shipwright Development Corporation, 44 Farquhar Street, Boston, MA 02131
+USA (617) 323-7923
+"Reality is not optional." --Thomas Sowell
+>>>>Phree Phil: Email: zldf@clark.net  http://www.netresponse.com/zldf <<<<<
+
+
+
+
+
+

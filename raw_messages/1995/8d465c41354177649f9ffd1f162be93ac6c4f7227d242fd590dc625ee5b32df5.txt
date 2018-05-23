@@ -1,0 +1,79 @@
+From: Doug Hughes <Doug.Hughes@Eng.Auburn.EDU>
+Date: Mon, 23 Oct 95 08:33:26 PDT
+To: pkoning@chipcom.com
+Subject: Re: "power one time pad"
+In-Reply-To: <3087F1A2@mailer2>
+Message-ID: <doug-9509231532.AA014714381@netman.eng.auburn.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At the risk of beating a mutilated horse carcass:
+
+>
+>Among other things, it says that POTP "doesn't use an encryption algorithm;
+>instead it synchronizes random processes on two computers as they
+>communicate".  (I wonder if the author understands that that's just another
+>way to describe encryption algorithms...)  The other claim is that it 
+>eliminates
+>the need to manage keys.  "... there is no need for central servers where 
+>PGP
+>keys ... are kept".
+>
+Well, PGP does have keys. You have your private key and your public key, and
+they have to be managed somehow (stored on disk) even if it's not centrally.
+Other algorithms like kerberos have more complex key management issues. 
+This has no key, and hence no management.
+
+>This seems like a strange claim because of course PGP doesn't require
+>central servers, but more importantly, you can't do authentication without
+>at least one piece of keying data being established out of band.  That
+>could be a certification authority public key, but you need something
+>to get started.
+>
+This is the most confusing part of the whole thing.. How does it get started.
+unfortunately, as this is embroiled in non-disclosure and patent-pending,
+we're not going to know, but are forced to take the word of experts such
+as David Kahn that it works as advertised.
+
+>Supposedly this thing was shown at Interop.  Did anyone see it, and does
+>the product make sense even if the article didn't?
+>
+Yes, I and a friend of mine were the only two people in the audience
+that were not Journalists.  It does look rather intruguing, but so much
+negativism is flying about, that most people have dismissed it out of hand.
+
+>(One thing that disturbes me about the product name is the use of the
+>phrase "one time pad".  Since the "random" processes are presumably
+>not random but rather pseudo-random, there is no one time pad involved
+>at all, but rather a plain old stream cypher of some sort, which may or
+>may not be secure in practice but cannot have the "secure from first
+>principles" property that real one time pad has.)
+>
+Yeah, this is a bit of a marketing issue. It doesn't use a cryptographically
+strong random number generation scheme. Instead, some kind of state about
+the two machines and the message stream is used to perform synchronization.
+Then, the message itself is supposed to impart the non-repetitive nature
+for the non-repeating "One time pad".
+ So, in the sense that it never repeats, it could be called a one time pad,
+and that's how they are using it. However, according to the traditional
+definitions of a one time pad with a strong random number and no correlation,
+it may not pass.
+
+I believe they also use a random number stream somehow.. e.g. both parties
+observe some random number stream, as well as the randomness in the message
+itself to construct the pad. It would seem that if you wanted to decode
+message N of an M message sequence, you would need all of the messages 1
+through N to do it. If any one of them was missing, you couldn't decode
+N itself.
+--
+____________________________________________________________________________
+Doug Hughes					Engineering Network Services
+System/Net Admin  				Auburn University
+			doug@eng.auburn.edu
+	Apple T-shirt on Win95 - "Been there, done that"
+
+
+
+

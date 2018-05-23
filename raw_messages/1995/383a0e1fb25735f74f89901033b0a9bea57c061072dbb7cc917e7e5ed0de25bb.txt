@@ -1,0 +1,40 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Wed, 11 Jan 95 20:51:57 PST
+To: cypherpunks@toad.com
+Subject: Re: How do I know if its encrypted?
+In-Reply-To: <m0rSFsb-000kfuC@mill2.millcomm.com>
+Message-ID: <199501120450.UAA29781@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   My question is how do I know it is encrypted?  
+
+Calculate an entropy measure of some sort.  Entropy is a measure of
+disributional skew.  Maximum entropy means minimum skew.
+
+For human-readable text of any sort, the monogram entropy, i.e. the
+entropy of individual characters, will _always_ be detectably less
+than maximal.  Encrypted text will always be near maximal.  The two
+are easy to distinguish.  ASCII-armored encrypted text will always be
+right at 6 bits per byte.
+
+For speed of implementation, you don't need even to look at much text.
+You can get a statistically significant measure quite quickly from the
+first couple of kilobytes.  
+
+And since you're only really worried about detecting non-randomness,
+you don't even need to calculate the exact entropy but rather an
+approximation of it.  This approximation can be done with entirely
+fixed point arithmetic, if you're a bit clever about it.
+
+A practical system would cut out a notch at 6/8 for ASCII armor, which
+would make approximation techniques a bit tricky.  More practical is
+just to detect ASCII armor with a regular expression recognizer and
+de-armor it before the entropy check.
+
+Eric
+
+
+
+

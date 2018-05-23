@@ -1,0 +1,46 @@
+From: michael shiplett <michael.shiplett@umich.edu>
+Date: Sat, 12 Feb 94 05:20:49 PST
+To: cypherpunks@toad.com
+Subject: Re: Strategies for getting encryption in widespread use QUICKLY
+In-Reply-To: <MhL5tSG00VAx02i0hU@andrew.cmu.edu>
+Message-ID: <199402121320.IAA23807@totalrecall.rs.itd.umich.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"mjg" == Matthew J Ghio <mg5n+@andrew.cmu.edu> writes:
+
+[ auto-install comments deleted...]
+
+mjg> Does anyone want to develop an encrypted term program?  On-the-fly
+mjg> encryption over a modem.  This would allow everyone to encrypt very
+mjg> easily.  It could support plug-in modules (with signatures) to support
+mjg> automatic pgp signing/verification, additional cipher modules (ie DES,
+mjg> IDEA, MPJ2).  When logging on to you favorite BBS, instead of typing
+mjg> your password in, you enter your account, and then set your encryption
+mjg> on your terminal to your password, and if it's right, then you can
+mjg> decode the transmission and you are logged on.  That way nobody could
+mjg> steal your password (or anything else) by tapping your transmission.
+
+  If the machines to which you want to connect are in a kerberos realm
+and you can run TCP/IP (ala PPP or SLIP) on your end, then kerberized
+telnet will offer you the ability to
+
+	a) connect to a host without sending your password over the
+        connection using a standard kerberos ticket-granting ticket.
+
+	b) encrypt the connection (DES using the session key), so that
+	you can, among other things, klog on the remote host without
+	the password being sent in the clear.
+
+It should be possible to add other encryption options into ktelnet.
+
+  One might be able to adapt this for BBS use either by modifying
+kerberos or by using something like s/key. There's no need for
+cleartext passwords to be flying across the wire.
+
+michael
+
+
+
+

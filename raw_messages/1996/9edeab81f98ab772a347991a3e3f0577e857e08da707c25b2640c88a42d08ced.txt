@@ -1,0 +1,55 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Tue, 2 Apr 1996 10:05:03 +0800
+To: pgp-bugs@MIT.EDU
+Subject: gnutar + pgp filter mode
+Message-ID: <199604011522.RAA09571@elysion.eiss.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+The gnu tar archiver allows to use an arbitrary
+compression program (option --use-compress-program=PROG).
+
+This works well with pgp if a small wrapper is used:
+
+#!/bin/csh -fb
+
+if ("$1" == "-d") then
+  exec pgp -d -f
+else
+  exec pgp -e -f
+endif
+
+
+
+
+The only problem is that this doesn't work well for
+larger amounts of data, because pgp reads in all
+data before starting with its work.
+
+
+Perhaps a future release of pgp will have a real filter
+mode.
+
+
+Hadmut
+
+BTW: Does this "crypto-hook" cause export restrictions to 
+apply on gtar ?
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMV/0tmc1jG5vDiNxAQFtAAP/TMuYeYf5q7k1Y8DrBjb6XFKYYFANH3RH
+FvThWq1BUgI+unH97EZkNkCzZJYT5qmLGk3+JLufCAw/o9YR7jKcldm2LNYJ96t2
+BDcSGDF3qx/IUzQBa5NV+gUerNRVSwA3LzkTbXufOxYH0cB3KNcsx3B0bE1rEDa/
+GCcJ1L6T+2s=
+=FMiZ
+-----END PGP SIGNATURE-----
+
+
+
+

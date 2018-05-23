@@ -1,0 +1,51 @@
+From: cman@communities.com (Douglas Barnes)
+Date: Sat, 30 Sep 95 10:43:08 PDT
+To: Simon Spero <ses@tipper.oit.unc.edu>
+Subject: Re: Crypto hardware (was: Using sound cards to accelerate RSA?)
+Message-ID: <v02120d01ac933d63d4d3@[199.2.22.120]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Simon--
+
+There is a lot more to cryptography hardware than just making
+stuff go fast. Any kind of co-processor array could handle the
+job -- doesn't have to be DSPs. For unsigned integer math, the
+486 DX4/100 is a perfectly decent chip, and prices are plumetting.
+If all you want is to make RSA go fast, you can rack up as
+many of these as you want, and do your work at Ethernet speeds
+(which should be more than fast enough for the forseeable future.)
+Also, you get to use your old familiar (and inexpensive) programming
+tools to write your code.
+
+It also turns out that when you're actually using cryptography to do
+valuable stuff, a lot of other concerns are just as
+important as speed -- in particular, physical security over the
+private keys. Most server-oriented cryptography add-ins are highly
+tamper-resistant units that can only be re-keyed when some sort
+of dongle is attached. Said dongle can be kept much more securely
+than a whole computer. Although other threats still remain, this
+substantially reduces the threat of key compromise. Incidentally,
+good hardware of this sort uses ASICs that give substantially more
+bang for the buck than the DSP solutions you're suggesting.
+
+Certainly messing around with DSPs is fun -- I've done it and
+enjoyed it -- but I don't think they will ever be significant as
+cryptographic co-processors.
+
+>That's another question. A DSP chip can also be used for crypto - yet
+>sound cards and nexts aren't ITARed, and aren't really considered
+>dual-use. A Modular exponentiator isn't a crypto device  (hey -
+>it's a bignum accelerator for Mathematica). Now, if I had a pipelined
+>WSI chip capable of delivering one result per cycle, I could think of
+>some useful applications, but ...
+>
+>Simon
+
+
+
+
+
+

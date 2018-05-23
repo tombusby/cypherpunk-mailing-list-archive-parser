@@ -1,0 +1,71 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Mon, 30 Aug 93 14:38:50 PDT
+To: cypherpunks@toad.com
+Subject: The need for FREE cryptography ...
+In-Reply-To: <m0oXDF6-0000nqC@vanbc.wimsey.com>
+Message-ID: <9308302129.AA16834@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> It would be wonderful if somebody would put a
+>> reasonably secure package (much like PGP) and copyleft the source.
+
+>Well the GNU MP library would be a good place to start [...]
+>It wouldn't be much work
+>to package it up with free code for Triple DES, IDEA, MD5, SHS and
+>some good "random" number generation algorithms.
+
+My own thoughts on packaging this kind of thing for general use is to
+make a cryptographically enchanced PERL.
+
+In particular, I'd add the following data types:
+
+    - arbitrary precision integers
+    - arbitrary precision modular integers (i.e. a value, modulus pair)
+    - bit/byte/word vectors of specifiable lengths
+
+I'd add the following operators
+
+    - '*%' (ternary) modular multiplication
+    - '**%' (ternary) modular exponentiation
+    - '~' (binary) bit permutation
+    - '~~' (binary) byte permutation
+
+I'd add some functions
+
+    - des()
+    - armor(), disarmor()
+    - gcd()
+    - xgcd() which also returns the coefficients s.t. x*a + y*b = gcd(x,y)
+
+I'd add some miscellaneous stuff like being able to read in a PGP
+keyring as an associative array.  Some strong pseudorandom number
+generators might be useful.  It might also be convenient to have a
+fast parser for RFC822 email.
+
+(Does everybody see where this is leading??)
+
+And just because you _can_ easily write, say,
+
+    $plaintext = &idea( decrypt, $ciphertext, 
+	$cipherkey ** $public_exponent{ $user} % $public_modulus{ $user } )
+
+or maybe something else, say,
+
+    $p = & first_prime( & long_random( 510, 514 ) ) ;
+    $q = & first_prime( & long_random( 510, 514 ) ) ;
+    $N = $p * $q ;
+    [...]
+
+doesn't mean that the cryptographic PERL violates anybody's patent
+rights in any way.
+
+These are just my thoughts.  I'm not going to work on this, but I do
+hope to inspire someone who might.
+
+Eric
+
+
+
+

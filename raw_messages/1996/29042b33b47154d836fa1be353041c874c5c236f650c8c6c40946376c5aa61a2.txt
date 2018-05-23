@@ -1,0 +1,46 @@
+From: daw@cs.berkeley.edu (David Wagner)
+Date: Fri, 19 Jul 1996 13:59:17 +0800
+To: cypherpunks@toad.com
+Subject: Re: Educational cryptanalysis competition (small prize)
+In-Reply-To: <9607171243.AA26209@clare.risley.aeat.co.uk>
+Message-ID: <4smp0e$dac@joseph.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <9607171243.AA26209@clare.risley.aeat.co.uk>,
+Peter M Allan <peter.allan@aeat.co.uk> wrote:
+> Obviously my crytanalysis needs some serious help.
+>     Answers resembling "That's junk - use XXXXX." score zero.
+
+If you have a n-byte plaintext P[0..n-1], define f(P) as 
+	f(P) = P[0] ^ P[1] ^ P[2] ^ ... ^ P[n-1].
+Now encrypt P[0..n-1] under your cipher to obtain C[0..n-1].
+(Ignore the final reversible unkeyed transformation to hex,
+which has no impact on security.)
+
+My observation is that
+	f(C) = rotate_byte(f(P), rot_constant) ^ key_dep_byte
+no matter how many rounds you use.  Here rot_constant is a
+key-independent constant, and key_dep_byte depends only on the
+key (and not on the plaintext or anything).  Therefore, (for
+example) knowing C[0..n-1] reveals f(P) when one known-plaintext
+is available.
+
+I'll leave it as an exercise to discover why and derive the
+values of the two constants.  Hint: it's enough to prove it
+for one round.
+
+I think that I don't need to spend any more time on it (though
+I am sure there are many more weaknesses lurking in the code).
+
+In all fairness I can reasonably conclude that
+
+	That's junk.  Use triple DES.
+
+Take care,
+-- Dave Wagner
+
+
+
+

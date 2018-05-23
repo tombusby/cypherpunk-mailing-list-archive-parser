@@ -1,0 +1,75 @@
+From: nelson@crynwr.com (Russell Nelson)
+Date: Wed, 30 Aug 95 20:46:16 PDT
+To: cypherpunks@toad.com
+Subject: Re: Mixmaster Security Issues
+In-Reply-To: <199508310117.SAA20828@infinity.c2.org>
+Message-ID: <m0so0Zi-000H93C@ns.crynwr.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Date: Wed, 30 Aug 1995 18:17:02 -0700
+
+Can't answer all of your questions, but I'll answer the ones I can,
+which will save time for someone else to answer the rest of them.
+
+   Apart from thwarting traffic analysis attacks, how does the security
+   of a Mixmaster Type II remailer packet compare to that of a
+   PGP-chained Type I message?
+
+Well, on the one hand, PGP uses IDEA, which is arguably better than
+triple-DES, but PGP also only uses the key length(s) of choice, which
+is to say that if you use the minimum length, you have very little
+security.  Also, Mixmaster packets remain the same length from hop to
+hop, so they are harder to track.
+
+Not every PGP remailer reorders.
+
+   For example, is each remailer in the path limited to knowing only
+   the next remailer in the path?
+
+And the previous one.  For PGP-chaining, that tells you a lot, because
+you can observe the message length getting smaller.
+
+   Is there any way for a remailer (except for the first and last in
+   the chain) to know how many hops have already occurred or how many
+   remain?
+
+No.  The hop list is a constant length, and the list is back-encrypted
+through the chain, so that all you can ever know is the next hop,
+which the previous remailer couldn't know because it couldn't decrypt
+it.
+
+And not even the first or last necessarily!  Both the source and
+destination are running Mixmaster (by definition).  There's no reason
+why mixmaster must remail -- eventually it delivers.  And someone
+sourced the mail using Mixmaster.  If the source or destination is not
+on an advertised remailer, or the destination was non-local to the
+destination remailerthen it's pretty obvious that someone on that host
+is an endpoint.  But that's one of the beauties of Mixmaster --
+there's a large security increase in setting it up as a remailer and
+advertising it.
+
+   Would any security be lost if Type I and II technology were combined
+   and a PGP-chained Type I packet were initially sent via Mixmaster?
+
+Security is increased.
+
+   Is my math correct in surmising that chaining a message through five
+   remailers, each with a reordering pool of five messages, could mean
+   that the message eventually leaves the chain as one of 5^5 (3125)
+   possible messages?
+
+You're ignoring the case where it is to/from a machine that runs a
+public remailer.
+
+-- 
+-russ <nelson@crynwr.com>    http://www.crynwr.com/~nelson
+Crynwr Software   | Crynwr Software sells packet driver support | PGP ok
+11 Grant St.      | +1 315 268 1925 (9201 FAX)  | America neither a Christian,
+Potsdam, NY 13676 |  Jewish, Islamic, nor atheist (etc&) nation.  This is good.
+
+
+
+
+

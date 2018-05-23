@@ -1,0 +1,52 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 21 Aug 1997 06:10:35 +0800
+To: cypherpunks@cyberpass.net
+Subject: coercion proof timestamping services
+Message-ID: <199708202137.WAA00738@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Just some thoughts about creating more robust time-stamping services.
+
+Current time stamping services just generate a PGP key, and sign any
+messages you send them.  PGP signatures already include a time stamp.
+
+Problem: if we find some interesting uses for time-stamps where it
+becomes important that no one can coerce the timestamping service into
+back-signing timestamps in the past, the current timestampers will be
+able to comply, or as they are automated services, simply confiscating
+the machine will likely give the attacker all information required to
+back date any number of time-stamps.
+
+One solution to this is for the time-stamper to publish all
+time-stamps (they are quite small being detached signatures), and
+publish a siganature on all the time-stamps stored in one file each
+day.  Perhaps even publish the signature in a newspaper.  Anyone with
+that newspaper, or an archive of the master signature only, will be
+able to verify any claimed time-stamps -- the publically published
+hash (in the signature) must match the time-stamps archived for that
+day.
+
+Another way is perhaps to have a sequence of keys for signing
+time-stamps on each day, and to discard the private key after that
+day.  Authenticate the use-for-one-day-only keys by signing with a
+long term key.  If people archive daily keys, the coercion of
+timestamping service will be detected if it attempts to publish a
+daily key for some date in the past, and the timestamping service
+can't sign with old keys as it has purposely discarded the private
+halves.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

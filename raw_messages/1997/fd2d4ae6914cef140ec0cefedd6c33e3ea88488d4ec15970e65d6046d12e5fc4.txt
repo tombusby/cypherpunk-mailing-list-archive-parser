@@ -1,0 +1,63 @@
+From: phelix@vallnet.com
+Date: Thu, 25 Dec 1997 03:23:24 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: hashcash spam prevention & firewalls
+In-Reply-To: <3.0.3.32.19971218120500.00707254@popd.ix.netcom.com>
+Message-ID: <34a4cc37.203592456@128.2.84.191>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On 22 Dec 1997 14:15:31 -0600, Adam Back <aba@dcs.ex.ac.uk> wrote:
+
+>The more thorny problem to solve is that posed by Robert Costner: what
+>do you do about nyms.  You (the sender) can't include postage for nym
+>reply blocks because you don't know (and mustn't know) the remailer
+>chain pointed to by the reply block.
+
+Could you throw hashcash into the reply block?  This would, of course, make
+reply blocks non-reusable. 
+
+Perhaps all remailers could agree to accept hashcash made out to a generic
+name like "remailer".  This way, the sender can just generate X coins
+without worrying about which remailers the message would go through.  The
+only problem is that the sender would have to know how many coins to
+generate.
+
+Actually, if the message never went through the same remailer twice, only
+one coin would needed.  Set up the remailers so that they don't strip away
+a coin made out to "remailer".  There could be problems with tracking the
+message though.
+
+
+>
+>> Mailing lists are still hard, and perhaps best handled by the user's
+>> software (or some fancy variant like user-selectable filters at the
+>> ISP mailbox.)
+>
+>I think it's simplest to have the user explicitly allow the mailing
+>list.
+>
+>You could possibly auto detect the pattern of a user subscribing to a
+>mailing list at the mail filter level also.
+>
+
+Each user will probably have a list of names that he will accept coins for.
+Mail sent to a listserver could have a coin made out to
+"listserver@foo.bar".  The listserver could, after checking the coin,
+simply pass that coin along with the message to everyone subscribed on the
+list.  The end user will receive a coin made out to "listserver@foo.bar".
+If that name is on his list, the coin will be checked; otherwise the
+message is automatically dropped/bounced/whatever.
+
+This way, the listserver is never burdened with generating hashcash; but
+those who send messages to the list are (but they only have to generate one
+coin for each message).
+
+-- Phelix
+
+
+
+
+

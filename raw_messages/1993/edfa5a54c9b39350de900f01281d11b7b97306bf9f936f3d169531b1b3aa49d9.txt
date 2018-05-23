@@ -1,0 +1,274 @@
+From: RYAN Alan Porter <ryan@rtfm.mlb.fl.us>
+Date: Wed, 2 Jun 93 22:21:16 PDT
+To: Hugh Daniel <hugh@toad.com>
+Subject: Re: CryptoStacker, long term vision
+In-Reply-To: <9306020657.AA05249@ecotone.toad.com>
+Message-ID: <Pine.3.03.9306030013.A18959-e100000@rtfm>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+This is tiring drivel concerning the CryptoStacker project.  It just
+started yesterday, so don't expect it to be too mature, we all have other
+things we have to do to pay the rent, right?
+
+Anyway, I am posting this to the list because it is kind of a plea for
+ideas, among other things, there are some tidbits that we need some help
+on.  This particular message seemed to address both of the main ones, so I
+picked it.  Don't complain about bandwidth, ok?  
+
+Alright, to summarize the needs of the project at this point--> we need:
+
+	1) some ideas on a good algorithm for a quick and easy
+ 	    encryption to be used in a simple straight software
+	    on-the-fly disk encryption.  I know that it's ironic,
+	    but it seems that that I and the people interested in
+	    funnelling me ideas are mainly deficient in the 
+	    encryption area...
+
+	2) does anybody know how the hell Stacker or DoubleStor or
+	    whatever executes the actual interception of the read/write
+	    routines and stacks them?  I don't get it at all.  I am
+	    more than willing to learn to get this thing working though. 
+
+
+To summarize this message in particular:
+
+Hugh: "Hey, wouldn't bell/whistle XXXXXX be a good idea?"
+
+Ryan: "Yeah, but can we get the thing to work at all first?"
+
+
+There, you have it.  You don't even have to read it if you're not
+interested...
+
+_______________
+Message follows:
+ 
+>   Here is one method of encrypting whats on a disk that I see as 
+> usefull for some, but not all of us.  There are real problems for
+> folks like me who have Unix systems as their home systems, but we will
+> leave that as a extra credit problem.
+
+Yeah, I am just concentrating on getting something out there for DOS
+support.  I actually loathe DOS and would rather be supporting UNIX (this
+would be a lot easier under Unix) but DOS is still a defacto standard and
+the people who need to be protected will be using DOS a lot...
+
+>   I see a disk drive (or scsi controler or bus interface or even
+> something that sits in the middle of a scsi cable) with a PCMCIA slot
+> in it.  Data gets passed about in the clear if no (or a dummy) card is
+> in the slot.  If a real card is in the slot then all data goes though
+> the card before being sent the rest of the way though the interface
+> (might also take the data out via the card, but that makes the card
+> more complex, even if the drive is cheaper, and has other problems).
+>   The card is a key, if its in you can read the disk and see the data
+> and it all looks fine.  If its not in and you read the disk you see
+> whatever is on the disk, mixed plain and/or cypher text.
+
+I like this idea, but I don't know about having ALL data go through the
+encryption system.  What about the idea of setting up a 'secure' partition
+and a 'fast' partition and having a device controller that would only run
+stuff sent to the 'secure' partition through the crypto system?
+
+I also don't know about the practicality of making the thing easy to
+download your own crypto into it.  I think that if I am using a DES chip
+that is widely understood and trusted that there would be no need for the
+further complication of letting people hack at it...  It would be a really
+cool option, and it would be a lot closer to allowing people to seize
+their own security, but I don't think that I can justify adding such a
+complicated feature at such an early stage.
+
+>   You now have a 'key', if you don't want the disk read take the key
+> out, breakit it even (if broken the card needs to erase its self as it
+> might be read even in this state by a electron micro scope or some
+> such).
+
+I really like this PCMIA key idea.  I don't think that just having a key
+would be enough though.  
+
+Say the Secret Service walks in tomorrow and my system is CryptoStacked,
+and the PCMIA key is dangling out of the slot because I fell asleep
+programming last night and forgot to take it out and put it in the safe or
+whatever.  <poof> all of that hard earned security is naught.
+
+I am much more in favour of a password system to assist the key, much like
+PGP uses a password system to assist the secret keyring.
+
+>   There are sevral types of cards one could use in such a system, the
+> ones I would like to see would have all sorts of crypto support
+> hardware and some sort of processer.  I want to be able to download my
+> own crypto system into the card (which should be program ONCE), so as
+> I can feal safe in that I control everything that goes on.  This might
+> be slower then doing a dedicated chip, but more usefull.  Support
+> chips(well features) might include hardware DES,RSA, etc. to speed
+> things up.
+
+I am thinking mainly of finding this much rumored DES chip and trying it
+out on a dedicated board.
+
+I had another idea for an initial stepping stone:
+
+are ISA cards DMA mapped?  If so, howabout a card that simply has the key
+burned into it's virtual value, but only when it is properly activated?
+
+You could easily achieve this by burning a simply program into an EEPROM,
+and the activation could be something like punching in a code on a keypad
+attached to the board or something.  (this comes to mind because I have a
+friend that just finished burning some simple programs into EEPROMS and
+building a simple keycode keypad, integrating them should be a weekend
+project)  That way, I could do the encryption in software for the
+specified 'secure' partition (until I can get my hands on a DES chip)
+using the value returned by the EEPROMs as the key.
+
+Sound feasable?
+
+>   If one feals like haveing fun you might be able to use the card
+> remotely, by sending the data (see why I don't want the card to be the
+> interface) over the net and decrypting it localy, then useing it
+> localy or re-encrypting it and sending it back to be used at the other
+> end again.  This is more work, but usefull!
+
+Hmm, that could work perhaps, but the main idea was to create a
+transparant file system encoding system for once the data already is
+local, there are certainly better packages out there for data transmission
+security than anything that *I* could cook up...  Just look at the flack
+that the Dolphin guys are getting just for even suggesting something like
+that...
+
+>   This would mean that the crypto key cards would need to be designed
+> to be usefull in disks, or as keys in CPU's.  The more general the
+> better.
+
+I agree, but a file system CryptoStacker will be hard enough to implement
+in the first place, I think that I will need to worry about that first.
+
+>   If one want to play around one could try to have passwords to turn
+> the cards on (digital text/voice, or phyical interface on the back of
+> the card).
+
+Ahh, should have read ahead...
+
+I like that voice recognition concept though, but that sounds kind of like
+a bells/whistles kind of thing too...
+
+>   One problem I see with this is how low a level it works at, for
+> instance blocks of disk are likely to expand/shrink with ecryption,
+> but for this sort of interface we have to pad.  Uck.
+
+Right, that is my main nightmare, what size blocks to use?  I just don't
+quite understand how Stacker does it.
+
+the way I see it we have a serious problem because there are at least two
+different ways of getting data onto or off of a disk.  If it was one or
+the other, I would be able to cope with it by intercepting that method and
+changing it, but there are at least two fundamentally different ways,
+reading by bytes and reading by variable length blocks.  I'm not sure if
+it is possible to read by bits or not, I've certainly never needed to do
+so, but a good scan through the PC interrupts might be necessary...
+
+The size of a block of data would not change with DES encryption, would
+it?  I might have a serious misunderstanding about how DES works if the
+size *DOES** change...
+
+Here is a though, the apparant ignorance of which is entirely due to the
+fact that I just don't understand at all how Stacker works on an intercpet
+level:
+
+How about just encoding each byte seperately, that way I could intercept
+the byte read/write no problem, and I could intercept the variable block
+read/write in a similar manner, just break it down into a series of single
+byte read/write cycles?
+
+Is it possible to DES encode a single byte and have it remain a single
+byte?  Is it a reasonably secure idea?
+
+I would do some DES research, but I am mail only and it takes WEEKS to
+poke around ftp sites through the mail, dig?  Perhaps someone could send
+me a nice FAQ?
+
+Perhaps someone knows of a nice method by which I *COULD* securely encode
+a byte to a byte and have it remain a byte using keys and such?
+
+I suppose you might have noticed by now, I am a very good software
+engineer, and a pretty good structure programmer, but only a good machine
+level programmer, and only a mediocre cryptologist, let's get all of that
+straight right here.
+
+>   I have in the back of my head an idea for a NFS like data (in the
+> simple case disk) server.  How this might be done is murkey to me
+> right now.
+>   My first problem is deciding on where I want the decryption to
+> happen.  We keep talking about doing it in the disk drive, but as my
+> example above shows there is no reason to do it that way, and it's a
+> lot safer to pump crypted data through a (maybe leeky) SCSI data cable
+> then to have it all ready decrypted.
+>   Maybe what this is trying to tell me is that there is a trueism
+> about decrypting data as close as resonable to the use point (and NOT
+> the source) as one can.
+
+This is all well and good, but I think that getting the damned thing to
+work at all will be a bitch, much less worrying about perfectly optimal
+security...
+
+>   Question is: Is there a good algorithm that can be done totaly in
+> software, that gains more speed & security from beside memory general
+> purpose decryption hardware and even more from dedicated cards?
+
+This is my question exactly, what encryption algorithm...
+
+>   This is really a protocall questoin, as we should be able to change
+> the crypt algorithm weekly if we want (might need to do this!).
+
+Oi, please... I am worried about finding ONE algorithm, you are already
+thinking about implementing any number on infinities...
+
+>   I wonder how this can work if I decide that I need not one, two or
+> three crypt keys, but hundreds!  I can see that I am going to have
+> just a few keys for the basic disk keys (can do one per disk) in
+> hardware, and likely hundreds of others that can't (afford or
+> effectivly) use dedicated hardware for.
+
+Well I don't see why any relatively unlimited number of keys couldn't exist.
+
+As for those people that can't afford to use dedicated hardware, there is
+still the less secure idea of having the key stored on a floppy that would
+be inserted at load time and read into memory.  This would have the
+obvious disadvantage of having the key sitting around in memory, a sitting
+duck (especially for people who leave their systems on all of the time,
+like me, as soon and the Nazis learned about systems like these then 'Run
+a key scanning program on the system to be confiscated' would just become
+step one in their procedure, would be a hole even if the keys were
+password protected) but it would be better than nothing at all, and the
+speed problems could be dealt with by using the multiple partition method
+that I described earlier, having a 'secure' virtual disk where all of your
+data goes, and a seperate 'fast' virtual disk which is unencrypted where
+all of your programs and such go.
+
+>   Have fun, theres work to be done!
+> 		||ugh Daniel
+> 		hugh@toad.com
+
+Yes, but you know, the more I think about it, the easier it looks... my
+two main problems right now are: 
+
+	1) What algorithm?  How?
+
+	2) How the hell to intercept the read/write routines?
+
+
+After that, the rest is just writing code.
+
+Code I can do, code is no problem...
+
+
+-Ryan
+the Bit Wallah
+
+
+
+
+
+

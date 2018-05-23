@@ -1,0 +1,45 @@
+From: David Mazieres <dm@amsterdam.lcs.mit.edu>
+Date: Sat, 27 Jan 1996 09:14:13 +0800
+To: warlord@MIT.EDU
+Subject: Re: Crippled Notes export encryption
+In-Reply-To: <199601242330.SAA08632@toxicwaste.media.mit.edu>
+Message-ID: <199601242346.SAA14838@amsterdam.lcs.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> cc: Jeff Weinstein <jsw@netscape.com>, cypherpunks@toad.com
+> Date: Wed, 24 Jan 1996 18:30:00 EST
+> From: Derek Atkins <warlord@MIT.EDU>
+> 
+> > How did kerberos avoid this?  The "bones" distribution of kerberos
+> > without crypto was not regulated by ITAR, right?
+> 
+> Kerberos didn't leave the crypto plugable.  The bones distribution
+> removed not only the crypto routines but also the calls to the crypto
+> routines.  It would be hard to call that "pluggable".  It took a lot
+> of work for someone down under to replace all those crypto calls!
+
+So where exactly do they draw the line?  You can still construct your
+software in such a way that there is a clean boundary between the
+crypto stuff and the rest.
+
+For example, could you have an application with a  function:
+
+	authenticate_user (int file_descriptor)
+
+which in the exportable version sends a password, and in the domestic 
+version constructs some sort of authenticator?
+
+Could you have an xdr-like function which on in an exportable version
+just does argument marshaling and in a domestic version also encrypts?
+
+How exactly are crypto-hooks defined?  This restriction seems orders
+of magnitude more bogus than even the ban on exporting actual
+encryption.
+
+David
+
+
+
+

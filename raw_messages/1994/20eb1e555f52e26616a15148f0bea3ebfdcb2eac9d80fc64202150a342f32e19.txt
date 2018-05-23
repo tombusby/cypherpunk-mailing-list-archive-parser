@@ -1,0 +1,51 @@
+From: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Date: Thu, 17 Feb 94 21:00:55 PST
+To: cypherpunks@toad.com
+Subject: Re: STEALTH OCEANS
+Message-ID: <Pine.3.89.9402172335.E9841-0100000@delbruck.pharm.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This is my first post to this list, so please don't flame me if I make
+some trivial mistake. %->
+
+
+IDEA Re: making random noise files "undetectable"...
+~~~~~~~  On many machines the file system allows users to "delete" files
+         without actually deleting them.  This is usually accomplished by
+         simply marking the disk blocks that make up the file as free.
+         Thus it should be possible to write an encrypted (noise) file on 
+         to disk, pad the rest of the disk with more noise and "delete" the
+         whole thing, making the disk look blank to all casual observers.
+
+PROBLEM: If the above idea is implemented, one could not write on to the
+~~~~~~~  the disk for fear of accidentaly overwriting the "free" disk blocks.
+
+SOLUTION: Knowing the _exact_ location and size of the file, one could write 
+~~~~~~~~  directly to those block which are _really_ free.
+
+2nd PROBLEM: In order to decrypt the file, one needs to know it's 
+~~~~~~~~~~~  _exact_ location and size (or use some undelete util)...
+             Which brings me to the...
+
+3rd PROBLEM: An undelete utility could make recovering the encrypted
+~~~~~~~~~~~  file trivial for _anyone_.
+
+SOLUTION: Make the file undetectable to udelete utilitys by modifying
+~~~~~~~~  the FAT table, or equivalent.  One would, of course, have to keep
+          track of the file in some other, non-standard, way.
+
+FINAL(?) PROBLEM: Implementing the above idea is trivial for the average
+~~~~~~~~~~~~~~~~  user.  Making and recovering truely undetectable files 
+                  may not be.
+
+
+                                 All feedback welcome,
+
+                                     Sergey
+
+
+
+
+

@@ -1,0 +1,75 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Tue, 22 Dec 92 09:02:47 PST
+To: CYPHERPUNKS <CYPHERPUNKS@TOAD.COM>
+Subject: Remailer encryption.
+Message-ID: <921222165347_74076.1041_DHJ39-2@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: miron@extropia.wimsey.com (Miron Cuperman)
+
+> In any case, the current scheme for ARA's is insecure.  This is
+> because people can send plaintext messages attached to the ARA.
+> This allows breaking anonymity by monitoring of the traffic from
+> all remailers and waiting until the message appears at one of
+> the outputs.
+> 
+> I will implement a more secure scheme.  The ARA will include
+> encryption instructions for each remailer.  Since each remailer
+> will be doing a transformation on the message, the attack above
+> will not be feasible.
+
+I'd like to hear more about this plan.  What kind of encryption
+instructions would be used in the ARA?  Would they be public key or
+secret key?
+
+Chaum's "Mix" paper in CACM (1981?  I don't have my refs handy) had
+a concept where at each step the remailer would encrypt the outgoing
+non-address part of the message with a DES key found in the anonymous
+address.  The user would remember all the DES keys used in the ARA
+and un-apply them in reverse order to reconstruct the original message.
+This would require some special software, I'd think, to remember the
+DES keys and unapply them (and to construct the anonymous address).
+(Actually, Chaum didn't specify DES but rather just an unspecified secret
+key system.  If PGP were used for some of this then perhaps IDEA would
+be a good choice.)
+
+This system sounded pretty complicated, and it still had the problem
+that by sending multiple messages to the same address a remailer could
+do some simple traffic analysis and break the ARA.  E.g. it would send
+5 messages to an ARA today, and discovers that it later gets 5 messages
+for user X (because it happens to be the last remailer in the ARA chain).
+Tomorrow, it sends 10 messages to that same ARA, and discovers 10 messages
+for that same user.  The next day it sends 7 messages to the ARA, and
+discovers 7 messages for that user.  Eventually it can deduce that the
+user and the ARA go together.
+
+To avoid this, Chaum calls these "one-time" ARA's and recommends that
+mixes not accept messages for the same ARA more than once.  I don't
+think this is a practical suggestion, though, since a one-time ARA is
+not useful enough.
+
+Hal Finney
+74076.1041@compuserve.com
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBKzcdKKgTA69YIUw3AQFK9wP/a27AgcL4ppMpYIbDfBy6Vw8NTjJzKpsL
+hQibQ3XO3wPFURS3Mn51eYLyYRuJPY1/Ve+Y1Kbb6oLiW1u8Btw8CxvB1xe05f32
+j0JwzSN1yL8blGMh4JxxXZI0t3SViJ1COt6p+I1SYLjftte/0YX0gc6dweFNUnkZ
+5VC4FH2WCbQ=
+=+Jx9
+-----END PGP SIGNATURE-----
+
+
+Distribution:
+  CYPHERPUNKS >INTERNET:CYPHERPUNKS@TOAD.COM
+
+
+
+
+

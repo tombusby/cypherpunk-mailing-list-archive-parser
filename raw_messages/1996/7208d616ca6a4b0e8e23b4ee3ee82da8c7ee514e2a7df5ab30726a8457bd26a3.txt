@@ -1,0 +1,88 @@
+From: mccoy@communities.com (Jim McCoy)
+Date: Wed, 31 Jul 1996 20:07:25 +0800
+To: cypherpunks@toad.com
+Subject: Re:FPGAs and Heat (Re: Paranoid Musings)
+Message-ID: <v02140b00ae24d66cfbdd@[205.162.51.35]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Oddly enough, I just left a talk at the '96 Genetic Programming conference on
+developing adaptable hardware and silicon evolution.  One of the speakers at
+this particular session was the Product Line Manager from Xilinx and one of
+the goodies he handed out was pre-release data sheets for the new XC6200
+series of FPGAs they are producing (the chips are already out in limited
+quantities) so here is a little update on the state of the art in this area.
+
+Tim May writes:
+> Bill Frantz wrote:
+> >>  o As more and more chips are added to a machine, two effects occur:
+> >>
+> >>      o Interconnections increase and increase running time;
+> >>      o Heat from the chips eventually limit [sic] the size of a
+> >>        machine.
+> >Fast machines produce a lot of heat.
+>
+> But, as many have pointed out, this is not a realistic limit.
+
+One can also use reversible logic to get arond the heat problem if mechanical
+means are not enough.  This is a necessity for molecular-scale computing and
+during the post-session BS at another talk we speced out a system that could
+probably evolve a reversible logic compiler.  Heat will not be a "wall" at
+any scale, it may add to the cost a little bit but the problem is solvable.
+
+The interconnection problem has also been solved in this chip series. [A
+long-standing problem with FPGAs is that there were generally a limited
+amount of "wires" running between the logic elements and thus a lot of cells
+were wasted because there were no interconnections left, I/O to the outside
+world was also a problem.]  The chip has a really cool interconnection method
+which allows a much more efficient use of the chip real estate and which
+makes the entire chip directly addresable (like regular RAM) through an
+on-chip interface module.  Given the relatively compact design in Ian and
+Dave's paper and the new chips one might even fit two or four cracking
+engines on a single FPGA.
+
+Either the NSA did not do thier homework in this area or they are lying.
+
+> >Now I have no problem with believing NSA would invest $7 million.  However,
+> >$700 million makes me wonder.  With FPGAs, there is a significant risk that
+> >people will change the crypto system and make the investment worthless.
+> >(Which, I guess, is why they prefer general purpose computers.)  However,
+> >if they can get the equivalent of a few bits of key back by cryptanalysis,
+> >then they knock the costs down to entirely reasonable (for them) levels.
+>
+> An FPGA is field-programmable. (FPGA = Field Programmable Gate Arrays) The
+> Xilynx and Altera lines of FPGAs could be reconfigured for other
+> algorithms, surely. (I recall several preliminary designs discussed in
+> various places.)
+
+There are two types of FPGAs, one is based on anti-fuse technology which is
+essentially a big complicated PROM, but the Xilinx FPGAs use SRAM to
+configure the interconnections between logic elements.  The newest line from
+Xilinx, the XC6000 series has the capability to be reconfigured either
+partially or completely from an on-chip cache in 5 ns.  That is five
+nanoseconds and you have a completely different piece of virtual hardware. If
+the configuration is loaded through the slowest I/O port on the chip it only
+takes 200 microseconds. Even if the encryption algorithm is secret these
+chips open up interesting posiblities for developing general-purpose
+cryptanalysis machines. [Hmm, there may be a paper in there... "Evolving A
+General-Purpose Cryptanalysis Engine"...]  What is even better from the
+perspective of the NSA accountants is that they only need to build the
+machine _once_, after that they just load up a new set of interconnections
+and now the DES cracker is an IDEA cracker.  Add to this the fact that the
+XC6000 series were designed to be built cheaply in large quantities (the
+Xilinx rep figures the price will get down to $29/chip in 5K lots for the
+samples he was passing around and he is a wafer guy and not marketting droid
+so this may be reasonably accurate.)  If anything, the Blaze, et many als.
+paper _underestimated_ the cost of a FPGA hardware cracking engine,
+particularly if you amortize the savings FPGAs give over the long term with
+thier almost limitless flexibility.
+
+jim
+
+
+
+
+
+

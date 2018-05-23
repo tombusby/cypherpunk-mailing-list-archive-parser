@@ -1,0 +1,61 @@
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+Date: Wed, 17 Jan 1996 08:52:07 +0800
+To: ckey2@eng.ua.edu (Christopher R. Key)
+Subject: Re: A weakness in PGP signatures, and a suggested solution (long)
+In-Reply-To: <1996Jan11.152134.127675@ua1ix.ua.edu>
+Message-ID: <199601162319.KAA09830@sweeney.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello ckey2@eng.ua.edu (Christopher R. Key)
+  and cypherpunks@toad.com
+ 
+> In article <Pine.ULT.3.91.960110182255.18692H-100000@xdm011>, Jeffrey Goldberg <cc047@Cranfield.ac.uk> says:
+...
+> First of all, if the recipient is a newsgroup, why would that particular
+> information need to be part of the signed information?  If you post to a
+...
+
+Somebody already pointed out an adult message being re-posted to a kidgroup.
+
+...
+> Secondly, if you are sending email to some one and sign it using pgp, wouldn't
+> that person need pgp to prove that in fact you did sign it?  Then it can be
+...
+> So if all that needs be done to a message to insure that the appropriate 
+> person reads it is encrypt it using their public key, why does pgp (or one
+> of the pgp interfaces) need to be changed to include header information?  
+...
+
+But then the recipient has a PGP-signed message from you which
+isn't encrypted (using pgp -d). That person could then impersonate
+you. Eg Alice the jilted lover could resend the goodbye message
+with forged headers to Bob's new girlfriend to get back at him.
+
+What a sentence. Here it is again, hopefully understandable:
+
+Bob->Alice
+  From:Bob; Encrypted(Signed("We're through",Bob),Alice)
+
+Alice does pgp -d, leaving her with Signed("We're through",Bob)
+
+Alice->Carol
+  From:Bob; Encrypted(Signed("We're through",Bob),Carol)
+
+Later, when Bob gets another girlfriend,
+
+Alice->Danielle
+  From:Bob; Encrypted(Signed("We're through",Bob),Danielle)
+
+Later still,
+
+Alice->Eve
+  From:Bob; Encrypted(Signed("We're through",Bob),Eve)
+
+
+
+
+

@@ -1,0 +1,47 @@
+From: anonymous-remailer@xs4all.nl (Name withheld on request)
+Date: Wed, 7 Dec 94 00:08:11 PST
+To: cypherpunks@toad.com
+Subject: PGPTools bug
+Message-ID: <199412070809.AA01450@xs1.xs4all.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+This is a known problem in old versions, caused by this bug in fifo_destroy.  
+
+  while(fb) {
+    nfb=fb; 
+    fifo_block_unlink(fb); /* Free the block */
+    fb=nfb->next;          /* And then read it...oops */
+    }
+
+It's fixed like this in later versions.  
+  
+  while(fb) {
+    nfb=fb->next;
+    fifo_block_unlink(fb);
+    fb=nfb;
+    }
+
+Get the latest version (10d I think) from ftp.csn.net, and download a file
+called pgptlupd.zip. The update has the fixed fifo, among other things.
+Don't use the earlier versions. They have bugs. Get my latest release, not
+one that has been hacked by someone else.
+
+						Pr0duct Cypher
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLuPbScGoFIWXVYodAQEtSQP/YepqB2czl4/7keW8R6KMrnI2YVnvqPBJ
+ENXi+Ds3TGFHazdskofjra1Dwu8I2tkrH61n0YDrHRwvlZUVFxpqGW+zPamLlhNG
+NPdQKabtT79qXQYNCxR8KrYZnpS3p21io5nVmYduOkW0ZqvTyo2cX8iKGsDXeBpV
+3idSCI+ZTr8=
+=lXLl
+-----END PGP SIGNATURE-----
+
+
+
+

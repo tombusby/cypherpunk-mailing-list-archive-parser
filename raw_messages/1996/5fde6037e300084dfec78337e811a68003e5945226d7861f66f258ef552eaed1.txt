@@ -1,0 +1,75 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Wed, 24 Jul 1996 18:53:43 +0800
+To: s_levien@research.att.com
+Subject: Re: Netscape
+In-Reply-To: <Pine.SGI.3.93.3.960723092837.18152A-100000@asparagus.research.att.com>
+Message-ID: <31F55981.3009@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Raph Levien wrote:
+> 
+> On Tue, 23 Jul 1996, Jeff Weinstein wrote:
+> 
+> >   I don't like the fact that your proposal ties the size of the
+> > bulk encryption key to the size of the public modulus.  There
+> > are legitimate reasons why someone might choose to have a 512
+> > bit modulus even though they prefer longer bulk encryption keys.
+> > Your heuristic would be a good fallback in the absence of more
+> > reliable information.
+> 
+>    I agree. My proposal certainly has its limitations. In addition to the
+> one you cite, it will make it very difficult to change away from
+> Triple-DES when the time comes.
+> 
+>    Of course, your hypothetical user who wants to use a 512-bit key and
+> 128-bit RC2 is still completely screwed by all currently shipping S/MIME
+> products, as well as the S/MIME spec.
+
+  I can't find anything in the S/MIME spec that makes the combination
+of 512-bit RSA key and 128-bit RC2 (or 3DES) illegal.  The spec says
+that you must support RSA key sizes from 512 to 1024.  Am I missing
+something?
+
+> >   There is another method that does not require verisign or other
+> > CAs to add key size extensions to their certs.  We can define
+> > a new authenticated attribute that gets included in Signed-Data
+> > and Signed-And-Enveloped-Data messages that indicates the
+> > user's key size and algorithm preference.  This has the advantage
+> > that the preference is selected and signed by the user.  This
+> > method was discussed at the S/MIME meeting in January at the
+> > RSA Crypto conference.  I'm a bit surprised that it never
+> > got into the Implementation Guide.  I'll make sure that
+> > we bring it up on the smime list again.
+> 
+>    I don't like the fact that your proposal leaves clients with absolutely
+> no information about symmetric cipher choice until the first round of
+> signed messages has been exchanged. In this initial round, the protocol is
+> still dependent on the global default.
+
+  How did you get the certificate of the recipient?  I assume that you
+got it from a degenerate PKCS#7 Signed-Data message as recommended by
+the s/mime spec.  That degenerate message could contain the attribute
+I describe.  If you got the certificate by some other means, we would
+fall back to your heuristic.
+
+> P.S. Can we agree not to describe 128-bit RC2 as "strong crypto" until
+> it's been subject to more serious scrutiny? It's probably a great cypher,
+> but most cautious crypto-people would far rather place their trust in
+> Triple-DES.
+
+  Certainly.  We will definitely offer 3DES as well as RC2 in our
+product.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

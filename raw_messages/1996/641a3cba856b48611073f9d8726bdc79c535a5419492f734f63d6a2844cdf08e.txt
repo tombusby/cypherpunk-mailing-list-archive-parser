@@ -1,0 +1,85 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Sun, 3 Mar 1996 04:57:17 +0800
+To: cypherpunks@toad.com
+Subject: Re: Truelly Random Numbers
+Message-ID: <ad5df17e0002100488bd@[205.199.118.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 8:11 PM 3/2/96, Adam Shostack wrote:
+>A. Padgett Peterson P.E. Information Security wrote:
+
+>| True however the current mechanism of generating PGP keys which consists
+>| primarily of pseudo-randomly pounding on a keyboard is hardly "truely random.
+>|
+>| Have no idea of the true number but expect it to be significantly less than
+>| that quoted above, even for a 1024 bit key like mine.
+>
+>        Accroding to Stephan Neuhaus's 'Statistical Properties of IDEA
+>session keys in PGP,' the session keys are very well distributed, when
+>tested for equidistribution and serial correlation.
+>
+>        This does not demonstrate that the RSA keys are as well
+>distributed, but it does generate some confidence that the key
+>generation methods of PGP are not very broken.  Testing for RSA
+>generation would be more difficult, since there are some practical
+>difficulties in getting a large sample of RSA private keys.
+
+In some PK code I did several years ago in Mathematica, the primes for the
+RSA modulus were found by picking a "random" (more on this later) starting
+point and then counting up from there, testing for primality (actually,
+pseudoprimality, technically). As one would expect, primes are found fairly
+quickly.
+
+The "randomness" of the resulting primes--and hence the randomness of the
+modulus and hence the "RSA key"--is set by the randomness of the starting
+point. With a reasonable amount of entropy, such as picking the next digit
+from several keyboard timings, I expect the 150-decimal-digit number to be
+*very* random!
+
+(In fact, I'd venture that merely asking people to type in digits would
+produce starting points that essentially would be very random...maybe some
+clustering here and there, or an unequal number of digits, or too equal a
+distribution, but adequate. An since an attacker could not know what the
+sources of randomness were for some particular person, I doubt strongly
+that factoring the modulus would be any easier.)
+
+Suppose a =
+4801747274372727828487361830183561393615106551195496693610351528409257572926
+659
+2027575902673957001560102249600798767153757681546836352857811107361291541511
+
+(which is about 140-150 digits, "randomly" entered by me)
+
+and p is computed as the first prime larger than this.
+
+q found the same way
+
+Now, is the modulus, n = pq, any more factorable than if a "more random"
+source of p and q were used?
+
+(I am actually asking this as a real question. Does anyone know if
+factoring is significantly easier for such not-completely-random numbers? I
+would expect that in theory it is, but in practice this is not a useful
+point of entry into factoring n. Just a hunch.)
+
+--Tim
+
+
+Boycott "Big Brother Inside" software!
+We got computers, we're tapping phone lines, we know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Higher Power: 2^756839 - 1  | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

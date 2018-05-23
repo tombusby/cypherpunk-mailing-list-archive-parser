@@ -1,0 +1,67 @@
+From: cman@communities.com (Douglas Barnes)
+Date: Wed, 27 Sep 95 14:17:14 PDT
+To: sameer <sameer@c2.org>
+Subject: Re: JCrypt (was: getting netscape to support the remailers)
+Message-ID: <v02120d08ac8f7bd3198e@[199.2.22.120]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>        That was what I was thinking as well. I am confused by
+>Netscape's java support though.. I haven't seen very many details. Is
+>netscape going to only support applets or can you add stuff to the
+>runtime as well? In order to use jcrypt one needs access to add stuff
+>to the runtime I beleive.
+
+Currently jcrypt is implemented as a glue layer on top of RSAREF.
+This means it has to be accessed through native methods. Also,
+in general, one doesn't want to be downloading trusted security code
+every time one uses it, even if it has strong authentication (and
+this hasn't been built into Java yet.)
+
+So there are two questions:
+
+  o Will netscape allow local trusted Java code to be invoked
+    by downloaded applets?
+  o Will netscape support native methods in such code?
+
+I would _greatly_ prefer to implement the jcrypt code in 100%
+java, but there are legal barriers to doing this where RSA is
+patented. JCrypt, however, is designed to allow the native
+methods to be replaced with Java should someone desire to do
+that.
+
+Also, there are other architectural concerns involving the
+direct or indirect invocation of local trusted encryption code
+by untrusted, downloaded software, which will be addressed
+somewhat in the next release of JCrypt.
+
+>
+>>
+>> >     I started thinking about what it would take to get Netscape
+>> >  to support sending mail through the remailers, after having
+>> >  read the S/MIME specs which Netscape 2.0 is apparently going to
+>> >  support. Perhaps with enough browbeating Netscape 3.0 will support
+>> >  the remailers.
+>>
+>> Netscape doesn't need to support remailers explicitly since Netscape
+>>will be
+>> supporting Java.  I think a remailer client is within Java's
+>>capabilities...
+>> Anyone disagree?
+>>
+>> andrew
+>>
+>
+>
+>--
+>sameer                                          Voice:   510-601-9777
+>Community ConneXion                             FAX:     510-601-9734
+>An Internet Privacy Provider                    Dialin:  510-658-6376
+>http://www.c2.org (or login as "guest")                 sameer@c2.org
+
+
+
+
+
+

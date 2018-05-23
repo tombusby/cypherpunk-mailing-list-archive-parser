@@ -1,0 +1,78 @@
+From: mch@squirrel.com (Mark C. Henderson)
+Date: Tue, 13 Feb 1996 16:09:19 +0800
+To: Ashfaq Rasheed <cypherpunks@toad.com
+Subject: Re: To find the clock speed of a sun workstation
+Message-ID: <199602130513.VAA23145@squirrel.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Feb 12, 16:16, Ashfaq Rasheed wrote:
+} Subject: To find the clock speed of a sun workstation
+} Hi
+} 
+} Is there anyway of finding the clock speed of the CPU on a Sun workstation?
+} As far as i know it can be found only by rebooting the machine and using
+} module-info? And I believe that the module-info does a no-op loop for a
+} a known number of times and calculates the time taken.
+} 
+} I would like to know if there is anyother way to finding it.
+
+If you run /usr/etc/devinfo -vp (Sun OS 4.1.x), or /usr/sbin/prtconf -vp
+(Solaris 2.x) you'll get a line which looks like
+
+clock-frequency:  02625a00
+
+This is the clock frequency in hexadecimal in Hz.
+
+The above example is from an IPX (40 MHz).
+
+Another example. On an SS1000E with two 60 MHz processors, you'll
+get output indicating two CPU devices each starting with
+
+        Node 0xffd8e6ac
+            clock-frequency:  03938700
+            device_type:  'cpu'
+
+again 0x03938700 == 60000000 
+
+On an Ultra 170E one gets
+    Node 0xf006ea64
+        manufacturer#:  00000017
+        implementation#:  00000010
+        mask#:  00000022
+        sparc-version:  00000009
+        ecache-associativity:  00000001
+        ecache-line-size:  00000040
+        ecache-size:  00080000
+        #dtlb-entries:  00000040
+        dcache-associativity:  00000001
+        dcache-line-size:  00000020
+        dcache-size:  00004000
+        #itlb-entries:  00000040
+        icache-associativity:  00000002
+        icache-line-size:  00000020
+        icache-size:  00004000
+        upa-portid:  00000000
+        clock-frequency:  09f437c0
+        reg:  000001c0.00000000.00000000.00000008
+        device_type:  'cpu'
+        name:  'SUNW,UltraSPARC'
+
+
+and 0x09f437c0 == 167000000
+
+Watch out for other lines labelled, clock-frequency, these are for 
+other devices. You want the one for the CPU device(s) (i.e. node with 
+device type 'cpu'). 
+
+
+-- 
+Mark Henderson -- markh@wimsey.bc.ca, henderso@netcom.com, mch@squirrel.com
+PGP 1024/C58015E3 fingerprint=21 F6 AF 2B 6A 8A 0B E1 A1 2A 2A 06 4A D5 92 46
+cryptography archive maintainer  --  ftp://ftp.wimsey.com/pub/crypto
+ftp://ftp.wimsey.com/pub/crypto/sun-stuff/change-sun-hostid-1.6.2.tar.gz
+
+
+
+

@@ -1,0 +1,67 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sat, 26 Feb 94 01:06:15 PST
+To: cypherpunks@toad.com
+Subject: Magic Money Comments
+Message-ID: <199402260907.BAA26825@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Pr0duct Cypher at remailer@merde.dis.org wrote:
+
+>> There is no prototype for pgp_randombyte.
+
+> There is a prototype for it in pgptools.h
+
+Yes, but it needs to say "byte pgp_randombyte(void);" instead of
+just "byte pgp_randombyte();".
+
+>> Complete prototypes for (*output) and (*lookup) need to be
+>> provided in the function header of pgp_check_sigs and also for a
+>> different function pointer (*output) used in PGPKGEN.
+
+> Is this bad? I thought a function pointer didn't really
+> care, as long as you called it correctly.
+
+No - it is fine.  This is simply a list of what it takes to
+eliminate all warnings from Borland.  It is certainly ok not
+to do this.  Even PGP generates quite a few warnings while
+compiling.
+
+> MPILIB has not been altered. It is the same as in PGP.
+> PLATFORM appears to set the appropriate modmult, but I
+> usually define UPTON because SMITH has given me some
+> problems in the past.
+
+Yes - I didn't notice all the various knobs and dials in
+PLATFORM.H until after I wrote that message.  I needed to
+define a few more things.
+
+> What are you running, a Cray? My machine takes quite a few
+> seconds to run the server.
+
+I am running on a 33 mhz 486.  While MPILIB does indeed take
+seconds to perform the required arithmetic, it builds its
+operations from an O(N^2) multiply algorithm.  A "fast"
+algorithm would speed things up considerably.
+
+> I hate error checking. If I put in safe read and write
+> calls, what do I do if they fail?
+
+Just exiting with an error message would be fine.
+
+> Thanks for pointing out that bug, and especially for
+> setting up a Magic Money server.
+
+You are welcome.  I'm not sure I have actually set up a
+server aside from the purpose of exercising the code for a
+few days.  Hopefully others will grab the executables and do
+something a bit more permanent.
+
+-- 
+     Mike Duvos         $    PGP 2.3a Public Key available    $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+

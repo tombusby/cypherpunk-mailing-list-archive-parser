@@ -1,0 +1,65 @@
+From: Eric Murray <ericm@lne.com>
+Date: Wed, 18 Dec 1996 09:35:18 -0800 (PST)
+To: m5@vail.tivoli.com
+Subject: Re: NSClean
+In-Reply-To: <32B80925.5BB0@tivoli.com>
+Message-ID: <199612181733.JAA30032@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike McNally writes:
+ 
+ 
+> I see complaints about cookies all the time, and I just have to
+> wonder why the fuss seems so relatively, well, unsophisticated,
+> for lack of a better word.
+
+Probably because cookies aren't explained well to the 'lay public'.
+
+> The cookie idea, in and of itself, is really a pretty good one and
+> can provide some useful features.
+
+Yep, it's a good alternative to stuffing a cookie in the URL and
+running everything through a CGI script.
+
+The objection I have with cookies are that they can be used to pass
+information between servers.  And they're being used to track where
+browsers go (see http://www.doubleclick.com for an example, theyre
+not the only people doing this).
+
+> "Naughty" uses of cookies for tracking sites visited might be
+> objectionable, I suppose.  It's easy enough to do selective
+> editing of the cookie file of course (maybe this NSClean product
+> can do that).
+
+Editing the cookie file doesn't have any effect while the browser is running.
+You could visit one Doubleclick-infested site and get one of their
+cookies then go to another infested site in the same session.
+
+A better method is to be able to selectively accept/send cookies from
+certain sites while blocking them from others.  As it happens
+I've written a program that does that.  See
+http://www.lne.com/ericm/cookie_jar.  It's still got some bugs
+but it generally works ok.  Note that you need access to
+a unix shell and perl to run it.
+
+It would be even better if browser writers added similar features to their
+browsers.  My program is a kludge.
+
+> One of the scary things might be that though cookies can be made
+> hard to forge, it's clearly impossible for cookie issuers to 
+> ensure the cookies aren't stolen or deliberately distributed.  If
+> a site uses a "secure" cookie as a means of identifying the web
+> visitor, there's certainly some risk if it then allows access to
+> sensitive information.
+
+Servers in that position would encrypt the data sent in cookie, no?
+
+-- 
+Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+
+

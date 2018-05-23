@@ -1,0 +1,80 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Tue, 29 Mar 94 11:44:53 PST
+To: cypherpunks@toad.com
+Subject: Re: cfp '94 transcript
+Message-ID: <9403291939.AA29718@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I have a question concerning the algorithm that is used in the
+> Clipper Chip, Skipjack..[]..There is a certain amount of conjecture
+> that in fact the algorithm contains a deliberately encoded weakness
+> that will allow the NSA, without access to the escrow keys, to be
+> able to intercept communication in their mission to monitor on-
+> shore and off-shore communications..[]..
+> 
+> BAKER                         I'll answer it yes or no if you'll
+> tell me exactly the question.
+> 
+> UNKNOWN                       Does it or does it not contain a
+> weakness that allows you to intercept the communications without
+> access to the escrow keys.  
+> 
+> BAKER                         No.       
+
+The response is incorrect; I'll leave moral judgements about whether
+the constitutes deliberate lying or mere confusion to others :-)
+
+Specifically, the Clipper Chip does *not* use the escrow keys -
+it uses its device unique key, which can be derived from them.
+It *could* have been designed to use the escrow keys to do the
+device-unique-key generation internally, or even to do *two* separate
+encryption rounds in LEAF creation so there isn't just one key, but nooo.
+Decryption of LEAF also does not use the escrow keys, it uses
+the device unique key as well.  The Black Box For Cops may very well
+use the escrow keys to derive the device unique key,
+but anybody who has access to the Skipjack and LEAF algorithms
+and Family Key and the device unique key can do the decryption,
+and you can probably feed the Black Box For Cops the device-unique key
+and 000000..00 instead of the escrowed key-parts.  (They'd have to
+do some *really* special checking otherwise.)
+
+So how do you get the device unique key without using the escrow keys?
+- Maybe you can FOIA it
+- Maybe the Key Generation Bureau can steal it during manufacturing
+- Maybe the Key Generation Bureau can just *take* it during manufacturing,
+	since the Attorney General's rules don't say not to.
+- Maybe the Key Generation Bureau can steal the two half-keys before
+	(or after) giving them to the so-called "escrow" agents,
+	which means they're not really the escrow keys.
+- Maybe the Key Generation Bureau can re-generate the keys,
+	either by stealing the input batch parameters from the
+	escrow agents or by brute-force searching the range of
+	inputs they might have provided or something similar.
+- Maybe the Black Box For Cops lets you extract the data from it,
+	either directly or by handing it carefully-designed input
+- Maybe authorized government employees can obtain the keys for
+	chips for internal use, and then distribute those chips
+	to victims\\\\\\\suckers\\\\\\customers outside government.
+- Maybe the rules for access to government-used Clipper-chip keys
+	are or will be different than for keys used by the public.
+	After all, their responsibilities for protecting internal
+	information are different than their ability to wiretap people.
+	So maybe they just "misread" a serial number and get the 
+	chip keys from the wiretapping-each-other list instead of the
+	escrow agencies by "mistake - those keys aren't "escrowed", 
+	since the escrow agents don't have them they're just
+	"retained for internal use".
+
+"Wiretap the usual suspects!"
+
+			Bill Stewart
+# Bill Stewart  AT&T Global Information Solutions, aka NCR Corp
+# 6870 Koll Center Parkway, Pleasanton CA, 94566 Phone 1-510-484-6204 fax-6399
+# email bill.stewart@pleasantonca.ncr.com billstewart@attmail.com
+# ViaCrypt PGP Key IDs 384/C2AFCD 1024/9D6465
+
+
+
+

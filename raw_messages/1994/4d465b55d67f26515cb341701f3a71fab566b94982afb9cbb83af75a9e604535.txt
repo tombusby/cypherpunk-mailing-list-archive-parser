@@ -1,0 +1,38 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Tue, 17 May 94 11:52:36 PDT
+To: ecarp@netcom.com (Ed Carp)
+Subject: Re: D-H key exchange - how does it work?
+In-Reply-To: <199405171830.LAA08463@netcom.com>
+Message-ID: <9405171852.AA00645@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Ed Carp says:
+> If I understand D-H right, both sides generate public keys from their
+> private keys, then just exchange public keys.  Is that right?  Or is there
+> something I'm missing? 
+
+Yes. Thats not the algorithm at all. D-H is based on the difficulty of
+the discrete log problem, that is, the problem of inverting an
+exponentiation modulo a large prime. 
+
+Its been a while, so I might be forgetting something here or
+misstating -- someone correct me if I am wrong.
+
+Suppose we have a field Z_p, where p is a prime. Suppose g is a
+generator of the field. Alice generates a random number a. Bob
+generates a random number b. Bob tells alice g^b, Alice tells Bob g^a.
+Alice knows a and g^b, and thus generates g^(ab) trivially. Similarly,
+Bob knows g^a and b, and trivially generates g^(ab). An interceptor
+only knows g^a and g^b, and because the discrete log problem is hard
+cannot get a or b easily, and thus cannot generate g^(ab).
+
+g^(ab) is now a shared secret of Alice and Bob.
+
+Perry
+
+
+
+

@@ -1,0 +1,69 @@
+From: eric@Synopsys.COM (Eric Messick)
+Date: Thu, 11 Aug 94 15:58:20 PDT
+To: cypherpunks@toad.com
+Subject: Re: RemailerNet
+In-Reply-To: <199408110153.SAA15769@ucsd.edu>
+Message-ID: <9408112258.AA09617@tiedye.synopsys.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <199408110444.VAA20478@jobe.shell.portal.com>, hfinney@shell.portal.com (Hal Finney) wrote:
+
+>Other ideas have been proposed for this problem.  Chaum suggested
+>having a public area where messages for a group of people would arrive;
+
+This is an excellent way of getting around this problem, but it uses
+lots of bandwidth.  Another idea I have been interested in is picking
+a message up from the middle of a chain.  In other words, your return
+address block lists 10 remailers (for example), and you just happen to
+run the 7th.  After the message hits your remailer, it continues
+through a few more hops and then gets eaten by /dev/null.  Your
+remailer, meanwhile, has snarfed a copy of ALL of the traffic running
+through it to another machine.  There you manually enter parameters to
+use to scan for messages to you.  If the feds come to you and demand
+that you perform this process while they monitor it, you enter
+a different set of parameters that uncover innocent messages that you
+arrange to be occasionally passing through.  If they've traced a
+message all the way to the end, they'll know it was to one of the 10
+remailer operators in the chain, but several of them are in
+inconvenient jurisdictions...  and maybe one of these tap-points was
+arranged to start another chain.....
+
+>One problem with anonymous return addresses is that the address changes
+>deterministicly as each layer is stripped off.  This allows the message
+>to be tracked by introducing copies with different bodies but the same
+>ARA (which is why Chaum specified use-once).  Eric Messick proposed a
+>system in which the message bodies would be changed at each step by the
+>remailers involved.  I don't recall the details, but I think that in order
+>to read the message the user had to send it back through those same re-
+>mailers after receiving it, to undo the transformations which had been
+>done on it.
+
+Not quite that bad.  Another message would have to be sent only if
+there was insufficient postage for one of the remailers, and that
+remailer decided to deliver it rather than just dropping it.
+Otherwise, all of the info necessary to decode the message is known to
+the recipient.
+
+>  It was a complicated scheme and we really didn't spend enough
+>time on it.
+
+That is certainly true.  I've been trying to figure out how to
+subdivide the project so that early implementations can be done
+without sacrificing the ability to do the more complex stuff later.
+
+>I view easy-to-use, secure ARA's as an unsolved (and perhaps unsolvable)
+>problem.
+
+I don't think they can be unconditionally secure without wasting lots
+of bandwidth.  Having one of the links be a wide area broadcast is
+very secure, but expensive in bandwidth.  It's all economics...
+
+>Hal Finney
+
+-eric messick
+
+
+
+

@@ -1,0 +1,45 @@
+From: Marc Horowitz <marc@cygnus.com>
+Date: Tue, 15 Apr 1997 12:33:03 -0700 (PDT)
+To: Black Unicorn <unicorn@schloss.li>
+Subject: Re: Useful utility?
+In-Reply-To: <Pine.SUN.3.96.970415125057.28199L-100000@polaris.mindport.net>
+Message-ID: <t534td884n6.fsf@rover.cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Black Unicorn <unicorn@schloss.li> writes:
+
+>> I've been hearing a lot of complaints from sysadmins who I try to convince
+>> to run SSH lately.
+>> 
+>> "Key management is too difficult."
+>> "I cant keep track of all that stuff."
+>> 
+>> I think that an interesting answer might be a ssh key issuing "robot." or
+>> vending machine of sorts.
+>> 
+>> It might works something like this.
+>> 
+>> [ details omitted ]
+>> 
+>> Comments?
+
+It sounds like you've basically reinvented Kerberos, at least from a
+key management perspective.  If you consider some of the pk extensions
+to Kerberos which have been proposed recently, it's even vaguely
+similar cryptographically.
+
+SSH is great if you control everything in your environment, and if the
+number of users and endpoints is small.  But as these parameters grow
+and change, Kerberos is more useful, because it scales more easily.
+What would be truly useful would be to combine the different
+approaches, so that you could use whichever mode was most appropriate
+to your environment.  This is possible, but the details are subtle,
+and would probably make backward compatibility difficult.
+
+		Marc
+
+
+
+

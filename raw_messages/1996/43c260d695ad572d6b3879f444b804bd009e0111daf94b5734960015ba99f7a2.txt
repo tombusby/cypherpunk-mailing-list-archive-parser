@@ -1,0 +1,123 @@
+From: "Vipul Ved Prakash" <vipul@pobox.com>
+Date: Sun, 31 Mar 1996 09:20:19 +0800
+To: cypherpunks@toad.com
+Subject: Psuedo-Ramdom Number Generator
+Message-ID: <199603301741.MAA15782@pobox.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Don't know if its proper to post some trivial code snippets on the 
+list. I felt some one just might find is useful.
+
+Vipul
+
+{*********************************************************************
+
+                 LFSR-based Psuedo Random Number Generator
+
+ LFSR is a random number generator based on a Linear Feedback Shift 
+ Register The _tap_ sequence is 31, 6, 4, 2, 1 and 0. The primitive
+ polynomial  mod  2 formed  from the tap sequence is x^32 + x^7 + x^5
+ + x^3 + x^2 + x +  1.  The function  LFSRRandom  generates  a 16-bit
+ unsigned  word.  Function  SetInit defines the initial parameters to
+ run the generator with. It should be noted that  a particular set of
+ Initial parameters will always generate  the  same set of 
+ psuedo-random numbers.
+
+ Vipul Ved Prakash <vipul@pobox.com>
+ 25th Feb '95 
+**********************************************************************}
+
+uses crt;
+
+var lShiftReg : longint;
+    wLastRandom : word;
+
+
+procedure LFSRRandom(var wGeneratedRandom : word);
+var
+   i : integer;
+   wNewRandom : word;
+   lFnResult : longint;
+begin
+     wNewRandom := 0;
+     for i := random(3) to random(3) + 13 do
+     begin
+          lFnResult := ((lShiftReg shr 31) xor (lShiftReg shr 06) xor
+          (lShiftReg shr 04) xor (lShiftReg shr 02) xor (lShiftReg shr 01) xor
+                        (lShiftReg)) and $1;
+          lShiftReg := (lFnResult shl 31) or (lShiftReg shr 1);
+          wNewRandom := wNewRandom or (lFnResult shl i)
+     end;
+     wGeneratedRandom := wLastRandom xor wNewRandom;
+     wLastRandom := wNewRandom
+end;
+
+procedure paramError;
+begin
+     writeln;
+     writeln;
+     writeln(#07,'Syntax : RGen <random number file> <number of
+     randoms to be generated> '); writeln; halt;
+end;
+
+procedure setInit(x, y : longint; z : integer);
+begin
+     if x <> 0 then lShiftReg :=  x else lShiftReg := 1; { Anything
+     but 0 } wLastRandom := y; randseed := z;
+end;
+
+
+var
+   i : longint;
+   ch : char;
+   wGeneratedRandom : word;
+   ranfile : text;
+   S : string;
+   number : longint;
+   code : integer;
+   dummy : integer;
+   count : integer;
+begin
+     count := 0;
+     clrscr;
+     setInit(4,5,10);
+     if (paramcount < 2) then paramerror else assign(ranfile,
+     paramstr(1)); rewrite(ranfile); val(paramstr(2), number, code);
+     if code <> 0 then paramerror; for i := 1 to number do begin
+          count := count + 1;
+          LFSRRandom(wGeneratedRandom);
+          str(wGeneratedRandom, S);
+          writeln(ranfile, S);
+          if count > 100 then
+          begin
+               count := 0;
+               write('.'); {Write a dot after every 100 numbers}
+          end;
+     end;
+     close(ranfile);
+     writeln;
+     writeln('Done. Press a key to exit...');
+     ch := readkey;
+     writeln;
+end.
+        .od8888bo.                              \|/
+     .d%::::88::888b.             	       (@ @)
+   .d888::::::::8:888%.   ------------------oOO-(_)-OOo-----------------
+   88888:::::::88888::%.  You walk across with your flowers in your hand
+  d888888:::88;888888::b       Trying to tell me no one understands
+  888888888:888888888888   Trade in your hours for a hand full of dimes
+  Y8888888::::::888888%P         Gonna make it baby in our prime.
+  '8888888:::::::8888:%'  ----------------------------------------------
+   '88888888:::888888%'   Vipul Ved Prakash        Fax : +91-11-3328849
+     '8888888::88888%'    Positive Ideas.     Internet : vipul@pobox.com
+        '"Y88%B8P"'       ----------------------------------------------    
+                              PGP Key : Finger <vipul@pobox.com>	                  
+ PGP Key fingerprint =  35 FF A2 CA BD 6B 80 82  61 30 F2 23 96 93 77 E4 
+~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=
+
+
+
+

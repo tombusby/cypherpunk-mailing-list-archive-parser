@@ -1,0 +1,57 @@
+From: yanek@novavax.nova.edu (Yanek Martinson)
+Date: Wed, 25 Nov 92 10:36:01 PST
+To: anon.list@pax.tpa.com.AU
+Subject: An easy-to-reply anonymous mail scheme
+In-Reply-To: <199211251815.AA16797@buila.NSD.3Com.COM>
+Message-ID: <9211251835.AA23411@novavax.nova.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >is this: Just include a public key in your post.  And ask any repliers to 
+> >post to the newsgroup, encrypted with that key.  No-one else but you can 
+> >decrypt the reply, and no-one can know that you did, since everyone receives
+> 
+> all of my own and everybody elses schemes is that it requires an INVOLVED
+> replier.  I need some way that I can send out an anonymous email, and have
+> the receiver of that email just hit "r" to reply to me.  If they have
+
+Ok, if that is what you want, then the following procedure will let you
+do exactly that: post anonymously, with a reply address that people can
+just 'r' to. And no-one (not even the host that is handling the replies)
+has to know who you are.  
+
+There exists a site, lets call it remailer.com.  It watches the newsgroup
+alt.key.announce for messages with the "Subject: remailer public key notice"
+that contain a public key.  It takes each public key, and perofmrs some
+sort of hash function on it, tcreate a short "key id". (note: the hash
+function must be cryptographically strong, i.e. it should be very difficult
+to construct another key with the same hash value). It stores hash and the
+key in a database.  Then whenever it receives a mail message
+to reply.HASH (where HASH is the key id), it encrypts the message with the 
+associated public key, destroys the plaintext message, and posts the ciphertext
+to alt.w.a.s.t.e.
+
+So to use this, you would generate a public/private key pair, and compute the
+hash function of the public part.  Anonymously post the public key to
+alt.key.announce, and then send your message by whatever means you like (anon
+mail, anon post to a regular newsgroup, anything) using reply.HASH@remailer.com
+as your return address.  Then watch alt.w.a.s.t.e for replies and decrypt
+as received... 
+
+All the recipient(s) have to do is press 'r' key and type the answer.
+
+You are guaranteed anonymity because no-one can find out who decrypted
+the alt.w.a.s.t.e message, since everyone received it.
+
+All you need is a good way to anonymously post to a newsgroup.
+
+--
+Yanek Martinson    mthvax.cs.miami.edu!safe0!yanek     uunet!medexam!yanek
+this address preferred -->> yanek@novavax.nova.edu <<-- this address preferred
+Phone (305) 765-6300 daytime   FAX: (305) 765-6708  1321 N 65 Way/Hollywood
+      (305) 963-1931 evenings       (305) 981-9812  Florida, 33024-5819
+
+
+
+

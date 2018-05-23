@@ -1,0 +1,143 @@
+From: "Jon 'Iain' Boone" <boone@psc.edu>
+Date: Mon, 14 Feb 94 10:25:31 PST
+To: cypherpunks@toad.com
+Subject: SCHEME for FULL-SPEC RETURN PATH
+Message-ID: <9402141601.AA25873@igi.psc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+ This is a portion of mail that I sent to bill stewart.  Since bill seems to
+ busy to send a critique, could someone else comply, please?
+
+ Jon Boone | PSC Networking | boone@psc.edu | (412) 268-6959 | PGP Key # B75699
+ PGP Public Key fingerprint =  23 59 EC 91 47 A6 E3 92  9E A8 96 6A D9 27 C9 6C
+
+- ------- Forwarded Message
+
+Date: Thu, 03 Feb 94 13:45:31 -0500
+From: "Jon 'Iain' Boone" <boone@psc.edu>
+
+
+  How secure do you think this is?
+
+  Three remailers:
+
+  anon1+@a.edu
+  anon2+@b.com
+  anon3+@c.org
+
+  Originator: boone@psc.edu (really igi.psc.edu, as Message-ID: shows)
+  Receiver: wcs@anchor.ho.att.com
+
+  ()Ka == contents inside () are encrypted with Public Key of A
+
+  mail addressed to random+*@foo.edu == mail to user random@foo.edu,
+					random's mail processor will
+					deal with the +*
+
+  The sender must encrypt his/her own address with the public key of the
+  first remailer and put it in the X-A-R-P: field.
+
+  Upon reciept of a message with X-A-S-P: set to non-empty, the re-mailer
+  will strip off its portion of the address and decrypt the rest with its
+  private key.
+
+  It will add itself to the X-A-R-P: and encrypt it in the public key of
+  the next remailer on the X-A-S-P:
+
+  If there is nothing in the X-A-S-P: (after having removed its own address),
+  then it needs to be sent to the To: address, so we set the From: address to 
+  be the contents of the X-A-R-P: with its own address pre- & post- pended.  
+  That way, the reciepient need not change his/her mail agent to respond via 
+  the X-A-R-P: (or even need to include the X-A-S-P: in the outgoing response).
+
+  If the message doesn't have an X-A-S-P:, the remailer checks the "To:"
+  for the contents of what would have been the X-A-S-P: with its own address
+  pre- & post- pended.  By stripping off its own address and de-crypting the
+  resultant, it has the next address to send it to. 
+
+  Barring wire-tapping, your privacy is susceptible in the logs (syslog, etc.)
+  of the first remailer (a.edu in my example) or if all the RSA-keys for
+  a.edu, b.com and c.org are broken.  To dampen wire-tapping, you could encrypt
+  the contents of the message with padding, making traffic analysis more
+  difficult.
+
+  Comments?
+
+  IGI.PSC.EDU:
+
+  To: wcs@anchor.ho.att.com
+  X-A-S-P: anon1+"(anon2+"(anon3+@c.org)Kb"@b.com)Ka"@a.edu
+  X-A-R-P: (boone@psc.edu)Ka
+  From: boone@psc.edu
+  Message-Id: <348723472.AA34890235@igi.psc.edu>
+
+  A.EDU:
+
+  To: wcs@anchor.ho.att.com
+  X-A-S-P: anon2+"(anon3+@c.org)Kb"@b.com
+  X-A-R-P: (anon1+"(boone@psc.edu)Ka"@a.edu)Kb
+  From: anon1+@a.edu
+  Message-Id: <2349458.AA23575@a.edu>
+
+  B.COM:
+
+  To: wcs@anchor.ho.att.com
+  X-A-S-P: anon3+@c.org
+  X-A-R-P: (anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com)Kc
+  From: anon2+@b.edu
+  Message-Id: <8980234.AA23489203@b.com>
+
+  C.ORG:
+
+  To: wcs@anchor.ho.att.com
+  X-A-R-P: anon3+"(anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com)Kc"@c.org
+  From: anon3+"(anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com)Kc"@c.org
+  Message-Id: <2343.AA123@c.org>
+
+  ANCHOR.HO.ATT.COM: (Reply) 
+
+  To: anon3+"(anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com)Kc"@c.org
+  From: wcs@anchor.ho.att.com
+  Message-Id: <99234.AA23492383@anchor.ho.att.com>
+
+  C.ORG:
+
+  To: anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com
+  From: wcs@anchor.ho.att.com
+  Message-Id: <2342349324.AA2343242@c.org>
+
+  B.COM:
+
+  To: anon1+"(boone@psc.edu)Ka"@a.edu
+  From: wcs@anchor.ho.att.com
+  Message-Id: <98234234.AA123213@b.com>
+
+  A.EDU:
+
+  To: boone@psc.edu
+  From: wcs@anchor.ho.att.com
+  Message-Id: <7732432.AA52342@a.edu>
+
+  Of course, some work would be necessary to accomodate double-blind
+  conversations.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLV92F4SAMUrxt1aZAQErUQQAggfMfjxAXS0rk9AL5uZTNN9adGNJqMvF
+gC5QSlgSki2bmUzfeoq/2cSpdUx7vX9LPCGd88+RnnouyhCDhK0a6fOLGgEDrtar
+miKGU11Ernt/bQC6gwvBa+KuD7pceLM2mPGw9NLxLMwwajP/U6CxL2/bMXIQhxZ0
+eMTM76QuEwE=
+=tfVg
+-----END PGP SIGNATURE-----
+#
+
+
+
+

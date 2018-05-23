@@ -1,0 +1,69 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Fri, 27 Sep 1996 13:28:21 +0800
+To: Steve Reid <steve@edmweb.com>
+Subject: Re: Public domain SHA-1 in C
+In-Reply-To: <Pine.BSF.3.91.960926163530.518A-100000@bitbucket.edmweb.com>
+Message-ID: <Pine.SOL.3.91.960927103628.11800D-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Thu, 26 Sep 1996, Steve Reid wrote:
+> I've written an implementation of SHA-1 in C. Public domain, so you can
+> hack it to your hearts content and/or use it however you want. You can
+> download it from
+> http://www.edmweb.com/steve/sha1.c
+...
+> It's reasonably fast (the 80 core SHA operations look good) but I'm
+> certain that there's room for improvement. 
+
+Some times for this implementation
+
+sha1 over a ~ 6 meg file, sparc 10
+user time	5.23s 5.23s 5.14s
+
+Replace your 'getc() into 256 byte buffer' loop with a 'read 16k at a 
+time' (I actually put your functions into my sha1 digest program).
+user time	3.79s 3.75s 3.72s
+
+Use sha1 from SSLeay.
+user time	2.32s 2.34s 2.24s
+
+
+Using gcc -O3 -fomit-frame-pointer for all builds and I left out by 
+B_ENDIAN advisory define; all permutations 
+produced the same digest, so the 2 SHA1 implementations conform :-).
+
+The key thing that speeds up the SSLeay sha1 is the avoidance of copying
+in the SHA1Update() type function.  Have a look if you like 
+(crypto/sha/sha_dgst.c.  
+The actually SHA1 digesting on 64 bytes is probably identical.  For most 
+message digests, it appears the bigest problem is shoveling data into the 
+algorithm fast enough.
+
+eric
+
+PS 	The MD2, MD5, SHA1 etc implemented in SSLeay are all stand alone
+	functions/libraries than can be compiled and used outside of the
+	SSLeay library build environment.  This also applies to the IDEA,
+	DES (libdes), RC2 and RC4 cipher subroutines present in the library.
+
+For those on the cipherpunks list (which I don't frequent any-more), the
+current version is SSLeay 0.6.4, it can be built as a shared library under
+unix and will build as thread safe DLL's under Windows 3.1/95/NT.  It is 
+thread safe under unix as well (only really tested under Solaris 2.5.1).
+
+http://www.psy.uq.oz.au/~ftp/Crypto
+ftp://ftp.psy.uq.oz.au/pub/Crypto/SSL
+ftp://ftp.psy.uq.oz.au/pub/Crypto/SSLapps
+
+--
+Eric Young                  | BOOL is tri-state according to Bill Gates.
+AARNet: eay@mincom.oz.au    | RTFM Win32 GetMessage().
+
+
+
+
+
+

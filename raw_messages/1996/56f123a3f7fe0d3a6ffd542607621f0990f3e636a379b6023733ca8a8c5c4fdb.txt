@@ -1,0 +1,71 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sun, 22 Sep 1996 15:04:11 +0800
+To: adam@homeport.org (Adam Shostack)
+Subject: Re: How to use procmail
+In-Reply-To: <199609050006.TAA07462@homeport.org>
+Message-ID: <199609220423.XAA00811@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Adam Shostack wrote:
+> :0
+> * From bal@swissnet.ai.mit.edu
+> {
+>    :0 h
+>    * >10000
+>    /dev/null
+> 
+>    :0 h
+>    *^Subject:.*no keys match
+>    /dev/null
+> 
+>    :0:
+>    *Subject: Your command, ADD
+>    $DEFAULT
+> 
+> 
+>    :0E
+>    | pgp +batchmode -fka
+
+Isn't this vulnerable to "deadbeef" attacks? I can also see an attack when 
+someone sends you an email with the spooofed "From " address and a user
+name that is the same (or almost the same) as that of your trusted parties.
+
+Suppose that you correspond with mrx@provider.com and you use encryption
+command 
+
+pgp -eaf mrx
+
+Then I can send you a bogus email containing a key for mrx@bogus.com 
+and next time you encrypt something for your friend nrx@provider.com,
+you will actually encrypt it with the wron key. If I intercept your
+email, your message to mrx can be compromised.
+
+> # basic file server.  Only sends whats in .outbound
+> :0 
+> * ^Subject: (SEND|get) [0-9a-z][-_/0-9a-z.]+$
+> * !^Subject:.*[ /.]\.
+> * !^FROM_DAEMON
+> {
+>    # FILE=`formail -x Subject: | sed 's/.* //'`
+>    FILE=`sed -n -e '/Subject:/s/.* //p' -e '/^$/q'`
+> 
+>   :0c 
+>   | (formail -rt -A"Precedence: junk";\
+>      cat $HOME/.outbound/$FILE) | $SENDMAIL -t
+
+*If* .outbound has some subdirectories (say subdir), How about this email: 
+
+From: dumbass@aol.com
+Subject: GET subdir/../../../../etc/passwd
+Reply-To: blin@algebra.com
+
+xxx
+
+
+	- Igor.
+
+
+
+

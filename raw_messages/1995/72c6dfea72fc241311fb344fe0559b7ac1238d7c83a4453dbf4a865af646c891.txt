@@ -1,0 +1,22 @@
+From: Mike_Spreitzer.PARC@xerox.com
+Date: Wed, 1 Nov 1995 02:56:13 +0800
+To: tytso@mit.edu
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <9510310316.AA26268@dcl.MIT.EDU>
+Message-ID: <95Oct31.094528pst."14855(1)"@alpha.xerox.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Blocking vs. non-blocking is a standard issue in design of U*X devices.
+Standard solution: make it block by default, and accept an IOCTL to put it in
+non-blocking mode.  There's even a POSIX way to do this:
+
+	flags_or_err = fcntl(fd, F_GETFL, 0);
+	{check for error}
+	res = fcntl(fd, F_SETFL, flags_or_err | O_NONBLOCK);
+	{check for error}
+
+
+
+

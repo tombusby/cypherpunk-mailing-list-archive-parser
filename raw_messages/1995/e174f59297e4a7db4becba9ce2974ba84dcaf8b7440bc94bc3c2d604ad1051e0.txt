@@ -1,0 +1,70 @@
+From: sdw@lig.net (Stephen D. Williams)
+Date: Mon, 24 Jul 95 13:43:58 PDT
+To: cypherpunks@toad.com
+Subject: Python export-a-cryptosystems
+Message-ID: <m0saUL1-0009tNC@sdwsys>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I hadn't seen this on the list, so I'm forwarding it.
+
+(I may have skipped it in my 'catchup on a rainy day' mail archive.)
+
+A friend arranged a lunch today with Guido (the author of Python,
+Guido van Rossum <guido@CNRI.Reston.VA.US>) and a few other friends.
+I haven't formed an opinion of Python yet.
+
+Notice that bc/dc isn't needed.
+
+------- Forwarded Message
+
+Date:    06 Jul 1995 14:20:13 +0000
+From:    Andrew KUCHLING <fnord@maggie.cs.mcgill.ca>
+To:      python-list@cwi.nl
+Subject: Re: Obfuscated Python
+
+Following modifications from Richard Jones and Guido van Rossum, we've
+now achieved a 4-line RSA script.  (Shouldn't we all be doing some
+*real* work, I wonder? :) ) I've added a 2-line one-time pad program,
+which simply XORs the contents of the two files whose names are
+provided on the command line.  Generation of random data (and securely
+exchanging it with your correspondent) is left as an exercise for the
+reader.
+
+So, the Python export-a-crypto-system-sigs are:
+
+   Try: echo 'This is a test.' | rsa.py 10001 1967cb529
+#!/usr/local/bin/python -- -export-a-crypto-system-sig -RSA-in-4-lines-Python
+from sys import*;from string import*;a=argv;[s,p,q]=filter(lambda x:x[:1]!=
+'-',a);d='-d'in a;e,n=atol(p,16),atol(q,16);l=(len(q)+1)/2;o,inb=l-d,l-1+d
+while s:s=stdin.read(inb);s and map(stdout.write,map(lambda i,b=pow(reduce(
+lambda x,y:(x<<8L)+y,map(ord,s)),e,n):chr(b>>8*i&255),range(o-1,-1,-1)))
+
+   Try: echo 'This is a test.' | rc4.py messagekey
+#!/usr/local/bin/python -- -export-a-crypto-system-sig -RC4-in-4-lines-Python
+from sys import*;st,x,y,i2,k,s=range(256),0,0,0,map(ord,argv[1]*256)[:256],1
+for i in st[:]:i2=(k[i]+st[i]+i2)%256;st[i],st[i2]=st[i2],st[i]
+while(s):s=stdin.read(1);x=(x+1)%256;y,c=(y+st[x])%256,len(s)and ord(s);(
+st[x],st[y])=st[y],st[x];stdout.write(chr(c^st[(st[x]+st[y])%256])[:len(s)])
+
+   Try: otp.py message pad >ciphertext
+#!/usr/local/bin/python -- -export-a-crypto-system-sig -OTP-in-2-lines-Python
+from sys import*;t=p=1;s,i,j=stdout,open(argv[1], 'r'),open(argv[2], 'r')
+while(t and p):t,p=i.read(1),j.read(1);t and p and s.write(chr(ord(t)^ord(p)))
+
+        Andrew Kuchling
+        andrewk@cst.ca
+        fnord@cs.mcgill.ca
+               (http://www.cs.mcgill.ca/~fnord)
+
+
+sdw
+-- 
+Stephen D. Williams 25Feb1965 VW,OH (FBI ID) sdw@lig.net http://www.lig.net/sdw
+Consultant, Vienna,VA Mar95- 703-918-1491W 43392 Wayside Cir.,Ashburn, VA 22011
+OO/Unix/Comm/NN       ICBM/GPS: 39 02 37N, 77 29 16W home, 38 54 04N, 77 15 56W
+Pres.: Concinnous Consulting,Inc.;SDW Systems;Local Internet Gateway Co.;28May95
+
+
+

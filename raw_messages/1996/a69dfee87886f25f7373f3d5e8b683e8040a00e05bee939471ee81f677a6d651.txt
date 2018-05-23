@@ -1,0 +1,77 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Wed, 6 Mar 96 06:57:05 PST
+To: wb8foz@nrk.com
+Subject: Re: PGP 3.0/4.0
+In-Reply-To: <199603061313.IAA07336@nrk.com>
+Message-ID: <199603061501.KAA16783@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+David Lesher wrote:
+
+| How about code that goes out & fetches keys upon demand, al-la DNS?
+
+This works with procmail to get keys for all mail I receive.  I
+discovered the problem is your keyrings get unmanageably large when
+you do this.
+
+
+
+# auto key retreival
+#
+# I have an elm alias, pgp, points to a keyserver
+
+:0BW
+* -----BEGIN PGP
+*!^FROM_DAEMON
+KEYID=|/home/adam/bin/sender_unknown
+
+:0 ahc	# added h 8 jan 95
+* ! ^X-Loop: Adams akr
+| formail -a"X-Loop: Adams akr" |elm -s"mget $KEYID" pgp
+
+# add the incoming keys to the ring
+
+:0
+* From bal@swissnet.ai.mit.edu
+{
+   # if we accidentally get the whole thing.
+   :0 h
+   * >10000
+   /dev/null
+
+   :0 h
+   *^Subject:.*no keys match
+   /dev/null
+
+   :0:
+   *Subject: Your command, ADD
+   $DEFAULT
+
+
+   :0E
+   | pgp +batchmode -fka
+}
+
+sender_unknown:
+#!/bin/sh
+# unknown returns a keyid, exits 1 if the key is known
+# $output is to get the exit status. Othierwise, this would be a one
+liner.
+OUTPUT=`pgp -f +VERBOSE=0 +batchmode  -o /dev/null`
+echo $OUTPUT | egrep -s 'not found in file'
+EV=$? 
+if [ $EV -eq 0 ]; then 
+        echo $OUTPUT | awk '{print $6}' 
+fi
+exit $EV
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+

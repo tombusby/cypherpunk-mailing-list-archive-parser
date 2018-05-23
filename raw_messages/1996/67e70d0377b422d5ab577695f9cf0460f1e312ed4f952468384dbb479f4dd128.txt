@@ -1,0 +1,108 @@
+From: ghio@netcom.com (Matthew Ghio)
+Date: Sun, 14 Jan 96 19:52:22 PST
+To: cypherpunks@toad.com
+Subject: anonymizer.cs.cmu.edu
+Message-ID: <199601150349.TAA01319@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I tried this site http://anonymizer.cs.cmu.edu:8080/prog/snoop.pl
+using Mosaic 2.7b2 and was told:
+
+     Your computer is a X11;Linux 1.2.13 i486. 
+     Your Internet browser is NCSA Mosaic. 
+     You just visited the Anonymizer Home Page. 
+
+With Arena it gave me:
+
+     Your Internet browser is Arena/0.96s libwww/.
+
+Lynx came up with even less:
+
+     Your computer is a Unix box.
+     Your Internet browser is Lynx.
+
+
+I did manage to completely confuse it with:
+
+> myriad:~> telnet anonymizer.cs.cmu.edu 8080
+> Trying 128.2.199.14...
+> Connected to LCON.PC.CS.CMU.EDU.
+> Escape character is '^]'.
+> GET /prog/snoop.pl
+> <HTML><HEAD><!-- blah -->
+> <TITLE>I  CAN  SEE  YOU</TITLE>
+> </HEAD>
+> 
+> <BODY BGCOLOR="78789F"
+>         text="#FFFFFF"
+>         vlink="#dbdb70"
+>         link="#FFFF00"
+>         alink="#1010ff"
+>         >
+> 
+> <center>
+>     <img alt="Anonymizer logo" src="ftp://anonymizer.cs.cmu.edu/pub/I19">
+> </center>
+> 
+> <HR>
+> 
+> Many people surf the web under the illusion that their actions are
+>     private and anonymous.  Unfortunately, it isn't so.  Every time
+>     you visit a site, you leave a calling card that reveals where
+>     you're coming from, what kind of computer you have, and other
+>     details.  Most sites keep logs of all your visits.  In many cases,
+>     this logging may constitute a violation of your privacy.
+> 
+>  <P>
+> 
+>     Here's a sampling of the kind of information that a site can
+> collect on you (please wait a moment):
+> 
+>  <P>
+> 
+> 
+> 
+> <BLOCKQUOTE><STRONG>
+> 
+> 
+> <img src="/let/a.gif"><img src="/let/j.gif"><img src="/let/u.gif"><img src="/let/r.gif"><img src="/let/i.gif"><img src="/let/s.gif"><img src="/let/o.gif"><img src="/let/n.gif"><br>
+> 
+> Your name is probably ajurison, and you can be reached at ajurison@netcom20.netcom.com.
+> 
+> 
+> <BR> Your Internet browser is [unknown browser].
+
+This time it actually took a stab at the user name, and got it completely
+wrong, although the hostname (netcom20.netcom.com) was correct.  I suspect
+it used finger and took a wild guess.
+
+
+The rest of the information is obvious from the User-Agent header, though I
+find it unusual that the new Mosaic reports the cpu/os type:
+
+ User-Agent:  NCSA_Mosaic/2.7b2 (X11;Linux 1.2.13 i486)  libwww/2.12 modified
+
+Mosaic 2.4 reports only:
+
+ User-Agent:  NCSA Mosaic for the X Window System/2.4 (L10N-2.4.0)  libwww/2.12 modified
+
+Lynx reports:
+
+ User-Agent:  Lynx/2.2  libwww/2.14
+
+The statement "Your computer is a Unix box." seems to be just a likely
+guess, but it could be wrong, because there is a version of lynx for MSDOS.
+
+
+What suprises me is not the information this got, but what it *DIDN'T* get.
+It never managed to figure out my username, despite the fact that netcom
+runs identd, and all three web browsers give it my username when they opened
+the FTP connection.  It only reported the hostname in one instance, and
+seems to be ignoring the info from the ftp session.
+This "snoop" script isn't getting half the information it could!
+
+
+
+

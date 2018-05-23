@@ -1,0 +1,46 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Mon, 23 Sep 1996 23:31:00 +0800
+To: johnbr@atl.mindspring.com (John Brothers)
+Subject: Re: Internet File System?
+In-Reply-To: <1.5.4.32.19960922191022.00736898@pop.mindspring.com>
+Message-ID: <199609231251.HAA02343@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+John Brothers wrote:
+
+| The other day, it occurred to me that Java could really take off if there
+| was some sort of file system.  And, since you can't write to local files
+| with Java, the obvious solution is to set up the 'fopen, fclose(), etc)
+| set of functions that are 'rpcs' to some server application on the same
+| computer as the web server the applet comes from.
+
+	Interesting idea.  But, this requires that for disk access,
+the applet have network access.  Violates the principle of least
+privledge.
+
+	The correct solution seems to me give the applet limited local
+disk access.  To those who claim this can't be done, I point to the
+UNIX kernel, which, with a small set of primitives, controls disk
+access pretty effectively.  (Quotas were added in 1984.)
+
+	This micro kernel could be added outside of the Java VM, so
+that the Java code can't touch it, only call it.  The V7 kernel is
+pretty small and efficient by todays standards.   Might want to use
+BSD4.4 instead, and also get portals, which would allow you to use
+/dev/tcp/www.netscape.com/80 as a file with certain permissions.  See 
+http://www.bsdi.com/bsdi-man?proto=1.1&msection=ALL&apropos=1&query=portal
+
+
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

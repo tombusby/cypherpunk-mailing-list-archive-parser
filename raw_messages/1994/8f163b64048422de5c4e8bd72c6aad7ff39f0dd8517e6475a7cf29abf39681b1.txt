@@ -1,0 +1,33 @@
+From: sommerfeld@orchard.medford.ma.us (Bill Sommerfeld)
+Date: Thu, 7 Jul 94 08:33:17 PDT
+To: ifarqhar@laurel.ocs.mq.edu.au
+Subject: Re: Counting bits
+In-Reply-To: <199407070647.AA12059@laurel.ocs.mq.edu.au>
+Message-ID: <199407071518.LAA00484@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Since people are playing "my processor is better than your processor"...
+
+This case (counting number of bits set in n-bit word) takes 2n+1
+instructions on the HP PA-RISC processor.  (HP's compiler generates
+2n+2 instructions, GCC takes 2n+1).  No branch instructions are
+generated in either case.
+
+HP's compiler uses the conditional skip feature of the PA
+architecture, while GCC converts
+
+	if (x&(1<<n)) y++;
+
+into the equivalent branchless form:
+
+	y += ((x>>n)&1);
+
+( (x>>n)&1 being a single-instruction bitfield extract on the PA).
+
+						- Bill
+
+
+
+

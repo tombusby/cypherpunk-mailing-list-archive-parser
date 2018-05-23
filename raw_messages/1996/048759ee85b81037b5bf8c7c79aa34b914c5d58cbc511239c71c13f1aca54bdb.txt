@@ -1,0 +1,77 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Sat, 25 May 1996 12:03:32 +0800
+To: cypherpunks@toad.com
+Subject: Re: Runtime info flow in Java
+Message-ID: <199605241946.MAA03873@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:09 AM 5/24/96 -0700, Lucky Green wrote:
+>At 20:06 5/23/96, Norman Hardy wrote:
+>
+>>I am interested in your paper because you define the problem as we do.
+>>There are some who think that capability architectures are the solution.
+>>There is little information on how to solve these problems with
+>>capabilities. I am trying to find time to address some of these issues.
+>
+>I walked away from your presentation of KeyKOS with the impression that a
+>capability system to be secure it would have to be implemented at the OS
+>level.
+>Can you build a such a system on top of an insecure OS, as Java would have
+>to do?
+
+Let me take a couple of stabs at this question.
+
+A lot of the answer depends on what you mean by secure.  For example, if
+the Java run-time can successfully contain Java applets so they can't
+access any of the unsecured portions of your OS, then it doesn't matter
+that those OS holes exist as far as protection from the applets is
+concerned.  The proof that the Java run-time actually can do this
+containment is left as an exercise for the student :-).
+
+Capabilities could be used to give specific Java applets access to specific
+resources on your computer system.  e.g. You could give an applet the
+capability to read a file.  In the Java world it would appear as an object
+with only one method (read).  The specific applet object instances which
+had access to that object could read the file.  Others could not.
+
+
+A slightly different view of where capabilities might fit in is on a
+network of mutually suspicious actors (e.g. the global Internet).  Start by
+assuming that each machine is strongly resistant to attack through the
+network.  (Ironically, Mac/Wintel platforms may be easier to secure in this
+manner than Unix platforms because they have fewer of the compromised
+network daemons running.  Firewalls already allow Unix networks to approach
+this level of security.)  In this model, you must either trust or contain
+all the code you run on your machine.
+
+We can use certificates (ref: SPKI) to implement network capabilities. 
+These certificates make statements of the form: The holder of the secret
+key which corresponds to this public key is permitted these specific forms
+of access to this specific resource on this location (e.g. a URL).  These
+certificates can act like capabilities.  They can be passed by creating a
+new certificate for the receiver which gives it the privileges implied by
+the old certificate.  They can be rescinded in any of a number of ways.
+
+Capability certificates allow you to give access to specific resources on
+your machine with public key authentication to prevent spoofing.  Because
+they support one or more techniques for the holder to pass the capability
+to others, they allow subcontracting computation to other machines in the
+network.
+
+I will note in passing that ACLs do not allow for subcontracting.
+
+Regards - Bill
+
+
+------------------------------------------------------------------------
+Bill Frantz       | The CDA means  | Periwinkle  --  Computer Consulting
+(408)356-8506     | lost jobs and  | 16345 Englewood Ave.
+frantz@netcom.com | dead teenagers | Los Gatos, CA 95032, USA
+
+
+
+
+
+

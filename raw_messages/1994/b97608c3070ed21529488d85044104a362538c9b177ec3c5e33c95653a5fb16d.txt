@@ -1,0 +1,69 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 3 Mar 94 08:06:49 PST
+To: jef@ee.lbl.gov
+Subject: Re: Standard for Stenography?
+Message-ID: <199403031607.IAA08429@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Jef Poskanzer <jef@ee.lbl.gov>
+> 
+> >  Firstly, congratulations for Sergey Goldgaber's stubborn pushing of
+> >this topic, for Bill Stewart's observation: "simple stego-programs,
+> >stealthy encryption programs"
+> 
+> I disagree with pretty much everything in your message, and since I'm the
+> one who opened the topic and who is writing the code, my opinion would seem
+> to count for quite a bit more than yours.  I'm not going to repeat the
+> reasons why the kind of standard you propose is a bad idea, you can fetch
+> the messages as easily as I can.
+> 
+> Cc:ed to the list only so that no one thinks Gary's proposal was accepted.
+> The permutation idea remains the best.
+
+I share Jef's disagreement with the spectacularly bad "neon sign"
+steganography header, but I don't think Sergey's approach was correct
+and I hope he does not feel the issue is closed yet.  Bill Stewart is
+IMO far more experienced and has far better understanding of the issue
+than Sergey, who has been a list member for only a few weeks and again
+IMO suggests a very naive security-through-obscurity approach.
+
+Bill Stewart, Norm Hardy, and other list members who have more experience
+and who have discussed these issues in the past will I think agree that the
+correct approach is to separate the function of the stegonography program
+to be a simple and clean insertion, and to have other components be
+responsible for assuring that what is inserted is statistically indistin-
+guishable from what is replaced.
+
+This notion that a "secret offset" will prevent the stego from being
+discovered is highly naive IMO.  The correct approach is to make it so
+that the stego cannot be recognized even if the opponent knows where it is.
+
+Adding offsets is like attempting to "improve" regular RSA by putting a
+secret amount of noise padding at the front (not of a stego file, but of
+an openly encrypted file).  This is unnecessary if you trust your encryption,
+and if you don't trust it then this approach should not make you trust it.
+
+Similarly, if your stego is so weak that knowing where it is in the file will
+allow the opponent to detect it, adding a random offset should not make you
+feel secure.  The correct approach is to have statistical identity between
+what you are inserting and what you are removing.  The stego program itself
+should then be as simple as possible.
+
+Now I will add my own little moral lesson, in the spirit of Tim and Jef.
+Sometimes when these discussions are re-hashed, old-timers are too busy or
+bored to join in.  New list members express naive views that are not vigor-
+ously refuted.  This is OK, but then some other new member takes these views
+to represent list consensus.
+
+I think it is great that Jef is working on a steganography implementation,
+but IMO the notion of "random offsets" is so fundamentally misguided that I
+hope he will reconsider.
+
+Hal Finney
+hfinney@shell.portal.com
+
+
+
+

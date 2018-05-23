@@ -1,0 +1,57 @@
+From: tzeruch@ceddec.com
+Date: Thu, 26 Jun 1997 04:40:59 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Anonymous browsing (was Re: Getting Back to our Radical Roots)
+In-Reply-To: <3.0.2.32.19970620150717.0082bab0@descartes.bluemoney.com>
+Message-ID: <97Jun25.162334edt.32257@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Fri, 20 Jun 1997, Jeremey Barrett wrote:
+
+> X-Premail-Auth: Good signature from user "Jeremey Barrett
+>    <jeremey@bluemoney.com>".
+
+> Anonymous web browsing is definitely being worked on. However, simply
+> chaining proxies ala remailer chains is not sufficient because traffic
+> analysis is fairly trivial.
+> 
+> The question is what's the threat model. If the goal is to prevent the
+> server from identifying the client given limited resources, then
+> www.anonymizer.com or similar is sufficient. However, the real problem
+> is preventing an entity with unlimited resources and control over most
+> of the nodes in the anonymous network from conducting successful traffic
+> analysis. This is an entirely different and very difficult problem.
+
+Having got the latest Applied Cryptography, it looks like it would be
+possible to set up a series of servers on the "Dining Cryptographers at a
+Disco" model.  It would require a constant flow, probably something like
+token ring, so couldn't be used for high bandwidth applications, but it
+completely nukes traffic analysis.
+
+(as an aside, if someone has control of "most of the nodes" they can cheat
+however they want without resorting to traffic analysis - if they
+control few nodes the picture is different).
+
+[brief but wrong description: assume there are an even number of servers. 
+Each generates a random number and passes it on along with a parity bit. 
+Then next server compares it's random number with the previous one and
+flips the parity bit if the random bits *differ*, and then sends the
+parity bit and the same random bit to the next server. When the bit has
+completed the circuit, the parity bit will be zero (which would be
+broadcast or send in the next round), unless someone altered it
+intentionally.  So any one can set a one bit by simply not flipping it,
+and no one will know who since all anyone knows is the original state of
+the parity bit when they saw it, and the previous random number.  If a
+series of bits is encrypted using a public key, then only the recipient
+will be able to receive it, and in all cases no one will know who sent or
+received the message.  You need collision detection like ethernet, and
+some addressing stuff, but all the extra bandwidth obscures the sender
+and recipient.  Someone please post a clearer description]
+
+
+
+
+

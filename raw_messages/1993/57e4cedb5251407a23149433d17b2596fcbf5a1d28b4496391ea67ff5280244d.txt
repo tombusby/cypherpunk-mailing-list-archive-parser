@@ -1,0 +1,43 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Sat, 10 Jul 93 12:35:48 PDT
+To: jpp@markv.com
+Subject: Re: Secure comm program, Sockets + LINK
+In-Reply-To: <9307092314.aa24145@hermix.markv.com>
+Message-ID: <9307101935.AA08791@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>   Meanwhile, I did peruse the LINK source and am a little unhappy with
+> the actual protocol used in setting up the secure channel.  It is only
+> authenticated in one direction, rather than both (as I understand
+> it).  I would like to see two way authentication, and (perhaps)
+> Diffe-Helman key exchange.
+
+I assume you're talking about the link program I wrote.
+If so:   I never really considered the RSA exchange as authentication
+although it can be thought of that way I guess.  The reason for
+the RSA part was primarily to exchange a private session key.  Only
+one side initiates the key exchange because of a flaw in the 
+implementation right now (if both send key exchange messages at the
+exact same time, both ends will end up using different keys).
+Even though only one end sends a message, both ends must "match up"
+in that they must both have 1/2 of the RSA key (the "encryption"
+and "decryption" or "public" and "private" keys).  Hence if they
+end up with the same session key you can consider it a match and
+hence a sort of authentication I guess.
+If (when) I implement DH key exchange I guess I should add some
+sort of authentication.
+I would like to put DH exchange in but I havent seen (or really 
+looked that hard :) for good DH source.  Anyone know of a fast
+implementation that is public domain (or that I have permission
+to use) and preferably available outside of the USA already?
+ 
+
+> 
+> j'
+> 
+
+
+
+

@@ -1,0 +1,89 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 20 Jan 1997 09:45:29 -0800 (PST)
+To: AaronH4321@aol.com
+Subject: Re: One time pads and randomness?
+Message-ID: <3.0.1.32.19970119220225.00653a30@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Welcome!  You've asked a Frequently Asked Question, so you're obviously 
+new here, but you're also thinking, so we'll cut you some slack :-)
+A good book on cryptography that you should read is Bruce Schneier's
+"Applied Cryptography", which talks about both math and practical issues.
+
+At 09:51 AM 1/18/97 -0500, AaronH4321@aol.com wrote:
+>I want to use a one time pad pased crypto system. I understand that the
+>randomness of the pad genorator is key to security (other than lossing 
+>the keys).  What I want to know is if I use a psuedo-RNG that ....
+
+Pseudo-Randomness isn't Real Randomness, and OTPs need Real Randomness.
+[Von Neumann said that anyone using mathematical methods to generate
+random numbers "is, of course, in a state of sin."]
+If you've got a Pseudo-RNG, your random number generator has some state
+at step 1 that totally determines the output at steps 2...infinity.
+This means that anybody who can determine the state of the PRNG at
+step n can decode all messages for steps n+1, n+2, ...., and often
+for steps 1....n-1 as well (depending on the particular PRNG.)
+If you're got Real Randomness*, even if you know the value of the
+pad at step n, it tells you entirely nothing about any other step.
+	
+To make it worse, the popular PRNGs turn out to be annoyingly easy
+to crack, i.e. to determine the state from a small number of samples.
+
+>Say I create a 1 million character one time pad that passes all of the
+>randomness tests.  It is "truely random". 
+
+Unfortunately, passing randomness tests doesn't tell you a pad is
+"truly random" - it just eliminates the blatantly easy stuff.
+For instance, x[n+1] = Hash( x[n] ) or X[n+1] = Encrypt( x[n] )
+for a cryptographically strong hash function or encryption like 
+MD5 or SHA or 3-DES will pass randomness tests just fine,
+but it's still totally deterministic.  Still not a OTP.
+
+However, say you create the pad from really random sources like
+flipping lots of coins or counting gamma rays, and haul it to your
+computers by well-armed guys with briefcases handcuffed to their wrists.
+
+>"A" grabs a chunk of the one time pad  starting at a random point and 
+>encrypts it....There "B" moves to the random point and begins decryption.
+
+If the pad is _really_ random, and you're sure nobody's seen any of it,
+then there's no difference between starting at a random point and
+starting at the beginning, and the bookkeeping is much cleaner.
+
+>During to process both computers mark that section of the OTP used so 
+>that they don't retransmit with it.  I realize this has a limited amount 
+>of messages before it is used up.  But would this be secure?
+
+Yeah, you've got it (once you remember to use a really random pad
+so there's entirely no relationship between bits n and n+1.)
+And you've also hit one of the basic difficulties with using OTPs,
+which is making sure you only use the once, and that this means
+that sometimes you run out AND YOU STILL CAN'T USE THE PAD AGAIN.
+
+	[*Some philosophers will argue that there isn't any
+	Real Randomness, that there's just a deterministic
+	State Of The Universe that's more complex than you happen to know,
+	and some will rant about Quantum Mechanics, and others who
+	actually have some clue about Quantum will tell you that it 
+	doesn't get you off the hook; in any case, as long as the universe
+	is messy enough it's be close enough for government work.]
+
+The NSA was able to crack a bunch of Russian OTP transmissions back
+in the 50s (the project name was Venona, and it was recently announced)
+because the Russians did two major things wrong: They used pads more
+than once when they were sloppy or out of new pads, and they didn't
+use very good randomness - clerks banging "randomly" on typewriters
+generate data with more correlation and less even distribution than
+they'd expect, and in nearly-pre-computer days they weren't able
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+

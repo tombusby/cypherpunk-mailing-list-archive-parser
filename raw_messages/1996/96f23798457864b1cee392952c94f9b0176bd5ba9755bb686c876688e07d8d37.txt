@@ -1,0 +1,78 @@
+From: C Matthew Curtin <cmcurtin@research.megasoft.com>
+Date: Wed, 21 Aug 1996 04:05:18 +0800
+To: cypherpunks@toad.com
+Subject: Securing Internet mail at the MTA level
+Message-ID: <199608201529.LAA01469@goffette.research.megasoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hi,
+
+Recently, I've been looking into securing email at the MTA level, and
+would like to get your thoughts on implementation possibilities and
+related issues.
+
+The problems that I'm trying to solve are:
+    1. Host authentication
+    2. Data privacy
+
+In order for the widespread encryption to work, several things need to
+occur:
+    1. Phase-in of the new stuff
+    2. Backward compatibility (ability to continue to work in the
+       clear) for a period of years
+    3. A single worldwide mechanism, defined by an RFC, and freely
+       available, except, perhaps, in the case of commercial
+       MTAs. (i.e., the use of RSA seems appropriate for host and
+       session key management, and is free via RSAREF in the US, free
+       outside of the US, but not free for commercial use. This seems
+       acceptable to me.)
+
+Two types of approaches are possible:
+    1. Adding to the SMTP protocol itself, allowing for MTAs to
+       identify crypto-capable peers, and then performing
+       authentication and session encryption where possible.
+    2. Waiting for a cryptographic transport layer network protocol
+       (such as what is being proposed in draft-ietf-tls-ssh-00),
+       allowing SMTP to remain untouched, and only requiring MTAs to
+       add support for the new network protocol.
+
+I like the second approach better, because it allows more problems to
+be solved with one move, and it would be easier to add crypto
+functionality to our common network utilities by simply making them
+aware of the new transport layer protocol. The first approach would
+require redefinitions of RFCs for each of the services, and lots of
+redundant work.
+
+I mentioned my interest in an SSH-capable MTA to Tatu Ylonen
+<ylo@ssh.fi>, and he as also expressed interest. The word from him on
+the status of the SSH Internet Draft is that a reference
+implementation should be available early next month. I'm considering
+using that reference implementation to add SSH capability to an MTA,
+perhaps sendmail.
+
+My questions are:
+    1. Which of the two approaches seems to make the most sense to
+       you?
+    2. Is there another approach that could work better?
+    3. Is there interest in adding SSH functionality to sendmail in
+       the near future (either by the draft spec, or once the RFC has
+       been published)?
+
+Please feel free to pass this around, if you deem appropriate. I'm
+interested in lots of feedback before deciding if and how to go ahead
+with the project.
+
+Thanks.
+
+-- 
+C Matthew Curtin        MEGASOFT, LLC        Director, Security Architecture
+I speak only for myself.  Don't whine to anyone but me about anything I say.
+Hacker Security Firewall Crypto PGP Privacy Unix Perl Java Internet Intranet
+cmcurtin@research.megasoft.com http://research.megasoft.com/people/cmcurtin/
+
+
+
+

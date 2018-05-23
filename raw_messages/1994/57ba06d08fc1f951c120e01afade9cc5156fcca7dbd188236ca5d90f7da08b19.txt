@@ -1,0 +1,76 @@
+From: Jonathon Fletcher <jonathon@izanagi.sbi.com>
+Date: Thu, 15 Dec 94 17:32:17 PST
+To: cypherpunks@toad.com
+Subject: Re: McCoy is Right! New Mail Format to Start Now.
+In-Reply-To: <199412152012.MAA28503@netcom2.netcom.com>
+Message-ID: <Pine.SUN.3.91.941216100731.5976F-100000@doe174g>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 15 Dec 1994, Timothy C. May wrote:
+> 
+> I see two "stable attractors" for text/graphics/multimedia/etc. sent
+> over the Net:
+> 
+> 1. Straight text, ASCII, 80 column format. All systems can handle
+> this, all mailers and newsreaders can handle it, it's what the Usenet
+> is essentially based upon, and it gets the job done. It meets the
+> needs of 95% of us for 95% of our needs.
+> 
+> 2. The Web, for graphics, images, etc. This will be the next main
+> stable attractor, deployed on many platforms. (I'm assuming the debate
+> here about Netscape standards does not imply much of a fragmentation,
+> that Mosaic, Netscape, MacWeb, etc., will all basically be able to
+> display Web pages in much the same way.)
+> 
+
+Okay, I'll go with that. I'd just like to point out that http (transport 
+for documents serverd on the web) uses mime. That's how your browser 
+knows something is html, or a picture of some format, or postscript. 
+
+find a web server (pick one) and telnet to it:
+
+% telnet my.web.server 80
+
+enter the following line and press return *twice*
+HEAD / HTTP/1.0
+
+(you need the second line because the server is expecting a mime header 
+from you - ended by a blank line).
+
+You'll get some answer like:
+HTTP/1.0 200 OK
+Date: Friday, 16-Dec-94 01:09:44 GMT
+Server: NCSA/1.3
+MIME-version: 1.0
+Content-type: text/html
+Last-modified: Tuesday, 06-Dec-94 06:10:37 GMT
+Content-length: 1067
+
+That's the server's answer to your query - one mime header (the http HEAD 
+request asks for info about a document).
+
+If you have a mailer that doesn't automagically verify signatures and 
+pack and unpack pgp messages it's a pain (I know tim will agree with 
+this). If you have a mailer that can't pack and unpack mime then it's a 
+pain too. Just because your mailer doesn't support it doesn't mean that mime 
+(or email privacy !) is a bad thing.
+
+-Jon
+
+PS: for those with macs or pcs or unix machines don't have mime. please 
+take a look at mpack - might find it usefull.
+
+	ftp://ftp.andrew.cmu.edu/pub/mpack
+
+
+--
+  j.fletcher@stirling.ac.uk
+  "opinions expressed are those of the author and not necessarily those of
+   anyone or anything else."
+
+
+
+
+

@@ -1,0 +1,69 @@
+From: nospam-seesignature@ceddec.com
+Date: Wed, 12 Nov 1997 00:37:59 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Privacy Software
+In-Reply-To: <199711031141.DAA01497@sirius.infonex.com>
+Message-ID: <97Nov11.112515est.32257@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Mon, 3 Nov 1997, Mix wrote:
+
+> Adam Back wrote:
+> >Monty Cantsin writes:
+> >> The PGP source code is not the worst I've ever seen, but it's kind of
+> >> odd.  
+> >
+> >I had a go at doing something with it (I'll let you know when I get
+> >it to work) -- I had the damnest job figuring out what was going on.
+> >The problem I found with understanding it were all of the nested
+> >functions called through vectors of functions and handler functions.
+> >Makes it hard to inspect what will happen without running the code
+> >under a debugger -- lots control flow is decided at run time.
+> 
+> So in other words, even though we have the source code we don't really
+> have confidence that we can tell what it is doing.
+
+There were only a few obscure points.  Most of it can be determined from
+hex dumps of the files produced.  I had public key management before I saw
+the source code.  Since I have a version that does not use any PGP source,
+but PGP 5.x interoperates fully, I think I can tell precisely what it is
+doing.
+
+> Even though the source code is available, I don't think it has been
+> studied all that carefully.  For example, hardly anybody knew that the
+> PGP 5.0 source had CAK features lurking in it.  Or, remember that bug
+> with the random number generator?  As I recall (i.e., feel free to
+> correct me), it was in Colin Plumb's code and he found it himself.
+> This would imply that it got by whoever went over the code when it was
+> released.  Not reassuring.
+
+There is that section for CAK in a future expansion note in Vol. 1 of the
+source.  There is probably a note in the CP archives I posted eons ago,
+long before the 5.5 controversy spawned all the traffic about CAK.  It was
+near the new passphrase hash which was one thing I could not figure out
+without the source. 
+
+> C is a big part of the problem.  Also, PGP was originally designed to
+> operate on some fairly slow machines and they tried very hard to
+> optimize the hell out of it.  Now, however, cycles are a lot cheaper.
+> I think we should give up speed for clarity.  Slow code that we can
+> really trust is better.
+
+C is not part of the problem, people who aren't good at abstraction are.
+It would look even more horrid in modula-2(3?).  If you have something go
+through three layers instead of one, it will be more complicated, for
+instance I did something more like:
+
+*hashstart[]() = {md5start,sha1start,ripemd160start};
+
+instead of the layering.
+
+--- reply to tzeruch - at - ceddec - dot - com ---
+
+
+
+
+

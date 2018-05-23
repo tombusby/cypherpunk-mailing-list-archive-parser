@@ -1,0 +1,72 @@
+From: Johnathan Corgan <jcorgan@netcom.com>
+Date: Tue, 13 Dec 94 14:14:25 PST
+To: Adam Shostack <cypherpunks@toad.com
+Subject: Re: Winsock & PGP Integration
+Message-ID: <Chameleon.4.00.941213141328.jcorgan@.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>	Seems to me that the UNIX model of building one mail transport
+>instead of 20 is a good one.  If you seperate out the UA from the
+>transport, you make it easy to fix or update the transport.
+
+I agree.
+
+>	So I would suggest, rather than hacking at Winsock and
+>hoping to catch the right protocols, build a set of libraries that can
+>be called by programs.  smtp.dll, for example, would be a mailer that
+>any mail program could call.  nntp.dll would handle news, underneath
+>all the various interfaces.  If you want to pretend to be premail, you
+>do it in smtp.dll.
+
+This is of course much closer to the ideal way of doing things.  However,
+the original motivation for this project was that in order for all
+existing Winsock based mail agents (except for Zmail, it looks like now)
+to add crypto/anonymity to their functionality, some work has to be done
+to change them.  The system I came up with to spoof Winsock would be
+(hopefully!) transparent, in that it would work with _existing_ mailers
+_today_.  To go the route you outlined, while in the long run a much more
+sensible way of doing things, would require the same sort of effort on the
+part of the current mail agents, i.e., they would need to change.
+
+Your suggestion is one I would like to follow up on; in the mean time, I am
+going to make an attempt at the spoofing idea.
+
+>	The advantage to other programmers is that they no longer have
+>to do the low level stuff that they had to before.  It allows
+>programmers build whats interesting, namely, the interface & gizmos.
+
+Hehe.  It's the user interface I hate doing the most!
+
+>	Make the package do the user interface side of things, and
+>make a seperate package to do the network protocols.  Makes building,
+>testing, and changing things a lot easier.  And while you're at it,
+>store all of your files as text.  :)
+
+Nah.  Variable bit sized binary records work well enough :)
+
+=======================================================================
+Johnathan Corgan       "Violence is the last refuge of the incompetent"
+jcorgan@netcom.com                       -Isaac Asimov
+PGP Public Key:        http://www-swiss.ai.mit.edu/~bal/pks-toplev.html
+Or send email to:      pgp-public-keys@pgp.ai.mit.edu Subj: GET jcorgan
+=======================================================================
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLu4cV01Diok8GKihAQEQqwP/T1XQPJYPHyVZWB3sAO1Fl8TdgikW+I/6
+1/XnNitgm7WwwUdadGFx0gVEzbmwN0yRbwntKV/M8wuYG+0oQ2NPBBSoBDMbUYqR
+OmIjUDg7P+v7X4Ga4B6MLeca6bemxYGT+Jv3F4xTQrohyUyNc+zMBR6CPWrv5d7g
+NQzIeTsIn/M=
+=Tagz
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

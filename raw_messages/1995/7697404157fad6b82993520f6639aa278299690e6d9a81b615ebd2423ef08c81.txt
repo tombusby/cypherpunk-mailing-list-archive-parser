@@ -1,0 +1,57 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Tue, 31 Oct 1995 06:48:34 +0800
+To: Rich Salz <rsalz@osf.org>
+Subject: Re:  Keyed-MD5, ITAR, and HTTP-NG
+In-Reply-To: <9510301954.AA07200@sulphur.osf.org>
+Message-ID: <Pine.SOL.3.91.951030125419.429B-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 30 Oct 1995, Rich Salz wrote:
+
+> The licensed version of RC4, or the software that was posted anonymously?
+
+Cop-out: That algorithm described in Applied Cryptography 2nd Edition 
+under the label RC4.
+
+> Where would you swap RC4 for DES?
+
+The swap would take place in the list of schemes that must be supported 
+by conforming applications. 
+
+> I assume your added stipulation is a "should" not a "must" item.
+
+Correct [strong should, but still should]
+
+> How are you going to handle key management and naming?
+
+The protocol's part of key management for OOB shared keys is taken care 
+of by naming; session key exchange with PK is not yet fully defined, but 
+will  look a lot like either SKIP or Photuris. 
+
+Naming:
+   Names are strings, of the format <domain>:<name>, where domain is the
+name-space from which the names are taken. The following domains are
+pre-defined: 
+
+DN:	X.500 Distinguished name. The name portion contains the RFC1485 
+	ascii encoding of the DN.
+
+URN:	Uniform Resource Name. The name consists of a URN (whatever that 
+	turns out to be).
+
+PGP:	PGP format name. A PGP user name.
+
+
+Simon
+----
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

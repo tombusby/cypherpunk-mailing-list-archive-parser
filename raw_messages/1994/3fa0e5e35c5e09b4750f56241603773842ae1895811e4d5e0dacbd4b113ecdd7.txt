@@ -1,0 +1,77 @@
+From: Graham Toal <gtoal@an-teallach.com>
+Date: Wed, 30 Mar 94 12:14:50 PST
+To: cypherpunks@toad.com
+Subject: Re: Very funny, Polyanna :-( [namespace pollution]
+Message-ID: <199403301844.TAA19801@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	From: Eric Hughes <hughes@ah.com>
+
+	contracting and for authentication.  The current systems don't support
+	this, and will, I suspect, not support this any time soon.  In the
+	meanwhile such policies will have to be created manually, even if
+	their operation is transparent.
+
+	>Whatever solution we can find will have to involve active support
+	>from the keyservers I suspect.  
+
+	The key servers are just serving data.  To add policy criteria to the
+	key servers is to extend their functionality beyond their original
+	intent.
+
+So?  It has to be done *sometime* by someone.  The point I was making
+was that for pgp (or any equivalent cyphered mail system) to work *en
+masse*, it has to be completely automatic and idiot-proof.  I'm not
+talking about *us* here, I'm talking about your old mother, or Mac
+users, or the company technophobic managing director etc.  What I see
+as desirable for such people is that their mail is encrypted whenever
+possible, but they don't have to do anything to make it happen.  This
+means that the current web of trust scheme is not an applicable model,
+because these people have defined *no* trusted paths at all.
+
+We need some relatively trustworthy mechanism for getting pgp keys
+that will foil a denial-of-service attack - either the one I suggested
+where someone sets up a key for a mailing list or mail2news gateway
+(either maliciously or accidentally as with our friend Paulie-Anna)
+- or where someone creates a key for a specific person (as one joker
+did for Sternlight last year (this was a second one; Sternlight had
+one of his own first which he never revoked before he deleted his
+private key...)) which means that person won't be able to receive
+mail - if auto-pgp mechanisms become common.
+
+To me it looks like this has to be done by heavy-handed control
+coming from the keyserver admins, though I'd prefer that there
+was a more democratic way.  Please suggest anything you think is
+appropriate...
+
+For the moment, I think that an auto-pgp mechanism will have to
+use a relatively secure server like SLED that can't have arbitrary
+keys added to it by all and sundry.  If this is sufficiently
+different to the current key server mechanism that Eric doesn't
+object, then fine :-)  Actually, the mechanism I forsee for doing
+this sort of thing is the tcp/ip interface to a keyserver that
+Ben Cox suggested last november.  It *could* be bolted on to the
+finger server at wasabi, but I think the whole concept needs us
+to stand back a bit and think of what we really want before we
+start hacking.
+
+
+One mechanism that crossed my mind - when a new key is added, the
+keyserver that gets it first might hold on to the new key until
+after it had mailed the key owner and requested confirmation.  This
+ought to be possible to automate.  This would also block the cases
+where someone bulk uploads their keyring with keys on it which
+they'd been given in confidence, by people who didn't want their
+employers or government to know they were using pgp...
+
+Graham
+
+PS cc'd to alt.security.pgp - would the cypherpunks interested
+in this thread follow it there with me please?
+ 
+
+
+
+

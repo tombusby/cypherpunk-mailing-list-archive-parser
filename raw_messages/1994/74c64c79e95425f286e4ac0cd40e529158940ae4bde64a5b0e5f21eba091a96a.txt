@@ -1,0 +1,109 @@
+From: pcw@access.digex.net (Peter Wayner)
+Date: Fri, 19 Aug 94 14:05:47 PDT
+To: cypherpunks@toad.com
+Subject: Some facts on the Cray-3 deal
+Message-ID: <199408192105.AA22741@access3.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+<FORWARDS deleted....>
+
+I should note that the processors on this machine sound strikingly like
+the Coherent Memory Chips that I turned into DES crackers.
+
+Also, the SRC's observation that the routing network of the SIMD machines
+is expensive is an old one at Coherent. Their memory chips were only
+connected with a one dimensional network and Chuck Stormon felt that
+this was the only connection arrangement that scaled. This is one
+of the sad limitations of packaging. In SIMD machines with multiple
+processors per chip it is often impossible to quadruple the number
+of processors per chip when a new fabrication process emerges. There
+just aren't enough pins available. 
+
+It turns out that the 12 dimensional routing network of the Connection
+Machine was really overkill. A three dimensional one was nice on some
+problems, but you paid the price in performance. I'm not surprised
+that the Terasys could really run rings around the CM-2 for some 
+problems that didn't need the bandwidth. It does sound interesting
+if the scatter/gather hardware can do a good job with the routing.
+
+(It is interesting that this announcement came on the same timeframe
+as the obituaries for Thinking Machine. They all said stuff like 
+"These guys were brilliant and the machine was great...but the market
+didn't see their brilliance." It would be funny if the old Cray
+design proved to be just as versatile.)
+
+All that being said, I don't really think that this machine will be
+anywhere near as powerful as the one I described. The 512,000 processors
+would probably take about 300-1000 days to do a brute force DES search.
+The main advantage is that the processors have 64 bits available in 
+memory, not 42. That's just enough to store a complete DES (or SKIPJACK!!!)
+block in place. There is no need to use the communication hardware
+to go back and forth. I'll do a more complete calculation later.
+
+I don't know whether they'll be able to add more SIMD processors with
+time. 512k words of memory seems pretty small even when there are 8 bytes
+to a word.  
+
+
+-Peter Wayner
+
+>Date: Fri, 19 Aug 1994 13:30:42 -0400 (EDT)
+>From: Ronald G Minnich <rminnich@descartes.super.org>
+>Subject: Re: SSS attachment - is that Splash II?
+>To: jms <jms@central.cis.upenn.edu>
+>Cc: f-troup@AURORA.CIS.UPENN.EDU
+>
+>The WSJ article on the Cray-3 deal involves a chip/system designed here
+>called TeraSys. Maya [Minnich djf] has a forthcoming article in IEEE
+>Computer about it.
+>The basic idea is to embed bit-serial processors in the sram chips, one
+>processor per bit in the memory row register. It's a simple processor with
+>an ALU and three registers. The memory "words" can now be thought of as
+>running vertically up the columns, rather than horizontally along the
+>rows. Every time you fetch a row, you are in fact fetching 64 bits from 64
+>different words to be operated on in the ALUs.This gives you roughly a
+>100-fold increase in memory bandwidth, since you no longer mux the data
+>down from 64 bits to 1 or 4 bits to bring it off-chip. The key
+>contribution of the Cray (this idea due to Ken Iobst of SRC, who also was
+>the architect of the chips) came from Ken's realization that the Cray vector
+>scatter/gather hardware could push the bits around BETWEEN the chips as
+>fast as the hardware networks on, e.g., the CM-2. Thus the Cray-3, a
+>vector supercomputer, can function as a very high-performance SIMD system
+>as well. You don't need to build the additional network found on so many
+>SIMD machines, e.g. maspar or cm-2.  You also can have phases of a
+>program, wherein it runs SIMD for a while, then vector, then SMP mode,
+>etc.
+>
+>The TeraSys processors built here at src cost about $80K each, and for
+>several problems could easily outrun our $6M CM-2.
+>
+>The chips are National Semi SRAMS, with mods done here by Mark Norder and
+>Jennifer Schrader. Ken Iobst is the architect of the chips. The
+>programming environment was basically Maya Gokhale's DBC language, which
+>also runs on Splash-2, the CM-2, and clusters. Cray has reimplemented the
+>chips for the Cray-3.
+>
+>In keeping with the NSAs new plans for SRC, this project was terminated
+>at SRC last January. The systems are gradually being turned off and the
+>cabinets put to other uses. No further work is occurring at SRC in this
+>area.
+>
+>Feel free to forward this article to people who may ask you. There was
+>some good work done by people here.
+>
+>ron
+>
+>rminnich@super.org     | Error message of the week:
+>(301)-805-7451 or 7312 | NFS server localhost not responding still trying
+>
+>
+>
+
+
+
+
+
+

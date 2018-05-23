@@ -1,0 +1,38 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Thu, 17 Jun 93 11:20:22 PDT
+To: jka@ECE.CMU.EDU (Jay Adams)
+Subject: Re: fast des
+In-Reply-To: <9306171547.AA02951@mustang.ece.cmu.edu>
+Message-ID: <9306171820.AA03851@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> If you were interested in cracking DES, I wonder if you couldn't just
+> build the hardware out of FPGAs.  That way, you could make key loading
+> and the decrypted data test fast as well.
+> 
+> - Jay
+> 
+I tried this on the xilinx 3090 chip.  The tools to handle palasm
+didnt seem to be designed to handle a job that size, I had to split
+up the file into 3 sub parts (S boxes, key scheduler and everything
+else).  I never got it completed but judging by some of the output
+I got, it wouldnt have fit on the 3090, which is quite a big
+FPGA.  The implementation is straight forward, but there is alot
+of juggling you have to do to put it on a 3090 since the S boxes
+are slightly bigger than the CLB's tables, and you end up wasting
+alot of space when you just need a bunch of xor gates (2 xor's
+per CLB, and you need alot of XORs).  Implementation with
+standard cell technology would probably be very easy, and
+save alot of space too.
+(routing the thing is another problem too, since there are
+so many permutations,  I am not sure if a near-full-capacity
+FPGA would be able to route all the permutations)
+                        Tim
+
+
+
+
+

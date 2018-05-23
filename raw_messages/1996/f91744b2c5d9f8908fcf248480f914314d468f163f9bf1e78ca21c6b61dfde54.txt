@@ -1,0 +1,35 @@
+From: Ian Goldberg <iang@cs.berkeley.edu>
+Date: Thu, 29 Feb 1996 05:39:39 +0800
+Subject: DES hooks in Linux kernel
+Message-ID: <3134C356.4771A55A@cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(aeb@cwi.nl is included, as he seems to be the last person to have
+touched loop.c before it was put into the standard Linux kernel sources,
+but I may be wrong.)
+
+The file loop.c, included in recent Linux kernel sources, includes calls
+to DES routines, such as:
+
+#ifdef DES_AVAILABLE
+static int transfer_des(struct loop_device *lo, int cmd, char *raw_buf,
+                  char *loop_buf, int size)
+{
+<snip>
+                        des_ecb_encrypt((des_cblock *) tmp,(des_cblock*)
+                            loop_buf,lo->lo_des_key,DES_ENCRYPT);
+<snip>
+}
+#endif
+
+AFAIK, the presence of these hooks (even if surrounded by the ifdef's)
+makes this file illegal to export from the United States.  Its presence
+on ftp sites in the US could get someone in trouble.
+
+   - Ian "this ITAR thing is really silly..."
+
+
+
+

@@ -1,0 +1,40 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 3 Aug 1996 20:02:53 +0800
+To: cypherpunks@toad.com
+Subject: Re: strength of 128-bit encryption?
+Message-ID: <199608031017.DAA23426@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:38 AM 8/2/96 -0400, KDBriggs1@aol.com wrote:
+><< Current export standards allow export of 512-bit RSA for encrypting
+> (including key exchange), 1024 bit for signing. >>
+>1024-bit for signing?  Do you have a reference for this?  I was under the
+>impression that digital signatures were not covered by export restrictions.
+
+I've heard this also, but remember that the export standards are
+"whatever specific products we decide you can export" rather than a
+formal law you can design to and be sure they'll obey.
+
+The ITAR doesn't cover pure authentication software, only software
+capable of preserving privacy through encryption.  Some public-key
+signature algorithms only do signature, some only do privacy,
+RSA does both.  Thus, especially for software like Netscape which
+_does_ have encryption capabilities, they can get away with limiting
+the strength of the RSA signature portion because it's part of the
+encryption package, and because RSA signing is just encrypting with
+your private key instead of your public key.  Someone _could_ use
+an RSA signature program to encrypt short data (like keys)
+if they wanted to work at it, and while bugs in software are of course
+entirely unheard of that would make this easier, there's still the
+risk that those Crafty Furriners might disassemble the crypto code
+from Netscape and reassemble it with the limits removed.
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	Defuse Authority!
+
+
+
+
+

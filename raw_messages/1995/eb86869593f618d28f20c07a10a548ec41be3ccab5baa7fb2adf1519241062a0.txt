@@ -1,0 +1,42 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Mon, 9 Oct 95 17:07:54 PDT
+To: "Perry E. Metzger" <perry@piermont.com>
+Subject: Re: netscape mail starts java attachments upon get new mail...
+In-Reply-To: <199510092305.TAA24544@jekyll.piermont.com>
+Message-ID: <Pine.SOL.3.91.951009165759.13562G-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 9 Oct 1995, Perry E. Metzger wrote:
+
+> 
+> "Josh M. Osborne" writes:
+> > As far as I know Java apps can only make network connections to the
+> > IP address they were loaded from.
+> 
+> That might be the design, but we know that it is hard to faithfully
+> implement very complicated designs.
+> 
+
+The design of java is supposed to make analysing for security easier than 
+it might be in other similarly sized systems- whether it does this or not 
+is something that needs to be checked for carefully. 
+
+The three components that need to be analysed are the class loader, the 
+implementation of the JVM, and the code to check network connections. 
+
+Analysing the VM and the class loader should be a simple (hah) matter of 
+structural induction (possibly a two step process of converting the vm 
+description into a denotational semantics and analysing that, followed by a 
+proof that the vm is a faithful implemenation of those semantics.)
+
+the networking code is simple  to prove safe if the VM and classloader 
+can be shown to be safe.
+
+Simon
+
+
+
+
+

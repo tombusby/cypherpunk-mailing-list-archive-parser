@@ -1,0 +1,180 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Tue, 1 Aug 95 05:19:42 PDT
+To: cypherpunks@toad.com
+Subject: Re: a hole in PGP
+In-Reply-To: <9508010821.AA20913@cs.umass.edu>
+Message-ID: <9508011212.AA17103@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> > PGP does not use "truly random hardware techniques"
+> 
+> Correct. However, the excerpt of RFC 1750 you quoted above does not claim
+> that all PRNG techniques are unreasonably insecure, nor does it suggest that
+> they should never be used.
+
+Nor do I.
+
+> > "...For the present, the lack of generally available facilities for
+> > generating such unpredictable numbers is an open wound in the design of
+> > cryptographic software. ... the only safe strategy so far has been to
+> > force the local installation to supply a suitable routine to generate
+> > random numbers. To say the least, this is an awkward, error-prone and
+> > unpalatable solution." - 1994 - after PGP was implemented.
+> 
+> I agree with the RFC's authors that mandating provision of platform-
+> dependent routines is an awkward and unappealing strategy. Note, however,
+> that they characterize it as "the only safe strategy". They say that the
+> _strategy_ is error-prone; they do not say that all locally-supplied
+> routines are unreasonably insecure, and should not be used.
+
+But in practice, PGP is not used this way by the masses.  They use standard
+distributions withou alteration.
+
+...
+> > So I guess the RFC supports my contention and not [Derek Atkins'].
+> [...]
+> [re: PGP's key generation methods]
+> > But the RFC acknowledges that these methods are highly suspect and should
+> > not be trusted.
+> 
+> Where ?  Give a citation, please. It doesn't say anything of the sort in
+> the part you quoted previously. Furthermore, you inexplicably omitted all
+> mentions of keystroke-timing PRNG techniques in RFC 1750. Here are some
+> excerpts that strike me as particularly germane to the quality of the
+> randomness in PGP:
+
+That is my interpretation, however, reasonable people may differ...
+
+> ------------------------------------------------------------------------
+> 4.2 Timing and Content of External Events
+> 
+>    It is possible to measure the timing and content of mouse movement,
+>    key strokes, and similar user events.  This is a reasonable source of
+>    unguessable data with some qualifications. On some machines, inputs
+>    such as key strokes are buffered.  Even though the user's inter-
+>    keystroke timing may have sufficient variation and unpredictability,
+>    there might not be an easy way to access that variation.  Another
+>    problem is that no standard method exists to sample timing details.
+>    This makes it hard to build standard software intended for
+>    distribution to a large range of machines based on this technique.
+> 
+>    The amount of mouse movement or the keys actually hit are usually
+>    easier to access than timings but may yield less unpredictability as
+>    the user may provide highly repetitive input.
+> [...]
+
+Sounds like this is not very random - I agree that "the user may provide
+highly repetitive input".  Just because one type of input is more
+repetitive, doesn't make the other truely random.
+
+...
+> I find it difficult to reconcile your claim that "the RFC acknowledges
+> that these methods are highly suspect and should not be trusted" with the
+> RFC's assertions that:
+> 
+> 	"the timing and content of [...] key strokes [...] is a reasonable
+> 	 source of unguessable data"
+
+You left out "with some qualifications".  This is the part where I have concern.
+
+> 	"the timing and content of requested `random' user keystrokes can
+> 	 yield hundreds of random bits"
+
+You missed the "but conservative assumptions need to be made" part.  Hundreds
+of random bits are possible, but how many actual bits of content are contained in
+PGP input.
+
+> 	"this strategy may make practical portable code to produce good
+> 	 random numbers for security"
+
+You missed the "However, it may still fail against a high grade attack
+on small single user systems, especially if the adversary has ever been
+able to observe the generation process in the past.  A hardware based
+random source is still preferable." part and your reliance on the term
+"may" as "does" is overly optimistic.
+
+> Having said that, allow me to state my position on some of the other
+> issues you've raised. I do not _know_ nor can I _prove_ that PGP has
+> no cryptographic backdoors. I happen to _believe_ that it does not --
+> among other things, I have met Derek Atkins and Jeff Schiller, and I
+> trust them in this regard. I don't consider that any reason for you to
+> believe that it's backdoor-free. In fact, I'm not interested in trying to
+> persuade you or anyone else that it is backdoor-free. By the same token,
+> I don't see any reason for anyone here to heed your demands that they
+> justify _their beliefs_ to _your satisfaction_. 
+
+Not demands - questions.  Why is it that you are unwilling to take
+questions as questions and instead translate them into demands? You
+could have answered my questions without all the other side comments. 
+Why didn't you? I interpret this as being defensive, which means to me
+that you are not as sure as you outwardly indicate and that there may be
+some lingering issues.  So I ask more questions.  You respond with more
+posturing and fewer answers, so I become even more concerned.
+
+It's probably my fault for not asking them in the way you are used to
+hearing them, or maybe we are all over-sensitive about our work.
+
+> I remain rather baffled as to your motives in this mini-campaign. You said
+> that no-one can prove PGP has no backdoors, and many here essentially said
+> "what else is new ?". In the white paper about your small "secure" HTTP daemon,
+> thttpd, (found at http://all.net/ManAl/white/whitepaper.html, to save you the
+> trouble of more self-promotion ;), it says:
+> 
+> > Proof of program correctness to verify even simple security
+> > properties, for example, grows almost exponentially with the number of 
+> > program statements. Verifying a 100 line limited-language program for the
+> > simple security properties associated with the Bell-LaPadula model of
+> > security takes about 24 hours of CPU time on a Cray supercomputer. The 
+> > source code for the NCSA W3 server in widespread use today is about 6600
+> > lines long, so there is no computer around today that is likely to be able
+> > to verify its security (or more likely demonstrate its insecurity).
+
+Which is why we need very small programs (which PGP is not) that do the
+security-critical functions.  We can then analyze these programs and
+determine many important properties with regard to their security, which
+we cannot do with PGP.
+
+> If we adopt this standard, it seems hopeless to "verify" the PGP source, as
+> others have noted here. [BTW, I read your detailed code walkthrough for
+> thttp with interest, and commend your work on that. I'm planning some
+> sort of similar review for a larger piece of code, and it's encouraging
+> to see other people pulling it off.]
+
+Thank you, but I think it may be too hard to do for a much larger piece
+of code.  There is another gentleman who is now working on formally (and
+automatically) verifying these properties.  Perhaps his results will be of
+value in your problem and similar problems for other programs.
+
+...
+
+> [On a largely unrelated note, why does http://all.net/admin/usepolicy.html
+> contain the following warning ?  Specifically, why the age limit ?
+> 
+> 	"This service is ONLY for use by legally competent adults human [sic]
+> 	 individuals of age 18 or older. If you do not meet these criteria, 
+> 	 you should immediately cease and desist your use of this service."]
+
+I think that some of the popular literature sections may be considered
+pornography (Fanny Hill, the Kama Sutra, etc.) and in order to comply
+with the applicable laws, I thought it would be prudent to warn off our
+fragile youth.
+
+> "...because of Dr. Cohen's frequent, blatant, and intentional disregard for
+>  the guidelines that this list operates under, and because of his apparent
+>  disregard for the frequently expressed opinions of many of the members of
+>  this list that they don't appreciate his antics, I've configured Majordomo 
+>  to divert all messages he posts to Firewalls to the list owner for review 
+>  and approval before posting..." -Brent Chapman, July 24, 1995
+
+And if enough of those on this list feel that this discussion and my postings
+are too commercial or too abusive to take, I am certain that Brent will send
+you a free copy of his Fred filter.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

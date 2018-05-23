@@ -1,0 +1,39 @@
+From: Jim Gillogly <jim@acm.org>
+Date: Wed, 28 Sep 94 15:04:44 PDT
+To: cypherpunks@toad.com
+Subject: Re: 3DES
+In-Reply-To: <9409282126.AA00174@focis.sda.cbis.COM>
+Message-ID: <9409282204.AA01197@mycroft.rand.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> pstemari@bismark.cbis.com (Paul J. Ste. Marie) writes:
+> triple DES uses:
+
+> Eabc(x) = Ea(Db(Ec(x)))
+
+> as opposed to:
+
+> Eabc(x) = Ea(Eb(Ec(x)))
+
+> in order to preserve some symmetry properties.  Can anyone give a
+> better explanation?
+
+OK -- if you want to retain compatibility with old 56-bit DES chips
+in your same network, you can set a = b = c and get:
+
+  Eaaa(x) = Ea(Da(Ea(x)))
+
+using the first form, which reduces to Ea(x), or a single 56-bit DES
+encryption instead of the 168 bits your TripleDES chip can handle.  The
+second form doesn't have this property or any other useful property other
+than standalone security, since DES isn't a group.
+
+	Jim Gillogly
+	Highday, 7 Winterfilth S.R. 1994, 22:03
+
+
+
+

@@ -1,0 +1,43 @@
+From: Antonomasia <ant@notatla.demon.co.uk>
+Date: Mon, 3 Nov 1997 00:11:26 +0800
+To: cypherpunks@ssz.com
+Subject: auto signing messages Re: perl from Amad3us
+Message-ID: <199711021541.PAA02992@notatla.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+>  #!/usr/local/bin/perl
+>  $userID="cypherpunks\@algebra.com";
+>  $pgp="/usr/local/bin/pgp";
+>  $tmp="/tmp/.sig$$";
+>  undef($/);
+>  $post = <STDIN>;
+>  ($headers,@body) = split(/\n\n/,$post);$body = join("\n\n",@body);
+>  open(PIPE,"|$pgp -satf +batchmode +verbose=0 -u $userID > $tmp");
+
+
+Real paranoiacs don't put temporary files in world-writeable directories.
+
+If a hostile user symlinks your majordomo binary (or something)
+to /tmp/.sig999 you're going to overwrite it with garbage.
+
+A single purpose directory /tmp/mdsig writeable only by the
+list account 'majordom' would be my preference.  (Correct owner
+and mode for this directory and parents could be checked by the perl
+script before it decides to write there.)
+
+
+--
+##############################################################
+# Antonomasia   ant@notatla.demon.co.uk                      #
+# See http://www.notatla.demon.co.uk/                        #
+##############################################################
+
+
+
+
+

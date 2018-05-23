@@ -1,0 +1,48 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Mon, 18 Jul 94 12:00:03 PDT
+To: cypherpunks@toad.com
+Subject: How to make a random permutation
+In-Reply-To: <9407171514.AA15664@prism.poly.edu>
+Message-ID: <9407181835.AA22253@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A deck shuffling method was presented:
+
+   //shuffle the deck:
+   for (i=0; i<=10000; i++)
+    {
+     c1=rand() % (4*13+2);
+     c2=rand() % (4*13+2);
+     swapcards(&cards[c1],&cards[c2]);
+    }
+
+
+I continue to be amazed at how few people know an algorithm to
+generate a truly random permutation efficiently.  There's one (due to
+Parnas, if I remember correctly) which generates each of the 52!
+possible permutations with equal probability, runs with exactly 52
+loop iterations (i.e. a 200 time speed up over the above), and is
+provably correct by a simple induction.
+
+Assume random(x) returns a random integer between 0 and x.
+
+a[ 0 ] = 0 ;
+for ( x = 1 ; x < N ; ++ x ) {
+    i = random( x ) ;
+    if ( i == x ) {
+	a[ i ] = i ;
+    } else {
+	a[ x ] = a[ i ] ;
+        a[ i ] = x ;
+    }
+}
+
+Proof is left to the reader.  (Hint: use induction on N.)
+
+Eric
+
+
+
+

@@ -1,0 +1,40 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Fri, 25 Aug 95 14:52:29 PDT
+To: "J. R. Valverde (EMBL Outstation: the EBI)" <txomsy@ebi.ac.uk>
+Subject: Re: Cypherpunk Brute Squad [Re: SSL Challenge: Server problems]
+In-Reply-To: <199508252041.VAA01686@neptune.ebi.ac.uk>
+Message-ID: <"swan.cl.cam.:196070:950825215208"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Server timing problem: Goodbye unknown -- you have been timed out
+> which I assume is a message from the server telling me it's too loaded,
+
+No -- it means that you were taking too long to respond, so it timed you out.
+
+> No input when expecting an ACK line
+> which sound even worst... I've been having trouble getting keys all the
+> afternoon now, what a pity.
+
+brclient -k failed to get any keys, so brutessl didn't generate any output,
+so brclient -A didn't get any input :-(
+
+Latest brloop should avoid this by not calling brutessl if brclient -k failed
+and also not calling brclient -A if brutessl didn't run / failed.
+
+> BTW, the versions I'm running now are brloop 0.05 and brclient 0.16 and
+> since I'm in Cambridgeshire-UK too, with a 2Mbps link, I doubt that the
+> timeout is due to congestion on the net.
+
+Well, the problem with brclient 0.16 was that a "go faster" stripe made it
+go *too* fast if local, perl losses data, so it times out :-((
+
+> Any suggestions? Or is it only the overload in the server that's giving
+> me nightmares?
+
+Kind of -- slow clients hogging the single threaded (idle) server :-((
+
+
+
+

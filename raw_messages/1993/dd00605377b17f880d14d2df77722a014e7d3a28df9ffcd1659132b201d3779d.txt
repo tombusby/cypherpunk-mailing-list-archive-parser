@@ -1,0 +1,46 @@
+From: peb@PROCASE.COM (Paul Baclace)
+Date: Thu, 23 Dec 93 16:09:48 PST
+To: wex@media.mit.edu
+Subject: Re: picture signatures
+Message-ID: <9312240009.AA26174@ada.procase.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There is no need to sign the picture itself: a secure time stamp would
+prove ownership of the oldest version of a picture:
+
+	CryptoHashA(picture) --> H_i 
+
+Then the timestamp service:
+
+	CryptoHashB(H_i, H_j) --> H_receipt ; H_j is hash from another customer
+
+The H_receipt is published in a well-known place/time and is traceable to the 
+picture.  The actual scheme the Bellcore folks worked out is tree
+structured for efficiency reasons.
+
+An altered version of a photo would presumably have a different hash,
+but it would not have an earlier timestamp hash.  Insofar as one could
+recognize that an image was incorporated into another altered image,
+misappropriated and stolen copyrights could be detected.  Recognition
+is inherent in this process. This isn't very different from sound
+sampling: if the alteration completely obscures the orignal beyond
+recognition, then there isn't much of a case to prove theft.  For a
+picture example, I could digitize a copyrighted image and use *only*
+it's color palette on one of my pictures (I haven't tried this yet, but
+it sounds like a good "empircal color theory").
+
+BTW, Anyone have an email addr of the Bellcore folks who invented the 
+secure timestamp system?  I'd like to use the service if it is still 
+operational.
+
+
+Paul E. Baclace
+peb@procase.com
+
+
+
+
+

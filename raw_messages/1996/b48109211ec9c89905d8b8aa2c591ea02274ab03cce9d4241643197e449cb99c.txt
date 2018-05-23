@@ -1,0 +1,71 @@
+From: John Gilmore <gnu@toad.com>
+Date: Fri, 20 Sep 1996 18:48:54 +0800
+To: cypherpunks@toad.com
+Subject: Re: 56 kbps modems
+Message-ID: <199609200744.AAA07457@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I checked the Rockwell home page, which has a pointer to the press
+release.  It isn't very technical, but gives some good clues.  It
+looks like they're doing an interesting trick.  The modems aren't
+designed for use like traditional modems, where the same equipment is
+on each end.  Instead, there is a digital interface on one side of the
+phone call (like at an Internet Service Provider).  The consumer side
+modem has a traditional analog interface.
+
+The rest of this is speculation and fantasy on my part.
+
+So, think about it.  The analog side will generate voltages and send
+them to the local central office, where they will be digitized and
+sent to the destination central office digitally.  There, they will be
+patched into one channel of a T1 line (out of 24) and sent digitally
+to the ISP's "modem bank".  Equipment is already available (and in use
+all over the uunet network) that plugs T1 into a board full of digital
+signal processors, decodes each of the 24 channels (each channel
+running any modem signalling protocol, or ISDN), handles PPP packet
+framing, and gateways the resulting packets to/from an Ethernet.
+
+Now for Rockwell's trick, you get the DSP's in the two modems to talk
+to each other.  They can run some simple coding scheme (say ordinary
+2400 baud modem for this example) to pass digital data back and forth
+while they're negotiating the full blown deal.  First, the analog side
+sync's up with the clock for the 8000 samples/sec that the central
+office is digitizing (into 8-bit samples).  You can do that by sending
+one voltage and then switching to another; the far side can tell you
+whether you switched on a sample-boundary or not (was there a sample
+"in between" before it settled to the new value?).
+
+OK, then, in each sample slot, the analog side can send one of 256
+different voltages.  The digital side can tell it the 8-bit values it
+received.  Then fine-tune that to sending 128 different voltages,
+taking particular care around the ones that got distorted the first
+time.  As long as you can find 128 distinct voltage levels that the
+central office will reliably digitize, you're done.  You're sending
+7-bit samples at 8000 samples/sec.  Do something similar for the
+analog receive side, and you can start passing user data at 56K.
+
+If the robbed-bit stuff gets in the way of seeing 128 distinct voltage
+levels in every byte, you can send solid zeroes or solid ones in each
+direction and see which bits they're stealing out of which bytes.
+Use most of the 8 bits available in the other bytes (you can find e.g.
+200 different voltage levels that will work), and in the stolen byte,
+you can find e.g. 100 voltage levels that work.  This is more bits
+than using 128 voltage levels in every byte, and in fact you can
+probably get closer to 64 kbits/sec than to 56 kbits/sec, depending on
+the analog qualities of the wire to your central office.
+
+A nice trick!  It won't speed up analog-modem-to-analog-modem
+connections, but those will increasingly be a smaller and smaller
+fraction anyway, as the digital infrastructure becomes cheap.  And
+of course the 56K modems will just be DSP's with decent A/D and D/A
+interfaces, so they can run all the old analog protocols too, in the
+case that the phone line isn't digitized, or if they want to talk to
+an old modem.
+
+	John
+
+
+
+

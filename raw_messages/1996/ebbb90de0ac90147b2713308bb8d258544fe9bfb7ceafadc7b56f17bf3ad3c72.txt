@@ -1,0 +1,28 @@
+From: ghio@c2.org (Matthew Ghio)
+Date: Sat, 13 Jan 1996 03:55:54 +0800
+To: cypherpunks@toad.com
+Subject: Re: p-NEW digital signatures
+In-Reply-To: <960112182626_72124.3234_EHJ93-1@CompuServe.COM>
+Message-ID: <m0tapC8-000ungC@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Kent Briggs <kbriggs@execpc.com> wrote:
+>s is discarded and the signature is r and z.  The verification is:
+>
+>m=zy^r mod p
+>
+>This slows down the signing but speeds up the verification.  Here's the $64K
+>question:  Does this compromise the signature's security?
+
+Yes.  In this case a fake signature can be forged by picking a random r, and
+then z can be calculated as:
+
+z=my^(-r) mod p
+
+No security at all.
+
+
+
+

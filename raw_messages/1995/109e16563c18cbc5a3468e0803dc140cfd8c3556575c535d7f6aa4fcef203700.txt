@@ -1,0 +1,63 @@
+From: Raph Levien <raph@c2.org>
+Date: Sun, 19 Nov 1995 03:14:13 +0800
+To: cypherpunks@toad.com
+Subject: Re: Design proposal: crypto-capable generic interface
+In-Reply-To: <199511181441.JAA02040@homeport.org>
+Message-ID: <199511181856.KAA24071@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Shostack wrote:
+> A daemon per user, or per machine? Either way, I think you
+> run into problems on a big multi-user machine. (Either its an extra
+> process or two per person, or its a great target for attack &
+> subversion.
+
+One per user. I'm thinking that, most of the time, the daemon process
+would only last as long as the application.
+
+It is certainly true that if there were to be one daemon per machine,
+the security requirements would be a lot greater, as it would no
+longer be possible to rely on the operating system to get the file
+permissions right, etc. On the other hand, the daemon process better
+be done right, or your're in trouble anyway.
+
+> Its an interesting proposal, but let me ask you this--Why is
+> it better than a libpgp (or pgp.dll) that offers a variety of services
+> to programs at multiple levels (ie, offers full one call RSA/IDEA
+> encryption and compression, as well as ascii armoring, or offers each
+> of those as a seperate function.
+
+   Exportability. There is a general feeling that a mailer program
+with specific hooks to libpgp is going to have trouble with
+exportablity (and forget about binaries), where a program that
+supports a generic interface (the likes of .mailcap) is out of the
+NSA's jurisdiction. Of course, this is speculation until we actually
+get a ruling, but it sounds plausible enough to me to warrant spending
+some time on design and implementation.
+
+   Your question brings up another point: if the daemon process is
+going to run as the personal slave of the application, then why not a
+dynamic library instead? Two reasons. First, on Unix anyway,
+interprocess communication through domain sockets is a more mature,
+robust, and portable technology than dynamically linked libraries. On
+Windows, it's probably the other way around, and that's worth thinking
+about.
+   The real reason is, though, that the daemon and application should
+naturally be distrustful of each other's address spaces. Can you see
+Netscape shipping code that links in a Joe Random dll? Conversely, do
+you want your PGP secret data structures sharing an address space with
+one of Netscape's beta releases? Using two processes in two address
+spaces solves this problem.
+
+   Jeff, if you're reading this, what do you think Netscape's chances
+are for supporting such a protocol, assuming of course that there were
+nicely implemented daemons, and that the protocol itself was going to
+standards track? Is it something you'd be interested in?
+
+Raph
+
+
+
+

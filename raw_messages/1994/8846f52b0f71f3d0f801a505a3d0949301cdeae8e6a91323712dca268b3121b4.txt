@@ -1,0 +1,32 @@
+From: koontzd@lrcs.loral.com (David Koontz )
+Date: Wed, 26 Jan 94 11:27:10 PST
+To: tcmay@netcom.com
+Subject: Re: clipper pin-compatible chip
+Message-ID: <9401261919.AA22973@io.lrcs.loral.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: m5@vail.tivoli.com (Mike McNally)
+
+>I don't think the idea proposed is to reverse-engineer the Clipper.
+>Rather, the idea is that once you know the pin-out you can make an
+>electrically-compatible (and, in important ways, software-compatible)
+>replacement.
+
+While the clipper chip and its CCEP brethern have chip specifications 
+that imply that key is supplied as long as a read flag is in a certain
+state.  The key for the clipper chip is 10 bytes of actual key plus
+3 bytes of cryptographic check word (CCW), for a total of 13 bytes.
+
+Operating in a system expecting a clipper chip potentially restricts
+the keyspace.  Non-centrally selected keys use the clipper chip to
+'fish' for the CCW, where it is re-fed.  The host system (to the 
+clipper chip) is going to try and feed 10 bytes plush 3 bytes of
+a constant.  Utilizing IDEA, the key is supposed to be 16 Bytes.
+
+The point being that dropping an IDEA chip in is not 'plug and play'.
+
+
+
+

@@ -1,0 +1,51 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Thu, 14 Apr 94 22:47:41 PDT
+To: cypherpunks@toad.com
+Subject: Re: New anon mailer idea?
+Message-ID: <9404150546.AA12667@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal writes:
+>  - You'd want this feature to be optional.  Some people might not want
+>    their anonymity limited by having their return address recorded, even
+>    in encrypted form.
+
+The obvious implementation is to add a Generate-Return-Address: header 
+so you can use it if you want it, but won't get one otherwise.
+The encryption definitely needs some sort of random padding,
+though CBC with a random IV plus length-padding at the end
+should probably suffice.
+
+>  - The use of a symmetric cypher is a very nice way of getting the use-once
+>    capability, along with the "burn after reading" effect of a remailer
+>    chain which destroys itself as it goes.  But it could be a considerable
+>    burden on the remailer operator to maintain the database.  One possibility
+>    would be to fix a maximum time limit on how long the return addresses are
+>    kept "alive" and require some real money to keep them longer.
+
+Public key has the advantage that the operator doesn't *need* a database.
+If you want to implement use-once addresses (or use-N-times),
+you could include a tag with the address (such as the IV),
+and reject future messages using that tag (e.g. save a hash of the tag).
+You could also implement time-limits by including an expiration date.
+
+Perhaps something S-Key like might be applicable, if you want to stick
+to private-key methods?
+
+>  - What we would really like is for the recipient to hit the "reply" button
+>    and be able to send his mail back.  
+
+Matt Ghio's remailer+62647629379278@wherever.com syntax does this fine.
+If desired, you could implement anonymous bit-bucket addresses
+this way as well, though they're somewhat more useful if your remailer
+generates encrypted outgoing messages.  Alternatively, you can *always*
+generate either a real or a bit-bucket return address, and leave it up to
+the sender to inform the recipient that there's a probably-working return path.
+
+		Bill
+
+
+
+

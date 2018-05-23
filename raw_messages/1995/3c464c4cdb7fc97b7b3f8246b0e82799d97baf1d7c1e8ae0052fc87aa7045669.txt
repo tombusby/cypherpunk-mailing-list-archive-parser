@@ -1,0 +1,46 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 13 Sep 95 15:28:19 PDT
+To: cypherpunks@toad.com
+Subject: Re: Can GAK be made "not interoperable" with PGP?
+Message-ID: <199509132227.PAA03114@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Duncan Frissell <frissell@panix.com>
+> At 10:26 AM 9/13/95 -0700, Timothy C. May wrote:
+> 
+> >But is this even possible, to make a GAK system "not interoperable" with,
+> >say, PGP?
+> >
+> >Unless the GAK system has some sort of entropy analyzer, and can recognize
+> >high-entropy sources which it presumes to be encrypted data (*), one can of
+> >course PGP-encrypt a text file and then GAK the resulting file.
+> 
+> I took it to mean that they were saying that an approved program on one end
+> of a communication exchange could not exchange encrypted messages or
+> established an encrypted session of some kind with an un approved program on
+> the other end.  Not trying to outlaw superencryption (PGP on both ends using
+> a GAKed channel) but GAK on one end working with an unapproved system on the
+> other end.  A ringer GAK-work-alike that would defeat the intent of GAK.
+
+Yes, I think this was the idea of the original "software key escrow"
+proposal, from TIS as I recall.  The sender would encode the session key
+with a government public key but there was some trick by which the
+receiver would verify that the session key was in fact encoded correctly
+and refuse to operate if it was wrong.  So any attempt to corrupt or
+remove the LEAF would be detected if you were talking to a compliant
+receiver.
+
+That is part of why Matt Blaze's Clipper attacks were so significant,
+because they went to the heart of this requirement.  It was always clear
+that you could superencrypt with Clipper, but Matt found a way in which
+you could send a LEAF which would be accepted by a regular Clipper phone
+but which had bogus data for law enforcement.  So this defeated the
+requirement of not interoperating with rogues.
+
+Hal
+
+
+
+

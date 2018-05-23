@@ -1,0 +1,37 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Fri, 16 Dec 94 09:37:17 PST
+To: cypherpunks@toad.com
+Subject: PGP key checking
+Message-ID: <9412161735.AA06993@elysion.iaks.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I just signed and checked some pgp keys (using pgp 2.6.1) and I found
+something unexpected:
+
+Keys can be checked with the -kc option. To identify the key to be checked
+either a string or the KeyID (with 0x-prefix) can be given as an argument.
+
+If I do now 
+
+pgp -kc name_of_anyone 
+pgp -kc 0xanyones_key_id
+
+for the very same key (once identified by substring, once by keyid,
+which should both do the same job)
+the first command checks many more signatures than the second command.
+The second command stops earlier, but I couldn't find out yet, whether
+this stops after finding a trusted path to the checked key or what else could
+be the reason for this.
+
+Any ideas?
+
+Hadmut
+
+
+
+
+
+

@@ -1,0 +1,64 @@
+From: Scott McGuire <svmcguir@syr.edu>
+Date: Fri, 9 Aug 1996 09:09:31 +0800
+To: cypherpunks@toad.com
+Subject: Re: appropriate algorithm for application
+In-Reply-To: <320A29E7.13728473@systemics.com>
+Message-ID: <ML-2.2.839536845.7349.scott@homebox.>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>Scott McGuire wrote
+>>
+
+... stuff deleted ...
+
+>>
+>> 
+>> Why not just encrypt the files with regular, single key encryption and only
+use
+>> the public-key encryption on a master file holding a copy of all the
+individual
+>> keys?  This would be faster right?
+>
+>The main reason is so that anyone can generate new keys as and when
+>they please. The master key is not required for key generation, which
+>makes it more secure (ie. it spends more of its time in the safe) and
+>practical (the master key may be in a different building).
+>
+>Gary
+>--
+>pub  1024/C001D00D 1996/01/22  Gary Howland <gary@systemics.com>
+>Key fingerprint =  0C FB 60 61 4D 3B 24 7D  1C 89 1D BE 1F EE 09 06 
+>^S
+>^A^Aoft FAT filesytem is extremely robust, ^Mrarely suffering from^T^T
+
+If the master file (or say master directory with one keyfile for each
+encrypted file) is encrypted with public key encryption, than anyone with the
+master public key can add a new encrypted file key but only the person with
+the master private key can remove one of those keys.
+
+Now that I think about it, this is like having each user encrypt their file
+with a conventional key and sending a PGP encrypted message with the key they
+used to the maintainer of the master file.  Of course if you don't trust the
+users to give up a copy of the key, you would need to automate the procedure.
+
+Scott
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3a
+Charset: noconv
+
+iQCVAwUBMgpQiN7xoXfnt4lpAQEBfwQAuHXSGhgWXr1S7gEKWH9iygLlSrioGjoz
+/4+kqXKW/Q1ygDub0W3Tdr54uHaltAD8V/uk539i2ToTA0HQwaQ/jQq4eyRWrASl
+bW1e5VWkJrKOm3J1qDSfIcoD7ACygwMb2Fxmp1w0GQ5uOOwjH8bow7YGMVPZKa/C
+pDLIbjT36bM=
+=18an
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,41 @@
+From: Phil Karn <karn@unix.ka9q.ampr.org>
+Date: Wed, 28 Dec 94 22:19:49 PST
+To: perry@imsi.com
+Subject: Re: IPSP and Netscape
+Message-ID: <199412290621.WAA07850@unix.ka9q.ampr.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In article <94Dec13.08.6313@qualcomm.com>, you write:
+|> Privacy and authentication are also provided by IPSP. However, IPSP
+|> provides all sorts of advantages -- immunity from traffic analysis, no
+|> requirement to change the way an application operates to start using
+|> it, protection of the entire IP stack (not just TCP sockets), very
+|> minimal changes required to applications that want to use the
+|> information provided by the IPSP layer for authentication (and no need
+|> to change your read or write calls or anything), etc, etc, etc.
+
+Uh, I don't see that IPSP provides any automatic immunity to traffic
+analysis. It does make certain kinds of fine-grained traffic analysis
+a little more difficult. E.g., you can't tell what upper level
+protocols are in use, and if you share a single SAID between each host
+pair you can't tell which or how many users are sharing the path. But
+you can still tell that the hosts are communicating.
+
+If you use IPSP in the IS-IS tunnel mode, you could help protect the
+identities of the end systems on each end, but again you can't hide
+the fact that the ISes are talking.
+
+Something like IPSP *could* serve as the basis of an anonymous
+forwarding IP network analogous to the existing anonymous remailers,
+but this would take a lot more work. And you could generate bogus
+filler traffic between a pair of IPSP hosts to help cover the real
+traffic between them.
+
+Phil
+
+
+
+

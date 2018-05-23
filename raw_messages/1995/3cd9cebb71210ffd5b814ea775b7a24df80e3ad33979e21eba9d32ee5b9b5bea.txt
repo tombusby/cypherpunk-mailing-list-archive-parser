@@ -1,0 +1,59 @@
+From: monty.harder@famend.com (MONTY HARDER)
+Date: Mon, 21 Aug 95 20:41:01 PDT
+To: CYPHERPUNKS@toad.com
+Subject: Divide and Conquer
+Message-ID: <8AF9533.0003000356.uuout@famend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+O > As you may have surmised Hal has given us another challenge to satisfy
+O > the people who want to do a challenge to see *how fast* they can do it
+O > by involving as many people and their computers as possible.
+
+  Here's a thought or twelve: Precompute the divsion-of-keyspace
+problem, in advance of the actual issue of challenge. Use whatever
+criteria of estimating spare mips (idle_percentage * mips_rate) and
+allocating slices, then issue each participant a [start..end] space
+(and a direction flag. More on this later).
+
+  That way, when the challenge is issued, there is no fumbling about,
+but rather a simple: "Gentlemen, start your programs."
+
+  Divide the participants into two roughly equal groups of total spare
+mips, so as to address reliability and trust issues. Then allocate the
+entire keyspace twice.
+
+  Later...
+
+  For more fun, if the cracker can be coded to read a direction flag
+from the config file, so that the main loop can go ++ or --, the
+lists of keyspace could alternate thusly:
+
+       Red Team   Blue Team
+
+        0000++     0000++
+        --iiii     --jjjj         This method of allocating keyspace
+        iiii++     jjjj++       puts the key in the space of 4
+        --kkkk     --mmmm       different people at once, but only
+        kkkk++     mmmm++       increases average search time by a
+              . . .             factor of 2 to protect against holes.
+      / --0000     --0000       since the direction flag is independent of
+    / \ (FFFF--)   (FFFF--)     team, it reveals nothing to a Bad Guy.
+  /
+ Two ways of saying the same thing.
+
+  In effect, the ranges computed by the allocator are paired up, and the
+two people who share the range play "meet in the middle". If there are n
+participants in the group, and b of them are Bad Guys, the probablity of
+failure would be roughly (b/n)**4.
+
+
+
+ * On a clear disk you can seek forever
+---
+ * Monster@FAmend.Com *    
+
+
+
+

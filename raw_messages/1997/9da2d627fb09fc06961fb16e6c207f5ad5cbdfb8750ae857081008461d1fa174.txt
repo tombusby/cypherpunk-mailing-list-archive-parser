@@ -1,0 +1,72 @@
+From: "Michael H. Warfield" <mhw@wittsend.com>
+Date: Thu, 13 Feb 1997 06:53:25 -0800 (PST)
+To: ichudov@algebra.com
+Subject: Re: How to make majordomo request confirmations of subscriptions?
+In-Reply-To: <199702130511.VAA29241@toad.com>
+Message-ID: <m0vv2XO-0000vKC@wittsend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ichudov@algebra.com enscribed thusly:
+
+> Hi All,
+
+> I would like to set up my majordomo to request subscription
+> confirmations from users, by sending them a cookie. Looking at the
+> majordomo config files, I have not found such option.
+
+	Majordomo 1.94 and above...
+
+	subscribe_policy = open+confirm
+
+	Last I looked, majordomo does not have subscription expirations
+or periodic confirmations.  A couple of months ago someone else on a large
+mailing list I help run suggested a package that would periodically mail
+a bounce probe.  The probe would have explicit instructions to do NOTHING
+if you wanted to remain on the list, just ignore the message.  If the
+message came back, due to an E-Mail bounce, vacation program, or someone
+who decided they didn't want to remain on the list after all, you toasted
+them off.  Sort of an inverse confirmation message.  I lost the message
+about the package before I could find it.  It sounds like a great compliment
+to majordomo.  Maybe should be another feature for majordomo?  Anyone who
+has heard of this add-on, let me know.  I'm still looking for it.
+
+> Ideally I would like to have a system that a) requires the
+> new users confirm new subscriptions and b) once in a while
+> as users to confirm their existing subscriptions.
+
+	The instruction which go back with the job results and the confirmation
+need to be beefed up.  I've had a lot of subscribers get "confused" when
+their STUPID windows mailer breaks their "auth" message into two lines and
+majordomo refuses to recognize it.  Forwarding the confirmation message
+back or "replying" to it tend to screw up big time, so I modified the message
+in my version to instruct users to "create a new message with this line as
+the only line in the body".  It's cut down on the screwed up subscriptions
+immensely.
+
+	Majordomo also needs to be enhanced a bit to flush out bits and pieces
+of floatsam in the E-Mail address that are not valid E-Mail addresses...
+Example:  "Michael H. Warfield" <mhw@wittsend.com> would result in messages
+going back to Michael, H., and Warfield, as well as mhw@wittsend.com.  I'm
+planning on cleaning out any whitespace separated tokens which do not
+contain an embedded "@" followed by a least one "." and ending with an alpha
+or a ".".  That's on my to-do list for this week or next...  Along with
+upgrading to 1.94.1.
+
+> Is there any way to do it?
+
+> Thank you.
+
+> 	- Igor.
+> 
+
+-- 
+ Michael H. Warfield    |  (770) 985-6132   |  mhw@WittsEnd.com
+  (The Mad Wizard)      |  (770) 925-8248   |  http://www.wittsend.com/mhw/
+  NIC whois:  MHW9      |  An optimist believes we live in the best of all
+ PGP Key: 0xDF1DD471    |  possible worlds.  A pessimist is sure of it!
+
+
+
+

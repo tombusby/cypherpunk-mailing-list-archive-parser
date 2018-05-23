@@ -1,0 +1,53 @@
+From: jkreznar@ininx.com (John E. Kreznar)
+Date: Thu, 2 Dec 93 18:22:36 PST
+To: jerry@terminus.us.dell.com
+Subject: Re: Entropy, Randomness, etc.
+In-Reply-To: <9312010132.AA20601@terminus.us.dell.com>
+Message-ID: <9312030219.AA08840@ininx>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+This is a supplement to the fine answer to your question which has
+already provided by Scott Collins.
+
+> How do we measure the entropy of a random number,
+> or a series of random numbers?
+
+> Give a particular set of data used to generate a random key, such as,
+> a unix box's /dev/mem, how can one measure the number of bits of
+> entropy?
+
+Actually, it can't be done.  The consistent measure of entropy for
+finite objects like a string or a (finite) series of random numbers is
+the so-called ``program length complexity''.  This is defined as the
+length of the shortest program for some given universal Turing machine
+which computes the string.  It's consistent in the sense that it has the
+familiar properties of ``ordinary'' (Shannon) entropy.  Unfortunately,
+it's uncomputable: there's no algorithm which, given an arbitrary finite
+string S, computes the program-length complexity of S.
+
+Program-length complexity is well-studied in the literature.  A good
+introductory paper is ``A Theory of Program Size Formally Identical to
+Information Theory'' by  G. J. Chaitin, _Journal of the ACM_, 22 (1975)
+reprinted in Chaitin's book _Information Randomness & Incompleteness_,
+World Scientific Publishing Co., 1990.
+
+	John E. Kreznar		| Relations among people to be by
+	jkreznar@ininx.com	| mutual consent, or not at all.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLP6iDsDhz44ugybJAQH9IwP/V2EZ/crPIENnkWAYFbCKfNrPuStkb7U9
+kQurAUc0xgIzcGjYYw6KFAwJ2zMYgGAmtUlbBbkEaJnAjQJc6AT2Q3PBWitWG5Fk
++p2YJwSV00TtSxVXqiu7IWUpK2zlbCDzYq0hdoabe4GOoYgdYd96y6WV62AqFb39
+MifNcQF5XMQ=
+=quUv
+-----END PGP SIGNATURE-----
+
+
+
+

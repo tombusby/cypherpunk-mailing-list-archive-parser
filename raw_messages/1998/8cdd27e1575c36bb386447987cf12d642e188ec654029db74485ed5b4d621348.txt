@@ -1,0 +1,36 @@
+From: Eric Cordian <emc@wire.insync.net>
+Date: Sun, 20 Sep 1998 10:37:42 +0800
+To: cypherpunks@cyberpass.net
+Subject: Alleged IDEA(tm) Weakness
+In-Reply-To: <199809200308.NAA12805@avalon.qualcomm.com>
+Message-ID: <199809201540.KAA25520@wire.insync.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+> I think this is wrong. It claims that the problem
+> in IDEA comes from the bias of the multiplication
+> operation... but the multiply in IDEA is over the
+> integers modulo 65537, with the 0 value
+> representing 65536, not 0...  this is in fact an
+> unbiased operation. However I have not attempted
+> to verify the rest of the logic.
+
+Correct, multiplication by a non-zero residue modulo 65537 is a
+permutation of the non-zero residues.  The central notion behind IDEA is
+to use this operation, which can be expressed expeditiously in terms of
+the unsigned 16x16->32 multiply, as a builtin wide S-Box.  This is how
+IDEA manages to do strong encryption using only a few ordinary arithmetic
+and logical instructions with no necessity for table lookup.
+
+I didn't bother to read the rest of the rant. 
+
+-- 
+Sponsor the DES Analytic Crack Project
+http://www.cyberspace.org/~enoch/crakfaq.html
+
+
+
+

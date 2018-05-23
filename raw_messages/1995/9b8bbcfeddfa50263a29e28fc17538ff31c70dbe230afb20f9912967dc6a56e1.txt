@@ -1,0 +1,71 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Thu, 19 Jan 95 22:52:53 PST
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: traffic analyzing Chaum's digital mix
+Message-ID: <Pine.SUN.3.91.950119224724.28755B-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I have been thinking about the problem of traffic analysis of a 
+remailer.  More specifically, the problem is how can Eve trace Bob, who 
+is communicating with Alice through an ideal Chaumian digital mix?  (As 
+most of you know, current remailers are missing many of the features of 
+the digital mix Chaum specified in his CACM paper (at 
+ftp://ftp.csua.berkeley.edu/pub/cypherpunks/papers/chaum.digital-mix.gz 
+), thus making them extremely vulnerable to anyone with non-trivial 
+resources.)
+
+The simplifying assumptions I use here are:
+1.  there is one mix, which is perfectly secure and trustworthy (note 
+    that multiple mixes do not increase untracebility over a single mix if 
+    it is perfectly secure and trustworthy)
+2.  anyone can monitor all traffic in and out of the mix, but no one can 
+    link an incoming message with an outgoing one
+
+The basic approach is to use this raw traffic information to calculate a 
+SCORE for each user of the remailer with respect to Alice, where the 
+user with the highest SCORE is the person Alice is most probably 
+communicating with.  The idea is that with a Chaumian mix, every time 
+Alice sends a message to Bob there is always a pattern of Alice sending 
+a message to the mix, followed by Bob receiving a message from the mix 
+during the next batch.  By counting the number of such correlations for 
+each user over a period of time, and taking into account the fact that 
+users who receive more messages from the mix will have higher numbers
+of coincidental correlations, a SCORE can be calculated so that it would 
+be a good indication over the long run of the probability that a particular 
+user is communicating with Alice.
+
+For a digital mix that does batching based on a fixed number of incoming 
+messages, the SCORE for a user U can be calculated in the following way:
+1.  for each mix batch i, calculate P(i)=lesser(# of messages sent by 
+    Alice, # of messages subsequently received by user U)
+2.  after a period of time t, calculate Q=sum(P(i))
+3.  calculate the average value of Q of users with similar usage 
+    patterns as user U
+4.  SCORE(U) = Q / average(Q)
+
+Now whether or not this approach actually works depends on whether the 
+number of users with SCORE higher than Bob's SCORE converges to 0 as 
+time t increases, and how quickly it converges.  Answering these two 
+questions will require modeling the usage patterns of Alice, Bob, and 
+the mix as a whole.  I'll try to do this for some simple cases in a later
+post.
+
+Wei Dai
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLx9V8Tl0sXKgdnV5AQFg2gQAhEJ1wgf/XaqMOlVcvYfwgOeR2cKPPyQM
+fitAJdXKkEXvTtUa3biByvVK86SLQmW/0cLME76UsmaMUY+FVncBoKwlRGKJnDci
+6b7VtEW2ZkZKntUieTXFaVbSgI5XL/lIqQu2FFS6wuxH1KayxFeDLiTD6HWfa8t6
+sedGrTb5f2I=
+=Vjum
+-----END PGP SIGNATURE-----
+
+
+
+

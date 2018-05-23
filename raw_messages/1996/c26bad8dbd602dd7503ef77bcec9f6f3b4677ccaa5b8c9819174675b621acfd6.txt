@@ -1,0 +1,53 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 19 Feb 1996 02:14:38 +0800
+To: "Mark M." <markm@voicenet.com>
+Subject: Re: PING packets illegal?
+Message-ID: <199602181745.JAA08949@ix5.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 03:20 PM 2/14/96 -0500, markm@gak [cute machine name :-] wrote:
+>-----BEGIN PGP SIGNED MESSAGE-----
+>> Concerning the ITAR ...... what would happen if some Evil Hacker Dude in,
+>> say, England, decided to ICMP-ping a host in America? Nothing wrong with
+>> that ...... but if those ping packets contained little pieces of something
+>> like PGP ...... would the host being pinged be breaking the law? Would
+>> all the hosts in the route between that host and the host in England that
+>> was doing the ping also be breaking the law?
+>
+>Exporting encryption to the U.S. from another country is not illegal, only
+>exporting from the U.S. is.  The method of transmissioni is irrelevant.  It
+>does not matter if TCP packets or ICMP-ping packets are used to transmit the
+>data. 
+
+You missed the fun part of his post - it's that ping packets return the
+data they were pinged with, so the US-end host is re-exporting components of
+PGP.
+>From a legal perspective, it's tough to assert that the US user had scienter,
+given that it pings scarcely reach the machine's consciousness, much less
+the human users', since they're handled by ICMP rather than by a user-space
+TCP or UDP
+socket.  (Obviously, if there's a sniffer around this is slightly different.)
+
+Is it possible to send out forged ping packets, pinging machine B with a From
+address of C (fake) instead of A (real), so that Alice can talk to China via
+Bob?
+If so, it might be an interesting method for traversing some firewalls,
+and also (if you write a ping-collector program) for back-channel
+communications.
+
+If you want to really abuse the protocols, 53 bytes probably fits into the
+64 you can send in a ping, so you could implement ATM-over-ICMP :-)
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+! Frank Zappa for President !
+
+
+
+
+

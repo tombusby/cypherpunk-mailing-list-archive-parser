@@ -1,0 +1,99 @@
+From: Alex Strasheim <cp@proust.suba.com>
+Date: Fri, 15 Mar 1996 11:50:18 +0800
+To: adam@lighthouse.homeport.org (Adam Shostack)
+Subject: Re: Remailer passphrases
+In-Reply-To: <199603140450.XAA12195@homeport.org>
+Message-ID: <199603140613.AAA00470@proust.suba.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+(warning:  I don't know much about security, so if you don't either, 
+don't take what I have to say too seriously...)
+
+> 	This is a long standing debate in the security community.
+> Some folks like multiple box security.  Others point out that using
+> two boxes means both need to be well secured, and you have twice as
+> many places to make mistakes.
+
+Ok, I see your point.  If someone compromises workstation, they can read
+all the mixmaster packets by looking at what comes in and out of blackbox. 
+But they still can't grab the passphrase and key, so old and future
+traffic is safer, and if there's a large reordering pool they'll have
+trouble matching a given incoming packet with a given outgoing packet. 
+
+> 	Lets say the boxes are called workstation and blackbox.  If I
+> break into workstation, I can provide bogus files for blackbox.  Since
+> blackbox extends some trust to workstation, it might not be expecting
+> to see a message with a return address of "`|telnet evil.fbi.gov`".
+
+It seems to me that if you're just running a remailer that only talks to
+one other machine, it ought to be possible to eliminate this kind of a
+problem.  Blackbox grabs a file from a queue on workstation, runs it
+through mixmaster, and deposits the output in an outgoing queue on
+workstation.  If the trojan file is something strange, it will just drop
+through mixmaster.  Maybe it would choke workstation on the way out, but
+blackbox -- and the passphrase -- would be safe.
+
+> 	I'd argue that setting up a simple mailer which uses
+> workstation as a relay host gives you as much security, and lessens
+> your dependance on workstation, which we expect will be comprimised.
+
+If we leave sendmail on, we're hosed -- wouldn't bb moving packets on and
+off workstation with ssh's rcp be a lot safer? 
+
+> (Of course we expect ws to be comprimised.  Why else are we setting up
+> bb as a seperate machine?)
+
+Agreed.
+
+> 	Turning of getty and removing the swap file strike me as a bit
+> extreme.  A panic login system, otoh, that accepts a bad password and
+> wipes the disk, might not be a bad idea.  (Of course, if this becomes
+> popular, the bad guys will just rip out your disk and read it on
+> another machine.)
+
+I admit freely that this is all extreme and impractical...  I was just
+trying to think through the problem.
+
+I was shooting for a system that would be worthless to an attacker if it
+was turned off, and which couldn't be hacked easily from the console
+without turning it off.
+
+A crypto file system directory will be worthless if the machine goes down,
+and if there's no swapfile, there's not going to be anything nasty left
+behind there.  The bad guys *can't* rip out your hard drive and read it,
+because all the good stuff is on the cfs drive -- it's just a big blob of
+idea'd data, and neither the remailer' or cfs's passphrase was ever
+written to disk.  
+
+When bb boots, it waits for the sysadmin to ssh in and mount the cfs drive
+manually, then start the remailer manually.
+
+If the attacker didn't know what you've got in place, he'd probably just
+steal the machine assuming he could get something out of it when he's got
+it back on his workbench.  If he did know the details of the system, he'd
+be faced with trying to extract the cfs and remailer passwords from the
+machine's ram without turning it off and without being able to login from
+the console -- ideally you wouldn't even have a keyboard plugged in.  (I
+have no idea how hard it would be to steal information from a running
+machine's ram -- or if it's even possible).
+
+> 	Be awful tough if it only listens to ssh & smtp.  Are you sure
+> your kernel doesn't do anything bogus with ICMP?  Data overflows in
+> ssh or smap?  DNS, syslogd, tty overloads?
+
+Actually, it only listens to ssh;  a bug there is fatal.  Same goes for
+the kernel.  We don't need dns -- to bb, the only other machine in the
+universe is workstation, and it knows the IP address.
+
+If the core system can't run without incident, you're in trouble.  But 
+couldn't you do a pretty good job of shielding it from surprises by 
+turning almost everything off and not letting it talk to the outside 
+world, except in very narrow ways?
+
+
+
+
+
+

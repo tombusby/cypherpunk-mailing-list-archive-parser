@@ -1,0 +1,41 @@
+From: greg@ideath.goldenbear.com (Greg Broiles)
+Date: Thu, 5 May 94 15:39:00 PDT
+To: cypherpunks@toad.com
+Subject: Cypherpunks change bytes!
+Message-ID: <m0pzBw2-0001WLC@ideath.goldenbear.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+I ought to be studying, but goofing off is more fun. I generated a test
+key with the binary distribution of PGP 2.3a for DOS. I then changed the
+byte at offset 2F688 in PGP.EXE from 0x33 (ASCII "3") to 0x34 (ASCII "4"),
+and the byte at offset 2F689 from 0x61 (ASCII "a") to 0x00 (null).
+
+The patched PGP.EXE identifies itself as "Version 2.4" in ASCII armor blocks
+and otherwise; the key generated with the "2.3a" version extracts as a "2.4"
+key after the patch. ViaCrypt PGP 2.4 for DOS can successfully read files
+encrypted with the patched PGP.EXE, and add keys generated under "2.3a" but
+labelled as "2.4" keys. I haven't done a lot of testing, but spot checks
+make it look like everything's fine. 
+
+I don't see the point in forcing everyone to patch their binaries or
+recompile from source - does anyone else? Bidzos & Co. are certainly smart
+enough to anticipate this step. What's the catch?
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLclzd33YhjZY3fMNAQGiDwP9HjSYfNfn4q/9L/BOqXluH06015x3YmDM
+gNPfg5T2lWcsYJyyx/tMnVWdtAnFENAFUB7zK5vNq+Y/tquKaE6kEuZeUzZz1o+k
+sOofUAR1Y+sUii4Fu8R2J7scNCDL2pjl/hIqAAfT0voHiexxOTR9uxCDeiWxz9w0
+xpyuvJBLQq8=
+=G5Oq
+-----END PGP SIGNATURE-----
+
+
+

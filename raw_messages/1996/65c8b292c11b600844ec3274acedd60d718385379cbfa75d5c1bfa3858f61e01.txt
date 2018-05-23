@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 21 Apr 1996 12:27:09 +0800
+To: Adam Shostack <adam@lighthouse.homeport.org>
+Subject: Re: Dictionary searching code
+Message-ID: <199604210149.SAA14482@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:02 PM 4/19/96 -0500, Adam wrote:
+>	Does anyone have some code that will search a dictionary, and
+>tell me *quickly* if an arbitrary chunk of text is in the dictionary?
+>Pre-indexing steps are fine, as is using big chunks of disk for hash
+>tables.  The point of course, is to check arbitrary possible plaintext
+>that a test decryption produces.
+
+Those who don't remember Unix are condemned to re-invent it :-)
+There have been _lots_ of papers done on the topic, and lots of
+programs written; there's probably a good chunk of material in Knuth as well.
+How quick is "quickly"?  How big is your dictionary?
+
+"grep" is probably not the right model, since you have the opportunity
+to pre-sort your dictionary.  "look" does a binary search on sorted text, 
+which can be very fast for general applications; you can go faster if
+you want to play with indexing and hashes, using lots of programs like dbm.
+
+If you're looking up a bunch of words at a time, you probably win by
+looking up an index table before looking in the dictionary itself,
+since it'll be in cache or in your program for all but the first look.
+If your dictionary is under 1MB, the useful parts of it may stick around
+in cache long enough to avoid multiple disk reads, especially if
+you're able to pre-sort the words you're searching against as well.
+On the other hand, if it's 100MB, and you're using a large machine,
+it's worth using maybe 100-1000KB of hash table to speed up lookups.
+
+Somebody mentioned the use of a bitmapped hash-table to get a quick check
+on whether an entry is probably there; there was a paper in Usenix's journal
+about 5 years ago on this by one of the Bell Labs Research folks,
+probably Doug McIlroy or Peter Weinberger, in the context of a spelling
+checker.  If the hashes aren't expensive to compute, and you get a 
+small percentage of false hits, it's cheap to look them up in the real
+dictionary.
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

@@ -1,0 +1,67 @@
+From: henry strickland <strick@osc.versant.com>
+Date: Tue, 16 Nov 93 10:20:51 PST
+To: hfinney@shell.portal.com (Hal Finney)
+Subject: Portable TCL-based crypto toolkit
+In-Reply-To: <9311151952.AA03070@jobe.shell.portal.com>
+Message-ID: <9311161819.AA27386@osc.versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+# One thing that frustrates me is the difficulty of easily providing
+# implementations of cryptographic algorithms that would be useful on a
+# wide range of machines.  A lot of these algorithms are really simple,
+# almost trivial.  Yet to write programs to implement them takes pages and
+# pages of code, and making them portable so that people on PC's, Mac's, and
+# Unix machines can use them is almost impossible.
+
+My experience has been much better.  I do have a TCL-based crytpo
+tookit running, currently on SunOS, although some of the work (RSAREF
+wrappers) I did on macintosh.  I think most of the pieces in this
+list port to MAC or DOS, using ANSI_C+POSIX emulation:
+
+	tcl7.0 (John Ousterhout's "Tool Control Language") sprite.berkeley.edu /pub/tcl
+	gmp (gnu miltiple precision) prep.ai.mit.edu /pub/gnu
+	gdbm (gnu database manager) /pub/gnu
+	alo-des (by Antti Louko (alo@kampi.hut.fi)) kampi.hut.fi
+	md2, 4, 5 (reference implementation) ftp.uu.net /inet/rfc/rfc{1319,1320,1321}
+	tclRawTCP (TCP socket, listen, connect for TCL) harbor.ecn.purdue.edu
+	RSAREF 1.1 (beta?) <rsaref-administrator@rsa.com>, 
+			includes limited license to practice RSA & DH
+
+Along with the tcl7.0 for MAC (for THINK6.*, altho in about 2 hrs
+I got it running under THINK5.* as well) comes ANSI and enough-of-POSIX
+libraries, sufficient to do most of what you need.
+
+I assume ANSI and enough-of-POSIX are available for PC as well?
+(I've never done programming on PC, so I can't speak from experience.)
+
+And I assume assume we can find TCP (Berkeley Sockets functions) for MAC and PC.
+
+
+This toolkit is sufficient to do most anything we've talked about.  I
+want to supplement this with more stuff -- IDEA, UDP, cme's trans,
+tripleDES, etc. -- but it already contains at least one implementation
+of what you need to prototype almost anything we've talked about.
+
+TCL is the trick.  Using this toolkit, I implemented Knapsack in about
+2 hours (because it was my first one), El Gamel in half an hour, and a
+DH-exchanged- DES-encrypted TCL-shell session over TCP in 2 hours.
+Most anything becomes a one-evening job, except DC-nets, because it has
+so many componenets....
+
+I'm trying to shape this into a release.  This will have to be a
+strictly-US-citizen-in-the-USA highly-controlled release, like
+RSAREF and RIPEM are.  Sorry...
+
+
+					strick
+
+					"stricks write code"
+
+
+p.s. perhaps someone could mail me the ftp path to the ITAR again...  thx
+
+
+
+

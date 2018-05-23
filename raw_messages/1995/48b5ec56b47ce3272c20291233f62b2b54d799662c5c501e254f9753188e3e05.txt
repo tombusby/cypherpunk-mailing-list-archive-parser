@@ -1,0 +1,34 @@
+From: rschlafly@attmail.com (Roger  Schlafly)
+Date: Thu, 14 Dec 1995 23:41:17 +0800
+To: cypherpunks@toad.com
+Subject: Kocher's RSA attack
+Message-ID: <rschlafly3480927310>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I read Kocher's paper, but I question its applicability.  One of his
+premises is that the time of a modular multiplication varies with
+the data.  I've checked my code for modular multiplication, and
+the clock cycles to execute don't depend on the data at all.  The
+same instructions get executed, and assuming the processor has a
+hardware multiply, they take the same time.
+
+When I timed the modular multiplication, I was able to detect some
+slight variation, but I attribute this to cache misses, as the variance
+with the same data was the same as the variance with different data.
+
+Apparently RSAREF has modular multiplies which vary significantly
+with the data, but I maintain this is not necessary.
+
+A good test case for his analysis might be to pull a secret key
+from a smart card.  If, say, the Capstone chip modular multiplication
+has some timing anomalies, this might be a good way to defeat the
+Fortezza card.
+
+Roger Schlafly
+
+
+
+

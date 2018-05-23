@@ -1,0 +1,164 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Sat, 6 Dec 1997 00:14:16 +0800
+To: Alex Woolfson <abdiel@worldnet.att.net>
+Subject: Re: Security of Encrypted Magic Folders
+In-Reply-To: <001501bd0131$20c8d5a0$a1a0400c@default>
+Message-ID: <Pine.SUN.3.96.971205102510.18650B-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Thu, 4 Dec 1997, Alex Woolfson wrote:
+
+>     EMF's encryption offers good protection and excellent speed.  It
+>     hasn't been broken yet.  It is, as far as we know, exportable.  THERE
+>     IS NO BACKDOOR.  Should you forget your password there is nothing we
+>     can do to decrypt your encrypted files.
+
+If it is exportable, then it is weak encryption by definition.  The
+question is how weak.  Reading their marketting crap provides more
+insights in just how lame this is:
+
+>     Quite a few people ask us how big EMF's key size is.  They've learned
+>     from other encryption programs that the bigger the key the stronger
+>     the encryption.  This really doesn't apply to EMF.
+> 
+>     We developed our own encryption instead of using a standard because
+>     we wanted EMF to be able to decrypt at the byte level.  In this way
+>     we only need to decrypt/encrypt the data your programs require and
+>     not the entire file.
+
+In other words: security through obscurity.  Smells like snake oil, looks
+like snake oil, it even has bits of snake scales in it.  Heck, if they say
+that the key size is not important, it's likely very tiny, or regardless
+of what key size you'd use (if you had any choice), it's such a weak
+cypher that it wouldn't get you anything.
+
+ 
+>     In theory, because we decrypt at the byte level, the biggest key we
+>     could use would be 8 bits - which is a joke.  So instead of
+>     decrypting every hunk of data using the same key, as most other
+>     encryption programs do, we developed an algorithm to vary the key
+>     based on the data's location within the file.  In this way we get
+>     both high security and high speed.  We are trying to patent EMF's
+>     encryption method.
+
+Whoop.  so the key is the location of the data?  At most, this means a 32
+bit key on most file systems, 64 bits on newer file systems.  This assumes
+that your file is long enough for that.  But as a key, this is totally
+useless as the key is the location which is visible to all.  Likely they
+would be wise to "mix" this location key with the passphrase.
+
+This offers little more than CBC would.  The only difference is that CBC
+is based on the previous block, where this is based on the location of a
+byte in the file (which is known) whereas a CBC depedns on knowledge of
+the previous block.
+
+If they did it the right way, they'd use the passphrase to build a lookup
+table of large keys based on the byte location within a file, but because
+this depends on your passphrase, your security is still that of the
+passphrase at maximum.  There may be ways to weaken this.
+
+>     Having said all that, truth is, most encryption isn't "cracked" by
+>     breaking the algorithm, it's done by guessing the password.  Brute
+>     guessing of passwords tends to level the playing field tremendously.
+>     We actually have an advantage because we aren't an established
+>     standard.  Because we're small and relatively obscure chances are no
+>     one will take the effort to write a password guessing program (which
+>     incidentally would violate copyright and intellectual property laws.)
+>     Even if someone were to go thru all this effort we could easily
+>     change the encryption method for the next update.
+
+This is total bullshit.  It's Grade A, government approved exportable
+snake oil.  Just because they are small and obscure it doesn't guarantee
+you any extra safety.  
+
+Just because nobody has bothered to write a brute forcer for their code
+doens't mean nobody can do so.  And no, this would not violate any of
+their copyright if the author of the brute forcer proggie wrote it without
+copying their code.  It might violate intellectual property laws if they
+had a patent on it, but they can't get one since they're going by
+security through obscurity.  They claim to be applying for a patent, but
+if they do, their code is published and their weaknesses will be
+displayed.
+
+It might violate trade secret laws if someone who has the source or the
+algorithm shares it, but not if someone reverse engineers it (depending on
+reverse engineering laws of course.) 
+
+Just because they could "rewrite" the code in the next update against
+cracking or brute force attacks does not buy you security.  FYI: If you
+use this crap and someone steals a copy of the encrypted files off your
+hard drive, it doesn't matter what new updates this company produces.  The
+fact is you used the older breakable version, the attacker has your
+cyphertext and will decode it. 
+
+ 
+>     If we used an established encryption method like DES or Blowfish then
+>     your files would probably have to be fully decrypted when opened,
+>     would exist on disk as unencrypted while you're using them, and then
+>     would need to be encrypted when closed. 
+
+Translation: We don't use CBC, because that would be more work and slow
+down our crappy cypher.  Deeper translation: break any portion of any
+encrypted file and you'll likely break the whole thing if not huge parts
+of it.  
+
+"Established encryption methods (sic)" use CBC because it adds security. 
+Their algorithms are well published and well known so people can find
+their weaknesses and publicise them.  Whatever weaknesses there are in
+this thing are hidden from those who can't or won't reverse engineer it. 
+But there are plenty of those who can and will, and have no qualms about
+releasing it anonymously, or worse: keeping the expolit to themselves so
+as to exploit those stupid enough to use this lame shit.
+
+It only takes one cracker with a good disassembler to reverse engineer
+their code and find all the holes, and they'll be out of business.  If
+what protects your data is the cypher, and not the key, then breaking the
+cypher is all you need to do.
+
+Heck, I'd bet they use something really shitty like this: (since "key size
+is not important", and "depends on location".)
+
+
+char code(char *passphrase, char data, long location);
+{
+  int i; char c;
+  
+  for (i=0; passphrase[i]>0; c^=passphrase[i++]);
+
+  return (data ^ c ^ (char)(location & 0xff));
+}
+
+Gee, I probably violated their "intellectual" property by guessing their
+code, heh.
+ 
+
+> This has multiple
+>     disadvantages.  First, if your computer shuts down while you have
+>     "encrypted" files open, then those files would be unencrypted.  This
+>     doesn't happen with EMF as your encrypted files are always encrypted
+>     as stored on disk.  The second disadvantage is that it slows things
+>     down tremendously.  
+
+Not if you use an encrypted disk driver.  then, all your data is encrypted
+all the time.  (You get into other issues such as keeping the passphrase
+or key from falling into the pagefiles, etc...)
+
+[Meaningless babble deleted.]
+
+
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    |Prying open my 3rd eye.  So good to see |./|\.
+..\|/..|sunder@sundernet.com|you once again. I thought you were      |/\|/\
+<--*-->| ------------------ |hiding, and you thought that I had run  |\/|\/
+../|\..| "A toast to Odin,  |away chasing the tail of dogma. I opened|.\|/.
+.+.v.+.|God of screwdrivers"|my eye and there we were....            |.....
+======================= http://www.sundernet.com ==========================
+
+
+
+
+

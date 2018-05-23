@@ -1,0 +1,35 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Thu, 7 Dec 95 19:33:00 PST
+To: cypherpunks@toad.com
+Subject: Strange Unix behavior dealing with utmp - anyone recognize this?
+Message-ID: <9512080330.AA27098@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+I was sending out a few hundred 25K emails over a period of a minute or so
+when my systemn encountered this thrilling sequence:
+
+Dec  7 22:11:56 all vmunix: file:<3>zs1: silo overflow
+Dec  7 22:11:57 all syslogd: /etc/utmp: File table overflow
+Dec  7 22:11:56 all vmunix:  table is ful<3>zs1: silo overflow
+
+It appears to be some sort of file table overflow related to the syslog
+daemon.  The message repeats numerous times and I think it has to do
+with the number of messages sent over a short time, however:
+
+	I regularly send far more messages without this error
+	It lost the processes that were generating these messages
+		so I had to redo part of the mailing.
+
+Does anyone recognize the symptom, and does this open a potential for
+attack by stress?  (e.g., if you can get something to fail in this way
+can the failure cause something to be missed?)
+
+Just thought I'd mention it.
+
+-> See: Info-Sec Heaven at URL http://all.net/
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

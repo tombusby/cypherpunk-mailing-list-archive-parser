@@ -1,0 +1,37 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Wed, 24 Jan 1996 06:22:05 +0800
+To: Rich Salz <rsalz@osf.org>
+Subject: Re: Hack Java
+In-Reply-To: <9601231630.AA07540@sulphur.osf.org>
+Message-ID: <Pine.SOL.3.91.960123110558.8403C-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 23 Jan 1996, Rich Salz wrote:
+
+Have you implemented this? If so, I'd be interested to hear how; It 
+doesn't sound feasible.
+> 
+> Now suppose, I fake a compiler (or I have a malicious compiler)
+> and I generate by hand malicious byte code such that
+> in the symbol tables, tricky_pointer and data have the same
+> offset.
+
+Symbol tables in java class files don't have offsets - they consist of a 
+list of class_ids, names, and types. Offsets into the class object are 
+theoretically generated at run time, and are purely internal to the 
+virtual machine. 
+
+The only way to get at the offsets is through the _quick variants, which 
+are not real java instructions, but placeholders inserted by the Sun 
+classloader after offsets have been calculated. If the class verifier can be
+made to allow _quick instructions through, security disappears - this is 
+checked for- a hole in this code would be huge.
+
+Simon
+
+
+
+
+

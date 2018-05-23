@@ -1,0 +1,55 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Mon, 9 Oct 95 23:16:10 PDT
+To: perry@piermont.com
+Subject: Re: java security concerns
+In-Reply-To: <199510100547.BAA00623@jekyll.piermont.com>
+Message-ID: <199510100615.CAA00389@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> Aleph One writes:
+> > Iam sorry I dont fallow your logic. You find Postscript files
+> > save because you can set up the interpreter to ignore Postscript commands
+> > to write to files and execute programms (check the CIAC alerts), yet
+> > you find Java applets insecure even when you can set up the same
+> > restrictions and more under HotJava (and hopefully Netscape)?
+> > That does not compute.
+> 
+> Yes it does.
+> 
+> To (perhaps over)simplify my point, the Java interpreter cannot be
+> stripped of all i/o capabilities and still remain useful. I can
+> physically remove all the "dangerous" calls from a Postscript
+> interpreter and still have it be useful.
+
+  There is a large class of Java apps that need no file i/o capability.
+99% of all Java apps on the web right now don't save any persistent state 
+information. I couldn't find any Java apps on the Java page that
+used file i/o.  If by "stripped of i/o capabilities", you mean
+that the Java interpreter is not permitted to ever call open/read/write,
+not even to read in files it needs like config/preferences files or 
+dynamically linked libraries, I'd say that's absurd. There's not many 
+things that can be stripped of such capabilities, including postscript
+interpreters, except for those which run the interpreter straight
+out of rom. But it's still unclear whether those lack "i/o capabilities",
+given that some postscript printers run operating systems and tcp/ip
+stacks, and it is feasible for the interpreter to crash and execute
+an i/o call. However, the Java interpreter can certainly be compiled
+to not allow Java applets to ever do disk or network i/o. It doesn't
+even take a recompile. Just delete the file i/o class.  
+
+  It is certainly possible, to within a high degree of confidence,
+to "box in" all i/o calls, especially if they are run in a separate
+process. 
+
+-Ray
+
+
+
+
+
+
+

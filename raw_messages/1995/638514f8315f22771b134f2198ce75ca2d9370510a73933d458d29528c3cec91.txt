@@ -1,0 +1,61 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Wed, 11 Oct 95 15:22:40 PDT
+To: anon-remailer@utopia.hacktic.nl (Anonymous)
+Subject: Re: MITM evasion MITM evasion
+In-Reply-To: <199510110855.JAA17966@utopia.hacktic.nl>
+Message-ID: <199510112222.SAA21067@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Anonymous, claiming to be Tim May, writes:
+>Two years ago, I pointed out that getting a single message past
+>the man in the middle isn't good enough; you have to convince your
+>readers that the key they received on one channel is more accurate
+>than the key they're receiving on all the other channels.
+>But if they'll believe that, they may also believe the man in the middle's
+>announcement that the key in your name on all the keyservers is
+>wrong, and the correct key is the one he's putting out.
+>Can't win either way, but it's still important to get the key out.
+
+I see two general categories of MITM attacks.  In one case, Mitch wants
+to eavesdrop on Alice and Bob, but doesn't really care about other
+communication they do.  In the other, Mitch wants to know about all of
+Alice's communications, regardless of with whom they are.
+
+Public key cryptography turns the first case into two instances of the
+second.  If Mitch doesn't control all of both Alice and Bob's
+communications with everyone, the will eventually discover that the key
+they're using for the other isn't the same one everyone else uses.
+
+In the second MITM model, Mitch has an unbelievable task.  Any public
+key that goes from Alice to anyone else, or vice versa, must be
+substituted with one Mitch holds.  Any messages *about* public keys
+must be transformed into messages about the corresponding MITM keys.
+
+This includes telephone conversations where Alice and Bob exchange
+keyids, the business card Eve has printed with her keyid and gives
+to Alice at Interop, the Betsi key Alice can read in the newspaper,
+WWW pages, files FTP'd, and face-to-face meetings.
+
+Anything short of total control gives Alice an opportunity to learn
+about Mitch's presence.  If Alice can exploit the hole enough to get
+one good key, Mitch must change his tactics to denial of service
+with respect to that key, or Alice can ask the key owner for other
+good keys.
+
+If Mitch can successfully surround Alice in such a cloud, I submit
+at least one of the following statements is true:
+
+1. Alice is such a non-entity that no one really wants to communicate
+with her.
+
+2. Bob can safely assume that the new key he just got isn't really from
+Alice, because an Alice-with-a-life surrounded by a nearly successful
+Mitch-cloud wouldn't be sending out keys --- she'd be sending out
+messages saying "HELP ME!!  I'M LOCKED IN MITCH'S SECRET BOMB
+SHELTER!!!"
+
+
+
+

@@ -1,0 +1,57 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Mon, 28 Aug 95 00:42:35 PDT
+To: Mark <mark@lochard.com.au>
+Subject: Re: SSl challenge - it was fun!
+In-Reply-To: <199508280134.AA19987@junkers.lochard.com.au>
+Message-ID: <"swan.cl.cam.:288030:950828074205"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> One problem with being in Australia was that I was asleep when
+>> new software updates were announced and tended to get them later
+>> than everyone else, and because of this an auto-update would
+>> be particularly useful to me if we do this again.
+> I would be extremely wary of this as accepting code written by someone else to
+> automatically run on your machine is bad.
+
+Indeed !
+
+This is why brclient and brloop are two separate programs ..
+(those who don't care about security can run "brclient -Ubrutessl -tssl | sh"
+ (for a demo, type "brclient -Ubrutessl -tsslck")
+ BUT it means that the SKSP server could run any command on your system!
+)
+Users should read brclient (and make me blush !) to show that there are no
+trapdoors. Then they should read brloop and convince themselves that whatever
+data is returned by brclient, no rogue command will be run.
+(this is why brloop is written in sh rather than perl -- I assume more people
+ read sh than perl ...
+)
+
+Note that brclient and brloop do not do any file I/O (so can be chroot'ed, etc)
+and apart from "pretties" (such as calling hostname / uname -n to generate an
+ID) brclient doesn't exec any other commands, so all you need provide are those
+used by brloop (I think sed and head).
+If anyone cares to build a "cell" in which to run it, please let me know.
+However, I fear that it might be somewhat machine specific.
+One problem is that the more recent brloop starts by asking "which servers
+shoudl I use" unless they are explicitly set -- this means that you either need
+to wire down the host to call (e.g. a local SKSP "local CPU farm" server),
+or allow it to make an outgoing call to *ANY* host on port 19957 (well, you
+might care to disable access to your local network, 127.* etc).
+
+> If they do not have the expertise, they will hear of it soon enough when
+> others scan the offered code.
+
+I've been waiting, but not heard any yet :-))
+
+
+After my experiences of a handfull of old clients killing the server for
+everyone, I plan to circumvent the problem by causing rogue brloop's to exit.
+Sure -- auto update would be nice, but until the padded cell above is
+implemented
+
+
+
+

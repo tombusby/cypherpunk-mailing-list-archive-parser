@@ -1,0 +1,61 @@
+From: John Douceur <johndo@microsoft.com>
+Date: Mon, 8 Aug 94 12:39:33 PDT
+To: cypherpunks@toad.com
+Subject: RE: Remailer ideas
+Message-ID: <9408081940.AA21249@netmail2.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>From: Eric Hughes  <hughes@ah.com>
+>Date: Saturday, August 06, 1994 4:02PM
+
+>Hal's random-send spool has an expected value of latency which is
+>approximately the size of the spool but has no deterministic upper
+>bound for that latency.  Fine.  Great.  No problem.  There should be
+>zero hesitation here, because the expected value -- the probabilistic
+>average -- is what you want.
+
+There is an important distinction between systems for which the only
+observable behavior is the probabilistic average and those for which
+the observable behavior is that of the individual actions.  An example
+of the former system is a hash table with open addressing:  The
+absolute worst case for a lookup is as bad as that in an unsorted
+list; however, this is not usually a problem, because programs
+generally perform large numbers of lookups, and the performance that
+the user observes is therefore equal to the probabilistic average.
+An example of the latter system is the case in point, a remailer:
+If a message is delayed unduly, the sender is unlikely to be
+contented by the fact that many other users' messages were serviced
+with considerably greater promptness.
+
+Therefore, the probabilistic distribution of service times is as
+important a metric of a remailer's performance as the probabilistic
+average service time.  It may thus be quite reasonable to build in a
+hard cutoff in service time, such that any message that has been
+delayed by more than a set amount will be guaranteed to be sent on
+the next transmission.  For some user of the remailer, this will make
+an observable improvement in performance; and since the extreme delay
+which triggers the expedited transmission is an unpredictable and
+infrequent event, it will not make cryptanalysis of the remailer any
+easier.
+
+JD
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLkaHjEGHwsdH+oN9AQGOjAP/eCDAPlVfsdzB7HsBO5FLmFaxt5udMAPE
+UrFYw1EvrFP8gbMd6976dU6+o/A6xtDbZXCN8UOX5SYsY4+ixWxR3X5x86f4VAPi
+BowglJWs9hrGH/iSGH1tk2+ehbpFNKA4vUlvRtjKfX5vudYr5+fHWjCndFiVTo6K
+VXy0N2iQI4U=
+=uTv6
+-----END PGP SIGNATURE-----
+
+
+
+

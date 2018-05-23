@@ -1,0 +1,92 @@
+From: ghio@utopia.hacktic.nl (Matthew Ghio)
+Date: Fri, 22 Sep 95 10:59:07 PDT
+To: cypherpunks@toad.com
+Subject: Re: Crypto Sync Issue
+In-Reply-To: <199509191846.LAA24272@netcom4.netcom.com>
+Message-ID: <m0swC6B-0012rZC@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tom Rollins <kelso@netcom.com> wrote:
+
+> I am interested in encrypting a SLIP link between my
+> PC (running Linux) and my Netcom shell account (running
+> SLIRP).
+> 
+> My question has to do with error conditions on the line.
+> If I drop a character or packet, the two sides will loose
+> crypto sync and result in things scrambled from then on.
+> The modems will fix most of the low level problems.
+> However, Murphy's Law has not been repealed. :)
+> 
+> Are there any standard methods to provide the SYNC between
+> the sender(encryption) and the receiver(decryption) on
+> an Async connection ?
+> 
+> Since Slip uses IP packets, I was planning on an encryption
+> of the data portion of the IP packets (leaving the header
+> alone).
+
+A better approach would be to encrypt the entire IP packets and leave the
+framing bytes alone.  
+
+But this is what I do:
+
+I use regular unencrypted SLIP (slirp) between here and netcom.
+Also install copies of slirp in all your other unix accounts, plus your
+favorite session encryption daemon (deslogin, ctcp, ssh, esm, etc).
+Then make some script files like this.  For this example I use deslogin
+to establish a secure session with utopia.hacktic.nl.
+
+/root/dialup:
+
+#!/bin/csh
+dip /root/netcom.dip
+/sbin/agetty 38400 ttyqf -l /root/utopiadeslogin &
+dip /root/utopia.dip
+
+/root/utopiadeslogin:
+
+#!/bin/csh
+exec /usr/local/bin/deslogin ghio@utopia.hacktic.nl
+
+/root/utopia.dip:
+
+port ptyqf
+wait ogin: 60
+send anything\n
+wait d: 5
+send password\n
+wait ] 5
+send \n
+send exec slirp-0.9o/src/slirp\n
+get $rmtip 10.0.2.42
+get $locip 10.0.2.16
+mode CSLIP
+
+
+Add to /etc/hosts:
+
+10.0.2.42       utopia-secure
+
+
+Then I can do: telnet utopia-secure
+and everything is encrypted.
+
+I got deslogin from utopia's anon-ftp dir.
+A 3DES version would be nice tho.
+
+When you want to hangup, use this to kill all of the dip processes:
+
+#!/bin/csh
+ps -ua|grep " pQf "|awk '{print "kill " $2}'|csh
+ps -ua|grep " pS1 "|awk '{print "kill " $2}'|csh
+
+
+To do this for more hosts, just pick any available IP addresses
+in 10.0.2.x and a free tty (ttyq* are usually unused).
+
+
+
+

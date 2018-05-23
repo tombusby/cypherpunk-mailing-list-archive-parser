@@ -1,0 +1,56 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Tue, 12 Aug 1997 23:47:59 +0800
+To: coderpunks@toad.com
+Subject: Encrypting same data with many keys...
+Message-ID: <Pine.SUN.3.96.970812111223.26326D-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+What are the dangers of taking a small block of data - say upto 1K in
+size, then producing many files, each being the same data encrypted by
+other keys? 
+
+i.e.:
+	Plain data: 1K in size or smaller
+	
+	File 1: Data encrypted with Key1
+	File 2: Data encrypted with Key2
+	File 3: Data encrypted with Key3
+	File 4: Data encrypted with Key4
+	File 5: Data encrypted with Key5
+	File 6: Data encrypted with Key6
+	File 8: Data encrypted with Key8
+		....
+	File N: Data encrypted with KeyN
+
+A known plaintext attack won't help you to break the keys unless you have
+one of the eight keys, but will having many keys that encrypt the same
+data significanltly weaken the security of that tiny chunk of data?
+
+And no, I don't mean, there's N keys so the odds of brute forcing the data
+is now N times easier.  Assume we're using 128 bit Blowfish/Idea or
+better, and discarding weak keys.  Are there any differential or other
+cryptanalysis methods to use the eight resulting cyphertexts to get at the
+data other than brute forcing it if you don't know any of the keys?
+
+What if instead of using a private key cypher, we used a public key
+cypher?  Would that make any difference in attack methods?
+
+The data won't contain any text, or identifiers (i.e "GIF89" in GIF files,
+"MZ" in wintel executables, etc...)  known or guessable to the attacker...
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    |Prying open my 3rd eye.  So good to see |./|\.
+..\|/..|sunder@sundernet.com|you once again. I thought you were      |/\|/\
+<--*-->| ------------------ |hiding, and you thought that I had run  |\/|\/
+../|\..| "A toast to Odin,  |away chasing the tail of dogma. I opened|.\|/.
+.+.v.+.|God of screwdrivers"|my eye and there we were....            |.....
+======================= http://www.sundernet.com ==========================
+
+
+
+
+

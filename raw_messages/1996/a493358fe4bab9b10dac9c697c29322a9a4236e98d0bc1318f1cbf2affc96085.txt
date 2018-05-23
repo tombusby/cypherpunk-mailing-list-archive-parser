@@ -1,0 +1,68 @@
+From: Christian Wettergren <cwe@it.kth.se>
+Date: Mon, 29 Apr 1996 22:21:58 +0800
+To: cypherpunks@toad.com
+Subject: Re: trusting the processor chip
+In-Reply-To: <Pine.LNX.3.91.960428150426.2054A-100000@crash.suba.com>
+Message-ID: <199604290725.JAA08405@piraya.electrum.kth.se>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+The promised reference:
+
+"The Intel 80x86 Processor Architecture: 
+Pitfalls for Secure Systems"
+
+Olin Silbert, Oxford Systems Inc,
+Phillip A Porras, The Aerospace Corp,
+Robert Lindell, --- " ---
+
+Abstract:
+An in-depth analysis of the 80x86 processor families identifies
+architectural properties that may have unexpected, and undesirable,
+results in secure computer systems. In addition, reported
+implementation errors in some processor versions render them 
+undesirable for secure systems because of potential security and
+reliability problems. In this paper, we discuss the imbalance in 
+scrutiny for hardware protection mechanisms relative to software,
+and why this imbalance is increasingly difficult to justify as
+hardware complexity increases. We illustrate this difficulty with 
+examples of architectural subtleties and reported implementation
+errors.
+
+
+My comments:
+This is a high-security view paper, so they go on looking for
+all possible covert channels etc. Not what we are discussing 
+here, perhaps.
+
+They note one problem with Page Access Control by the TCB through
+the VERR and VERW instructions. In some cases it is possible
+that these instructions leave "grant access" when they should have
+said the opposite.
+
+They note that the Timestamp Counter (TCS) in the pentium might
+give out high-resolution timing information. This can be used 
+attack sw RSA running in another task for example, I believe.
+
+They have 102 flaw reports collected for 80386, 80486, Pentium.
+
+There are 8 major security flaws reported. "7. The bits of the 
+I/O Permission Bitmap (IOPB) correspond to individual byte addresses
+in the I/O address space. The D0 step of the 386 permits
+access to certain addresses prohibited by the I/O bitamap: if a 
+4-byte access is performed, only 3 of the 4 relevant bytes are 
+checked."
+
+There were 9 denial-of-service as well, here's one "LAL, LSL, 
+VERR, VERW for a null (zero) selector (A1 step) [Turl88]"
+
+Quite fun reading, although I also recognizes that this kind of
+attack is a bit down on the list of best cost/effort ratios.
+
+-Christian
+
+
+
+

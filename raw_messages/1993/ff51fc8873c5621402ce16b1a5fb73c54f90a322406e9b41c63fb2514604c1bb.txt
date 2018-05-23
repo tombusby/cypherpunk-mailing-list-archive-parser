@@ -1,0 +1,48 @@
+From: Jay Prime Positive <jpp@markv.com>
+Date: Mon, 18 Jan 93 21:47:16 PST
+To: CYPHERPUNKS@toad.com
+Subject: Poor Man's Cash -> Poor Man's Wallet
+Message-ID: <9301182145.aa03856@hermix.markv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: jpp@hermix
+To: CYPHERPUNKS@TOAD.COM
+In-reply-to: Hal's message of 17 Jan 93 13:47:45 EST <930117184744_74076.1041_DHJ40-1@CompuServe.COM>
+Subject: Poor Man's Cash -> Poor Man's Wallet
+
+  Here is a minor change which can be used with the Poor Man's Cash
+protocol to increase the burden on banks which wish to trace
+transactions.  I will call it Poor Man's Wallet protocol.
+
+  Rather than maintain accounts, have the bank maintain only a map
+from bills to values.  The bank will support three kinds of
+transactions: Combine, Split, Validate.
+
+  To check that a bill is good, I ask the bank to VALIDATE b1.  It
+responds with v and b2.  V is the value of b1, and b2 is a new bill
+that has the value of b1 (- bank fee).  (Naturaly the new value of b1
+will be 0.)  Worthless bills b1 could result in either a b2 with a
+value of 0 (thus issueing a new 0 worth bill) or with no bill at all.
+
+  To add money to my wallet, I ask the bank to COMBINE a bill b1 from
+somewhere else, to a bill b2 from my wallet.  Both b1's and b2's value
+get zeroed, and a new bill b3 with value = to v(b1) + v(b2) (- bank
+fee) is returned to me.
+
+  To break a bill down to more convinient sizes (perhaps when I wish
+to pay some one), I ask the bank to SPLIT a bill b1 into b2 and b3,
+where v(b3) = v(b1) - v(b2) (- bank fee).
+
+  It may be better (as far as anonymity goes) to require the bank fees
+be paid with a seperate bill.  It will be better to have many banks,
+and to have the banks each validate bills of other banks.  Since in
+this case your anonymity is the maximum of the anonymities of the
+chain of banks involved.
+
+j'
+
+
+
+

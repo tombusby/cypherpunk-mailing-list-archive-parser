@@ -1,0 +1,44 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Thu, 12 Nov 92 13:18:01 PST
+Subject: No Subject
+Message-ID: <9211122117.AA29329@iha.compuserve.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bcc: Blind Recipients List:;
+Subject: Why hardware random numbers?
+Message-ID: <921112211037_74076.1041_DHJ46-1@CompuServe.COM>
+
+I don't understand the desire for hardware-based random number generators.
+It seems to me that a decent software RNG would be adequate for
+the main uses that I have heard of for RNG's (mostly session key
+generation).
+
+Seed the RNG initially with a nice random set of characters typed in
+by the user, plus timing information based on the rate of timing of
+those characters.  Also use the local system clock, and possibly a
+hash of some sectors of the disk or some files on /tmp.  Create a pool
+of random numbers in this way.
+
+As you use them, refill the pool, making the refilled bytes a function
+of the current system clock, and whatever message you are encrypting
+(or some other appropriate global state).
+
+Use a nice strong RNG based on DES, MD5, IDEA, or some other cypher or
+hash function.
+
+I don't think anyone could break the resulting random stream without
+a physical attack on your computer.  Why pay $50 to $200 for a hardware
+device when you can get the same effect in software that already exist?
+Both PGP and RIPEM, I think, use the above techniques for their random
+numbers.
+
+Hal
+74076.1041@compuserve.com
+
+
+
+
+

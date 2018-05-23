@@ -1,0 +1,75 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 9 May 1997 17:59:14 +0800
+To: harka@nycmetro.com
+Subject: Re: El Gamal
+In-Reply-To: <199705090000.UAA02189@linux.nycmetro.com>
+Message-ID: <199705090726.IAA00747@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Harka <harka@nycmetro.com> writes:
+> Adam Back <aba@dcs.ex.ac.uk> wrote:
+> >PGP has been standardising on El Gamal which is not covered by RSA's
+> >patents, for precisely the reason that RSA Inc has a bad record as a
+> >litigious patent worker.  El Gamal is a variant of Diffie-Hellman, 
+> >and the patents on Diffie-Hellman are set to expire RSN (later this 
+> >year, Sept?)
+> 
+> How does El Gamal compare functionally and security-wise to RSA and 
+> who developed it?
+
+Functionally: it provides both a digital signature method and an
+assymetric encryption method.  They are not self-inverses as in RSA
+(in RSA encrypt with secret key = signature, encrypt with public key =
+assymetric encrypt; with El Gamal encrypt and sign are different
+operations).  
+
+Security: EG is based on the discrete log problem (being a variant of
+Diffie-Hellman) where as RSA is based on the factoring problem.
+Discrete log has about the same security for the same size keys.  El
+Gamal encrypted blocks and signatures are twice the size as RSA
+blocks, there is a 2x expansion.
+
+If you don't mine a common prime modulus with EG, key generation
+is fast (just generate a random number), RSA key generation is _slow_.
+
+There is no separate patent on EG.  The D-H patent, which the patent
+holders may argue covers EG, expires as I said RSN so the attraction
+of EG is that it will then be unencumbered by patents.
+
+El Gamal was developed by Taher El Gamal.
+
+I don't see the advantage of EG encryption, D-H achieves the same
+thing with the same security and it doesn't have message expansion.
+There is a difference, with D-H you can't choose the session key
+directly, it is negotiated and depends on the encryptors choice of
+negotiation parameter and the recipients secret key.  However most
+uses of public key encryption are only interested in exchanging or
+negotating a symmetric key anyway, so D-H seems practical for this
+purpose.  Is there any speed advantage with EG encryption?
+ 
+EG signatures and D-H encryption?  You can share the prime modulus
+public key parameter.
+
+> >I think that the initial PGP products are using RSA, however I 
+> >understood PGP is moving to El Gamal, where RSA is due to be 
+> >relegated to a `for backwards compatibility only' feature. 
+> 
+> Is El Gamal used in the source for PGP 3.0?
+
+I don't know, no one's exported the source to pgp3.0 in electronic
+form, and I haven't seen the books either.  
+
+PGP4.5 (which has been exported, was on ftp://ftp.replay.com last I
+looked) seems to use RSA still.  It has the added functionality of a
+windows front end, separate signing and encryption keys, and expiry
+dates on keys.
+
+Adam
+
+
+
+
+

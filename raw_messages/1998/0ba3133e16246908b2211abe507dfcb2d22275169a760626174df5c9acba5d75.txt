@@ -1,0 +1,114 @@
+From: Robert Hettinga <rah@shipwright.com>
+Date: Tue, 27 Jan 1998 01:36:55 +0800
+To: cypherpunks@cyberpass.net
+Subject: CyberSitter to the rescue.
+Message-ID: <v04003906b0f2716ac2dc@[139.167.130.248]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+--- begin forwarded text
+
+
+Resent-Date: Tue, 20 Jan 1998 17:19:45 -0500
+X-Authentication-Warning: qnx.com: localhost [127.0.0.1] didn't use HELO
+protocol
+To: 0xdeadbeef@substance.abuse.blackdown.org
+Cc: bostic@bsdi.com
+Subject: CyberSitter to the rescue.
+Date: Tue, 20 Jan 1998 16:08:19 -0500
+From: glen mccready <glen@qnx.com>
+Resent-From: 0xdeadbeef@substance.abuse.blackdown.org
+X-Mailing-List: <0xdeadbeef@substance.abuse.blackdown.org> archive/latest/2639
+X-Loop: 0xdeadbeef@substance.abuse.blackdown.org
+Precedence: list
+Resent-Sender: 0xdeadbeef-request@substance.abuse.blackdown.org
+Status: U
+
+
+Forwarded-by: Faried Nawaz <fn@LISP-READER.Hungry.COM>
+Forwarded-by: acb@zikzak.net (Andrew C. Bulhak)
+Forwarded-by: Matt Curtis <mattc@beam.com.au>
+
+This is from the PerForce mailing list, PerForce is a source code
+control system that doesn't use mounted drives, but instead uses
+TCP/IP socket communications to check code in and out.
+
+-----
+
+Well, I just spent several hours tracking something down that I
+think is SO braindead that it must be called evil.  I hope this
+will save someone else some hassle.
+
+There's an NT box on my desk that someone else uses every now and
+then.  This machine is otherwise used as my programming box and
+backup server.
+
+All of a sudden, my programming files were being corrupted in odd
+places.  I thought "hmm, my copy must be corrupt".  So I
+refreshed the files.  No change.  "hmm, the code depot copy must
+be corrupt"..  Checked from other machines.  No problem there.
+
+Viewed the file from a web based change browser in Internet
+Explorer.  Same corruption in the file.  Telnet'd to the server
+machine and just cat'd the file to the terminal.  Same problem.
+What's going on?
+
+The lines that were corrupted were of the form
+
+ #define one 1 /* foo menu */
+ #define two 2 /* bar baz */
+
+What I always saw ON THIS MACHINE ONLY was:
+
+ #define one 1 /* foo     */
+ #  fine two 2 /* bar baz */
+
+Can you guess what was happening?
+
+Turns out, someone had inadvertly installed this piece of garbage
+called CyberSitter, which purports to protect you from nasty
+internet content.  Turns out that it does this by patching the
+TCP drivers and watching the data flow over EVERY TCP STREAM.
+Can you spot the offense word in my example?  It's "NUDE".  Seems
+that cybersitter doesn't care if there are other characters in
+between.  So it blanks out "nu */ #de" without blanking out the
+punctuation and line breaks.  Very strange and stupid.
+
+It also didn't like the method name "RefreshItems" in another
+file, since there is obviously a swear word embedded in there.
+Sheesh.
+
+It's so bad it's almost funny.  Hope this brightens your day as
+much as it brighted mine :-).
+
+ ----
+ +----------------------+---+
+ | Ross Johnson         |   | E-Mail: rpj@ise.canberra.edu.au
+ | Info Sciences and Eng|___|
+ | University of Canberra   | FAX:    +61 6 2015227
+ | PO Box 1                 |
+ | Belconnen  ACT    2616   | WWW: http://willow.canberra.edu.au/~rpj/
+ | AUSTRALIA                |
+ +--------------------------+
+
+--- end forwarded text
+
+
+
+-----------------
+Robert Hettinga (rah@shipwright.com), Philodox
+e$, 44 Farquhar Street, Boston, MA 02131 USA
+"... however it may deserve respect for its usefulness and antiquity,
+[predicting the end of the world] has not been found agreeable to
+experience." -- Edward Gibbon, 'Decline and Fall of the Roman Empire'
+The e$ Home Page: http://www.shipwright.com/
+Ask me about FC98 in Anguilla!: <http://www.fc98.ai/>
+
+
+
+
+
+

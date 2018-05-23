@@ -1,0 +1,76 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 2 Oct 95 14:48:34 PDT
+To: Carl Ellison <cme@TIS.COM>
+Subject: Re: Certificate proposal
+Message-ID: <199510022148.OAA26396@ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:53 AM 10/2/95 EDT, Carl Ellison <cme@TIS.COM> wrote:
+>X.509 certificates are not totally bad.  Their structure contains lessons
+>for anyone designing a certificate structure.  [Raw X.509 does not imply a
+>hierarchy, I believe.  Steve Kent & Co. do.]
+
+I agree with you about hierarchies, and even RFC1422 doesn't really force you
+to use hierarchy, much less a government-enforced one, though it clearly 
+prefers it, and it definitely does support the concept of having a key signed
+by more than one CA, at least for CA's keys.  The most important differences,
+from my perspective, are
+1) X.509 explicitly addresses Certificate Revocation Lists, though it
+        isn't real precise about how they should be distributed, and the
+        hierarchical approach isn't necessarily the best.  (Maybe put the 
+        location of the preferred CRL for a key certificate in the cert itself?)
+2) X.509 certificates, unlike PGP, only support once signer per certificate;
+        this is a slight hierarchical bias, which forces you to haul around a 
+        pile of certificates to have multiply signed keys, without specifying
+        a syntax, so simple key-cert programs may not know what to do with
+        multiples, and hence force hierarchy; the rest of us will just have
+        to deal with multiply syntaxes.  But that's mainly a verbosity
+        problem, duplicating Distinguished Names and key info.
+3) Neither PGP nor X.509 (as documented in the RFC1422 and PKCS#6) have any
+        mechanism for additional information other than cramming it into
+        the username, but supposedly X.509 Version 3 includes something?
+
+>Perhaps the biggest problem is the use of a name -- a text string (or some
+>abortion like the DN which can be reduced to a text string) -- as the
+>anchor point.    [.... use the public key instead ....]
+>What remains is a need for attributes to be bound to a key.  ...
+>Current certificates are going down a fundamentally wrong path.  They are
+>trying to bind keys to people and let Society somehow bind attributes to
+>people -- but the latter binding is too weak to permit keys to be bound to
+>attributes or permissions.
+
+Eventually, there may be a way to represent most of the attributes you want
+to describe in some format, which I dare say will look _far_ uglier than
+ASN.1 :-)
+Binding a key to a text-string usually representing a person does give you
+the slack to use other mechanisms rather than wait for the release of
+/standard-name="Attribute Semantics Notation"/version=32769/ORG="International
+Slowness
+Organization"/Country=none/reliability=ExtremelyHighTrustUsThisTime/versionh
+istory=
+
+For now, there do seem to be some kinds of attributes that would benefit from
+better representations than a human-name plus free-form text, such as
+"which application does the user want you to use this key for?" "how much
+should I
+trust the user's desire to have me use that key for that application?"
+"how do I get this key's owner to give me money?" "does the key-holder 
+have the authority to speak for a given organization/human/bank account?"
+If you look at Verisign's DNs, or the text in my PGP keys, you'll see various
+ugly attempts at this.
+
+And then there's "WHICH person named Bill Stewart does this key belong to?"
+For the latter, I'm interested in solutions other than "Social Security Number",
+"Citizen-Unit Nationalized ID Card Number", etc.
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

@@ -1,0 +1,45 @@
+From: nobody@alumni.cco.caltech.edu
+Date: Fri, 15 Oct 93 19:30:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: Detecting double-spending (long)
+Message-ID: <9310160224.AA12745@alumni.cco.caltech.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(Actually, it _is_ from the person in the "from" address above.  The
+Portal system, from which I usually post, seems to have lost the ability
+to send mail to toad.com.)
+
+Wonderer asks:
+> So, this method relies on trusting the bank? After all,
+> Alice must include her identity in the messages, so that
+> double spending can be detected later. When the bank 
+> verifies that it says 'Alice' and not 'Bozo', then it
+> could keep track of her coins.
+
+This method does not depend on trusting the bank not to reveal Alice's
+identity.  That's why this is called "cash".  As long as she does not
+double-spend, her identity is kept secret.
+
+I'm not sure whether you are asking about the part of the protocol
+where Alice withdraws her cash from the bank, or the later part where she
+spends the money and the merchant sends it to the bank.  When she
+withdraws the money, she blinds the f(xi,yi) candidates by multiplying
+them by ri.  For half of those, she has to reveal the ri, but that half
+IS NOT USED in the rest of the protocol.  The ones which are used are
+blinded and so the bank never sees her <info> in those.
+
+When she spends the money and reveals the values to the merchant,
+Alice only includes her <info> in the form (ai xor <info>), where
+ai is a random value that nobody knows unless she double-spends.  The
+ai "blinds" the <info> so that (ai xor <info>) does not reveal <info>.
+Only if she double-spends is both ai and (ai xor <info>) revealed for
+some i, and only then is her <info> exposed.
+
+Hal
+hfinney@shell.portal.com
+
+
+
+

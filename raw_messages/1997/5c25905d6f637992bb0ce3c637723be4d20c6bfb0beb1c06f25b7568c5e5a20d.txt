@@ -1,0 +1,88 @@
+From: Anonymous <nobody@REPLAY.COM>
+Date: Mon, 22 Sep 1997 06:08:35 +0800
+To: cypherpunks@toad.com
+Subject: Fwd: Re: Quor's cypher
+Message-ID: <199709212145.XAA07725@basement.replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+This is a really nifty encryption program.  It runs about half the speed
+of rc4, but seems much more secure.
+
+
+--- Forwarded Message:
+
+From: quor@nym.alias.net
+Subject: Re: tell me what you think of this...
+
+[snip]
+
+---
+
+/* Stream ciphers are often used because of their speed and simplicity of
+implementation despite their inherent weakness against known-plaintext,
+ciphertext-modification, and key-reuse attacks.  The algorithm described
+below provides a more secure alternative for encrypting data eight bits
+at a time, which, while maintaining a simple self-inverting architecture,
+provides resistance to the aforementioned attacks, and features a large
+keyspace, small code size, back traffic protection, and resistance to
+timing attacks and differential cryptanalysis. */
+
+
+/* Qcypher.c */
+
+#include <stdio.h>
+
+unsigned char a,b,c,state[256];
+
+unsigned char q(unsigned char i)
+{
+  static unsigned char a0,a1,b0,b1,c1,c2,c3,c4,o,d1,d2,d3,d4;
+
+  a0=state[a];
+  a1=state[a0];
+  b0=state[b];
+  b1=state[b0];
+  c1=i^(0xAA&state[(i&0x55)^a]);
+  c2=c1^(0x55&state[(c1&0xAA)^b]);
+  c3=c2^(a+b)^(a0+b0);
+  c4=c3^(0x55&state[(c3&0xAA)^b]);
+  o=c4^(0xAA&state[(c4&0x55)^a]);
+  d1=i&o;
+  d2=i^o;
+  d3=c2&c3;
+  d4=c2^c3;
+  state[c&=255]^=a^d4;
+  state[c^0x80]^=b^d4;
+  a+=d1+b1+1;
+  b^=d2^d3^a1;
+  c++;
+  return(o);
+}
+
+void setkey(unsigned char *key, int len)
+{
+  int x;
+  a=b=c=0;
+  for(x=256;x--;state[x]=0);
+  for(x=0;x<len;x++) state[x&255]^=key[x];
+  for(;len--;*(key++)=0) q(*key);
+  for(x=0;x<256;q(x++));
+}
+
+void main(int ac,unsigned char **av)
+{
+  unsigned char byte;
+
+  setkey(av[1],strlen(av[1]));
+
+  while(fread(&byte,1,1,stdin)>0)
+    putchar(q(byte));
+}
+
+
+
+
+

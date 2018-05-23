@@ -1,0 +1,80 @@
+From: tomw@orac.engr.sgi.com (Tom Weinstein)
+Date: Tue, 24 Oct 95 00:46:33 PDT
+To: cypherpunks@toad.com
+Subject: Re: How can e-cash, even on-line cleared, protect payee identity?
+In-Reply-To: <199510232023.OAA10038@nag.cs.colorado.edu>
+Message-ID: <199510240746.AAA01967@orac.engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <DGxFBL.753@sgi.sgi.com>, Hal <hfinney@shell.portal.com> writes:
+
+> "Simon Spero" <ses@tipper.oit.unc.edu>  wrote:
+>>> If so, there's 
+>>> an obvious way to get two way anonymity with an on-line system. If Alice 
+>>> wants to pay Bob $10, then Bob could prepare the usual squillion copies 
+>>> of the note, each with a serial number known only to Bob, then blind them 
+>>> and send them to Alice. 
+>>> 
+>>> Alice would then reblind them and send them to Nick, the banker. Nick
+>>> would then pick one of the notes, and ask Alice for the blinders for the
+>>> rest. Alice would then ask Bob for his blinders for the rejected notes,
+>>> and would forward both sets on to Nick, who would check them, and if
+>>> they're legit, sign the remaning copy, and return it to Alice.  
+>>> Alice cound then remove her blinding factor, and sent the result on to
+>>> Bob. Bob then removes his blinding factor, and can now spend the coin. 
+
+> This is an interesting idea but it is more complicated than necessary, I
+> think.  The denomination can be carried in the exponent, in which case
+> there is no need for cut and choose and nobody can cheat the bank.  A
+> coin suitable for deposit is a signed number of some special form.  To
+> pay Bob, Alice does not withdraw anything ahead of time.  Rather, Bob
+> gives her a blinded coin, which she reblinds and gives to the bank.  The
+> bank signs it (debiting Alice's account) and gives it back to her.  She
+> strips off her blinding and gives it to Bob.  He strips off his own
+> blinding and verfifies that he is left with a signed number of the
+> appropriate form.
+
+> This system is in some ways the inverse of regular ecash.  Instead of
+> Alice withdrawing a coin ahead of time, and Bob checking it with the bank
+> right away, it is Alice who does the bank interaction at payment time,
+> and Bob who waits before interacting with the bank.  The computational
+> and communications costs do not seem much worse than ecash.
+
+> There is no way Alice can double-spend because she cannot anticipate
+> Bob's blinding factor and give him a previously-spent coin which will
+> unblind to the proper form.  There could be an issue of fraud, though,
+> where Bob insists that Alice's coin was no good even though it actually
+> was.  Since he has blinded it she will have no way of recognizing it when
+> he eventually deposits it.  In the current system this does not arise as
+> Alice can always give him another copy of the coin and prove that it is
+> good, and she can further determine if Bob has deposited it.  So some of
+> the trust in the bank necessary with regular ecash gets replaced by trust
+> between payee and payor in Simon Spero's system.
+
+If Bob insists that the bank wouldn't redeem Alice's coin, that's not
+Alice's fault.  The bank should have reserved the money when Alice
+withdrew it.  Since nobody other than Bob sees the unblinded coin, it's
+Bob's fault if somebody else spent it before Bob could.  In the case of
+fraud by the bank, since the bank signed the coin, the bank should be
+liable if it won't redeem it.
+
+Perhaps the problem is that Bob insists that Alice's coin was not signed
+by the bank.  In that case, how about this modification?  Alice should
+first show Bob the doubly blinded coin she gave to the bank and the
+signed doubly blinded coin she received back.  Bob can verify the
+signature and then Alice can give him the blinding factor so he can
+unblind it himself.  Bob also needs to sign the singly blinded coin that
+he gives to Alice so that Alice can later show that she gave him the
+correct blinding factor if Bob tries to claim that she didn't.
+
+Are the any problems with this?
+
+-- 
+Sure we spend a lot of money, but that doesn't mean | Tom Weinstein
+we *do* anything.  --  Washington DC motto          | tomw@engr.sgi.com
+
+
+
+

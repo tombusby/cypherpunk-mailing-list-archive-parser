@@ -1,0 +1,61 @@
+From: "Rick H. Wesson" <wessorh@ar.com>
+Date: Tue, 23 Aug 94 21:21:30 PDT
+To: cypherpunks@toad.com
+Subject: Brands cash in perl
+Message-ID: <199408240421.VAA09565@ar.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Below are two Perl psudo-Functions as I see Brands Cash as described 
+by Hal (hfinney@shell.portal.com) Am I comming close or am I way off,
+Personally I understand code better than the written word and I can
+loose lots in the translation. If this is on the "right track" then 
+where does $g come from, can I take it from the modulo of a PGP 
+key?
+
+
+# mPrime(m') is passed as $CASH with the two submitter generated 
+# Check values $A and $B. &GetChallenge returns the random challenge 
+# we requested as $c0, the two additional ones ($c1 and $c2) were
+# supplied by the depositor.
+
+sub Deposit{
+  local($CASH, $A, $B) = @_;
+  if(($A*$B) == $CASH){
+      ($c0, $c1, $c2) = &GetChalenge;
+      $Catch = $A*($B ^ $c0);
+      $Check = $Amt^$c1*$g^$c2;
+      if($Catch == $Check){
+         sql("insert into account Balacne=Balance+$CASH");
+         print "ALL OK; CASH Accepted\n";
+      }else{
+         print "Double Spender!!\n"
+         &CatchCriminal($CASH);
+      }else{
+         print "You Lie!!!\nStop making up stuff\n";
+         &CatchCriminal($CASH);
+
+   }
+}
+
+# Supplied with a users account number, however this happens via a form
+# or E-Mail, we generate m' and sign and deliver it... 
+
+sub mPrime{
+   local($Acct, $Amt, $g) = @_;
+   $RandomNumber = &GetHugeRandomNumber;
+
+   $Acct = sql("Lookup $Person's Account");
+   sql("update Balance=Balance-$Amt where AccountID=$Acct");
+
+   $CASH = $Amt**$RandomNumber * $g**($Acct*$RandomNumber);
+   
+   sql("Intert $CASH into outstanding insterments");
+   
+   return(&Signed($CASH));
+}
+
+
+
+

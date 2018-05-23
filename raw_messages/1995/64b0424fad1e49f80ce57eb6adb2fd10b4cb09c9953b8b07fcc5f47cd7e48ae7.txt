@@ -1,0 +1,35 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Sat, 28 Oct 1995 02:13:31 +0800
+To: frantz@netcom.com (Bill Frantz)
+Subject: Re: Linux security issues
+In-Reply-To: <199510270552.WAA17904@netcom7.netcom.com>
+Message-ID: <199510271704.NAA07834@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Actually keeping the pass phrase out of swap space is fairly easy (although
+> I havn't looked at the PGP code to see if it actually does this).  Read the
+> pass phrase in raw mode, one character at a time and convert it one
+> character at a time to the decryption key for the private RSA key.  Then
+> the OS doesn't need to buffer the whole line, either in kernel space or in
+> user space.
+
+This isn't as easy as you think, and it completely breaks many
+abstractions to do this!  PGP does some of this, but not all of it.
+It does get the pasphrase one character at a time, however it does
+buffer it all before hashing it to a key.  One reason is that you do
+not necessarily know how big a session key you need, so you may need
+to use different hashing techniques to get different sized keys.
+
+It would be nice if PGP tried to lock its memory pages on OS's that
+support page locking, so that some pages dont get swapped out.  But
+that isn't a very general solution, since not all OS variants provide
+such a mechanism.
+
+-derek
+
+
+
+
+

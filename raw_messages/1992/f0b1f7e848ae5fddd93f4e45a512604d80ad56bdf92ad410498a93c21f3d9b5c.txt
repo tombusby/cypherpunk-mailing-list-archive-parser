@@ -1,0 +1,51 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Wed, 25 Nov 92 10:30:40 PST
+To: cypherpunks@toad.com
+Subject: PGP on local machine (was Re: MacPGP)
+In-Reply-To: <199211251002.AA24840@well.sf.ca.us>
+Message-ID: <9211251830.AA13482@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: George A. Gleason <gg@well.sf.ca.us>
+> Seems to me we need it for encryption as well...  For instance, telecom
+> software which allows you to back out into a screen editor where you write
+> something and then encrypt it, and then get back to telecom and transmit the
+> ciphertext directly.
+
+The following would require customization on both ends, but seems doable:
+
+You compose the message, using emacs or some other Turing-complete editor.
+You hit the "PGPify" key [sequence].
+emacs echoes a special START string
+The local comm program recognizes it and goes into "capture" mode.
+emacs blats the plaintext to stdout, where it is captured.
+emacs echoes a STOP string.
+The comm program sees this, stops capturing, shells to DOS, and runs PGP.
+emacs kills the original text block.
+(emacs command ends)
+The comm program shoves the cyphertext into the upload stream.
+(comm macro reverts to lurk mode)
+You send the message.
+
+All of this, I think, could be implemented with available programs.
+Kermit won't hack it on the local end, so maybe I'll switch to
+Telemate.  This protocol would require a clean line or EC modem; is
+this a problem?
+
+It might be a better move to write a [shell, Perl] script that's a
+drop-in replacement for Unix pgp: it goes through the whole protocol
+above, and looks to the outside world as if it had done the work
+itself.  People have written emacs macros (I think) to make this
+work with mail; it could also be used as a unix-pgp replacement in
+other places.
+
+It might be nice if the plaintext were not echoed to the screen while
+being transferred, too.
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

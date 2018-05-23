@@ -1,0 +1,49 @@
+From: norm@netcom.com (Norman Hardy)
+Date: Wed, 11 Aug 93 23:32:44 PDT
+To: cypherpunks@toad.com
+Subject: Re: Secure voice software issues
+Message-ID: <9308120629.AA17113@netcom4.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eric Blossom <eb@srlr14.sr.hp.com> says:
+> I have seen estimates that a straight forward implementation requires
+> about 13.5 million Mulitply+Accumulates / second.  Most of the time is
+> burned up using a brute force search for the best excitation vector to
+> use.  There is a fixed 512 entry code book, and a dynamic code book
+> with 256 entries (it may be 128).  Each code book entry is an
+> excitation vector that is 60 samples long.  Therefore, to evalute each one,
+> you have to run a 60 element vector through a 10 pole filter to get
+> the predicted output, then compute some measure of error.  This
+> requires an additional difference operation that is implemented as
+> some kind of "perception weighting filter" (I don't remember the
+> details).
+ 
+I have been reading the PowerPC 601 manual (MPC601, The Macs of early
+1994). It is dangerous to
+believe performance figures. They give you the world in one chapter 
+and then take it back here and there in bits and pieces.
+Here is what I see however. Simple single precision floating point
+operations can issue one per cycle. The book mentions several
+floating point ops that take more than one clock in a pipeline stage.
+They don't mention floating multiply-add. I think one can issue each
+clock. I-unit instructions can issue in the same clock as floating
+point ops. If you do the block trick used to multiply matrices then
+one load is required per multiply add. All this leads to the optimistic
+estimate that the 50MHz machine can sustain nearly 50 fmadd's per
+microsecond on a 50MHz chip. Inner products are much like matrix multiply
+which is a benchmark where the RS/6000 (The MPC601's father) achieved
+nearly one fmadd per clock, and that was double precision!
+ 
+128 excitation vectors each of 60 single precision loats fit in the on
+chip cache, but it is tight.
+ 
+There may be enough margin here for it to work with no special DSP.
+ 
+I'll be in Yosemite for a few days so I won't be able to respond
+immediately to comments.
+
+
+
+

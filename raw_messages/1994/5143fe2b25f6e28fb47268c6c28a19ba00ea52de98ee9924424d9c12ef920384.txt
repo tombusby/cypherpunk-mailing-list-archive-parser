@@ -1,0 +1,25 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Thu, 2 Jun 94 16:39:35 PDT
+To: cypherpunks@toad.com
+Subject: Faster way to deescrow Clipper
+Message-ID: <01HD2TUJI8NC95Q50V@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The attack posted here uses a brute-force search to find a phony LEAF
+which has a valid checksum. Instead, why not just initialize the chip
+with a session key and get the LEAF. Reset the chip and initialize it
+with a different session key, but send the first LEAF instead of the
+second one. The LEAF would look good unless you tried to decrypt the
+session key. The wrong-IV problem would remain. The NSA should have
+designed the Clipper so that, if the IV was wrong, the chips would not
+accept the LEAF. They also should have used a much larger (32-bit or
+even 64-bit) checksum.
+
+--- Mike
+ 
+
+
+
+

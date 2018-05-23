@@ -1,0 +1,39 @@
+From: patrick@Verity.COM (Patrick Horgan)
+Date: Fri, 22 Sep 95 08:15:47 PDT
+To: cwe@Csli.Stanford.EDU
+Subject: Re: Exchange random numbers (was: Re: netscape's response)
+Message-ID: <9509221511.AA19305@cantina.verity.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> This isn't a problem as I see it, he'll only know what bits he
+> flipped, not the actual state.
+
+Wouldn't even know that if you permuted it.  You _could_ use a fixed
+permutation, or you could use input information from another source
+to select the permutation.  Even something as simple as taking 5 bits
+from one source and using another source mod(random seed length) to
+decide where to xor it into the random seed.  (Rotating back to the 
+front if needed, or you could let the bits fall off the end.) And if
+all you ever give out to randomness partners is the result of a good
+hash there's no way they could ever determine anything from it, or
+determine what effect their contribution had.  Shoot, they wouldn't
+know if their contribution went into the seed, or merely affected
+how someone elses contribution went into the seed.
+
+Patrick
+
+   _______________________________________________________________________
+  /  These opinions are mine, and not Verity's (except by coincidence;).  \
+ |                                                       (\                |
+ |  Patrick J. Horgan         Verity Inc.                 \\    Have       |
+ |  patrick@verity.com        1550 Plymouth Street         \\  _ Sword     | 
+ |  Phone : (415)960-7600     Mountain View                 \\/    Will    | 
+ |  FAX   : (415)960-7750     California 94303             _/\\     Travel | 
+  \___________________________________________________________\)__________/
+
+
+
+

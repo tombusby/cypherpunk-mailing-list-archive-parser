@@ -1,0 +1,93 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Wed, 9 Aug 95 16:51:42 PDT
+To: cypherpunks@toad.com
+Subject: Re: "S1" encryption system (was: this looked like it might be interesting)
+In-Reply-To: <199508092259.PAA10092@jobe.shell.portal.com>
+Message-ID: <199508100000.UAA07792@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal writes:
+>I suppose the unstated implication is that this might be Skipjack.
+>
+>I have looked at the program a bit and have a few observations:
+>
+....
+>The encryption function itself is a modified Feistel type cipher, with
+>the blocks broken into 8 pieces and xor'd with functions involving F,
+...
+
+Someone sent me (to my bell labs address) a copy of this this afternoon via
+an anon server in the netherlands.  It looks like others got it as well, and
+it appears to have been posted to the cypherpunks list, though it hasn't
+yet shown up here from the list (my mail seems to be slow today).  Did
+anyone else have a copy mailed directly to them?
+
+I don't quite know what to make of it.  A couple of random quick first-order
+observations:
+
+	The code appears to have been translated from some other
+	language by someone not skilled in C.  Hal noted the
+	lack of "for" loops where they are obviously called for,
+	and at least two odd bits of code that appear to be bugs,
+	at least one of which one would suspect would cause it to
+	fail to interoperate with correct implementations (if we
+	are to assume the "correct" cipher uses the entire key schedule).
+	Also note the awkward assignement to the F and G tables.
+
+	S1 could suggest Skipjack, but it is also a pretty generic name
+	for a cryptosystem.
+
+	I thought Skipjack (like most other NSA cryptosystems) is SECRET,
+	not TOP SECRET, but on the other hand this appears to be part of
+	some kind of "secondary analysis" package, whatever that is, so
+	if this is really spook stuff, the TOP SECRET designation could
+	be reasonable.
+
+	The cipher is similar in some ways to one designed by Bruce
+	Schneier and I last year (MacGuffin, described in
+	ftp://research.att.com/dist/mab/mcg.ps ).  In particular, note
+	that in each of the 32 rounds, 16 bits are operated on by 48
+	(or 40, depending on the effect of the G function).
+
+	There is at least one novel feature - the G function used to
+	select which F's (Sboxes) to use.  I've not seen this before.
+
+	The cipher appears to be designed for software implementation
+	(byte oriented, etc.).  The software, on the the other hand,
+	goes to some trouble to emulate a hardware interface, as if it
+	were written to be dropped in to some pre-existing code or
+	library.
+
+	The F outputs are not uniformly distributed.  In fact, some outputs
+	appear far more often than others (I base this on running "grep|wc",
+	not on any real analysis.)
+
+	What a strange key schedule.
+
+	The "family" XOR business at the begining and end suggests
+	RSA's DESX.  The lanuage in the comments suggests that it's there
+	to allow for non-interoperable "families" of users.  GOST
+	has similar features, though GOST couples this more closely to
+	the cipher's internal structure.
+
+	As far as I know, no one has EVER leaked TOP SECRET material
+	cryptosystem in this way, so I'm very skeptical.  But there's
+	always a first time.
+
+I don't know what to believe.  If this is a real, classified cryptosystem,
+it would be a very unusual first.  On the other hand, if this is a hoax,
+whoever did it appears to have gone to some trouble, and has included some
+interesting design features.  A third possibility, if we are to believe
+the spook markings, is that it is a re-implementation of someone else's
+cryptosystem, created for the purpose of cryptanlysis.
+
+All in all, I remain very skeptical.  It smells like a hoax to me, but
+I'm willing to look at it with an open mind.
+
+-matt
+
+
+
+

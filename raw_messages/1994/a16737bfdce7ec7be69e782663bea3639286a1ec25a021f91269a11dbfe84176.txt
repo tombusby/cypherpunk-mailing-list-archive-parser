@@ -1,0 +1,61 @@
+From: koontzd@lrcs.loral.com (David Koontz )
+Date: Thu, 12 May 94 15:28:44 PDT
+To: jims@Central.KeyWest.MPGN.COM
+Subject: Re: NSA Chief Counsel in Wired, to appear on AOL
+Message-ID: <9405122227.AA02095@io.lrcs.loral.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: "Jim Sewell" <jims@Central.KeyWest.MPGN.COM>
+>
+><In mail Richard Johnson said:>
+>>
+>[.. the public sector]
+>>    drafts along behind the government, adopting government standards on
+>>    the assumption that if it's good enough for the government's
+>>    information, it's good enough to protect industry's.
+>
+>   But Clipper NEVER claimed to be good enough for the government's info!
+>   As far as I know the description was that it was to be used for "sensitive
+>   but not classified info" and as such it's not good enough for the REAL
+>   secrets.
+
+In the interest of keeping weak arguments from being battered down latter,
+it is entirely possible that the cryptographic algorithm used in clipper
+(SKIPJACK) is identical to that found in the CCEP type 1 devices (KG-84,
+STU-IIIs, KY-57/8s, etc.).
+
+What may make the clipper chip unsuited for classified traffic is that it
+is not type 1 certified (control processor code reviewed, failure mode
+analysis, etc.) and does not require centralized key distribution - the
+clipper chips have the ability to have the correct Cryptographic Check
+Word (CCW) read back when attempting to load a home grown key,  Type 1
+devices simply go to an error state, insisting that only 'state sponsored'
+keys be used.  What is involved is the encryption of a known plaintext
+pattern, the resulting ciphertext is subsampled (3 bytes), which is the
+CCW.  (It is almost a certainty that if the crypto algorithm in clipper
+were identical, that the plaintext values are different.)
+
+The lack of rigidly checked hardware implementations, and screening of
+the keys could be the major differences between a clipper chip and one
+for classified traffic.  One of the CCEP crypto modules is supposed to
+have unit IDs embedded in transmissions, and most of them do remote
+rekeying, which may have been subborned for the remainder of the LEAF.
+The check word in the LEAF fits in nicely with checking the validity
+of a new key received from the distant end.  The unit ID is required
+for a centralized key distribution scheme.
+
+In other words it may not be that the cryptographic algorithm is not
+good enough to protect classified data, rather that the key selection
+process and hardware implementation are not certified for classified data.
+
+One can image that this could be told to certain elected representatives
+in classified briefings, and used to discount this one argument, and by
+extension other arguments.  One should be willing to stipulate that the
+cryptographic algorithm is not the weakness, rather that the escrow aspect
+is what is objectionable.
+
+
+
+

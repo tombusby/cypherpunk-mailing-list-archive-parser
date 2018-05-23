@@ -1,0 +1,82 @@
+From: Jiri Baum <jirib@cs.monash.edu.au>
+Date: Thu, 21 Sep 95 20:14:06 PDT
+To: cwe@Csli.Stanford.EDU (Christian Wettergren)
+Subject: Re: Exchange random numbers (was: Re: netscape's response)
+In-Reply-To: <199509211852.LAA22259@Csli.Stanford.EDU>
+Message-ID: <199509220312.NAA15933@molly.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello stewarts@ix.netcom.com, cypherpunks@toad.com, jsw@netscape.com
+  and Christian Wettergren <cwe@Csli.Stanford.EDU>
+
+Christian Wettergren <cwe@Csli.Stanford.EDU> wrote:
+...
+> | If I only ever give out a hash of my seed, and only ever *add* any received
+> | info to my seed (and stir it in well), how can anyone find out anything?
+> | (Apart from hash weaknesses.)
+> 
+> Giving out contribution: 
+>      MD5(select_bits(my_seed, start_bit, stop_bit)) -> remote
+> Taking in contribution : 
+>      my_seed = my_seed XOR 
+>      ((select_low_bits(remote_contrib, contrib_width) << contrib_area)
+
+Hmm, I use:
+  taking-in:
+	seed = MD5(seed,new-data)
+  giving-out:
+	MD5(seed)
+
+(where every giving-out is preceded by a taking-in). Is that OK?
+If not, why not and how can I improve it?
+
+> You also need to keep track of who has contributed what, and how much.
+...
+
+Why? I guess to keep track of how much entropy I believe I have...
+
+> This might become a problem if you don't have a safe authentification
+> mechanism, like baseing the tracking on the IP-numbers etc.
+
+That's a safe authentication mechanism? I don't think so.
+But you need a secrecy mechanism, so I guess that's where you'd
+add your auth.
+
+...
+> The boot-strap stage is actually the big problem still. But if the
+...
+
+The boot-strap is done only once (at install time) so it's not a big
+problem to ask for lots of random text from user.
+
+...
+> | In any case, accepting donations of entropy cannot possibly reduce the
+> | amount of entropy I have, can it?
+> 
+> This isn't a problem as I see it, he'll only know what bits he
+> flipped, not the actual state.
+
+Good, I thought so.
+
+Sorry, have to go now, rest later...
+
+Jiri
+- --
+<jirib@cs.monash.edu.au>     <jiri@melb.dialix.oz.au>     PGP 463A14D5
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMGIpgixV6mvvBgf5AQGRggQAwEcY+5N0stTbWXfXg3zQ6FNdzv9Sckds
+3xAjLbxr85jS98Sj0Nm++DwS674U8YfrNzTRg3HnOBUcS+i8UvP445jtj4UiyxU8
+hyM2ZvzBWjFuj35jXF4KR5XotZyvAsAcICsssv0UQZ3JKWV+tU/pN8sZ3sgKRRWZ
+ipvAFyY+rhA=
+=1d8P
+-----END PGP SIGNATURE-----
+
+
+

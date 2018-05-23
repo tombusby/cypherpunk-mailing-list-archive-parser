@@ -1,0 +1,38 @@
+From: pmetzger@lehman.com (Perry E. Metzger)
+Date: Thu, 21 Oct 93 10:28:00 PDT
+To: cypherpunks@toad.com
+Subject: why an envelope
+Message-ID: <9310211724.AA02906@kublai.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Enough people have asked that I'll explain why envelopes are seperated
+from headers in mail.
+
+Lets say I'm sending mail with the following header
+
+To: foo, bar, baz
+
+Mail gets stored and forwarded many times during its delivery process
+on a large internet. If at every stage the only hint the mailer had
+for delivery was the header address, every mailer along the way would
+have to generate three copies of the mail in order to guarantee
+delivery. Kind of nutty, eh?
+
+Thats why there is a seperate envelope. When you generate the mail,
+three seperate copies will be produced with seperate envelopes
+indicating the mail whould be sent to "foo", "bar", and "baz", and the
+mailers in between don't look at the headers at all.
+
+This is a slight simplification because envelopes can contain multiple
+addresses -- but thats when you are sending one message to many people
+via a common path -- the mailer at the last step where the mail can
+take a common path is expected to break the envelope up before sending
+it further along.
+
+Perry
+
+
+
+

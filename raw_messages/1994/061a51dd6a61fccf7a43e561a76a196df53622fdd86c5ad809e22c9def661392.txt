@@ -1,0 +1,87 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Tue, 27 Dec 94 18:38:02 PST
+To: cypherpunks@toad.com
+Subject: Re: Making sure a program gets to the receiver intact
+In-Reply-To: <9412280015.AA22592@anchor.ho.att.com>
+Message-ID: <199412280237.SAA02055@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+
+The specific question is tampering of files on archive sites.  The
+larger issue is information, particularly software, distribution.  My
+position is that timestamping is a better solution than signatures for
+the tampering issue and that both are useful for the larger issue.
+
+   Some good points, but on the whole I'll disagree.  Either way, the solution 
+   pretty much comes down to "eternal vigilance"....
+
+Well, "eternal vigilance" is really "public information".  Both the
+timestamping problem and the signature problem resolve down the same
+problem about secure _cleartext_ transmission.  How do people gain an
+assurance that they have the same shared piece of information?
+
+The first advantage that timestamping has over signatures is that
+timestamps are temporal and signatures are not.  Private keys for
+signatures change over time by design, but timestamp roots do not,
+also by design.  That is, once a timestamp root has been securely
+transmitted, there is an assurance that everything up to that point is
+OK.  Spoofing a signature, however, can be done by spoofing a key
+change; there are public information solutions to this as well, but
+they still do not have temporal assurances.
+
+The second advantage is the the timestamp roots are more widely shared
+than individual public keys.  Because more people look at this one
+piece of information, it's much harder to completely forge.  The cost
+of verification is smaller per person, but there is much more total
+verification performed.
+
+The root keys in a certification hierarchy have the same property of
+wide sharing, but the effect on public key distribution is not the
+same.  The creation of the timestamp root is a _technically_ linkage
+of all the individual timestamps, while the root key of a certifying
+authority creates _social_ links between the root key and the other
+keys.  The technical linkage is stronger.
+
+   The interesting technique that digital timestamping provides is that it
+   lets you show that the version you claim you posted to the ftp site
+   got there before the [different] version that's there now.
+
+You can also post a public announcement, timestamped, which has the
+location and the timestamp of the information and the archive.  This
+public announcement has public information properties as above.
+
+   To use that technique, either you need to broadcast the details of the
+   digital timestamping in an unhackable public fashion, 
+
+The "unhackable" nature is not even necessary to assume.  All you need
+is the ability to post public information with some non-zero
+probability of success.  Eventually the public information gets out.
+The timestamp will indicate priority.
+
+There's also the possibility of timestamping the entire directory tree
+periodically.  This is all publicly verifiable, so an interposer would
+have to intercept the very first transmission and could not come along
+later and perform undetectable corruption.
+
+   On the other hand, without signatures, it's not too hard for a Bad Guy
+   to store bogus files on the server and get them timestamped too -
+
+Sure, that's the whole point.  Any information protection, signatures
+or timestamps, can simply be replicated.  The timestamp algorithm
+gives you a temporal ordering to distinguish between the two, which
+signatures don't have.
+
+On the other hand, I'll amplify Matt's point by pointing out that any
+deployed mechanism to increase the difficulty and cost of information
+subversion is better than what exists now, which is strictly ad hoc.
+The integration issues of any public authentication system will be
+difficult, regardless of the underlying mechanism.
+
+Eric
+
+
+
+

@@ -1,0 +1,81 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 15 Jul 1996 06:30:20 +0800
+To: coderpunks@toad.com
+Subject: Encrypted file systems
+Message-ID: <199607141148.MAA00279@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Some more thoughts on encrypted file system design criteria.
+
+A wish list:
+
+- Choice of secret key encryption algorithms (IDEA, 3DES, MDC, Blowfish)
+
+- Multiple architectures (MSDOS, Win31, Win95, WinNT, Unix, Mac)
+
+- High performance (hand optimised assembler for each architecture)
+
+- Compression
+
+- Ability to chain algorithms (IDEA and then 3DES for example)
+
+- Possible to have encrypted file systems on separate partitions, or
+
+- Encrypted file system located in a file in another file system 
+  (much like DOS stacker drives) this is an ease of use criteria -- I
+  suspect re-partitioning drives would put off many potential users.
+
+- Ease of use.  Graphical user interface for setup and administration
+  functions, with a very simple set of configurations options
+  displayed by default, with more advanced configuration options
+  available in "expert" mode.
+
+- All directory and FAT information should be encrypted, so that
+  it is not possible to discover even number of files, or percentage
+  of disk used without the key
+
+- Facility for duress key, with the real data hidden in the unused
+  space of the first encrypted drive.  To increase the plausible
+  deniability all unused blocks within a file system should be filled
+  with garbage, so that it is not possible to tell if there is more
+  data there.
+
+- File system steganographically hidden in files on another file
+  system (encrypted or not).  Support for a wide selection of file
+  formats (Aiff, Wave, Midi, JPEG, GIF, RGB, MPEG).
+
+- Ability to use stegoed file system in files on an unencrypted
+  file system, and boot from a floppy to access stegoed file system,
+  with no other traces left on hard disk.
+
+Thought for the day: the main barrier for a Chinese dissident to using
+such software is that being caught with a boot floppy with the
+software for a stegoed drive would be dangerous.  What would solve
+this would be if Microsoft, Apple, UNIX vendors, Slackware linux
+included this functionality (or this software itself as useful
+freeware included with the CD distribution) in their respective O/Ses
+as non-optional modules -- that is you get the software installed
+whether you want it or not.  If everyone has the software, mere
+possesion of the software no longer is a problem.
+
+Throw in a few useful utilities, like a steganographic interface to
+anonymous remailers, the address of a few ftp/www by email services,
+and you have a system with interesting possibilities.
+
+To improve the national security of the US, the NSA should be dropping
+CDs with such software (much like war-time propoganda leaflets air
+dropped) on undemocratic countries with poor human rights records.
+Instead they expend their efforts on ITAR...
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

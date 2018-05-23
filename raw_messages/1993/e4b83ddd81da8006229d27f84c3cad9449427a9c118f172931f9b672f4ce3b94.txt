@@ -1,0 +1,46 @@
+From: Eric Blossom <eb@srlr14.sr.hp.com>
+Date: Fri, 10 Dec 93 11:09:33 PST
+To: jim@Tadpole.COM
+Subject: small memoryspace DES?
+In-Reply-To: <9312101606.AA11702@chiba.tadpole.com>
+Message-ID: <9312101907.AA00281@srlr14.sr.hp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Getting back to the cypherpunks-write-code theme, I'm
+> currently attempting to put DES on a u-ctlr that has 
+> a whole 1k of memory for things like 'stack'.  All
+> the DES implimentations I've found thusfar have 
+> traded memory for speed.   
+
+You can get by with about 2KB of static table (sbox + permutation),
+assuming you lookup the sboxes 1 at a time and fold the permuation
+into the table lookup.
+
+	8 sboxes * 64 entries/sbox * 4 bytes/entry  = 2KB
+
+For the key schedule you'll need 8 bytes/subkey * 16 subkeys = 128 bytes
+(You can do it with 6 bytes/subkey, but it's easier with 8 bytes/subkey)
+
+I suggest that you look at the "descore" implementation by Dana How. 
+You can find it with archie.
+
+Also, if the uP that you are using has direct bit addressable memory,
+the permuations stop being a problem -- say 2 instructions/bit.
+Obviously, permutations are real easy to do in hardware.
+
+In addition, I suggest that you do some back of the envelope
+calculations to make sure that you're going to get the kind of
+throughput that you expect.  The simplest way is to work out the code
+for a single round, and then multiply by 16.  This will get you in the
+ball park.
+
+Have fun!
+
+Eric Blossom
+
+
+
+

@@ -1,0 +1,95 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 11 Oct 1997 10:03:06 +0800
+To: anon@anon.efga.org
+Subject: non-transferable & designated verifier signatures
+In-Reply-To: <b05fb56f192e6ba0f7bd244ee561bbaa@anon.efga.org>
+Message-ID: <199710110011.BAA06419@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Monty Cantsin writes:
+> Anonymous wrote:
+> >[non-transferable signatures]
+> >
+> >[these sigs] guarantee the message came from another person, but
+> >aren't binding.  [...]
+> >
+> >In paper business correspondence, there is no such distinction.  A
+> >signed letter is transferable.  Go beyond this and business will be
+> >scratching its heads.  It's a solution looking for a problem.
+> 
+> How about arbitration?  Two parties may wish to make an agreement to
+> be judged by an arbitrator of their choosing.  In certain cases, the
+> State can be expected to intervene.  If only the arbitrator knows the
+> signatures to be valid, the State has no fair basis on which to make
+> an intervention.
+
+Wuw.  Don't go away will you Monty?  That was an excellent point.
+
+The application you describe could be catered for very well by a third
+type of signature called a designated verifier signature.  With this
+type of signature you can designate when you create the signature who
+can verify it.  DV signatures are different than non-transferable
+signatures in that in addition to being not transferable to
+non-verifiers, you can't transfer them without revealing your private
+key.  The other difference being that you can construct them for other
+verifiers (the arbitration service).
+
+Non-transferable signatures on the other hand work by being made
+forgeable by the recipient.  That way it is essentially the recipients
+word against the senders.  However there is some transferable proof
+there: there is proof that _one_ of you wrote it.
+
+So DV signatures are probably the best of the two.  Merely being able
+to demonstrate enough proof to cause an argument about which of you
+wrote the document costs you the compromise of your private key.
+
+Also you could clearly cope with the arbitrator situation without
+resorting to DV signatures; non-transferable signatures would be
+enough, if you sent a signed message to Alice, and a detached
+signature to your abitrator.  If you want to later use the abitrator,
+you send the body of the message to the arbitrator.  He calculates the
+hash of the message, and is then able to use the detatched
+non-transferable signature to verify your claim.  But he can't
+demonstrate this to other people.  One disadvantage is that the
+arbitrator could team up with you and make that two peoples words
+against one.  You might see that as an advantage, but Alice won't.  An
+arbitrator which indulged in this kind of behaviour may lose
+reputation.
+
+
+Lastly, some comments along the lines of `smart contracts' as
+discussed by Nick Szabo in the past.  It would be nicer if you didn't
+need the arbitrator.
+
+One way to do this for some kinds of situations is for each party to
+setup a atomic transfer where they give each other the ability to
+cause a penalty to be extracted from both of them.
+
+Say they are engaging in some business worth $100.  Alice is
+performing some programming task for Bob.
+
+If Bob is satisfied with the software he gives Alice the $100.  If he
+is not he incurs a $50 loss himself which goes to charity, and Alice
+does also.  In doing this he doesn't get the software.  But Alice is
+penalised, and it is better than losing $100.
+
+Problem with that example is that you still need an arbitrator
+probably.  Unless perhaps Bob is able to determine quality without
+source code, or with part of source code.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,51 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 15 Apr 1996 10:17:53 +0800
+To: jeremey@forequest.com
+Subject: Re: Is crypt(1) a prohibited export?
+In-Reply-To: <Pine.BSI.3.91.960414014821.7867A-100000@newton.forequest.com>
+Message-ID: <199604142234.XAA00563@adam.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jeremey Barrett <jeremey@forequest.com> writes on cpunks:
+> [...] But since a one-way hash function (implemented as a one way
+> function) can't really be used for encrypted communication, 
+
+One way hashes can be used to produce an block encryption system
+running in CFB mode, eg: Peter Gutmann's MDC.
+
+(CFB mode is where you encrypt an IV (just a random salt) with the
+key, and XOR the result with the data (you chaing the encrypting for
+subsequent blocks) -- to decrypt you just repeat the process, use the
+same IV and encrypt again.  As you never actually use the block
+ciphers decrypt function, you can therefore (and this is what MDC
+does) use a one way hash in the place of a block encryption algorithm
+in CFB mode.)
+
+> I don't think it is subject to export restriction.
+
+They don't seem to be subject to export restrictions, but then perhaps
+that is paradoxical, perhaps they should be.  (Well no crypto should
+be export restricted in my view naturally, but for logical consistency
+you understand...)  It would in my view be a good thing if one way
+hash functions were declared to be non-exportable, as this would
+clearly hinder commerce, as they are used in signatures and
+authentication.
+
+Also I seem to remember that Dan Berntstien's case was based on the
+prior restraint in him not being free to discuss his method for
+turning a one way hash into a symmetric key function.
+
+Adam
+--
+Exported RSA today?  --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

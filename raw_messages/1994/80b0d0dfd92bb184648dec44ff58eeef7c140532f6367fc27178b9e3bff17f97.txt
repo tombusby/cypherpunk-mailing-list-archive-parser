@@ -1,0 +1,45 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 28 Jan 94 21:38:22 PST
+To: cypherpunks@toad.com
+Subject: Re:  2-way anonymous via SASE
+Message-ID: <199401290538.VAA06991@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim's idea looks good for anonymous communication.  It is basically
+the same as the one Chaum describes in his 1981 Communications of the
+ACM paper.  CACM is one of the most widely available computer science
+journals so I would encourage people interested in this topic to go
+to the local university or junior college library and xerox it (CACM,
+vol 24, p. 84, February, 1981).
+
+The one difference is that Jim's B, C, and D are conventional rather
+than public keys in Chaum's system.  This could be slightly more
+efficient.
+
+We have had a primitive SASE capability available and documented on the
+cypherpunks remailers for over a year.  Karl Barrus and I have written
+scripts and programs to facilitate creating SASE's - you just type in
+your address and a list of remailers to use and out comes the SASE block
+which goes at the top of the reply message.
+
+The weakness of the present system is that it lacks the B's etc. for
+extra encryption at each stage.  That means that someone who can observe
+net traffic can match up incoming and outgoing messages because the body
+does not change, only the address portion changes.  (Of course, such
+matching is already possible for the non-batching remailers based on
+simple timing, which includes almost all of them.)
+
+One other caution Chaum raises re the SASE's is that they should not be
+used more than once.  If they could be it would be possible to send in
+multiple messages using the same SASE and notice which output address
+was similarly duplicated.  This non-reuse actually has to be enforced by
+the remailer, else the Opponent can eavesdrop on an SASE-based message
+and replay the address portion.
+
+Hal
+
+
+
+

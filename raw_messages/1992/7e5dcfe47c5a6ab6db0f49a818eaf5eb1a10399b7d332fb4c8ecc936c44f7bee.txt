@@ -1,0 +1,62 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Thu, 3 Dec 92 15:36:23 PST
+To: cypherpunks@toad.com
+Subject: understandable cypher software
+Message-ID: <9212032155.AB19933@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Folks--
+
+A paragraph of philosophy and then some technical PGP questions.
+
+I should be able to verify with my own eyes how cypher technology works.  
+Otherwise I'm trusting my security to somebody's black box.
+I should be able to write my own and test that it interacts with someone 
+else's the way it's supposed to.  I should be able to monitor the 
+communications between my copy of a cypher product and some other, and 
+verify that they're doing the things people say they are. 
+Besides, I'd like to carry the crypto basics in my head "just in case."
+To these ends, I'd like cypher software that is as easy to read and
+understand and trust as possible.  I'd like to start with a distilled PGP.  
+
+Does this list cover the heart chambers of PGP? (Not to devalue the rest):
+        RSA
+        IDEA
+        The signature algorithm (MD5?)
+                128 bits?
+                Is that based on RSA?
+        A cryptostrong pseudorandom # generator?
+                Is this based on RSA?
+        Something that takes keystroke delays (real, but not so good, 
+                random numbers) and makes real good random numbers?
+                Is this based on RSA?
+        A data compression algorithm (some variation of LZW?)
+        A binary<-->ascii translator
+
+RSA seems to depend on doing modulo-multiply on big integers.  What are the 
+relative speeds of the different modmults in PGP (modulo processor speed)...
+        the simplest C version
+        the fastest C version
+        the fastest assembler version on the processor where it matters least
+        the fastest assembler version on the processor where it matters most?
+
+Given the time to do modmult, couldn't all the rest (including modexp) be
+done in an interpreter that had big ints and modmult as a primitive?
+
+What's the formula for RSA again?
+        out = in * something ^ somethingelse mod yetanother??
+        I know it can't be, because the key is only one number.
+
+What is/are the basic primitive(s) for IDEA?
+
+-fnerd
+"Computer software must not only work, it must also appear to work."
+                           --Carl Hewitt
+fnerd@smds.com (FutureNerd Steve Witham)
+
+
+
+
+

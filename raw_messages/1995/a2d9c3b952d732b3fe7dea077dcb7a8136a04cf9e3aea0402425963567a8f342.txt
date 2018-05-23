@@ -1,0 +1,46 @@
+From: Eric Hollander <hh@xcf.Berkeley.EDU>
+Date: Fri, 10 Feb 95 11:03:28 PST
+To: cypherpunks@toad.com
+Subject: why pgp sucks
+Message-ID: <9502101849.AA21833@xcf.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+if i use a command like
+
+	pgp filename
+
+it will automatically figure out the right thing to do with the file.  if
+it's encrypted, and i have the key, it will attempt to decrypt it.  if it
+contains keys, it will ask if i want to add them to my keyring.  if it's
+signed, it checks the signature.
+
+this sucks!
+
+if i'm trying to write a program to automatically process incoming mail (for
+instance, to see if it's encrypted with a specific key), i certainly don't
+want to have the possibility of people being able to add garbage to my
+keyring just by mailing it to me.
+
+is there a way of saying
+
+	pgp -decrypt-with-key user_id filename
+
+and have it return some error code indicating whether or not the file was in
+fact encrypted with user_id, and also gauranteeing that it won't do other
+fun stuff with the file, like add it to my keyring?
+
+is there a way of using pgp in a diagnostic mode, to just inform me of what
+the file contains (is it signed and/or encrypted, from who and to whom?),
+without processing it, and without interaction, and without messing around
+with the keyring?  has anyone written some scripts to do this kind of thing?
+
+or should i just wait until some of the groups working on the other
+encryption software get it out?
+
+e
+
+
+
+

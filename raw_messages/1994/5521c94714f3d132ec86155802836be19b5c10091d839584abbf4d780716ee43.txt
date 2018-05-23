@@ -1,0 +1,54 @@
+From: remailer@merde.dis.org (remailer bogus account)
+Date: Wed, 2 Feb 94 20:01:04 PST
+To: cypherpunks@toad.com
+Subject: PGPTools Minor Bug
+Message-ID: <9402030359.AA28381@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+There is a minor bug in PGPTOOLS.C which needs to be fixed. In 
+pgp_extract_rsa, two lines need to be added. This variable was not being
+cleared. When the precision was later set to max, there was garbage left
+in the high-order bytes of the mpi. This caused the size of the MPI to be
+wrong, and the function would not decrypt 2.2 or earlier packets. It could
+also occasionally fail to decrypt a 2.3 packet. Sorry about that.
+
+					   Pr0duct Cypher
+
+/* Decrypts and extracts the key from an RSA-encrypted block */
+/* Returns true if successful, false if not */
+int pgp_extract_rsa(struct fifo *f,byte ideakey[16],
+     struct pgp_pubkey *pk,struct pgp_seckey *sk)
+{
+struct mpi *p=safemalloc(sizeof(struct mpi));
+struct mpi *c=safemalloc(sizeof(struct mpi));
+unit *dp=safemalloc(sizeof(unitarr));
+unit *dq=safemalloc(sizeof(unitarr));
+unit *temp=safemalloc(sizeof(unitarr));
+byte result;
+
+word16 checksum=0;
+byte *pp;
+byte type;
+word32 length;
+set_precision(MAX_UNIT_PRECISION);        <--------- ADD
+mp_burn(p->value);                        <--------- ADD
+set_precision(bits2units(pk->n.bits+SLOP_BITS));
+pgp_examine_packet(f,&type,&length);
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLU4ptsGoFIWXVYodAQG3GQQApg45mfrbfoUP4BhrtmvE+zRGdSp6zx9+
+M7GDnJ+vpCVzQj6S7Z+y1RZ4FFAT6yX/63oeVvhW8FzNZ1s5xOZivbIZrhC6WPJU
+qZiuy/veXD7OrWpUJueucT5xPF/Nsjdx3w2DiAy2x7YtRycpzugMSpSdvJcCcOuK
+rGBkPV2eJDc=
+=+WVh
+-----END PGP SIGNATURE-----
+
+
+
+

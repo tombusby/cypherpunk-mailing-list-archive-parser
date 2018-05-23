@@ -1,0 +1,23 @@
+From: schneier@chinet.chinet.com (Bruce Schneier)
+Date: Wed, 6 Jul 94 12:49:05 PDT
+To: jrochkin@cs.oberlin.edu (Jonathan Rochkind)
+Subject: Re: stream ciphers and realtime communications?
+In-Reply-To: <199407061721.NAA19360@cs.oberlin.edu>
+Message-ID: <m0qLce4-0002IqC@chinet.chinet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Stream ciphers are very efficient in hardware encryption applications, but
+suck eggs in software.  They have been the workhorse of military cryptography
+for at least 40 years, but those are all hardware applications.  If you
+are working in software, it is much easier to deal with data in 64-bit
+blocks than in individual bits.  The Shrinking Generator, which has only
+two LFSRs, is slower than DES in software.  You need to iterate the
+Shrinking Generator 64 times to encrypt the data that DES handles in just
+one iteration.
+
+Bruce
+
+
+

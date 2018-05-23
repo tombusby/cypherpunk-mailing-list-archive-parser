@@ -1,0 +1,52 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Fri, 23 Sep 94 12:14:12 PDT
+To: Cypherpunks Mailing List <cypherpunks@toad.com>
+Subject: Re: Fast Modular Factorial?
+In-Reply-To: <199409231755.MAA03386@zoom.bga.com>
+Message-ID: <YiUmX4i00VohMD1kkn@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim choate <ravage@bga.com> wrote:
+
+> Just some thoughts...
+> 
+> If x < n then (n!)modx will always be 0. Since n! is simply the product of
+> the numbers 1...n and is always a integer product dividing by x simply
+> removes the factor m such that we have the product of 1...m-1,m+1...n.
+
+And there will always be such a value for m equal to kx where k is an
+integer less than n/x
+If x is non-prime, there may be factors f and g such that f*g=x.  In
+that case, if n>f and n>g then n=0, hence finding the smallest value of
+n such that (n!)mod x =0, will yeild a factor of x.  In that case,
+dividing by x would remove the factors f and g, yeilding a zero
+remainder.
+
+> If x>n and x is not a prime then the result will again always be 0 since
+> we can break x down into factors smaller than n and the previous
+> argument removes the various factors.
+> 
+> If x is prime and x>n then we will get a result that is non-zero.
+
+Yes, but if x is not prime, and x>n, (n!)mod x will not necessarily be
+zero, unless x>n>x/2
+
+
+A few examples:
+
+mod 7:
+ n   1  2  3  4  5  6  7  8  9 10
+ n!  1  2  6  3  1  6  0  0  0  0
+
+mod 15:
+ n   1  2  3  4  5  6  7  8  9 10
+ n!  1  2  6  9  0  0  0  0  0  0
+
+
+Note that for mod 15, n=>5 produces only zeros, revealing the factor 5.
+
+
+
+

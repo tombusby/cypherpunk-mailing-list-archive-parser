@@ -1,0 +1,139 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Sun, 25 Jan 1998 02:08:45 +0800
+To: cypherpunks@toad.com
+Subject: Re: Why no "Banner Ad Eaters"?
+In-Reply-To: <199801240418.FAA17881@basement.replay.com>
+Message-ID: <5DiTJe33w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+nobody@REPLAY.COM (Anonymous) writes:
+> Tim, I'm surprised. WebFree for the Macintosh does this very thing. It
+> matches on URL substrings and simply removes these things wholesale from
+> your browser window. No broken image boxes, nothing. It also kills cookies
+> and stops animated GIFs from leaking through, if you want to nuke either of
+> those things.
+
+Of course, the person putting up the web page might well argue that you're
+violating his copyright in some bizarre way.  The image on your screen with
+the ad banners stripped is not what the author intended; especially if you're
+helping third parties to strip ads. IANAL... thoughts?
+
+I occasinally use the Altavista search engine in text mode
+(www.altavista.digital.com) and it has ads (for amazon.com) right in the
+middle of the text, in the same html file as the search results.
+I suppose the next logical step in the anti-ad proxy is to edit the dynamically
+edit the incoming html and to delete or replaces specified strings; perhaps
+a while "intelligent agent" that will filter in only the information you've
+requested, keeping out *all* the graphics and other crud.
+
+While I was researching this subject, I came across a web page of some
+student at Rutgers. It displays 4 advertizing banners and uses java/javascript
+(obnoxious technologies that I disable) to make sure that you've clicked
+all 4 (presumably he gets some credit for it); only after the javascript is
+convinced that you've clicked the ad banners can you get in. Yeah, right.
+But if ad filtering becomes more commonplace in the future, i can imagine
+crypto being (mis)used to enforce ad viewing: "You no clicky my sponsor ads,
+you no see my content."
+
+I disagree with whoever said that the technology for deleting ads is the
+same as the technology for deleting porn. Porn publishers very much don't
+want their content to reach minors or anyone who's offended by it, and
+mostly coopereate with rating agencies.  Porn isn't generally mixed with
+desirable content on the same pages. You can just block the entire page
+containing some porn (or, with vancouver-webpages' pics ratings you can
+block pages containing "disparaging remarks about the environment", kewl).
+Advertisers don't give a damn if their ads are seen by those who aren't
+interested in them, and will use technology to make it harder for you to
+filter out their ads (or to get to the content without seeing sponsor ads).
+
+When MS IE 3.0 first came out, it supported pics ratings. So I got very
+excited and wrote my own little pics ratings server (a better ones is
+available from wc3, by the way) to filter out banner ads. Unfortunately,
+after I wrote it and started testing t, I doscovered that IE 3.0 only
+asks the pics server about eh top-level page; it does NOT ask the pics
+server about the urls references in "IMG SRC=" and the like. I guess
+the reasoning is that if the top-level page is acceptable, than anything
+embedded on it is acceptable, which may be true about porn but not true
+about ads.
+
+Overall, this whole advertiser-sponsored model sucks. I'd rather be paying
+(electronic cash, of course) for the resources I use.
+
+> The URL is: http://www.falken.net/webfree/
+>
+> Junkbusters (http://www.junkbusters.com/) offers a personal proxy server
+> kind of thing that lets you mash just about everything: HTTP headers, user
+> agent info, referer URL, cookies, etc. It runs on either NT or Unix variants.
+
+It runs udner OS/2 too!! I've got it to work under NT. it may work under
+Win95 as well. (Anyone wants an executable for M$ platforms?)
+
+> One could also use it to get around a firewall configured to reject
+> non-standard browsers, but That Would Be Wrong, as Nixon once said. It lets
+> you specify which sites or substrings to look for, and which ones you trust.
+
+I've been using junkbstr and am pretty happy with it. One disadvantage of
+using any proxy server, as opposed to filtering in the browser, is that the
+browse is one step removed from the TCP/IP.  E.g. if you try to connect
+to a non-existent domain without a proxy, the browser goes to DNS and tells
+you that it can't resolve it. Going via a proxy, the proxy server goes to
+DNS and sends a page back to the browser sayng it couldn't resolve it, which
+isn't as clean.
+
+Although I'm not doing it much, the following worked out fine for me:
+junkbuster running on an NT box connected to the internet via ppp; browsers
+running on 4 win95 boxes connected to the NT box via ethernet, using
+the NT box as the proxy server.
+
+I've exchanged e-mail with someone about the list of URL patterns to block...
+I have no time for this myself, but someone ought to put up a web page
+tracking what ad urls people block. That would be a nice public service.
+
+> It also does proxy chaining.
+
+It would be nice to have it chain automatically through more than one proxy.
+
+Another nice little feature of junkbstr is it ability to send "wafers" -
+your own cookies, which will hopefully confuse whatever tracking software
+exists on the server.  I send noise with the following wafers:
+
+NOTICE=Please send no cookies
+AnonTrack=X
+Apache=X
+ASPSESSIONID=X
+CFID=X
+CFTOKEN=X
+DOL=X
+DTRACK=X
+EGSOFT_ID=X
+GeoId=X
+GeoStitial=X
+group_discount_cookie=T
+GTUID=00.00000.0.0.0000.0000
+ink=X
+JEB2=X
+MC1=ID=X
+p_uniqid=X
+PFUID=X
+registered=YES
+RMID=X
+s_uniqid=X
+session-id-time=X
+session-id=X
+SWID=X
+UID=X
+Urid=X
+userid=X
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+
+

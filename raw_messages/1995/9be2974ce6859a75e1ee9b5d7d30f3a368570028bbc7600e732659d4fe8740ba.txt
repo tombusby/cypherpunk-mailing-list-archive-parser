@@ -1,0 +1,41 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Sun, 5 Nov 1995 13:40:58 +0800
+To: "Perry E. Metzger" <perry@piermont.com>
+Subject: Re: using pgp to make an otp
+In-Reply-To: <199511050428.XAA06831@jekyll.piermont.com>
+Message-ID: <Pine.SOL.3.91.951104211722.6970F-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On the subject of reused one-time-pads: What are the attacks that become 
+available if a pad is used two times. The ones I can think of are:
+
+known plaintext- if any parts of one message can be obtained or guessed, 
+	the corresponding parts of the other message are automatically 
+	obtained. 
+
+statistics- (m1^C)^(m2^C) == m1 ^ m2. If the message is english, then 
+certain combinations of letters are more frequent than others. Try more 
+probably cominations first. 
+
+Guess phrases - pick a common word - slide it down the m1^m2 text and 
+see if the result looks like english - if it does, you've got a word in 
+one, and a bunch of known text in another. 
+
+The latter attack looks like it could be automated pretty well, and could 
+run pretty fast, but I get the feeling I'm missing an obvious, better 
+method. What's the standard way of attacking TTPs?
+
+What's the most secure way to reuse a OTP if (say) an emergency happens 
+when you're on the road, and you're out of pad? Could you build a 
+sequence of keys for something like DES from widely separated bits of the 
+pad, and use each key for one block, or is this likely to expose the 
+original OTPed message, as well as the successor messages?
+
+Simon
+
+
+
+

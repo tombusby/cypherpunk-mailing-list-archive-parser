@@ -1,0 +1,53 @@
+From: bill@twwells.com (T. William Wells)
+Date: Sun, 5 Sep 93 14:06:59 PDT
+To: cypherpunks@toad.com
+Subject: anonymous routing
+Message-ID: <CCwDIJ.Cp9@twwells.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've been thinking about the problem of sending anonymous e-mail
+without using explicit routing. Here's one solution.
+
+Each message is comprised of two parts, an encrypted address and
+the data to be transmitted. The encrypted address has N parts,
+each encrypted so that it can be decrypted by one remailer. These
+N parts each contain information such that M of them can be used
+to reconstitute the destination address. Note that no indication
+is given of which remailer decrypts which; a remailer is expected
+to attempt decryption of all of them and to check for success.
+When a remailer is able to decrypt a piece, it replaces it with
+its decrypted value. It then remails the results, either to a
+randomly chosen remailer or to the destination, if it has the M
+parts.
+
+Sounds like the mail will never get delivered? Possibly.
+
+	N pieces in the message
+	M pieces needed to recover the addresses
+	R remailers
+
+If I haven't screwed the math,
+
+H = R * (1/N + 1/(N-1) + 1/(N-2)....1/(N-M+1))
+
+That is, the average number of hops to deliver a message will be
+the product of the size of the remailer pool and a factor that is
+purely a function of the address information. This number amounts
+to an appreciable fraction of the remailer pool unless the number
+of pieces is very large. For example, with just two pieces needed
+and 20 pieces provided, you'll hit about 10% of the remailers.
+
+Combine this with two things: make all messages the same size and
+create a "background" set of noise messages and I think that just
+about covers connecting sender to receiver. The only exception I
+can think of is that, since a message going into the system has
+the same data going out, if the bad guys see it in both places
+you're screwed. There's an obvious solution to that that I've
+overlooked, right?
+
+
+
+
+

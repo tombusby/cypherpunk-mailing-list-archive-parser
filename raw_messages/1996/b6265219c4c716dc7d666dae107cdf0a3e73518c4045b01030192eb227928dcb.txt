@@ -1,0 +1,64 @@
+From: David Mazieres <dm@amsterdam.lcs.mit.edu>
+Date: Sun, 14 Jan 1996 03:46:30 +0800
+To: Rich Graves <llurch@Networking.Stanford.EDU>
+Subject: Re: A weakness in PGP signatures, and a suggested solution (long)
+In-Reply-To: <199601030407.UAA12551@comsec.com>
+Message-ID: <199601131820.NAA14561@amsterdam.lcs.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Rich Graves <llurch@Networking.Stanford.EDU>
+> Newsgroups: netcraft.cypherpunks,alt.security.pgp,sci.crypt,mail.cypherpunks
+> Date: Fri, 12 Jan 1996 02:04:13 -0800
+> 
+> An easy short-term partial solution would be to modify mailcrypt, bap, or
+> whatever front end you use to automatically put the current date and (a
+> shortened form of) the To: or Newsgroups: header into the PGP signature
+> Comments: line. 
+
+Well, I'm not much of an elisp hacker so I resorted to using perl, but
+here's what I have.  This doesn't address the issue of automatically
+verifying the headers in a message, but at least the headers are in
+the message so that you can manually verify things when there may be a
+problem.
+
+David
+
+--
+#!/usr/local/bin/perl
+#
+# Put Header In Sig.
+# This script copies mail headers into the body of a message
+# before signing, so that your signed messages cannot be taken
+# out of context.
+#
+# To use with mailcrypt, put something like the following in your
+# .emacs file:
+#
+# (defun put-header-in-sig ()
+#   (call-process-region
+#    (point-min) (point-max)
+#    "~/bin/phis"
+#    nil
+#    (current-buffer)
+#    nil))
+# (add-hook 'mc-pre-signature-hook 'put-header-in-sig)
+
+
+while (<>) {
+    last if /^--/;
+    $header .= $_ unless /^(BCC|FCC):/;
+    $date = 1 if /^Date:/i;
+}
+
+exit 0 unless $_;
+
+$header = "Date: " . `date` . $header unless $date;
+print $header, "\n";
+
+while (<>) {}
+
+
+
+

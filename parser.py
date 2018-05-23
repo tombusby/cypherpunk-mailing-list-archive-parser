@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 from email.parser import Parser
 import re
-import pprint
 import sqlite3
 import dateutil.parser
+import hashlib
+import pprint
 
 
 class EmailMessage(object):
 
     def __init__(self, file_year, raw_text):
+        m = hashlib.sha256()
+        m.update(raw_text)
+        self._message_hash = m.hexdigest()
         self._file_year = int(file_year)
         self._raw_text = raw_text
         parsed_message = Parser().parsestr(raw_text)
@@ -68,8 +72,15 @@ def get_messages():
 
 
 def insert_into_db(conn, message):
+    def process_possible_unicode(text):
+        try:
+            return unicode(text.decode('utf-8', 'replace'))
+        except UnicodeDecodeError:
+            return str(text)
+
     sql = """
         INSERT INTO messages (
+            `message_hash`,
             `message_id`,
             `file_year`,
             `date`,
@@ -79,26 +90,41 @@ def insert_into_db(conn, message):
             `subject`,
             `reply_to`
         ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?
         )
     """
-    conn.cursor().execute(sql, [
+    params = [
+        message._message_hash,
         message._message_id,
         message._file_year,
         message._unixtime,
         message._raw_date,
-        message._from,
-        message._to,
-        unicode(message._subject.decode('utf-8')),
+        process_possible_unicode(message._from),
+        process_possible_unicode(message._to) if message._to else None,
+        process_possible_unicode(message._subject),
         message._reply_to
-    ])
-    conn.commit()
+    ]
+    try:
+        conn.cursor().execute(sql, params)
+    except sqlite3.IntegrityError:
+        pass
+    except sqlite3.ProgrammingError:
+        pprint.pprint(params)
+
+
+def write_message_to_file(message):
+    with open("raw_messages/{}/{}.txt".format(
+        message._file_year, message._message_hash
+    ), "w") as f:
+        f.write(message._raw_text)
 
 
 def main():
     conn = sqlite3.connect('database.db')
     for message in get_messages():
         insert_into_db(conn, message)
+        write_message_to_file(message)
+    conn.commit()
     conn.close()
 
 

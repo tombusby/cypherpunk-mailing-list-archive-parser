@@ -1,0 +1,47 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 8 Mar 1996 05:42:12 +0800
+To: cypherpunks@toad.com
+Subject: Re: Square pegs in round holes, matchmaking, corporate mailservers
+Message-ID: <199603071812.KAA16510@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Bill Stewart <stewarts@ix.netcom.com>
+> [>>Dimitris Tsapakidis <dimitrt@dcs.rhbnc.ac.uk> wrote:]
+> >  >Bob must find out whether Alice has declared (commited) her interest
+> >  >in him, if and only if he has declared (commited) his interest in her.
+> >  >Before he does so, he can at most know that a girl is interested in him.
+> >  >Another description: Bob and Alice can have a date if they both commit
+> >  >to each other. If only one commits, nobody will ever find out about it.
+> >  >- T is the trusted third party.
+> [Padgett contribution elided]
+> Oh, that would work fine.  Let a, b, and t be Alice, Bob, and Trent's secret DH
+> keys, and g and p be the generator and prime (all math below is mod p.)
+> If Bob wants to talk to Alice, he sends Trent B = g**b, marked "For Alice",
+> optionally anonymously.  Trent calculates X = B**t == g**bt, and sends it to
+> Alice.
+> Alice calculates K = X**a == g**bat, calculates H = Hash(K) and 
+> posts it anonymously, or sends it to Trent to post or mail to Bob. 
+> If Alice wants to talk to Bob, she calculates A = g**a mod p,
+> sends it to Trent, optionally anonymously, marked "For Bob".
+> Trent calculates Y = A**t == g**at , and sends it to Bob.  
+> Bob calculates K' = Y**b == g**abt, calculates H' = Hash(K') and
+> notices that it's the same as the H he pulled off the net earlier.
+> Bob says "Oh, wow!  Alice wants to talk to me!", encrypts some lame drivel 
+> of a message M with key K'==K, and mails it to Alice if he knows her address
+> or posts it with Subject: H', which Alice receives.
+
+I don't think this satisfies the requirements.  Once Bob calculates H'
+and sees that it matches H, he knows that Alice likes him, but Alice
+doesn't know that he likes her.  The whole point of the protocol was to
+be fair.  Bob must only learn that Alice likes him if Alice is guaranteed
+to learn that he likes her.
+
+I have posted an alternate solution in another message.
+
+Hal
+
+
+
+

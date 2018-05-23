@@ -1,0 +1,80 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Thu, 23 Nov 95 03:08:12 PST
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: generating provable primes
+Message-ID: <Pine.SUN.3.91.951123024142.12404A-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Several days ago someone (I forgot who he was) asked about code for 
+primality tests.  I just implemented an algorithm to generate random 
+provable primes that is only about 50% slower than generating probable 
+primes.  It will be in the next version of Crypto++, but I've attached 
+code for the main function in case anyone is interested in the 
+algorithm.  Full description can be found in "Fast Generation of Prime 
+Numbers and Secure Public-Key Cryptographic Parameters" by U.M. Maurer in 
+Journal of Cryptology, Volume 8 Number 3, 1995.  The paper also describes 
+a more complicated algorithm that produces primes with a more uniform 
+distribution.
+
+There was discussion some days ago about generating strong primes 
+for DH exchange moduli.  Eric Young reported that he spent tens of hours 
+of CPU time to generate a 4096 bit prime p such that (p-1)/2 is also 
+prime.  However, there is really no reason why DH exchange moduli must be of 
+the form 2q+1 where q is a prime.  It should be sufficient that they are 
+of the form rq+1, where q is a large enough prime (say more than 256 
+bits).  The following algorithm generates a provable prime p=2rq+1, where q 
+is a prime with at least half the length of p.
+
+bignum ProvablePrime(RandomNumberGenerator &rng, unsigned int bits)
+{
+	const unsigned smallPrimeBound = 29, c_opt=10;
+	bignum p;
+
+	BuildPrimeTable();
+	if (bits < smallPrimeBound)
+	{
+		do
+			p.Randomize(rng, bignum::Power2(bits-1), 
+bignum::Power2(bits)-1, ODD);
+		while (TrialDivision(p, 1 << ((bits+1)/2)));
+	}
+	else
+	{
+		const unsigned margin = bits > 50 ? 20 : (bits-10)/2;
+		double relativeSize;
+		do
+			relativeSize = pow(2.0, 
+double(rng.GetLong())/0xffffffff - 1);
+		while (bits * relativeSize >= bits - margin);
+		
+		bignum a,b;
+		bignum q = ProvablePrime(rng, unsigned(bits*relativeSize));
+		bignum I = bignum::Power2(bits-2)/q;
+		bignum I2 = I << 1;
+		unsigned int trialDivisorBound = (unsigned 
+int)min((unsigned long)primeTable[primeTableSize-1], (unsigned 
+long)bits*bits/c_opt);
+		boolean success = FALSE;
+		do
+		{
+			p.Randomize(rng, I, I2, ANY);
+			p *= q; p <<= 1; ++p;
+			if (!TrialDivision(p, trialDivisorBound))
+			{
+				a.Randomize(rng, 2, p-1, ANY);
+				b = a.ExponentiateMod((p-1)/q, p);
+				success = (Gcd(b-1, p) == 1) && 
+(b.ExponentiateMod(q, p) == 1);
+			}
+		}
+		while (!success);
+	}
+	return p;
+}
+
+
+
+
+

@@ -1,0 +1,61 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Wed, 20 Oct 93 14:32:48 PDT
+To: cypherpunks@toad.com
+Subject: Re: crypto technique
+Message-ID: <9310202130.AA09601@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+One question before I work on this more at a later date.
+
+Can you still decode properly if you take the modulus of each
+coefficient?  I ask since if you can't, the modulus makes is harder to
+find the constants, but as a side effect it also destroys the message.
+
+Say I use
+
+f = 29/2 x + 40
+g = 135/2 f^2 + 135/2 f + 75
+
+I get g = 110775 + 317155/4 x + 113535/8 x^2
+
+This is easy to solve, so Matt takes the modulus of each coefficient
+(some power of 2, I pick 32 here to keep it simple).
+
+results in g' = 23 + 99/4 x + 127/8 x^2
+
+Say I encode my message x = 5
+
+g(5) = 6895725/8 mod 32 = 109/8
+
+g'(5) = 4349/8 mod 32 = 253/8
+
+Notice that these two results aren't equal at all!  
+
+Am I misunderstanding the encoding (and decoding) process?  Aren't
+these two results supposed to be equal?  I'm not getting the expected
+result when each coefficient is reduced mod 32.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLMWsI4OA7OpLWtYzAQHdMQP+Jy7gdjgyhg9vrwi8K+KkrVSDbciOy6Sb
+BJQ1/zMg8inqmILbahO9SG3yTTh7+/k+OdUhiyxHYaaC5Jhv5n+QIvFTizHDA3VY
+/M5uXpt883bBLBaCp3ICDsPJEtgzMePxySP3n+qKG+nZ9MUDQ7msLq7SDCqM6eUU
+BXHHmjNjr+A=
+=kjVG
+-----END PGP SIGNATURE-----
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

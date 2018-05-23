@@ -1,0 +1,70 @@
+From: "Peter Trei" <trei@process.com>
+Date: Thu, 3 Oct 1996 23:17:04 +0800
+To: cypherpunks@toad.com
+Subject: Can we kill single DES? #2
+Message-ID: <199610021852.LAA28445@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Yesterday I posted 'Can we kill single DES?', and I count about 20 
+responses, counting both those to the list, and those to me personally.
+
+One offer was made of a $1000 reward in return for a crack, if the
+offerer could make publicity hay of the offer (no, I don't have a problem
+with that, but I'd like it set up so that others could add to the reward as
+well). If the reward got big enough ($10k?) I think it would be a 
+major incentive for otherwise uninterested people to run the screen
+saver. On the other hand, it might get into legal hassles - I don't know.
+
+The total cpu power pledged at the moment could sweep the key
+space in 300-400 years, if my speed estimates are correct. 
+
+I'm  concerned that the key scheduling may be worse than I estimated 
+in my earlier letter - Phil Karn's code to generate the key schedule takes 
+about 150x as long as my code takes to test the key. However, neither he 
+nor I have bothered yet to optimize this part of the code, or reduce it to
+assembler. It looks like I can get this part down to two instructions
+per round, at least most of the time.
+
+-----------
+
+I'm really concerned about the problem of a search failing, or 
+succeeding only after too long a time. Perry's proposal of about
+a month of real time is on the right order, though I could see up
+to 3 months being possible.
+
+Here's what I'm thinking of doing:
+
+1. Writing a prose description of the platform independent speedups.
+
+2. Writing a proposal for a client-server protocol for doling out
+   keyspace and returning results. Aside from the direct Internet
+   interface, there will also be a mechanism for i/o via plain text -
+   suitable for cut-and-paste, or simple CLI interfaces.
+  
+3. Writing a generic 'C' implementation of the keysearch client and server, 
+   which demonstrates the i/o and the various speedups. This should
+   be highly portable (but probably non-exportable). You'd also be able
+   to search randomly, or from a designated starting point.
+
+4. Work on the screen-saver based version of the client.
+
+I'm still very interested in hearing about any hardware based 
+approaches actually underway - not a pile of wild-assed guesses
+and hopes.
+
+Those who want to look at a fast DES in assembler should check 
+out Phil's 386 version, which includes both generic C and a variety
+of assembler implementations for the actual encryption step. See:
+ftp://idea.sec.dsi.unimi.it/pub/security/crypt/code/des386.zip
+
+Phil also has a Pentium version (a little slower than mine) 
+which he mails to US citizens.
+
+Peter Trei
+trei@process.com
+
+
+
+

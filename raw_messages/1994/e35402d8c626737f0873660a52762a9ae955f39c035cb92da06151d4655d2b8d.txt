@@ -1,0 +1,39 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 16 Jul 94 10:23:34 PDT
+To: cypherpunks@toad.com
+Subject: Factoring
+In-Reply-To: <199407152117.RAA08087@bb.com>
+Message-ID: <9407161658.AA19174@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Factoring keeps being described as a 2^(n/2) problem, yet AFAIK
+   [...], it's doable in linear (O(n)) time.
+
+Remember that the 'n' is the length of the input.
+
+   /* Algorithm:  To factor the number n, start with n boxes, each with on
+      "marble."  Remove last box, put it's marble in box #1.  If all boxes
+      have the same number of marbles, the number is factored.  If not,
+      remove last box.  Put marble in box #2.  Compare.  Etc.
+
+      possible optimizations: div by each prime l for a quicker starting
+	   point.  (2,3...)
+      */
+
+This algorithm is equivalent to trial division by each number less
+than n.  At each stage the 'box counter' is equal to the remainder and
+the 'number of boxes' is the divisor.
+
+Now since n can be encoded in lg n bits (lg = base 2 logarithm), the
+length of the input is N = lg n.  The representation of the boxes can
+be represented in O(N) bits; use two counters, each the length of the
+input.  The number of trial divisors is about 2^N, yielding an
+exponential time algorithm.
+
+Eric
+
+
+
+

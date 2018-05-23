@@ -1,0 +1,69 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 4 Jun 93 06:54:47 PDT
+To: cypherpunks@toad.com
+Subject: CryptoStacker, long term vision
+In-Reply-To: <Pine.3.03.9306032254.B28432-d100000@rtfm>
+Message-ID: <9306041351.AA05555@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I also think that it would be a lot more valuable if it were distributed
+>with code so that any user who wanted could inspect it for trapdoors.
+
+The nature of crypto software is that is valueless unless you trust
+it.  You don't have to trust a word processor, because you can see
+immediately that what you typed on the screen comes out the printer.
+For security software, however, breaches are invisible, or more
+precisely visible only after the damage has been done.
+
+This is the reason that I disregard DISKREET from Norton.  There's no
+source, and largish companies are notorious for pushing compromised
+software.  Norton's unlikely to ship source, so unless someone
+decompiles it, I'm not biting.
+
+>Umm, perhaps this is overly optimistic, but I was hoping that I would be
+>able to use an algorithm that did 1 byte in / 1 byte out encryption so
+>that I wouldn't have to deal with sector remapping.  
+
+You need to do a bit of research into what a block device driver
+actually does.  It deals only with blocks of characters, not with
+individual ones or arbitrary length strings.  The block interface at
+the driver level is different than the file access at the API level.
+Don't confuse the two levels.  DOS already does the buffering required
+to turn a block device into a file system.  You don't need to
+replicate it.
+
+As a result, the cipher you choose needs to be a block cipher.  DES
+works on blocks of 8 bytes at a time.  A typical sector is 512 bytes.
+So you are going to have 32 DES (or iterated DES) operations per
+sector.
+
+>  I was thinking that I would even basically leave
+>the FAT and such intact, or at least only slightly modified.
+
+Again, at the driver level, you don't know that a FAT even exists.
+Ray Duncan's book _Advanced MSDOS Programming_ contains a good chapter
+on device drivers.  You should be able to find code for a skeleton
+block device driver on the net; check the msdos programming groups for
+more info.
+
+>I'll keep everyone updated no problem.  How else am I going to get
+>suggestions and help?
+
+I would also suggest that you find programming partners.  If for no
+other reason than to do code review, someone else ought to be
+involved.  You wouldn't want to make the group too large, but three or
+four is not overlarge.  The archive at soda is available for group
+work, if desired.
+
+Eric
+
+
+
+
+
+
+
+
+

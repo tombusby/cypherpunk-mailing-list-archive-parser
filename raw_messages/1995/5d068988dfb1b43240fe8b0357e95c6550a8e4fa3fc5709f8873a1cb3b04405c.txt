@@ -1,0 +1,139 @@
+From: Nathaniel Borenstein <nsb@nsb.fv.com>
+Date: Fri, 6 Jan 95 14:45:49 PST
+To: jrochkin@cs.oberlin.edu
+Subject: Re: for-pay remailers and FV (Was Re: Remailer Abuse)
+In-Reply-To: <2292.789427808.1@nsb.fv.com>
+Message-ID: <wj3QKlz0Eyt5AxIAJg@nsb.fv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Excerpts from fv: 6-Jan-95 for-pay remailers and FV (W..
+jrochkin@cs.oberlin.edu (4416*)
+
+> Hmm. Maybe I don't completely understand how this is going to work, but
+> won't _every_ remailer in the chain need to know your FV billing account?
+> How would the rest of them charge via FV without knowing your billing
+> account?  What Russell was suggesting (I think), was that only the first
+> would bill via FV directly, so only the first would need to know your
+> billing account, and then he'd settle up with the others at the end of the
+> month. (A particular variation of that scheme is what you mentioned later
+> in your message, and I'll get to that).
+
+The latter is what I was proposing.  Only the first one would charge via
+FV, but the other ones would form a "closed system" that you could only
+get into by going through one that charged.
+
+> But assuming that every remailer along the chain _was_ charging via FV, I
+> fail to see how only the last one would need your billing account; seems to
+> me they all would, and thus any one could collude with FV to violate your
+> anonimity.
+
+That's not my assumption.  I think you may have misread my mail -- I
+*agree* with you on this point.  Sorry if I was unclear!
+
+> The
+> remailer operators still have to have an organization and remain in close
+> contact, which I am uncomfortable with because it seems to make collusion
+> more likely. 
+
+As I said, it all depends on your level of paranoia....  I tend to think
+that in such an organization, where the primary "product" is privacy,
+each member would tend to watch all the other members like hawks, eager
+to publicize any instance of the other guy not being sufficiently
+zealous in protecting privacy.  (Of course, I'm assuming that people
+like *you* will be running these services, i.e. people even more
+paranoid about privacy than me.)
+
+> And it's still dificult to intermix for-pay and free remailers
+> within your chain, or even just for-pay remailers from several different
+> consortiums. 
+
+I think this is wrong.  In my model, each consortium model has two, a
+for-pay and a for-free.  Anyone can send to a for-pay, but only a
+consortium remailer can send to a for-free.  Not that complicated,
+really.
+
+>  [The
+> consortium, as far as I can tell, would also find it rather dificult to
+> charge more for a longer chain, I can't think of any way for them to charge
+> anything excpet a uniform amount regardless of length of chain, unless you
+> give the first remailer a way to tell the length of your chain, which is
+> undesirable. I'm not sure if this is a problem.]
+
+To my mind, that's not a bug, it's a feature.  The consortium is
+charging you a set fee for privacy, and you get to decide how many hops
+are required to have a level of privacy you trust.
+
+> And this level of paranoia would be perfectly well surved by a Julf/penet
+> style remailer, which _would_ work well with an FV-payment system, as I
+> agreed before.  The cypherpunks chained remailernet system as a whole is
+> overkill for your paranoia needs, but appearantly not for the needs of
+> those who use it over Julf's.  It appears to me, that an FV-style payment
+> scheme can't be added to the cypherpunks chained remailer system without
+> dropping it's security to the level of Julf's.  Which might be good enough
+> for you, but not good enough for me, or presumably for anyone else that
+> uses cypherpunks remailers.
+
+This is true of the scheme that I said I would be satisfied with (one
+remailer + FV), but not true, I think, of the "overkill" scheme, which
+was the consortium.
+
+> [Do you understand how cypherpunks remailers work, and the difference
+> between them and a julf/penet style remailer?   Do you understand how
+> encryption is used in a cypherpunks-style remailer chain to make it so each
+> individual remailer only knows the next remailer along the chain, and not
+> the entire rest of the chain?]
+
+Well, I *think* I do, though I may be suffering from a bit of
+dilletantism here -- I'm certainly no expert in cryptography, but I
+think I understand the concepts involved.  We haven't even gotten into
+the effect of encryption yet -- so far, we've just been talking, I
+thought, about untraceability.  But as far as I can see, there's no
+reason that the consortium pay-only-at-entry scheme couldn't work with
+encrypted remailers.  Am I confused?  Couldn't you use the same
+cryptographic chain as is currently used, where all the inner entries in
+the chain are free crypto-remailers open only to other consortium
+remailers, but in which the outer encrypted message had the FV payment
+attached, which gained it entry to the remailer pool?
+
+> Try to bring up objections to a digicash-style system that are applicable
+> to remailers.   I agree that they are different technologies that fill
+> different requirements, but it seems to me that the particular requirements
+> of a remailer system are only met by a digicash/magic money style
+> technology.
+
+Again, I think you mis-read me.  I haven't (nor do I care to) spent a
+lot of time thinking about how to do remailers at all, let alone with
+digicash.  What I was referring to was the basic objections that come
+from using a digital cash scheme in the first place.
+
+>  I think  an electronic cash system that will work with remailers, must
+> satisfy these things:
+> 1) You need to be able to enclose the "signifyer" of the transaction inside
+> encryption.  Whether the "signifyer" is the cash itself, or an agreement to
+> make a transaction together with a billing number, or whatever, you need to
+> be able to enclose it in a PGP (or other arbitrary PKE protocol) encrypted
+> block.
+> 2) The "signifyer" of the transaction (which again might theoretically be
+> the cash itself, or some kind of billing number) alone shouldn't be enough
+> to reveal the identity of the anonymous user.
+
+I agree that FV doesn't meet the above requirements, but I don't see why
+they're necessary for remailers.  In the consortium scheme I'd proposed,
+the only thing that could ever be proven about you would be that you had
+used a remailer.  Now, if the message was not encrypted, your anonymity
+could be broken by collusion of FV and the "entry" remailer.  But if the
+cypherpunks style cryptographic chain was used, i.e. if the contents
+(including an inner envelope that said who you really sent it to) were
+encrypted, nothing more would ever be derivable without the collusion of
+everyone in the chain, and even then it would only be derivable if
+certain records were kept.  
+
+All I'm claiming is that it's do-able using the FV payment system.  I'm
+not going to do it myself because I don't personally feel that this
+level of untraceability is EVER legitimately necessary.....  -- Nathaniel
+
+
+
+

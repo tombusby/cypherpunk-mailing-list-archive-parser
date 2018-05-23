@@ -1,0 +1,88 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Fri, 26 Jul 1996 03:06:03 +0800
+To: cypherpunks@toad.com
+Subject: Re: Digital Watermarks for copy protection in recent Billbo (fwd)
+In-Reply-To: <199607250621.BAA07021@einstein.ssz.com>
+Message-ID: <199607251521.IAA06190@netcom18.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim Choate <ravage@einstein.ssz.com> writes:
+
+ >> The Sampling Theorem states that equally spaced
+ >> instantaneous samples must be taken at a rate GREATER THAN
+ >> twice the highest frequency present in the analog signal
+ >> being sampled.  If this is done, the samples contain all the
+ >> information in the signal, and faithful reconstruction is
+ >> possible.
+
+ > Actualy the sampling theorem states that if you want to
+ > reproduce a signal reliably it must be sampled at a
+ > frequency AT LEAST TWICE that of the highest frequency of
+ > interest in the FFT of the signal. This means the signal
+ > must be deformable into sine waves, not all signals qualify
+ > for this particular limitation and in general are not good
+ > signals for sampling.
+
+You want a continuous Fourier transform, not a discrete one, to
+determine the frequency spectrum of the waveform being sampled.
+The FFT is simply an algorithm for computing the DFT without
+redundant computation.  In general, any Lebesgue integrable
+complex function will have a Fourier transform, even one with a
+finite number of discontinuities. The reverse transform will
+faithfully reproduce the function, modulo the usual caveats about
+function spaces and sets of measure zero.
+
+There is no meaningful difference between speaking of the highest
+frequency in a signal, and the highest frequency present in its
+Fourier transform.
+
+ > An example is a step change from v1 to v2. since there is
+ > no change in voltage except for a brief moment the output
+ > of the FFT is pretty much flat.
+
+The Fourier transforms of step functions, square wave functions,
+delta functions, and other oddities are perfectly well defined.
+Again, the FFT is not relevant here.  A step function does not
+have a upper cutoff in the frequency domain, so you can never
+reproduce it perfectly from its samples, although the faster you
+sample, the sharper the edges of the reconstruction will become.
+
+ > What comes out the other end looks like a spike (similar to
+ > what happens when you feed a square wave to a transformer
+ > and look at the output). If you reconstruct this via the
+ > sampling theorem you get a sign wave of extremely low
+ > amplitude and frequency.
+
+I don't think so.
+
+[Incomprehensible Deletia]
+
+ > Back to the comb. Where a given signal has a componant leave
+ > the teeth. Where there is no componant break them off. You
+ > are left with a ratty looking comb. Now to each of the
+ > remaining teeth assign an amplitude for that specific
+ > frequency that is consistent with the FFT you calculated.
+ > The way this FFT is implimented in practice is called a
+ > 'Comb Filter' where it samples the signal (wide bandwidth)
+ > over a set of very small bandwidth filters in parallel.
+
+I must have been absent on "tooth day" in Functional Analysis
+class.
+
+ > One of the basic ideas of Algebra is that any given curve
+ > can be explained by a arbitrary set of equations. The
+ > Sampling Theorem just gives you a rationale for picking from
+ > that set.
+
+AIIIIIIIIEEEEEEEEEEEEE!  (I feel much better now :)
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

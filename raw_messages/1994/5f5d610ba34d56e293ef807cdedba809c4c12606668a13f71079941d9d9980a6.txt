@@ -1,0 +1,55 @@
+From: sw@tiac.net (Steve Witham)
+Date: Sun, 11 Sep 94 20:40:14 PDT
+To: cypherpunks@toad.com
+Subject: Re: Cracking MD5 for $10M
+Message-ID: <199409120339.XAA22462@zork.tiac.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>...another algorithm dominates it
+>for single processor loop detection... at least in storage space.  It
+>works as follows: get a sequence of values v(i+1) = MD5(v(i));
+>simultaneously get another sequence w(i+1) = MD5(MD5(w(i))), and start them
+>at the same place, v(0) = w(0).  That is, you're running one of them twice
+>as fast as the other.
+
+I like to call this the "two race cars" algorithm--you start a fast car
+ahead of a slow car on a single-lane track, and if the fast one runs
+into the slow one it's a looped track.
+
+Funny, just two weeks ago a coworker put a 32-bit CRC function into
+the programming language I use, and I was playing with finding collisions.
+(I bet a dollar there would be a non-trivial collision between CRCs of the
+76,000 files on our biggest disk and lost.)
+
+Has anyone mentioned using this sort of method to generate same-hash texts
+with, say, opposite meanings?
+
+David Wagner says--
+
+>Another thing -- I'm not sure this method is (directly) useful for
+>generating lots of collisions, if that is what is desired.  I believe
+>Dr. Hellman wrote some paper about the cycling properties of random
+>functions (out of interest in DES), and he concluded (if I remember
+>correctly) that when you generate lots of random starting values and
+>look at their cycling properties, most starting values will drain into
+>a very few specific cycles.
+
+Seems to me that even if lots of random starting points drain into
+the same cycle, you've still got lots of collisions.  Either points where
+the sequences join the cycle, or points where different tributaries join
+each other before joining the cycle.
+
+ --Steve
+
+ - - - - - - - - - -
+They say the User exists *outside* of the net.
+No one knows for sure, but I intend to find out!
+ --ReBoot (Saturday morning 3D animated cartoon)
+
+
+
+
+
+

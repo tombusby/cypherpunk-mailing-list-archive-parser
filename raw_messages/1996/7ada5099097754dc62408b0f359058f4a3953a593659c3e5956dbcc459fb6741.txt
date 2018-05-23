@@ -1,0 +1,62 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 11 Oct 1996 13:46:20 -0700 (PDT)
+To: peter.allan@aeat.co.uk
+Subject: Re: Binding cryptography - much work, little point ?
+In-Reply-To: <9610111223.AA02697@clare.risley.aeat.co.uk>
+Message-ID: <199610111911.UAA00320@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Allan <peter.allan@aeat.co.uk> writes:
+> Eric_Verheul writes:
+> 
+> > In our scheme any third party, which is probably never a TRP, can check
+> > equality of the sessionkeys send to the primary recipient (the TRP) and
+> > the second recipient (the real adressee), i.e. *without* needing secret
+> 
+> So could anyone anyway by asking the TRP.  The TRP returns a Yes/No
+> answer, without disclosing the session key.
+
+Yes, but how would you know the TRP was telling the truth?  Also
+asking the TRP is an online protocol with respect to the TRP.
+
+> Is your binding scheme motivated mainly by avoiding that workload on
+> the TRP ?  Or by the fact that everybody might prefer a different TRP ?
+
+The paper suggests that in one plausible implementation, the checkers
+referred to could be network service providers:
+
+from the summary of the paper posted here:
+: The idea is that any third party, e.g., a network or service provider,
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+: who has access to components 2, 3 and 4 (but not to any additional
+: secret information) can: 
+: a. check whether the session keys in components 2 and 3 coincide; 
+: b. not determine any information on the actual session key.
+
+This would allow for instance for a software only implementation of a
+madatory key escrow system.  The government in question could then
+deputize ISPs to do their mandatory GAK compliance checking for them.
+(Deputizing companies is a recent trend in law enforcment techniques
+anyway).
+
+This would allow for instance IP level encryption, with non-conforming
+encrypted packets being dropped by all ISPs in the country in
+question.  Something the Singaporeans might find useful.  The checking
+functionality could also be added to a key escrow enabled router.
+
+For this kind of application, binding cryptography is spot on.
+
+Adam
+
+[disclaimer: I'm against GAK]
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

@@ -1,0 +1,58 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Mon, 21 Jun 93 20:40:44 PDT
+To: zane@genesis.mcs.com (Sameer)
+Subject: Re: OTP dual decryption
+In-Reply-To: <m0o7qY1-000MU6C@genesis.mcs.com>
+Message-ID: <9306220340.AA02067@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 	Hmm? I don't understand this problem. There's only one set of
+> cyphertext.. the actual cyphertext. Do you mean "different batch of
+> cyphertext" as the OTP which creates the innocuous plaintext from the
+> cyphertext? Maybe encrypt the OTP w/DES and keep it on your hard drive.
+> When "they" snag the drive, they see the different cyphertext, you tell
+> them that it's the OTP you used and give them the DES-key to decrypt the
+> innocuous OTP.
+> 	I sense a problem with histogram equalization, however. Is there a
+> problem here or does OTP-encryption take care of that? 
+
+With a OTP any plaintext can correspond with any cyphertext
+given:
+
+   PAD (+) plaintext = cyphertext
+meaning
+   PAD (+) cyphertext = plaintext
+and
+   plaintext (+) cyphertext = PAD
+
+so, take your output of DES,  xor its contents with
+desired "false plaintext"  this is your false pad.
+store this on a seperate disk and make it look
+all secret-like.
+
+When feds come and take your cyphertext (which is output
+of DES) they ask for your key.  You hand over your
+disk with (fake) PAD.  They xor the two together to
+get (fake) plaintext which reads.  
+
+You dont have to do this before hand either, if you
+have a copy of your cyphertext after the feds
+confiscate a copy from you you can generate pad
+to make it say something that will really freak them
+out,  like something you couldnt have known prior
+to the seizure of the cyphertext :
+  "I will be illegally raided on July 2, 1994,  sounds
+   sort of like '1984' to me.  I wish the government
+   would stay out of my  life"
+
+
+> | Sameer Parekh-zane@genesis.MCS.COM-PFA related mail to pfa@genesis.MCS.COM |
+
+peace.
+
+
+
+

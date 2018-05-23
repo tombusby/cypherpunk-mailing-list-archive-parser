@@ -1,0 +1,68 @@
+From: Rick Smith <smith@securecomputing.com>
+Date: Sat, 6 Dec 1997 06:28:09 +0800
+To: "James A. Donald" <cryptography@c2.net
+Subject: Re: Please Beta test my communications cryptography product.
+In-Reply-To: <199712050100.RAA04735@proxy4.ba.best.com>
+Message-ID: <v03007800b0ae121c8f4c@[172.17.1.150]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 5:00 PM -0800 12/4/97, James A. Donald wrote:
+>    --
+>I have produced a program that, like PGP, provides digital
+>signatures and communications encryption.
+> http://www.jim.com/jamesd/Kong/Kong.htm
+>This is the first beta.  Please beta test this product.
+
+Actually, it's more fun to beta test the product concept than it is the
+product itself, especially since I don't use Windoze these days.
+
+First of all, the product Kong is not solving the same problem PGP was
+designed to solve: PGP follows the classic approach to e-mail encryption,
+with certificates to address MIM and personal authentication issues. Kong
+only concerns itself with individuals' cyberspace identity. But there's
+something appealing to this simplifying notion, and I'm interested in
+anything that makes crypto easier for people to understand and use.
+
+I admit I can't figure out what crypto mechanism Kong is really using since
+there's obfuscating talk of passphrases and secrets. But I can see how I'd
+do it with conventional public key mechanisms. The 123 byte (or whatever)
+string included in the message would incorporate a digital signature over
+the message plus the public key used to produce the signature. Thus, each
+message contains an internal integrity check. Recipients also would be able
+to compare the public keys used to sign two or more messages allegedly from
+the same recipient and verify that they were signed by the same entity.
+(technical nit: I'd prefer to put the PK in a special message header field
+and only stick the digital signature data in the message body, like PGP).
+
+Since Kong does not use certificates, it is vulnerable to the Man in the
+Middle (MIM) attack and indeed to forgery. However, I also suspect that the
+behavior of a long lived cyberspace identity would make a MIM attack
+detectable and/or impractical in the long run. If John Doe consistently
+includes a public key in his web site, messages, and postings, then
+recipients have a relatively independent way to validate the key being used
+in a message allegedly from him. The public key is literally associated
+with the cyberspace identity and its "reputation capital." Since no third
+party is attesting to the identity, you could argue that it's exclusively
+established by the holder's cyberspace reputation. This is an interesting
+property.
+
+Key revocation remains a problem, as with any PK system. The key holder
+essentially starts over associating reputation capital with the new key.
+This could be weird (but the topic of an interesting tale) if the revoked
+key was actually disclosed to an adversary and actively used in forgeries.
+
+As mentioned above, I haven't used the produt itself. But the underlying
+concept may represent a practical subset of classic e-mail security.
+
+Rick.
+smith@securecomputing.com                Secure Computing Corporation
+"Internet Cryptography" at http://www.visi.com/crypto/ and bookstores
+
+
+
+
+
+

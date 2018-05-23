@@ -1,0 +1,59 @@
+From: Andy Brown <asb@nexor.co.uk>
+Date: Thu, 31 Aug 95 06:10:43 PDT
+To: Sam Quigley <poodge@econ.berkeley.edu>
+Subject: Re: yabc
+In-Reply-To: <199508310523.WAA21036@quesnay.Berkeley.EDU>
+Message-ID: <Pine.SOL.3.91.950831135429.29780C-100000@eagle.nexor.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 30 Aug 1995, Sam Quigley wrote:
+ 
+> Also, it seems that there have been some "extensions" to the SKSP
+> protocol...  For instance, suddenly there are different machines
+> dedicated just to ACKs, etc.  Is there a central repository of these
+> changes?  (Have these changes even been publicly reviewed?)
+
+These aren't changes to the protocol, which just defines what a client and
+a server should understand.  The "local" servers that only do ACKs are
+designed to collect up reponses from a local client farm and then feed
+them en-masse to the central server, using SKSP.
+
+To answer your second point, there are ideas being floated around between 
+Adam, Piete and myself as to the "next step".
+
+I had the idea that the load on the central server might be reduced by
+having a system where clients register their availability times, PGP key
+and computing horsepower to the server, and the server calls the client at
+the start of an available period and hands it a keyspace that fills the
+time available.  PGP signatures on all exchanges would authenticate the
+parties and it would be impossible for large keyspaces to be requested in
+error or malicously.  Un-ack'd keyspaces would wrap around.  This idea
+needs quite a bit more coding and people have expressed reservations about
+just how much load would be saved.
+
+On the other hand, Piete has a proposal that also uses PGP signatures and
+retains the existing protocol.  The central server would remain as is, but
+would only accept ACKs from servers that it trusted via a signed PGP key. 
+There would be a small number of such second level servers, perhaps one in
+each country.  This hierarchy of trust extends downwards as far as is
+necessary in each country with clients being at the leaf nodes of the
+tree.  This method spreads the load worldwide in a very effective manner,
+with the final central server only receiving calls from a handful of other
+servers.  This idea needs less coding than mine and solves the immediate
+problem. 
+
+We're still talking, and listening...
+
+
+- Andy
+
++-------------------------------------------------------------------------+
+| Andrew Brown  Internet <asb@nexor.co.uk>  Telephone +44 115 952 0585    |
+| PGP (2048/9611055D): 69 AA EF 72 80 7A 63 3A  C0 1F 9F 66 64 02 4C 88   |
++-------------------------------------------------------------------------+
+
+
+
+

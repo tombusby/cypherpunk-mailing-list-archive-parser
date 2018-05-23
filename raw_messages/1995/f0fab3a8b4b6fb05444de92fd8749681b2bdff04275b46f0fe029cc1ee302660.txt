@@ -1,0 +1,35 @@
+From: Raph Levien <raph@CS.Berkeley.EDU>
+Date: Thu, 9 Nov 1995 08:44:18 +0800
+To: stewarts@ix.netcom.com
+Subject: Re: PGP Comment feature weakens remailer security
+In-Reply-To: <199511080454.UAA05765@jobe.shell.portal.com>
+Message-ID: <199511081943.LAA24863@kiwi.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Point well taken.
+
+   I'm seriously considering completely disabling the PGP comment
+feature when invoked from premail. In fact, that's what the new code
+does right now.
+
+   On an unrelated topic... cypherpunks like to count bits, right?
+What is the correct number of pseudorandom bits to use in a MIME
+multipart separator? If the data has a line which matches the
+separator, the message is corrupted. Of course, if you can take
+multiple passes through the data, you can simply verify that it does
+not contain a line which matches the separator. But if you're
+restricted to a single pass, then the only way to do it is to use a
+randomly generated separator.
+   I figure that 128 bits should _definitely_ be enough (that's what
+is in the new premail code now). Even 64 bits should ensure that it is
+unlikely that anyone will ever experience message corruption over the
+expected lifetime of premail. However, it makes me nervous. What do
+people think?
+
+Raph
+
+
+
+

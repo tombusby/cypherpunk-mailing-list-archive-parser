@@ -1,0 +1,62 @@
+From: attila <attila@primenet.com>
+Date: Sat, 30 Dec 1995 07:23:03 +0800
+To: "Dr. Dimitri Vulis" <dlv@bwalk.dm.com>
+Subject: easy avoidance of PGP signature forgeries and reuse
+In-Reply-To: <oTTsgD7w165w@bwalk.dm.com>
+Message-ID: <Pine.BSD.3.91.951229172352.26978C-100000@usr5.primenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+    START <attila>
+
+	I never paid much attention to the problem other than to avoid 
+    it by forcing it --i.e. list the destination and the send inside the
+    signature block, thus:
+
+    ----------------- BEGIN PGP SIGNED TEXT
+
+    To: john doe <john@box.com>
+    Newsgroups: sci.crypt
+    From: jane roe <jane@topsey.turvey.com>
+    Subject: that's all folks!
+
+    John, don't darken my door during the Christmas holidays.
+
+	Nevermore.
+
+    jane
+
+    ---------------- BEGIN PGP SIGNATURE
+
+    ERTYUIKJBNM,./34567JM,./
+
+    ---------------- END PGP SIGNATURE
+
+	with e-mail, e-letters, direct faxes, etc. it is to easy to 
+    ignore the courtesy header. From a standpoint of security, you have
+    blown away each of the attacks outline in your article in so much as 
+    the signature will not compute if the courtesy block is omitted.
+
+	personally, I do not think PGP 3 should attempt to solve the 
+    problem. Most of the headers involved are applied _after_ the message 
+    leaves the mail program; and, PGP interfaces are virtually the same 
+    as invoking an alternate editor, which gets you nothing.
+
+    END <attila>
+
+
+--
+--------------------------------------------------------------------
+#!/bin/perl -s-- -export-a-crypto-system-sig -RSA-3-lines-PERL
+$m=unpack(H.$w,$m."\0"x$w),$_=`echo "16do$w 2+4Oi0$d*-^1[d2%Sa
+2/d0<X+d*La1=z\U$n%0]SX$k"[$m*]\EszlXx++p|dc`,s/^.|\W//g,print
+pack('H*',$_)while read(STDIN,$m,($w=2*$d-1+length$n&~1)/2)
+
+
+
+
+
+

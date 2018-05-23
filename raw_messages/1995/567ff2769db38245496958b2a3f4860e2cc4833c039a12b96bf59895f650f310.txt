@@ -1,0 +1,38 @@
+From: ghio@cmu.edu (Matthew Ghio)
+Date: Wed, 9 Aug 95 18:19:47 PDT
+To: cypherpunks@toad.com
+Subject: Re: this looked like it might be interesting
+In-Reply-To: <199508091852.UAA23821@utopia.hacktic.nl>
+Message-ID: <m0sgM6l-000vpPC@myriad>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hmm.. This is interesting indeed.  It is a 32-round cipher operating
+on a 64-bit block.  It has an 80-bit key with a 16-bit cryptographic
+checkword.  This seems a lot like a certain hardware-based encryption
+system some TLA spooks were pushing about a year ago.
+
+If this isn't Skipjack, someone sure went to a lot of trouble to make
+it look like skipjack.  It's also possible that it is an early development
+version of what later became Skipjack/Clipper.  It is dated February 1989
+and July 1991, which would be consistent with NSA's claim that they had
+been working on Skipjack for about 5 years.  It also mentions a "S-2"
+revision.  It'd be interesting to try to see if it will interoperate with
+a real clipper chip, but I wouldn't bet on it.
+
+Hal Finney noticed that the coding style seems sloppy or amateurish.
+This is probably just an attempt by the programmer to hide his tracks.
+The RC4 stuff also had unnecessary operations in it, presumably for the
+same reason.
+
+Hal also comments on the use of XOR instead of bit permutations as in
+DES, and the use of 8-bit table sizes, which would make a software
+implementation easier.  This is odd, considering that the algorithm
+purports to be designed for hardware.  However, NSA did say that part
+of the clipper algorithm was in software, which was designed to be
+erased if the chip was tampered with...
+
+
+
+

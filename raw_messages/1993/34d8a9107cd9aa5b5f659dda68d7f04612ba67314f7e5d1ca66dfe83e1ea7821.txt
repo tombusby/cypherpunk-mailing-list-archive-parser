@@ -1,0 +1,53 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Mon, 22 Mar 93 15:20:11 PST
+To: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Subject: Re: Encrypted computing questions
+Message-ID: <9303222315.AB22500@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Timothy Newsham <newsham@wiliki.eng.hawaii.edu> asks a lot of questions
+about my "crypto goal" of encrypted computing.  Rather than answer his
+questions one at a time, I'll try to clarify what I meant.  Also, below
+I ask about a related crypto goal of "trans-cryption."
+
+The idea is that you have a program and maybe some initial state information.
+The program accepts data in some encrypted form.  It does the equivalent of
+decrypting it and processing it.  EXCEPT...
+  o  It never turns any part of it into plaintext (unless the output is
+     plaintext, in which case it only shows up after the computing is done).
+  o  It's impossible by analyzing the code or watching it run to figure out
+     what it did, or which bits went where.
+  o  In particular, you can't figure out the decrypting key by analyzing
+     the program or watching it run.
+  o  If there's state information left over, it has to be in some 
+     encrypted form.
+Working backward from these goals, I figure that the program is somehow 
+combined with its private key when it is turned into a crypto-program.
+How do you convince users that this is what you've done, that your program
+is actually a crypto program that never reveals its private key or 
+plaintext of its inputs--that it doesn't just decrypt and then process the
+plaintext--and that you've thrown away the private key used to make it?
+
+When it runs, it has to process all its data in encrypted form!  What sort
+of encryption could this be?  The data has to be shuffled all around
+continuously, and it would seem you'd have to have lots of "if" statements
+to make sure it behaved very differently with small input changes, so
+that no one could tell what any input bit affected.
+
+If the program were an interpreter for a general-purpose language, 
+you could send it encrypted programs to run.
+
+A related idea is trans-cryption.  Is it possible to do the equivalent
+of two RSA encryption steps (e.g., decrypt with one key, then encrypt
+with another), without storing information that would let you deduce either 
+of the keys or the data between the two steps?
+
+-fnerd
+fnerd@smds.com (FutureNerd Steve Witham)
+
+
+
+
+

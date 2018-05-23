@@ -1,0 +1,78 @@
+From: Clay Olbon II <olbon@ix.netcom.com>
+Date: Wed, 4 Dec 1996 06:28:01 -0800 (PST)
+To: Eric Murray <cypherpunks@toad.com
+Subject: Re: more IPG and random numbers
+Message-ID: <1.5.4.32.19961204142607.006a18bc@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:24 PM 12/3/96 -0800, Eric Murray wrote:
+>I did some more experiments with the IPG stream-cipher
+>algorithim and random number tests.  Since IPG claim that their
+>algorithim passes chi-square tests of randomness, I found
+>a chi-square test program.  It's written by Peter Boucher
+>and was posted to sci.crypt in '93 (<2bum8sINN98j@roche.csl.sri.com>).
+
+Eric,
+
+The chi-square test is fairly easy to implement.  Understanding the
+alogrithm and interpreting what the test results mean is as important as a
+proper implementation.  An excellent text that covers testing PRNGs
+(including, chi-square, KS, runs (up, down, above & below the mean), and
+autocorrelation) is Simulation Modeling & Analysis, by Law & Kelton.
+
+>> Does the 'runs up' (or 'runs down') test with run-length equal to two
+>> get me anything over the standard chi-square test?  I left it in.
+
+Yes.  It tests yet another aspect of "is the data truly random?"
+
+>First I ran the output from my version of the IPG algorithim that I
+>posted a couple days ago :
+>
+>% ./boucher < ipg.out
+>Occurances:  n =  12000000, V=-8375833.71
+>Character occurances non-random
+>Successions: n =     46875, V=62287.82
+>Character successions non-random
+
+Unless the V is a typo, there is an error in the code.  The chi-square
+statistic can never be negative.
+
+>Then I ran output from a test RNG that's basically a loop around random():
+>
+>% ./boucher < myrandom/out
+>Occurances:  n =   3414720, V=213050.62
+>Character occurances non-random
+>Successions: n =     13338, V=1143.41
+>Character successions non-random
+
+I did considerable testing on random() a while back.  It is actually quite
+good at producing a uniform distribution.  There were other problems however
+(notably autocorrelation in triplets).
+
+>Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+>PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+I suggest you take a look at the chi-square program and check it for errors.
+Based on the above observations, I am a little suspicious of your results. 
+
+As a side note, I tend to test PRNGs using stream lengths that are similar
+to what I will need in a real use of the generator.  I also test multiple
+seeds, because statistically, some seeds will fail.  Of course, testing
+multiple seeds has its own problems (see the bonferroni inequality) of which
+most non-statisticians are unaware.  
+
+I have been curious for a while about developing a statistical test that
+would examine the expected number of failures of a repeated statistical
+test. Haven't had the time to look into it yet though - not enough hours in
+the day.
+*******************************************************
+Clay Olbon			    olbon@ix.netcom.com
+engineer, programmer, statistitian, etc.
+**********************************************tanstaafl
+
+
+
+
+

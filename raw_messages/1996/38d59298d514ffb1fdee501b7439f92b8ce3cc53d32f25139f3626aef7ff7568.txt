@@ -1,0 +1,58 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Mon, 8 Jul 1996 06:38:46 +0800
+To: Bill Frantz <frantz@netcom.com>
+Subject: Re: SAFE Forum--some comments
+In-Reply-To: <199607031912.MAA08980@netcom8.netcom.com>
+Message-ID: <Pine.LNX.3.94.960707144145.179B-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Wed, 3 Jul 1996, Bill Frantz wrote:
+
+> I hear this as the server sends out a key which the client uses to encrypt
+> the username/password.  This algorithm makes less sense than the one I
+> thought I heard at the SAFE forum on Monday which was:
+
+True.  That algorithm is completely useless.
+
+> 
+> (1) The server sends out a challenge/salt (different each time)
+> (2) The client uses a secure hash to compute hash(salt||password) and
+> returns the username and the hash.
+> (3) The server computes hash(salt||password) and compares the hashes.
+> 
+> Given that there is still some interest in algorithms and protocols on this
+> list, can you describe what is really happening?
+
+That one makes more sense.  If the salt is completely random, then an attacker
+will not be able to use a replay attack.  Since the password is hashed, there
+is no way to find it out given the output.  This does require the server to
+maintain a list of cleartext passwords, but that's not any worse then Kerberos
+which requires a KDC store everyone's DES key.
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xe3bf2169
+http://www.voicenet.com/~markm/ | d61734f2800486ae6f79bfeb70f95348
+"Freedom is the freedom to say that two plus two make four.  If that
+is granted, all else follows."  --George Orwell, _1984_
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMeAGBrZc+sv5siulAQEzGwQAp6rB1eJ5DIzn9Zs5LlEDFu3K7XFRcl7S
+/9MQ5ykCmvgnOqgN1Pud/KYLsZuY2x+G5W68EF0kTVfwarS2ZCT2wYVhH5cMaEQs
+2YfxtoK9opB73GiMP3OJUTZlNPnwCCe/y/iHJN7HqAv/YLi+gdIc9rGXtfegE/eY
+sASbbC7C1oY=
+=NJSu
+-----END PGP SIGNATURE-----
+
+
+
+

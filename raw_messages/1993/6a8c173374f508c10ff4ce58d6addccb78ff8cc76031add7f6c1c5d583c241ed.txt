@@ -1,0 +1,52 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Tue, 5 Oct 93 23:45:09 PDT
+To: cypherpunks@toad.com
+Subject: Crypto Toolkit Suggestions
+Message-ID: <01H3RYOHPK4I8ZE0SY@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I'm writing a toolkit to allow crypto programs to be written using
+pipes and shell/perl scripts. There will be several small programs, most
+of which will act as filters, to give direct access to rsa, idea, md5,
+keyrings, etc. This should allow quick and easy coding of digicash,
+zero-knowledge servers, and other interesting things.
+
+So far I've got the MD5 and IDEA functions. MD5 is just a filter - it takes
+whatever you feed it and outputs the MD5 hash in hex. IDEA takes e or d for
+encrypt or decrypt, a key, and (if encrypting) an initialization block. Then
+it acts as a filter. The output is ten bytes longer than the input - init
+block and two key check bytes - just like the idea_file function in PGP's
+crypto.c file. MD5 links with md5.c and md5.h, and IDEA links with idea.c
+and idea.h from pgp23a.
+
+For example, you could do:
+key=`md5`
+passphrase^D
+init=(16 random hex digits - another MD5 is okay, it will ignore excess)
+export key init
+idea e key init < infile > outfile
+idea d key < outfile > decrypted
+
+Questions: what is the best way to pass a key?
+The command line is definitely out, because ps shows it. Right now, IDEA
+takes the name of an exported environment variable containing the hex key.
+Can you securely wipe an environment variable? Is there a better way?
+(A temporary file could be dangerous; a key could be left lying around.)
+
+What else should I write? Ideas: direct access to rsa with hex numbers,
+direct access to modmult, etc, for dh and stuff, a filter for armor/dearmor
+and zip/unzip. A program to pull key material out of a keyring in hex, so
+you could use PGP keys with the rsa routines. What would really be nice is a
+filter that could generate pgp-compatible packets, so you could make up any
+"pgp object" using a pipe. You could also use the hex output directly.
+
+--- MikeIngle@delphi.com
+
+The enemy is not just the federal government.
+The enemy is centralized power, wherever it may exist.
+
+
+
+

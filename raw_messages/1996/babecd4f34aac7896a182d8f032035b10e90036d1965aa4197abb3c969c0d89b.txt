@@ -1,0 +1,29 @@
+From: Laszlo Vecsey <master@internexus.net>
+Date: Sun, 4 Aug 1996 02:46:33 +0800
+To: cypherpunks@toad.com
+Subject: Anonymous Message Broadcast
+Message-ID: <Pine.LNX.3.92.960803125401.4269B-100000@micro.internexus.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Has anyone implemented a simple anonymous chat system (an anonymous irc)
+using the technique described in Applied Cryptography 2nd edition? I'm
+speaking of the Anonymous Message Broadcast documented in section 6.3, it
+begins on page 137.
+
+Can the same system be implemented using base256 (unsigned char, 8bit ASCII)
+instead of the simple on/off binary method that is described in the
+explanation? How would it differ.
+
+Thanks.
+
+(define(RSA m e n)(list->string(u(r(s(string->list m))e n))))(define(u a)(if(>
+a 0)(cons(integer->char(modulo a 256))(u(quotient a 256)))'()))(define(s a)(if
+(null? a)0(+(char->integer(car a))(* 256(s(cdr a))))))(define(r a x n)(cond((=
+0 x)1)((even? x)(modulo(expt(r a(/ x 2)n)2)n))(#t(modulo(* a(r a(1- x)n))n))))
+
+
+
+
+

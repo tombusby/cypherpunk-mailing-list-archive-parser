@@ -1,0 +1,46 @@
+From: ph@netcom.com (Peter Hendrickson)
+Date: Thu, 19 Dec 1996 21:18:19 -0800 (PST)
+To: "Timothy C. May" <cypherpunks@toad.com
+Subject: Re: Executing Encrypted Code
+Message-ID: <v02140b03aedfd5494638@[192.0.2.1]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 9:20 PM 12/19/1996, Timothy C. May wrote:
+>> However, why not use "beacons"?  The clock could have a built-in timer
+>> that needs to be reset once a month from an authenticated source.  This
+>> assumes the presence of net connectivity, but that's not a terrible
+>> assumption.
+
+> I mentioned "beacons" in the portion of my message you did not quote here.
+
+Gack!
+
+> As for why they are not being used, they don't exist.
+
+Here's how I would do it.  When the processor wants to update its
+clock, it generates a random number and encrypts it for the trusted
+time source.  The trusted time source decrypts its message to get
+the random number.  It timestamps it, encrypts it, and sends it
+back.
+
+This means you can't replay old time messages to keep using your
+old software.
+
+Is it possible to have a little clock and rechargeable battery on
+a chip?  If so, then this technique should be easy to use.
+
+If not, then the processor can count the number of cycles it runs and
+use that as an approximate means of deciding when to check the time.
+
+Or, it could demand a time update every time it is power cycled.
+
+Peter Hendrickson
+ph@netcom.com
+
+
+
+
+
+

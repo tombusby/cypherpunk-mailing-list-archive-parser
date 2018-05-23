@@ -1,0 +1,59 @@
+From: an402976@anon.penet.fi (RingZero)
+Date: Sun, 8 Oct 95 14:45:48 PDT
+To: cypherpunks@toad.com
+Subject: Re: NEW Netscape RNG hole
+Message-ID: <9510082136.AA03945@anon.penet.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Phil argues this file handle being lost isn't a big mistake.
+He describes how the function is actually called, which
+does indeed show that it shouldn't be much of a problem.
+However, Netscape had not revealed enough information about
+their RNG to allow myself or other reviewers to determine how
+critical it was. If, for example, this seeding function were
+called once every time a secure connection were established,
+losing a handle would be a major problem.
+
+This seems like a good reason to ask for the code for
+SEC_RandomUpdate(). You show us from what sources you gather bits,
+but you don't show us how you mix them or, for that matter,
+stream out "random" bits.
+
+If you did have a description in your original published code
+that was better than "mixing is accomplished with MD5", I
+must've missed it.
+
+
+RingZero
+
+===========
+From: Phil Karlton  <karlton@netscape.com>
+Subject: Re: NEW Netscape RNG hole
+Date: Sunday, October 08, 1995 1:39AM
+
+RingZero wrote:
+>
+> Did anyone else notice a bug in the new, public Netscape
+> RNG code? It appears that on Windows builds, during the
+> RNG seeding, the function that hashes in file contents
+> (EnumSystemFiles) doesn't close a file handle (lFileHandle).
+
+I think you mean lFindHandle. I'm not a windows programmer, so I have
+no idea if the enumerator needs to be cleaned up, but I will forward
+your message to the appropriate folks here.
+
+[...]
+
+--****ATTENTION****--****ATTENTION****--****ATTENTION****--***ATTENTION***
+Your e-mail reply to this message WILL be *automatically* ANONYMIZED.
+Please, report inappropriate use to                abuse@anon.penet.fi
+For information (incl. non-anon reply) write to    help@anon.penet.fi
+If you have any problems, address them to          admin@anon.penet.fi
+
+
+
+

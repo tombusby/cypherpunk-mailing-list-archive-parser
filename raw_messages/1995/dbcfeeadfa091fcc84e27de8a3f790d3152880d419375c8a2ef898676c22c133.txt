@@ -1,0 +1,109 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Thu, 19 Oct 95 10:49:35 PDT
+To: cypherpunks@toad.com
+Subject: Re: DalSemi: Add-Only Memory for Storage of Digital Cash (fwd)
+Message-ID: <acabd56b3c0210041857@[205.199.118.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 1:46 PM 10/19/95, Nathan Loofbourrow wrote:
+(quoting someone else...)
+
+> >      Perhaps someone with more semiconductor physics background
+> > can correct me, but my understanding is that some kinds of nuclear
+> > radiation can be used to erase OTP EPROMS.   I suppose this might damage
+
+Sure, x-rays can erase EPROM cells. (Not the dosages found in airport x-ray
+machines, anticipating the usual question someone raises when they hear
+this.)
+
+> > the crystal lattice badly enough to render the device useless in
+> > some bit positions or reduce data retention time a lot, but I sure
+> > wouldn't bet any security on devices out there not being
+> > arbitrarily reprogrammable (thus using bits to represent digital
+> > coins in a wallet that get reset when they are spent is not a
+> > good idea).
+
+The details of whether one can x-ray (or gamma-ray, etc.) erase a one-time
+programmable (OTP) device without semi-permanently damaging it depend on a
+lot of factors. Generally, an EPROM-based OTP device will erase under
+irradiation before it is damaged. (At least this was my experience. Your
+erasage may vary.)
+
+>You might want to take a look at the paper I mentioned, then: I
+>believe that irradiation of the OTP EPROM to return all bits to "ones"
+>is too blunt a tool to do you any good. A virgin EPROM has a value of
+>zero in the suggested scheme. And, as mentioned, flipping random sets
+>of bits is strongly likely to get you caught.
+
+Whether a floating gate empty of electrons ("erased") is considered to be a
+"zero" or a "one" is wholly dependent on conventions in the design....one
+manufacturer may treat "erased" bits as zeroes, another as ones. (The sense
+of the charge may invert several times on the way through the sense
+amplifiers and decoding logic.)
+
+Bottom line: I'd take a bet that I could bulk-erase a Dallas Semi chip
+without damaging it permanently, even if lacked a transparent lid. But I
+wouldn't take a bet that I can then reprogram it so as to spoof another
+such chip.
+
+Continuing on to some other points:
+
+>I seem to remember PROMs actually undergoing physical, rather than
+>electrical, state changes (that were presumably nonreversible). Am I
+>recalling old technology, or am I just plain mistaken?
+
+There are several kinds of "programmable read-only memories" (PROMs):
+
+* Fusible-link PROMs, in which a silicon, nichrome, or other fuse is
+"blown" by passing an appropriate current through the fuse. These are
+indeed nonreversible changes (though a failure mechanism is for fuses to
+"grow back"). And there are variants involving "anti-fuses."
+
+* _Erasable_ PROMs, in two main categories:
+
+- UV-EPROMs, or just EPROMs, in which a dosage of UV light through a
+transparent window (quartz or sapphire) erases the EPROM cells. This works
+by the UV photons supply enough energy to the electrons stored in isolated
+("floating") polysilicon gates so tha they leave the floating gates and are
+conducted away. Programming is done by forcing electrons to be
+avalanche-injected onto the floating gates.
+
+- EE-PROMs, or EEPROMs, or "E-squared PROMs," in which UV light is not
+needed. A suitable electrical bias can cause a cell to be erased (i.e., to
+allow electrons on floating gates to leave).
+
+* And there are all sorts of wrinkles, variants, and other issues:
+
+- Transparent lids vs. no lids. EEPROMs obviously need no transparent lids.
+Even EPROMs may be built without transparent lids, if the intended use is
+for customers to program them _once_ and only once ("OTP").
+
+- Bit-erase vs. block-erase. Whether individual bits in an EEPROM can be
+erased without neighboring bits being erased. A design issue. (Obviously
+UV-EPROMs are only used in block-erase situations, where the block is the
+entire memory.)
+
+Intel built a "Key-PROM," circa 1983-5, in which the innards were somewhat
+encrypted against outside-reading. My electron-beam testing lab was able to
+image the internal states of these devices and so bypass the encryption.
+(But it was enough for casual use to foil certain types of copying.)
+
+I hope this helps. Semiconductor physics is its own specialty, like crypto.
+
+--Tim May
+
+Views here are not the views of my Internet Service Provider or Government.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+Corralitos, CA              | knowledge, reputations, information markets,
+Higher Power: 2^756839      | black markets, collapse of governments.
+"National borders are just speed bumps on the information superhighway."
+
+
+
+
+
+

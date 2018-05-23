@@ -1,0 +1,138 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Thu, 12 May 94 04:16:39 PDT
+To: cypherpunks@toad.com
+Subject: Re: Cypherpunks Goals: Bad debate drives out good debate
+Message-ID: <199405121116.MAA23115@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+		You have a good summary of what's going on. Personally I've
+	found it useful to create a filter for my cypherpunks mail to send
+	posts from people whom I respect more into a seperate folder such that
+	the signal-to-noise ratio in that folder is higher. When I have more
+	time I read the folder with the lower signal-to-noise ratio, but I
+	often do not have those resources.
+		I don't really have to deal with bad posts because I don't see
+	most of them unless I have some extra time on my hands... Others
+	interested in rational discussion and debate and actual-doing-things
+	might find this a useful technique.
+
+Ditto.  Actually I gateway c'punks straight into a local 'mail.cypherpunks'
+group, with the hack script below (there might be an easier way, but I had
+the code around anyway).
+
+First, I created a user called 'cypher', then gave it this .forward:
+
+suilven% cd ~cypher
+suilven% cat .forward
+"|mail2news mail.cypherpunks cypherpunks@toad.com"
+
+Since I'm running the smrsh security wrappers, mail2news has to be in the
+special smrsh directory, /usr/adm/sm.bin.
+
+mail2news:
+#!/usr/contrib/bin/taintperl
+#
+# mail2news - Incredibly simple program to take a mail message from
+#             stdin and insert it into a moderated newsgroup so you can
+#             read mailing list messages via news instead of mail.
+#
+# Usage: mail2news <newsgroup> <reply-gateway>
+#
+# Author: Stephen Hebditch <steveh@orbital.demon.co.uk>
+#
+# Operation:
+#   1. Create a new local group (e.g. orbital.lists.uri) with moderated
+#      status to contain the local messages.
+#   2. Make sure the newsgroup isn't going to propagate outside your
+#      system.
+#   3. Modify mailpaths (C News) or moderators (INN) so that your local
+#      replies get sent back to the mailing list.
+#   4. Use a mail filter program (such as comes with elm) to divert
+#      messages arriving from the list to this program instead.
+#
+
+# Add local config info here
+# Make secure (from 'perl' man page)
+$ENV{'PATH'} = '/bin:/usr/bin:/usr/local/bin';
+$ENV{'IFS'} = '' if $ENV{'IFS'} ne '';
+
+$path = $ENV{'PATH'};    # Not tainted
+
+$domain = "suilven.an-teallach.com";
+$rnews = "/bin/rnews";
+$update = "/usr/local/bin/op updatetrn";
+$user = "news";	# If badly installed, news will get the replies
+$newsgroup = $ARGV[0];
+if (!$newsgroup)
+	{
+	die ("No newsgroup name supplied\n");
+	}
+
+$replyaddr = $ARGV[1];
+if (!$replyaddr)
+	{
+	$replyaddr = $user;
+	}
+
+$body = 0;
+$kill = 0;
+$subject = 0;
+
+open (NEWS, "|$rnews") || die ("Can't run $rnews: $!\n");
+print (NEWS "Newsgroups: $newsgroup\nPath: $domain!not-for-mail\n");
+print (NEWS "Followup-To: poster\nReply-To: $replyaddr\n");
+while (<STDIN>)
+	{
+	chop;
+	if (!$body)
+		{
+		if (/^Subject:\s+(.*)$/io)
+			{
+			if ($1 ne "")
+				{
+				$subject++;
+				print (NEWS "$_\n");
+				}
+			}
+		# Add here any headers you wish to kill
+		elsif (/^(Received|Return-Path|X400-Received|Newsgroups|Path|To|Reply-To):/io)
+			{
+			$kill++;
+			}
+		elsif (/^From\s.*$/io)
+			{
+			}
+		elsif ((/^\s.*$/io) && ($kill))
+			{
+			}
+		elsif ($_ eq "")
+			{
+			$body++;
+			if (!$subject)
+				{
+				print (NEWS "Subject: <no subject>\n")
+				}
+			print (NEWS "Approved: news@$domain\n\n");
+			}
+		else
+			{
+			$kill = 0;
+			print (NEWS "$_\n");
+			}
+		}
+	else
+		{
+		print (NEWS "$_\n");
+		}
+	}
+
+close (NEWS);
+system($update);
+
+exit (0);
+
+
+
+

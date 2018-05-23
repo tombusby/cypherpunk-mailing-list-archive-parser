@@ -1,0 +1,80 @@
+From: charliemerritt@BIX.com
+Date: Thu, 7 Oct 93 10:49:20 PDT
+To: warlord@MIT.EDU
+Subject: WEAK RSA KEYS
+Message-ID: <9310071345.memo.43629@BIX.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On cypherpunks
+warlord@MIT.EDU (Derek Atkins) posted an example of a (small) RSA key.
+He is perpetuating a dangerous myth about RSA.
+He probably believes, along with most people, that for each
+encryption exponent there is ONLY ONE decription exponent.
+In fact there are AT LEAST TWO.  Yes, you have a "spare key".
+Maybe many.  In fact I can generate RSA keys with "good" primes
+that are hard to factor, yet the keys are WEAK - easy to break.
+
+This is part of Derek Atkins' example:
+
+> Here is a better example:
+>
+>     p = 5   q = 11  N = pq = 55
+>     m = (p-1)(q-1) = 4*10 = 40
+>
+>Now, we need to choose our public and private decryptors, E and d,
+>such that Ed = 1 mod (m):
+>     E = 3   d = 27
+
+In his example the decrypt exponent is 27.
+The "spare" is 7.  The "spare" runs faster, too.  Go ahead, try it.
+
+The myth is that "ED = 1 mod (m)".
+The truth is as follows:
+	G = gcd( p-1 , q-1)  in this example G=2
+	F = m/G              in this example F=20
+	ED = 1 mod (F)
+
+I showed this to Phillip Zimmermann and PGP keys are generated
+this way.  At first PRZ checked to be sure G=2.  Then he found
+that with random large primes G was almost always small, say < 17 or so.
+So now he doesn't check.
+
+HERE IS WHY IT IS IMPORTANT TO KNOW THIS:
+
+Let's say my name is Denning.  Lets say there is a new government chip they want
+certified.  They describe the (RSA) algorithm to me, in secret.  I look at
+it from every angle I *can think of*.  Yes the skipj--- RSA algorithm
+is good.  I say so in public.  No, I can't reveal how it works, but trust me,
+my name is Denning and I know what I speak of.
+Now the government starts producing KEYS for this new algorithm.  They
+key escrow them to two agencies.  They also make sure that G IS LARGE.
+The algorithm can be brute force attacked (search for spares).  They don't
+give a da*m about warrants and escrow, the TLA can brute force any keys
+they need.
+
+Think about it, Dorothy.  We aint in Kansas any more.
+
+Here is an example (using small numbers) of a weak key.
+
+P=607   q=1213   n=736291
+phi=(p-1)*(q-1)=734472    G=606
+F = phi/g = 1212
+
+E=5  D=485     (D*E)=1 mod F
+
+M=40 (message)  M^E mod n = 55551   cyphertext=55551
+
+55551^D mod n = 40
+
+A spare key can be found every 1212 numbers, just add 1212 to D:
+1697, 2909, 4121, 5333.....etc    They are all spares.
+
+Charlie Merritt's rule of cryptography:
+"Don't trust even RSA if you don't generate the keys; Know your source (code)."
+
+
+
+

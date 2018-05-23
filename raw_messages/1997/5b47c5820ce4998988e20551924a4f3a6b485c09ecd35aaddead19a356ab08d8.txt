@@ -1,0 +1,197 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 11 Oct 1997 19:58:16 +0800
+To: hal@rain.org
+Subject: Re: PGP CAKware & IETF controlled Open-PGP standard
+In-Reply-To: <199710102354.QAA01978@s20.term1.sb.rain.org>
+Message-ID: <199710111107.MAA02086@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Hal Finney, now working for PGP <hal@rain.org> writes:
+> PGP now offers an extensible signature format.  This allows key
+> signatures, both self-signatures by a key on itself, and ordinary key
+> signatures by keys on other keys, to do more than before.  The extensions
+> are in the form of subpackets within the signature packet.  Various
+> subpackets have been defined, and Open-PGP would be an excellent forum
+> to propose and design new subpacket types and corresponding data formats.
+
+OK, that means the correct technical term for my discussion is an
+argument over the GAK compliancy subpacket type.
+
+> Some of the subpackets are modifiers of ordinary userid-binding signatures.
+> These allow signatures to have expiration dates; to be marked as non-
+> exportable (so that the signatures are only for your own use on the
+> keyring); 
+
+I really like this non-exportable signature option.  It is highly
+useful.  I have a couple of keys on my key ring with signatures on
+them that I have mentally flagged as non-exportable.  This is because
+they are signatures by the True Name of nyms I happen to know the True
+Name of and are intended to allow me to transfer the trust to that
+Nym, but the Nym is trusting me not to make public this signature.
+
+It would be really kind of neat to extend this functionality so that I
+_couldn't_ export the key by making the certifcate a non-transferable
+signature, or a designated verifier signature.
+
+> And here there is the new corporate message recovery key (CMRK)
+> subpacket.
+
+This is the controversial object.  I have been arguing in a couple of
+earlier posts today that this design is a bad idea from a security
+perspective, and from the point of view that it is a form of GAK
+compliancy when coupled with PGP's SMTP policy enforcer.
+
+The reason I say this is that if we get to the situation where many
+businesses are using PGP 5.5 + PGP policy enforcer, the clients
+"choice" to not encrypt to the message snooping second crypto
+recipient in the CMRK subpacket will have little practical meaning.
+The user will be forced to comply or be unable to send messages which
+don't bounce.
+
+A better place to do corporate snooping, and to avoid the extra
+security risk of sending messages over the internet encrypted to two
+rather than one long term encryption keys, is to snoop the plaintext
+after it has been decrypted in the PGP 5.5 mail client.
+
+Also, the message snooping functionality is reading between the lines;
+Jon's post no where mentioned this as a user requirement.  What he
+said was that corporates had a need to recover encrypted email
+messages stored in encrypted mail folders.  If this is truly the case,
+the functionality is even easier to achieve, just encrypt the mail
+folder to a company escrowed storage key after decryption.  Easy to
+do, and more secure.  Same flexibility in reflecting the internal
+structure of the company's trust and risk management in the storage
+key escrow architecture.
+
+> The CMRK subpacket allows a key to request that when a message is
+> encrypted to it, the message should also be encrypted to a specified
+> additional key.  The subpacket includes a flag byte which is designed to
+> allow the key to give information about the circumstances under which this
+> should be done. Only two values are presently defined, one specifying
+> an optional request, and the other meaning that the message will not be
+> read by the recipient if the additional encryption hasn't been done.
+
+If PGP is going to forge ahead and try for this flawed message
+snooping architecture anyway, I would urge you personally to at least
+press upon them to remove the flag meaning that a message will not be
+received without the use of the message snooping key, and to remove
+the functionality preventing delivery in the SMTP policy enforcer.
+
+> I won't address the controversy about this feature, as that is being
+> thoroughly discussed in other forums.  Let me make two points, though:
+
+OK.  The controversy has technical basis too -- and seems to be
+starting to be discussed in this forum also.  There is also a question
+of how this design interacts with the IETF policy of not allowing
+political issues to weaken protocol designs to discuss.
+
+> We would like to move towards a mechanism to allow more power for keys
+> to make assertions.  Matt Blaze's (still vaporware?) PolicyMaker project
+> showed how powerful such a general mechanism could be.  SPKI is also
+> working along these lines, defining a certificate format which allows
+> keys to make very general classes of assertions.
+
+I've read Matt's PolicyMaker paper.  I can see the attraction of
+moving towards these generalisedl trust statement syntaxes.
+
+I would be nice to see the topic of the recipient refusing email based
+on policies relating to third party access to messages in transit
+being addressed in the standard when and if PGP gets to that stage.
+
+There are some nice uses for some types of recipient refusal.  Ecash
+payment for message processing, or my less $ oriented hashcash
+proposal also.  (The types of problem that can arise with real ecash
+payment for receipt, which hashcash avoids is that if applied to
+discussion forums, it can bias the forums to allowing through more of
+what rich people have to say.  A similar argument perhaps applies to
+email following up to comments made in public forums, you can only
+reply to someone if you have the money.  Busy people may set very high
+payment rates.)
+
+> The CMRK is one such type of assertion: "please cc to key X anything
+> encrypted for me".  The key is requesting that the specified other key
+> by an additional recipient on encryption.
+
+I can see problems with this type of assertion.  I hope when the time
+comes that a way to define a convetion or set of rules which disallows
+this as part of the standard.
+
+> If we move to a sufficiently powerful language to allow keys to make
+> useful assertions, it seems to me that we will probably inherently
+> allow keys to make assertions of a type which some people may regard as
+> politically unacceptable, like this one.  But to artificially constrain
+> the language so that it can only say things which are politically correct
+> will make a an already-difficult design task into an intractable one,
+> I'm afraid.
+
+We'll see when we get to it.  In the mean time, PolicyMaker &
+look-alikes are vapourware.
+
+> Ultimately, a fully general and flexible system of key assertions will
+> allow keys to say stupid things as well as smart ones.  I believe that
+> the power gained from having such a language gives advantages which
+> outweigh the problems of misuse.  (Note the similarities to the debate
+> over the PICS labelling technology, which some people oppose because it
+> could be misused.)
+
+It's similar to PICs in that third party rating services are fine (for
+example consumer product evaluations in various magazines), but
+centrally controlled ones are objectionable to many of us.
+
+> Secondly, with this type of assertion, as with others such as
+> the preferred algorithm packet, it is inherently in the sender's
+> (encryptor's) power to ignore it if he chooses.  You can request that I
+> not use triple-DES, but I could still send you a message encrypted with
+> that algorithm.  You would then have the choice to reject it or accept it.
+> This is a point which I owe to Phil Zimmermann.
+
+The problem with this point, which you say is PRZ's, is that it falls
+down for interoperability reasons when the system is widely deployed.
+Exactly how much "choice" do you have when 80% of businesses will
+bounce your mail if you don't comply.  How much "choice" do you have a
+few years later when 95% of individuals and companies are using the
+same system, and the government is holding the master snooping keys.
+
+[1] The long term likely value of this choice is rather low, so the
+assertion that it leaves you empowered is a weak assertion.  You would
+paradoxically in this case be much more empowered if the recipient did
+the escrowing silently after receipt by decrypting and storing his
+mail folder with an escrowed storage key.  Of course it would be nice
+if this policy was advised in the public key also, to at least warn
+you, in case you mistook the persons email address as a private
+account.  (Some ISPs have names which look similar to some companies
+names,... domain names ending in .com, if you are not familiar with
+the company name).
+
+> Likewise in PGP 5.0 the user can override the CMRK request even in
+> its strongest form (although not in 5.5, because that is intended
+> for business-to-business communications).
+
+I submit for the above reasons that this overriding feature will in
+the long term me fairly meaningless.  What is the practical individual
+empowerment transferred in being able to override something in the
+sure knowledge that it will thereby be bounced and not delivered.
+
+> Therefore, I very much agree with Jon Callas that an implementation which
+> (perhaps optionally) allows overriding the requests which a key makes
+> in its self-signatures should still be considered compliant.  That is
+> consistent with the nature of the sender's power to create the message.
+
+I strongly disagree for reasons stated in paragraph [1] above.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

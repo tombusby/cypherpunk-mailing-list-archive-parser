@@ -1,0 +1,68 @@
+From: jim@bilbo.suite.com (Jim Miller)
+Date: Fri, 31 Dec 93 16:58:36 PST
+To: cypherpunks@toad.com
+Subject: Re: Anonymous Video on Demand
+Message-ID: <9401010055.AA27523@bilbo.suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+could
+As I think about it more, the "anonymous video on demand" problem can be  
+solved with an oblivious transfer protocol.
+
+Here's how I see it working:
+
+(The following is adapted from the oblivious transfer protocol described  
+in "Applied Cryptography" on page 98.)
+
+Say Alice is the Video Vendor and Bob is the customer...
+
+Alice generates a public/private key pair for each movie in her video  
+database and publishes the public keys in an electronic catalog.  Each  
+public key would be paired with a movie description and a catalog index  
+number.
+
+Bob downloads Alice's catalog and browses through it offline.  Bob makes a  
+selection, and also randomly picks 99 (or any large number) other catalog  
+numbers
+
+Bob generates a random DES key and encrypts this key with the public key  
+associated with his selection.
+
+Bob sends the encrypted DES key and the list of 100 catalog numbers to  
+Alice.
+
+Alice decrypts the DES key with the private key associated each catalog  
+number received from Bob.  In only one case will Alice successfully  
+recover Bob's DES key, only she doesn't know which case.
+
+Alice encrypts each movie selection with the resulting DES keys from the  
+previous step and sends all 100 encrypted movies to Bob.
+
+Bob will only be able to decrypt and view the movie he selected and Alice  
+wont know which of the 100 movies Bob selected.
+
+Ta Da!
+
+The nice thing about this protocol is that it doesn't really have anything  
+to do with videos.  It could be used for an electronic library, or any  
+warehouse of digital information where the Vendor wishes to charge for a  
+download, yet the Customer doesn't want the Vendor to know which item is  
+selected.
+
+Also, the Vendor still can use statistical analysis to determine which  
+items are more popular and which items are less popular.  The Vendor could  
+keep track of how many times an item was mentioned in a Customer selection  
+list.  The more popular items would appear in more lists.  Unpopular items  
+would have different statistics.  This analysis breaks down if all items  
+are equally popular, or Customers don't chose the other 99 items randomly.
+
+
+Jim_Miller@suite.com
+
+
+
+
+
+

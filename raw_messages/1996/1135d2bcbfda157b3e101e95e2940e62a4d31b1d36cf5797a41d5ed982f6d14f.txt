@@ -1,0 +1,85 @@
+From: Martin Hamilton <martin@mrrl.lut.ac.uk>
+Date: Sun, 7 Apr 1996 06:05:31 +0800
+To: cypherpunks@toad.com
+Subject: Re: pgp keys
+In-Reply-To: <199604060900.BAA24994@dfw-ix3.ix.netcom.com>
+Message-ID: <199604061756.SAA24919@gizmo.lut.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bill Stewart writes:
+
+| At 11:55 AM 4/4/96 -0500, Jack P. Starrantino   jpps@voicenet.com wrote:
+| >Is there a reliable method for obtaining the pgp public key for an
+| >arbitrary email address? [....] to obtain keys I do not have.
+| 
+| Reliable?  No; not everybody follows The One True KeyDistribution Method,
+| or even follows one-or-more of the popular electronic approaches, 
+| and not all keys that are distributed electronically are on the Internet,
+| though some of them may be on intranets or fido or uucp nets.
+
+It would be neat if individual Internet sites could run their own key 
+servers in a distributed framework, using whatever protocol(s) they 
+wanted to.  Finding someone's public key shouldn't be rocket science - 
+if you already have their email address.  Checking the signatures might 
+be, though ?
+
+The pgp.net folks have established the convention of "keys.<domain 
+component>.pgp.net", which lends itself to a simple algorithm along the 
+lines of...
+
+  Email address:
+    martin@mrrl.lut.ac.uk
+  Look for:
+    keys.mrrl.lut.ac.uk.pgp.net
+    keys.lut.ac.uk.pgp.net
+    keys.ac.uk.pgp.net
+    keys.uk.pgp.net
+    keys.pgp.net
+
+I'm not clear on whether it would be friendlier on the DNS to start 
+with the least specific cases and move down to the most specific (i.e. 
+reverse the order of the steps).  The latter would seem to result in 
+less junk (NXDOMAIN responses) being kept by DNS servers which 
+implement negative caching.
+
+Keyservers might be reasonably be expected to speak a number of 
+protocols ?  e.g. mail to "pgp-public-keys", finger, and perhaps a 
+dedicated key lookup protocol ?
+
+OK so we're lacking a mechanism for indicating things like which 
+protocols/services a host supports, on which port numbers, etc...  
+Perhaps it isn't even something we should be thinking about in relation 
+to key servers ?  In any case, lots of new DNS RRs have been proposed 
+which could handle the problem - but not implemented or deployed :-)
+
+As a quick hack, I suppose the embedded URL scheme used by Netfind 
+could be nicked and put to use for public key servers, e.g. in 
+pseudo-Perl
+
+  foreach (text record at keys.<domain>.pgp.net) {
+    next unless /^kx-/;     # only interested in kx-<URL>
+    s/^kx-//;               # toss Key eXchanger prefix out
+    &do_something_with($_); # use resulting URL
+  }
+
+Do people have any opinions about these ideas ?  Obviously the DNS is 
+going to be vulnerable to spoofing, so those URLs may be dodgy.  If 
+we're checking the signatures aggressively this needn't be a problem, 
+at least in relation to serving up public keys ?
+
+If anyone knows of a forum where this stuff is being discussed, I'd 
+appreciate a pointer.  Would be happy to set up a dedicated list if 
+there isn't anything already.  FWIW, I don't seem to see any discussion 
+on cypherpunks, coderpunks, spki, ietf-pkix, ietf-asid, ietf-ids, ... 
+:-(
+
+Martin
+
+
+
+
+
+

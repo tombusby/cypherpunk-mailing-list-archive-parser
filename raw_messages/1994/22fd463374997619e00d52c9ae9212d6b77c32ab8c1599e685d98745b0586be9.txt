@@ -1,0 +1,70 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Fri, 1 Jul 94 15:27:37 PDT
+To: andy@autodesk.com (Andrew Purshottam)
+Subject: Re: Physical storage of key is the weakest link
+In-Reply-To: <199407012057.NAA24090@meefun.autodesk.com>
+Message-ID: <199407012226.PAA01800@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> Excuse my ignorance of PGP, I am fairly new to using it, and thinking about
+> its operation and source code. Is not your secret key stored encoded by
+> the pass phrase, so that if the pass phrase is in your head, the secret
+> key on disk is useless to an attacker? Of course, while PGP is running,
+> after you have entered the pass phrase, the secret key is available within 
+> your machine, and could be stolen, and if your OS leaves pagefiles etc
+> arounnd, might even be taken after you shut down PGP.
+> 
+> Or am I missing something? Thanks, Andy
+
+I haven't seen a formal analysis of the strength of PGP if the secret
+key is known but the passphrase is still secure, but from conventional
+crypto we would assume that the search space would be greatly reduced.
+My passphrase, for example, is 11 characters long. Other folks may use
+fewer characters. 
+
+And many people pick passphrases of less total entropy (that is, more
+predictable). Fragments of names, phrases, etc.
+
+The number of passphrase guesses that would have to be made depends on
+the characters used and the particular characters chose. For example,
+if most people use 8 characters chosen from the 26 letters, in one
+case, then 26^8 = 2 x 10e11 possibilities. Increasing this to, say, 40
+characters and a length of 10 implies 4 x 10e17 possibilities, which
+is almost out of reach for brute-force cracking.
+
+(But most passphrases picked by humans have lower entropy than this.)
+
+Speculatively, knowing the passphrase-encrypted secret key may make it
+easier to crack RSA; this is just a speculation. It is not yet even
+been proven that RSA is a strong as factoring. i.e., we don't know for
+sure that the RSA information provided as part of the protocol doesn't
+in some way make the problem simpler than straight factoring of the
+modulus.
+
+In short, these are reasons to keep your secret key secret. Your
+passphrase alone may be insufficient (else why not just dispense with
+the secret key and just have a passphrase?).
+
+I haven't checked to see what Schneier or Zimmermann had to say about
+this, so maybe they have more information.
+
+--Tim May
+
+
+
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^859433 | Public Key: PGP and MailSafe available.
+"National borders are just speed bumps on the information superhighway."
+
+
+

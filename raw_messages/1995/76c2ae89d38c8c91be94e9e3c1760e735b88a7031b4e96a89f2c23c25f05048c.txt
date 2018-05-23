@@ -1,0 +1,55 @@
+From: "Mark M." <markm@omni.voicenet.com>
+Date: Sun, 5 Nov 1995 04:41:32 +0800
+To: cypherpunks@toad.com
+Subject: Re: using pgp to make an otp
+In-Reply-To: <01HX8P5B3MCI91XT4Q@MAIL-CLUSTER.PCY.MCI.NET>
+Message-ID: <Pine.LNX.3.91.951104032833.116A-100000@localhost>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sun, 5 Nov 1995, amp wrote:
+ 
+> greetings c-punks,
+> 
+> i may have posted this at some time in the past, as i have asked it
+> elsewhere and gotten different responses. i'm interested in that the
+> folx here think about it though, so here it is...
+> 
+> i want a source of data for use as a otp. i don't want to have to
+> hook up any external devices to my pc to do it. (although some of the
+> methods mentioned in the past few days are quite interesting.)
+> 
+> i'd like to know if there was a reason not to use the output of pgp
+> to do it. i've been playing with the following method. i take a file
+> and encrypt it to a key with the '-a' flag on. this generates an
+> ascii file that is easily editable using simple, standard rexx calls.
+> i strip the first 20 or so lines and the last 20 or so lines
+> and put the resulting file aside. then i perform the same operation
+> again and append the file to the previous result. i repeat until the
+> file is sufficiently large for my purposes and then give the
+> resulting file to the person(s) i want to have it.
+
+There is a way to make a file with random contents using PGP.  Just type
+pgp +makerandom=xxx file.ext where xxx is the size of the file you want to
+create.  I would not advise using this or other methods using a pseudo-
+random number generator.
+ 
+> i would think that the output of pgp should be pretty darn random. if
+> it isn't, then it's usefulness is less than its reputation imo. as
+> you can tell if you've read this far, i'm not a cryptographer. i just
+> like the stuff and am working to become more proficient in its use as
+> i think it is important if we are to maintain our privacy in an
+> increasingly digital world.
+
+The random output of PGP is pretty random but when the output is used to
+generate very large OTP's, patterns will no doubt exist.  Hardware RNG's
+are still the best. 
+
+`finger -l markm@omni.voicenet.com` for public key and Geek Code
+Public Key/1024: 0xF9B22BA5 BD 24 D0 8E 3C BB 53 47  20 54 FA 56 00 22 58 D5
+Homepage URL:http://www.voicenet.com/~markm/
+
+
+
+

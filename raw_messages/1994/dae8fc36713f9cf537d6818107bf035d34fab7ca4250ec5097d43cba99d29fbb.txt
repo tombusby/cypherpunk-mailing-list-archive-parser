@@ -1,0 +1,60 @@
+From: HO  JUNYA <hojunya@ecf.toronto.edu>
+Date: Wed, 19 Jan 94 10:08:56 PST
+To: cypherwonks@lists.eunet.fi
+Subject: Questions about hardware RNG design and implementing RSA/DES/IDEA in hardware
+Message-ID: <94Jan19.130755edt.4305@cannon.ecf.toronto.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+(I apologize for the crossposting; I feel that this is relevant to
+the newsgroups and mailing lists  that I've posted this to)
+
+Hi, we're trying to design and build a hardware random number generator
+for use in key generation for secret key cryptosystems (likely to
+be at least a one time pad, perhaps DES or IDEA), as part of a
+hardware design project.  We'll be putting the transmitter and
+receiver on expansion cards for ibm-compatible pc's, and hopefully
+be able to keep as much of the work as possible in hardware.
+
+My question is, I am trying to come up with ways of building
+this true RNG (random number generator) using a few simple components.
+For my noise source, I will probably be using thermal noise in
+electrical components.
+
+I understand that noise has a Gaussian distribution  through
+time (i assume time referring to the time interval between successive
+signals of a certain power/amplitude?), and will be finding the
+median of this distribution so as to sample the random binary bits
+on either side of this median.  We will attempt to design something
+which will automatically find the median in a given set of
+conditions.  (I am told this is called anti-biasing?)
+
+My questions are:
+
+does anyone know of any actual implementations of this sort of RNG?  
+
+can anyone suggest a good introductory reference to noise, random
+behaviour or sampling from random sources?
+
+what sort of hardware requirements do the DES, IDEA and RSA algorithms
+have?  We will not be using IC's built for the DES or RSA encryption,
+but will perhaps program a controller of some sort to do this.  I
+am afraid that RSA (for the initial secret key exchange) will take
+too long on an 8088 or lesser processor.  we're looking for bitrates
+of about 1kbits/s from the RNG, since 75% of that will likely be
+thrown away in the process of 'pairwise (something)'.  (if two 
+consecutive bits are the same, throw them out, if they are different,
+take the first one)
+
+
+I would appreciate any comments, answers, concerns, &c
+
+Junya
+hojunya@ecf.toronto.edu
+
+
+
+
+

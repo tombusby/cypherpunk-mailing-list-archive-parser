@@ -1,0 +1,70 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Wed, 20 Oct 93 16:57:49 PDT
+To: cypherpunks@toad.com
+Subject: Re: crypto technique
+Message-ID: <9310202355.AA25861@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I think the modulus operation destroys uniqueness.
+
+I don't have a proof, but after working symbolically for a while, I
+tried an example:
+
+f = a x + b
+g = c f^2 + c f + d
+
+where I picked a = 11/2, b = 8, c = 25/2, d = 3.  I also pick P = 16
+to keep it small.
+
+So g = 903 + 4675/4 x + 3025/8 x^2 mod 16
+
+and if I reduce each coefficient mod 16, I get
+
+  g' = 7 + 3/4 x + 81/8 x^2 mod 16
+
+Great so far.  (And I checked to see that g and g' are equal).  So
+let's look at all possible messages and their encryption:
+
+x       g'(x)	x       g'(x)
+- -       -----	-       -----
+1	15/8	9	15/8
+2	1	10	3
+3	35/8	11	67/8
+4	12	12	2
+5	63/8	13	127/8
+6	8	14	2
+7	99/8	15	67/8
+8	5	16	3
+
+There is a serious problem in the above: the messages 10 and 16
+encrypt to the same ciphertext; 11 and 15 also; and 12 and 14.  The
+ciphertext 3 decodes to 10 or 16, 67/8 decodes to 11 or 15, 2 decodes
+to 12 or 14.  That's 6 out of 16 messages, a sizeable 37.5%.
+
+This behavior may have uses in fair coin flipping or some sort of
+oblivious transfer (I am not claiming this in the general case, just
+in the example above!), but not as encryption.
+
+Besides, the fact that even messages encrypt to integers and odd
+messages encrypt to fractions probably isn't good.
+
+So Matt, with the numbers you used to generate the challenge problem,
+see if any messages encrypt to the same ciphertext, just as a check.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLMXPfIOA7OpLWtYzAQFoowP/XLN/poS5kB49IdCBxDe5lVUK05XZYNh+
+0vlBCjDwczqeER5SZMRPagyKSP4qbJb+BFPCNIcw0fcDrSlGCrYejzpgnn5N8vsM
+KmxlUE+1+8SSIsyyz6ctj7tLFp7wArxgVlOjjxQ7Yj92CIX81IShpvqWPu7rdqWN
+1cCpphAwzHI=
+=d0rL
+-----END PGP SIGNATURE-----
+
+
+
+

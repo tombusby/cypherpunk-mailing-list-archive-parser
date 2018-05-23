@@ -1,0 +1,73 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 4 Aug 95 16:37:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: Java and Safe-TCL security
+Message-ID: <199508042336.QAA15267@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Ray Cromwell <rjc@clark.net>
+> Hal,
+>   One of the designs I have one the drawing board is to store per-script 
+> persistent data in a dbm file, and allow scripts to import/export data
+> from/to a shared tuple-space. I would limit the data storage to 1024
+> bytes (to make it portable, some DBM libraries have this limit)
+>   Scripts could store variables via a new command added to the interpreter
+> like 'SafeTcl_putvar varname value', and access valuables with
+> 'SafeTcl_getvar varname', 'SafeTcl_varlist'. Also, there would be a
+> 'SafeTcl_read_variables' which could be executed at the beginning of
+> the script to reload all stored variables. 
+>   Scripts could talk to other scripts by means of a 
+> 
+> 	SafeTcl_export -value value scriptname1 scriptname2 ...
+>  
+>   The other script(s) could check for any incoming imports and use 
+> SafeTcl_import to retrieve the value. (when the last import is done,
+> the data is garbage collected. Also, there would be a timestamp so that
+> old data would be purged after a time limit anyway)
+
+This sounds like an interesting approach.  I hear that Telescript uses a
+remote procedure call concept for inter-script communication.  So one
+script gets to call the public methods of another script.  I don't know
+how it finds out what other scripts are arround for it to talk to,
+though, or decides whether they have anything of interest.
+
+The tuple space idea sounds good and is not too dissimmilar from the
+get/setconfigdata in safe-tcl.  There are some problems about security
+though.  Who gets to delete tuples?  How do you prevent a malicious
+script from messing up the data?  Maybe it depends on the application,
+what you want to use this data for.
+
+BTW what kinds of facilities are there in Java for scripts to have access
+to disk files?  I know there was some discussion of using scripts for
+cryptography.  Presumably the user would want to give "read only" access
+to the (public) keys he used.
+
+And how about other forms of I/O, email and the like?  Can Java scripts
+do this?  What are the restrictions to prevent abuse?  Safe-tcl has a
+concept where a script can send mail, but the implementation pops up a
+window and asks the user first if it is OK to send.  (Unfortunately that
+doesn't work for a telescript like application where there is no user
+around to vet the messages.)
+
+>   The problem with all safe "agent" designs is that the programming language
+> itself isn't enough. There needs to be a meta-agent language for 
+> querying capabilities of local environments.
+
+Yes, there was some discussion about this on the safe-tcl list.  There is
+also an agents list I was on for a while but they couldn't even agree
+about what an agent was so not much progress happened there!  There have
+been various proposals for standard ways agent scripts could specify what
+capabilities they need to run, etc.  Doing web searches on "agents" will
+track a lot of these down.  However most seem concerned with traditional
+issues like compute cycles, memory usage, etc., and not with the more
+difficult and important issues of knowing whether there is another agent
+there (or a local database) which has the specific information my agent
+is after.
+
+Hal
+
+
+
+

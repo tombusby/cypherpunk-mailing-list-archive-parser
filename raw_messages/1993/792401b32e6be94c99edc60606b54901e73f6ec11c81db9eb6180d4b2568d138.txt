@@ -1,0 +1,78 @@
+From: Brad Huntting <huntting@glarp.com>
+Date: Sun, 29 Aug 93 09:26:15 PDT
+To: Derek Atkins <warlord@athena.mit.edu>
+Subject: Re: PGP-MIME
+In-Reply-To: <9308290317.AA07547@podge.MIT.EDU>
+Message-ID: <199308291623.AA03115@misc.glarp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> For PGP to really make use of MIME, it could use "multipart" types
+>> to separate the objects being encrypted and/or signed from the
+>> signatures and encrypted session keys associated with them.
+
+> No, this is WRONG.  Take a look at the PEM-MIME Internet Draft.  You
+> *do not* want to separate the signature from the body of text being
+> signed, since then you lose the delimiters of the signed message, and
+> MIME can do anything with the data (like transfer tabs to spaces,
+> etc.)  This is BAD.
+
+If the signed object where of type text/*, then yes it might be
+altered with impunity.  But MIME would not alter a body part type
+such as application/pgp-object or message/external-body would it?
+
+There's a definite advantage in using multipart/* to separate
+signatures from the plain-text they apply to because then you can
+easily encode the signatures with base64 while encoding the text
+in "7bit" or "8bit".
+
+> If you keep the message and signature together, it will work
+better.  > MIME still does funky things, however, some times.
+
+Then we need to get the MIME do's and dont's nailed down in the
+next RFC (if they arn't already) specifying exactly which type can
+be altered, and to what extent.
+
+> Currently, you can easily use MIME as a transport mechanism for
+PGP > messages.  However currently there is no way to use PGP
+security for a > MIME message.  Hopefully we can take what the
+PEM-MIME effort has > learned and apply that to PGP..
+
+But I can put a MIME message headers in a PGP message.  And (though
+I haven't tried it), I should be able to specify that application/pgp
+messages will be piped through a command like "pgp -m|metamail" or
+"pgp -m|mhn -file /dev/stdin".  Unfortunately, I've had problems
+redirecting pgp's stdin and stdout.  I'm not sure that it opens
+/dev/tty every time it wants to talk to the user.
+
+Also, since you bring up PEM-MIME, what could be done to bring PGP
+and PEM closer together?  I'm not suggesting changing the web of
+trust model or using DES instead of IDEA.  Just make the formats
+similar enough so that an application implementing one could be
+painlessly modified to implement the other.
+
+A common format wouldn't seem to be all that difficult to implement.
+Since some folks want to use triple DES and others IDEA, add this
+info to the RSA encrypted portion of the message.  This has the
+advantage of hiding not only the key used to encrypt the body of
+the message, but the algorithm as well.
+
+As for the trust models, there not so different in theory, just in
+practice.  PEM is planing on using X.509 type certificates, and
+they are having problems figuring out how to map X.500 Distinguished
+Names (DN's) onto e-mail addresses (I think they're making the
+problem allot harder than it is).
+
+Perhaps the model for future PEM/PGP systems is to keep both private
+key rings, and public key rings with the latter being found in the
+(Internet) X.500 directory.  This would nessesitate being able to
+sign a private key with a public key, and vice versa.
+
+
+brad
+
+
+
+

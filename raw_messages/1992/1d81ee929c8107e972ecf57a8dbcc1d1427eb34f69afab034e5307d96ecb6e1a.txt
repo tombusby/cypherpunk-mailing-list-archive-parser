@@ -1,0 +1,47 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 13 Nov 92 01:20:39 PST
+To: cypherpunks@toad.com
+Subject: Rander box
+In-Reply-To: <9211130757.AA27092@netcom2.netcom.com>
+Message-ID: <9211130920.AA27066@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>   It will have two serial connectors,   one an input,  and other the
+>output,   and connect to a modem or serial port.   Physically,  it should
+>have dip switch to select baud rate,   and an on-off switch.
+
+Some simplifications I might suggest:
+
+I only think you need an output connector.  See below.
+
+If you can power it off the RS-232 line, you won't need a power
+switch.  You should be able to draw enough power off, say, the DTR
+line to power a simple thing like this.
+
+For a dedicated random number generator with low bandwidth, there's
+not much reason for variable baud rate.  I'd use a fixed baud rate of,
+say 1200, or even 300.  If you make it low enough you could just
+kludge together a serial interface, but with the low cost of UART's,
+it's probably not worth it.  You might also consider using a PIC, which
+has built-in serial.
+
+>   When switched on,   and a "cr" (or some other character) is sent to it,
+>random bytes will stream out continiously.   
+
+I'd just make the thing spew continuously.  It's not like you're
+losing real, er, information if you ignore a few random bits.  This
+way you don't need the added circuitry for switching on and off.
+
+The actual use of this thing is going to require a device driver to
+buffer up random bits for later use.  So all the flow control to the
+higher layer happens there anyway.  And if the UART buffer overflows,
+so what?
+
+Eric
+
+
+
+

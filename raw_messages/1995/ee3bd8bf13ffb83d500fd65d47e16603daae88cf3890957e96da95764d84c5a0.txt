@@ -1,0 +1,52 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Wed, 13 Dec 1995 05:54:04 +0800
+To: "Rev. Ben" <samman-ben@cs.yale.edu>
+Subject: Re: Timing Attacks
+In-Reply-To: <Pine.A32.3.91.951211141205.26486F-100000@FROG.ZOO2.CS.YALE.EDU>
+Message-ID: <199512112011.PAA01501@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>I'm not so sure I see the great usefulness of this attack.
+>
+>I've taken a cursory glance at Mr. Kocher's paper on-line and what it 
+>comes down to essentially, if I undestand it correctly, is that you need 
+>to be as sure of the timing as you can be.
+>
+>Now, on a distributed system, you can't measure those timings, because 
+>any latency  could come from the originating computer, the links in the 
+>middle or any combination of them.
+>
+>Also precise timings can be limited by fluctuating load averages amongst 
+>other things in a time-sharing computing environment.  While this might 
+>work in a lab, with the current advances in computing speed, the 
+>differences between a fast and a slow calculation can easily be opaqued 
+>by network lag.
+>
+>Am I missing something, or does this attack only work in a lab?
+>
+
+The more timing noise between the attacker and the target, the
+harder it is to exploit the measurements.  Based on some (very
+rough) experiments I've set up here, I suspect the attack is easy
+if you're on the same computer (and measure CPU load), probably
+feasible if you're on the same network and the host and net are
+unloaded, and unlikely otherwise.  The attack is especially
+interesting against crypto tokens that are supposed to hold a secret
+key secret, where you can get very close and take very good timing
+measurements.
+
+Keep in mind also that Kocher's results are only the first cut,
+based on a very simple statistical model.  I suspect we'll be seeing
+many improvements and variations over the coming months.
+
+Bottom line is that implementing good cryptosystems is a lot harder
+than one might think...
+
+-matt
+
+
+
+

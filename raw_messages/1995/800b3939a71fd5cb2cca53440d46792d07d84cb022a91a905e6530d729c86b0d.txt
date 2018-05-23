@@ -1,0 +1,64 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 23 Nov 1995 09:24:23 +0800
+To: cypherpunks@toad.com
+Subject: Re: ecash protocol: Part 1
+In-Reply-To: <199511212146.NAA11456@cory.EECS.Berkeley.EDU>
+Message-ID: <199511230103.RAA15911@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Ian Goldberg <iang@cory.EECS.Berkeley.EDU> writes:
+
+>Last week, I was taking a look at the ecash protocol (no, I don't have a copy;
+>I have a binary, which I can't even run...).  
+
+>I've managed to decipher a useful bit of the first message sent from
+>the shop to the payer.  It's the Payment Request, and contains the following
+>information:
+
+>o Header identifying packet as Payment Request
+>o The integer 4
+>o The payment amount, in cents
+>o The time (seconds since 1970)
+>o The integer 79
+>o The name of the shop (payee)
+>o A description of the item being paid for
+>o An empty string
+>o The integer 0
+>o End of Record marker
+
+That's very interesting work!  What are the string formats, are they null
+terminated or Pascal-style with a preceding count byte?  How did you
+identify "an empty string", wouldn't that just be a byte of 0?  How did
+you know it was an empty string rather than just a 0.
+
+Did you get this by inducing a shop to send a payment request message to
+some program you wrote which was listening on the ecash port?
+
+I think a good way to get the rest of the information would be with a
+proxy which logged message traffic.  I know ecash has some proxy support
+but I'm not sure how it works.  There are SOCKS proxies and http proxies,
+and I don't know which it uses.  I used a logging httpd proxy to derive
+the data for the SSL challenges I did this past summer.  It might be
+interesting to post the binary data from some ecash transactions.
+
+>I guess the important bit is that the payee, the item being bought,
+>and the cost are sent _in the clear_.  Some of the people I've talked
+>to think this is a huge privacy breach, and some don't.  You all can
+>debate this now.  Lucky can, if he wishes, add insight, and/or tell us
+>what DC may do about this.
+
+I wonder if it would be legal to write shop software which sent such a
+payment request, took the resulting coins, and deposited them in the bank
+(if we could figure out all the protocols necessary).  This particular
+sequence of operations would not appear to infringe anybody's patents -
+there are no blinding operations involved.  It's not clear how useful
+such a program would be but at least it would be one step away from the
+DigiCash monopoly.
+
+Hal
+
+
+
+

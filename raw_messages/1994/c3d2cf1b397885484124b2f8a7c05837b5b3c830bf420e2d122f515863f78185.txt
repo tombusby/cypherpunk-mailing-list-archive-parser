@@ -1,0 +1,38 @@
+From: qwerty-remailer@netcom.com
+Date: Fri, 4 Feb 94 09:25:09 PST
+To: cypherpunks@toad.com
+Subject: Re: New remailer up.
+Message-ID: <199402041723.JAA29445@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Before I start throwing out ideas that I'm sure aren't new to readers here,
+>I have a simple question that perhaps I should post to comp.unix.questions
+>or comp.lang.perl, but.... Can I, and how would I, get a perl script to
+>kick in and send out mail every few minutes when I am NOT logged in. Is this
+>possible on Netcom?
+
+Rather than try to run in some asynchronous mode as you suggest, why
+not do the following when each message arrives:
+
+   place message in your queue, designating random hold time
+
+   foreach message in the queue that's been held long enough
+         send random number (1<=n<=3) dummy messages
+         send the queued message
+         send random number (1<=n<=5) dummy messages
+
+The whole thing remains data-driven while you're not logged in
+and can be manually flushed if you are logged in.  So long as
+there is a steady stream of traffic, messages won't get stalled
+for long times.  You could even send some 'activation' messages
+at controlled intervals from some comfortable site (where you can
+use cron), routed via another remailer.
+
+Just some ideas off the top of my head.
+
+
+
+

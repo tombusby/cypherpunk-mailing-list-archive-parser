@@ -1,0 +1,95 @@
+From: John Deters <jad@dsddhc.com>
+Date: Sat, 7 Sep 1996 05:06:57 +0800
+To: Bruce Schneier <cypherpunks@toad.com
+Subject: Re: What the NSA is patenting
+Message-ID: <2.2.32.19960906165918.0073d060@labg30>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:26 AM 9/3/96 -0500, Bruce Schneier wrote:
+>I just spent a pleasant hour or so searching a patent database for all
+>patents assigned to the NSA.  There's some interesting stuff:
+>
+>	"Self-locking, tamper-evident package"
+>	Method of retrieving documents that concern the same topic"
+>
+>Fifty-Four patents total.  (Used to be they just kept stuff secret; now
+>they patent some of it.)  Attached is the most interesting thing I found: a
+>patent on techniques for reading data off overwritten magnetic media.
+>
+>Bruce
+
+[ Interesting patent deleted ]
+
+This method implies that they have the ability to scan the entire platter
+surface at resolution level that is basically atomic.
+
+>From lots of experience gained from working with metalworking machinery, it
+sounds like some of the old magnetic data might be leaving traces behind by
+a process called "backlash".  It happens because machines don't realign
+themselves precisely, unless the lead-in steps are repeated every time.  
+
+A fairly simple demonstration of this can be found on most dot-matrix
+printers.  They usually have a mode called "uni-directional" printing, where
+the printhead puts dots on the paper only when travelling from
+left-to-right.  This is used to improve the quality of a graphic image.
+Print a simple pattern of repeating vertical bars (||||||) across the page
+and down several lines with this mode turned off, and you'll probably notice
+the lines tend to not line up perfectly.  Turn uni-directional printing on,
+and watch the behavior of the printhead.  It will "home" itself to the far
+left side before printing the next line of bars.  The bars will then be
+lined up "better" than in the bi-directional print.
+
+We should be able to use this feature to our advantage to write a "backlash-
+enhanced" wipedisk driver.
+
+The wipedisk utilities I've seen today primarily consist of repeatedly
+writing a pattern such as 0x55555555, then 0xAAAAAAAA, then 0xFFFFFFFF, then
+0x00000000.  While this will probably eradicate most of the traces of the
+original data, it's all happening "unidirectionally" -- starting at the
+first sector of the file,  write this data till all the sectors have been
+overwritten.  
+
+Given that the original data may have been written in reverse sector order,
+or reverse cylinder motion order, or after a large cylinder change, the
+wipedisk might still leave traces remaining on the disk.  Using the above
+example of printing vertical bars, imagine having each line print three
+times using the unidirectional mode, and randomly picking one line out of
+the entire array to print bi-directionally.  It'll stand out like a sore
+thumb.  That's what I think they're looking for with their data recovery method.
+
+What would probably make for a more secure wipe utility would be to alter
+the "head approach path" prior to making each of the passes described above.
+So, before overwriting the sectors in order from 0 to EOF full of
+0x55555555s, have the head move to the 0th cylinder first.  Before
+overwriting the sectors in order from 0 to EOF with 0xAAAAAAAAs, have the
+head move to the last cylinder beforehand.  Repeat for the 0xFFFFFFFF and
+0x00000000 sectors, except overwrite the sectors in order from EOF to 0.
+
+All this pre-writing motion could theoretically reduce the repeatability of
+the drive head positioning arm as well as possibly hitting different
+rotational sync  points, using the backlash effect to its fullest extent.
+
+Of course, the biggest problem will be that of overcoming intelligent disk
+controllers.  No self-respecting SCSI drive is going to voluntarily swing
+the disk head around inefficiently, and I don't know enough about how IDE
+works to say anything different about it.
+
+I hope some hardware hacker who knows their low-level stuff will be able to
+write a secure disk wiper.
+
+John
+--
+J. Deters  "Captain's log, stardate 25970-point-5.  I am nailed to the hull."
++-------------------------------------------------------+
+| NET:   jad@dsddhc.com (work)    jad@pclink.com (home) |
+| PSTN:  1 612 375 3116 (work)    1 612 894 8507 (home) |
+| ICBM:  44^58'36"N by 93^16'27"W Elev. ~=290m (work)   |
+| PGP Key ID:  768 / 15FFA875                           |
++-------------------------------------------------------+
+
+
+
+
+

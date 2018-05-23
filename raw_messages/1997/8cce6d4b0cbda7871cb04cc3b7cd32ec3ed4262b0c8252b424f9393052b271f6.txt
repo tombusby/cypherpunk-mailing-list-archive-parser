@@ -1,0 +1,53 @@
+From: "James A. Donald" <jamesd@echeque.com>
+Date: Fri, 10 Oct 1997 02:43:18 +0800
+To: Adam Back <jad@dsddhc.com
+Subject: Secure Phone:  Making man in the middle audible.
+Message-ID: <199710091831.LAA06017@proxy3.ba.best.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Here is a method to render Man in the Middle audible on a telephone
+connection.
+
+Before speech can be encrypted, it is digitized and compressed.  It
+is turned into digital packets.  There is some choice in the size
+and other properties of the digital packets.
+
+Suppose that Bob's computer from time to time formulates a plan to
+do groups of a particular size and form, and sends Ann's computer a
+hash of that plan and the DH negotiated shared secret.
+
+Malloc (the man in the middle) cannot send this hash to Ann's computer
+for Ann would discover the shared secret she is using is not the same
+as the shared Bob is using.
+
+So his computer must formulate its own plan, and send its own hash, 
+which will not agree with Bob's plan, because Bob's computer does
+not reveal the plan except by actually sending the packets.
+
+So malloc must decompress Bob's speech packets, repacketize them, 
+and recompress them,
+
+Often he will not be able to send off a packet, until he has received 
+two of Bob's packets.
+
+So this triples the delay, and increases the speech degradation.
+
+This should quite noticeable, noticeable enough to provoke Bob
+and Ann into verifying their connection by reading the hash
+digits of their shared secret.
+
+ ---------------------------------------------------------------------
+              				|  
+We have the right to defend ourselves	|   http://www.jim.com/jamesd/
+and our property, because of the kind	|  
+of animals that we are. True law	|   James A. Donald
+derives from this right, not from the	|  
+arbitrary power of the state.		|   jamesd@echeque.com
+
+
+
+
+

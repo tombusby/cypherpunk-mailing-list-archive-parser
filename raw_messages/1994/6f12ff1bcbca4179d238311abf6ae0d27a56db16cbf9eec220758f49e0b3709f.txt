@@ -1,0 +1,50 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 6 Aug 94 16:48:42 PDT
+To: cypherpunks@toad.com
+Subject: Improved remailer reordering
+In-Reply-To: <199408061531.IAA28014@jobe.shell.portal.com>
+Message-ID: <9408062320.AA17234@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+About message mixing:
+
+   A measure that is used for situations like this is entropy.  
+
+Indeed.  This is exactly the mathematical measure for what I've called
+"privacy diffusion" in a remailer network.  It is, namely a measure of
+of the uncertainty to a watcher of what ingoing message corresponds to
+what outgoing message.
+
+As soon as you begin to write down some of the equations for this
+value, several things become distinct possibilities:
+
+-- duplicate messages may decrease security
+-- retries may reduce security
+-- interactive protocols may reduce security
+-- there is such a thing as a needlessly lengthy remailer path
+-- noise messages might not be worth the bother
+-- multiple different routes may reduce security
+
+One thing becomes blaringly obvious:
+
+-- it's reordering that's mathematically significant; that's what goes
+directly into the equations.
+
+
+   To consider different batching strategies, consider a remailer where the
+   messages come in one per hour, at 1:00, 2:00, 3:00, etc.  
+
+Since the particulars of the time don't matter for this analysis, I'd
+suggest using the terminology "message interval", since the entropy
+calculation is time-scale invariant.
+
+Hal's suggestion for rollover schemes is a good one.  I'll be working
+on the math for it.
+
+Eric
+
+
+
+

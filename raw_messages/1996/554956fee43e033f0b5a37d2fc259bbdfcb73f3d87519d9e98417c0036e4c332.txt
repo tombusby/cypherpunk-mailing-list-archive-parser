@@ -1,0 +1,135 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Thu, 1 Aug 1996 09:07:13 +0800
+To: cypherpunks@toad.com
+Subject: Re: FPGAs and Heat (Re: Paranoid Musings)
+Message-ID: <199607312158.OAA21831@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I have really scrambled up the quotes from verious people.  My appologies
+if you think I have misrepresented your viewpoints.
+
+>Bill Frantz said:
+>>If we assume a machine designed to break *every* message, NSA's response
+>>makes more sense.
+>
+At  4:07 PM 7/31/96 -0700, Timothy C. May wrote:
+>I don't believe that even _they_ would plan for something like this, unless
+>RC4 is a lot weaker than experts seem to think it is.
+
+One of NSA's traditional roles is to automatically scan communications and
+pull out the "interesting" stuff.  To continue this role, they have to be
+able to decrypt the messages.  I wouldn't, particularly when thinking in
+paranoid mode, assume they have given up on that role.
+
+
+At  2:14 AM 7/31/96 -0800, Jim McCoy wrote:
+>There are two types of FPGAs, one is based on anti-fuse technology which is
+>essentially a big complicated PROM, but the Xilinx FPGAs use SRAM to
+>configure the interconnections between logic elements.  ...
+
+At  9:07 AM 7/31/96 -0800, jim bell wrote:
+>However, I think it very unlikely that an organization like the NSA would 
+>bother with an FPGA to do a cracking engine.  FPGA's have substantial 
+>limitations, as you alluded to above, due to the need to make them "general 
+>purpose."  A non-field programmable Gate Array, a hard-wired chip, would 
+>tend to optimize the interconnections on chip including minimizing the 
+>delays, but not incur the full-custom costs such as the penalty for low volume.
+
+>Bill Frantz said:
+>>Now I have no problem with believing NSA would invest $7 million.  However,
+>>$700 million makes me wonder.  With FPGAs, there is a significant risk that
+>>people will change the crypto system and make the investment worthless.
+>>(Which, I guess, is why they prefer general purpose computers.)  However,
+>>if they can get the equivalent of a few bits of key back by cryptanalysis,
+>>then they knock the costs down to entirely reasonable (for them) levels.
+
+I was assuming program only once chips, like the old burn-the-fuse PROMs. 
+If you are ordering in quantity 700,000, for the RC4-40 engine, then you
+have no need to worry about the cost of small runs of Mask programmed
+chips.
+
+
+At  4:07 PM 7/31/96 -0700, Timothy C. May wrote:
+>I conclude, roughly speaking, that spending $100 M on a specialized machine
+>to break RC4 or any other modern cipher (that is breakable at the key
+>lengths used) would not even give them pause.
+
+If they are using Programmable-only-once Gate Arrays or Mask programmed
+ones, $700 million for a machine which will cost $7 million for a simple
+reprogramming might give them pause.  Or at least make them consider if
+there is an alternative.  If they are using easily reprogrammable arrays,
+then they have a general purpose computer specialized for certain types of
+parallel processing.  If this machine cost $100 million, I agree they would
+probably build it.
+
+
+At 12:42 AM 7/31/96 -0700, David Wagner wrote:
+>Those estimates assume that a single FPGA can break RC4 in hours.  I think
+>that is an extremely optimistic assumption, given the available public
+>information.  But perhaps NSA is orders of magnitude ahead of us in chip
+>design (unlikely) or orders of magnitude ahead of us in RC4 cryptanalysis
+>(and we're back to paranoid musings).
+
+>> If we assume a machine designed to break *every* message, NSA's response
+>> makes more sense.
+
+I feel like I'm leaning over backwards to defend NSA's response, an
+extremely uncomfortable position (and I could crack my skull when I fall)
+:-).  The most important issue is, what is NSA's state of the art.  If we
+accept their $1000/FPGA chip, then they are indeed at the bleeding edge,
+and suffering from the associated low chip yields.  If they are at the best
+cost-performance point for 2-3 years ago or whenever they started approving
+the export of RC4-40, then they are certainly subject to David Wagner's
+performance limits.
+
+A number of people have mentioned the heat problems.  I, and I think also
+NSA, never said they couldn't be solved, but solving them involves
+engineering costs, whether it is to design cooling or distribution
+techniques.  I think the bullets in their response were primarily to
+justify that $10 million NRE cost.  (Getting to $10 million isn't hard on a
+government project.)
+
+
+At  2:14 AM 7/31/96 -0800, Jim McCoy wrote:
+>One of the speakers ... was the Product Line Manager from Xilinx and one of
+>the goodies he handed out was pre-release data sheets for the new XC6200
+>series of FPGAs they are producing (the chips are already out in limited
+>quantities) so here is a little update on the state of the art in this area.
+>
+>The interconnection problem has also been solved in this chip series. ...
+>Given the relatively compact design in Ian and
+>Dave's paper and the new chips one might even fit two or four cracking
+>engines on a single FPGA.
+>
+>The newest line from
+>Xilinx, the XC6000 series has the capability to be reconfigured either
+>partially or completely from an on-chip cache in 5 ns.  That is five
+>nanoseconds and you have a completely different piece of virtual hardware. If
+>the configuration is loaded through the slowest I/O port on the chip it only
+>takes 200 microseconds.
+
+Given this kind of hardware, the only reasonable assumption is that if NSA
+hasn't built a general purpose cracking engine, they will.
+
+
+>Even if the encryption algorithm is secret these
+>chips open up interesting posiblities for developing general-purpose
+>cryptanalysis machines. [Hmm, there may be a paper in there... "Evolving A
+>General-Purpose Cryptanalysis Engine"...]
+
+The idea of a genetic system to "learn" an unknown cypher system and then
+brute force crack it is indeed worth a paper, perhaps several.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | Cave ab homine unius lebri | Periwinkle -- Consulting
+(408)356-8506     |  [Beware the man of one    | 16345 Englewood Ave.
+frantz@netcom.com |   book]  - Anonymous Latin | Los Gatos, CA 95032, USA
+
+
+
+
+
+

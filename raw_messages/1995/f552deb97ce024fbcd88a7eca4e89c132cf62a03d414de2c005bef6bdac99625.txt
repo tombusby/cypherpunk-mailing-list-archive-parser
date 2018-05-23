@@ -1,0 +1,68 @@
+From: Laurent Demailly <dl@hplyot.obspm.fr>
+Date: Sun, 17 Sep 95 18:57:46 PDT
+To: cypherpunks@toad.com
+Subject: Anonymous WWW proxy Alpha release available
+Message-ID: <9509180157.AA13253@hplyot.obspm.fr>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+If you are interested, the first (alpha) version of my anonymous httpd
+proxy is available  see htpp://hplyot.obspm.fr:6661/ (where it runs,
+unless it dies meanwhile, then see
+htpp://hplyot.obspm.fr/~dl/wwwtools.html  oor mail me)
+
+Ok, what does it do more than cern's :
+
+  + It's single process, light, and mostly multi-tasking
+  + It removes all nasty 'personal' infos like user-agent, referer,...
+  + If there is an "ProxyControl: V1 <proxy-list>" in the header,
+    it will send the request to first the the first proxy listed
+    in the list and sending to that one a "ProxyControl: V1
+    <rest-of-proxy-list>" header
+  + If you launch your personnal copy of the AnonProxyHttp with
+    arguments  "port 2 ph1:pp1 ph2:pp2 ph3:pp3" and 
+    setenv http_proxy http://localhost:port/
+    accessing the web now goes through your AnonProxy, which randomly
+    creates a route to your url going through 2 of the 3 specified
+    other AnonProxy
+
+What will come when i'll have some time :
+  
+  + more flexibility in the spec of the other AnonProxies and
+    a centralized and/or distributed catalog of availble proxies
+
+What I need folks for :
+
+  + get it and run it (and debug?), so we could chain them :-)
+
+What is the big catch/problem :
+
+  + its written in .... Tcl + tcl-dp + tclX !
+    (plz don't flame me...)
+    so you need a tcl-dp+tclX interp to try it locally...
+
+Feedback  / Comments / ... welcome
+Regards
+dl
+
+- -- 
+Laurent Demailly * http://hplyot.obspm.fr/~dl/ * Linux|PGP|Gnu|Tcl|...  Freedom
+Prime#1: cent cinq mille cent cinq milliards cent cinq mille cent soixante sept
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+Comment: Processed by Mailcrypt 3.3, an Emacs/PGP interface
+
+iQCVAgUBMFzRIXk52/beodHxAQFGzAP+Kl4ImRpuYIjSk7rtEjGIoPVSv1d1j6sq
+9GIgmFgRLSyiw2LcYzlFNxtEOqAjM2k+rJttHxavKOJb+eeAzqZP7ihWHfBv8FS3
+56SiCw16h2OPsEeZ4TOkUmMTEGDWHJKN9tfVac4qpuG1LZ7A2RejMAUV9qp02LNg
+Vch5aDWlPNc=
+=AvS/
+-----END PGP SIGNATURE-----
+
+
+
+

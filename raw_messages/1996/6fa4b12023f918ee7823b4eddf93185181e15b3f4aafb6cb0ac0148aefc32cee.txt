@@ -1,0 +1,106 @@
+From: wlkngowl@unix.asb.com
+Date: Sat, 6 Jan 1996 07:56:42 +0800
+To: Cypherpunks@toad.com
+Subject: More Noise Sphere Noise (simple source code)
+Message-ID: <199601051236.HAA28251@UNiX.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Ok, no language holy wars.  This was quickie to test out
+the Noise Sphere plotting.  It's in Pascal, but it's
+understandable.
+
+{ Simple demo of a Noise Sphere in Turbo Pascal         }
+{ (If only I had a really awful RNG to test it with...) }
+
+program NoiseSphere;
+  uses Graph, Crt;
+
+const
+  BGIPath = ''; { where those silly Borland *.BGI drivers are }
+
+var
+  GraphMode,
+  GraphDriver: Integer;
+
+
+type
+  Polar = record
+    r, theta, phi: Real;
+  end;
+
+  Cartesian = record
+    x,y,z: Real;
+  end;
+
+procedure PolarToCartesian(var P: Polar; var C: Cartesian);
+begin
+  C.x := P.r * Sin(P.phi) * Cos(P.theta);
+  C.y := P.r * Sin(P.phi) * Sin(P.theta);
+  C.z := P.r * Cos(P.phi);
+end;
+
+procedure Plot(var C: Cartesian);
+begin
+  with C do begin
+    PutPixel(100+(Round(100*y)), 200-(Round(120*z)), Yellow);
+    PutPixel(320+(Round(100*x)), 200-(Round(120*y)), Red);
+    PutPixel(540+(Round(100*x)), 200-(Round(120*z)), Blue);
+  end;
+  Delay(1);
+end;
+
+
+function ByteToReal(b: Byte): Real;
+begin
+  ByteToReal := b / 256;
+end;
+
+function InitScreen: Integer;
+begin
+  GraphMode := VGAHi;
+  GraphDriver := EGA;
+  InitGraph(GraphDriver,GraphMode,BGIPath);
+  InitScreen := GraphResult;
+end;
+
+var
+  n: LongInt;
+  X: Array [ 0..2 ] of Real;
+  P: Polar;
+  C: Cartesian;
+begin
+  InitScreen;
+  Randomize;
+  for n := 0 to 2 do X[n] :=
+{$ifdef USEDEV}
+{$else}
+    ByteToReal(Random(256));
+{$endif}
+  n := 0;
+  repeat
+    with P do begin
+      r := Sqrt(X[(n+2) mod 3]);
+      theta := pi * X[(n+1) mod 3];
+      phi := 2 * pi * X[n];
+    end;
+    PolarToCartesian(P,C);
+    Plot(C);
+    X[n] :=
+{$ifdef USEDEV}
+{$else}
+    ByteToReal(Random(256));
+{$endif}
+    n := (n + 1) mod 3;
+  until KeyPressed;
+    ReadKey;
+  RestoreCrtMode;
+end.
+
+
+
+
+

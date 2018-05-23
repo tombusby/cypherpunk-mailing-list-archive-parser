@@ -1,0 +1,38 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 4 Jul 94 14:38:23 PDT
+To: Roger Bryner <bryner@atlas.chem.utah.edu>
+Subject: Re: MD5 is 1=>1?
+In-Reply-To: <Pine.3.89.9407041124.A6205-0100000@atlas.chem.utah.edu>
+Message-ID: <9407042142.AA28845@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+MD5, like all hash functions, are many-to-one functions.  This means
+that theoretically there are an infinite number of messages that will
+hash to the same value.  This also means that reverting from the hash
+back to your original message is nigh impossible.  The security of MD5
+is based upon the fact that *finding* two messages that hash to the
+same value is as difficult as a brute-force attack, which requires
+2^128 trials (maybe it's 2^127, but I don't think that really
+matters).
+
+I dion't believe that multiple iterations of MD5 will cause you to
+lose entropy.  Actually, you will lose entropy on teh *first*
+iteration, since MD5 will \*only\* let you have 128 bits of Entropy,
+since there are only 128 bits in the output.  In subsequent
+iterations, you just move those bits around.
+
+Does this answer your question?
+
+-derek
+
+         Derek Atkins, SB '93 MIT EE, G MIT Media Laboratory
+       Member, MIT Student Information Processing Board (SIPB)
+    Home page: http://www.mit.edu:8001/people/warlord/home_page.html
+       warlord@MIT.EDU    PP-ASEL     N1NWH    PGP key available
+
+
+
+
+

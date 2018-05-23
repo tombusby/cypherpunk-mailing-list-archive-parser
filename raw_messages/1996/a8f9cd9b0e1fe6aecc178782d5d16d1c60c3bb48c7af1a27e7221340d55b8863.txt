@@ -1,0 +1,73 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sat, 6 Jan 1996 13:52:36 +0800
+To: cypherpunks@toad.com
+Subject: Re: Pi Stuff
+In-Reply-To: <m0tYMQF-0008ykC@pacifier.com>
+Message-ID: <199601060513.VAA12559@netcom21.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jim bell <jimbell@pacifier.com> writes:
+
+ > While I'm not an expert at this, I think you're
+ > misrepresented the Chudnovsky result.  They formulated an
+ > equation that allowed "you" to continue the calculation
+ > past "N" digits as long as you had the result that far.
+
+That property would be possessed by any self-correcting iteration
+which converged in a neighborhood of Pi.  It would not be
+necessary to repeat ones earlier calculations at increased
+precision in order to determine Pi to additional digits.  One
+could just use the previous calculations as a starting point and
+continue to iterate, doing the new calculations to extended
+precision.
+
+I believe the Chudnovskys proved a much stronger result than
+this, although precisely what it was escapes me at the moment.
+
+[Please hum the theme to "Final Jeopardy" while I look up
+ Chudnovsky's formula]
+
+Good - it's in the sci.math FAQ.
+
+Set k_1 = 545140134
+    k_2 = 13591409
+    k_3 = 640320
+    k_4 = 100100025
+    k_5 = 327843840
+    k_6 = 53360;
+
+Then pi = (k_6 sqrt(k_3))/(S), where
+
+S = sum_(n = 0)^oo (-1)^n ((6n)!(k_2 +nk_1))/(n!^3(3n)!(8k_4k_5)^n)
+
+This converges linearly at about 14 digits a term, and carries
+forward a sufficiently small amount of state that one can iterate
+into the billions of digits without the CPU requirements becoming
+painful.  So it basically functions as a digit generator for Pi,
+which, when appropriately initialized, will work on any part of
+the number and emit the appropriate output.  The denominator
+simplifies in a special way which keeps the computation localized
+to a small neighborhood of the place where the new digits are
+appearing.
+
+ > As far as I know, they DID NOT generate any formula for the
+ > generation of isolated digits of pi, the more recent news.
+
+I guess you're right about it not having the specific form of a
+function which takes "i" as input and emits the "ith" bit.
+Nonetheless, the discovery of this particular formula and the
+way in which its computational requirements expand tastefully
+with increasing numbers of digits hints strongly at the existence
+of the aforementioned closed solution.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+
+

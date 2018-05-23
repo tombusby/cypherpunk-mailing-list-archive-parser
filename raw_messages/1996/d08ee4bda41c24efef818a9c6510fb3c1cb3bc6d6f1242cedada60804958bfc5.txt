@@ -1,0 +1,103 @@
+From: mpd@netcom.com
+Date: Thu, 14 Nov 1996 14:11:30 -0800 (PST)
+To: Eli Brandt <eli@gs160.sp.cs.cmu.edu>
+Subject: Re: FCPUNX:Small 'Hard' Problems Wanted
+Message-ID: <199611142211.OAA21942@netcom12.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eli Brandt <eli@gs160.sp.cs.cmu.edu> writes:
+
+ > (I'm getting this this through fcpunks, so my reply is
+ > going to you. If you reply, you can cc cypherpunks if you
+ > want.)
+
+Ok.
+
+[snip]
+
+ >> ... I plan to test it on reduced round DES, full 16 round
+ >> DES, and some RSA problems of various sizes.
+
+ > These are all in NP (though not necessarily NP-C), so you
+ > can certainly solve them with SAT, but I'd be *very*
+ > surprised if SAT were an efficient way to do it.  If
+ > SAT-reduction beats the number field sieve at factoring, for
+ > example, you've got a major research result.
+
+Actually, I would expect any AI algorithm which has some notion
+of convergence to beat all of the "combination of congruences"
+factoring methods, which are essentially exhaustive searches,
+albeit it under the image of some useful transformations and
+homomorphisms.
+
+SAT (boolean satisfiability) does not seem to illuminate
+factoring or other cyptographic problems in any obvious way. Even
+a prime implicant covering of a typical strong cryptographic
+function would be mondo huge in terms of memory.  Crypto problems
+map pretty nicely into circuit problems, however, and circuit
+satisfiability seems to be a nice wedge with which to attack a
+number of the most popular ones.  Of course, you can go back and
+forth between circuit and SAT problems, but thinking in terms of
+circuits allows you to add the correct additional variables to a
+problem which would be gigantic if you did the output directly in
+terms of the input bits.
+
+I will wait to see if this thing munches through DES of various
+rounds before claiming any "research results."
+
+ >> I already have C code to map RSA and n-round DES problems
+ >> into an appropriate circuit satisfiability problem
+
+ > How big a SAT problem does an n-bit RSA or n-round DES
+ > problem turn into?
+
+Well - the typical DES S-Box requires between 130-155 2-input
+logical operations to express its 4 bit output in terms of its 6
+bit input if you basically construct it in the obvious no-brainer
+way without attempting any clever optimization.
+
+Throw in a few XORs, and you can wire 2 round DES in about 2,500
+one and two input logical operations, and the full 16 round DES
+takes about 25,000.  I'm sure this can be improved upon greatly,
+if someone wanted to tweek the wiring diagram.
+
+What I've done to convert DES to a circuit satisfiability problem
+is to make a logical network with (56+64+64) input bits and 1
+output bit. The input consists of (key,plaintext,ciphertext).  I
+pass both the plaintext and ciphertext through the IP, and do
+half the rounds on each with the appropriate subkeys.  Then I XOR
+opposite 32 bit sections between them, OR it all together, and
+complement the output.
+
+This yields something which lights up if the key maps the
+provided plaintext into the provided ciphertext and outputs zero
+otherwise.  When it is instantated with a particular
+plaintext/ciphertext pair, this diagram can be munched by the
+previously mentioned algorithm to yield a possibly non-empty set
+of keys.
+
+RSA is a little bit more messy.  Given a modulus between 2^k < N
+< 2^(k-1), you can construct a circuit which when instantated
+with the modulus bits will light up if and only if the larger
+of the two distinct primes is input.  The way I do this requires
+only two multiplicative operations, one being a modular
+reciprocal of an odd number modulo 2^k, and the other being a
+multiplication.  Both of these are wired as N^2 algorithms,
+using successive approximation, although near-linear algorithms
+probably exist.
+
+As a data point, a circuit which lights up when RSA-140 is input
+can be done in about a million NANDs.  Someone has offered me
+some time on a 64 meg ultraSparc to try some RSA problems, but I
+am going to debug the C version on DES first.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

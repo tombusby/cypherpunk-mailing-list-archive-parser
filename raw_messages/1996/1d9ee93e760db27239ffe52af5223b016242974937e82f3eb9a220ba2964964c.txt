@@ -1,0 +1,105 @@
+From: elkins@antares.aero.org (Michael Elkins)
+Date: Thu, 23 May 1996 17:54:35 +0800
+To: paul.elliott@Hrnowl.LoneStar.ORG (Paul Elliott)
+Subject: Re: PGP MIME INTERNET DRAFT considered harmful.
+In-Reply-To: <31a3910d.flight@flight.hrnowl.lonestar.org>
+Message-ID: <199605230403.VAA14508@zzyzx.aero.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Boundary..3941.1071713579.multipart/signed"
+
+--Boundary..3941.1071713579.multipart/signed
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+On May 22, paul.elliott@Hrnowl.LoneStar.ORG (Paul Elliott) wrote:
+> I as you should know, I have never said that base64 should never be used.
+> I merely say that signatures should be taken over the original binary data.
+> Base64 can be used for transport as needed, but it should be a convention
+> that the any base64 is removed before signatures are checked.
+
+However, this method does not allow for any verification of the content-type
+headers for that part.
+
+> As my examples show, some users may have legitimate reasons for
+> wishing to attach a generally useful PGP signature to a MIME message.
+
+> PGP MIME should allow users to sign those documents the user wishes
+> to sign, faithfully transmitting those signatures to the receiver. It should 
+> not dictate that a user will sign an unintelligible artifact of a data 
+> transmission system.
+
+Your last two comments really illustrate the divison that we've previously
+seen on the pgp-mime list.  On the one side you have those who want to
+include the MIME headers in the digital signature, and on the other are those
+who want the signature to be over the data in it's "binary" (unencoded)
+form.  I _do_ see merit in the latter.  However, that was not the goal of
+my draft.  What I've been trying to get across is that my draft does not
+preclude you from writing your own draft on how to transmit detached
+signatures along with your message (perhaps something like
+multipart/pgp-signed).
+
+> Pressure will build for PGP MIME to support binary datapaths.
+
+When this occurs, I will glady remove that restriction.
+
+> PGP MIME will have to go through a complicated migration path
+> to phase in this transition. All this complexity can be avoided by
+> doing the right thing now.
+
+Complex migration path?  How so?  Implementations that accept both
+7-bit and 8-bit PGP messages but only generate 7-bit messages will
+not suffer in the least if one day we decide it's ok to generate 8-bit
+signed messages.  They will still accept either.  Newer versions of
+the software can make use of the 8-bit path and it will interoperate
+perfectly with older versions.
+
+> Users should have a policy of only attesting to statements by digital
+> signature, that they know _of their own personal knowledge_ is true.
+> Any other policy is to court disaster.
+
+This argument, which while true, doesn't make your approach any safer.  Any
+software used is a proxy, and no matter how brilliant or naive the user
+is, it's still a proxy.  There is some amount of trust that the software
+is doing the "right thing."  It doesn't matter if I'm signing a PGP/MIME
+message in my e-mail client or running PGP to encrypt a .gif or .jpg.
+
+> I have gotten the impression that you guys have stopped listening.
+> Everyone seems hell-bent on standardizing this inferior system that
+> will lockin a poor design. I hoped that by appealing to a larger
+> audience I could get more articulate and respected people to
+> persuade you to rethink. Perhaps some of the cypherpunks can
+> say something that will provoke an attack of sanity that will
+> stop this inexorable march toward a bad standard.
+
+No, we haven't stopped listening.  We've just heard these arguments arguments
+over and over again for the past six months and nobody from that camp has
+proposed an alternative.  Again, I do not believe the two methods are
+mutually exclusive.  PGP/MIME is not meant do what I term "object security,"
+it's meant for "transport security."
+
+I think perhaps it's not so much PGP/MIME that you don't like, but the
+whole multipart/security architecture in general.
+
+me
+-- 
+Michael Elkins <elkins@aero.org>		http://www.cs.hmc.edu/~me
+PGP key fingerprint: EB B1 68 32 3F B5 54 F9  6C AF 4E 94 5A EB 90 EC
+
+
+--Boundary..3941.1071713579.multipart/signed
+Content-Type: application/octet-stream; name="pgp00003.pgp"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pgp00003.pgp"
+Content-Description: "PGP signature"
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KVmVyc2lvbjogMi42LjIK
+CmlRQ1ZBd1VCTWFQamtHTjlvV0JnaFBESkFRSHc3UVArSUhtblpjY1VZeVdo
+bmtsb1hjM253cS96ampBbjFLR0oKMmpYVkJkQjBDVWR1UHhDOU00Y1NJdzVm
+N2pzd2NhSFlOWUV5ZlRtNUZGem9vdWFYMU5tRWZMdE9MWkxwZW13OApXaEJa
+OU1sM0VXSjM0cVVENFBPaU1JeHZ2WFNLcTBadjVjM0lXSFZvdFR3V0x4S09Z
+djMybFloQlU2NWlVSzN2CktnOVNwNTFENGxrPQo9V01mUAotLS0tLUVORCBQ
+R1AgU0lHTkFUVVJFLS0tLS0K
+--Boundary..3941.1071713579.multipart/signed--
+
+
+

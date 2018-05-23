@@ -1,0 +1,57 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Fri, 20 Oct 95 21:56:18 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Java good for security? (was: 50 ways...)
+In-Reply-To: <199510201919.PAA20537@clark.net>
+Message-ID: <Pine.SOL.3.91.951020212519.14955B-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Earlier on, when the Java threads started, I posted several responded to 
+a post like this explaining why java theoretically protects against 
+attacks like the ones mentioned, and suggested what parts of the code 
+need to be examined/attacked to violate the security assumptions. 
+Everybody here knows what you can do if you can execute any code you 
+want; to show a breach you must show that the code you want can be executed.
+
+Although I wouldn't put money on the current implementation of the Java 
+VM is 100% perfect, I am pretty confident that a fully trusted VM can be 
+built (the instruction set and type verifiers are very simple and 
+conservative). Adding in the garbage collector and the thread system may 
+make things more complicated, but hopefully these factors won't make 
+things too bad. 
+
+Once you have a trusted VM and core runtime, all you need to do is add 
+once the run-time classes you need and are able to verify to your desired 
+level of trust, and you have a reasonably trusted language to write your 
+programs in. This, and several other features of java should make it 
+easier to write trusted code.
+
+	1) Exceptions. Java has exceptions, and like CLU on prozac, nags 
+	   you if you don't explicitly catch or pass thru them. Errors 
+	   which are ignored are a very common cause of security holes.
+	2) Bounds checked arrays. Can't overflow, making the world safe 
+	   for stack frames everywhere.
+	3) Garbage collection - no leaks, and no use of freed memory.
+	4) Real access protection  for private members - easier to make sure
+	   info isn't leaking if all access is mediated through a single unit.
+	
+Hmmm. What other features would be good for writing trusted code like 
+network servers? Anyone got any cites on language issues and security? 
+That don't involve ADA :-)?
+
+Simon
+
+
+----
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

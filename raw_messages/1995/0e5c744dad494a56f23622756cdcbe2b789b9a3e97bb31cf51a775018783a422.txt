@@ -1,0 +1,57 @@
+From: stewarts@ix.netcom.com (Bill Stewart)
+Date: Wed, 26 Jul 95 12:48:32 PDT
+To: cypherpunks@toad.com
+Subject: Challenge-response passwords (Was: big word listing)
+Message-ID: <199507261944.MAA20832@ix9.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:59 PM 7/25/95 +0100, Andrew Spring wrote:
+>Free-after-1997 example:
+>        g is a generator of a prime p.
+>        password is X (0<X<p);
+>        password file has g^X mod p.
+>        login server generates Y, issues challenge g^Y.
+>        expected response is g^XY mod p
+>        login client has X, generates (g^Y)^X = g^XY mod p.
+>        J. Random SuperHacker can get g^X, and g^Y, but not g^XY.
+
+It's _not_ free after 1997!  I thought of it last fall, was surprised I couldn't
+find it anywhere in the literature, given that it's pretty obvious,
+but eventually found that a guy from Siemens had patented it in Germany
+and then gotten a US patent in ~1994.  Unfortunately, he phrased it in terms of
+"commutative hash functions", with g^X mod p as an example, so it's more
+general.
+He also extended it to do two-way authentication (obviously the process can be
+symmetrical if the user has a stored g^W from the server and can send a
+challenge,
+but he found a way to save a step or two.)
+
+I developed it because I was looking for a way to do authentication-only
+public key stuff so the code would be exportable - this approach doesn't
+generate a shared secret (since the otherwise-secret g^XT is exposed
+as the response to the challenge.)  However, it's possible to extend it to
+preserve the shared secret - instead of sending response g^XY mod p, send
+        Hash(g^XY mod p)
+and have the login server validate that.  One advantage is that the hash
+can be much shorter than the whole g^XY mod p, e.g. 32-64 bits instead of
+512-1024.
+
+And you can now use (g^XY mod p) as a session key (for encrypted sessions)
+or an authenticator (e.g. send Hash(Data,sequence#,sessionkey) as a MAC for
+each packet.
+#---
+#                                Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+# Export PGP three lines a time --> http://dcs.ex.ac.uk/~aba/export/
+M0V]N9W)E<W,@<VAA;&P@;6%K92!N;R!L87<@+BXN(&%B<FED9VEN9R!T:&4@
+M9G)E961O;2!O9B!S<&5E8V@L(&]R(&]F('1H92!P<F5S<SL-"F]R('1H92!R
+M:6=H="!O9B!T:&4@<&5O<&QE('!E86-E86)L>2!T;R!A<W-E;6)L92P@( T*
+
+
+
+
+

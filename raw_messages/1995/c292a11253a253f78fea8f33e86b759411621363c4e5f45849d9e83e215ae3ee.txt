@@ -1,0 +1,59 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Mon, 9 Oct 95 17:29:59 PDT
+To: "Perry E. Metzger" <perry@piermont.com>
+Subject: Re: java security concerns
+In-Reply-To: <199510092322.TAA24567@jekyll.piermont.com>
+Message-ID: <Pine.SOL.3.91.951009171543.13562H-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 9 Oct 1995, Perry E. Metzger wrote:
+
+[ I just got Man-On-The-Street'ed by a TV news crew asking my opinion of 
+  the OJ Verdict, I'm entitled to a little Side-Bar 
+
+> Sendmail is about 29K lines of C code -- not significantly larger by
+> my standards -- and has proven nearly impossible to secure.
+
+Hey - but sendmail was designed to be Z-1 secure - formally proven to be 
+unsecurable :-)
+
+> taken on an impossible task. Marcus Ranum has noted that you can't
+> trust a program thats bigger than a couple of pages long, and I
+
+For the general case this is true. To be able to trust larger systems, you
+need to not only be able to trust the individual 2 pagers, but to also be
+able to show that composing the sub units doesn't lose whatever property
+you're trying to do. The architecture of the system needs to be designed
+with this in mind; otherwise reasoning about the composite becomes
+intractable. There are all sorts of things you can do to make analysis
+easier - eliminating global state, etc. Retrofitting security or 
+verifiability never works. 
+
+Distributed co-operative theorem proving, anyone?
+
+END-DIGRESSION]
+
+Real point of the message:
+
+In my previous message, I left out some fundamental parts of the run-time 
+that need to be looked at carefully. The garbage collection needs to be 
+examined carefully. Normally GC algorithms are formally derived, so it's 
+the implementation that needs to be checked for. holes in the GC may be 
+too unpredictable to exploit for anything but core-dumping, especially since 
+java uses a mark-sweep conservative collector. 
+
+A more promising area of attack might be the Thread system. If the thread
+system can be confused, it might be possible to have an untrusted app
+start executing in the context of a trusted thread. This may or may not 
+be exploitable, depending on how much of the untrusted threads context 
+gets held over (call stack, etc), but could be fun if it works.
+
+Simon
+
+
+
+
+
+

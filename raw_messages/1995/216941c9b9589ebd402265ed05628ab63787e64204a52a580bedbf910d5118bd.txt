@@ -1,0 +1,47 @@
+From: Childers James <ic58@jove.acs.unt.edu>
+Date: Mon, 30 Oct 1995 12:15:16 +0800
+To: Mark <mark@lochard.com.au>
+Subject: Re: MD4-derived hash functions
+In-Reply-To: <199510300353.AA55657@junkers.lochard.com.au>
+Message-ID: <Pine.SOL.3.91.951029213809.15622A-100000@jove.acs.unt.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 30 Oct 1995, Mark wrote:
+
+> >The conclusion to take away from this is simple: double encryption
+> >doesn't give you much extra security over single encryption.  Don't
+> >use double encryption.
+> 
+> That doesnt make sense. If one accepts that double encryption is securer than
+> single encryption, wether marginally or twice as secure, why not use it?
+
+Ah yes, but the vagarities of crypto don't lend themselves to real-world 
+analogies so easily. With crypto schemes, if you use double-encryption, 
+you effectively halve the amount of time needed to crack them. This is 
+because of the "man in the middle attack." Schneier talks about it in 
+Applied Crypto, and I am sure others on this list know the technical 
+details better than I.
+
+What Schneier says has been proven to be secure is, instead, a triple 
+encryption scheme. Using two different keys, it goes something like this 
+(if memory serves):
+
+	Cipertext = P1xorEK1 -> C1xorDK1 -> C2xorEK1
+
+Where P1 is the plaintext, EK1 is encrypt key 1, and DK1 is decrypt key 1.
+
+That doesn't look right the longer I consider it, but the basic idea is 
+there. Encrypt, decrypt, then encrypt again.
+
+
+"Freedom is meaningless unless  | ic58@jove.acs.unt.edu - James Childers
+ you can give to those with whom| No man's freedom is safe
+ you disagree." - Jefferson     |    while Congress is in session
+        EA 73 53 12 4E 08 27 6C   21 64 28 51 92 0E 7C F7
+
+
+
+
+

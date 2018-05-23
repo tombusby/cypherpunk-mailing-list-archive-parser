@@ -1,0 +1,48 @@
+From: eichin@cygnus.com (Mark Eichin)
+Date: Thu, 10 Jun 93 13:31:10 PDT
+To: pmetzger@lehman.com
+Subject: re: query...
+In-Reply-To: <9306102009.AA27673@snark.shearson.com>
+Message-ID: <9306102030.AA07054@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   A query -- I understand that the MIT Athena people implemented a DES
+   encrypted telnet/telnetd for use with Kerberos. Anyone out there know
+   where its sources live and how I could hack it to take a user
+   specified DES key?
+
+   Perry
+
+The first one was done by Paul Borman at Cray. A snapshot was up for
+FTP on uunet (named telnet.91.03.25.tar.Z) though I don't know what
+was done with it; the authentication and encryption options draft
+standard that it conformed to has been modified since then, although
+all of the implementations (such as the utexas version for the Mac)
+I've seen so far conform to Borman's version.
+	It shouldn't be too hard to specify a key (of course you have
+the problem of securely getting the key to the other end of the
+connection -- that is, after all, one of the major side-benefits of
+Kerberos...) 
+	The last release of Kerberos from MIT included a "kstream"
+library, written by Ken Raeburn, which could be dropped in to an
+existing telnet or kermit or other application to provide this kind of
+feature. 
+	There is also Derek Atkins' S.B. Thesis project, which
+included modifications to telnet for accessing Kerberos via the remote
+host, without having IP access on the client to the KDC (such as on a
+dialup or with a firewall or something.) I'm sure he'll announce
+something here about how to get the sources, if they're in a
+releasable yet.
+
+				_Mark_ <eichin@athena.mit.edu>
+				MIT Student Information Processing Board
+				Cygnus Support <eichin@cygnus.com>
+				Cygnus Network Security
+
+From cypherpunks-request  Thu Jun 10 13:14:32 1993
+Received: by toad.com id AA25347; Thu, 10 Jun 93 13:09:48 PDT
+
+
+

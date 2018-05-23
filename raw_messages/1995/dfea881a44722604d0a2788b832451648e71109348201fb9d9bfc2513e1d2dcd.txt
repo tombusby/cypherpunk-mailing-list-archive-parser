@@ -1,0 +1,50 @@
+From: Alex Tang <altitude@cic.net>
+Date: Thu, 24 Aug 95 19:54:00 PDT
+To: Piete.Brooks@cl.cam.ac.uk (Piete Brooks)
+Subject: Re: server congestion?
+In-Reply-To: <"swan.cl.cam.:271770:950824230145"@cl.cam.ac.uk>
+Message-ID: <199508250253.WAA24682@petrified.cic.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu Aug 24 19:00:15 1995: you scribbled...
+> 
+> > Couldn't one take advantage of the 50.000 mistake, by
+> > setting up a second server for that space.
+> 
+> The design of the prtotocol assumes a hierarchy -- maybe in the next attempt.
+> 
+> Static partitioning would be possible (e.g. 0000-7ffff and 8000-ffff)
+> but there are problems with acking to the right server, deciding which to
+> contact, etc.
+
+It would probably be best to have the "child" servers requeset large
+chunnks of keyspace from a "parent" server.  This may require some minimal
+extension to the protocol.  In particular, in the helo, you may want to
+add a "client type" field which would be either "Client" or "Server".  If
+it's a "Server" the parent server would keep track of the name/ip of the
+"child" server.  If someone tried to ack a set of keyspace that the "child"
+server was responsible for, the "parent" server would return either a 
+
+	601 STOP <child server/port>
+
+or perhaps a new return code  such as
+
+	602 ACKHERE <child server/port>
+
+The 602 code would differ from the 601 code stop in that the client could
+come back to either server in the future.
+
+This would let a real "Client" could request keys from any server, but 
+would have to ack back to the same server.
+
+When the "child" server runs out of keyspace, it would get some more from
+it's "parent" server.  
+
+Just my $0.02.
+
+...alex...
+
+
+

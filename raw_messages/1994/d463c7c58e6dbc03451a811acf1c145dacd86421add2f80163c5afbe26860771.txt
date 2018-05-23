@@ -1,0 +1,40 @@
+From: Matthew Ghio <ghio@chaos.bsu.edu>
+Date: Sat, 17 Sep 94 20:51:45 PDT
+To: cypherpunks@toad.com
+Subject: Re: Stealth remailers
+Message-ID: <199409180357.WAA21905@chaos.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal <hfinney@shell.portal.com> wrote:
+
+> Some time back I proposed a variation of this idea: "second tier"
+> remailers, which always forward their outgoing messages through
+> one or more "first tier" remailers, which work like the current ones
+> and take the political heat as a result.  Second tier remailers would
+> be very safe to run and it would be rare that a sysop or supervisor
+> would get a complaint about the remailer's activity.
+
+ftp cs.cmu.edu
+cd /afs/andrew.cmu.edu/usr12/mg5n/public/remailer
+get ghio.cp-remailer.tar.gz
+
+gunzip & untar
+
+Change the following line in the readheaders.c,
+in the block_addr function:
+  if (match==1) address[0]=0;
+to
+  if (match!=1) address[0]=0;
+
+Your blocked.addresses file is now a pass-addresses file.
+Put the email addresses of other remailers in the file.
+You now have a stealth remailer.
+
+Now, EVERYONE should go do this RIGHT NOW!
+No more excuses for not running remailers...  :)
+
+
+
+

@@ -1,0 +1,47 @@
+From: "Mark W. Eichin" <eichin@cygnus.com>
+Date: Tue, 15 Dec 92 23:46:40 PST
+To: tytso@ATHENA.MIT.EDU
+Subject: re: ps -laxww for randmoness?
+In-Reply-To: <9212160715.AA09133@tsx-11.MIT.EDU>
+Message-ID: <9212160740.AA04597@tweedledumber.cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Don Davis, of MIT Project Athena, did some research a number of years
+back on getting good (physical) randomness out of a unix workstation.
+If I recall correctly, the general idea was to look for trends and
+biases, find explanations for them, and then filter them out or
+normalize against them. Sources of "real" nondeterminism came from
+things like variations in hard drive behavior (such as actual seek
+time, which shows up indirectly in the paging system because it does
+or does not cause time delays due to missed sectors...) I don't have a
+reference handy, but if noone comes up with one I'll send him email
+and see if he has it online.
+	In other words, 'ps -laxww' itself is relatively useless --
+but the underlying data does actually have randomness; you may have to
+dig pretty hard for it, though.
+							_Mark_
+
+   SUB: Re: ps -laxww for randmoness?
+   SUM: <tytso>, tytso (Theodore Ts'o)->avalon@coombs.anu.edu.au, cypherpunks@toad.com
+
+      From: avalon@coombs.anu.edu.au (Darren Reed)
+      Date: Wed, 16 Dec 92 2:30:49 EST
+
+      Has anyone tried using the microsecond counter from unix as a random
+      source ?  Its obviously *not* going to be good if you want a continuous
+      stream of random numbers, but if you need them just 'every now and then',
+      what about it ?
+
+   This should be in an FAQ:  Unixes have different levels of granularity
+   in the microsecond counter; some systems may only have a 10 ms (that's
+   10000 microsecond) resolution to their clock.  So you can't necessarily
+   depend on a getting lot of bits of randomness from this method.
+
+						   - Ted
+
+
+
+
+

@@ -1,0 +1,51 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Tue, 8 Feb 94 11:16:50 PST
+To: cypherpunks@toad.com
+Subject: Insecurity of anonymous remailers
+Message-ID: <9402081913.AA00297@deathstar.iaks.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> From owner-cypherpunks@toad.com Sat Feb  5 21:55:58 1994
+> Date: Sat, 5 Feb 1994 15:21:18 -0500 (EST)
+> From:  MatthewJ Ghio <mg5n+@andrew.cmu.edu>
+> To: Cypherpunks Mailing List <cypherpunks@toad.com>
+> Subject: Info on anonymous remailers
+> Content-Length: 1429
+> 
+
+Matthew J Ghio wrote:
+
+> I am pleased to report on the performance of our two newest remailers,
+> qwerty@netcom.com and nate@vis.colostate.edu.  Both remailers had a very
+> good response time.
+
+Is it really a good idea to make anonymous remailers work so fast?
+Everyone who can analyze the traffic of anonymous remailers and
+can read the from/to header lines, the message size and the 
+transfer dates immediately knows who sent mail to whom. 
+
+The make the remailers more safe, I would suggest to modify the
+software:
+
+Every message must be sliced into pieces of standardized size
+( e.g. 8K or 500 lines ). It should be possible to send the
+pieces over different channels. Every server should collect 
+pieces and keep them a random time. Perhaps they could be
+collected until 10MByte of pieces are collected and then they
+can be sent out all. Every piece could contain a time limit
+which may not be exceeded by the servers. Higher limit means
+more confusion for a spy trying to follow this packet. The
+packets should be recyphered by every hop. They could have
+a random tail who's length is changed by a hop. A traffic
+spy could not find out which input and which output packets
+correspond.
+
+Hadmut
+
+
+
+
+

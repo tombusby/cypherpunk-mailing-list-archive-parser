@@ -1,0 +1,31 @@
+From: "Robert A. Rosenberg" <hal9001@panix.com>
+Date: Sun, 20 Aug 95 20:52:24 PDT
+To: michael shiplett <walrus@ans.net>
+Subject: Re: Sun's buggy MD5?
+Message-ID: <v02130508ac5da8006e75@[166.84.254.3]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 20:45 8/18/95, michael shiplett wrote:
+>MD5 test suite:
+>MD5 ("") =               f00001c0effffba8429b59d50529097c
+>MD5 ("a") =              f00003c0effffba8aec5fcf4284a8dbe
+>MD5 ("abc") =            f00005c0effffba896fc8af8ca60a911
+>MD5 ("message digest") = f00007c0effffba8f373218f317a9558
+>MD5 ("abcdefghijklmnopqrstuvwxyz") = f00009c0effffba896b4f24acb3f4738
+>MD5 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+>= f0000bc0effffba8cef237a614aa457d
+
+There certainly is something VERY wrong. I think that the result is being
+reported from a location that is 8 positions left of where it should be
+pointing. Position 9 is where the "random" (ie: Probably correct) data
+starts. The first 8 positions are f0000Xc0effffba8 (where X increments by 2
+for each invocation). Thus this looks like some kind of constant or fixed
+work area.
+
+
+
+
+
+

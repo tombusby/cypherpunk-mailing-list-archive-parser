@@ -1,0 +1,77 @@
+From: Matt Carpenter <mcarpent@Dusk.obscure.net>
+Date: Sun, 14 Jul 1996 21:59:55 +0800
+To: hfinney@shell.portal.com
+Subject: Re:  Execution of signed scripts received by e-mail
+Message-ID: <199607141042.FAA01300@Dusk.obscure.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hal <hfinney@shell.portal.com> writes:
+> 
+> That sounds very impressive!  The one problem I've run into with mail
+> filtering software is that each message asynchronously spawns a separate
+> filter process.  This can cause some conflicts with accessing disk files.
+> I haven't used procmail so I don't know if it has this problem.  But if
+> so you may need to be careful if there are any cases where two processes
+> could be accessing the same disk files.  For example, what if two copies
+> of an identical email message arrive at almost the same time, would your
+> dup detection work.
+
+If I am reading the procmail docs correctly, then the following recipe
+should create a lockfile called 'emscrypt.lock' which will prevent more than
+one instance of the script from being run at a time
+
+:0:emscrypt
+^ Subject.*SQUEAMISH OSSIFRAGE
+|/PATH/emscrypt
+
+I agree it would be better if emscrypt used its own locks on the timestamp
+files.  However, it is my understanding (someone please correct me if I am
+wrong) that there is no simple way to provide file locking in Perl that is
+portable across the various flavours of Unix (see the descriptions of the
+fcntl and flock functions on p. 144-145 of the Camel book).  So I haven't
+tried to implement locking from within emscrypt yet.  Of course, if these
+functions are available on the majority of machines (anyone?) then I should
+probably use them.
+
+> The other issue is the possibility of mail arriving out of order.  Looking
+> for increasing timestamps may cause spurious rejection of some messages.
+> On the other hand this is a difficult problem to handle in general so
+> probably the current solution is OK.
+
+Yeah, I though about that too.  It can be somewhat alleviated by
+batching the individually signed scripts into a single mail message, if 
+you know you are going to be submitting several scripts close together 
+in time.
+
+Any other ideas?
+
+> 
+> Hal
+> 
+
+Thanks for the feedback.
+
+- --Matt
+
+- --
+mcarpent@mailhost.tcs.tulane.edu
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMejLIijtJAMyBnp9AQHnYgf6AkCfu7KLGKmJ6JNe0JscYkqWwHWGStFW
+0u0dMrQekySy75iRqvyHJ789BhUj2gH5DhKBK97C0AhKj2jmv//7RALadqXOa73G
+9nF31evxd+IItWaxeWbQQT9yNvEOz/bmLrz0bgH+GEwKHRFmUmwOObo4bw59M2bc
+EianNNT0Ig4tOcVt6kaxWm79PylQvDvtIxy6e3g0wIyg0gUI9vzGSa7S1y9PAJSB
+d60yJAfYKSEPGoab8fDbrTbJLMUfR1BYevdHrJxxCiuOj9uhIEfCnHua/P6k6tvP
+ZIa8Bz3jilq+AE/+CzBezk0IJmq7MEMQFJHyk/1AtKwY58x6xxWxuQ==
+=S64i
+-----END PGP SIGNATURE-----
+
+
+
+

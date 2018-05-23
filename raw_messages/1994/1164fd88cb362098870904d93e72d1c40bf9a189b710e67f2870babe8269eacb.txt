@@ -1,0 +1,44 @@
+From: DAVESPARKS@delphi.com
+Date: Thu, 14 Jul 94 22:27:35 PDT
+To: cypherpunks@toad.com
+Subject: Re: Triple encryption...
+Message-ID: <01HEPTT89VZI9I5RDS@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Carl Ellison (cme@tis.com) wrote:
+
+> have you considered
+>
+>        des | tran | des | tran | des ?
+
+That one's sort of your "trademark", isn't it? <g>  (TRAN is really
+clever, BTW.)  One scheme that seems to make even more sense, though, is:
+
+         des | tran | IDEA | tran | des
+
+You get the benefits of 112 bits worth of DES keyspace along with 128 bits
+of IDEA keyspace, and thus don't stake your total security on the strength
+of EITHER algorithm.  Other than making the code bulkier by requiring the
+inclusion of code for TWO crypto algorithms, and 64 bits of extra key
+material, what other drawbacks would there be to such a scheme (in a
+NON-commercial setting where licensing of the patented IDEA is not an
+issue)?  If IDEA turns out to not be as secure as we've been led to believe,
+at least it, sandwiched between two layers of TRAN shuffling, should at least
+slow down a meet-in-the-middle attack on the remaining two layers of DES.
+
+As I recall, last time we discussed this over on sci.crypt you also
+advocated an additional step of "PRNGXOR".  Is that still the case?  Have
+you had the opportunity to read the Eurocrypt '94 paper by Eli Biham on
+triple DES modes, yet?
+
+ /--------------+------------------------------------\
+ |              |  Internet: davesparks@delphi.com   |
+ | Dave Sparks  |  Fidonet:  Dave Sparks @ 1:207/212 |
+ |              |  BBS:      (909) 353-9821 - 14.4K  |
+ \--------------+------------------------------------/
+
+
+
+

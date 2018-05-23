@@ -1,0 +1,35 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Wed, 6 Jul 94 05:21:57 PDT
+To: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Subject: Re: MD5: hashing, > 1->1
+In-Reply-To: <9407052324.AA16560@flammulated.owlnet.rice.edu>
+Message-ID: <9407061221.AA00280@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Karl Lui Barrus says:
+> The birthday paradox situation corresponds to just finding two
+> messages with the same hash.  In this case the expected work is 2^64,
+> but then the two messages that you discover with the same hash may be
+> random (and thus worthless).
+
+You can engineer them, actually.
+
+Imagine that you had a 64 bit hash function, and the birthday paradox
+thus provided you with a 2^32 difficulty in finding a collision.
+
+Prepare two versions of the document you want to fake the signature
+on. Adjust the documents over and over again (trivia like spacing will
+do -- find 32 locations and either add or don't add a space) until you
+get a colliding pair of hashes. 
+
+This illustrates that hash collisions are actually quite a problem if
+you have an insufficiently large hash.
+
+Perry
+
+
+
+

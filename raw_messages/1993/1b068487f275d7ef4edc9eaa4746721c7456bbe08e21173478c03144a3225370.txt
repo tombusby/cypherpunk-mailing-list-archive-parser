@@ -1,0 +1,30 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Wed, 6 Oct 93 10:55:16 PDT
+To: cypherpunks@toad.com
+Subject: Re: Strong PRNGs
+Message-ID: <9310061753.AA21992@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Someone wrote:
+
+>	for each bit in the 512-bit register, if the bit is a 1, add the
+>	corresponding array entry into a 521-bit accumulator (init'd to 0
+>	at the start of this pass), modulo a 521-bit prime.
+>                                            ^^^
+>                                           is this correct?
+>
+
+Yup.  512 + 8 + 1 = 521
+
+512:	for the seed for next time
+8:	for the output byte
+1:	slop, since numbers mod a 521 bit prime won't give a uniform
+	distribution of the top bit
+
+ - Carl
+
+
+
+

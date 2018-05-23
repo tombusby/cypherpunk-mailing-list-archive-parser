@@ -1,0 +1,290 @@
+From: Jon Callas <jon@pgp.com>
+Date: Thu, 16 Oct 1997 10:19:56 +0800
+To: Adam Back <wprice@pgp.com
+Subject: Re: anti-GAK design principles: worked example #1
+In-Reply-To: <v04001b0eb06a3d206797@[205.180.137.244]>
+Message-ID: <3.0.3.32.19971015190021.00ae9730@mail.pgp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 11:45 PM 10/15/97 +0100, Adam Back wrote:
+   
+
+Okay, Adam, I'll be civil here, but here's something I want to note:
+
+You've ranted, raved, politicized, propagandized, given ad hominem attacks,
+and stated the opinion that anyone who disagrees with you is evil. You've
+sent flames to our internal development lists, which is at least impolite.
+Yet you say, "constructive criticism only." Sure. I'd like an apology from
+you, though. Deal?
+
+
+   
+>   Also I have been accused of using "lots of anti GAK rhetoric, but
+>   giving no proposals" by Kent.  I reject that claim.  (I did use lots
+>   of rhetoric, but this was to try to impress upon those arguing for CMR
+>   of it's dangers.  They do not seem to acknowledge them.) I'll try in
+>   this post to steer clear of anti-GAK rhetoric.  We'll instead take it
+>   as a given that pgp5.5 and pgp5.0 are GAK compliant because of CMR and
+>   that this is a bad thing.
+
+Uh huh. Steer clear of rhetoric, but we'll take it as a given that you're
+right and everyone else is wrong. At least this is a de-escalation.
+   
+>   Design 1.
+>   
+>   Instructions:
+>   
+>   - scrap the CMR key extension
+>   
+>   - store a copy of the private half of the users PGP encryption key
+>     encrypted to the company data recovery key on the users disk.
+
+Okay -- constructive criticism only. I sincerely hope I'm reading this
+correctly. You're saying that someone's private key should be encrypted to
+the corporation's key. This sounds like key escrow to me. How does this
+differ from the overly strict, nit-picking, freedom-threatening definition
+that I gave? 
+
+This is better than the throw-the-floppy-in-the-safe model in that the
+company-readable version of your key is sitting on your machine. That's good. 
+
+I see a threat here that if the corporation backs up my disk, they they
+have my secret key and thus can read all files that key has ever encrypted.
+This is bad. Normally, if they back up my system, they have my secret key,
+but they have to hack my secret key. Most people's passphrases are easier
+to crack than a public key, but I think this is worse.
+
+With this system, the corporation can read everything I encrypt with that
+key, because they effectively own it. Encrypting my secret key to them
+essentially gives it to them. With CMR, I have the option of making some
+files readable, and some not. This isn't necessarily a good thing -- some
+companies want access to all data, and your proposal helps them.
+
+I'm actually very surprised by this design of yours. On the scale of
+property-balanced-with-privacy, you've come down hard on the side of
+property. Your system makes it so that an employee of a company can *never*
+use this key for a purpose the company can't snoop on. This isn't
+necessarily bad, I think that people *should* have separate keys for work
+and personal use. This just makes the work key definitely the work key. A
+number of our customers will like that.
+   
+>   - (optional) design the software to make it hard to copy the data
+>     recovery packet from the disk, hide the data, bury it in keyrings,
+>     stego encode it, whatever, use your imagination.  This is to attempt
+>     to restrict the third parties ability to by pass the principle of
+>     non communication of recovery information
+   
+This is security through obscurity. We publish our source code, so this
+won't work.
+   
+>   Recovery method:
+>   
+>   Custodian of recovery key inserts recovery floppy disk in machine,
+>   decrypts copy of users private key, hands control back to user to
+>   choose new passphrase.
+
+Choosing a new passphrase is not sufficent. If the custodian ever uses that
+key, it *must* be revoked, a new encryption key issued, and all data
+encrypted with it re-encrypted. There is also the problem of
+re-distributing the revocation and new encryption key to all the people who
+have your old one. This is no worse than any other revocation problem, but
+CMR does not require revoking the user's key.   
+   
+>   Possible objections:
+>   
+>   objection #1. what if disk burns?
+>   counter #1:   backup your disk
+>   
+>   objection #2: users don't back up disks
+>   counter #2:   that is a good way to loose data :-) if they don't have
+>                 the data the key protecting the data won't help them
+
+This is no different with CMR. One of the design goals of CMR is to avoid
+the myriad logistic and security problems associated with data archival.
+   
+>   GAK-hostility rating:
+>   
+>   Harder to pervert for GAK than pgp5.5 / pgp5.0 CMR design.
+
+Why? With your mechanism, if the G manages to A the K, then they can
+decrypt every message that key has ever encrypted. I think this is a design
+flaw. 
+   
+   
+>   I'd be interested to see Will, or Hal, or other PGPer's criticisms of this
+>   simple modification, perhaps criticisms could most constructively answer:
+>   
+>   - what is stopping you implementing this
+>   - are there any plug ins which can't cope with this
+>   - are there user requirements which it can't meet
+>   - is there some fundamental flaw you think I have missed
+>   - can you see ways that this could be perverted to implement GAK
+>     (yes I can too, btw, but...)
+>   - are those ways logisitically harder for GAKkers to acheive than for CMR
+>   
+>   Please be specific, no general waffle about understanding the
+>   complexities of balancing user ergonomics, user requirements etc.
+>   That is a no-brainer, you need to do this analysis, the cost function
+>   for evaluating such design issus is now expressed explicitly in design
+>   principle 4 rather than being assumed.  List problems and explain the
+>   significance of the all important deployability criteria.
+>   
+>   Cryptographic protocol designs are very flexible; most design goals can
+>   be met, or worked around I claim within the positive GAK-hostility
+>   side of the cryptographic protocol and product design solution space.
+>   
+>   Lastly, I would encourage readers to be critical of the GAK-hostile design
+>   principles themselves:
+>   
+>   - can you see any aspects which inaccurately reflect trade-offs
+>   - can you see methods to bypass inadvertently or deliberately the design 
+>     that might require another corollary to correct.
+>   
+>   In anticipation of constructive criticism,
+
+Okay, general observations:
+
+I'm really surprised at this. In the continuum between privacy and
+property, you've come down hard on the side of property. You've said that a
+key owned by a corporation is *fully* owned by the corporation, and any
+employee who uses it for personal purposes is daft. This is not what I
+expected you to be arguing.
+
+Enforcement. Most corporations want some level of enforcement on their
+policies. The enforcement we put in isn't fool-proof, but it's far easier
+to comply than resist. This is a design goal. I have a concern that the
+only enforcement that the corporation has is to take your private key. If
+this is their only way to make you follow their rules, they'll do it. Many
+of them will play nice if possible, but hardball if they have to.
+
+Fair-warning. In my first missive, I talked about my own principles, and
+one of them is the "fair-warning" principle. It states that users should
+know what is going on. If you have a key that is used in this system, there
+is nothing in it that tells me that your company can read a message I send
+you. I see this as a flaw, and one that I consider to be a *very* big deal.
+Full disclosure is one of my hot buttons.
+
+
+
+I think this is breaks a number of your principles.
+
+Principle 1: The end-user's keys *are* escrowed with the company. If my
+disk is ever backed up, then the corporation has my secret key. In order to
+keep it from being implicitly escrowed, I have to put it someplace like
+off-line media that can be gotten to if I'm hit by a bus. If you disagree,
+please tell me how this is different from escrow.
+
+Principle 2: The corporation is always a tacit crypto-recipient. It's no
+different than CMR, and has the additional disadvantage that senders don't
+know that the implicit receivers are there.
+
+Principle 3: Again, the corporation is a tacit recipient in *all* uses of
+the key. With CMR, they are an explicit recipient, and it's possible to
+exclude them. There's no way to exclude the corporation here.
+
+Principle 4: I don't see how this differs between your proposal and CMR.
+
+
+Lastly, I here's a summation of what I think.
+
+I think it's an interesting proposal. You're much more of a
+corporate-control proponent than I am. I think control and privacy have to
+be balanced, whereas you obviously think corporate control is trump. We
+disagree there.
+
+I am uncomfortable at the ease with which the end user can lose their key.
+The end user must somehow prevent the employer from even so much as backing
+up their computer, or it's just plain escrow.
+
+I am uncomfortable not only with your siding with the corporation against
+the employee's privacy, but also with your siding against the privacy of
+someone who sends a message to the employee. Furthermore, I think that the
+absence of a disclosure mechanism in your protocol is for us, a fatal flaw.
+We'd never implement a system that does not have disclosure.
+
+I do not see how your system is GAK-hostile. I think it is no more
+GAK-hostile than CMR, and potentially more GAK-friendly, because it is
+based around manipulating the actual secret key material. The failure mode
+of CMR is that an adversary can decrypt messages, whereas the failure mode
+of your proposal is that the adversary gets the key.
+
+	Jon
+
+   
+   Adam
+   
+   [1]
+   ==============================8<==============================
+   GAK-hostile design principles
+   
+   If we take the design goal of designing systems including
+   confidentiality which are not GAK compliant, we can most succinctly
+   state this design goal as the task of ensuring that:
+   
+   - at no point will any data transferred over communications links be
+     accessible to anyone other than the sender and recipient with out
+     also obtaining data on the recipient and/or senders disks
+   
+   
+   We can then derive the design principles required to meet the design
+   goal of a non-GAK compliant system with confidentiality services down
+   to ensuring that:
+   
+   principle 1:
+      no keys used to secure communications in any part of the system are
+      a-priori escrowed with third parties
+   
+   principle 2:
+      second crypto recipients on encrypted communications are not
+      used to allow access to third parties who are not messaging
+      recipients manually selected by the sender
+   
+   principle 3:
+      communications should be encrypted to the minimum number of
+      recipients (typically one), and those keys should have as short a
+      life time as is practically possible
+   
+   principle 4:
+      deployment wins.  violating any of principles 1 to 3 whilst
+      still retaining some GAK-hostility can be justified where
+      deployment is thereby increased to the extent that the violations
+      increase the degree of GAK hostility in the target jurisdictions
+      overall
+   
+   Corrollary 1: Included in design principle 2) is the principle of not
+   re-transmitting keys or data after decryption over communication
+   channels, re-encrypted to third parties -- that is just structuring --
+   and violates design principle 2.
+   
+   Corrollary 2: where communications are transmitted which violate
+   principles 1, 2 or 3 it is in general more GAK hostile to enforce as
+   far as possible that the recovery or escrow information remains in as
+   close proximity to the data as possible.
+   
+   Corrollary 3: where communications are transmitted which violate
+   principles 1, 2 or 3 it is in general more GAK hostile to make these
+   communications as difficult to automate as possible.  For example no
+   scripting support is given to enforce that GUI user interaction is
+   required, and/or that the process is made artificially time consuming,
+   and/or that the communication must not use electronic communication
+   channels
+   
+   ==============================8<==============================
+   
+   
+
+-----
+Jon Callas                                  jon@pgp.com
+Chief Scientist                             555 Twin Dolphin Drive
+Pretty Good Privacy, Inc.                   Suite 570
+(415) 596-1960                              Redwood Shores, CA 94065
+Fingerprints: D1EC 3C51 FCB1 67F8 4345 4A04 7DF9 C2E6 F129 27A9 (DSS)
+              665B 797F 37D1 C240 53AC 6D87 3A60 4628           (RSA)
+
+
+
+
+

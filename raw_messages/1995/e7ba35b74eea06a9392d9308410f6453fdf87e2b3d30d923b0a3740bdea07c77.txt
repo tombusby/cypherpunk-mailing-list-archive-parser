@@ -1,0 +1,164 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Sat, 12 Aug 95 04:58:38 PDT
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Nym server development....
+Message-ID: <9508121158.AA20379@cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This seems as good a time as any to forward the full text of this to the
+list. At worst, Alpha is a solid proof-of-concept of a possible "nym server"
+model. IMHO it's actually much better than that.
+
+I strongly recommend reading the below before asking basic questions about 
+the workings of Alpha....
+
+-Futplex <futplex@pseudonym.com>
+
+Forwarded message:
+> Date: Sat, 12 Aug 1995 04:41:01 -0700
+> X-Last-Updated-Date: Jan 9 1995
+> From: help@alpha.c2.org (Automated reply)
+> Subject: Info on anonymous account service @alpha.c2.org
+> Reply-To: admin@alpha.c2.org
+> 
+> This mail message was sent automatically in response to the message you
+> sent to help@alpha.c2.org
+> 
+> This system allows you to create a pseudonymous address of the format
+> username@alpha.c2.org.  For security, all messages are encrypted with PGP.
+> 
+> To create a mail alias, first create an encrypted reply-block for a
+> cypherpunk-style remailer.  An encrypted reply block is a message
+> encrypted with a remailer's PGP public key, which will be sent to
+> your address, or to an address where you can receive messages.
+> 
+> To create a reply block, you would create a message for a remailer that
+> goes back to you:
+> 
+>  ::
+>  Request-Remailing-To: you@yoursite.org
+> 
+> Then you would encrypt that with a remailer's public key, and prepend
+> the necessary Encrypted: PGP header.  When this message is received by
+> a remailer, it would decrypt it and send it to you.  It would also send
+> you any text appended to the end (outside the PGP wrapper).  Thus, using
+> a reply block, it is possible for people to send you mail without knowing
+> your real address.
+> 
+> Next, choose a pseudonym and a password.  The pseudonym-address may contain
+> any alphabetical or numeric characters, or hyphens.  The password may not
+> contain any spaces.  Then create a message of the following format:
+> 
+>  From: yourname@alpha.c2.org
+>  New-Password: Your_Password
+>  Reply-Block:
+>  ::
+>  Anon-To: remailer@xs4all.nl
+> 
+>  ::
+>  Encrypted: PGP
+> 
+>  -----BEGIN PGP MESSAGE-----
+>  Version: 2.3a
+> 
+>  hIwC/nqSW1QDQfUBBACknZMV93wFS2CH0orlgslmEm+alhjI1eKwbbTTmeRWC5Rg
+>  /S3vZw+95ZuCZfqxKE0XrgZXzOEwfoyBcpVvf9Pb9D19TqEMTmmL/Jpl1xcxmbJ2
+>  OGsHpQ/TxpazBCVhdBmPblj5wWvwfG1+ZKpIkQ5hiLJhryQM/TUDarEscs3zdaYA
+>  AAB5231aMcQ74AKoDZizABMF3Tw+olV4mm4jVo9cMn2B3Rj2XBFl4pV9VL3h0ZQB
+>  cPY/ytBRyZPugr0NpLgjO+q6mEjCcgQrxpYQ+1PvFPdDx1GmJ5ogZqW+AVHsNqAp
+>  vRoiG8ZhXs4r3E8liFsNtMMf6CUAsdV2ZoX1Hw==
+>  =Bla3
+>  -----END PGP MESSAGE-----
+> 
+> Do not actually indent it; that's just for example purposes.
+> Encrypt this with the following public key and mail it to
+> alias@alpha.c2.org.  Unencrypted mail sent to this address
+> will be deleted automatically.  If everything is correct, your
+> mail alias will be created, and you will be sent a confirmation.
+> If not, there will be no way for the software to reply to you,
+> so the message will be deleted.  If you don't receive anything,
+> something is wrong, so try again.  Be sure to test the reply
+> block first, so that you will know it works!  Also, don't forget
+> to include the address of the remailer, and the Encrypted: PGP
+> header at the beginning of your reply block.
+> 
+> Here is the public key:
+> 
+> -----BEGIN PGP PUBLIC KEY BLOCK-----
+> Version: 2.6
+> 
+> mQCNAi7K8rQAAAEEAMiK09Nd+NfaL4Q14bKT0Ivdj3MdbCjAG6Cs5ULYBS1ZWSLA
+> KiHsm0+kPNHqBVOufN7FT2iK0Mbuyk+dZgHG6ScicDkImysRkmso7eh5c9mU9V8K
+> M0+ImKJyOwgVLEgyRK5e4h2XHpwSTtpx3zZpk4CsexLGCQNXF+ikm236U0rNAAUR
+> tCpQc2V1ZG9ueW1vdXMgUmVtYWlsZXIgPGFsaWFzQGFscGhhLmMyLm9yZz4=
+> =xmQf
+> -----END PGP PUBLIC KEY BLOCK-----
+> 
+> 
+> When mail comes in for your address at alpha.c2.org, it will be
+> encrypted with Your_Password, using pgp -cta, appended to the reply
+> block and sent to remailer@alpha.c2.org.  Be sure that you have
+> the Encrypted: PGP header, and the address of the next remailer
+> it is to be sent to!  All messages are held and sent out in random
+> order once an hour.
+> 
+> If you later wish to change your password, send an encrypted message to
+> alias@alpha.c2.org containing a From: line with your nickname, a
+> Password: line with your current password, and a New-Password: line
+> containing your new password.  If the old password is correct, the
+> password will be changed to the new one.  For example:
+> 
+>  From: Dan_Quayle
+>  Password: Bush
+>  New-Password: Clinton
+> 
+> You can also include a new Reply-Block.
+> 
+> A mail alias can be deleted at any time by setting the password to nothing.
+> (Send a password change request with nothing following the 'New-Password:')
+> 
+> 
+> Sending messages
+> 
+> Once you have created a working address, you can send mail from that address.
+> Simply create a message with standard mail headers, and add your password
+> in a Password header.
+> 
+>  From: jdoe@alpha.c2.org (John Doe)
+>  Password: foobar
+>  To: alt.anonymous@demon.co.uk
+>  Subject: hello world
+> 
+>  This is my message.
+> 
+> The message would be delivered as shown, minus the Password: header.
+> If the password is not correct, the message is discarded.
+> 
+> 
+> Troubleshooting
+> 
+> Here are some common problems.  If you're having trouble, check the
+> following list:
+> 
+>  - Be sure to use -t option with PGP
+>  - Test your reply block and be sure it works!
+>  - If you are having trouble creating a certain address, perhaps
+>    you already created it, but used the wrong reply block
+>    or a different password.
+>  - Usenet posts require a Subject: header.
+>  - Messages to alias@alpha.c2.org must be encrypted with PGP
+>    Be sure you use the correct PGP key; remailer@alpha.c2.org
+>    has a different one.
+> 
+> 
+> Problems may be reported to admin@alpha.c2.org
+> 
+> For more information about Community ConneXion,
+>  telnet to c2.org and login as guest, or if you have a WWW browser:
+>  http://www.c2.org/
+> 
+
+
+

@@ -1,0 +1,89 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Tue, 9 Jul 1996 16:35:08 +0800
+To: perry@piermont.com
+Subject: Re: Word lists for passphrases
+In-Reply-To: <199607082320.TAA10998@jekyll.piermont.com>
+Message-ID: <199607090422.XAA08435@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Perry Metzger, in a profound display of stubbornness, continues
+educating AwakenToMe@aol.com.
+
+But how about this C prog:
+
+z(int d,char*s){for(*s='a';*s<='z';(*s)++)d?z(d-1,s-1):puts(s);}
+BS(s){char *S=(char*)malloc(s+1);S[s]=0;z(s-1,S+s-1);free(S);}
+main(){BS(2);}
+
+is there anything shorter and no less efficient? most of time is wasted 
+in puts of course
+
+igor
+
+Perry E. Metzger wrote:
+> 
+> 
+> AwakenToMe@aol.com, in a profound display of stubbornness, continues
+> to insist that his program to enumerate all possible words of length N
+> (that is, aaaaa, aaaab, aaaac, etc.) is somehow interesting. I am
+> therefore forced to drive in the nail with a sledgehammer. Forgive me.
+> 
+> He writes:
+> > > > > It's [...] trivial enough to be done by 99% of the people on
+> > > > > cypherpunks in their sleep.
+> > > >  
+> > > > Yes. But let me ask you this. Have you done it yet??
+> > >
+> > > Most of us don't bother writing up four line programs and shipping
+> > > them out, no.
+> >  
+> > really? Wow. four lines of code? You must be a really good programmer. duh.
+> 
+> Hardly. A ten year old could do it. I know, since I wrote substantially more
+> sophisticated stuff when I was ten.
+> 
+> Since you insist, here is less than a minute's work. Yes, I timed it.
+> 
+> ------Cut Here------
+> /*
+>    This could be more elegant, but the point is obviousness.
+> */
+> #include <stdio.h>
+> 
+> int main()
+> {
+> 	char i[6];
+> 
+> 	for (i[0] = 'a'; i[0] < 'z'; i[0]++)
+> 	  for (i[1] = 'a'; i[1] < 'z'; i[1]++)
+> 	    for (i[2] = 'a'; i[2] < 'z'; i[2]++)
+> 	      for (i[3] = 'a'; i[3] < 'z'; i[3]++)
+> 		for (i[4] = 'a'; i[4] < 'z'; i[4]++)
+> 		  printf("%s\n", i);
+> }
+> ------Cut Here------
+> 
+> The operative portion of the program is six lines ling, and five of
+> those lines are virtually identical.
+> 
+> You can write the thing much more elegantly, without redundant
+> code. However, I have elected to leave it as utterly brainless as
+> possible to demonstrate that ANYONE could write the thing.
+> 
+> > Youd be surprised at the # of requests from people who actually had a good
+> > use for it, and didnt have the time to spend writing it themselves.
+> 
+> Human stupidity is never a surprise.
+> 
+> Perry
+> 
+
+
+
+	- Igor.
+
+
+
+

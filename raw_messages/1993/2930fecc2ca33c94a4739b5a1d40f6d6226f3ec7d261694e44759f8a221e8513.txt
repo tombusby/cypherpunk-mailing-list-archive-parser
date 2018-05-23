@@ -1,0 +1,62 @@
+From: Mike Johnson <exabyte!smtplink!mikej@uunet.UU.NET>
+Date: Fri, 16 Jul 93 14:16:47 PDT
+To: cypherpunks@toad.com
+Subject: steganography and cryptography
+Message-ID: <9307161455.A01259@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Kragen Sittler says:
+
+> . . .
+> For a steganographically strong code, the cyphertext must not be recognizable
+> to its home program.  This means, among other things, no CRC's, no MD5's, etc,
+> intended to assure data integrity.  This means no delimiter-structured files.
+> (I think--I'm not absolutely sure on this one.)  Every field in the file must
+> be either fixed-length or have a number somewhere in it
+> (in a format indistinguishable from the rest of the cyphertext) which tells it
+s
+> length.  And every field, individually, must not be recognizable as something
+> unusual. (For instance, no sending of large prime numbers in the clear, as the
+y
+> are very unlikely to appear in a random file.)
+> 
+> The foregoing "field" stuff has to do with things like PGP, which have a
+> message cyphertext, encrypted with a session key, and a session key, encrypted
+> with a PKC, in the same message. (Possible several cyphertexts of the session
+> key.)
+> 
+> Oh, and it would be nice, though not essential, if a corruption in the file
+> made it completely, rather than partially, nonsense when decrypted.  This way
+> you can't have a file with no use to the recipient used as evidence against
+> them.
+> 
+> The important qualifications seem to rule out any crypto package in current
+> widespread use, don't they?
+> . . .
+
+For a steganographically strong code, it is not enough to make it
+unrecognizable to its home program.  The ciphertext must look like something
+"innocent" to either a human reader or a computer program designed to look
+for ciphertext.  For example, the message could be hidden in the least
+significant intensity bits of a bitmapped picture that the intended recipient
+has an unmodified copy of.
+
+If data that looks like random noise is innocent enough, then it is not hard
+to hack PGP or write another encryption program that intentionally lacks any
+signature information.  I wrote several programs with this property.  The two
+best examples are CRYPTE and CRYPTMPJ, both of which are available on the
+Rainbow Missions BBS at 303-938-9654.  This makes them a little harder to use
+than PGP and similar programs, because the user has to know in advance when
+encryption and decryption are appropriate, and which algorithm to use. 
+
+Allowing a signature in the file format makes it obvious which program was
+used to encrypt the data (thus slightly reducing security), but it makes it
+easier to use the program.  This increase in ease of use makes it more likely
+that it will be used, and that increases security.
+
+
+
+
+

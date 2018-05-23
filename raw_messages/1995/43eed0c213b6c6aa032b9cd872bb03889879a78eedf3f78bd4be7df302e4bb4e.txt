@@ -1,0 +1,42 @@
+From: Bob Snyder <rsnyder@janet.advsys.com>
+Date: Mon, 25 Sep 95 10:24:53 PDT
+To: jsw@neon.netscape.com (Jeff Weinstein)
+Subject: Re: Netscape "random" number seed generator code available
+In-Reply-To: <445j6k$h03@tera.mcom.com>
+Message-ID: <199509251138.HAA18954@janet.advsys.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jsw@neon.netscape.com said:
+>   More on the RNG stuff.  On Unix systems we look for ~/.pgp/
+> randseed.bin, and feed it through the RNG hash.  On Unix and PC 
+> systems we feed the environment through the hash, so that would be a 
+> good place for a concerned user to put some random stuff of their 
+> own. 
+
+For UNIX, including the environment is pretty useless for determining a seed. 
+On BSD-style machines, try a ps -uxeww. The environment is known by anyone who 
+has access to the machine when the seed is generated, and possibly to many 
+others, since some machines have SNMP daemons that will give out the process 
+table, or may have the systat "service" turned on.
+
+The later two may not include the environment on most machines, but I believe 
+it concievably could, and may be implimentation specific from UNIX to UNIX.
+
+I greatly applaud Netscape for "going public" with this information, and 
+remaining open to suggestions despite the bad publicity it has been getting. 
+One of the large corporations I work with is looking to do an electronic 
+commerce with some pretty amazing $ amounts soon (at least, amazing to me), 
+and I know I'm going to be asked about the security breaks. I feel confident 
+that I can tell them exactly what is wrong, and what Netscape is doing to fix 
+it, and that I don't think it should be a matter for great concern. I'm not 
+sure I could have done that had Netscape done nothing but issue the press 
+release and weather the bad press in silence.
+
+Bob
+
+
+
+
+

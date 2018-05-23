@@ -1,0 +1,59 @@
+From: Eric Blossom <eb@comsec.com>
+Date: Tue, 7 Oct 1997 04:02:19 +0800
+To: aba@dcs.ex.ac.uk
+Subject: Re: Secure phone
+In-Reply-To: <199710060125.CAA03034@server.test.net>
+Message-ID: <199710061905.MAA22945@comsec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> In addition, to keep life even more interesting, prior to exchanging
+>> the public exponentials g^x and g^y, commitments (hashes) to those
+>> values are exchanged...  If the commitments don't match the final
+>> values, the protocol terminates.  
+>
+>I can't see that this prevents MITM either.
+>
+>Eve, the attacker, just sends commitments to the values she would have
+>sent in performing the MITM were there no commitments.
+
+What the commitment prevents is a birthday attack on the verification
+code by Mallet.  Mallet has to be able to come up with a g^x' that
+when concatenated with g^y and hashed computes the same verification
+code as g^x concatenated with g^y and hashed.
+
+Exchanging commitments to g^x and g^y prior to sending g^x and g^y
+severely constrain the the degree of freedom that Mallet has to work
+with.  (Another option that works the same way is the "interlock"
+protocol, where each side sends half the message (g^x or g^y) and
+doesn't send the second half until after receipt of the first half
+from the other end).
+
+>Say (for example) if someone smuggled me one of your phones, and I
+>called up Tim.  The only protection I'd have is recognizing Tim's
+>voice after hearing him speak breifly years ago.  (American accents
+>sound similar to me).
+
+None of this is designed to provide authentication of the end point.
+It is designed to ensure that you've got a private channel to the end
+point. 
+
+>On the other hand, using persistent key public key crypto, Tim has
+>been signing his posts recently, and I have an ancient public key of
+>his stashed away which his new key is signed with.  If we were able to
+>construct a protocol to bolt on top of the reading of hashes, we could
+>have much greater protection against MITM.
+
+Agreed.  The primary difficulty is getting the public keys into the
+unit.  And agreeing on what kind of certificate to use...  
+My preference (for patent reasons) would be to use DSA or ElGamal
+signatures.
+
+Eric
+
+
+
+
+

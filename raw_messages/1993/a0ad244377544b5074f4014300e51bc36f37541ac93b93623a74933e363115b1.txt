@@ -1,0 +1,66 @@
+From: stig@netcom.com (Stig)
+Date: Tue, 25 May 93 23:45:43 PDT
+To: prz@sage.cgd.ucar.edu
+Subject: Re: PGP:  Environment protection for UNIX
+Message-ID: <9305260645.AA14381@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I wrote:
+> 
+> 
+> 	main (int argn, char **argv, char **envv)
+> 	{
+> 	    for ( ; *envv ; ++envv) {
+> 	        if (!strncmp(*envv,"PGP",3)) {
+> 	            char *c=*envv;
+> 	            while (*c) *c++=' ';
+> 	        } /* end of if */
+> 	    } /* end of for */
+> 	    system("printenv");
+> 	    sleep(10);
+> 	}
+> 
+
+And I should've enclosed it in #ifdef STUPID ... #endif.  I misread
+the putenv(3) man page and didn't realize that you could just use 
+
+	putenv("PGPPATH=");
+	putenv("PGPPASS=");
+
+To wipe those variables out of your environment...  They still might
+get caught by a 'ps -eaxuww' but chances are slim.  Is it posible to
+alter your arguments so they're not visible to 'ps -auxww'?
+
+Well as a matter of fact, it does seems to work on my sparcstation:
+
+        main (int argn, char **argv, char **envv)
+        {
+            system("ps -uww");
+        
+            for (;*argv;++argv) {
+                while (**argv) {
+                    *(*argv)++ = ' ';
+                } /* end of while */
+            } /* end of for */
+        
+            puts("--------------------------------");
+            system("ps -uww");
+        }
+
+Not elegant, but that's what makes it a GLP (grungy little program).
+
+So, is there a more elegant way to do this?  How portable is it?
+Finally, of how much use is it?
+
+	Stig
+    
+
+/* Jonathan Stigelman, Stig@netcom.com, PGP public key on request */
+/* fingerprint = 32 DF B9 19 AE 28 D1 7A  A3 9D 0B 1A 33 13 4D 7F */
+
+
+
+

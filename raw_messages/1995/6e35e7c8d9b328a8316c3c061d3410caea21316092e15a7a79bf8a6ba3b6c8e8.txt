@@ -1,0 +1,45 @@
+From: David Van Wie <dvw@hamachi.epr.com>
+Date: Tue, 19 Sep 95 21:49:26 PDT
+To: "'SMTP:cypherpunks@toad.com>
+Subject: Re: Verification of Random Number Generators
+Message-ID: <305F9CEC@hamachi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Tue, 19 Sep 1995 09:04:29 -0700
+"Erik E. Fair" wrote:
+ --------
+>>
+>> Just an idle thought: it might be possible to do a probabalistic
+>> verification of a RNG by sampling it over some number of samples, and
+>> statistically analyzing the sample space. This would be analysis under 
+the
+>> model of "RNG as black box" as opposed to (or rather, if you're smart, in
+>> addition to) code inspection & review. Any statisticians among us?
+>>
+>> Erik Fair
+>>
+
+The problem with a statistic is that it assumes an independent variable.  If 
+the variable is not truely independent (which happens with some frequency in 
+real world analysis), any purported statistical result is meaningless 
+(undefined, to be more precise).  Clearly, the hack of netscape relied on 
+the fact that the vairable was not independent.
+
+>But statistical tests of randomness alone do not make a good RNG.
+>At least, not for cryptographic use. A cryptographically secure
+>RNG is also unpredictable, i.e., computationally unfeasible to
+>predict the next random bit will be given the algorithm, and not
+>reliably reproduced, i.e., multiple runs with the exact same input
+>do not generate the same sequence.
+
+This is almost right.  Statistical tests work fine if they are conducted on 
+independent variables.
+
+dvw
+
+
+
+

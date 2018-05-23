@@ -1,0 +1,66 @@
+From: Kent Crispin <kent@songbird.com>
+Date: Thu, 3 Jul 1997 01:16:12 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Jeff's Side of the Story.
+In-Reply-To: <19970702074006.19127@bywater.songbird.com>
+Message-ID: <19970702100000.40925@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, Jul 02, 1997 at 11:53:56AM -0400, Ryan Anderson wrote:
+> On Wed, 2 Jul 1997, Kent Crispin wrote:
+> 
+> > The non-deterministic retention time in the network could probably be
+> > solved, but at the expense of some significant complexity.  I have 
+> > not been able to think of a secure way to do it, however.  [If the 
+> > remailers know and trust each other, the problem is easy.]
+> 
+> Remailers using this could be configured to not modify the "date" header
+> until final delivery.  Then you can base the probablity of final delivery
+> upon some function of date/time or another header
+> "X-Remailer-Max-Delay-Time:"   If you're worried about traffic analysis,
+> it is possible to randomly modify the date/time header by small amounts
+> at each hop.  (This however only helps and somewhat loaded systems..)
+
+The Evil One can always masquerade as the next to the last remailer, 
+with suitably altered date fields or whatever.  I wasn't thinking in 
+terms of traffic analysis -- I was thinking in terms of guaranteeing 
+that the last remailer in the chain, the one that actually delivers 
+the message, cannot be predicted in advance.
+
+The current remailer algorithm allows an evil user to cause a 
+particular remailer to be the source of Bad Stuff, which makes that 
+remailer a target of those who don't like the Bad Stuff.  The basic 
+problem is that the end user is able to specify the remailer chain.
+
+[Digital postage can't do much to solve this problem, BTW.  The
+offensiveness of a message is not measured by the postage.]
+
+On the face of it, this seems like a relatively simple problem.  The 
+current algorithm allows the end user to specify the final remailer 
+-- change it so that the final remailer is not under the end user's 
+control.  The problem is, how does the final remailer know whether it 
+was chosen by the end user, or by another remailer who *used* to be the 
+final.
+
+Incidentally, another useful modification of having the final 
+remailer forward one more time is this:
+
+if( destination address is in my legal jurisdiction )then
+	with higher probability forward to another randomly chosen remailer
+else
+	with lower probability forward to another remailer
+endif
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

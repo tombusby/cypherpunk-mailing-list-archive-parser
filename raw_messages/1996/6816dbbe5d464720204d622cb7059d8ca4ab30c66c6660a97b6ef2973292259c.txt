@@ -1,0 +1,74 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Thu, 25 Jul 1996 07:32:11 +0800
+To: Igor Chudov <ichudov@algebra.com>
+Subject: Re: Brute Force attack Question
+In-Reply-To: <199607241550.KAA00886@galaxy.galstar.com>
+Message-ID: <Pine.LNX.3.94.960724145922.589A-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Wed, 24 Jul 1996, Igor Chudov wrote:
+
+> Suppose Alice sends letters to BoB, and they always exchange plain 
+> text ASCII data. Suppose also that they use DES for encryption.
+> They are afraid that Perry intercepts their messages and tries to brute
+> force their DES key.
+> 
+> Perry has 100,000 computers (and 20,000 couriers alone:) and his brute
+> force attacks are as follows: he tries all keys in succession, looks at
+> the decrypted texts, and *if* the decrypted text looks like a potential
+> message (has only ASCII characters for example) he looks at that key closer
+> as it is likely that he has found the right key.
+> 
+> What is Alice and Bob decide to obscure their letters and add random
+> NON-ASCII  characters at random places? They may agree to just ignore
+> all non-ASCII characters, so these characters would never change the
+> meaning of their letters. If they do that, Perry does not have any easy
+> way to tell whether he really recovered the right plaintext or not, because
+> even correct key would still produce a lot of non-ASCII characters.
+> 
+> If percentage of ASCII characters in all 256 byte space is 40%, Alice
+> and Bob may agree to put in junk characters to make up exactly 60% of
+> the message. This way messages will look like random character data.
+> 
+> Is there any good method for attackers to circumvent this obscurity?
+> What is the general method to make a judgment whether the recovered
+> text really is a plain text if Alice and Bob noisify their letters?
+> 
+> I can think of this: we sift through all recovered plaintexts and remove
+> all non-ASCII bytes, and then do some simple testing to see whether
+> the remaining ASCII data resembles normal English texts. This kind
+> of testing seems to be quite expensive though, compared to just testing
+> for ASCII vs. non-ascii bytes. Anything else I am missig?
+
+If the attacker uses a known-plaintext attack, then all this is a non-issue.
+However, if the attacker is using a ciphertext-only attack, looking for the
+MSB to be 0 is a good way to find a correct decryption.  Also, randomness tests
+could be run on recovered plaintexts.  This is why compression before
+encryption is a good idea.  If the plaintext is completely random, then there
+is no way to crack the ciphertext.
+
+- -- Mark
+
+PGP encrypted mail prefered
+Key fingerprint = d61734f2800486ae6f79bfeb70f95348
+http://www.voicenet.com/~markm/  
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMfZzibZc+sv5siulAQEjOAQAsbTWucrq0yI8W1j0C1mQHiciFsRNyabH
+PatrW7m67qEy4Xgw+D7dDMURjjdkQFOAm1L4t0QCIuUNIa31H74x6e/qnNQn8WAs
+VBx95B1yQ8RF86rPEMkHO78FVDeQM+/oP2Dqe2/I6dO+pj5YLJ8E1IsBJz+JrUZl
+eXSDvmYNLp0=
+=QfTu
+-----END PGP SIGNATURE-----
+
+
+
+

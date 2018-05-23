@@ -1,0 +1,80 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 20 Jul 1996 15:30:12 +0800
+To: WlkngOwl@unix.asb.com
+Subject: Re: Opiated file systems
+In-Reply-To: <199607191718.NAA04087@unix.asb.com>
+Message-ID: <199607191806.TAA00542@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Rob <WlkngOwl@unix.asb.com> writes:
+> On 18 Jul 96 at 11:01, Adam Back wrote:
+> 
+> > For plausibility it would probably be best if very few people used the
+> > duress key feature.
+> 
+> And how can you guarantee that?
+
+User apathy, people not reading documentation, documenting it as an
+advanced feature... etc.
+
+How many people actually generate a PGP key revocation cert in advance
+in case of losing the key for instance?
+
+> Also: an attacker doesn't care about what percentage of (other)
+> users use duress feature of not.  His concern is whether you use it.
+
+Good point.  But what other data does the attacker have aside from how
+many others do?  Even knowing how many others do would be
+tricky.. are they telling the truth when they say they aren't?
+
+> Note that you'd have to be careful of what you say and do over email 
+> in the clear (or encrypted to someone cooperating with an attacker): 
+> if you post an excerpt of source code or maybe somehting like 
+> Edupage, or if you save mail, there might be reason enough for the 
+> attacker to expect to see some of that on your encrypted fs after 
+> he's rubber-hosed your key from you.  If he doesn't, and he knows you 
+> have a possibility of using the duress-key feature...
+
+Smart analysis, yes you'd have to be very careful to partition the way
+you used the two file systems.  You'd have to pretend that the 2nd
+partition did not exist when comunicating with any one who you didn't
+trust.  Perhaps you could have some assistance even... making the
+duress file system read only when you have the hidden fs mounted as an
+option to remove the chance of accidentally copying something from the
+hidden fs that you couldn't (otherwise) explain being your possesion?
+
+Someone cooperating with the attacker could be tricky though,
+ultimately there's not much you can do about infiltration aside from
+always using a nym for correspondence to do with your hidden persona
+which goes with your hidden fs.
+
+> Oh yeah. Psychology is a good way of determining the likelihood of 
+> using a duress system.
+
+Hmm, the psychological aspect of your plausible deniability.  Don't
+think cryptographic protocols can do much about that.
+
+> With the extra work and overhead of a duress system, you're better 
+> off using stego on some gifs or graphics files.
+
+But I don't think stego solves your whole problem: you still have to
+have software to access the stegoed data.  Where do you store this?
+Nearly back to square one.  (If the answer is on a floppy this applies
+equally to a duress file system).
+
+The one advantage of stegoed data is that you expect the least
+sig. bits in image files to be random, where-as you don't expect the
+LSBs in unused space (even in encrytped file systems once you're
+inside the encryption layer) to be random.
+
+However the disadvantage is 8 - 24 times reduction in space
+efficiency.  (Your earlier point).
+
+Adam
+
+
+
+

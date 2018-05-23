@@ -1,0 +1,115 @@
+From: Sameer <sameer@soda.berkeley.edu>
+Date: Wed, 20 Apr 94 18:55:08 PDT
+To: unicorn@access.digex.net (Black Unicorn)
+Subject: Re: remailers
+In-Reply-To: <199404210139.AA06941@access1.digex.net>
+Message-ID: <m0ptnzT-00010yC@infinity.hip.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Black Unicorn spake:
+> 
+> 
+> 
+> For some reason I have not been able to get any of the remailers to
+> work with PGP encryption.
+> 
+> In addition, the ping figures at the end of the soda finger file
+> don't seem to have changed since I first looked at them some
+> days ago.... is this just me?
+> 
+
+	No, the ping-thing is actually turned off. ;-(.
+	Should probably start that up once again..
+
+> Is anyone out there chaining with PGP supporting remailers?
+
+	I wrote a perl script which does chaining.. it follows
+
+#!/usr/bin/perl
+$home = $ENV{'HOME'};
+$pgpdir = $home . "/.psuedo";
+$pgpexe = "PGPPATH=$pgpdir pgp " ;
+$tmp = "/tmp/out.$$" ;
+$oldfile = "/tmp/oldfile.$$" ;
+@REMAILERS = ('hal@alumni.caltech.edu',
+              'remail@infinity.hip.berkeley.edu',
+              'hfinney@shell.portal.com',
+              'ebrandt@jarthur.claremont.edu',
+              'catalyst@netcom.com');
+
+
+
+
+$option = $ARGV[0];
+shift;
+unshift(ARGV, '-');
+
+&createapath;
+
+sub createapath
+{
+    print STDERR "Create a path--remailer list:\n";
+    $count = 0;
+    do
+    {
+        do
+        {
+            $num = 0;
+            foreach $remailer (@REMAILERS)
+            {
+                $num++;
+                print STDERR $num . ")" . $remailer . "\n" ;
+            }
+            print STDERR "Choose the next site: (or 0 to end hops) ";
+            while(<>)
+            {
+                $choice = $_ - 1;
+                last;
+            }
+        }
+        until ( $choice < $num && $choice > -2 );
+        $HOP[$count] = $REMAILERS[$choice] if $choice != -1;
+        $count++;
+    }
+    until ( $choice == -1 ) ;
+
+    $count--;
+    print STDERR "Choose the destination: ";
+    while(<>)
+    {
+        $HOP[$count] = $_;
+        last;
+    }
+
+    while ( $count > 0 )
+    {
+        open(CRYPT, "| $pgpexe -eaf $HOP[$count-1] > $tmp");
+        print CRYPT "::\nAnon-To: $HOP[$count]\n\n";
+        if ( open(OLDER, $oldfile) )
+        {
+            print CRYPT <OLDER>;
+            close OLDER;
+        }
+        close CRYPT;
+        open (OLDER, ">" . $oldfile);
+        open (CRYPTED, $tmp);
+        print OLDER "::\nEncrypted: PGP\n\n";
+        print OLDER <CRYPTED>;
+        close CRYPTED;
+        close OLDER;
+        $count--;
+    }
+    open (FILE,">" . $option);
+    print FILE "To: $HOP[0]\n\n";
+    open(DONE, $oldfile);
+    print FILE <DONE>;
+    close DONE;
+    unlink($tmp);
+    unlink($oldfile);
+}
+
+
+
+

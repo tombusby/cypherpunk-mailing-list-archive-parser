@@ -1,0 +1,139 @@
+From: aba@atlas.ex.ac.uk
+Date: Thu, 15 Feb 1996 19:03:29 +0800
+To: warlord@mit.edu
+Subject: Re: Stealth PGP work
+In-Reply-To: <199602140209.VAA03693@toxicwaste.media.mit.edu>
+Message-ID: <10100.9602141537@dart.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Derek Atkins <warlord@mit.edu> writes on cpunks:
+> > It seems that there a market demand for a stealth-capable product.
+> > Many peoples here seems to discuss it.  And for the time being, AFAIK,
+> > this type of products are used by a specific class of peoples, most of
+> > which knows what 'stealth' means.
+> > 
+> > So why is it that they design a program that would not permit the use
+> > of a feature considered desirable by it's customer base?
+> 
+> The big question I have for you is, what do you mean by "stealth" PGP?
+
+I presume he means stealth, and the functionality that it provides, as
+a filter for pgp versions 2.x.  The question in the minds of users of
+this utility (for steganography applications) I think will be will
+stealth still work with pgp3.0, and would it useful to include as
+built-in functionality for pgp3.0.  I raised this question myself to
+the pgp3 development team some time ago, and the reply I got was
+essentially that it would still be possible to have as an add-on, so
+there was no need to clutter the pgp3 functionality.
+
+Henry Hastur's stealth 1.3 is included with pgp2.6.3i in the
+contributions directory...
+
+> Do you want a PGP message which doesn't say to whom it is encrypted?
+> Or do you want a PGP message which does not even acknowledge that it
+> is a PGP message?  If what you want is the former, then that can fit
+> under the PGP API fairly well.  If you want the latter, it will not.
+
+For steganography applications both are required (actually a
+transformation formulated by Hal Finney, or an equivalent by Bodo
+Moeller is necessary to add more than casual strength to the degree of
+plausible deniability due to the fact that the rsa encrypted header
+will always be less than the rsa modulus).
+
+I haven't looked at the PGP3 API, but why will a stealth option not
+fit?  If stealth can perform the operation as a separate program, why
+is it infeasible or difficult for pgp3 to support a stealth option,
+and another to support unstealth to a particular recipient.  (With
+stealth on decrypt the user provides the user id they think the
+message will be addressed to).
+
+On encrypt, the stealth operation should be real easy to implement
+inside PGP, it is just another post-filter operation like ascii armor,
+stealth instead.
+
+On decrypt, it is more tricky because firstly you loose information
+about what kind of data it was, and secondly because you loose the
+recipient user id if it was encrypted data.
+
+However, if you provide an API call to unarmor with out decrypting,
+and a call to decrypt with out uncompressing, etc then a call to test
+for a particular user id on the assumption that it is addressed to
+that user id and is an encrypted message would fit in a similar way?
+
+Also note that the rest of the information, once this operation has
+suceeded is retained inside the encryption envelope - the length tag,
+signature, whether it is further compressed, and so forth.
+
+The stealth operation as implemented in Henry's 1.3 is not all that
+secure, and I had an attempt at implementing Hal Finney's algorithm to
+produce a stealth 2.0.  My attempts are at:
+
+	http://www.dcs.ex.ac.uk/~aba/stealth/
+
+This is beta code, and I presume the reason that Stale included
+stealth 1.3 rather than stealth2.01b with pgp263i was either that 2.01
+is beta, or because he did not know it existed.
+
+The reason that the code is beta, is that I had a problem in
+implementing stealth as a standalone.  The problem is that Hal's
+algorithm has a requirement for cryptographic quality random numbers.
+It seems silly to duplicate all this code inside stealth when pgp
+provides it internally.  And the (+makerandom=n file) option is not
+convenient, because stealth is invoked as a filter with pipes, and
+invoking pgp twice doesn't seem like a good idea.  It might even be
+dangerous (interferring with the normal sequence of randseed
+stirring)?  Besides I had gone to some pains in stealth2.0 to ensure
+that nothing hit the disk at all if sufficient memory was available to
+do without.
+
+> The reason is that PGP, by definition, is a self-describing packet
+> format.  Without that description there is no general way for the PGP
+> library to discover what kind of message it is parsing order to
+> perform the proper operation to open the message.
+
+stealth allows you to specify encrypt or decrypt, if decrypt the user
+id to insert.  It also supports conventional encryption.
+
+> OTOH, if just the keyID is missing, the library will happily try all
+> the keys on your secret keyring until one succeeds or they all fail
+> (I'm not sure if this is implemented, but it fits quite nicely under
+> the API).
+
+That would be a useful functionality from stealths point of view.
+
+> The other question I have is: who do you think the "customers" of PGP
+> are?  
+
+He expressed his request in terms of customer demand...
+
+> If you think the majority of PGP's customers are the crypto-privacy
+> activitst types, you are highly mistaken.  PGP has hit the main
+> stream, and is being used by many non-crypto-aware people.  Probably
+> more of them than there are of us.
+
+PGP was started on idealogical grounds, my argument for including
+stealth, or as much stealth compatible options as fit within the API
+model, is that there are countries where crypto is illegal.  It is not
+100% certain that the US won't one day join them (what do you rate the
+odds of a mandatory GAK appearing in the US?).  I'd view it as part of
+PGP's guerrilla privacy features, and a precaution against such worst
+case scenarios.  Besides stego applications have their own set of
+uses, albeit they are not in mainstream use in the same way that pgp
+is.
+
+> If you want to discuss this more, let's take it to private email,
+> please.
+
+I'd prefer to see the discussion on the list, or at least cc me in
+such discussion.  Any reason for private email?  The topic is
+cryptography related,
+
+Adam
+
+
+
+
+

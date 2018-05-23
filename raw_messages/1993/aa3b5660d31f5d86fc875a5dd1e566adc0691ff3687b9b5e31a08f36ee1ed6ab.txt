@@ -1,0 +1,39 @@
+From: Derek Atkins <warlord@Athena.MIT.EDU>
+Date: Sat, 28 Aug 93 20:36:10 PDT
+To: Network Demon <demon@aql.gatech.edu>
+Subject: Re: Total RSA in PGP
+In-Reply-To: <9308290221.AA10833@toad.com>
+Message-ID: <9308290333.AA07580@podge.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This was discussed about a year ago!  It is a bad idea to do this for
+a couple reasons.  First of all, RSA can only encrypt a block of data
+the same size as the key.  So, for example, if you encrypt a message
+to me using my key, it RSA-encrypts in blocks of 709 bits!  Second,
+there is no cypher-chaining, so the encryption from one block doesn't
+affect the encryption of the next.  It is possible to do something
+like this, but I sure wouldn't want to do it.
+
+As for the time, lets say you have a 10K message (not unreasonable,
+although thats a fairly long email message ;-), and you are encrypting
+it in a 512-bit key.  Well, 512 bits is 64 bytes, so you are
+encrypting 10K bytes 64 bytes at a time (or 160 blocks).  Each 64-byte
+block takes a few seconds, lets just say one second (its a little
+faster on some system, and a lot slower on others!)  This means you
+are spending 160 seconds, or almost THREE MINUTES, to encrypt this 10K
+file!
+
+Personally, I don't think that the extra security that you may (or may
+not: you now have a massive plain-text attack, although I don't know
+how you can really use it) get is worth the 2 extra orders of
+magnitude of time it takes to encrypt the data!
+
+As for adding this as a feature to PGP.  It's *not* going to happen.
+
+-derek
+
+
+
+

@@ -1,0 +1,39 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 26 Aug 94 22:07:54 PDT
+To: cypherpunks@toad.com
+Subject: Re: MATH: Brands cash, Hal's posts
+In-Reply-To: <9408262236.AA17736@snowy.owlnet.rice.edu>
+Message-ID: <199408270507.WAA25137@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Karl Barrus <klbarrus@owlnet.rice.edu> writes a very nice set
+of examples of some of the discrete-log protocols using actual numbers.
+
+I did leave one thing out:
+
+>* Schnorr identification protocol
+>[...]
+>> 3.  Paul calculates r = cx+w and sends that to Vicki.
+
+>Paul calculates r = 561 * 555 + 200 = 311555.
+
+This works, but it will be more efficient to take r mod the order of g,
+which would be n-1 in this case.  The same thing applies to all of the 
+other places where we multiply and add exponents.
+
+>> 4.  Vicki confirms that g^r = (GX^c)*GW.  Both should be g^(cx+w).
+
+This should still be true with r = cx+w mod (n-1).
+
+I departed from the nice step-by-step description for the actual cash
+protocols because they are so complicated and I wanted to explain it as
+I went.  If Karl gets far enough to try doing that it would probably be
+worthwhile to rewrite that portion first.
+
+Hal
+
+
+
+

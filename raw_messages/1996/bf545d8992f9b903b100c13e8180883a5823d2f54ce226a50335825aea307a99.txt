@@ -1,0 +1,190 @@
+From: "Deranged Mutant" <WlkngOwl@unix.asb.com>
+Date: Tue, 17 Sep 1996 10:31:35 +0800
+To: cmcurtin@research.megasoft.com
+Subject: Re: Snake Oil FAQ 0.4 [comments appreciated]
+Message-ID: <199609161749.NAA14132@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+For those not-yet-in-the-know: I no longer have the time to manage it 
+and asked for somebody (and Matt agreed to) to take the Snake Oil
+FAQ's care and feeding.
+
+Note that this is not cc'd to coderpunks. I don't 
+think it's appropriate for coderpunks.
+
+On 16 Sep 96 at 9:56, C Matthew Curtin wrote:
+[..]
+> --------------------------- snake-oil-faq ----------------------------
+> 
+>                            Snake-Oil Warning Signs
+>                         Encryption Software to Avoid
+[..]
+> The Snake Oil FAQ is (to be) posted monthly to cypherpunks, sci.crypt,
+> alt.security, comp.security, and comp.infosystems. We're targeting those who
+
+Does it need to be posted monthly?  Better to post pointers to it 
+most of the time, possibly to other places as well  (alt.2600 comes
+to mind...).
+
+Perhaps when the first 'non-beta' of this document is released a 
+History could be added.
+
+[..]
+ 
+> Different products will serve different needs, and it's rare that a product
+> will serve every need. (Sometimes a product won't be needed: it may be
+
+Nitpick: Hm. Change that to "no product will serve every need".
+
+> better to use a utility to encrypt files, transmit them over a network using
+> standard file transfer tools, and decrypt them at the other end than to use
+> a separate encrypted utility in some cases.)
+
+Or more clearly: is encryption THE feature of the utility, or is it 
+an added feature?  It's better to use separate utilities made for 
+that purpose rather than one that tries to do everything.
+[..]
+> Key Sizes
+> 
+> Some ciphers, while currently secure against most attacks, are not
+> considered viable in the next few years because of relatively small keysizes
+> and increasing processor speeds (making a brute-force attacks feasible). The
+
+Change to "making brute force attacks--that is, trying every possible 
+key--feasible".
+
+[..]
+>                     Symmetric and Public-Key Lengths With
+>                   Similar Resistance to Brute-Force Attacks
+> 
+>                  Symmetric Key Length Public-key Key Length
+>                         56 bits             384 bits
+>                         64 bits             512 bits
+>                         80 bits             768 bits
+>                        112 bits             1792 bits
+>                        128 bits             2304 bits
+
+That's a controversial comparison. I've read references (from a 
+couple of years ago) saying that a 3k-bit RSA key is as strong as a 
+128-bit IDEA key.
+
+Trying to compare the two (symmetric and assymetric) is like running 
+through a tar pit.
+
+> Some Common Snake-Oil Warning Signs
+> 
+> The following are some of the "red flags" one should watch for when
+> examining an encryption product
+> 
+>    * Technobabble
+[..]
+>      A sign of technobabble is a descrption which drops a lot of technical
+>      terms for how the system works without actually explaining how it
+>      works. Often specifically coined terms are used to describe the scheme
+>      which are not found in the literature.
+
+Of course, how is an amateur supposed to know if these terms are 
+found in the literature? That was a recurring comment that people 
+sent me when I first posted the FAQ.
+[..]
+>      Just because software uses to different method of computation 
+
+Typo! "uses to different method..."?
+[..]
+>      grounded in mathematical theory. The security is based on problems that
+>      are believed, if not known to be hard to solve.
+
+Hm. How about "that are widely believed"?
+ 
+[..] 
+>      A OTP system is not an algorithm. It works by having a "pad" of
+>      random bits in the possession of both the sender and recipient.
+[..]
+>      never again be used. The bits in the pad must be truly random,
+>      generated using a real random source, such as specialized
+>      hardware, radioactive decay timings, etc., and not from an
+>      algorithm or cipher. Anything else is not a one-time-pad.
+
+Although it is(?) mentioned below, I'd emphasize here in some way that 
+the users of the OTP generate the key.  Somebody else sending you a 
+supposed OTP that he generated is not secure.
+
+>      The vendor may confuse random session keys or initialization vectors
+>      with OTPs.
+
+Explain random session keys and initialization vectors.  A glossary 
+at the end of the document would be a good thing.
+
+>      Sometimes attacks are theoretical or impractical (requiring special
+>      circumstances or massive computing power running for many years), and
+>      it's easy to confuse a layman by mentioning these.
+
+Oh yeah.  These need to be explained.  What I had in mind was timing 
+attacks against RSA or IDEA, or factoring of public keys.
+
+>    * Keys and Passwords
+> 
+>      The "key" and the "password" are often not the same thing. The "key"
+
+"often" not?!? (oops...was that my wording?) They aren't the same, 
+though often they are confused in snake oil.
+[..]
+
+>      If there's a third-party utility that can crack the software,
+>      avoid it.
+> 
+>      If the vendor claims it can recover lost passwords (without using a
+>      key-backup or escrow feature), avoid it.
+> 
+>      If there is a key-backup or escrow feature, are you in control
+>      of the backup, or does the vendor or someone else hold a copy
+>      of the key?
+
+That is, if you lose the key, you don't want a third party to have as 
+much a chance to recover it as you do.
+
+[..]
+> 
+>      If the vendor is unaware of export restrictions, avoid the software:
+>      the vendor is not familiar with the state of the art.
+
+Also... if the vendor does not understand export restrictions, avoid 
+the software. I'm thinking of a certain snoil-vendor who said 128-bit 
+IDEA keys were'nt secure since they could be exported.
+
+>      Because of export restrictions, some legitimate (not-Snake Oil)
+>      products may have a freely exportable version for outside of the USA,
+>      which is different from a separate US/Canada-only distribution. Also
+
+Such exportable versions are not as secure, of course.
+[..]
+> Other Considerations
+> 
+> Interface isn't everything: user-friendliness is an important factor, but if
+> the product isn't secure then you're better off with something that is
+> secure (if not as easy to use).
+> 
+> No product is secure if it's not used properly. You can be the weakest link
+> in the chain if you use a product carelessly. Do not trust any product to be
+> foolproof, and be wary any product that claims it is.
+
+I wanted to add some sort of 'non-guru hacks' to test a product. One 
+example might be to actually examine 'encrypted' files to see if they 
+are really encrypted. (I'm thinking of the AMG archiver, which only 
+encrypted the CRC; CODEC archiver also only encrypted the CRC is a 
+file is not compressed.)
+
+Thanks again for taking over the FAQ.  A good job!
+
+Rob
+ 
+---
+No-frills sig. Befriend my mail filter by sending a message with the subject "send help"
+Key-ID: 5D3F2E99 1996/04/22 wlkngowl@unix.asb.com (root@magneto)
+Send a message with the subject "send pgp-key" for a copy of my key.
+
+
+
+

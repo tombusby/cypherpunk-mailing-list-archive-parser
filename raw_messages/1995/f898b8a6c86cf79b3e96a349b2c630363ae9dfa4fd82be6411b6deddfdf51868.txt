@@ -1,0 +1,65 @@
+From: tjb@acpub.duke.edu (Tom Bryce)
+Date: Fri, 3 Feb 95 22:11:13 PST
+To: tjb@acpub.duke.edu
+Subject: IMPORTANT: BUG IN 68K IDEA ASSEMBLER DISTRIBUTED IN SECURE EDIT
+Message-ID: <v01510102ab58c9039fd6@[152.3.113.8]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+IMPORTANT NOTE:
+
+If you are going to use the IDEA 68k assembler distributed with Secure Edit
+b0.5, please take note of the following bug:
+
+You have to change
+
+@Mulzero3:
+        neg.w   d7 <---
+        addq.w  #1,d5
+        sub.w   -2(a1),d5
+        bra.s   @Muldone3
+
+to:
+
+@Mulzero3:
+        neg.w   d5 <---
+        addq.w  #1,d5
+        sub.w   -2(a1),d5
+        bra.s   @Muldone3
+
+
+I have not yet received any reports of data being fouled up by this, and
+before tonight personally had encrypted and decrypted megabytes without
+error, but note that I HAVE FOUND EXAMPLES OF IT FOULING UP A BLOCK OF
+DATA. IT IS DANGEROUS TO USE THIS CODE IN ITS PRESENT FORM. Please make
+note of this if you are going to use this 68k code.
+
+Currently, I do not believe this code is being used anywhere except Secure
+Edit b0.5, although it was certainly about to be used. I will immediately
+upload a corrected version of Secure Edit and source.
+
+Sorry about the screw up.
+
+Tom
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLzMbp1uwJA7oL8O9AQGk0wP/YF8VQ2jDtW63Wb7fteImBvYCfMi7NnTf
+tXMBV6U5iIKf+iBoED34gnwJyLAdEplpMa6P1yJUIMjNXly1/I+SzQoMFGVXuuKV
+m0h+idXI1mXTVG+gnmdpGMw9/6/u72DcaYCZRHveL8tuMesO5UdgQEDjvy+zX7+c
+0cAvyXQaArg=
+=ubXB
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

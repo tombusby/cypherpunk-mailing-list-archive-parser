@@ -1,0 +1,89 @@
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+Date: Sun, 3 Sep 95 18:33:40 PDT
+To: sjb@austin.ibm.com (Scott Brickner)
+Subject: Re: SSL search attacks
+In-Reply-To: <9508311728.AA16306@ozymandias.austin.ibm.com>
+Message-ID: <199509040132.LAA21977@sweeney.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello cypherpunks@toad.com
+  and Scott Brickner <sjb@austin.ibm.com>
+
+Scott Brickner <sjb@austin.ibm.com> writes:
+> Jiri Baum writes
+...
+> >Each client could pick a segment at random, check it and then broadcast
+> >a NAK. Other clients would then know that the segment in question has
+...
+> This only reduces the cost if everyone is playing fair.  In practice,
+...
+
+No worse than fake NAKs to the central server (viz comment below).
+
+> >One advantage is that it is not necessary to have a central infinitely
+> >trusted server. (Nothing personal, but bogus server is an attack.)
+> 
+> An attack on what?  The overall model here is that someone presents
+...
+
+An attack on the attempt. If the key owner also volunteers a server,
+then half the CPU cycles will report to that server (and be given
+useless chunks of keyspace) thus halving the CPU power available to
+the usual server ("half" in an infinitely naive world, of course).
+
+The approach I suggested basically corresponds to everyone maintaining
+hir own server; servers that trust each other will coordinate.
+An attacker can of course NAK the key segment, but only those that trust
+the attacker will take any notice.
+
+> My point is that the "random" efforts are no different than everyone
+> working on the problem independently, each picking a random place to
+> start and going sequentially from there.
+
+The difference is that in this scheme everyone does coordinate, only
+it's peer-peer rather than client-server.
+
+> >NAKs and IGRABs would be weighted by the trust accorded to the entity
+> >that originated them.
+> 
+> This is similar to what I outlined yesterday afternoon.  Let unsolicited
+...
+
+I think that's where it came from. I really should provide citations,
+shouldn't I...
+
+...
+> Invalid unsolicited NAKs
+> don't destroy the current search, they only slow it down slightly ---
+> but less than a fully random effort.
+
+Similarly in the peer-peer approach, the effort is coordinated but
+untrusted NAKs slow it down only slightly. The only "solicited" NAKs
+will be your own.
+
+
+Hope that makes sense...
+
+Jiri
+- --
+If you want an answer, please mail to <jirib@cs.monash.edu.au>.
+On sweeney, I may delete without reading!
+PGP 463A14D5 (but it's at home so it'll take a day or two)
+PGP EF0607F9 (but it's at uni so don't rely on it too much)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMEpXLSxV6mvvBgf5AQFn2QP/eJ0BlATPHS2xoLoJuHdJYR7Y5gN5scmK
+DHOby7rGJ3Rj6CZ6PrdkQVf9ckUdmUwhCzAiCi3wnPHPf0gi4rPjLyBpmyTgl8yA
+q+VqYPkBAflwHqXIsqbxx94PiZayt8b578Qtqoa2jJzjSCKMa8IonWGeztP/xNxa
+FCmJDocudq4=
+=r/Hv
+-----END PGP SIGNATURE-----
+
+
+

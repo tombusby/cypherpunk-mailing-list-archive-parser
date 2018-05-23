@@ -1,0 +1,29 @@
+From: nobody@alumni.cco.caltech.edu
+Date: Thu, 17 Jun 93 23:50:08 PDT
+To: cypherpunks@toad.com
+Subject: Computer Shopper encryption
+Message-ID: <9306180648.AA04035@alumni.cco.caltech.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If Kragen's RNG from Computer Shopper is called repeatedly with range=256,
+so that the resulting values are in the range 0-255 for xor'ing,
+it is very weak.  That will mean that the RNG will repeat with period
+of at most 256, and so the only question is which of the 256 possible
+starting points was used.  In other words you only need to do 256 trial
+decryptions (just try seeds from 0-255) and you've got it.
+
+Using the low-order bits of an LCM RNG like this one is a bad idea.  You
+should use the high order bits, or use a range which is not a power of
+2 so you end up using all the bits.  Even then LCM RNG's aren't crypto-
+graphically strong, although from what I have seen the techniques of
+breaking them are what a layman would call complicated.  Compared
+to breaking, say, DES, though, they are no doubt trivial.
+
+Hal Finney
+74076.1041@compuserve.com
+
+
+
+

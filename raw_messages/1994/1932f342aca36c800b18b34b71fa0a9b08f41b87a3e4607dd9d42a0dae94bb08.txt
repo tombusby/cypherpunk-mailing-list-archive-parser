@@ -1,0 +1,37 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Thu, 15 Sep 94 09:06:23 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: thoughts on RC4
+In-Reply-To: <199409151546.IAA02879@jobe.shell.portal.com>
+Message-ID: <9409151606.AA04784@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal says:
+> perry@imsi.com (Perry E. Metzger) writes:
+> 
+> >Unlike most ciphers, RC4 doesn't seem to have any particular word
+> >length dependancies in its principles.
+[...]
+> I'm not sure exactly how you would generalize it.  Right now it has a 256
+> entry table which holds a permutation of the values in 0..255.  A byte is
+> selected from this table and xor'd with the data stream.  To increase to
+> four bytes per entry and keep it as a permutation we would have to have 4
+> billion entries taking up 16 GB of memory which seems a bit much.
+> Altenatively we could still have 256 entries but have them four bytes
+> each, but then it's not clear that you keep the cryptographic properties
+> since you no longer have a permutation.
+
+Am I being thick? If you simply do all array indexes modulo the length
+of the table, wouldn't you still have a permutation? (Its true,
+however, that one could slow down the algorithm quite a bit if one
+isn't careful with how one does this...)
+
+.pm
+
+
+
+
+

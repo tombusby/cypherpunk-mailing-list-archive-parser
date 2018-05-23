@@ -1,0 +1,81 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Fri, 13 Sep 1996 09:05:43 +0800
+To: mac-crypto@thumper.vmeng.com
+Subject: Gaining trust in OCO crypto code
+Message-ID: <199609122203.PAA25166@netcom8.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+These thoughts came up at the Mac Crypto conference, but are somewhat more
+general than the Macintosh, so I am ccing them to cypherpunks.
+
+OCO, or Object Code Only, a bad idea whose time has not yet past (although
+it was part of the reason for the decline of IBM's mainframe operating
+systems), is the business practice of keeping the source code for a system
+secret.  Some companies are applying the idea to cryptographic software, so
+the we should think about how we can establish trust in such software.
+
+There are three techniques which may work for all OCO software.
+
+(1) Trust the designer/implementor.  Ron Rivest's RC2 and RC4 algorithms
+were originally released as OCO algorithms.  Rivest's reputation as a
+cryptographer established trust in them.
+
+(2) Trust a third party auditing agency.  The US military trusts vendor
+implementations of cryptographic software because they have been audited by
+the NSA.
+
+(3) Reverse engineer the implementation.  While laborious, this process is
+straight forward.  When Netscape started using RC4 in their SSL
+implementation, a review of its security became important enough that a
+certain anonymous person(s) reverse engineered the implementation and
+posted it to the Internet.  As a result, the algorithm has undergone peer
+review.
+
+
+If we can't use the above techniques, we have to think very carefully about
+what parts of a cryptographic system we can trust by only examining their
+inputs and outputs.  Here is a list of things we can NOT trust in this
+manner:
+
+(1) Random number generation.  An error (as occurred in a Netscape
+implementation), or a deliberate weakness can not be easily detected by
+examining only the output of a cryptographic random number generator.
+
+(2) Key generation.  There are published ways to encode an RSA secret key
+in the corresponding RSA public key.  A key generation algorithm which only
+uses 32 bits of the random number would be hard to detect, but easy to
+break by one who knew its secret.  You have to be able to examine in detail
+how keys are generated.
+
+
+Now there are some things we might be able to trust based only on an
+examination of the inputs and outputs.
+
+(1) Implementation of a cryptographic algorithm.  If we can feed it enough
+test cases, and compare the output with a public, well vetted
+implementation, we can come to believe that it is correct.
+
+(2) Certain cryptographic protocols.  If we can trust one side of a
+Diffie-Hellman (DH) key exchange, then we can trust the keys generated
+because both sides contribute to the randomness of those keys.  However we
+can't trust two instances of an OCO DH exchange implementation working with
+each other, so this trust doesn't seem to cover many practical instances.
+
+If the OCO protocol implementation can interoperate with a trusted
+implementation, then we can start to have some trust in it.  However, we
+will still have to carefully examine the protocol for covert channels. 
+This form of trust may be of real-world use.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | "Lone Star" - My personal  | Periwinkle -- Consulting
+(408)356-8506     |  choice for best movie of  | 16345 Englewood Ave.
+frantz@netcom.com |  1996                      | Los Gatos, CA 95032, USA
+
+
+
+
+
+

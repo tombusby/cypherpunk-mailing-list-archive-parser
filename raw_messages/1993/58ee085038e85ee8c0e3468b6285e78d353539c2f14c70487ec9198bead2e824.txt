@@ -1,0 +1,37 @@
+From: jpp@markv.com
+Date: Sat, 10 Jul 93 19:59:58 PDT
+To: newsham@wiliki.eng.hawaii.edu
+Subject: Re: Secure comm program, Sockets + LINK
+In-Reply-To: <9307101235.aa02134@hermix.markv.com>
+Message-ID: <9307101959.aa26573@hermix.markv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	  Andrew			  Betty
+
+    KCA=Initial key K0 in s/w       KCB=Initial key K0 in s/w
+    KCB=Initial key K0 in s/w       KCA=Initial key K0 in s/w
+    KCi= KCA + KCB                  KCi= KCA + KCB
+    KCo= KCA + KCB                  KCo= KCA + KCB
+
+    Use KCi for reading, and	    Use KCi for reading, and
+    KCo for writeing to the         KCo for writeing to the
+    chanell for a while             chanell for a while
+
+    Requset a new sesion key        Requset a new sesion key
+    DES(KCo,RSA(BP,K1A))            KRB=DES(KCo,RSA(AP,K1B))
+            \_____________   ______________/
+      KCi=KCA+KCB         \ /         KCi=KCB+KCA
+      KCo=K1A+KCB          X	      KCo=K1B+KCA
+             _____________/ \______________
+            /                              \
+    Sevice new key request
+    TA=DES(KCi,KRB)
+    K1B=RSA(AS,TA)
+    KCi=K1A+K1B
+
+
+
+
+

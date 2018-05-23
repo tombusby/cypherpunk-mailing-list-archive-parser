@@ -1,0 +1,63 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Sat, 3 Dec 94 09:35:12 PST
+To: cypherpunks@toad.com
+Subject: Re: Disclaimer within signed body?
+In-Reply-To: <199412022016.PAA16908@bb.hks.net>
+Message-ID: <199412031833.KAA17387@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Todd's autosigner raises some good issues about what signatures can
+actually represent.  Todd's service takes an incoming message,
+attaches a note about technical means and also a signature.
+
+As Todd points out, this signature represents the fact that a message
+destined for the cypherpunks list passed through his server.  But Todd
+also wants the signature to attest to the disclaimer attached to the
+mail.  The signature, therefore must be affected by both segments of
+text, that is, the disclaimer must be inside the signature.
+
+There is also, however a desideratum that the original message be
+preserved to the greatest degree possible.  Since two text segments
+must go inside the sig block, there must be a packaging syntax to
+represent a two part message composed of the original message and the
+disclaimer.  There is already a syntax which accomplishes this for
+email--MIME.
+
+
+I'm not going to get the syntax of this example right.
+
+-----------------------------------------------------------------------------
+--- Begin signed message ---
+::
+Content-Type: multipart/mixed
+Content-Length: [...]
+Boundary: ===
+
+Content-Type: text/ascii
+===
+<original message>
+===
+Content-Type: text/ascii disclaimer
+===
+<disclaimer>
+===
+--- Begin signature ---
+a;sdfj;alsdjf;a lsjas;ldkfj;asjdf;askjdf;laskjdfdf
+a;sdfj;asdjf;asfj;alsjdf;aljdf;alsdjf;alsjdf;asjdf
+--- End signed message ---
+-----------------------------------------------------------------------------
+
+Now as far as aesthetics, this has got a lot of screenjunk in it.  It
+does, however, represent exactly what is going on in a way that the
+right kind of MIME capable reader can make exact use of.
+
+I'm not advocating this.  I do think, though, that a minimal solution
+to all the criteria at once looks a lot like this.
+
+Eric
+
+
+
+

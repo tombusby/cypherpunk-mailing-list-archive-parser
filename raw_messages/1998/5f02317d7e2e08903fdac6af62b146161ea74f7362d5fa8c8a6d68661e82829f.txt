@@ -1,0 +1,37 @@
+From: Anonymous <nobody@replay.com>
+Date: Wed, 28 Oct 1998 08:14:36 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Using a password as a private key.
+Message-ID: <199810272341.AAA20410@replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+RedRook@yahoo.com writes:
+> Assymetic crypto systems such as Diffie-Hellman, El-Gamel, and DSS,
+> allow the private key to be a randomly chosen number. But, as a cute
+> hack, instead of using a random number, for the private key, you could
+> use a hash of the User Name, and a password.
+> 
+> Doing so allows the users to generate their private key on demand.
+> They don't have to store the private key, and if they want to work on
+> a another computer, they don't need to bring along a copy.  Has any one
+> tried this? Is there existing software that does this? Any comments on
+> the security of such a scheme?  The only draw back that I can think of
+> is the potential lack of randomness in the key. If the user chooses a
+> bad password, it would be possible to brute force the public key.
+
+You can accomplish the same thing by encrypting your private key (including
+RSA) with a passphrase and publishing it.
+
+Because of the problems with passphrase bruting, it probably only
+makes sense to do this with a machine-generated passphrase which has
+guaranteed entropy.  Something like: "Aarhous mocrader Fals paca rate
+portion wiserustingned" has a guaranteed > 128 bits of entropy, which
+should be enough for most purposes.  Probably with an hour's study most
+people could memorize such a passphrase.
+
+
+
+

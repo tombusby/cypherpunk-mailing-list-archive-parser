@@ -1,0 +1,44 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Wed, 20 Sep 95 10:21:40 PDT
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Encryption algorithms used in PrivaSoft (fwd)
+In-Reply-To: <43o23b$91r@calum.csclub.uwaterloo.ca>
+Message-ID: <9509201721.AA07110@cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+David Clavadetscher of PrivaSoft writes:
+> At this time our crypto engine is patented and proprietary. 
+
+Ian Goldberg writes:
+> Waitasec...  I was under the impression that if you patented it, you had to
+> reveal it.  That's why RC4 isn't patented (it used to be a trade secret).
+
+I think I have figured out now what Clavadetscher meant. According to the
+PrivaSoft home page, the product uses "bitmap encryption". Inspired by your
+mention of patents being published, I sought a relevant patent, and I believe
+I've found it. U.S. Patent 5,321,749 was issued to a Richard Virga of Danbury,
+CT in 1994. It describes a protocol for representing an arbitrary fax
+document as a bitmap, encrypting it, and encoding it for transmission. 
+
+The user inputs a password (4-20 characters) to be used as a session key. 
+However, no encryption algorithm is specified. (The patent suggests the 
+familiar method of seeding a PRNG with the session key, and XORing the 
+resulting stream with the plaintext bitmap.)
+
+Assuming this is in fact the scheme PrivaSoft uses, I posit that their
+"crypto engine" consists of a patented (by someone who now works for them ?)
+protocol wrapped around a proprietary encryption algorithm.
+
+20 characters (the patent doesn't discuss constraints on the character set,
+AFAIK) looks rather short. This is one possible reason for the Commerce 
+Dept.'s export approval.
+
+http://www.megasoft.com/privasoft/about.html discusses PrivaSoft.
+ftp://town.hall.org/patent/data/05321/05321749 is the text of Patent 5,321,749.
+
+-Futplex <futplex@pseudonym.com>
+
+
+

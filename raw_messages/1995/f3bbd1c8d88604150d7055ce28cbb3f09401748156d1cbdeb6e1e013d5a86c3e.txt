@@ -1,0 +1,162 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Sun, 5 Feb 95 18:03:00 PST
+To: strick at The Yak <strick@yak.net>
+Subject: Re: "encrypt tcp connections" hacks
+In-Reply-To: <199502060105.RAA07673@nando.yak.net>
+Message-ID: <9502060202.AA03281@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+strick at The Yak says:
+> I take your opinions more seriously than perhaps I should,
+
+I don't want to scare people into not doing things -- but I do want to
+inform. Persons taking my opinion, or that of any authority, on face
+value without doing their own reasoning, get what they deserve.
+
+> I'm not doing this to re-invent the wheel.  I'm doing it because
+> I need it, and nothing else is working very well for me.
+
+Then do it...
+
+> I'm doing it because I don't see anything that's easy-to-use in wide
+> use today.  I don't just want one or two encrypted applications -- like
+> the Kerberos telnet and rcp -- but something to transparently provide
+> privacy for all TCP sockets -- like SMTP sockets between (re)mailers,
+> NNTP, X11, FTP, MUDs, etc.
+
+Well, in the long term, my hope is that people use IPSP for this. It
+will mean that the kernels on their machines simply deal with all this
+stuff and that userland applications get to ignore it 90% of the time.
+
+> Let me name the ones I can think of.
+> 
+>   1.  	Matt Blaze just announced one.
+
+>   2.	Kerberos4.  I use Kerberos4 between home and work all the time.
+> 	However the only command I have that actually encrypts the
+> 	session is the "rlogin" replacement.
+
+And the telnet; however, it has a library to let you do whatever you want.
+
+>       (But I sure use it, even if it's just DES.)
+
+In v5 there is more general support, I believe.
+
+> 	Also Kerberos administration is a nightmare.
+
+Thats really an interface issue, I think -- they have a lot of the
+fundamental stuff down. If thats one's only complaint with Kerberos (I
+have others) the "right thing" is to build a simplified administration
+system. 
+
+> 	And the reason big providers like The Well and Netcom won't
+> 	run kerberos (or at least not the last time I asked) is that
+> 	they would have to hire another person just to do the
+> 	password management etc.
+
+Thats quite untrue -- passwords in kerberos are set by the users, not
+by the administrators!
+
+
+>   3.	Kerberos5.  I've been unable to build Kerberos5 on my 
+> 	sun3.  Honestly.  To build it, I have to have ISODE, which seems 
+> 	to be some enormous ISO thing that I haven't been able to build.
+> 
+> 	Again, not too encouraging for your average unix sys admin.
+
+You only need ISODE for the ASN.1 compiler; you don't have to build
+the whole thing.
+
+>   5.	Standards for IPng.  Vapor, as far as I know.  Is there any
+> 	usable code, that works in IP this generation?
+
+There is swIPe, and the derived TIS product. Its a bit primitive since
+it doesn't handle per-socket keying. There is stuff that I'm hacking
+on between flames -- its going to be called swIPe II. It will conform
+to my RFC drafts and should run out of the box on any 4.4BSD
+system. I'm hoping people will back-port it to SunOS and the like.
+
+There is also SSL, which is what the Netscape people are pushing --
+stands for Secure Sockets Layer.
+
+There is also the thing this guy Andy Heffernan did a draft on in
+which you do this at the TCP layer; he uses a TCP option to pass IVs
+and MACs.
+
+There is also the method proposed by the AFT working group at the
+IETF, a.k.a. the "socks" working group, for encrypting sockets.
+
+There is also the thing that Miron Cuperman wrote for YTalk. It did
+diffie-hellman key exchange followed by an encrypted session.
+
+There are about three or four more that I can't bring to mind at the
+moment but I'm damn sure I've seen them.
+
+> I think it comes down to the fact that, of these, only Skronk and 
+> Blaze's software use a Diffee-Hellman -like Key Exchange so that
+> administration stuff doesn't have to be done by humans and footnet.
+
+Diffie-Hellman doesn't give you real security without some sort of way
+to authenticate the exchange. Man in the middle gets you. You are then
+down to either using signed exchanges or some sort of challenge or
+conventionally keyed way of authenticating.
+
+BTW, Kerberos most emphatically does not require active
+administration. I've run it in an environment with thousands of hosts
+with narry a person paying it any attention.
+
+> The real value I'm adding is not the crypto.  It's the packaging.
+> When I'm done it should be possible to skronk all your current 
+> clients and servers by just overriding the shared library libc.so,
+> running a skronk map UDP daemon, and customizing a configuration
+> file to tell the daemon what to say.
+
+Well, this is an admirable goal. Of course, the Netscape people want
+to do the same thing with SSL, and others have proposed to do it, too.
+
+Ultimately, the thing that is going to fix the net is IP layer
+encryption -- anything at a higher layer can't really fix all the
+problems reliably. (As an example, consider RST attacks against TCP
+connections.) It also can't fix them pleasantly.
+
+Meanwhile, of course, it is going to be a while before that stuff is
+universally deployed. My reference implementation isn't going to be
+here before April. It will be freely available, but it will only run
+on some architectures, and it is unlikely to be idiot friendly or
+perfect out of the box day one.
+
+Understand, also, that as one of the few people here who writes code I
+don't want to discourage you from continuing by any means!
+
+However, I'd say that this isn't going to be a permanently deployed
+thing on the net -- that much we can be pretty sure of.
+
+> The discussion question is -- if we have so many hacks already -- 
+> howcome they're not in use.
+
+Probably people aren't that enthusiastic about them. Encrypted
+sessions are in wide use for telnet and the like -- I do that sort of
+thing regularly, and now that session stealing has become a fact of
+the net I suspect that S/Key is going to vanish and be replaced by
+various encrypted telnets. SMTP it doesn't make much sense to protect
+because what you really want to protect is the contents -- i.e. via
+PEM, MIME security multiparts, or some similar method (I favor PGP'ed
+secure multiparts myself.)
+
+> p.s.	need some wizard-level help here.
+> 
+> 	I use syscall(2) when I reimplement read() write() connect()
+> 	accept() etc. on SunOS. 
+
+Why? Why not just do the original calls? If you are trying to overlay
+shared libraries, just rename the calls in the symbol tables or
+relink the library or something similar...
+
+Perry
+
+
+
+

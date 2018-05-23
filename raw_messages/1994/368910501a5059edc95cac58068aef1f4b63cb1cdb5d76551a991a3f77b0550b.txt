@@ -1,0 +1,46 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Mon, 7 Feb 94 09:06:21 PST
+To: cypherpunks@toad.com
+Subject: Some stuff about Diffie-Hellman (and more :-)
+In-Reply-To: <199402071555.KAA04653@snark>
+Message-ID: <9402071704.AA23562@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Indeed, a paper has been published on how to break Sun Secure RPC
+>based on the idiotic decision by someone at Sun to standardise the
+>modulus used. 
+
+It wasn't standardization that was the problem.  The Sun modulus was
+just too small.  My take on the idiocy was that the designers were
+assuming that because they didn't know how to break such a large
+modulus, that no one else did either.
+
+>The suggestion by Mr. Cain to use a
+>single generator and modulus for all traffic is astonishingly naive.
+
+It's not naive (as such), it's just that any such modulus must be chosen with
+extreme care.
+
+Here are some very basic rules of thumb:
+
+-- Don't use a 2^k modulus.  In addition to the exponentiation taking
+place faster, they're much easier to break.
+
+-- Use a single large prime p for the modulus of size > 600 bits.
+
+-- Make sure that you can prove that your generator actually generates
+the group.  This requires knowing the factors of p-1.
+
+Burt Kaliski told me that he picked a D-H modulus by searching for a
+pair of primes < q, p=2q+1 >.  It took a _long_, _long_ time, but it
+was then easy to show that the element 2 generated the group.  It may
+be that there is a clever attack based on the generator 2, but I
+haven't seen one published.
+
+Eric
+
+
+
+

@@ -1,0 +1,55 @@
+From: "Alan (Miburi-san) Wexelblat" <wex@media.mit.edu>
+Date: Tue, 14 Dec 93 14:23:53 PST
+To: cypherpunks@toad.com
+Subject: Signing pictures -- how hard, how long?
+In-Reply-To: <199312142006.MAA29406@mail.netcom.com>
+Message-ID: <9312142220.AA08575@media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think that compression is a non-problem.  It's an example of a change
+which can be signed.  Here's what I imagine:
+
+<SCENE> -> DigiCamera -> DigiEditor -> Compress -> Xmit -> Uncompress ->View
+
+At each step of the way, it should be possible to sign the image.  I
+disagree with the thought that we don't need signature in the camera.
+Remember that a signature is not intended to *prevent* forgery as much as to
+provide a trail of responsibility.  Thus a picture taken with my digicamera
+should contain a signature generated from the camera's key and mine.  I'm
+the artist responsible for initially capturing the scene and I'm responsible
+for the claimed accuracy of the resulting picture.  Similarly I want to sign
+every frame because I can't predict which frame(s) are going to be edited
+out and which frame is going to be turned into a still picture that appears
+on the front page of everyone's newspaper.
+
+[The comment about GPS info in the camera is not far off.  Cameras that know
+where they are will be about 1 generation behind the first digital cameras.]
+
+If someone takes the "film" I've shot and edits it, I expect that edited
+version to be re-signed by the person who does the edit (possibly generating
+a new original signature or a signature based on my initial signature).
+Just as today negatives are kept archived for years, the editor will keep a
+disk archive of my original -- again, we preserve the chain of
+responsibility.
+
+Lossy compression takes two basic forms.  One is block-truncation-like,
+where the whole picture is sent at each frame, but some (presumably
+perceptually insignificant) bits are omitted.  The other is MPEG-like where
+only certain key frames are sent as whole pictures; the intermediate frames
+are sent as deltas to the most recent whole frame.  In either case, a coded
+picture is, for signature purposes, like an uncoded picture.  It can be
+signed, with a signature generated from the equipment and the operator keys.
+For MPEG-like compression you might sign the deltas or you might sign the
+resulting picture (previous image with new delta applied).
+
+The problem with bit-rot is a more significant one.  In this case you might
+want to compute your hash not over every bit of the image, but over the
+"significant" ones.  That way if you lose low-order bits that no one cares
+about your signature is still valid.
+
+
+
+
+

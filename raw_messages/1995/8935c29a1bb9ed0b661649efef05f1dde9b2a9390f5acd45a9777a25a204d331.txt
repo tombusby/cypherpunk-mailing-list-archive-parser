@@ -1,0 +1,52 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sun, 8 Oct 95 00:18:06 PDT
+To: privsoft@ix.netcom.com (Steve )
+Subject: Re: Graphic encryption
+Message-ID: <199510080717.AAA02124@ix5.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:17 AM 10/6/95 -0700, privsoft@ix.netcom.com (Steve ) wrote:
+>Also if any of ya'll are famillar with graphic encryption, I am looking 
+>for opinions as to its strengths / weaknesses.
+
+While normally I'd agree with Lucky Green and say that a good encryption
+algorithm's strength is independent of its input data, there are exceptions.
+
+The description of Privasoft's method on their web page sounded like* it
+broke up a fax image into little squares and shuffled them around based on
+some proprietary (hence presumably weak) algorithm, somewhat like feeding
+them to a shredder or puzzle-box, then put them in a file you can ship
+with regular fax software or decrypt yourself.  If that's the case,
+and if the squares are sufficiently big to have enough pixels for fax
+software to compress decently, then it's weak no matter _how_ strong
+the encryption algorithm that shuffles them is, because you can piece together
+matching edges like a jigsaw puzzle, or like a bunch of Iranian students
+with American Embassy shredded documents.  Using computers is a lot easier,
+since you've got precise images of print - most edges will match pretty well
+with the edges of the adjacent squares, and you can jigsaw the parts that
+still need work if you get too many multiple matches.  
+
+A much stronger way to encrypt faxes is to do the Group 3 (or G4) compression
+first, then encrypt using a real algorithm, ship the (now-useless-for-fax)
+encrypted bits, decrypt, and read with your favorite fax-image viewer.
+Or, of course, take the raw file you would have done this with, which is much
+smaller than the fax-compressed image, encrypt it, ship, decrypt, and view,
+but that means the person on the far end needs the same word-processor.
+
+
+-------
+* The software was on the web page; if I'd had spare disk space that day and
+some slack time I could have downloaded the demo version and tried it,
+but this is what the description sounded like it meant.
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

@@ -1,0 +1,37 @@
+From: "Mike Johnson" <exabyte!smtplink!mikej@uunet.UU.NET>
+Date: Tue, 5 Oct 93 13:15:00 PDT
+To: cypherpunks@toad.com
+Subject: Re: Need Suggestions for Random Numbers
+Message-ID: <9309057498.AA749854878@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>I have seen here and elsewhere descriptions of hardware random
+>number generators (Geiger counters measuring random nuclear
+>decay, microphones picking up background hiss etc.), but I need
+>something that can be implemented entirely in software.
+
+There is no such thing as real random numbers implemented purely in software.
+The best you can do in pure software is a cryptographically strong
+pseudorandom number sequence, started at a random point -- like continually
+feeding the output of DES back to its input.
+
+>Also, can anyone recommend a statistical test for randomness, or
+>for detecting repeating patterns in a "random" file?
+
+Try compressing the file with PKZIP & see if it gets smaller.  If it does, it
+flunks.  If it doesn't, it may still have some patterns to it.
+
+>What would be a good source of random meaningless sound? (an
+>quiet room, ocean surf, repeats of Gilligan's Island, old
+>presidential speeches (pick your favorite president). :-)
+
+Not bad, but be sure to compress the output to remove the regular patterns of
+the surf, etc, then use the compressed output -- after stripping off any
+headers applied by the encryption program.
+
+
+
+

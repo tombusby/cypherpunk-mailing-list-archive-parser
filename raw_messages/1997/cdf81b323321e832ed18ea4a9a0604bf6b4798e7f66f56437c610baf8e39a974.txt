@@ -1,0 +1,95 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 16 May 1997 02:26:20 +0800
+To: paul@fatmans.demon.co.uk
+Subject: Re: Eternity server considerations and musings
+In-Reply-To: <Pine.LNX.3.91.970513165201.835A-100000@fatmans.demon.co.uk>
+Message-ID: <199705151813.TAA01081@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Paul Bradley <paul@fatmans.demon.co.uk> writes:
+> The main method used by governments around the world so far to
+> attempt to censor information has been the use, or proposal of,
+> proxy servers for whole countries or jurisdictions.  This method has
+> only thus far been used to censor www connections, and has been used
+> to censor specific sites, hence the use of mirroring to circumvent
+> government censorship.
+
+One of the main considerations in the design of my eternity server was
+the idea that there was information which might get published via
+remailers, but would be unlikely to get published on a web page
+directly.  Eternity translates the ability of publishing via a
+remailer into the ability to publish on the web.
+
+An example is perhaps the NSA handbook, or Mykotronix dumpster diving
+results.  These sorts of things tend to arrive via remailer, and then
+get mirrored afterwards.
+
+There will also be some class of documents which are too hot to mirror
+at all, or where the censor is litigious enough (Scientologists?) to
+present a real danger to it's ciritics, and to mirrorers of the
+criticisms.
+
+A question then is could a censor systematically block all eternity
+search engines effectively.  I think this would be relatively easy,
+the design does not really attempt to deal with site blocking
+directly.
+
+The URL always includes "eternity" so is easy to block.  You could
+perhaps provide an option for a public key encrypted URL.  Or lookup
+by the SHA1 of the URL directly.  An SSL session would also help, the
+cgi-binary accepts both post and get methods.  However ultimately, the
+eternity servers will be advertised, and so the censors just need to
+keep track and block all the advertised servers.
+
+However there is another option: all the data is available in USENET
+anyway, so anyone can run an eternity search engine for their own use
+in a shell account.  To block this is more difficult.
+
+> [blocking USENET, key word searches, recognizing encrypted data]
+
+Use stego solves this (as Bill Frantz observed).  Do a web search on
+`texto', it's a nice simple text stego program.
+
+Another interesting fact is that they can't block the traffic unless
+they have decrypted it.  As the data can be encrypted with the SHA1 of
+the URL, they won't necessarily recognize it as an eternity web page
+until it gets accessed or the URL advertised, by which time it is too
+late.  The URL can be smuggled in and passed around more readily.
+
+> [a censor can provide a censored USENET feed for their country, they
+> can't provide a censored WEB feed because it's too large]
+
+WEB mirroring is useful where the data being mirrored is illegal in
+someone else's country and you are trying to stay one step ahead of
+the censor.
+
+Eternity means you can publish material which is illegal or
+dangerous/unpopular to publish in your own country.  
+
+> [...] it would be nice to see a more robust system which thwarted
+> all attempts to censor without the need for human intervention by
+> mirroring sites etc.
+
+Sounds like something that could be addressed by building on the
+rotating mirror idea William Geiger has been talking about.  Perhaps
+you could have an apache module which provided a proxy service which
+allows encrypted and steganographically encoded URL passed to it, and
+encrypted, stego web pages passed back.  Combine with some unstego
+method on the receiving end, and lots of people using apache with this
+option turned on, and the censor would have one heck of a problem on
+their hands.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

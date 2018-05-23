@@ -1,0 +1,43 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Sat, 11 Feb 95 05:31:40 PST
+To: Derek Atkins <warlord@MIT.EDU>
+Subject: Re: why pgp sucks
+In-Reply-To: <9502110321.AA29986@toxicwaste.media.mit.edu>
+Message-ID: <9502111331.AA16528@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Derek Atkins says:
+> The only problem with piggybacking off the current DNS implementation
+> is that DNS was designed for SMALL pieces of data (read: hostnames and
+> IP addresses).  PGP keys are HUGE pieces of data, in respect, and DNS
+> just wont handle the sizes.  For example, my PGP key is about 8k of
+> data (approximately).  DNS would never be able to handle that!
+
+Well, its already been modified to do it. Read the drafts by Eastlake
+and Kaufman on DNS security, which basically means keys in the DNS and
+signed DNS records.
+
+> It its bigger than a single UDP packet DNS has trouble.
+
+So you use TCP -- DNS already supports that. In any case, however, the
+reassembly size and lowest common denominator MTUs are being jacked
+way up for IPv6.
+
+> No, while DNS is a perfect model for a distributed keyserver,
+> it is by no means the implementation infrastructure that we want
+> to use.
+
+I very strongly disagree. Even today, we find more and more bugs in
+DNS. If we had to start from scratch, we'd have to build an
+infrastructure like DNS all over again, only to find that we suffer
+from all the same old bugs and end up with a parallel implementation
+that looks almost exactly like DNS only less reliable.
+
+Perry
+
+
+
+

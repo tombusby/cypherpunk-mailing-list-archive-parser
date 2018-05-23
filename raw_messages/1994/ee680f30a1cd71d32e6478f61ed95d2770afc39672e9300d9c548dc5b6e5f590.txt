@@ -1,0 +1,81 @@
+From: kipp@warp.mcom.com (Kipp E.B. Hickman)
+Date: Wed, 14 Dec 94 13:32:16 PST
+To: hfinney@shell.portal.com
+Subject: Re: Clarification of my remarks about Netscape
+Message-ID: <9412142130.AA20536@warp.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In article <199412140047.QAA17489@jobe.shell.portal.com>, you write:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> "Amanda Walker" <amanda@intercon.com> writes, quoting someone from
+> Netscape:
+> 
+> >> I didn't bother imbedding the RSA Unaffiliated User CA because I 
+> >> didn't think server operators would use it to get certificates. 
+> 
+> >Well, it's what Apple is using for PowerTalk signers (which are a key pair and 
+> >X.509 certificates, by default from the Unaffiliated User PCA).  It makes 
+> >sense for personal (as opposed to organizational) servers, such as someone 
+> >running MacHTTP for their home page...
+> 
+> >On the other hand, if RSA has set up a server PCA, that should be suffcient 
+> >for now.  I wonder what the certification policy is, though--how do you prove 
+> >that you control a given server?  For an Unaffiliated User CA certificate, you 
+> >just have to show a notarized application and two forms of ID, one with a 
+> >photo (driver's license, passport, etc.).  I can't off hand think of an 
+> >equivalently strong way to ID control of a server...
+> 
+> This relates to the other part of my question, which didn't get answered:
+> what is the relationship between the name found in the X.509 certificate
+> and the server?  Does X.509 include an internet address like mcom.com,
+> and the Netscape client checks that this matches the address of the
+> server it is connecting to?  I am not very familiar with the certificate
+> format but I had the impression that it used a very different naming
+> scheme.
+> 
+> Or does the client accept any valid certificate without regard to the
+> connection if any between the name in the certificate and the server to
+> which it is connected?  This whole area was left undefined in the SSL
+> spec but will be important for interoperability.
+> 
+> Hal
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: 2.6
+> 
+> iQBVAwUBLu5AkhnMLJtOy9MBAQEFQgH/dmiiEjycULNdDCNiU8SkoB57bHv9W5Lc
+> d+K7cBqq0ZknCwXtqZtbPTR7d8F1z0WFbMlP6QF3zywVz2GrDIg5kg==
+> =qQ9u
+> -----END PGP SIGNATURE-----
+
+From the spec, the appendix on certificates:
+
+   Certificates are validated using a few straightforward steps. First,
+   the signature on the certificate is checked and if invalid, the
+   certificate is invalid (either a transmission error or an attempted
+   forgery occurred). Next, the CertificateInfo::issuer field is verified
+   to be an issuer that the application trusts (using an unspecified
+   mechanism). The CertificateInfo::validity field is checked against the
+   current date and verified.
+
+Here is what we do in Netscape (for now). We have imbedded a set of
+certificates in the client. The certificates are for issuers of
+certificates that "we" trust. Any server which is certified by one of
+these issuers will be automatically trusted by the Netscape
+Navigator...
+
+Admittedly this is primitive, but it's a start.
+
+---------------------------------------------------------------------
+Kipp E.B. Hickman          Netscape Communications Corp.
+kipp@mcom.com              http://www.mcom.com/people/kipp/index.html
+
+
+
+
+
+

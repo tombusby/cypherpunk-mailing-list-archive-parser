@@ -1,0 +1,164 @@
+From: jim bell <jimbell@pacifier.com>
+Date: Sat, 27 Jan 1996 19:40:34 +0800
+To: die@die.com
+Subject: Re: NOISE NOISE NOISE - clocks and other irrelevance
+Message-ID: <m0tg8TO-0008yOC@pacifier.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:40 AM 1/27/96 -0500, Dave Emery wrote:
+>
+>> 
+>> A peripheral I've long wanted to see, commonly available:  ACCURATE  time, 
+>> broadcast to the millisecond/microsecond/nanosecond, available from sources 
+>> as varied as TV VIR's, FM subcarriers, and other sources, available as an 
+>> easy input (via a peripheral card) to a computer.
+>
+>	The only technology that I'd trust to be useful much below
+>10-100 ms is GPS.   The others are unlikely to be controlled well enough
+>at the source to be trusted. 
+
+What about Loran?  WWV(B)?  Receptor-type signals?
+
+Now, I agree that CURRENTLY few people "depend" on those other (non-GPS, 
+non-Loran, non-WWVB) systems, but to some extent that's a "chicken and egg 
+problem"  
+
+> Current TV broadcasting, for example,
+>usually involves multiple passes though digital frame stores and time
+>base correctors  - most homes get the signal via cable which itself
+>involves significant uncontrolled delays  (juat the thermal changes
+>in propagation delay  in a long CATV cable and amplifier chain due to weather
+>changes run into the many microseconds).
+
+Perhaps, but I'm assuming broadcast tv.  Single source.  Limited variability 
+in path length.  I admit there  are limitations; my argument is that the 
+signals SHOULD contain accurately-defined points, even if it is only one per 
+frame.
+
+
+>	And humans beings being as imperfect as they are, it is hard to
+>beleive that making sure that the time being broadcast is really kept accurate
+>is going to be a priority when most people use it for purposes that require
+>plus or minus a few seconds timing.
+
+I think that if there WERE some reliably-available timecode system, plus a 
+cheap single-chip system to drive it, it WOULD be kept reliable enough 
+because of demand.
+
+
+>> I have a 12-year-old Heathkit "Most Accurate Clock" that I assembled myself, 
+>> and had the foresight to install it with its computer  interface option. 
+>> (receives 5, 10, or 15 MHz signals broadcast from Boulder, Colorado, 
+>> containing "exact" time.) 
+>> 
+>> While I've never taken the time to connect it to my PC, it provides 
+>> (through an RS232 jack) correct time with a rated accuracy of about 5 
+>> milliseconds, as I vaguely recall. (Even has a dipswitch setup on the bottom 
+>> to tell it how many 500 mile increments you are away from WWVB... corrects 
+>> for delay to a first order of magnitude.)
+>> 
+>	WWVB is the 60 khz broadcast (which is more accurate due to more
+>stable propagation) 
+
+Not much of a difference, given the context.  For example, I'm probably 1000
+miles away from Boulder; it is highly unlikely that the path length
+differences for the HF bands could exceed about 100 miles, or about 0.5
+millisecond.  Given the context, it's accurate enough for anti-spoofing work
+in networks.
+
+
+. the  HF ones are WWV.  Commercial time receivers
+>are available that work off the 60 khz time code (very narrow bandwidth
+>ASK), but the 60 khz is most used as a standard frequency for long
+>term tracking of error in local standards.
+
+Any more?  I don't think so.  GPS has probably pretty much taken over as the
+"gold standard" for clock synchronization, I suspect.  Path length is known,
+by definition, and the resolution must (as a consequence of the distance
+accuracy requirements) be in the low-nanosecond level.
+
+
+
+>> (BTW, if anybody knows how to easily connect it to the pc, or has the 
+>> appropriate software, please tell me  The task isn't difficult from a 
+>> hardware standpoint; it's just RS-232 serial ASCII timecode at about 9600
+>> bps which 
+>> either continuously retransmits or on request.  The problem is the software:
+>
+>	If you run unix
+
+Nope.
+
+> there are some quite sophisticated programs that
+>can use this specific clock (connected to a serial port) that allow sync
+>to the full accuracy possible at good times of day (around 1 ms).   The
+>programs also allow time distribution to other computers on a network -
+>thus their name  - ntp - which stands for network time protocol (and the
+>network time program that implements it). This protocol and the various unix
+>programs that implement it are quite widely used on commercial LANs and
+>the Internet to sychronize time amoung unix workstations, servers, and
+>bridges and routers.  Current implementations are capable of tracking
+>clock oscillator error on a system and adjusting the time periodically
+>to compensate for the frequency error of the clock and even to predict
+>(polynomial approximation) the change in frequency error with time.
+>
+>	The man behind much of this (at least the early research) is
+>Dave Mills who used to be at louie.udel.edu which hosted a ftp
+>site for the programs.   An archie search will reveal where they
+>are kept now, and there is a newsgroup (comp.protocols.time.ntp) for this
+>which no doubt has a substantial faq file about this. 
+
+Thanks for the reference.
+
+	
+
+>> (Then again, there are those "Receptor" watches which have (at least)
+similar 
+>> accuracy, which as I understand it work on FM subcarrier principles.)
+>
+>	Yes they use the RDS broadcast on the 57 khz subcarrier for this.
+>Of course there is no certainty the station has the clock set accurately.
+
+Chicken and egg, again.  I assume that any radio station can afford $300 for
+a GPS receiver that can put out time accurate to 1 microsecond.  If enough
+people start USING such broadcasts, they will be considered NECESSARY and
+will be maintained.  The Receptor watch is an excellent interest-developing
+product to assist in this problem; the only problem might be that errors of
+greater than the 5 msec spec'd are not necessarily immediately apparent to
+the common watch-on-wrist user.
+
+>
+>	TV stations could be made to maintain a local clock sync'd to
+>GPS and use that to do the final level of clocking out before feeding
+>the transmitter and could thus ensure that some reference point in some
+>frame happened at an exact time, but given that a user who can see a TV
+>signal can probably see GPS signals and can do the same timekeeping himself
+>for a couple hundred bucks it hardly seems worth it any more.  I do
+>expect that time codes with modest accuracy (few tens of ms at best)
+>will become common as part of the Starsite (or whatever they call it
+>now) program guide distribution on PBS, simply because this has defined
+>a format that can conveniantly contain time messages multiplexed with
+>other data and the box displays the time.  DSS and VC-II both also have
+>this capability, but of course the uncertainty of the satellite delay
+>limits accuracy and neither has provisions for providing time to other
+>devices.
+
+
+
+
+>	This is possible, but I bet the variations in phase in the local
+>distribution system due to power factor, choice of phase to use, propagation
+>time through transmission lines and substations and so forth would
+>mean that phase as observed at two distant sites was rather random
+>and maybe even subject to shifts over time as load conditions varied.
+
+I'm hoping some HV engineer will make a comment as to this factor.
+
+>
+
+
+
+
+

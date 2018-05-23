@@ -1,0 +1,146 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 11 Oct 1997 20:00:47 +0800
+To: I.Brown@cs.ucl.ac.uk
+Subject: Re: PGP CAKware & IETF controlled Open-PGP standard
+In-Reply-To: <343F4B28.B3E088A1@cs.ucl.ac.uk>
+Message-ID: <199710111135.MAA02104@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Ian Brown <I.Brown@cs.ucl.ac.uk> writes:
+> William Geiger wrote:
+> 
+> > This is a stereotypical Strawman. "Even if PGP avoids GAK some other 3rd
+> > party can modify it to be Gakware." Every version of PGP had the ability
+> > to encrypt to multiple recipients. As I stated in my previous posts I can
+> > get PGP 2.6.x to do everything 5.5 does with a couple of scripts.
+> 
+> Yes, but as Adam says, the average Mr. Windows can not. In any case,
+> this is not a narrow technical argument. Of course any system with
+> multiple recipients can be turned into GAKware. The point is that we
+> don't want to make it ANY easier for anyone to do so.
+
+Agree.  What I am proposing is to make GAK enabled systems
+non-interoperable with the OpenPGP standard on the sending end (ie to
+define that when you receive a message it won't dictate to you that
+you should use GAK compliancy, and to define that if flags indicating
+message snooping is ocurring this won't be enforced by your mail being
+bounced if you don't, and won't be implemented with encrypting to a
+special snooping crypto recipient).  What PGP is proposing with PGP
+5.5 is to implement enforcement on end users to send to GAK (or
+corporate snooping) enabled keys using the snooping key.
+
+They claim that it's ok, because the user is empowered, as he can
+override the sending to the snooping key.  But, if you enable the
+sender of a message you receive to state (in syntax defined as part of
+the OpenPGP standard, or even if it is not) that if you don't encrypt
+to this corporate snooping key (or technically equivalent
+functionality: government GAKking key) the message will bounce, how is
+this user empowerment, or choice in any meaningful way.  How is this
+user empowered to choose when 80% of businesses end up using this
+feature?  Or when the government mandates this feature.
+
+> > No this is not mandatory GAK compliance. Mandatory GAK compliance would be
+> > if every copy of PGP came with a government key and the program *forced*
+> > the user to encrypt all his messages with it.
+> 
+> Again, as Adam says, how long would it take for a government to
+> introduce legislation making this mandatory once PGP 5.5-type systems
+> took off? Or, more insiduously, using its purchasing power - "Federal
+> agencies will only buy CAK-enabled systems" - to ensure the vast
+> majority of systems did so.
+
+Bingo!
+
+> > Ok Adam here is a challenge for you:
+> > 
+> > -- Explain why Corporations do not have the right to access *their*
+> > documents in whatever form they may be in.
+> 
+> Can I take this one up ;-) 
+
+You beat me to it ... my reply crossed in the mail :-)
+
+> The point is, with *communication* keys, corporations will have full
+> access to the plaintext because it will be decrypted by the
+> recipient as soon as it arrives. I appreciate your point about
+> corporations being able to read *their* documents - although doing
+> so by snooping, without the sender's knowledge, is rather unethical
+> to say the least - but I don't think they have the right to snoop on
+> all *incoming* communications, whoever they may be from. This is the
+> really scary part of PGP 5.5...
+
+Even if you do argue that they do have the right to snoop incoming
+messages (and there may be a case for this even if some of us find it
+a bit little brotherish), this can still be just as easily catered
+for, without building GAK compliance into the IETF OpenPGP standard by
+having the user's client software decrypt and store their mail folder
+in plain text, or encrypted to a company escrowed storage key.
+
+Such a system would not be at all GAK compliant.
+
+> William Simpson wrote:
+> 
+> > Let us decide _what_ the goals are, _how_ to solve the problems, and
+> > _then_ decide the protocol details and formats to match the solution.
+> 
+> Absolutely. Can we start with Adam and William's proposal that we should
+> have three separate types of key: communication, signature, and storage.
+
+(I am glad that you managed to persuade William that this was
+necessary, I didn't notice him agree :-) William should however be
+credited for the useful contribution that you can just as easily
+implement corporate snooping with the existing multiple crypto
+recipients functions of pgp2.x.  (Without the GAK compliancy baggage).
+
+> This would be very simple to implement; probably the easiest and most
+> backward-compatible way would be to define a new packet type specifying
+> a key's usage. 
+
+I'll go for this idea.  X509 v3 certificates have such an extension,
+and it seems like a very useful functionality for OpenPGP to include.
+
+Re. the argument about separating key functionality leading to more
+consistent and secure designs, if people don't like 3 keys, you should
+see some of the Norwegian standards stuff which was relayed to me at a
+eurpean medical messaging standarisation meeting... they reportedly
+have 5 key usages defined:
+
+  1. storage
+  2. signatures
+  3. encryption
+  4. certificates
+  5. authentication
+
+> > Why have a communication enforcement filter, when the only usage is
+> > supposed to be for recovering archival storage?
+> 
+> Absolutely. I can see the point, and appreciate the difficulties faced
+> by PGP Inc., in most of the CAK features of PGP 5.5. But I just can
+> *not* see how the twisted idea of the SMTP snooper ever came about.
+
+It came about I suspect because the real unstated feature they are
+trying to implement is message snooping, and not stored email folder
+access as the "data recovery" badge used by Jon in his first post may
+lead one to assume.  Of course the reason they think they are able to
+use the argument that "email is both storage and communications" to
+justify this is largely because they haven't yet digested the meme
+that you should have separate storage keys.
+
+I also heartily agree with William Allen Simpson's comments.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

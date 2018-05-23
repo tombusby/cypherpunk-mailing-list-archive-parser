@@ -1,0 +1,83 @@
+From: Gary Howland <gary@hotlava.com>
+Date: Sun, 10 Aug 1997 20:21:54 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: pgp -c undetectable change to ciphertext? (was Re: Hipped on PGP) [SYSTEMICS]
+In-Reply-To: <199708091742.SAA02232@server.test.net>
+Message-ID: <199708101208.FAA23504@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Ian Grigg <iang@systemics.com> writes:
+> > [Gary Howland gives talk at HIP on technical PGP flaws, 0xDEADBEEF etc]
+> >
+> > And for the record, whilst Gary's attack to change conventionally
+> > encrypted files without detection was unknown to the PGP team at the
+> > moment, we can be sure that it will be addressed.
+
+It's not just unconventionally encrypted files - any encrypted file
+that is unsigned can be modified without detection.  I brought this
+to everyones attention because far too many people assume that encryption
+provides integrity.
+
+
+> Hmm.  Change pgp -c files you say.  Lets see... do you mean this:
+> 
+> % echo hello world > junk
+> % pgp -c +compress=off -zfred junk
+> % sed 's/....$/adam/' < junk.pgp > junk2.pgp
+> % pgp -zfred junk2.pgp
+> % cat junk2
+> hello woøP?t
+> 
+> That much is obvious.
+> 
+> (pgp doesn't complain or even notice the above btw ... there is no
+> checksum and so you can just garble the file, if you so wish, and pgp
+> won't complain).
+
+Yes, this is part of the point I was making.
+
+
+> Or did Gary find a way to undetectably modify ciphertext without
+> turning off compression?
+
+Of course it is easier to modify uncompressed files, but even compressed
+files can be tampered with - it's just an awful lot harder.
+
+ 
+> Could you or he elaborate on your attack?  
+
+In addition to turning files to garbage, I was pointing out that files can
+be truncated.  This could be very serious, if, say, you removed the second
+of a pair of financial transactions, or perhaps removed the last line of
+a security program, eg. if the last line of a script is "chmod -w filename"
+and you can remove this line, then you may be in trouble.
+
+As well as trashing files, and truncating them, it is also important
+to remember that the last 8 bytes can be modified without detection
+if the plaintext is known.  This could be very serious.  Think of
+the damage that could be done in 8 bytes ( "rm -rf /").
+
+I agree that these attacks are very unlikely to occur, but I just wanted
+to bring it to everyone's attention.
+
+ 
+
+> If you're using PGP with compress=on, then I suspect your chances of
+> undetectably modifying the ciphertext and still coming up with
+> something which is a valid compressed packet is fairly low.  I wonder
+> how low.  
+
+If the plaintext is known, I could come up with a change to the last 8 bytes
+that would be valid (well, perhaps not - I don't know ZIP compression
+too well).
+ 
+
+Gary
+
+
+
+
+

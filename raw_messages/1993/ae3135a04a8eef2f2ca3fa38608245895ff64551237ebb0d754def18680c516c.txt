@@ -1,0 +1,52 @@
+From: sameer@netcom.com (Sameer Parekh)
+Date: Tue, 14 Sep 93 01:28:52 PDT
+To: cypherpunks@toad.com
+Subject: Really simple script for pgp
+Message-ID: <9309140826.AA19612@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+	I wrote a really simple script for PGP which I am particularly
+proud of. (I'm not very experienced at sed/awk/etc. hacking, so that's
+why I'm so happy with it.)
+	All this does is extract all keys from your pgp keyring with
+the partial string specified in the cmdline and saves it to either the
+keyring given as the second argument or a file with the name of the
+partial string.
+
+- -- 
+Sameer
+sameer@netcom.com
+
+#!/bin/sh
+if [ $2 ]
+then
+ FILE=$2
+else
+ FILE=$1
+fi
+
+pgp -kv $1 | tail +3 | cut -c30-150 | sed -n -e '/./p' | sed -e 's/^.*$/pgp -kxf \"&\"/' | /bin/sh | pgp -kaf $FILE 
+
+
+
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLJWAHgvya0ihLgutAQF+qAP6AnuLuCyLKAdysbWbcM5CVYozSQK8ESCf
+j+njlB9PkfBGA/ap15WWcWQZybeXvglfzl2gjDYftslbb0UNqUyGEw4dPrthGq93
+7WiVceatZmGf9zzwvrEOV8xMJfG7SovxY/KDsrXJOxXPTXpdJTB5cG42gQe/MSUX
+Y3S3RWcD0Lo=
+=9iQ7
+-----END PGP SIGNATURE-----
+
+
+
+

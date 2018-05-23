@@ -1,0 +1,79 @@
+From: Lucky Green <shamrock@netcom.com>
+Date: Thu, 1 May 1997 14:41:59 +0800
+To: Adam Back <cypherpunks@cyberpass.net
+Subject: Re: Eternity service proxies
+Message-ID: <3.0.32.19970430232407.007181c8@netcom13.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 05:41 AM 5/1/97 +0100, Adam Back wrote:
+>
+>[btw what do people think of the practice of putting To: cypherpunks,
+>and Bcc: coderpunks@toad, cryptography@c2 as I have done here? 
+
+Works for me.
+[...]
+>My announce was rather hurried, and someone suggested to me the use of
+>a proxy as an architecture for interfacing to the eternity service
+>rather than the cgi based system I have.
+>
+>The person who suggested this to me also described some work on a
+>"universal proxy framework" which is designed to enable things like
+>"cookie-cutting, onion routing etc."  Also it was suggested this is a
+>cheaper way to implement a proxy.
+[...]
+
+This is true for some value of cheaper. The proxy framework provides
+services to the proxylets. Therefore it is cheaper to write a proxylet than
+it is to write a proxy. However, the advantages of using a proxy framework
+to enable multiple local proxies are not limited to reducing the work
+effort of the proxylet author. The framework also would provide
+registration services, which are pretty much a requirement for dynamically
+loadable proxylets to exist on a machine without requiring user intervention.
+
+After all, the proxies have to operate in a certain order to be functional.
+This order would be hard to achieve without the proxies knowing about each
+other. And since the proxies almost by definition have no idea what is
+happening on the other side of that socket (or however you want to
+implement the proxy-to-proxy interface), somebody needs to watch over them
+to make sure they get used in the right sequence.
+
+To give an example of a machine with a moderate number of client side
+proxies, you might have
+
+1. A DNS resolver proxy that intercepts the *.eternity TLD's.
+2. The actual Eternity proxy that builds the NNTP requests.
+3. A crypto proxy that encrypts the NNTP requests between the localhost and
+a suitable NNTP server.
+4. An Onion Router/Pipe-net/jondo proxy that allows for anonymous access of
+the NNTP server.
+
+And that's just for the Eternity service. Add to this a POP/SMTP proxy that
+automatically encrypts/decrypts all mail, an https proxy that beefs up 40
+bit SSL to 128 bits, a proxy that provides for on the fly decryption of
+webpages that are _stored_ encrypted, and before you know it you have ten
+proxies on a machine that all have to be used in a specific order.
+
+Ten proxies that have no way of knowing about each other. A proxy framework
+soon becomes a requirement.
+
+>My ideal interface would have been a web proxy, as this allows the
+>user to transparently integrate this into their browser.  You may be
+>able to set your browser to use the proxy to handle *.eternity, and
+>have the rest go direct, but I'm not so sure on this point.
+
+Sure. The user should never have to use special tools to access
+information. That's the beauty of using proxies. You use a standard browser
+as front end. All the rest is taken care of transparently by the proxies.
+
+
+-- Lucky Green <mailto:shamrock@netcom.com> PGP encrypted mail preferred
+
+   "I do believe that where there is a choice only between cowardice and
+    violence, I would advise violence." Mahatma Gandhi
+
+
+
+
+

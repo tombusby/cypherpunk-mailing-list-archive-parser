@@ -1,0 +1,58 @@
+From: Martin Janzen <janzen@idacom.hp.com>
+Date: Wed, 27 Oct 93 17:18:02 PDT
+To: cypherpunks@toad.com
+Subject: Re: help/subscribe
+In-Reply-To: <9310262207.AA05658@banff.procase.com>
+Message-ID: <9310280017.AA06037@loki.idacom.hp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Paul Baclace writes:
+>>It seems I perpetrated a vile and offensive error in sending a subscribe
+>>request directly to the list.
+>
+>I don't get offended, I just save the subscribe/unsubscribe message
+>in a special folder that I will use to train a learning algorithm
+>to recognize these kinds of requests. [...]
+>If anyone has suggestions for implementation that maximizes applicability
+>(e.g., I could write a C program that reads stdin or a named file and 
+>returns a status code), please let me know.
+
+Since you mention stdin, I assume you're running UNIX.  In that case, it's
+very easy to do this using awk; no C programming required.
+
+To try this out, create a small awk program called subscribe.awk, which
+contains one regular expression per "flavor" of subscribe request.  The
+command in braces is executed if a match for that regexp is found:
+
+  /[Pp]lease subscribe me/ {exit 1}
+  /[Aa]d me to the/        {exit 1}
+  /How .* subscribe/       {exit 1}
+  [etc.]
+
+Create or capture a suitable example message.  To test it:
+
+  % awk -f subscribe.awk subscribe_message; echo $status
+  1
+  % awk -f subscribe.awk other_message; echo $status
+  0
+
+Or, you can use awk as a filter:
+
+  % cat subscribe_message | awk -f subscribe.awk ; echo $status
+  1
+  % cat other_message | awk -f subscribe.awk ; echo $status
+  0
+
+Now, just wrap it in a shell script which responds with an appropriate
+message (you can of course have subscribe.awk return a different exit
+code depending on which regular expression is matched), and call the
+shell script from your $HOME/.forward file, mail filter, or whatever.
+
+-- 
+Martin Janzen           janzen@idacom.hp.com
+
+
+
+

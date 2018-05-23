@@ -1,0 +1,111 @@
+From: Kent Crispin <kent@bywater.songbird.com>
+Date: Wed, 15 Oct 1997 22:46:09 +0800
+To: coderpunks@toad.com
+Subject: Re: Technical Description of PGP 5.5
+In-Reply-To: <3.0.3.32.19971015004322.0068ca64@popd.ix.netcom.com>
+Message-ID: <19971015071258.47724@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, Oct 15, 1997 at 12:43:22AM -0700, Bill Stewart wrote:
+> Jon Callas presented a technical description of PGP5.5 at this 
+> month's Bay Area Cypherpunks meeting, as well as flak catching on the 
+> politics discussion; Phil Zimmermann and other PGP folks also helped.
+> This posting is an attempt to summarize the technical parts
+> and leave the politics for other messages.  Perhaps there's been some
+> technical discussion on OpenPGP, but feel free to forward this there if not.
+
+No, there has been little technical discussion.  Maybe I've missed 
+it, but I haven't seen from Adam a succint writeup of what his design 
+actually is -- most of what he writes is so inflated with steaming 
+anti-GAK rhetoric that it's hard to get a coherent picture.  Perhaps 
+he will take your example to heart, and post a strawman design, and 
+leave the politics to other messages.
+
+> 1) PGP 5.5 API Toolkit -  It's the core of the PGP5.5 GUI and SMTP tools.
+> 	It'll be out Real Soon Now.  It's a major change from the 
+> 	PGP 5.0 Toolkit, which is based on ViaCrypt's older code.
+> 	The toolkit knows about all the features in the message
+> 	formats, so even if the application programs from PGP
+> 	don't provide a given friendly or hostile feature,
+> 	you can still write it yourself, and so can the Bad Guys.
+> 
+> 2) PGP 5.* message format - unchanged - uses the multiple recipients,
+> 	without any indication of or dependence on relationships
+> 	between the recipients.  The format is approximately
+> 		Recipient Record 1 - KeyID1, E(sessionkey, PubKey1)  ....
+> 		Recipient Record N - KeyIDN, E(sessionkey, PubKeyN)
+> 		Message - E(Message, sessionkey)
+> 	KeyID is the 32-bit KeyID, rather than a fingerprint.
+> 	I don't know if the format or the PGP 5.x software can 
+> 	generate or accept messages with recipient records for
+> 	two different keys with the same keyid (or whether it matters
+> 	if the keys are for DH*, RSA, or both.)
+> 		* DH can be spelled "E L  G A M A L" -- Blame Cylink :-)
+> 
+> 	While 5.0 did introduce new data formats, they're not stealthy,
+> 	and features like the SMTP filters depend on being able to
+> 	know how many recipient-key records a message contains,
+> 	where their boundaries are, and what their KeyIDs are.
+
+Correct me if I'm wrong, but this seems to imply that the CMR fields 
+in the key structure are really just a convenience -- if PGP, Inc. 
+didn't write an smtp filter that enforced a CMR key, someone else
+(say a firewall vendor) could do so easily, defining whatever 
+relationship between keys they wanted.
+
+To make that a bit stronger, it seems like *any* model that uses 
+persistent encryption keys essentially enables CMR-like functionality 
+in a smtp filter -- it could be done using pgp 2.6.
+
+And therefore, PGP Inc might as well get the business, because if 
+there is demand, someone will.
+
+In the meantime they can work on perfect forward secrecy.
+[...]
+
+> - Customers -
+> 	Some of the customers do want to "recover" all their users' 
+> 	traffic. Others wanted to make sure that mail to a customer 
+> 	service rep got encrypted to the other customer service reps 
+> 	also, or at least to the rep's boss, so someone could handle
+> 	the business if the original recipient was away.
+> 
+> 	One of the more obnoxious customers was implementing CAK by
+> 	having the Corporate Security department generate keys and
+> 	hand them to the users on floppies; this gives them a less
+> 	obnoxious approach that they're willing to try.
+> 
+> 	One of the customers was really paranoid about making sure
+> 	their employees didn't leave their CAD drawings encrypted
+> 	and then steal them or extort money from the company for
+> 	decrypting the plaintext when they quit; apparently the
+> 	idea of using a document management system like programmers
+> 	use for source code control had never occurred to them....
+
+Things aren't that simple.
+
+In any case, in large organizations (corporate or government) one of
+the biggest motivations for snooping is prevention of management
+embarassment.  It's seriously embarassing, for example, to read in the
+paper in the morning that one of your employees has been maintaining a
+public ftp porn archive on the company computers....you can fire the
+employee, but the damage has been done.  
+
+It's a cold fact that some employees are stupid, and others are bad. 
+Snooping is more a result of this fact than it is innate evil on the
+part of management. Of course it is nicer to work in a trusting 
+environment, but the problems go both ways.
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

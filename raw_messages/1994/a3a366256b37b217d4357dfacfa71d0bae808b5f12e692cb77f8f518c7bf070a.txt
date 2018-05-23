@@ -1,0 +1,41 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 8 Aug 94 07:58:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: Anonymous Transport Agents (Was: Latency vs. Reordering)
+In-Reply-To: <940808023733B6Mjgostin@eternal.pha.pa.us>
+Message-ID: <199408081457.HAA07967@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jeff Gostin <jgostin@eternal.pha.pa.us> writes:
+
+>     Suppose an encryption-savvy mail transport agent, say ESMTP, was
+>developed. Further suppose that part of handshaking protocol for this
+>transport protocol included an ENCRYPTED reverse lookup on IP identities
+>to check that the message is actually coming from where it claims it's
+>coming from.  Suppose again that the results of this lookup were only
+>checked for correctness (boolean), and then discarded WITHOUT LOGGING, or
+>at least with minimal logging. If the reverse lookup was TRUE (IE: the
+>sending machine was who it said it was), the message was accepted. If it
+>failed, the message would be accepted, and then sent to the bit bucket.
+
+I can see two problems.  First, at least the first machine on the trans-
+port path will see both your origin address and your destination address.
+So it is in a perfect position to do traffic analysis.  Many users may
+not have the ability to control which machine this is since routing is
+usually automatic these days.
+
+Second, if each machine simply saves a message and sends it on, then even
+if the messages are encrypted there will probably be timing relationships
+between the incoming and outgoing messages which will allow them to be
+linked.  So someone monitoring the intersite communication channels may be
+able to track a message through the network just by noticing when it comes
+into and goes out of each node.  This is why Chaum introduces message
+batching and mixing at each node.
+
+Hal
+
+
+
+

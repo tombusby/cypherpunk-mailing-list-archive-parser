@@ -1,0 +1,63 @@
+From: stewarts@ix.netcom.com
+Date: Tue, 8 Oct 1996 07:30:34 +0800
+To: scottb@aca.ca
+Subject: Re: picture encryption
+Message-ID: <199610071755.NAA22300@attrh1.attrh.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 04:04 PM 10/4/96 -0400, you wrote:
+>Sometime back someone mentioned a program that would hide messages inside a 
+>picture, by replacing the LSB of the color with the message.
+
+There are several such programs.  The general term is "Steganography",
+which means "hidden writing", so you'll see programs with names like
+stego, jsteg, mandelsteg, etc.  Look in the usual archive locations
+such as ftp.ox.ac.uk and ftp.funet.fi.  Also, for Romana Machado's
+stego programs, look at her home page on www.fqa.com.
+
+>I was thinking that if they outlawed high strength encryption (non GAK 
+>approved), not letting them realize that you were sending encrypted 
+>information would be an excellent alternative.  
+
+It's not an _excellent_ alternative, but if it's all you can get,
+it's all you can get.  It helps to use encryption algorithms that
+don't have special forms, e.g. don't begin with "----- BEGIN PGP"
+or other easy-to-spot headers, don't limit their output to printable ASCII,
+and (tougher) don't have other subtleties such as the statistical
+properties of RSA keys or checksums that can be tested without decrypting.
+There's been a lot of discussion on the subject here, and there are
+some stealth-PGP versions that obscure PGP's form.
+
+One difficulty with stego'd encrypted data is that it's tough to use
+it for applications like encrypting voice between your cellphone and
+the cellphone company, since _they_ won't be implementing it.
+
+One suggested place to stash encrypted data is in the low bits
+of compressed voice on an internet phone product.  It's difficult -
+you need to pick a voice compression algorithm that has room to
+substitute bits without messing up the voice quality a lot,
+which means you need to work closely with the compression algorithm.
+For 64kbps PCM, this is easy (some of the T1 standards already do this
+to send signalling bits, which is why data is often limited to 56kbps.)
+ADPCM and Delta Modulation can probably handle it fairly well, though
+they're generally used only down to speeds of 16 kbps.  Tighter compression
+algorithms have less room for noise, are much more sophisticated,
+require much more computation, and are probably a lot tougher to use,
+but they're where most of the internet phone products are.
+
+And then there are applications like CU-SeeMe (low-speed video conferencing)
+which are generally flaky enough that you could toss in the occasional
+stego frame and blame it on your cheapo camera or the overloaded reflector :-)
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk
+  Imagine if three million people voted for somebody they _knew_,
+  and the politicians had to count them all.
+
+
+
+
+

@@ -1,0 +1,63 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Fri, 27 May 94 00:49:20 PDT
+To: dct@newt.cs.byu.edu
+Subject: Re: dispersed DES
+Message-ID: <9405270748.AA07251@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matt Blaze writes:
+> David Taylor writes:
+> >I have come up with (and implemented) a version of triple DES for true
+> >paranoids, which I call dispersed DES.  All I do is append four bytes to
+> >the beginning of the output files for each cycle of triple DES.  It seems
+> >like this should provide even more security than triple DES, but I am no
+
+> It sounds like you have weakend 3-DES.  Where do you get these 4 bytes?
+> If they are fixed or deterministically generated, you will have made it
+> possible for an attacker who can brute-force 1-DES (e.g., with a Weiner
+> machine) to "peel off" each single DES key.  Instead of a 112 (or 168) bit
+> work factor (as with 3-DES), you'd end up with a 57 or 58 bit work factor.
+> If you randomly generate the 4 bytes, you have to carefully evaluate your
+> random number method.  In any case it sounds like your mode is the weaker
+> of 3-des and 1-des*(the complexity of your random bit generator).
+
+One way to get the bytes, which involves passing the data through your
+system in several batches rather than once-through, is to take the
+last 4 bytes of the message and move them to the beginning, or vice versa.
+This avoids lengthening your message by a block each time (and avoids
+the need for high-quality random padding at the end), and the bytes
+are unlikely to be lower in randomness than the original plaintext,
+since they'll have been passed through DES once already.
+
+On the other hand, assuming you're using CBC, this means you either have
+to do _lots_ of extra bookkeeping, or else do the second and third
+encryptions on the CBC'd text rather than the original text,
+which Biham or Shamir showed was weaker.
+
+> Perhaps I don't understand how your scheme works.  Also, what intuition
+> makes you think that it's stronger than plain old 3-DES?
+
+My intuitive feel about it is that it gains some strength because the
+4-byte (half-block) offset introduces mixing between the blocks of data,
+and mixing is generally a Good Thing in cryptosystems.  
+On the other hand, CBC also introduces mixing between blocks as well,
+and is far better studied, and doing stuff experts have studied is also
+a Good Thing.  The mixing done by the 4-byte offset is all local;
+the data in a given block of input propagates at most two more blocks,
+while the mixing done by CBC allows each block to affect all blocks
+farther along in the message.  There are also a variety of other ways
+to mix data between blocks, including Terry Ritter's various DES-packagings
+and some of the other block extension techniques discussed in Schneier.
+
+		Bill
+		
+# Bill Stewart  AT&T Global Information Solutions, aka NCR Corp
+# 6870 Koll Center Parkway, Pleasanton CA, 94566 Phone 1-510-484-6204 fax-6399
+# email bill.stewart@pleasantonca.ncr.com billstewart@attmail.com
+# ViaCrypt PGP Key IDs 384/C2AFCD 1024/9D6465
+
+
+
+

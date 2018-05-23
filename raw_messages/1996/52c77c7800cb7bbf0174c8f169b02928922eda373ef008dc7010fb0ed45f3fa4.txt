@@ -1,0 +1,74 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Wed, 24 Jul 1996 05:51:57 +0800
+To: cypherpunks@toad.com
+Subject: Re: DES-Busting Screen Savers?
+Message-ID: <ae1a5e6f1d021004c7bc@[205.199.118.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 5:02 PM 7/23/96, Lucky Green wrote:
+>At 15:53 7/23/96, Timothy C. May wrote:
+>
+>>Or several times that number of machines or time for machines with less
+>>crunch. Say, 100K Pentium-type machines for a month or two. How might this
+>>be gotten?
+>>
+>>A while back I proposed one approach: a brute force "screen saver" for
+>>Windows machines. Other platforms, maybe, but the most cost-effective thing
+>>to do is to go after the Windows market only.
+>
+>A friend of mine actually wrote an RC4-40 cracking screen saver during the
+>initial RC4 crack. We finished the brute force so quickly that he never
+>released the software.
+>
+
+Too bad. Properly modularized software, i.e., with a place to drop in the
+specific system/algorithm being attacked, could be adapted quickly to
+DES-busting, or whatever.
+
+If your friend still has this, and it's not just spaghetti code, maybe he
+can adapt it to a truly large-scale attack.
+
+BTW, sitting in my hot tub last night I quickly reconstructed the math for
+the "random" keyspace inefficiency:
+
+-- Imagine that N users are "randomly" picking chunks of keyspace to
+search. That is, they are not coordinating with others to avoid
+duplication.
+
+-- By the time the total amount of computons expended has equalled the
+amount that would have been expended in a "no duplications" allocated
+search, the Poisson probability distribution says that 1/e = 36.8% of the
+keyspace will not have been searched; the rest of the probabilty lies in
+keyspace searched once, twice, three times, etc.
+
+-- Thus, the calculation will have to go 2-4 times longer to give a high
+(>95%) chance that the answer is found. For example, at 3 times the
+"efficient" search time, there is only a 1/e^3 = 5% chance that nobody has
+found the answer
+
+The probabalistic assignment is less efficient, obviously, but has the
+advantage of not requiring a registry of keyspace allocations. Further,
+"denial of service" attacks (lying about having searched a chunk, or
+incorrectly searching or reporting) are not a problem.
+
+
+--Tim May
+
+Boycott "Big Brother Inside" software!
+We got computers, we're tapping phone lines, we know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Licensed Ontologist         | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

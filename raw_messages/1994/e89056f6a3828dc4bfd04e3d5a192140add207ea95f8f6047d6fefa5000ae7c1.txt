@@ -1,0 +1,52 @@
+From: Michael Handler <grendel@netaxs.com>
+Date: Fri, 8 Jul 94 10:21:07 PDT
+To: Dan Marner <dmarner@mis.nu.edu>
+Subject: Re: Request: tamper-proofing executables
+In-Reply-To: <9407081655.AA29629@mis.nu.edu>
+Message-ID: <Pine.3.89.9407081353.B13677-0100000@unix2.netaxs.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 8 Jul 1994, Dan Marner wrote:
+
+>    I would appreciate any pointers to documents, source code or
+> programs that deal with using cryptographic techniques to detect
+> or prevent modification of executable code. I am looking for 
+> something that uses either a signature or a one-way hash to detect
+> modifications at run time. 
+>    Of particular interest is information on signing a file that
+> includes the signature as part of the file. Is this possible with
+> any of the common algorithms?
+
+	Hoom. Last year, I was working on an idea I head, of making 
+self-encrypting executables. It used a simple XOR with a hardcoded value. 
+Not very secure, but that wasn't the point. The XOR was meant to deter 
+decompilers and stupid k00l /<-Rad hackerz from hex-editing the strings 
+in the program. It as, of course, vulnerable to debuggers, but I did run 
+into code later meant to deter them as well...
+	My ramblings here do have a point, and it's this: It's VERY 
+difficult to get an executable protection or encryption scheme to be 
+undefeatable. If they have a debugger, a decompiler, and various other 
+crypto-verification tools, they can defeat your scheme. Put a CRC of the 
+MD5 hash in the file to make sure they don't replace the hash? They can 
+generate the CRC of their hash and replace it in the file.
+	I have yet to devise or find a foolproof [ ;) ] or unbreakable 
+protection scheme. I'mm starting to think there's no such animal. What 
+you CAN do is protect your executables against file corruption, viruses, 
+and lame-0 hacker dudez. But, getting any secure PGP-level security is 
+very difficult.
+	OTOH, if anyone else has come up with a scheme that is hard to 
+break / unbreakable, *please* come formward and correct me. I have a few 
+applications that I'd like to apply this to. :)
+
+--------------------------------------------------------------------------
+Michael Brandt Handler                                <grendel@netaxs.com> 
+Philadelphia, PA                                    <mh7p+@andrew.cmu.edu>
+Currently at CMU, Pittsburgh, PA            PGP v2.6 public key on request
+Boycott Canter & Siegel                <<NSA>> 1984: We're Behind Schedule
+
+
+
+
+

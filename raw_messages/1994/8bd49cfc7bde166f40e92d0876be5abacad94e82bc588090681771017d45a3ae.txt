@@ -1,0 +1,76 @@
+From: andrew@riskdev.ml.com (Andrew Brown)
+Date: Mon, 12 Dec 94 16:59:34 PST
+To: jrochkin@cs.oberlin.edu (Jonathan Rochkind)
+Subject: Re: extra dashes in PGP-related blocks?
+In-Reply-To: <9412122245.AA17251@hodge-podge.MIT.EDU>
+Message-ID: <9412130059.AA07996@nottingham.riskdev.ml.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>> From: Jonathan Rochkind
+>
+>My problem was that a user would send me their public key, inside of a
+>signed message, and the "BEGIN PUBLIC KEY" stuff would have the "- " on it.
+>Which means that before I can add it to my keyring, I've got to edit out
+>the extra "- "s, and then save it in a file, and then pass it through PGP,
+>instead of just passing the original message though PGP, or using the Mac
+>"copy" command on a part of the message and sending that through PGP.
+>Or someone sends me an encrypted address block inside a signed message, and
+>I've got to do the same before I can use it.
+
+but wait!  you can't actually verify the outer sig until you extract the key
+from inside the signed message?  that's a bit more complicated.  pgp will
+actually recognize a key embedded inside an armored, signed message but it won't
+(i don't think -- warlord?) play with the key other than tell you it is one.
+
+what these people should probably be doing is signing their public keys with
+their private keys to provide the same functionality (almost).  what you have,
+otherwise, really is a two step process.  you will have to strip off the outer
+sig layer to get the the key.
+
+>I now understand why PGP does what it does, but it's still a pain. Perhaps
+>the ideal mail reading program would run my incoming mail through PGP
+>before I even saw it, so I wouldn't have this problem. Well, actually not.
+>My ideal mail reader would check the signatures before I saw them, but
+>would also leave them intact on the message, so I could re-check them
+>myself manually if I wanted.  Oh well.  It's not a limitation on
+>functionality of any kind, just on convenience.
+
+i believe if you used emacs to read your mail, you might get that sort of
+functionality since it's very user-customizable (is that a word?).  i wrote
+myself a little perl wrapper to handle signing/encrypting outbound messages
+so that i don't have to type all the options and redirect the output or move
+output files.  it's a one person thing.  to each his own.  i prefer to read
+my mail in a very un-adulterated form and i do all my sig verifying and
+decrypting by hand too.  i'm weird that way.
+
+apologies to warload, you are right (imho) about the fundamental behavior of
+remailers.  they shouldn't do things like that except perhaps atttemp to
+remove the outer armor layer if it is an encrypting/decrypting remailer.
+
+peas and goobles!
+
+- -- 
+- --< "CYBERBOY" >--
+andrew@ml.com (Andrew Brown)
+Phone: 1.212.449.0088
+Fax:   1.212.449.8612
+
+BATF plutonium AK-47 Kennedy colonel nuclear munitions Legion of Doom
+smuggle World Trade Center arrangements strategic PLO Rule Psix Ortega
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.1
+
+iQCVAwUBLuzxy7AuBPCxVEQ9AQGylAQAtrcF0ra1aG94Wnac3QFIVL1kmiOsNlGj
+zCMDAQxXExnBf5UhGct+EkDfO20kZAr2cgYwP5CH3YdcmKJ6J2nk9dvJaujZ2Dhf
+hPpug+uqnGC7R7V0ZsCcq9onpgYW+9lS4Do+EG1MIfz7j5pg541HBoBVBXOpKRXo
+nPPB+9OTkLw=
+=xOk1
+-----END PGP SIGNATURE-----
+
+
+

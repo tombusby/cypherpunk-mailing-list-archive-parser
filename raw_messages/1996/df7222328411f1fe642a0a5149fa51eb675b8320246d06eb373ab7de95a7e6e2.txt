@@ -1,0 +1,85 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 13 Sep 1996 12:09:32 +0800
+To: pgut001@cs.auckland.ac.nz
+Subject: Re: [Long] A history of Netscape/MSIE problems
+In-Reply-To: <84245818912499@cs26.cs.auckland.ac.nz>
+Message-ID: <199609120716.IAA00231@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Guttmann <pgut001@cs.auckland.ac.nz> writes on cpunks:
+> [...]  The reason for the 40-bit key and (according to RSADSI, the
+> company that developed RC4) the reason why details on it were kept
+> secret was that these conditions were required under an agreement
+> between the Software Publishers Association (SPA) and the US
+> government which gave special export status to the RC4 algorithm and
+> a companion algorithm called RC2.
+
+Hadn't heard that before, that the trade secret requirement was
+imposed on RSADSI.  What was your source for that info, it is an
+interesting assertion on the part of RSADSI, and I am intrigued.
+
+> [reverse engineer of RC4...]
+> The results were posted to mailing lists and the Internet [Anon
+> 1994a].  Someone with a copy of BSAFE tested it against the real
+> thing and verified that the two algorithms produced identical
+> results [Rescorla 1994], and someone else checked with people who
+> had seen the original RC4 code to make sure that it had been
+> (legally) reverse-engineered rather than (illegally) copied [Anon
+> 1994b].
+
+Some people held that it had been a licensed holder of RC4 source who
+had posted it in violation of the license agreement.  I think I recall
+that Tim May, may be others, argued this nearer the time.
+
+That the code looked different isn't of itself proof that it was or
+wasn't reverse engineered; it is entirely plausible for the anonymous
+poster (if it was a source license violation) to have gone to some
+pains to obscure this fact, by changing the appearance and style of
+the code.
+
+> [RC4 key schedule biases...]
+
+You ought to reference Andrew Roos paper [posted to the list, and
+sci.crypt, at least] analysing key schedule biases in RC4.  Paul
+Kocher posted a response (this was in sci.crypt) saying that he had
+discovered the same biases while working for RSADSI, (at a time before
+RC4 was revealed, or at least before RSADSI started discussing RC4
+publically, a tacit admission by them that alleged RC4 was RC4)
+
+> Further improvements to the attack were proposed.  
+
+Andrew Roos brutessl code was special case optimised for SSL, he
+precomputed part of the MD5 digest, and progressed through the key
+space in an order chosen to maximise the amount of MD5 precomputation
+that could be done.  Something of interest, perhaps.
+
+> The attacks on RC4 are a prime example of a publicity attack.  They were
+> carried out by volunteers using borrowed machine time, noone (apart from
+> Netscapes stock prices) was harmed, 
+
+Strangly (I'm not sure if anyone lost money due to this), I think
+Netscapes prices hardly suffered, perhaps even improved slightly.
+Could be due to the `any publicity is good publicity' syndrome.  There
+was a *lot* of publicity, and Netscapes response in fixing the problem
+was good.  Several US cypherpunks were tracking the stocks at the
+time, and could probably verify this.
+
+One omission: you didn't say anything about Paul Kocher's timing
+attack on RSA, which I think affected Netscape servers, and was fixed
+after his publicizing the attack.  Then you could discuss Ron Rivest's
+blinding solution, and the time delay solution.
+
+Otherwise, excellent.
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

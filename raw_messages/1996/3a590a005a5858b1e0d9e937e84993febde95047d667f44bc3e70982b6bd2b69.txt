@@ -1,0 +1,57 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 16 Jul 1996 15:21:29 +0800
+To: Jack Mott <thecrow@iconn.net>
+Subject: Re: Hardware RNG
+Message-ID: <199607160009.RAA28737@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>	Got a geiger counter plugged into the game port
+Cool.  As other people have noted, the game port may do timing things
+that can degrade the quality of your random numbers a bit, so don't
+use too many bits per sample unless you really understand its behaviour.
+>	Weak radioactive source next to it (dont worry wont fry you)
+>	Use a PRNG string to do create an RC4 S-box
+>	Cycle through the S-box in a tight loop, each time checking to 
+>see if the geiger counter got a hit, if it did, record that number in 
+>the S-box as our first byte, do this 100 times, and we have 100 random 
+>numbers.
+
+Other people have also commented that this is bad, unless you can
+show that the math behind it works well and usefully.
+
+>any thoughts? It seems to work well, no basic stat analysis reveals any 
+>pattern, and physicists have backed me up on radioactive decay being 
+>'the great randomizer'.
+
+The real randomness you have is from the radioactive decay intervals,
+plus or minus any gain from the game port hardware.  No need to muck that
+up with RC4, especially in ways that may add predictability.  
+Be very careful with statistics - if something's grossly skewed, the usual
+tests will pick it up, but they can't tell if there's a mathematical way
+for somebody who knows data point N to predict point N+1.  If you look
+at the output of your geiger counter system, you'll probably see a roughly
+exponential distribution of time intervals between hits (which is the
+result of uniformly distributed events like radioactivity) modified a bit
+by your game port behavior (e.g. the times may all be multiples of 1ms or 17ms.)
+You can extract decent random bits from this by inverting the distribution;
+if you want really high quality randoms, at lower resolution, 
+you can do something like pick two samples and return 0 or 1 depending on 
+which one is shorter - especially useful if you don't trust the game port.
+
+Your generator can't give you more real bits than that; the RC4 just
+obfuscates it, makes it harder to evaluate the real strength, and
+evens out the distributions.  You could still crunch the bits through
+MD5 or something, but only use as many bits of output as you're sure
+the generator is really giving you.
+
+#				Thanks;  Bill
+# Bill Stewart +1-415-442-2215 stewarts@ix.netcom.com
+# http://www.idiom.com/~wcs
+#				Re-delegate Authority!
+
+
+
+
+

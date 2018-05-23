@@ -1,0 +1,40 @@
+From: yanek@novavax.nova.edu (Yanek Martinson)
+Date: Sun, 20 Dec 92 05:45:43 PST
+To: hh@soda.berkeley.edu (Eric Hollander)
+Subject: Destroying Data (Re: Remailer Policies)
+In-Reply-To: <9212200800.AA20904@soda.berkeley.edu>
+Message-ID: <9212201344.AA26203@novavax.nova.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> logs.  However, I would not censor any transmissions.  I would stop
+> accepting mail from a site given enough reasonable complaints.
+
+That would not help in the least.  The person can still send mail 
+through your system, they would just not use you as the first hop.
+ 
+> Dido for me.  I would make an attempt to destroy all of my data if an
+> attempt were made to take the equipment or access the data by a government
+
+Make sure you don't think 'rm -rf /remailer-logs' actually destroys data.
+It merely de-allocates the i-nodes.  You need to know which physical
+device the filesystem is on, (let's call id /hdxxx) and then do
+'cat /dev/null > /dev/hdxxx' which overwrites with zeroes all data
+on that partition.  For that reason it may be preferable to keep all
+such information opn a filesystem of their own, so you don't have to
+destroy much other data along with it.
+
+If you use swapping or paging, you need to clear out those devices
+too, and then turn the machine off to remove all data in RAM.
+
+
+--
+Yanek Martinson    mthvax.cs.miami.edu!safe0!yanek     uunet!medexam!yanek
+this address preferred -->> yanek@novavax.nova.edu <<-- this address preferred
+Phone (305) 765-6300 daytime   FAX: (305) 765-6708  1321 N 65 Way/Hollywood
+      (305) 963-1931 evenings       (305) 981-9812  Florida, 33024-5819
+
+
+
+

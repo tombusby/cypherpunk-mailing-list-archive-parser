@@ -1,0 +1,63 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Fri, 5 Jan 1996 08:55:13 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Kocher timing attack in RISKS
+In-Reply-To: <v0153050dad10efd26ebd@[206.86.1.35]>
+Message-ID: <199601050027.TAA03963@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[via Steven Weller]
+> Reproduced here from RISKS digest:
+> 
+> ------------------------------
+> 
+> Date: Tue, 26 Dec 1995 17:23:09 -0100
+> From: Saso Tomazic <saso.tomazic@fer.uni-lj.si>
+> Subject: Re: Timing cryptanalysis of RSA, DH, DSS (Kocher, RISKS-17.53)
+[...]
+> 2.) It is not so difficult to rewrite algorithms to be resistant to timing
+> attacks, i.e., to have execution time independent of secret key.  For
+> example, the algorithm to compute R = y^x mod n given in the Kocher paper
+> can be simply rewritten as:
+> 
+> Let R = 1.
+> Let A = 1.
+> Let z = y.
+> For i=0 upto (bits_in_x-1):
+>    If (bit i of x) is 1 then
+>          Let A = (R*z) mod n
+>    Else
+>          Let B = (R*z) mod n
+> Let y = y^2 mod n.
+> Let R = A.
+> End.
+> 
+> to be resistant to timing attacks.
+
+This appears to be a version of something Hal and I and others initially
+suggested that doesn't really defeat the timing attack. In particular, the
+variable size of R in iteration k affects the time taken to compute either
+A or B in iteration k+1.
+
+Futplex <futplex@pseudonym.com>
+*** Welcome to Cypherpunks -- Now Go Home ***
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMOxwKCnaAKQPVHDZAQEapwf+IcCBI6ksBOftZ/ASB7azlmNXAT2Gzvlw
+/1ifFUPNY3nF1G2KWOVUi7tfke0W9xzPDM9G5oG4lJ+SoRcalnO9sVcL5UaxQT0d
+9mpskePCgyhQhYfYlVcRL7DglcY+7y451TSkHihRCyyUxxV5xfy9PDBPNDlXBwnR
+y9JSsEwuB9Amv2BrX/fwI5m6nuGNvRytSNrqFeLw1X8XTXknwx89KIlIlyOTPGYa
+ntS90pJ+bbiYnr3caOLrwAzSBsDnHduFA+0IKa66dOZNahF+1OiCC/roOE4lAxfl
+vQ8hOH6Y2EMdJ5If3IchnuunC10xBE+PQhRepBoSQCuTxqfbItaDGw==
+=izhc
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,60 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Fri, 25 Aug 95 00:34:10 PDT
+To: "Perry E. Metzger" <perry@piermont.com>
+Subject: Re: Crypto DLL's/SSLeay 0.4.5
+In-Reply-To: <199508241311.JAA13033@frankenstein.piermont.com>
+Message-ID: <Pine.SOL.3.91.950825081153.9077E-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 24 Aug 1995, Perry E. Metzger wrote:
+> Eric Young writes:
+> > On the PGPphone issue, I Personally I feel SSLphone would be a much 
+> > better way of doing things.
+> Oh, yeah? No user certificates, no way to verify whats on the other
+> end. No assurances that you aren't being tricked into using a weak
+> algorithm because negotiation doesn't take place under cover of
+> signature. Lots of little potential cracks. Thanks, but no thanks.
+
+:-) Agreed, it depends on how you use SSL and implement it, I have not 
+added it yet but I'll put in my library hooks so an application can 
+refuse to use certain ciphers that are in the library.  Currently you 
+can specify your preference of cipher and there 
+is a call to return the cipher being used on an SSL connection.  The most 
+recent version of SSLtelnet of ours prints the subject name of the server 
+and the cipher being used, just so you can know if you are using RC4-40 :-).
+
+As for authentication, agreed, the key distribution problem for X509 
+needs work but still, if the audio is good enough, you should know who is 
+on the other end :-).
+
+> This is not to slight your code. I'm slighting the protocol.
+none taken, my main support for SSL is that there is minimal work to be 
+done to make an application support encryption (+ perhaps authentication) 
+over a connection.  This means that any work done to improve the SSL 
+library (as in certificate distribution and verification) will instantly 
+be able to be added to all applications using that SSL library.  If each 
+one of 15 different appliction has a different cipher/authentication 
+package, there is 15 times the work to upgrade.
+Hell, to put PGP type authentication in SSL would probably not be very hard.
+It would require a new certificate type and a new 'verify certificate' 
+routine and that would be about it.
+Basically I'm a bit lazy, I like to write libraries and then keep on 
+reusing them.
+
+> > For phone over modem, authentication is not really required
+> And why is that?
+Again, if the voice is clean enough, you should know who is at the other end.
+If you are talking about a program being at the other end, well thats 
+another matter :-).
+
+eric
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups that the message contents :-)
+
+
+
+
+

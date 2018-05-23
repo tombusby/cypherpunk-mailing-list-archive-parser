@@ -1,0 +1,90 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 24 Mar 1997 16:37:41 -0800 (PST)
+To: stewarts@ix.netcom.com
+Subject: Re: UK to ban free use of crypto?
+In-Reply-To: <3.0.1.32.19970324005655.00627bd8@popd.ix.netcom.com>
+Message-ID: <199703250023.AAA00902@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bill Stewart <stewarts@ix.netcom.com> writes:
+> The big problem is that the document has a really warped view of the 
+> cryptographic and business services that a "Trusted Third Party" 
+> would provide, and some parts are expressed in quite broad language.
+> For instance, it implies that the TTP is being trusted with private keys,
+> otherwise there would be no way for it to recover anything.
+> 
+> On the other hand, from their Q&A:
+> 	Q: Will a TTP be able to access an encrypted message ? 
+> 	A: No. It is important to be clear that it is not envisaged 
+> 	that the encrypted communication would be routed via the TTP. 
+> 	Nor will the TTP encrypt the message, it will merely assist 
+> 	(depending on the service offered) in the very complex area of 
+> 	key management or Key Certification. 
+
+I think that the paper implies in several places that TTPs, if they
+offer a CA service for public encryption keys, will also be required
+to hold the private keys, and to hand the private keys over to the
+government on demand.
+
+This Q&A is not contradictory with this interpretation.
+
+When they say that the TTP will not be able to decrypt the message,
+what they mean is that it would be able to decrypt the message if the
+message were given to it, but that that's not the way the GAK
+architecture works.
+
+What happens is they first obtain a authorisation for a wire tap, then
+obtain copies of your email.  Then they go to the central access point
+and ask for your private key.  Then *they* decrypt your email.  `The
+TTP will not be able to access an encrypted message' in the sense that
+they won't give it the message to decrypt.
+
+> If the TTP is not encrypting the data, they don't need the secret key
+> or your private key.  They DO need your public key, to sign it, 
+> so a second party can trust that a key they have is really yours.
+> But you and the second party can use the signed keys to exchange a
+> secret session key, or to sign documents, without the TTP's help.*
+
+This is bypassing the intent of the key-escrow/GAK functionality of a
+TTP.  There is a section which discusses this, and makes it a design
+criteria that users not be able to by pass the GAK function, whilst
+making use of the signature certification function.  Personally, I'm
+not sure that this is possible, as there a whole host of ways around
+it.  (Use the signature key in the way you suggest, superencrypt,
+subliminal channels, stego, etc).
+
+> The main time you want another party to have a copy of your keys
+> is for stored data:  to cover the "employee dies" case 
+> (the document explicitly permits companies to handle their own keys 
+> without regulation, so no TTP is needed here),
+
+This is the point which I think should be pushed: the only commercial
+need for CKE (_commerical_ key escrow) is for _stored_ data.  Do you
+see any corporations crying out to open their communications for
+industrial espionage by DISSI, NSA, GCHQ, etc.?
+
+> SO - what _is_ all this malarkey about "legal access" and "key recovery"
+> and "key escrow" systems?  The document claims repeatedly that it's not
+> purporting to regulate any of the conditions under which a Third Party
+> would ever be Trusted with the keys you actually encrypted something with.
+
+I think there are several sections which imply that the TTP must keep
+private encryption keys for any public encryption keys it holds (and
+that it must allow government access to them).  There are many places
+where the presumption is made that the TTP has the key to release to
+government.
+
+Adam
+
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

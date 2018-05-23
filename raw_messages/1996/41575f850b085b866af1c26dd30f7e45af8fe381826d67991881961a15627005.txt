@@ -1,0 +1,180 @@
+From: wlkngowl@unix.asb.com (Mutatis Mutantdis)
+Date: Mon, 25 Mar 1996 17:28:21 +0800
+To: wlkngowl@unix.asb.com (Mutatis Mutantdis)
+Subject: Noise Sphere Plotter in C++ (was Re: Noise sphere graphical tests of randomness)
+Message-ID: <199603250551.AAA22514@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 23 Mar 1996 22:29:52 GMT, I wrote:
+
+>I've got a short program for the PC (w/TPascal source) that plots a 
+>noise sphere from a file of (pseudo) random data, if anyone is 
+>interested.  Requires a VGA card that handles mode 5Fh (640 x 480, 
+[..]
+>The source has a brief explanation of what noise spheres are and a 
+>reference to the Pickover article the program was based on.
+
+>The source code is not copyrighted, and it would be nice to see it ported to
+>other systems, or maybe a portable C version that writes the output to a
+>PCX file in RBG(?). [I'm not that fluent in C to write one...]
+[..]
+
+BTW, check the ftp.funet.fi site...
+
+Somebody sent me a C++ conversion of it. It compiles fine with BCC 4.02.
+
+Enclosed here (thanks to  "James Pate Williams, Jr." <pate@mindspring.com>)
+
+/*
+  NOISESPH.PAS, A Noise Sphere plotter written in Turbo Pascal (23-Mar-96)
+  Robert Rothenburg Walking-Owl <WlkngOwl@unix.asb.com>
+  No copyright is claimed.  No guarantees made.
+
+  Usage: noisesph file
+
+  This program reads a file of random or pseudo-random data and plots
+  a noise sphere of the data. Poor RNGs or sampling methods will show
+  clear patterns (definite splotches or spirals).
+
+  The theory behind this is to get a set of 3D polar coordinates from
+  the RNG and plot them.  An array is kept of the values, which is
+  rotated each time a new byte is read (see the code in the main
+  procedure).
+
+  Rather than plot one sphere which can be rotated around any axis,
+  it was easier to plot the sphere from three different angles.
+
+  This program is based on a description from the article below.  It
+  was proposed as a means of testing pseudo-RNGs:
+
+  Pickover, Clifford A. 1995. "Random number generators: pretty good
+	 ones are easy to find."  The Visual Computer (1005) 11:369-377.
+*/
+
+#include <conio.h>
+#include <fstream.h>
+#include <graphics.h>
+#include <iostream.h>
+#include <math.h>
+#include <process.h>
+
+struct Cartesian
+{
+  double x, y, z;
+  unsigned Color;
+};
+
+struct Polar
+{
+  double r, theta, phi;
+};
+
+int MidA, MidB, MidC, MidY, Scale;
+
+double ByteToReal(unsigned char b)
+{
+  /*note that there will be some gaps since we're only using the
+	 equivalent of an 8-bit decimal here*/
+  return  b / 256.0;
+}
+
+//Initialize the graphics screen
+int InitScreen(void)
+{
+  int GraphMode, GraphDriver;
+
+  GraphDriver = VGA;
+  GraphMode = VGAHI;
+  detectgraph(&GraphDriver, &GraphMode);
+  initgraph(&GraphDriver, &GraphMode, "");
+  Scale = getmaxx() / 6;
+  MidA = Scale, MidB = 3 * Scale, MidC = 5 * Scale;
+  MidY = getmaxy() / 2;
+  if (MidY < Scale) Scale = MidY;
+  return graphresult();
+}
+
+unsigned int ScaleColor(double)
+{
+  return LIGHTGRAY;
+}
+
+int Round(double x)
+{
+  return (int) (x + 0.5);
+}
+
+void Plot(struct Cartesian& C)
+{
+  putpixel(MidA + Round(Scale * C.y), MidY - Round(Scale * C.z), C.Color);
+  putpixel(MidB + Round(Scale * C.x), MidY - Round(Scale * C.y), C.Color);
+  putpixel(MidC + Round(Scale * C.z), MidY - Round(Scale * C.x), C.Color);
+}
+
+void PolarToCartesian(struct Polar P, struct Cartesian& C)
+{
+  //No rotation was added. Instead we plot from three angles...
+  C.x = P.r * sin(P.phi) * cos(P.theta);
+  C.y = P.r * sin(P.phi) * sin(P.theta);
+  C.z = P.r * cos(P.phi);
+  //We can assign colors based on x, y, z, r, theta / pi or phi / (2 * pi)
+  C.Color = ScaleColor(C.y);
+}
+
+void main(int argc, char* argv[])
+{
+  double X[3];
+  int error, i, n = 0;
+  unsigned char byte;
+  fstream inp;
+  Cartesian C;
+  Polar P;
+
+  if (argc != 2)
+  {
+	 cout << "usage: noisesph filename" << endl;
+	 exit(1);
+  }
+  inp.open(argv[1], ios::binary | ios::in);
+  if (!inp)
+  {
+	 cout << "*error*\could not open input file" << endl;
+	 exit(1);
+  }
+  error = InitScreen();
+  if (error != grOk)
+  {
+	 cout << grapherrormsg(error) << endl;
+	 exit(1);
+  }
+  for (i = 0; i < 3; i++)
+  {
+	 inp.get(byte);
+	 X[i] = ByteToReal(byte);
+  }
+  do
+  {
+	 P.r = sqrt(X[(n + 2) % 3]);
+	 P.theta = M_PI * X[(n + 1) % 3];
+	 P.phi = 2 * M_PI * X[n];
+	 PolarToCartesian(P, C);
+	 Plot(C);
+	 inp.get(byte);
+	 X[n] = ByteToReal(byte);
+	 n = (n + 1) % 3;
+  }
+  while (!kbhit() && inp);
+  getch();
+  closegraph();
+}
+
+
+
+
+
+
+
+
+

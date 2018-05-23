@@ -1,0 +1,32 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Thu, 24 Aug 95 14:45:00 PDT
+To: Thomas Grant Edwards <tedwards@src.umd.edu>
+Subject: Re: brloop not working
+In-Reply-To: <Pine.SUN.3.91.950824172624.22646F-100000@thrash.src.umd.edu>
+Message-ID: <"swan.cl.cam.:242090:950824214413"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> OK - I dig this, but brutessl on my Linux box is still complaining about 
+> usage...(sorry about the bandwidth but I assume other people are probably 
+> having similar problems)
+
+OK -- I'll leave CP on the CC list then ...
+
++ eval brclient -dklLtssl|(read a;nice -20 brutessl - $a)|(read a;echo  
+$a 1>&2;
+ echo $a) |brclient -AlLtssl
+++ brclient -dklLtssl
+++ brclient -AlLtssl
+++ read a
+++ read a
+++ nice -20 brutessl -
+
+That's the problem -- "brclient -dklLtssl" failed to return any keys,
+[ congestion of the server :-((( ]
+so brutessl was called with just the "-" which brloop put there.
+
+
+
+

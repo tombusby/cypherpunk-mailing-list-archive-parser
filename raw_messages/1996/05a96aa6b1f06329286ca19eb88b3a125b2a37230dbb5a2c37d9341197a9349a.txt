@@ -1,0 +1,62 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 11 May 1996 02:25:57 +0800
+To: nyap@mailhub.garban.com (Noel Yap)
+Subject: Re: time services on the Net
+Message-ID: <199605100039.RAA00738@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:11 AM 5/7/96 -0400, you wrote:
+>I'm in need of a time service available over the Internet.
+>Time-stamping is a plus, but the actual time (GMT, local, ...)
+>is more important.  Does anyone have, or know of where I
+>can find, a list of these services?
+
+Check out http://www.clock.org/clock.org.html and
+http://tycho.usno.navy.mil/ for more information.
+
+There are some standard TCP/IP protocols for time.
+You can check the RFCs for more information on them,
+and look in whatever your operating system calls the "services" file.
+
+There's a simple "daytime" protocol which gives the time in
+hours:minutes:seconds at 1-second resolution, in ASCII or
+binary, over TCP or UDP.  It's dumb, but it works fine
+if that's enough resolution for you, and there are programs
+to set your system clock based on it, such as rdate for Suns
+and wsntime for Winsock.  
+
+There's a far fancier protocol called NTP, the Network Time Protocol,
+which is a multi-tiered time protocol with servers and clients
+and mutual agreement and adjustment for round-trip delay and such.
+Depending on the quality of your network connections, it can
+be accurate to very fine time resolutions.
+
+It's good form for ISPs to support NTP, both to keep their
+clocks synchronized and to feed time to their clients,
+but not all of them do that.  It's also good form for ISPs to
+keep _all_ their machines in sync, not just most of them,
+as occasionally happens at (ahem) some large well-known ISPs,
+especially if they're going to bill for prime/nonprime time...
+Another motivation is so that tycho.usno.navy.mil and its
+friends tick and tock.usno.navy.mil only get hit by a few
+thousand ISPs instead of potentially millions of individuals.
+
+Ask your ISP's administrators what they do about clock sync,
+unless of course you _are_ the administrator, or your ISP
+takes three weeks to respond to tech support questions like
+the (ahem) large well-known ISP not named above.
+I currently use wsntime to sync off cesium.clock.org because
+my ISP has reconfigured their time service and takes
+weeks to respond to tech support quetions, but I was using
+the ISP directly for a while.
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+# goodtimes signature virus innoculation
+
+
+
+
+
+

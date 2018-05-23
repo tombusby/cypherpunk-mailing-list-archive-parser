@@ -1,0 +1,50 @@
+From: ichudov@algebra.com (Igor Chudov @ home)
+Date: Sun, 29 Dec 1996 14:35:44 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: cypherpunks suggestion
+Message-ID: <199612292022.OAA20370@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+John -- 
+
+Just got back after vacation...
+
+It is my understanding that cpunks list has been attacked by 
+several clever tricks. I have a couple of suggestions on how to 
+improve protection of this list:
+
+# Use the following recipe in .procmailrc for cypherpunks (or majordomo)
+# account: 
+
+:0
+* ^TOcypherpunks
+* !^X-Loop:
+* !^FROM_MAILER
+* !^FROM_DAEMON
+* !^X-Mailing-List:
+{
+  # get rid of duplicates
+  :0 Wh: msgid.lock
+  | formail -D 65524 msgid.cache
+
+  # add X-Loop:, etc
+  :0 fhw
+  | formail -I "X-Loop: cypherpunks@toad.com" 		\
+	    -I "X-Mailing-List: cypherpunks@toad.com"	\
+	    -I "Precedence: list"			\
+	    -I "Errors-To: cypherpunks-errors@toad.com"
+
+  # this recipe finally passes the submission to majordomo
+  :0
+  | majordomo ....
+}
+
+The rest is not really anything for cypherpunks, and should go to /dev/null.
+
+	- Igor.
+
+
+
+

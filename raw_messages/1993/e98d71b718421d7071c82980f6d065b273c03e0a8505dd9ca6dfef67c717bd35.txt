@@ -1,0 +1,33 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Thu, 21 Oct 93 10:12:48 PDT
+To: hfinney@shell.portal.com (Hal Finney)
+Subject: Re: Mail delivery question
+In-Reply-To: <9310211532.AA05517@jobe.shell.portal.com.shell.portal.com>
+Message-ID: <sglg7Lq00awJQWsX5w@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I was pondering the same question awhile ago.  After poking around in
+the system and reading the temporary scratch files that the system
+created by the mailer, I noticed that the mail was being preceeded by a
+seperate header packet which was not included in the message.  Sending
+mail to myself caused the system to create two temporary files in the
+process.  One of them was called "SF" and the other was "QF".  I don't
+know what the letters stand for, and this is probably just how CMU does
+it, other sites may be different.  Anyway, in my test mail to myself,
+the SF file contained:
+
+#From |<mg5n+@andrew.cmu.edu>|
+#To |mg5n+@andrew.cmu.edu|
+#Auth |26634;andrew.cmu.edu;Matthew J Ghio|
+
+and the QF file contained the actual text of the message plus the
+headers that you see.  So the email is actually sent as two seperate
+packets of data, the headers you see are just there for looks, the
+actual delivery info is hidden behind-the-scenes.  Does anyone else have
+any description of "standard" methods of handling internet e-mail?
+
+
+
+

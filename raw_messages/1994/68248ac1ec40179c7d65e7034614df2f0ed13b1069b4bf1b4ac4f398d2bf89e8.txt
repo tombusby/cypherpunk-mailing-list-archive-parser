@@ -1,0 +1,53 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Sun, 17 Jul 94 22:56:10 PDT
+To: ben@Tux.Music.ASU.Edu
+Subject: PROTOCOLS: Re: Hashed Hash
+Message-ID: <9407180554.AA21317@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I'm planning on implementing the "cryptographic protection of databases" 
+> on page 61 of Schneier, to create a directory of a professional 
+> organization that would be useless to telemarketers.
+> [hash last name to get DES key and location of encrypted data in list.]
+> [ problems of brute-force and popular-last-names attacks ]
+
+If you're only concerned about telemarketers, this amount of obscurity 
+may be enough - anybody competent enough to hash a list of, say,
+10000 last names x 1000 first names into your database is at 
+least an *interesting* telemarketer :-)
+
+If you're concerned about telemarkers from the NSA/FBI/KGB,
+then the algorithm isn't enough anyway, because even if you make the
+search space large/slow enough to make it hard to list the whole list,
+it's still easy to look up "Goren" or "Stewart" or "McCarthy" to see if
+they're card-carrying members; it won't protect the usual suspects.
+
+An intermediate variant is to use a password as part of the hash;
+if everybody has their own password, the table size is N**2, or you can
+give everyone the same password without increasing the table size,
+and still be able to distribute the list on FTP.
+
+[This version is probably most useful for Secret Societies,
+where key distribution and privacy are taken seriously -
+the Masons could use a 33*N-entry hash table, and you *still* wouldn't
+be able to tell whether any members were the Illuminati! :-) ]
+
+By giving everyone different passwords and adding logN dummy records to
+the database, you could also tell whose copy was leaked (if only one copy
+leaks out; you obviously need more entries to detect multiple leaks.)
+
+On the question of whether there are functions I(m) = H(H(m)) for popular
+hashes, by definition there are, since H(H(m)) is one.  For most of
+the cryptographically useful functions, though, there aren't any that
+are faster than running the hash function twice.  Some exceptions are
+hashes like a**x mod p, x**a mod p, and obviously (a*x+c) mod p.
+But DES is known not to be a group, and MD5 is ugly enough it probably
+isn't group-like either.
+
+			Bill
+
+
+
+

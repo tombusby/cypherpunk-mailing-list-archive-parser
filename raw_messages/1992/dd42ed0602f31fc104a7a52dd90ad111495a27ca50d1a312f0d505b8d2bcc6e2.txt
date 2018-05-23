@@ -1,0 +1,60 @@
+From: Karl L. Barrus <barrus@tree.egr.uh.edu>
+Date: Tue, 15 Dec 92 09:43:54 PST
+To: cypherpunks@toad.com
+Subject: remailer extension (contact field)
+Message-ID: <9212151743.AA20003@tree.egr.uh.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've added a contact field to my remailer.  To contact me (the
+operator of remailer03 <elee7h5@rosebud.ee.uh.edu>) you can use the
+following header:
+
+----cut here----
+::
+Contact:
+
+----cut here----
+
+Note the colon after contact and the blank line at the end.
+Encryption of this header is supported as well; you can reach me by
+encrypting this contact header and doing the usual.
+
+For those interested - here are the changes to maildelivery and
+remail.pl (I haven't been able to study the remailer code much, and am
+just learning perl, so this can probably be improved.)
+
+Changes to maildelivery, before the * on the last line
+Add the following: (I spaced everything out in the file)
+
+Contact  ""  pipe R  remail.pl
+Contact  ""  file A  archive.remail
+
+Add to remail.pl, before the block that begins
+                  if (/^Request-Remailing-To:/ || /^Anon-To:/)
+
+if (/^Contact:/) {
+  chop ;
+  s/^.*// ;
+  $addressee = $_ ;
+  $addressee = "my.id@some.other.machine" ;
+}
+
+I don't know perl well enough to figure out what can or can't be
+deleted (specifically the $addressee = $_ line, etc.)
+
+/-----------------------------------\
+| Karl L. Barrus                    |
+| barrus@tree.egr.uh.edu (NeXTMail) |
+| elee9sf@menudo.uh.edu             |
+\-----------------------------------/
+
+
+
+
+
+
+
+

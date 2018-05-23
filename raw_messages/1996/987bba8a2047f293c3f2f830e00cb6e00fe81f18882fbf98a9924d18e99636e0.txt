@@ -1,0 +1,42 @@
+From: Eric Eden <erice@internic.net>
+Date: Fri, 5 Apr 1996 11:46:24 +0800
+To: cypherpunks@toad.com
+Subject: Using crypt()
+Message-ID: <199604041747.MAA11669@ops.internic.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I'm testing a encryption program that includes use of crypt().  
+(I know its not the strongest scheme.)  Here's the problem:
+
+We ask users to e-mail us an encrypted password derived form the
+crypt() utility when they set up an account.  When they want to
+change information related to the account, we ask them to e-mail the
+cleartext of the encrypted password.  The program then checks to see
+if the cleartext matches the original encrypted password. If so, their
+information is automatically updated.
+
+The only problem is when users mistakenly supply cleartext initially,
+they can never update their information because the program isn't
+smart enough to realize that the user was submitting cleartext instead
+of an encrypted password when setting up their account.
+
+Is there any way to check and see if the text the user 
+supplies initially has been encrypted or is cleartext?
+
+Or is there a better way to do this?
+
+The account does not contain financial information, otherwise a
+stronger scheme would be required.  Right now the program allows the
+user to choose from the auth schemes MAIL-FROM, CYPT-PW or PGP.
+
+Any hints would be appreciated.
+
+Eric
+
+
+
+
+

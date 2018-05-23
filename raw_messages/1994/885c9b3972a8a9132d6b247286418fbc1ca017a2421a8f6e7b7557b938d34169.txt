@@ -1,0 +1,113 @@
+From: strick@techwood.org
+Date: Mon, 12 Dec 94 12:23:23 PST
+To: jrochkin@cs.oberlin.edu (Jonathan Rochkind)
+Subject: (RFC934) Re: extra dashes in PGP-related blocks?
+In-Reply-To: <ab124e4c0302100420d1@[132.162.201.201]>
+Message-ID: <199412122021.MAA04027@gwarn.versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+THUS SPAKE jrochkin@cs.oberlin.edu (Jonathan Rochkind):
+# 
+# Does anyone know what it is that's putting in these "- "s, why it's putting
+# them in, and how to stop it?
+
+They're part of RFC934 and they are the correct standard way to 
+encapsulate messages inside messages, short of using MIME.
+Many mailers produce & handle these correctly.  
+
+The extra "- " are due to "Character-Stuffing the Encapsulation Boundary".
+What you&we need is filters to extract encapsulations that unstuff
+nested encapsulations.
+
+Relevant excerpt from RFC934 follows.    --strick
+
+--
+--
+--
+
+
+Network Working Group                        Marshall T. Rose (Delaware)
+Request for Comments: 934                       Einar A. Stefferud (NMA)
+                                                            January 1985
+
+              Proposed Standard for Message Encapsulation
+
+  ...
+
+Message Encapsulation
+
+  ...
+
+   Definitions: a draft forwarding message consists of a header portion
+   and a text portion.  If the text portion is present, it is separated
+   from the header portion by a blank line.  Inside the text portion a
+   certain character string sequence, known as an "encapsulation
+   boundary", has special meaning.  Currently (in existing
+   digestification agents), an encapsulation boundary (EB) is defined as
+   a line in the message which starts with a dash (decimal code 45,
+   "-").  Initially, no restriction is placed on the length of the
+   encapsulation boundary, or on the characters that follow the dash.
+
+  ...
+
+      2.3. Encapsulated Messages
+
+      Each encapsulated message is bounded by two EBs: a pre-EB, which
+      occurs before the message; and, a post-EB, which occurs after the
+      message.  For two adjacent encapsulated messages, the post-EB of
+      the first message is also the pre-EB of the second message.
+      Consistent with this, two adjacent EBs with nothing between them
+      should be treated as enclosing a null message, and thus two or
+      more adjacent EBs are equivalent to one EB.
+
+  ...
+
+
+Character-Stuffing the Encapsulation Boundary
+
+   It should be noted that the protocol is general enough to support
+   both general forwarding of messages and the specific case of digests.
+   Unfortunately, there is one issue of message encapsulation which
+   apparently is not addressed by any forwarding agent (to the authors'
+   knowledge) in the ARPA-Internet: what action does the forwarding
+   agent take when the encapsulation boundary occurs within a the text
+   portion of a message being forwarded?  Without exception, this
+   circumstance is ignored by existing forwarding agents.
+
+   To address this issue, this memo proposes the following
+   character-stuffing scheme: the encapsulation boundary is defined as a
+   line which starts with a dash.  A special case is made for those
+   boundaries which start with a dash and are followed by a space
+   (decimal code 32, " ").
+
+      During forwarding, if the forwarding agent detects a line in the
+      text portion of a message being forwarded which starts with the
+      encapsulation boundary, the forwarding agent outputs a dash
+      followed by a space prior to outputting the line.
+
+      During bursting, if the bursting agent detects an encapsulation
+      boundary which starts with a dash followed by a space, then the
+      bursting agent does not treat the line as an encapsulation
+      boundary, and outputs the remainder of the line instead.
+
+   This simple character-stuffing scheme permits recursive forwardings.
+
+  ...
+
+--
+--
+--
+  strick <...!{ihnp4,akgua,allegra,gatech}!techwood.org!strick>
+
+
+  echo '[q]sa[ln0=aln256%Pln256/snlbx]sb3135071790101768542287578439snlbxq'|dc
+                                           --keithv@cs.berkeley.edu(?)
+
+--
+
+
+
+
+

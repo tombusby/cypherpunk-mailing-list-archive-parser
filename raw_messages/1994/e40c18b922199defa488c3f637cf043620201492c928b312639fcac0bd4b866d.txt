@@ -1,0 +1,35 @@
+From: "Mark W. Eichin" <eichin@paycheck.cygnus.com>
+Date: Tue, 2 Aug 94 12:32:33 PDT
+To: hughes@ah.com
+Subject: Re: "Anon" fake...
+In-Reply-To: <9408021624.AA09621@ah.com>
+Message-ID: <9408021930.AA04439@paycheck.cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Now that an??? is alleged to be off the list, I'll post this; I sent
+it to Hugh earlier, but it should be of use to anyone running a
+security-related majordomo:
+
+	It should be simple enough to change RetMailAddr in majordomo.pl;
+	right before it returns $ReplyTo, adding
+
+	$ReplyTo =~ s/an(\d+)@anon.penet.fi/na\1@anon.penet.fi/;
+	
+	will switch an* addresses to na* ones...
+
+This lets an address subscribe, they just get automatically converted
+to na forms. (Alternatively, one can always drop in an abort in the
+ValidAddress function (if I remember that name right) to just abort on
+anything that matches penet.fi, but that would be rude, and merely
+escalate the problem...)
+						_Mark_
+
+ps. Has anyone added pgp support to majordomo? I might consider it...
+there are lots of issues -- but change the subject line if you want to
+talk about it on the list :-)
+
+
+
+

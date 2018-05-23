@@ -1,0 +1,83 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Mon, 19 Sep 94 10:18:20 PDT
+To: cypherpunks@toad.com
+Subject: DC-Nets and IP addresses
+In-Reply-To: <gate.PssVsc1w165w@dxm.ernet.in>
+Message-ID: <9409191640.AA15258@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   I've been arguing that DC-Nets are among the crypto protocols that
+   we've not exploited much so far. I was working on an
+   implementation, till I got stuck with the 'net' part of it.
+
+Speaking of long-term integration on the internet, might it not be a
+good idea to get some IP address range assigned for dc-net use?  
+
+To integrate with the rest of the Internet, there should be some IP
+address that this message appears to originate from.  These are the
+addresses that need reservation.  
+
+Class A,B,C addresses are the standard unicast addresses for network
+interfaces.  Class D addresses are multicast addresses.  Class E
+addresses are reserved; there are 27 bits of address space available.
+If we could reserve some 11 bit prefix of this address space, that
+would leave us with 16 bits of address for dc-net addresses.  This
+will certainly suffice until the new IP is fully deployed.
+
+As far as social mechanisms go, how does one go about reserving some
+prefix of the Class E address space?  Could our resident IETF gurus
+comment, please?
+
+Very Simple Review: To send one message, (1) a group of people make a
+bunch of bilateral communications.  (2) Each person publishes the sum
+of all the messages the receive.  (3) The sum of all the broadcasts in
+item (2) is the message.
+
+There are a bunch of integration issues to deal with as well.
+
+For communication internal to the dc-net, i.e. from one member to
+another, a Class D multicast address will suffice.  All the dc-net
+members would be members of the multicast group, and any of them could
+reconstruct a message.
+
+Communication from the dc-net to the rest of the internet is the
+problem.  How does someone send a message into the dc-net?  How does
+the dc-net send a message outside itself?  How do you properly do
+name service?
+
+For sending a message into the dc-net, a message directly posted from
+the outside to the internal multicast address for the dc-net would
+suffice.  But most systems can't route to a Class D address yet.
+Sending a message from the dc-net should appear, in an ideal world, to
+originate from the Class E address for the dc-net, but the same
+routing problem is even worse here.
+
+Unicast proxy addresses for the net solve both of these.  By using
+multiple loopback interfaces, you can given a machine on the Internet
+more IP addresses than it has physical interfaces.  That is, if a
+single machine has only an ethernet connection, adding two loopback
+interfaces could give that machine three IP addresses.  These extra IP
+addresses can be used as proxy addresses.
+
+These proxy sites would have to be trusted at least against denial of
+service.  If one assumes higher level authentication and integrity
+checking, alterations in the message stream by the proxy can be
+detected.  Failure recovery could then include choice of a new proxy
+or reconfiguration of the dc-net.
+
+I can't really comment now on how might a proper long term solution
+might work.  One would at least keep the proxy addresses for backward
+compatibility, since it's unlikely for many years to have direct
+support for dc-nets shipped as standard kernel features, although that
+_is_ the eventual goal.  It's likely that the protocols for
+discovering and joining multicast groups, as one example of an
+aggregate addressed entity, will apply here.
+
+Eric
+
+
+
+
+

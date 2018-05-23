@@ -1,0 +1,34 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Thu, 14 Apr 94 17:31:11 PDT
+To: cypherpunks@toad.com
+Subject: Remailer Reply Blocks
+Message-ID: <chfRzlC00VpcFNsV0g@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+from finger remailer@soda.berkeley.edu:
+
+>This feature currently uses the DES cypher, which is considered non-secure.
+>Not only that, but this system greatly facilitates a chosen plaintext
+>attack, which is a strong attack.  This is not a cryptographically optimal
+>system in this respect.  In other words, a determined adversary with
+>suffecient resources could probably decrypt the response block, and thus
+>break your anonymity, fairly easily.  I will soon switch from DES to IDEA,
+>which is thought to be a more secure cypher...
+
+Which is why my remailer uses 3DES and adds random padding to the
+address before encrypting it.  Random padding will thwart many chosen
+plaintext attacks, especially if you do some transpositions prior to
+encrypting it.  Since the text to encrypt is so small, doing five or ten
+consecutive DES encryptions with different keys would not use up much
+CPU time, but could dramatically increase security.  Also I compress the
+address slightly by stripping off the high bits so that 8 bytes fit into
+7.  Just a few suggestions to keep in mind...
+
+Overall, looks pretty good.  BTW, what's the number that it prepends to
+your email address when you get a reply?
+
+
+
+

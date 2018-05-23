@@ -1,0 +1,37 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Sun, 13 Mar 94 19:46:50 PST
+To: cypherpunks@toad.com
+Subject: re: voice encryption
+Message-ID: <9403140346.AA22368@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> [IBM ISDN board with TI DSP, COM1 interface, 64kbps]
+
+The big problem with ISDN is still getting connectivity to the
+people you want to talk to and getting service at reasonable prices
+(prices vary widely depending on your phone monopoly's interactions
+with the regulatory bureaucracy, and/or your distance from
+long-distance service providers if you want PRI connections.)
+
+Do you know if the TI DSP is user-programmable, or if it's just
+performing most of the ISDN functions?
+
+The difficulty with COM1 interfaces, when you're using DOS,
+is that DOS basically gives you a single character per interrupt,
+which means a system doing 8000 char/second on COM1 is taking a 
+*lot* of interrupts.  There are generally other interfaces that
+let you handle more characters at once, but they're not transparent
+to software that's expecting simple COM1, and they're often
+vendor-specific.  (The FOSSIL drivers for 16550 UARTs are addressing
+the same problem; maybe somebody's got FOSSIL support for ISDN?)
+On the other hand, if you're doing software to support voice over ISDN,
+it's probably worth doing some board-specific hacking, especially if
+you're going to use the on-board DSP anyway.
+
+Bill
+
+
+
+

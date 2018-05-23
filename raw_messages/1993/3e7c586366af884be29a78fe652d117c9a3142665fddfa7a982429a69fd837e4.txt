@@ -1,0 +1,48 @@
+From: stig@netcom.com (Stig)
+Date: Mon, 24 May 93 01:44:03 PDT
+To: prz@sage.cgd.ucar.edu
+Subject: PGP:  Environment protection for UNIX
+Message-ID: <9305240844.AA22961@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Phil & Cypherpunks:
+
+Here's a little program that demostrates a fairly simple way to immprove pgp
+security on multi-user systems....
+
+	main (int argn, char **argv, char **envv)
+	{
+	    for ( ; *envv ; ++envv) {
+	        if (!strncmp(*envv,"PGP",3)) {
+	            char *c=*envv;
+	            while (*c) *c++=' ';
+	        } /* end of if */
+	    } /* end of for */
+	    system("printenv");
+	    sleep(10);
+	}
+
+It deletes from it's own environment any environment variable that
+begins with the string "PGP".  It ain't bullet-proof but just by
+grepping the environment of netcom, I've identified several PGP users:
+
+	yonder
+	nickt
+	centaur
+	henderso
+
+This hack would prevent that...  'Course for UNIX, PGPPATH should
+default to $HOME/.pgp anyway.
+
+	Not doin' the work I oughta be doing,
+	Stig...
+	
+
+/* Jonathan Stigelman, Stig@netcom.com, PGP public key on request */
+/* fingerprint = 32 DF B9 19 AE 28 D1 7A  A3 9D 0B 1A 33 13 4D 7F */
+
+
+
+

@@ -1,0 +1,103 @@
+From: "Deranged Mutant" <WlkngOwl@unix.asb.com>
+Date: Mon, 15 Jul 1996 23:38:36 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Opiated file systems
+Message-ID: <199607151158.HAA28540@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On 14 Jul 96 at 12:48, Adam Back wrote while high on Ritalin:
+
+> Some more thoughts on encrypted file system design criteria.
+> A wish list:
+> 
+> - Choice of secret key encryption algorithms (IDEA, 3DES, MDC, Blowfish)
+
+Nice in theory. Awful in practice.  Requires code for managing keys, 
+encrypting and decrypting for ea. algorithm be resident in memory.  
+For some systems (MSDOS), free memory is at a premium... (one of the 
+reasons SecureDrive is popular is because it takes only 2.5k).  It's 
+not worth wasting memory for handling several algorithms when only 
+one is going to be used in most cases.
+ 
+> - Multiple architectures (MSDOS, Win31, Win95, WinNT, Unix, Mac)
+
+Ok...
+ 
+> - High performance (hand optimised assembler for each architecture)
+
+So much for maintaining code across platforms.
+ 
+> - Compression
+
+Not worthwhile.  Use a Stacker or JAM driver over the encrypted 
+partition on a PC, for instance.  Keep compression and crypto 
+separate utilities... keeps bugs from one interfering with another 
+and reduces complexity of both drivers; also, if one wants crypto 
+w/out compression or compression w/out crypto, no wasted memory (see 
+above about RAM being at a premium).
+
+> - Ability to chain algorithms (IDEA and then 3DES for example)
+
+Why?  Doesn't necessarily increase security, esp. considering the 
+performance hit (memory... see above, time, key management).
+
+> - Possible to have encrypted file systems on separate partitions, or
+> 
+> - Encrypted file system located in a file in another file system 
+>   (much like DOS stacker drives) this is an ease of use criteria -- I
+>   suspect re-partitioning drives would put off many potential users.
+
+Nothing new there.
+
+> - Ease of use.  Graphical user interface for setup and administration
+>   functions, with a very simple set of configurations options
+>   displayed by default, with more advanced configuration options
+>   available in "expert" mode.
+
+A common problem with much crypto these days.
+
+> - All directory and FAT information should be encrypted, so that
+>   it is not possible to discover even number of files, or percentage
+>   of disk used without the key
+
+Do you understand how such systems work?!?  Every sector is 
+encrypted in such systems.  That's not even an issue for most 
+encrypted file systems (at least on the PC).
+
+> - Facility for duress key, with the real data hidden in the unused
+>   space of the first encrypted drive.  To increase the plausible
+
+Huh?!?
+
+>   deniability all unused blocks within a file system should be filled
+>   with garbage, so that it is not possible to tell if there is more
+>   data there.
+
+If the algorithm is good, this shouldn't matter.  The only way a 
+person could tell if a sector is unused is if that person was able to 
+mount the partition already.
+
+> - File system steganographically hidden in files on another file
+>   system (encrypted or not).  Support for a wide selection of file
+>   formats (Aiff, Wave, Midi, JPEG, GIF, RGB, MPEG).
+
+Now this is getting nutty!!!  Never mind the size, compleixty and 
+amazing slowness of such a driver...  you'd have to have audio or video
+files of gigabytes in size to be able to store anything of use.
+
+> - Ability to use stegoed file system in files on an unencrypted
+>   file system, and boot from a floppy to access stegoed file system,
+>   with no other traces left on hard disk.
+
+Why?  The authorities would wonder why you have an 8 Gig JPG on your 
+disk and figure you're using it for stego, or you're crazy, or both, 
+and have you committed.
+
+Rob.
+ 
+
+
+
+

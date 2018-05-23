@@ -1,0 +1,38 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Wed, 6 Sep 95 17:48:44 PDT
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: fast modular reduction
+Message-ID: <Pine.SUN.3.91.950906174500.9460B-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+During the Crypto' 95 Rump Session, Josh Benaloh of Microsoft Corp. 
+presented a new modular reduction algorithm that he and I developed.  It 
+is faster than the Montgomery method by about 10 to 15%, and is more 
+general and easier to understand.  The central idea is that it is easy to 
+reduce a number to an equivalent one that's just one "block" (machine 
+word) longer than the modulus, by repeatedly subtracting off the highest 
+block, and adding back something that's equivalent, but smaller.
+
+In the following pseudocode, B is the radix in which the numbers are 
+represented (2^32 for a 32-bit machine), n is the length of modulus in 
+blocks, U is B^(n+1) mod the modulus, X is the number to be reduced, k+1 
+is the length of X, and Y is the result.
+
+1. Y = X
+2. For i from k down to n+1, repeat steps 3 and 4
+3.	Y = Y - Y[i] * B^i + Y[i] * U * B^(i-n-1)
+4.	If Y >= B^i, then Y = Y - B^i + U * B^(i-n-1)
+
+Tricks can be used to eliminate step 4, and to reduce Y to n blocks using 
+one single precision division, and n more single precision 
+multiplications.  The algorithm will hopefully be written up more 
+completely soon.
+
+Wei Dai
+
+
+
+
+

@@ -1,0 +1,83 @@
+From: "Vladimir Z. Nuri" <vznuri@netcom.com>
+Date: Sun, 4 May 1997 07:39:05 +0800
+To: cypherpunks@cyberpass.net
+Subject: Java woes on compatibility
+Message-ID: <199705032325.QAA11796@netcom13.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+in a recent "PC Magazine" the story went into the compatibility problems
+among different vendors versions of the Java language, predicting that
+the problems may become worse. in short the vendors have a hard time
+getting all the compliance exactly correct.
+
+unfortunately, this same story happened with Unix and C such that the
+libraries out there did not fully adhere to a standard, even when the
+standard went into meticulous detail. is it the same insurmountable
+problem all over again? can there ever really be a totally portable
+language? java was invented to solve portability problems, but is
+plagued with the same ones that other languages have.
+
+what's the solution? it hasn't been implemented yet, but I believe the
+solution is an extremely sophisticated verification package for the
+correctness of the Java language. this type of idea is hinted in the
+makefiles of some C programs that compile based on complex attempts
+to avoid/workaround portability glitches. I saw one that did many
+regression tests on "strcpy" trying to catch all the kinds of things
+that can go wrong.
+
+the idea is that you actually have code that tests all the key implementation
+aspects of the library and language. it needs to be capable of being fully
+automated. for example, you might have code that calls the java 
+window kit and then actually verifies that a window is drawn correctly
+by reading the screen or something like this. if you find that some things
+are falling through the tests, you just add to your tests. the tests
+don't need to be efficient-- you run them once and never again.
+
+also, I think the solution would involve writing a lot of verification
+routines for *every* feature of java that is implemented. the vendors
+simply run the code on their own implementation and it gives a "pass or
+fail" response. ideally, the java *user* could go through this process--
+then the company cannot claim themselves that their implementation pass
+it's all out in the open for customers to test themselves.
+
+I would suggest that anything in the Java language that can't be 
+tested like this, could be modified slightly to support this 
+"testable" property, and that it would really pay off bigtime. in other
+words, some part of the library that doesn't seem like it could be 
+tested, could have extra little aspects added to its implementation that
+support regression testing of the feature. (note that this is not
+necessarily "regression" in the classic sense of software engineering,
+but is very similar).
+
+I've written software that has this property, that its verification 
+routines are built into it and are accessable by the end user. I think
+it represents a major new and important design consideration. and ultimately
+I think it saves developers and users time in the long run, but perhaps
+not the short run.
+
+a lot of work? yes, but it's the only way in my opinion, and it can be
+done in an elegant way. if it isn't I believe that portability problems
+will *increase* as the article predicted, and the revolutionary possibilities
+of Java will be forever handicapped and shortchanged.
+
+note that some people think that you should have a certification process.
+I don't like this at all because then the verification tools are caught
+up inside the Java company when it makes sense to *distribute* these tools
+so vendors can debug their own software without going through a 
+bureacracy to get the stamp of approval. the verification suite is actually
+an extremely powerful utility that can test Java conformance and should
+be available to anyone trying to support the standard.
+
+note also that it wouldn't have to be Sun that creates such a package.
+in fact it might be better if someone not affiliated with the creation
+of the Java language built such a package.
+
+if anyone from Java/Sun is listening, I would be happy to consult on this.
+<g>
+
+
+
+
+

@@ -1,0 +1,58 @@
+From: zane@genesis.mcs.com (Sameer)
+Date: Thu, 8 Jul 93 23:40:43 PDT
+To: Clifford A Adams <caadams@polaris.unm.edu>
+Subject: Re: USENET newsreaders and cryptography: features/suggestions/questions
+In-Reply-To: <9307080348.AA10446@polaris.unm.edu>
+Message-ID: <m0oE9bF-000ZD1C@genesis.mcs.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <9307080348.AA10446@polaris.unm.edu>, Clifford A Adams writes:
+> 	1.  Does anyone know if including code like
+> system("pgp -m foobar") might cause legal problems?  Strn doesn't
+> implement any cryptographic techniques.
+	I wouldn't know, but to stay completely safe, it *might* be a good
+idea to use environment variables.
+
+CRYPTOPROGRAM=pgp
+
+system(strcat(getenv("CRYPTOPROGRAM"), " -m foobar"))
+
+	(I'm not well-versed in strcat, so this could be wrong, but you
+know what I mean.)
+	Then you're not mentioning PGP at all in the code. (Env. variables
+for the options would be a good idea as well.. that way you can't be
+attacked under the premise, "It's OBVIOUSLY for PGP, because the options
+are PGP-options.")
+ 
+
+> 	3.  It would be greatly convenient if someone would implement
+> a "verify signature only" switch for PGP.  Most of the applications I
+> would like to use don't involve data hiding--just signature verification.
+> I'm also lobbying the RIPEM author to include a similar feature.
+	One feature I'd like would be easy to parse PGP output. That way PGP
+can be more easily integrated with other programs. For example, doing
+the following:
+
+(-p for "easyparse"?)
+pgp -p <signed.txt
+
+	Would create output to stderr:
+
+3434/344D
+Sameer Parekh <zane@genesis.mcs.com>
+01/01/93 12:34:56 GMT
+
+	Then a program can parse it very easily. A successful sig would give
+a return code of 0, and failed sig would have a nonzero return code. 
+
+--
+| Sameer Parekh-zane@genesis.MCS.COM-PFA related mail to pfa@genesis.MCS.COM |
+| Apprentice Philosopher, Writer, Physicist, Healer, Programmer, Lover, more |
+| "Symbiosis is Good" - Me_"Specialization is for Insects" - R. A. Heinlein_/
+ \_______________________/ \______________________________________________/ 
+
+
+
+

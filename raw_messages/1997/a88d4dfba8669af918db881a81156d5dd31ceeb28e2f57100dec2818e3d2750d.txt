@@ -1,0 +1,54 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Fri, 7 Feb 1997 14:55:16 -0800 (PST)
+To: cypherpunks <attila@primenet.com>
+Subject: Re: faulty moderation software: duplicate messages
+In-Reply-To: <199702071941.LAA29273@toad.com>
+Message-ID: <Pine.LNX.3.95.970207175220.1844A-100000@purple.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+All messages with "Sender: owner-cypherpunks-unedited@toad.com" are received
+from the flames list.  The difference between the unedited and moderated lists
+is that the moderated list changes the message ID, appending toad.com, and
+deletes all received headers before "majordom@localhost.*by toad.com".  None
+of the messages are being doubled; this is just the result of buggy software
+
+Here's the recipe I use to filter out the three separate lists:
+
+:0
+* ^Sender: owner-cypherpunks.*@toad.com
+{
+	:0
+	* ^Sender: owner-cypherpunks-unedited@toad.com
+	flames
+
+	:0
+	* -1^1 ^Received:
+	* 3^1  ^Received:.*from majordom@localhost.*by toad.com
+	* ^Message-Id:.*toad.com
+	in.cpunks
+
+	:0
+	unedited
+}
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQEVAwUBMvuzrSzIPc7jvyFpAQFSywf/YqoJLI6crxcL9qJO/CXJKWMy5NCwilIX
+ZNgt5YkhMUpOzGtFLEYXdiw2XVisS0fWy2X7rGul7+BYYuVAM2tnOTKWuavufJXe
+KhIp41KKHe7dFWDarm5VwCt7pulRM4xVinpu0+T8M/1wfRLbC4bctJXGMSYSM9Pz
+U+IBqSbi3MkrE3lAwJtirvC3qDgQXvLqHQRVwYkv8wmVoQXGKCGuiM4YEu3TamvH
+bBPEPHfh7gbtVtBFiUri7jtGLHv6kROb0/wuREgkxHd0wLld/3L7GRClIgy8b+1K
+6TeuoO32SA6tp+a9yytQUuf/WvueGdFSbLwXHozMvRu5+WOcqa8Hbw==
+=MQlk
+-----END PGP SIGNATURE-----
+
+
+
+
+

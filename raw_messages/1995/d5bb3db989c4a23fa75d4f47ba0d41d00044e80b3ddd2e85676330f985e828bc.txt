@@ -1,0 +1,36 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Tue, 19 Dec 1995 17:49:16 +0800
+To: trei@process.com
+Subject: Re: (Fwd) SECURITY ALERT: Password protection bug in Netscape 2.0b
+In-Reply-To: <9512190026.AA15461@toad.com>
+Message-ID: <30D65A4B.7ED1@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This report is mostly bogus.  Netscape does not, and never
+has stored http auth passwords in files on your disk.  However
+we do cache documents from servers that use http auth.
+In this case the user had their preferences set to check the
+host site for updated content "once per session".  There is
+a bug, which we are fixing before 2.0 ships, that if the
+auth fails the document should be removed from the cache but
+was not. If the user had set their cache checking to "never",
+then if the document is in the cache, it will always be shown to
+the user, since no connection is made to the server.
+
+  Content providers who don't want their web pages cached
+should use the 'Pragma: no-cache' http header.  This will
+tell the navigator to not save the document in the disk cache.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

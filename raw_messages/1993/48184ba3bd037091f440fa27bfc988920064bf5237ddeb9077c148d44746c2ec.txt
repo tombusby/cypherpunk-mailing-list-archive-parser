@@ -1,0 +1,54 @@
+From: Brad Huntting <huntting@glarp.com>
+Date: Tue, 31 Aug 93 13:56:33 PDT
+To: cypherpunks@toad.com
+Subject: Re: anonymous mail
+In-Reply-To: <9308311923.AA17945@tamsun.tamu.edu>
+Message-ID: <199308312052.AA01186@misc.glarp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> PEM, [...] reveals in the clear who signed the message, outside of
+> the encrypted portion. Also [...] to be PEM compliant, you *must*
+> always sign your messages.
+
+Perhaps it's time we polished the edges, added a few of the features
+that are lacking, and wrote up up an RFC for the PGP message format.
+
+Some features I'd like to see in PGP are:
+
+	The ability to send an encrypted message to multiple
+	recipients without duplicating the entire message.  The
+	most logical way to do this would probably be to encrypt
+	the random IDEA key once for each recipient.
+
+	There needs to be a facility for having multiple signatures
+	on a single document without making the signers sign each
+	others signatures.  Besides the obvious application of
+	removing a signature from a document, this would also
+	facilitate things like petitions where many people could
+	asynchronously sign a single document, and latter assemble
+	all the signatures together.
+
+	It should be possible (though certainly not mandatory) to
+	hide the recipient's identity entirely.
+
+	The message format needs to allow for alternate forms of
+	encryption (besides IDEA).  Furthermore, the (shared key)
+	algorithm used to encrypt a message should be hidden in
+	the RSA encrypted part of the message along with the shared
+	key.  Ideally, a list of algorithms could be given which
+	would allow the message to be optionally compressed before
+	being encrypted, or encrypted two or more times with
+	different algorithms.
+
+If I'm confused and the PGP message format already supports some
+of these features, please correct me.
+
+
+brad
+
+
+
+

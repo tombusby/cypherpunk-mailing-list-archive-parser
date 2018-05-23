@@ -1,0 +1,37 @@
+From: "E. ALLEN SMITH" <EALLENSMITH@ocelot.Rutgers.EDU>
+Date: Mon, 1 Jan 1996 10:19:20 +0800
+To: vin@shore.net
+Subject: Re: Australian "calculatorcard"
+Message-ID: <01HZGYUZMNJ88Y5682@mbcl.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: vin@shore.net (Vin McLellan)
+
+>        Could be one of seven or 8 vendors of so-called
+"challenge/response" tokens or calculators.  Most of those sold in the US
+and Australia use straight DES (and a token-specific key) to encrypt the
+"random" challenge number in the token -- but it could be any secret-key
+algorithm.
+-----------
+
+	This is actually something cryptographic which I know a bit about,
+so I'll tell you what I know. I had a suitemate a bit back who was working
+for a local high-tech company as a computer programmer. He used a system
+somewhat like this, but with some interesting permutations.
+	The main difference was that it didn't use one algorithm. It used quite
+a few, determined by a hashing of the challenge code. There were a considerable
+number of challenge codes with distinct hash results that were never used. If
+the card got too many of those (or too many wrong PINs), it switched to an
+entirely different set of hashings and encryptions, all of which would warn the
+server (thanks to their turning out something different in a hash function on
+the server) that the card had been compromised. I suspect it would also wipe a
+EEPROM that was storing the valid hash function and algorithms, but he wasn't
+sure about that. It was all sealed in a plastic block to make sure it was
+physically hard to reverse-engineer, anyway.
+	-Allen
+
+
+
+

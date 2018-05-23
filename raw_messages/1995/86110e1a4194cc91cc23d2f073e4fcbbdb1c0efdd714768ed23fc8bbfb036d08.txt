@@ -1,0 +1,52 @@
+From: "Perry E. Metzger" <perry@panix.com>
+Date: Sun, 30 Jul 95 15:05:37 PDT
+To: Phil Fraering <pgf@tyrell.net>
+Subject: Re: Java, Netscape, OpenDoc, and Babel
+In-Reply-To: <199507282003.AA24860@tyrell.net>
+Message-ID: <199507302205.SAA20751@panix4.panix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Phil Fraering writes:
+> How would you make Java secure or create a secure Javalike language?
+> (Secure to your satisfaction, of course).
+
+Well, you can't make anything secure, but you can make things more
+secure.
+
+My fundamentnal design principles are:
+
+1) You can't abuse features you don't have.
+2) You can't abuse privs you don't have.
+3) You can't catastrophically fail to do something you don't do.
+
+I would eliminate the notion of having the Java interpreter make the
+system "safe" with language features that cripple certain threads of
+execution. Instead, I'd emasculate the whole system. Remove any i/o
+features right out of the interpreter -- ditto execution features or
+other features. I'd run the interpreter in a separate unix process
+communicating only through two pipes, one down which you feed code and
+mouse events and one up which you get bitmaps and URLs to fetch. The
+interpreter runs in a padded cell and can't alter the world except by
+passing up bitmaps and URLs. It doesn't talk to anything other than
+the browser.
+
+Even then, I'm not entirely comfortable, but I'm more comfortable.
+
+> What sort of interface does it have to the filesystem? I would guess that
+> a secure language would have its own filesystem mapped to a file of fixed
+> size in the normal filesystem, so that it couldn't cause disaster by
+> filling your hard disk.
+
+Thats not a secure system, because you depend on the interpreter
+properly doing the mapping. If there are no system calls to open(2) in
+the whole program it can't misuse any of those calls. If there are no
+calls to exec, it can't mis-execute things. Security through emasculation.
+
+Perry
+
+
+
+

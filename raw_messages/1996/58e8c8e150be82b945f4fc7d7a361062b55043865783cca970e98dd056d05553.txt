@@ -1,0 +1,137 @@
+From: Edgar Swank <edgar@Garg.Campbell.CA.US>
+Date: Sat, 24 Aug 1996 11:30:11 -0700 (PDT)
+To: Cypherpunks          <cypherpunks@toad.com>
+Subject: SecureDrive News 8/24/96
+Message-ID: <VqV6sD17w165w@Garg.Campbell.CA.US>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+SecureDrive Users:
+
+It's been brought to my attention that users who attempt to compile
+SecureDrive 1.4b using Turbo C++ 3.00 are haveing a problem in that
+the MD5 routine does not produce a correct result, so that the key
+generated from a given passphrase will not be the same as the
+pre-compiled version.  This is a bug in Turbo C++, not SecureDrive!
+
+However, a bypass for the problem is possible by modifying SD source
+as follows
+
+- ------------------------------cut here-----------------------
+*** C:\SECDR14B\UNC\MD5.C       Sun May 09 19:38:36 1993
+- --- MD5.C       Wed Aug 14 00:58:46 1996
+***************
+*** 12,17 ****
+- --- 12,20 ----
+   * of the MD5 routines in RSAREF.  Due to this alteration, this
+   * code is "derived from the RSA Data Security, Inc. MD5 Message-
+   * Digest Algorithm".  (See below.)
++  *
++  * Simplified some expressions to avoid incorrect compiles with
++  * some compilers, e.g. Turbo C 3.0  EWS  8/96
+   */
+
+  /*
+***************
+*** 135,145 ****
+- --- 138,158 ----
+
+      /* transform if necessary */
+      if (mdi == 0x40) {
++ #if defined (__TURBOC__)
+        for (i = 0, ii = 0; i < 16; i++, ii += 4)
++        {
++         in[i] =   (((UINT4)mdContext->in[ii+3]) << 24);
++         in[i] |=  (((UINT4)mdContext->in[ii+2]) << 16);
++         in[i] |=  (((UINT4)mdContext->in[ii+1]) << 8);
++         in[i] |=   ((UINT4)mdContext->in[ii]);
++        }
++ #else
++       for (i = 0, ii = 0; i < 16; i++, ii += 4)
+          in[i] = (((UINT4)mdContext->in[ii+3]) << 24) |
+                  (((UINT4)mdContext->in[ii+2]) << 16) |
+                  (((UINT4)mdContext->in[ii+1]) << 8) |
+                  ((UINT4)mdContext->in[ii]);
++ #endif
+        Transform (mdContext->buf, in);
+        mdi = 0;
+      }
+***************
+*** 167,178 ****
+    padLen = (mdi < 56) ? (56 - mdi) : (120 - mdi);
+    MD5Update (mdContext, PADDING, padLen);
+
+!   /* append length in bits and transform */
+    for (i = 0, ii = 0; i < 14; i++, ii += 4)
+      in[i] = (((UINT4)mdContext->in[ii+3]) << 24) |
+              (((UINT4)mdContext->in[ii+2]) << 16) |
+              (((UINT4)mdContext->in[ii+1]) << 8) |
+              ((UINT4)mdContext->in[ii]);
+    Transform (mdContext->buf, in);
+
+    /* store buffer in digest */
+- --- 180,201 ----
+    padLen = (mdi < 56) ? (56 - mdi) : (120 - mdi);
+    MD5Update (mdContext, PADDING, padLen);
+
+!   /* append length in bits and transform 1.4c*/
+! #if defined (__TURBOC__)
+!   for (i = 0, ii = 0; i < 14; i++, ii += 4)
+!    {
+!     in[i] =   (((UINT4)mdContext->in[ii+3]) << 24);
+!     in[i] |=  (((UINT4)mdContext->in[ii+2]) << 16);
+!     in[i] |=  (((UINT4)mdContext->in[ii+1]) << 8);
+!     in[i] |=   ((UINT4)mdContext->in[ii]);
+!    }
+! #else
+    for (i = 0, ii = 0; i < 14; i++, ii += 4)
+      in[i] = (((UINT4)mdContext->in[ii+3]) << 24) |
+              (((UINT4)mdContext->in[ii+2]) << 16) |
+              (((UINT4)mdContext->in[ii+1]) << 8) |
+              ((UINT4)mdContext->in[ii]);
++ #endif
+    Transform (mdContext->buf, in);
+
+    /* store buffer in digest */
+- ------------------------------cut here-----------------------
+
+This code will be inserted into any future version of SecureDrive,
+but no new release is planned at this time.
+
+For those users of Win95 and SecureDrive who are concerned about loss
+of 32-bit disk access, I've recently learned that use of Secure Device
+
+  ftp.demon.co.uk:/pub/ibmpc/secdev/secdev14.arj
+
+instead avoids this requirement. Although the Secure Device virtual
+drive is listed as in compatibility mode, the real drives are not so
+affected.  And since the virtual drive is mapped to a dos file on one
+of the real drives, I believe you get 32-bit phyical drive access
+there as well, although access is still slowed by CPU time necessary
+to encrypt and decrypt.
+
+Edgar W. Swank   <edgar@Garg.Campbell.CA.US>
+Edgar W. Swank   <EdgarSwank@Juno.com>
+Edgar W. Swank   <Edgar_W._Swank@ilanet.org>
+Home Page: http://members.tripod.com/~EdgarS/index.html
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCUAwUBMh7d4t4nNf3ah8DHAQHNdAP3RKd07B55fkW5CazT8mMaGUoTtjxSvUBv
+3ykPvBhHvu7egb4EB1/XcBTM3K/6QeE8Dt10XJVX15Fd9nHY+XI0c0VB8Trlb/NB
+0ymq+/SchedtUNmCgDeycbF104bfirpuXKy0OChDfpgMe0d/ifCXny6Co0BqIbRi
+fQyKtXzOxQ==
+=h1RT
+-----END PGP SIGNATURE-----
+
+-- 
+edgar@Garg.Campbell.CA.US (Edgar Swank)
+The Land of Garg BBS -- +1 408 378-5108
+
+
+
+

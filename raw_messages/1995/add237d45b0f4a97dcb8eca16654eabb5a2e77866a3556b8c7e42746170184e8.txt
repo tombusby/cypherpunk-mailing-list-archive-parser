@@ -1,0 +1,101 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 5 Oct 95 21:41:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: Certificate proposal
+Message-ID: <199510060440.VAA23299@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bob Smart <smart@mel.dit.csiro.au> writes:
+>Consider the IPSEC case. The current situation is:
+
+>1. We go through some process, let's call it Process A, where we determine
+>   that we want to talk to IP address 192.9.8.7.
+
+This would be, say, a DNS lookup on www.egghead.com.
+
+>2. We go through another process where we obtain the public key of 192.9.8.7.
+
+I get it by connecting to that IP address and asking for it, or perhaps
+I have it cached or I get it from some public cache.
+
+>3. We then try to decide, based on one or more certificates, whether we
+>   trust the public key to be the correct public key for 192.9.8.7.
+
+I see the certificate is signed by someone I trust and it certifies that
+this key is good for connections to Egghead Software at www.egghead.com.
+
+>Now consider the key-centric version.
+
+>1. Process A returns a public key which denotes the destination we want to
+>   talk to.
+
+OK, maybe this is some DNS variant that given www.egghead.com, returns a
+public key 0x12345678.
+
+>2. We then go through a process to obtain the IP address that belongs to
+>   that public key. We probably won't use the public key as an index to
+>   get that information. We probably use the information that was input
+>   to Process A. In fact this information may fall out as a byproduct
+>   of Process A. [However if we needed to make a scalable distributed
+>   database of RSA public keys then I have a design to do this -
+>   available on application.]
+
+OK, so now I do another DNS lookup on www.egghead.com to get the IP
+address.  Or maybe I even use key 0x12345678 as an alternative index to
+get that address.
+
+>3. We don't need to trust any certificates or anything else at this stage.
+>   The fact that the IP address belongs to the Public Key is signed by
+>   the Public Key itself.
+
+Now you've lost me.  Are you saying that the key is self-certifying,
+saying "I belong to 192.9.8.7"?  That is, it is accompanied by a
+signature issued by that key itself on this IP address?  I hate to be
+difficult, but this does not provide me with a warm feeling.  Anyone
+could have issued that key, claiming to belong to that IP address.  If
+the person who did so is able to interpose himself between me and that
+address then my messages are not secure.
+
+>The same thing happens with e-mail. If "Process A" gives us an e-mail
+>address to send to then we worry about whether we have the right public
+>key to go with it. If Process A gives us a Public Key then we can
+>have certainty about the associated e-mail address because the association
+>is signed by the Public Key.
+
+Again, I don't follow how we gain this certainty.
+
+>And a big win that just falls out of this is that I can have a
+>continuous exchange of information with one IP destination even if
+>it keeps changing its actual IP address (mobile computing) or I
+>can have an e-mail conversation with a person who keeps changing
+>their e-mail address. The things you want just fall out instead of
+>requiring clever software solutions.
+
+This can be dealt with in the certificate context by having a
+certificated key sign a statement that the IP address is now
+such-and-such.
+
+>In the key-centric world a certificate binds some attribute as a property
+>of a publc key. So an X.509 certificate would say "The owner of this
+>public key [i.e. person who knows the corresponding private key] owns
+>the following point in the X.500 namespace", rather than that "the
+>person identified by this DN owns the following publc key". Experience
+>has shown that the latter interpretation is a mine-field. It really
+>doesn't work.
+
+I don't really care whether the name is called an attribute, a
+distinguished name, or an ooblek.  I just don't see how you're going to
+get along without it.  The fact is, we live in a world populated by
+people and companies and we use names to identify them.  I will grant
+that there are problems with uniqueness but I don't think the solution
+can be to just give up on the whole idea of names since they are so
+messy.  Pretending that keys are communicating beings is not going to
+work.
+
+Hal
+
+
+
+

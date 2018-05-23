@@ -1,0 +1,71 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 25 May 1996 11:39:31 +0800
+To: cypherpunks@toad.com
+Subject: Re: Floating Point and Financial Software
+Message-ID: <199605242014.NAA17367@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Did that earlier posting really mean Digicash code uses 16-bit quantities
+for moving money around?  Yow!  The API says 32 bits.
+
+32 bits isn't enough precision; 64 bits is almost always enough.
+Floating point gives you about 53 bits, which is usually enough,
+but it fails badly for accounting.  The problem is that the amount
+of precision in a floating-point calculation depends on the
+magnitude of the numbers, so A+D and B-D may have different roundoff errors,
+which is a Very Bad Thing when you're trying to move $D from A to B.
+Floating point is fine for deciding how much money to move,
+but you have to move the same amount in each calculation.
+
+Otherwise, if there's no clever salami-attack programmer siphoning off the
+roundoff error, little half-bits of salami get created or destroyed
+on every transaction, leaving a random-walk amount of spam or anti-spam 
+splattered all over the accounting system, which is Not Good.
+And, of course, translating fractional decimal numbers of dollars
+into floating-point binary creates another roundoff spam event,
+while fixed-point systems would just use pennies or mills or microbucks
+and operate integrally, only doing roundoff for multiplications
+such as interest-rate calculation or /12s where you're deciding how
+much money to move from account to account.*
+
+Currency conversion is a good example - floating point may give you
+the most accurate number of dollars to move for a transaction of
+some integral number of yen, ecus, or zorkmids, which will generally
+be non-integral.  Suppose Alice and Bob have ECU-denominated accounts,
+and Alice pays Bob 1 dollar, or ECU 1/1.2299=0.8130742336775 **.
+If Alice's account has, say, 3.1459265 million dollars' worth of ECUs,
+and Bob's has 2.718128459045 ECUs, it's easy to lose 4.6566e-10 ECUS in
+the transaction, and probably more if you didn't have decimal conversions.
+
+64-bit integers let you use, say, millionths of a cent as your currency,
+with values up to +/- 8 trillion, which will handle the US Federal Debt for
+another couple of years, though more bits let you use the same code for
+anything from micropayment to hyperinflated currencies.
+
+One motivation for floating-point is historical computer power limits:
+bignum arithmetics on 8086s takes lots of work, especially in languages
+like Pascal or BASIC without abstract data types, and it's slow,
+while the 8087 chip was far faster, and handled big enough chunks of
+money for almost anybody who was doing their accounting on a PC
+instead of a Mainframe.
+
+[*My paycheck at AT&T often includes an Annual Penny Adjustment at the
+end of the year to correct for the monthly payments for salaries that
+aren't divisible by 3....]
+
+[** ECU value from WSJ May 13.  Ukrainian Karbovanets were 183300/dollar.]
+
+
+
+
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+# goodtimes signature virus innoculation
+
+
+
+
+
+

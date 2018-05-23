@@ -1,0 +1,40 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sun, 10 Oct 93 07:56:04 PDT
+To: cypherpunks@toad.com
+Subject: DC-Net proposal,  comments requested
+In-Reply-To: <9310100540.AA03355@netcom5.netcom.com>
+Message-ID: <9310101455.AA08173@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Doug Barnes writes about Tim Newsham's work on DC-Nets:
+
+>> I've been looking at this problem as well, Tim, and it doesn't seem to 
+>> me that you have to output a bit at a time. 
+
+Indeed, the DC-net protocol operates in any abelian (commutative)
+group, such as, say, integers mod 2^56 (the size of a ping packet
+body).  The modulus need not be a power of two, but there's little
+advantage if it's not.  The vectors in a linear code might also be
+appropriate for certain side effects.
+
+>[... some people] consider even using
+>ciphers to generate the tosses, though then the DC-Net ceases to be
+>information theoretically secure and is no more secure than the cipher
+>itself.
+
+In practice, this is a small problem.  Since many of the messages that
+a deployed DC-net sends out will be text encrypted for some particular
+destination, one needs no greater computational security than that of
+the cipher used to encode the message.
+
+There are several random number generators provably as secure as the
+hard number-theoretic problems used for public key cryptography.  The
+problems include quadratic residuosity, factoring, and discrete log.
+
+Eric
+
+
+
+

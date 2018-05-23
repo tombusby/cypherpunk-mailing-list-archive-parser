@@ -1,0 +1,90 @@
+From: an31185@anon.penet.fi (Anon of Ibid)
+Date: Sat, 28 Aug 93 15:48:13 PDT
+To: cypherpunks@toad.com
+Subject: Re: Commercial PGP; trapdoor rumors
+Message-ID: <9308282243.AA26548@anon.penet.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In message <01H2813M8J6090MZGB@delphi.com> Mike Ingle said:
+>If there is any flaw in PGP, there are only a few places where it
+>could be. The basic mechanics of the program (RSA, IDEA, etc) obviously
+>work. 
+
+I'll agree with you there, or at the least, if they don't work I'm not
+likely to be able to prove it. I also very much doubt that there's
+really a 'trapdoor' to deliberately make decryption easy, but there's
+plenty of scope for a bug or unwarranted assumption to do so by
+accident. (Look at WordPerfect 5.1 encryption, for a good example).
+
+>The file format can easily be checked to make sure it is correct.
+>A subtle flaw would have to be somewhere like: prime number generation,
+>random RSA key generation, or random session key generation. If the primes
+>weren't actually prime, that would make the RSA keys breakable. But
+>you could take the primes (pgp -kg -l and you will see them in hex)
+>and feed them into a primality tester to verify that.
+
+With regard to the file format, I've just been looking at that, I hacked
+a test copy of PGP 2.3a to dump out the plaintext that it would normally 
+idea-encrypt to a file, and encrypted a selection of files with a
+selection of keys to look for known plaintext, then went back into
+the source code to track down where it came from.
+
+The first twelve bytes of the data that gets idea-encrypted contain
+two bytes of known plaintext, and two repeated bytes. The actual
+contents are:
+
+	bytes 1-8:	Randomly generated prefix
+	bytes 9-10:	Repeat of bytes 7 and 8 (key check bytes)
+	bytes 11-12:	ALWAYS 0xA3 and 0x01 !!!!
+
+The repeated bytes come from idea_file() in crypto.c, and are used to
+verify that you got the correct key to decrypt the file. The known
+bytes come from squish_and_idea_file() in the same file, and verify that
+the input contains compressed data and that it's zipped.
+
+Now, I don't know enough about idea encryption to know how much this would
+help to break the code, but it still seems to me that much of this does
+not need to be here. Anyone got any suggestions ? (I'd guess you could 
+at least move the repeated bytes to the end of the file ?). It's definitely a
+weak point, as a brute-force attack would only need to decrypt 12 bytes
+to verify (or almost verify ?) a correct idea key, though whether that
+*greatly* reduces the security, I don't know.
+
+I realise that the random bytes are supposed in part to protect you from
+this, however, I don't see any point in reducing the security of the
+data if you don't have to. 
+
+>The most likely place for a bug would be in the randomness. I suppose
+>it is possible that a one-line bug somewhere could leave out most of
+>the randomness, making the keys still look random but actually be
+>predictable. Random number generation is hard to verify. How has
+>that in PGP been checked? The PGP source is so big and spread out,
+>it's hard to check. I don't think there is a bug, but it would
+>be nice if PGP were carefully examined and attacked. Where are these
+>rumors coming from? They are bad for the cause.
+
+Randomness is the next thing I'm going to look at. From the output I've
+produced, I can't say I'm greatly impressed by the randomness of the random 
+prefix bytes, though that's probably a result of looking at such a small 
+sample.
+
+Tomorrow, hopefully, I'll set a program running to generate a few hundred
+thousand PGP random numbers and look at what comes out. Obviously, I
+can look at the frequency of different byte values, both overall and in
+each of the bytes it produces, but does anyone know of any other simple
+'randomness' tests for 16-byte random numbers ?
+
+
+
+-------------------------------------------------------------------------
+To find out more about the anon service, send mail to help@anon.penet.fi.
+Due to the double-blind, any mail replies to this message will be anonymized,
+and an anonymous id will be allocated automatically. You have been warned.
+Please report any problems, inappropriate use etc. to admin@anon.penet.fi.
+
+
+
+

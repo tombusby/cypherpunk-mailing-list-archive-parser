@@ -1,0 +1,57 @@
+From: Kent Crispin <kent@songbird.com>
+Date: Wed, 2 Jul 1997 22:56:36 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Jeff's Side of the Story.
+In-Reply-To: <199707020337.UAA17514@you.got.net>
+Message-ID: <19970702074006.19127@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Tue, Jul 01, 1997 at 08:46:53PM -0700, Tim May wrote:
+> 
+> There's been an ongoing discussion of the Huge Cojones remailer situation
+> on the related newsgroups.
+> 
+> This has a lot of relevance to our issues, and this is one of the more
+> illuminating articles.
+> 
+> --Tim
+
+This probably has been suggested 20 years ago, but wouldn't Jeff's
+problem have been solved if the following slight modification were
+made to the algorithm: If you are the last remailer in a chain, then
+with probability p you pick another randomly choosen remailer to send
+through.  If p is 1 end user mail would never come from you; if p is
+0.5 then half the time you send the mail on one more step.  The end 
+user, then, can never be sure of which remailer will ultimately 
+deliver the message.
+
+If all remailers used this algorithm it has the disadvantage that mail
+could float for a very long, non-deterministic time in the network --
+if p were globally 1/2, for example, then with probality 1/1024, a
+message would float on for 10 more hops. 
+
+But it has the advantage that the end user cannot pick which remailer
+will ultimately deliver the message, thus making it much more
+difficult to pick on a single remailer.  It makes annonymous mailing 
+a less attractive service, since you introduce significant delays, 
+and an increased probability of loss.  But maybe making anon 
+remailing less attractive would be a good thing.
+
+The non-deterministic retention time in the network could probably be
+solved, but at the expense of some significant complexity.  I have 
+not been able to think of a secure way to do it, however.  [If the 
+remailers know and trust each other, the problem is easy.]
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

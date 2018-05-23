@@ -1,0 +1,47 @@
+From: "=?iso-8859-1?Q?Jes=FAs?= Cea =?iso-8859-1?Q?Avi=F3n?=" <jcea@argo.es>
+Date: Mon, 11 May 1998 06:04:34 -0700 (PDT)
+To: cert-es@listserv.rediris.es
+Subject: Chaffing & winnowing without overhead
+Message-ID: <35571323.D109A0D2@argo.es>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+You can have chaffing & winnowing without bandwidth overhead, but the
+resulting scheme hasn't the original "elegance" anymore. In particular,
+you don't send the plaintext on the clear.
+
+The new schema is useful to cypher a document using any standard
+signature library, exportable by definition. Very nice :), since you can
+use, at last, strong crypto :).
+
+a) When the connection starts, negociate an initial sequence number.
+   The sequence number mustn't be reused. We assume a ordered delivery,
+   like TCP.
+
+b) Calculate the signature for:
+
+   [sequence]0  ->  MAC0
+   
+   and
+
+   [sequence]1  ->  MAC1
+
+c) Compare both MACs and locate the first "different" bit,
+   from high to low bit or viceversa.
+
+d) Send that bit from MAC0 if you want to send a "0" or from
+   MAC1 if you want to send a "1".
+
+-- 
+Jesus Cea Avion                         _/_/      _/_/_/        _/_/_/
+jcea@argo.es http://www.argo.es/~jcea/ _/_/    _/_/  _/_/    _/_/  _/_/
+                                      _/_/    _/_/          _/_/_/_/_/
+PGP Key Available at KeyServ   _/_/  _/_/    _/_/          _/_/  _/_/
+"Things are not so easy"      _/_/  _/_/    _/_/  _/_/    _/_/  _/_/
+"My name is Dump, Core Dump"   _/_/_/        _/_/_/      _/_/  _/_/
+"El amor es poner tu felicidad en la felicidad de otro" - Leibnitz
+
+
+
+

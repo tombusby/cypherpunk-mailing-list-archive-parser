@@ -1,0 +1,48 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Mon, 11 Oct 93 14:59:50 PDT
+To: cypherpunks@toad.com
+Subject: Re: Breaking DES
+In-Reply-To: <9310111652.AA29091@anon.penet.fi>
+Message-ID: <9310112158.AA11809@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+wonderer wrote:
+
+>One other point... is the decision to encrypt - decrypt -encrypt
+>when applying triple des arbitrary? Why not just encrypt
+>with k1 and then encrypt with k2. Isn't the effect the same?
+
+Encrypting with k1 and then k2 leaves you open to the "meet in the
+middle" attack.
+
+Say I get a copy of the plaintext and ciphertext.  I could encrypt the
+plaintext with 2^56 keys, and decrypt the ciphertext with 2^56 keys.
+Then by matching results of the above steps, I could figure out k1 and
+k2.
+
+The work for this attack is 2^56 + 2^56 = 2^57, which suggests that
+double encryption doesn't increase the complexity of breaking your
+text very much.  It only increases it from 2^56 to 2^(56+1).  So if
+you use the same k1 and k2 for all your documents and it is worth my
+time and money to figure out k1 and k2, favoring double encryption
+over single encryption doesn't make much sense.
+
+Otherwise, there was fear that DES was a group (encrypting with k1 and
+k2 is equivalent to encrypting once with k3), but I think this got
+buried (?) recently.
+
+Also, with the triple encrypt-decrypt-encrypt, if you pick the same
+key for each step, it is equivalent to just single encryption.  Which
+may be of importance in compatibility issues, etc.
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

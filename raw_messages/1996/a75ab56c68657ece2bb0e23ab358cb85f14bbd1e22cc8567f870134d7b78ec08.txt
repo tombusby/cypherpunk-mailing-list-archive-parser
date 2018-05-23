@@ -1,0 +1,46 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Tue, 6 Aug 1996 14:38:46 +0800
+To: cypherpunks@toad.com
+Subject: Re: Integrating PGP 3.0 Library with INN
+In-Reply-To: <199608052017.PAA09340@homeport.org>
+Message-ID: <X5Z8RD36w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Shostack <adam@homeport.org> writes:
+
+> Igor Chudov wrote:
+>
+> | Has anyone thought of integrating PGP 3.0 library with INN?
+> |
+> | I was thinking along the lines of having PGPMoose support built
+> | right into INN: if an arriving article is posted to a moderated
+> | newsgroup for which a PGP key is available in the INN's keyring,
+> | INN verifies existence and correctness of a PGP signature.
+>
+>
+> | If moderators choose short enough keys (512 bits for example), this
+> | verification will not take any significant amount of CPU time.
+>
+> Its my experience that at full feed sites, there isn't enough cpu to
+> do this.  A p-90 can get ovewhelmed pretty easily trying to keep up
+> with the load.  Trying to look into the body of an article means at
+> least a few hundred more ops per article.  You could do this on a leaf
+> node.  However, you cut the reliability of the system by adding things
+> to go wrong.  Better to have a scanner that checks specific moderated
+> groups after INN has deposited the articles.
+
+It's wasteful to run this checking at every Usenet node.
+
+It would be more efficient to run PHPMoose checking at a few trusted sites
+and have them issue NoCeMs for articles that fail the check.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

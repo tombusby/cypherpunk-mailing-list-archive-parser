@@ -1,0 +1,136 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Wed, 23 Feb 94 11:50:25 PST
+To: cypherpunks@toad.com
+Subject: Digitally Signing Physical Objects
+In-Reply-To: <9402231350.AA18555@media.mit.edu>
+Message-ID: <199402231950.LAA08510@netcom9.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[In this post I'll explore an interesting use of P-K methods to allow
+physical objects to be digitally signed.]
+
+
+Alan (wex@media.mit.edu) forwards to us a clipping and bets that no
+encryption is used:
+
+> [The following was snipped from EDUPAGE, the online summary service.  Anyone
+> have access to more information?  --AW]
+> 
+> 
+> AND OPTICAL FINGERPRINTS. The National Registry uses an optical scanning
+> technology to create and compare digital maps of the finger surface. The
+> map can be converted to a modified bar code for inclusion on a wallet ID
+> card. The information can also be encoded on circuitry inside a credit or
+> debit card. (Tampa Tribune 2/20/94 B&F1)
+
+I'm not familiar with this, but I'll bet public key crypto is used. Or
+it certainly _could_ be used. How it could be used is an interesting
+example of using public key methods for authentication.
+
+So, even if these National Registry folks are not using P-K crypto,
+here's an example of how this could work:
+
+Imagine that one has a object--a fingerprint, a photograph, a dollar
+bill, a factory-made automobile part--which one wants to "sign," to
+protect against forgery. (The application to manufactured goods is
+obvious: lower-quality parts are often made by forgers and sold as
+factory parts. The counterfeiting application is also obvious. Ditto
+for the photo, even with digital scanning....for reasons that will
+become clearer. The application to fingerprints I'll leave for you to
+think about.)
+
+Call this thing "the original object." It will have variations in
+surface appearance (or deeper, in principle, but I'll just stick to
+surface features). For example:
+
+- dollar bills: variations in paper fibers, in flecks of particles, in
+surface roughness, etc.
+
+- auto parts: scratches and tool marks on smooth surfaces, metal
+grains, etc.
+
+- fingerprints: whorls
+
+- photos: grains will vary from photo to photo
+
+How can one "sign" these objects in an unforgeable way?
+
+1. Scan some part of the object, e.g., a linescan between two
+reference points. An intensity variation of reflected light, for
+example, will produce a vector of intensity variations.
+
+(What resolution, how many points taken, the location of reference
+marks, etc, are all details of vendor implementation.)
+
+2. Take this feature vector and encrypt it to the *private* key of the
+factory or other authenticating agent. The resulting number is stamped
+on the object.
+
+(In the case of "Light Signatures," an L.A.-based company which was
+proposing this scheme several years ago, the manufacturer of parts
+would stamp the resulting number on the finished part--and perhaps
+include it with the paperwork for the part. Harley-Davidson was
+supposedly considering the use of this, as they were having big
+problems with counterfeit replacement parts. Jim Omura, Presidende of
+Cylink, a Public Key Partner, told me this in 1988. I haven't heard
+any more about "Light Signatures.")
+
+3. The shop or customer wishing to authenticate the part takes the
+number stamped on the part, runs it through the *public* key of the
+manufacturer (widely available, not kept secret, of course) and gets
+back the feature vector, which he can then compare to what he actually
+sees on the object.
+
+(This clearly requires similar hardware to what was originally used by
+the manufacturer. And some tolerance for variations in intensity
+caused by equipment variations, wear, new scratches, etc., is needed.
+Not a really big problem, fortunately. You can fill in the details of
+what would be needed for fingerprints, for phots, for lottery tickets,
+for currency, etc.)
+
+4. A would-be forger cannot generate a "digital object signature" that
+correctly decrypts through the published public key. 
+
+Thus, the manufacturer or authenticator (whoever knows the private key
+corresponding to the public key) can "sign" his work and no one else
+can.
+
+This has obvious applications for authenticating paintings, original
+photographs (physical photos, not digital ones!), money, objects, etc.
+Anything in which natural variations can be converted into a
+very-hard-to-duplicate feature vector.
+
+This issue is also related to "is-a-person" credentialling in various
+ways. One might imagine Big Brother issuing ID cards in which
+fingerprints, retinal scans, facial features, etc., are encrypted with
+a private key. Any local cop or "checkpoint" (border, random stops,
+whatever) could then do the authentication locally.
+
+As with other uses of public key encryption--in contrast to symmetric
+ciphers, as we discussed earlier today--the private key is held safely
+and securely (presumably) and the field users don't run the risk of
+compromising security.
+
+I've wondered why this technology has not appeared in the six years
+since I first heard about it. Seems like a wonderful market niche.
+
+And I wonder how this fits in with Clipper and Capstone. After all, if
+the government holds escrowed digital signature keys as well, they
+could forge these items as well. Maybe that's what they want.
+
+--Tim May
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^859433 | Public Key: PGP and MailSafe available.
+"National borders are just speed bumps on the information superhighway."
+
+
+

@@ -1,0 +1,191 @@
+From: Julian Assange <proff@suburbia.net>
+Date: Sun, 31 Dec 1995 16:44:18 +0800
+To: puke@suburbia.net
+Subject: (fwd) Benchmarks - revs 1.3.50 & 51
+Message-ID: <199512310736.SAA06119@suburbia.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Path: news.apana.org.au!goliath.apana.org.au!sysx.apana.org.au!sleeper.apana.org.au!greathan.apana.org.au!news-mail-gateway
+From: fluido@marktest.pt (Carlo Emilio Prelz)
+Newsgroups: apana.lists.os.linux.kernel
+Subject: Benchmarks - revs 1.3.50 & 51
+Date: Thu, 28 Dec 1995 08:05:17 +0100 (MET)
+Organization: Mail-to-News Gateway
+Lines: 158
+Sender: daemon@greathan.apana.org.au
+Approved: usenet@greathan.apana.org.au
+Distribution: apana
+Message-ID: <Pine.LNX.3.91.951228075225.11217A-100000@pimpinel.fluido.org>
+NNTP-Posting-Host: greathan.apana.org.au
+
+Hi. Here follow the benchmark comparisons w.r.t. revisions 50 & 51. I
+decided to wait before posting rev 50 before because the file read &
+write results again bounced up with it, and I spent some (very little)
+time trying to see if I could have done anything to cause that. With
+no results, as usual. Now I also have results for the "greased
+weasel", and I decided to send out my numbers for what they're
+worth. Not much has changed with the latest release...
+
+I repeat my query: if anybody has suggestions about these huge jumps in 
+disk performance, please let me know. I am ALWAYS running the benchmark 
+test after a reboot. I login as root, start the process in background and 
+log out, and then generally go to sleep. The machine is NOT online, and 
+is not doing anything important at night. I have not changed anything in 
+the kernel config in the latest 3 revisions. I have a plain old ISA
+disk controller, and two generally fullish disks, but again, the
+situation did not change notably between 1.3.49 and 1.3.50.
+
+And, I now have to admit that I find it faster, for example, to load a 
+huge C file into emacs, and have it do the syntax coloring. I noticed it 
+this morning. 
+
+No problems in patching & compiling.
+
+--8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<--
+
+From:
+* Linux pimpinel.fluido.org 1.3.49 #77 Fri Dec 22 21:05:57 MET 1995 i486
+* Fri Dec 22 21:41:03 MET 1995
+
+To:
+* Linux pimpinel.fluido.org 1.3.50 #78 Mon Dec 25 11:18:00 MET 1995 i486
+* Mon Dec 25 12:11:11 MET 1995
+
+*******
+Results
+*******
+
+File Write (30 seconds)                ||   1000.0 ->   9460.0  +846.00%
+File Write (10 seconds)                ||   1200.0 ->   8070.0  +572.50%
+File Copy  (30 seconds)                ||    968.0 ->   2636.0  +172.31%
+File Copy  (10 seconds)                ||   1024.0 ->   2645.0  +158.30%
+Execl Throughput Test                  ||     67.9 ->     85.3   +25.63%
+C Compiler Test                        ||     48.7 ->     51.9    +6.57%
+Pipe-based Context Switching Test      ||   9863.0 ->  10493.0    +6.39%
+Process Creation Test                  ||    347.7 ->    368.9    +6.10%
+Shell scripts (1 concurrent)           ||     96.4 ->    101.9    +5.71%
+Shell scripts (4 concurrent)           ||     25.5 ->     26.5    +3.92%
+Shell scripts (2 concurrent)           ||     50.8 ->     52.6    +3.54%
+System Call Overhead Test              ||  29945.4 ->  30523.5    +1.93%
+Dhrystone 2 using register variables   ||  49658.9 ->  49910.8    +0.51%
+Arithmetic Test (type = int)           ||   8365.0 ->   8377.5    +0.15%
+Arithmetic Test (type = double)        ||   5063.6 ->   5071.1    +0.15%
+Recursion Test--Tower of Hanoi         ||    726.1 ->    727.1    +0.14%
+Arithmetic Test (type = arithoh)       || 127103.2 -> 127265.6    +0.13%
+Arithmetic Test (type = short)         ||   7508.8 ->   7515.5    +0.09%
+Arithmetic Test (type = register)      ||   8367.3 ->   8372.8    +0.07%
+Arithmetic Test (type = float)         ||   5066.8 ->   5069.3    +0.05%
+Arithmetic Test (type = long)          ||   8371.8 ->   8372.1    +0.00%
+Shell scripts (8 concurrent)           ||     13.0 ->     13.0    +0.00%
+Pipe Throughput Test                   ||  17850.0 ->  17726.9    -0.69%
+Dhrystone 2 without register variables ||  51001.9 ->  49772.1    -2.41%
+File Read  (30 seconds)                ||   4613.0 ->   4404.0    -4.53%
+File Read  (10 seconds)                ||   4648.0 ->   4390.0    -5.55%
+Dc: sqrt(2) to 99 decimal places       ||  11886.7 ->  10822.2    -8.96%
+
+--8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<--
+
+From:
+* Linux pimpinel.fluido.org 1.3.50 #78 Mon Dec 25 11:18:00 MET 1995 i486
+* Mon Dec 25 12:11:11 MET 1995
+
+To:
+* Linux pimpinel.fluido.org 1.3.51 #79 Wed Dec 27 19:16:06 MET 1995 i486
+* Wed Dec 27 22:41:23 MET 1995
+
+*******
+Results
+*******
+
+File Read  (30 seconds)                ||   4404.0 ->   4548.0    +3.27%
+File Read  (10 seconds)                ||   4390.0 ->   4516.0    +2.87%
+Dc: sqrt(2) to 99 decimal places       ||  10822.2 ->  11034.2    +1.96%
+Process Creation Test                  ||    368.9 ->    375.0    +1.65%
+File Copy  (10 seconds)                ||   2645.0 ->   2683.0    +1.44%
+File Copy  (30 seconds)                ||   2636.0 ->   2669.0    +1.25%
+Shell scripts (4 concurrent)           ||     26.5 ->     26.8    +1.13%
+C Compiler Test                        ||     51.9 ->     52.4    +0.96%
+Dhrystone 2 without register variables ||  49772.1 ->  49808.7    +0.07%
+Arithmetic Test (type = long)          ||   8372.1 ->   8376.6    +0.05%
+Arithmetic Test (type = register)      ||   8372.8 ->   8376.1    +0.04%
+Arithmetic Test (type = float)         ||   5069.3 ->   5069.9    +0.01%
+Arithmetic Test (type = short)         ||   7515.5 ->   7515.7    +0.00%
+Shell scripts (8 concurrent)           ||     13.0 ->     13.0    +0.00%
+Arithmetic Test (type = double)        ||   5071.1 ->   5067.4    -0.07%
+Arithmetic Test (type = arithoh)       || 127265.6 -> 127172.0    -0.07%
+Dhrystone 2 using register variables   ||  49910.8 ->  49870.6    -0.08%
+Arithmetic Test (type = int)           ||   8377.5 ->   8370.4    -0.08%
+Recursion Test--Tower of Hanoi         ||    727.1 ->    724.3    -0.39%
+Shell scripts (2 concurrent)           ||     52.6 ->     52.3    -0.57%
+Shell scripts (1 concurrent)           ||    101.9 ->    101.2    -0.69%
+File Write (30 seconds)                ||   9460.0 ->   9356.0    -1.10%
+Pipe Throughput Test                   ||  17726.9 ->  17227.1    -2.82%
+Pipe-based Context Switching Test      ||  10493.0 ->  10194.8    -2.84%
+System Call Overhead Test              ||  30523.5 ->  29476.8    -3.43%
+Execl Throughput Test                  ||     85.3 ->     81.5    -4.45%
+File Write (10 seconds)                ||   8070.0 ->   7680.0    -4.83%
+
+--8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<--
+
+From:
+* Linux pimpinel.fluido.org 1.2.10 #59 Tue Jun 13 09:46:17 MET DST 1995 i486
+* Tue Jun 27 10:18:13 MET DST 1995
+
+To:
+* Linux pimpinel.fluido.org 1.3.51 #79 Wed Dec 27 19:16:06 MET 1995 i486
+* Wed Dec 27 22:41:23 MET 1995
+
+*******
+Results
+*******
+
+Process Creation Test                  ||    119.9 ->    375.0  +212.76%
+Pipe-based Context Switching Test      ||   3446.9 ->  10194.8  +195.77%
+Dc: sqrt(2) to 99 decimal places       ||   5906.2 ->  11034.2   +86.82%
+Execl Throughput Test                  ||     51.6 ->     81.5   +57.95%
+Shell scripts (8 concurrent)           ||     10.0 ->     13.0   +30.00%
+Shell scripts (1 concurrent)           ||     78.3 ->    101.2   +29.25%
+Shell scripts (4 concurrent)           ||     21.0 ->     26.8   +27.62%
+Shell scripts (2 concurrent)           ||     41.0 ->     52.3   +27.56%
+C Compiler Test                        ||     42.2 ->     52.4   +24.17%
+Dhrystone 2 without register variables ||  46284.2 ->  49808.7    +7.61%
+File Write (30 seconds)                ||   8911.0 ->   9356.0    +4.99%
+Recursion Test--Tower of Hanoi         ||    709.2 ->    724.3    +2.13%
+System Call Overhead Test              ||  29238.2 ->  29476.8    +0.82%
+Arithmetic Test (type = float)         ||   5055.6 ->   5069.9    +0.28%
+Arithmetic Test (type = long)          ||   8353.5 ->   8376.6    +0.28%
+Arithmetic Test (type = register)      ||   8353.2 ->   8376.1    +0.27%
+Arithmetic Test (type = short)         ||   7496.0 ->   7515.7    +0.26%
+Arithmetic Test (type = double)        ||   5056.8 ->   5067.4    +0.21%
+Arithmetic Test (type = int)           ||   8353.4 ->   8370.4    +0.20%
+Arithmetic Test (type = arithoh)       || 126914.4 -> 127172.0    +0.20%
+Dhrystone 2 using register variables   ||  49802.4 ->  49870.6    +0.14%
+File Write (10 seconds)                ||   8100.0 ->   7680.0    -5.19%
+Pipe Throughput Test                   ||  18512.0 ->  17227.1    -6.94%
+
+
+--8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<----8<--
+
+Enjoy!
+Carlo
+
+--
+  *                                          ...Ma appena fuori tutto e' gomma,
+* K * Carlo E. Prelz - fluido@marktest.pt     tutto e' cicca impiastricciata...
+  *                                     (Marco Zappa-Niente cicca nella scuola)
+
+
+
+
+--
++----------------------------------+-----------------------------------------+
+|Julian Assange                    | "if you think the United  States has    |
+|FAX: +61-3-9819-9066              |  has stood still, who built the largest |
+|EMAIL: proff@suburbia.net         |  shopping centre in the world?" - Nixon |
++----------------------------------+-----------------------------------------+
+
+
+
+

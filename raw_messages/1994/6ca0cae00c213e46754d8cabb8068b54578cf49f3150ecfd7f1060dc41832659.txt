@@ -1,0 +1,44 @@
+From: Matthew Bernardini <matthew@gandalf.rutgers.edu>
+Date: Fri, 4 Feb 94 16:09:57 PST
+To: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Subject: Re: Running regularly
+Message-ID: <CMM-RU.1.3.760406745.matthew@gandalf.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Matthew Bernardini <matthew@gandalf.rutgers.edu> wrote:
+> 
+> > Why not make two shell scripts, one that sleeps for so long (say 20 minutes)
+> > using the unix sleep command, and then calls the remailer scripts in an
+> > infinite while loop.  This would work if you set it up as a background
+> > process,and you don't need to be root for it to work.  Only downsides are
+> > that when the machine crashes you have to log back in and restart script,
+> > your sleep command will always be in the top window if your sys-admin
+> > is watching, and you have to be careful not to spawn to many processes and
+> > bring the system down.
+> 
+> I tried this on the system here, but it killed off the process when I
+> logged off.
+> 
+> As for starting too many processes, just don't start them...  leave it
+> as one single process that just repeats itself indefinently with sleeps
+> in between.
+> 
+
+Did the processes get killed BECAUSE you logged off ?
+Or did they get killed because you left a single process runnning in the
+background for an extended period of time and an automated script killed the
+job.  Why not ask the sysadmin how to setup a long computational job for a
+couple of days ?  I don't think any sysadmin would have a problem with that.
+Then you could find out if the jobs are killed automatically somehow.
+
+If it turns out that it was just the process that was automatically killed
+on a time interval, then you could easily write a script that would spawn a
+new process and then kill the parent.
+
+Matt
+
+
+
+

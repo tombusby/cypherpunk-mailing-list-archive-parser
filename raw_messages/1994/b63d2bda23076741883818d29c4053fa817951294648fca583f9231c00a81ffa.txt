@@ -1,0 +1,83 @@
+From: Peter Wayner <pcw@access.digex.net>
+Date: Sat, 5 Mar 94 05:30:58 PST
+To: sergey@delbruck.pharm.sunysb.edu
+Subject: Re: more steganography talk
+Message-ID: <199403051330.AA13596@access2.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 4 Mar 1994, Jim Miller wrote:
+ 
+> In my mind, the perfect steganography system depends upon either an
+> environment containing ubiquitous random bit sequences or a
+> reversible algorithm that can transform non-random bit sequences into
+> random bit sequences without using encryption (unlikely).
+ 
+Such is the function of Mimic, available at ftp.cs.cornell.edu
+in /pub/wayner/Mimic
+ 
+It holds the most promise for steganography, in my oppinion.  Unfortunately,
+it may be difficult to implement, initially.
+ 
+ 
+Sergey
+
+
+------------------------
+
+
+Sorry to be so distracted. This is a very interesting topic for
+me, but I've been bogged down with more prosaic topics. I think
+the Mimic FUnction implementation that I did is a very general
+standard for steganography. On the current level, it just deals
+with text, but you can make it do bits by just using the alphabet
+of just plain {0,1}.
+
+Here are the important points about it:
+
+1) If the grammars are made complex enough, they can simulate
+anything you can compute with a computer. I.e. You can encode
+data in a Turing-complete way. 
+
+2) Even if you limit yourself to plain old context-free grammars,
+you still have a class of encryption functions that can be
+as powerful as RSA. I.e. You can show that any general program
+that can infer the grammar used in a Mimic function can also 
+break RSA. This proof is done by translating RSA encryption into
+a context-free grammar.
+
+3) If you use Turing-complete grammars, then the result is
+technically "undecidable." I.e. it may be technically 
+"unbreakable." I don't put much stock in this claim, but
+it is interesting to note that there is _no_ possible 
+brute-force attack on these systems. I do believe, though,
+that there could be many practical "incomplete" attacks
+that worked in general cases. 
+
+4) It is still unclear how to generate RSA-level strength
+with Mimic Functions. The simplest way may be just to 
+encrypt with RSA first. Understanding what makes grammars
+hard and easy to grok is a hard question. 
+
+5) That being said, I think that Mimic grammars are one
+of the most natural ways to specify steganography. There
+are many other forms that are Turing-complete, but I think
+that grammars are one of the most natural ways to specify
+what you want to happen. 
+
+6) The process is slightly difficult to implement, but I've
+got two running versions (as I've mentioned before on the 
+list). One in C and the other in Pascal. Your choice if 
+you live in the Continental US. It is not clear to me 
+if the software is "exportable". I considered applying
+to the commerce department to get a free assessment of the
+cryptographic strength, but then I found out that they
+were denying licenses to systems that I could break.
+
+So they're not a great oracle for these questions. 
+
+
+
+
+

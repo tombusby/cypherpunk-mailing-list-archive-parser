@@ -1,0 +1,65 @@
+From: Christian Wettergren <cwe@it.kth.se>
+Date: Wed, 27 Sep 95 02:15:13 PDT
+To: David_A Wagner <daw@cs.berkeley.edu>
+Subject: Re: Exchange random numbers (was: Re: netscape's response)
+In-Reply-To: <199509252031.NAA15134@quito.CS.Berkeley.EDU>
+Message-ID: <199509270913.KAA17943@piraya.electrum.kth.se>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+| > Giving out contribution: 
+| >      MD5(select_bits(my_seed, start_bit, stop_bit)) -> remote
+| > Taking in contribution : 
+| >      my_seed = my_seed XOR 
+| >      ((select_low_bits(remote_contrib, contrib_width) << contrib_area)
+| > 
+| 
+| People seem to think this kind of thing is obviously safe.  I'm not yet
+| convinced.
+
+Well, I'm not either, actually. But I think this might be better
+than the current state of affairs, where every bit of your seed
+is almost guessable. And it might also be an intermediate solution
+until there is a good random seed hardware generator in every computer.
+
+| By xoring in a quantity *chosen by your adversary*, you're essentially
+| allowing related-key attacks on your stream cipher.  (Your PRNG is just
+| a stream cipher, keyed with my_seed.)
+
+I think you mustn't allow the any external partner to "contribute" at a
+known and/or chosen offset into the buffer. You mustn't either accept 
+"too much" contribution.
+
+| Noone knows how secure most ciphers are against related-key attacks:
+| related-key attacks are known to be very powerful (often more powerful
+| than any other type); but very little research on this topic is available.
+| You're treading on unknown ground.
+
+Yes. But I wonder whether this isn't really about the battle between
+"the pragmatists" vs "the purists" point of view wrt security? I see so
+many very unsophisticated attacks out there that a related-key attack,
+although possible and powerful, still is rather unlikely.
+
+Could you quantify how powerful a related-key attack is, compared to
+some other kind of attack? I don't know anything about this kind of 
+attack, do you have any references?
+
+| There's the also a small error in your specific algorithm.  Let
+| 	 n = stop_bit - start_bit;
+| presumably n is much less than the length of your seed.  Then a brute-force
+| search over n bits will recover n bits of the seed -- this is a much faster
+| cryptanalysis than a brute force over all bits of the seed.  This can
+| probably be fixed by something like
+| 	MD5(select_bits(MD5(my_seed))) -> remote,
+| but the related-key uncertainties still remain.
+
+Ok, noted. Maybe I should try to write down this "idea" for a proper review?
+Hmmm.
+
+/Christian
+
+
+
+

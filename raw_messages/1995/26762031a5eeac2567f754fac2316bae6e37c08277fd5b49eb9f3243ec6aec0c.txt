@@ -1,0 +1,36 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 19 Sep 95 12:47:34 PDT
+To: cypherpunks@toad.com
+Subject: Re: Verification of Random Number Generators
+Message-ID: <199509191947.MAA23655@ix3.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:54 AM 9/19/95 -0500, andrew wrote, replying to Eric Fair:
+>>  Just an idle thought: it might be possible to do a probabalistic
+>>  verification of a RNG by sampling it over some number of samples,
+
+>But this wouldn't have solved Netscape's problem.  Netscape was using a  
+>pretty good PRNG (the one in RSAREF).  The problem was they were/are using a  
+>naive method of seeding it.  The output of the PRNG would have been  
+>statistically random, but since the seed had ridiculously little entropy it  
+>was easy to guess.
+
+It's even worse - the seeding mechanism has too little entropy, given that
+you know some of the input data (e.g. system clock), but if it had, say,
+32 bits of entropy, you'd have to run your test tens or hundreds of billions
+of times for the patterns to really show up - which is hard to do for something
+that uses the system clock or other hardware - and you'd really have to get
+at the output of the seeding process rather than the PRNG output, which has
+been filtered through enough MD5 that it's hard to detect the patterns.
+But you could still crack it easily enough.
+#---
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

@@ -1,0 +1,81 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 13 Sep 94 11:07:04 PDT
+To: cypherpunks@toad.com
+Subject: Re: alleged-RC4
+Message-ID: <199409131806.LAA05147@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Sommerfeld <sommerfeld@orchard.medford.ma.us> writes:
+
+>Actually, all the %256 operations in the code are superfluous on
+>8-bit-byte platforms since the indices are declared as `unsigned
+>char'.
+
+Ah, good point.  So my "typo" doesn't really matter (although I think
+it is a typo.)
+
+>Probably the only potential weakness I can see is that the `x' and `y'
+>counters are always initialized to zero when starting off; this means
+>that an attacker can almost always know the `x' value used to encrypt
+>each byte of cyphertext they find.  I can't see any way to exploit
+>this, though.  It would seem that you could (slightly) strengthen the
+>cipher by starting with x=state[0] and y=state[1], then cranking the
+>key generation loop for two more iterations..
+
+A related point is how the key-dependent state-table permutation is set
+up.  The algorithm is, in pseudo-code,
+	for i from 0 to 255
+		swap state[i] and state[j]
+where j is incremented by state[i] plus the next key byte, mod 256.
+Notice the similarity to the naive random-permutation generator:
+	for i from 0 to 255
+		j = random (256)
+		swap state[i] and state[j]
+where random (n) returns a random number less than n.  This naive
+algorithm is not quite right, as it generates 256 to the 256th power
+equally likely arrangements, when there are actually only 256!
+arrangements and 256! doesn't even divide 256^256 evenly.  The
+similarity I see is that j is chosen in the prepare_key as a slightly
+complicated function of the key byte and the current state, and we can
+view this as a key-dependent substitute for random (256).  So
+it would appear that the prepare_key algorithm, even with a fully
+random key, may produce a bias in the permutation table.
+
+A correct algorithm for a random permutation is:
+	for i from 0 to 255
+		j = random (i+1)
+		swap state[i] and state[j]
+Here we choose the random number from among the ones we have already
+done.  This algorithm can be easily proven correct.  Perhaps it would
+be better if the prepare_key algorithm did a similar thing, choosing
+the entry with which to swap modulo the current "i" value plus one rather
+than mod 256.
+
+One implication of the existing implementation is that there may be a
+simple relation between at least state[0] and the first character of
+the key.  Initially state[0] will be swapped with the value in the
+table at the position of the first byte of the key.  Since the table is
+initialized to 0..255, this means that state[0] will hold the value of
+the first key byte after that swap.  Now, it is probable that state[0]
+will be chosen "randomly" to be swapped with a later entry in the
+table.  But as we discussed here a few days ago, there is about a 1/e
+chance (about 37%) that it will not be swapped after its first
+guaranteed swap.  This means that 37% of the time that this algorithm
+is used, state[0] holds the first key byte at startup.  OTOH if the
+modification I suggested above were made, no such conclusion could be
+drawn and I don't see anything simple you could say about the likely
+permutation after prepare_key is complete.
+
+Now, having said this, I don't see any way to exploit this knowledge
+to attack the cypher.  The "lookup, sum, and lookup" structure of the
+cypher has too many degrees of freedom to allow this information about
+state[0] to expose a hint of what the key might be, as far as I can see.
+But it is an interesting aspect of the key setup, nevertheless.
+
+Hal
+
+
+
+

@@ -1,0 +1,46 @@
+From: Gary Howland <gary@systemics.com>
+Date: Sat, 4 May 1996 07:58:07 +0800
+To: VaX#n8 <vax@linkdead.paranoia.com>
+Subject: Re: encrypted Unix backup software
+In-Reply-To: <199605030102.UAA06977@linkdead.paranoia.com>
+Message-ID: <318A2206.69D8BD19@systemics.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+VaX#n8 wrote:
+>
+> Okay, before you flame me and tell me to pipe it through
+> a symmetric cipher filter, hear me out.  Tape handling is
+> hairy, depending on what kind of functionality you want.  A regular
+> filter may write(2) in strangely sized blocks, not working very well
+> with your tape drive.
+
+This is what I use:
+
+        tar -c --block-compress --sparse --atime-preserve
+--use-compress-program /usr/local/bin/destape  .
+
+and /usr/local/bin/destape looks like this:
+
+        #!/usr/local/bin/bash
+
+        if [ -z "$1" ]
+        then
+                gzip | /usr/local/bin/des -bE3
+        else
+                /usr/local/bin/des -bD3 | gzip -d
+        fi
+
+I also back up the des/gzip/tar to unencrypted to the start of the tape
+too.
+
+
+Gary
+--
+pub  1024/C001D00D 1996/01/22  Gary Howland <gary@systemics.com>
+Key fingerprint =  0C FB 60 61 4D 3B 24 7D  1C 89 1D BE 1F EE 09 06
+
+
+
+

@@ -1,0 +1,45 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Tue, 17 Oct 95 22:49:36 PDT
+To: cypherpunks@toad.com
+Subject: A comment about Netscape 2 and certifictes
+In-Reply-To: <199510180307.XAA23559@book.hks.net>
+Message-ID: <Pine.SOL.3.91.951018141041.27804D-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Just some more noise about netscape 2,
+
+I have been playing around with netscape 2b1 and have extracted the 
+certificates it trusts from the cert.db file.  (The file is a Berkeley DB 
+file and the certificates have a 7 byte prefix and a trailing printable 
+string).  They are as follows
+
+/C=US/O=AT&T/OU=Certification Authority
+/C=US/O=AT&T Bell Laboratories/OU=Prototype Research CA
+/C=US/SP=California/O=CommerceNet/OU=Server Certification Authority
+/C=US/O=MCI/OU=internetMCI/OU=MALL
+/C=US/OU=Test CA/O=Netscape Communications Corp.
+/C=US/O=RSA Data Security, Inc./OU=Commercial Certification Authority
+/C=US/O=RSA Data Security, Inc./OU=Secure Server Certification Authority
+
+The one unusual thing is that the CA for /OU=internetMCI/OU=MALL is missing
+	subject=/C=US/O=MCI/OU=internetMCI/OU=MALL
+	issuer= /C=US/O=MCI/OU=internetMCI/OU=PCA  <<<<<<<
+(the ComerceNet is signed by one of the RSA certificates)
+
+The CommerceNet certificate is only using a 678 bit RSA modulus, the other 
+certificates are either 1000 or 1024 bits long.
+
+If anyone wants the certificates I can send them.
+
+eric
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

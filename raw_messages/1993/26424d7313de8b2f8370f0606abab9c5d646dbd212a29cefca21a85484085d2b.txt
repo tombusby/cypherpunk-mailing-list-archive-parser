@@ -1,0 +1,73 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Sun, 21 Nov 93 17:43:21 PST
+To: sameer@uclink.berkeley.edu
+Subject: Re: Does someone know about irc "/on"?
+In-Reply-To: <m0p1Mhd-000J6pC@infinity.hip.berkeley.edu>
+Message-ID: <9311220143.AA28056@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I wrote a package for doing encryption over irc called Circ.  It was posted
+to comp.sources.misc and should be in the archives.  It is currently not
+extremely secure,  the weakest link is the random key generation which is
+seeded by the time.  This is very easy to brute force if you have any
+information on the time (even if you know the time to within a year).
+The program uses RSA to exchange secret keys and uses tripleDes to encrypt
+messages.  
+
+The program is implemented as a binary written in C and talks to ircII through
+/on's and /alias'es.  The script used by Circ is included below and may
+give you some ideas on how to interact with ircII.
+
+
+
+
+
+# this is for ircII 2.2.4
+# for some reason, /on ^public acts differently
+
+# Start up the proggie
+/^exec -name crypt exec new
+
+# automatically pick out protocol messages
+#    crypt processor gets:   !send nick!CLIPPER:...etc
+#    or   !our nick!SKPJACK:...etc 
+# under 2.2.4 public has:  nick channel message
+#   the version I use has  nick message
+#   this is the difference between the two script versions
+/on ^public "* * CLIPPER:*" /msg %crypt !$0!$2-
+/on ^public "* * SKPJACK:*" /msg %crypt OURNICK:$N;/msg %crypt !$0!$2-
+/on ^public_other "* * CLIPPER:*" /msg %crypt !$0:$1!$2-
+/on ^public_other "* * SKPJACK:*" /msg %crypt OURNICK:$N;/msg %crypt !$0:$1!$2-
+
+/on ^msg "* CLIPPER:*" /msg %crypt !*$0*!$1-
+/on ^msg "* SKPJACK:*" /msg %crypt OURNICK:$N;/msg %crypt !*$0*!$1-
+
+# messages comming back from crypt, to server or screen?
+/on ^exec "crypt TCHANNL: *" /msg $C $2-
+/on ^exec "crypt TSCREEN: *" /echo $2-
+/on ^exec "crypt TNICKNM: *" /msg $2 $3-
+
+# our irc commands:
+#    /key nick  or /key nick filename
+#    /die
+#    /e message to be encrypted
+#    /p message to be plaintext
+#    /crypt   (turn on automatic encryption)
+#    /plain   (turn off automatic encryption)
+#    /emsg nick text  send an encrypted message
+/alias key /echo K->*$0* Sending Key;/^msg %crypt SENDKEY: $0-
+/alias die /^msg %crypt QUITDIE:;/query 
+/alias e /echo E> $0-;/^msg %crypt CRYPTME:$0-
+/alias p /msg $C $0-
+/alias crypt /query %crypt
+/alias plain /query
+/alias emsg /echo E->*$0* $1-;/^msg %crypt !$0!CRYPTME:$1-
+
+/echo *** Encrypted Irc Protocol loaded. 
+
+
+
+

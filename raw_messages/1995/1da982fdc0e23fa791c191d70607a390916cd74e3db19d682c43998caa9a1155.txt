@@ -1,0 +1,46 @@
+From: mccoy@io.com (Jim McCoy)
+Date: Sat, 11 Feb 95 19:18:29 PST
+To: hfinney@shell.portal.com (Hal)
+Subject: Re: Does PGP scale well?
+In-Reply-To: <199502120105.RAA20992@jobe.shell.portal.com>
+Message-ID: <199502120318.VAA27650@pentagon.io.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Hal <hfinney@shell.portal.com>
+> 
+> I was just reading RFC1034 about DNS, and one thing I noted was that
+> there is a "reverse lookup" feature.  This allows you to go from, say,
+> 156.151.1.101 to portal.com.  This problem seems similar in some ways to
+> the key lookup problem since you have a relatively unstructured number
+> and you want to use it as a lookup key.
+[...]
+> According to the RFC, if you want to know what host machine is at
+> address 156.151.1.101, you do a lookup of 156.151.1.101.IN-ADDR.ARPA.
+> The RFC did not make it very clear how this is done. [...]
+
+Actually you do a lookup on 101.1.151.156.in-addr.arpa, it is reversed
+because of the way addresses are structured.  This is part of the
+problem with PGP keys and DNS: PGP key IDs are unstructured and randomly
+distributed, IP addresses are not really unstructured and thier
+distribution is not random.  A reverse lookup (aka "pointer query") happens
+the same way as a regular name lookup, it just reverses the order of the
+bytes in the IP address and then resolves it in the same method as a
+regular name, from the least specific to most specific parts of the
+address. 
+
+With a PGP key ID there is no order to the distribution of the IDs, so it
+is not like one could delegate authority for bits in a key ID the same way
+taht one can with bits/bytes in an IP address.  The inability to delgate
+chunks of the key ID space is what will prevent lookups by keyID; no one
+can run a single server that has all the IDs and the organizational
+problems with delegating random chunks of the keyID-space are fairly obvious
+(e.g. in the DNS model you are responsible for your own address space and
+it is in your own self-interest to make sure that it works, the same cannot
+be said of keyID-space)
+
+jim
+
+
+

@@ -1,0 +1,108 @@
+From: Alan Barrett <apb@iafrica.com>
+Date: Sun, 11 May 1997 17:28:36 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: key recovery vs data backup
+In-Reply-To: <19970510233052.07440@bywater.songbird.com>
+Message-ID: <Pine.NEB.3.95.970511105108.29245E-100000@apb.iafrica.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 10 May 1997, Kent Crispin wrote:
+> So PGP's multiple recipient feature is a fundamental building block,
+> but you need something more in a crypto-client to be sure that company
+> policy is followed.  It's that "somthing more" that is the hard part.
+>
+> And lest we get into the macho programmer argument -- of course it's
+> just a mere matter of design and programming.
+
+Yes.  And probably a lot less design and programming than the key-safe
+mechanism.  (For example, PGP already has an "encrypt-to-self" option
+that makes it add the user's own key as an additional crypto recipient
+of all messages; changing that to the more general "encrypt to this list
+of extra keys" should be quite easy.  But designing and building a key
+safe sounds like a lot of work to me.)
+
+Of coure, you trust the users not to use versions of PGP that do not
+make the corporate key a recipient of all communications, right?  If
+not, then you also don't trust them not to use keys that have not been
+sent to the key safe in the CAK model.
+
+> > If making policy decisions is too complex in your view for
+> > implementation or practicality, well just substitute a policy
+> > dumbed down to the level of the safe model.  Ie there is one crypto
+> > recipient, all company communications _must_ be encrytped to it as a
+> > second crypto recipient.
+>
+> You are right -- there is the degenerate case where the master key is
+> fixed.  However, I would contend that is *very* bad crypto design.  So
+> thus you have the problem of distributing information about a revoked
+> master key.  (Your solution, below, was that you have a signed policy
+> statement.  If you have a security breach, and are revoking a master
+> key, how do you know what signature to trust?)
+
+In the key-safe model, you have the problem o distributing information
+about a change in location (network address) of the key safe, or a
+change in the keys used to authenticate access to the key safe --
+similar complexity in both models.
+
+> Furthermore, by encrypting every document to the same master key you
+> have actually vastly increased your exposure -- a key-safe can have a
+> lot of special-purpose physical and cryptographic security, but the
+> master key in the multiple recipient model is almost certainly treated
+> the same as all other keys.
+
+You can use special hardware to generate the key pair and to store the
+private key -- again, similar issues and similar solutions in both
+models.
+
+> > I'm sure you can arrange this same flexibility and bring in the
+> > baggage of the policy decisions that come with it for the safe
+> > model also if you want it.  Store keys for different departments in
+> > different safes.  Give the master keys for the department to the
+> > department head, etc.,etc.  Same problem, similar policy decisions,
+> > right?
+>
+> Nope.  Not at all.  The policy for multiple recipients needs to be
+> interpreted by the crypto clients.  But in the key-safe model policy
+> is almost entirely in human hands.  It doesn't even have to be written
+> down.
+
+In either model, you can have the users' software do the same thing
+every time (talk to teh same key safe, or encrypt to the same additional
+key every time); and in either model you can have the users' software
+do different things depending on policies (talk to different key safes,
+encrypt to different additional recipients).
+
+It's unfair to say "but I choose to do the same thing every time, and
+you choose to do different things every time, therefore my model is
+simpler than yours".  In fact, both models are almost equally capable of
+being used in either the simple way or teh complex way.
+
+> Modestly secure example: The keysafe runs on a single workstation,
+> hardened similar to a firewall.  The only network connections are to
+> a single port, which does the cryptographically secure key storing
+> protocol.  When a key needs to be recovered, three trusted employees
+> troop into the room (three passwords are required, these passwords
+> are essentially the master key), and retrieve the needed key on a
+> floppy.  Other than the authentication protocol, there is *no* policy
+> embedded in the key-safe, which is to say, *any* policy the company
+> wants to use is ok.  It may take the personal presence of the company
+> president, it may take a signed statement from operations staff,
+> whatever.  No policy is embedded in software, and no software to
+> support software needs to be written.
+
+Again, the same scenario plays equally well in the
+extra-crypto-recipient model.
+
+> I spoke too soon here.  The key-safe model is intrinsically more
+> secure.
+
+I don't see how.
+
+--apb (Alan Barrett)
+
+
+
+
+

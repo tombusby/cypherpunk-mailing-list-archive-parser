@@ -1,0 +1,86 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Fri, 29 Mar 1996 23:20:11 +0800
+To: cypherpunks@toad.com
+Subject: [NOISE] Cable-TV-Piracy-Punks
+In-Reply-To: <2.2.32.19960328050605.00698058@arn.net>
+Message-ID: <199603281828.KAA10403@netcom8.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"David K. Merriman" <merriman@arn.net> writes:
+
+ > At 01:34 AM 03/28/96 +0000, you wrote:
+
+ >> I've been looking for a file on how to make PPV
+ >> descramblers and havn't found any. Commercial descramblers
+ >> cost around $200 base price. If anyone has a file on how to
+ >> make them please e-mail me one.  Thanks.
+
+ > This is cypherpunks. Not Cable-TV-Piracy-Punks.
+
+ObCrypto: Scrambling TV signals sometimes makes use of
+encryption, so perhaps a brief discussion of how this is done
+could be tolerated.
+
+If you are talking about recovering signals from completely
+encrypted digital MPEG-2 streams, such as those used by the DBS
+folks, you are probably out of luck.  The relevant processing in
+the decoder exists on a small card which has so far resisted
+attempts at reverse engineering.
+
+As far as analog signals are concerned, the "scrambling" of the
+video only involves the clipping of the horizontal sync pulses.
+This causes the picture to tear and the color burst to be missed.
+So you get a funny torn picture with odd colors in place of the
+original.  Sometimes, the set will momentarily lock on to
+something in the picture in place of the missing sync and you
+will get a reasonable picture for a few moments.  Kids often
+watch porn channels for hours waiting for such an effect to
+occur.
+
+The usual way of transmitting the missing sync information is to
+place an appropriately tuned 15,750 hz subcarrier on the sound
+channel.  If you pick this up, and use it to add pulses back onto
+the video, you will again get a signal your set will correctly
+process.
+
+There are a variety of techniques for scrambling audio.  The most
+expensive is to DES encrypt the sound and place it in the
+horizontal blanking interval.  The regular sound channel can then
+be used for advertising.  This requires a bit of processing at
+both ends, and is generally used for satellite to ground
+transmission of cable signals.  The other common method is to
+modulate the sound on a subcarrier, usually the one transmitted
+in phase with the missing sync.
+
+In most cable systems using addressable decoders, nothing is done
+to the sound at all, and the box simply mutes the set if its
+address is not in the list of authorized users for that channel.
+Persons viewing a PPV without a cable box will get a scrambled
+picture, but perfectly normal sound.  This is commonly referred
+to by people who listen to PPV events without paying as watching
+in "scramblevision."
+
+A hostile attack on such a system can be mounted in a number of
+ways.  One can simply mung the set top box to restore sync on all
+channels unconditionally, either by replacing a single chip with
+a black market substitute, or by doing some surgery on the
+electronics.  Once can also construct a number of simple circuits
+which will yank the subcarrier off the sound channel, and use it
+to trigger a pulse generator which gets added to the video.  You
+can even stick one of these in your TV set to render it truly
+"cable ready."
+
+Of course, once television transmission goes completely digital,
+and strong encryption is used on both audio and video, the
+opportunity for such simple attacks will vanish.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

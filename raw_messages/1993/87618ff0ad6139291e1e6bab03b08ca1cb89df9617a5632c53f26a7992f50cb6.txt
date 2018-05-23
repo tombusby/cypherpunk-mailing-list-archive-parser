@@ -1,0 +1,57 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Sat, 20 Nov 93 16:02:10 PST
+To: "L. Detweiler" <ld231782@longs.lance.colostate.edu>
+Subject: Re: Key vs. Signature revocation & Trust Webs
+In-Reply-To: <9311200628.AA01474@longs.lance.colostate.edu>
+Message-ID: <9311202358.AA05068@podge.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>  *signature* revocation certificates are not.
+> this a signor issues (in theory) if he thinks he has been betrayed
+
+While signature revocation certificates have not been implemented,
+their precense is possible within PGP.  There is a packet header that
+defines such an animal!
+
+I have been a fervent supporter of having such certificates
+implemented.  I've even, with some others, developed a fairly good way
+to do them: You put a timestamp on it, and if the revocation timestamp
+is after the signature timestamp, then the revocation takes
+precedence.  If the signature timestamp is greater than the revocation
+timestamp, then the signature is kept and the revocation is thrown
+out.
+
+In fact, this same design can be used for UserID revocations as well,
+in order to get rid of bogus userIDs.
+
+> also, notice how keys spread between servers `like a virus'. the
+> revocation certificates should do so as well. I don't know if key
+> revocation certificates do so in today's servers. I don't really trust
+> these servers!
+
+Keys, revocations, new userIDs, signatures.  *ALL* of these act like a
+virus.  Once anything is added to a keyserver, all the keyservers get
+them.  Revocations are propagated as quickly as new signatures, or new
+keys.  As for trusting the servers, well, you don't seem to trust
+anybody, but besides that point, you should trust the cryptographic
+material you get back from the keyservers in that you can verify the
+signatures on those certificates.  In other words, you should not
+blindly accept data you get from a keyserver as correct, without
+verifying the signatures on it.
+
+Anyways, hopefully this will get implemented sometime soon.  Although
+I'm not holding my breath; there are more pressing matters.
+
+-derek
+
+         Derek Atkins, SB '93 MIT EE, G MIT Media Laboratory
+     Secretary, MIT Student Information Processing Board (SIPB)
+         PGP key available from pgp-public-keys@pgp.mit.edu
+            warlord@MIT.EDU       PP-ASEL        N1NWH
+
+
+
+
+

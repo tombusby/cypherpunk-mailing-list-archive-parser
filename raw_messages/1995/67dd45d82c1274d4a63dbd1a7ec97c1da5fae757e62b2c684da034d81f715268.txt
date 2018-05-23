@@ -1,0 +1,58 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Tue, 19 Dec 1995 13:41:40 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: PGP's randpool()
+Message-ID: <199512190326.WAA20676@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+	What does PGP do when it exhausts randpool?
+
+	I've scanned the source, and found some useful tidbits, but
+RANDPOOLBITS seems limited to ~408 bytes.  I can invoke commands that
+should exhaust PGP's randpool, but don't seem to.  Doing "pgp
++makerandom=4000000 foo" repeatedly seemingly would cause PGP to
+prompt me to type in some random stuff, but it doesn't.
+
+	I'm trying to see how pgp reacts to me taking all its random
+bytes because I'm writing some shell scripts that use pgp to generate
+random passphrases.  (This is a case where I don't think bunches of
+system data are enough.)
+
+	(Note to reporters who might be listening: This is an fairly
+unusual invocation of PGP where a user would not interact with the
+program at all to supply new randomness.  Its not an attack on PGP's
+security in any interesting or newsworthy sense.)
+
+random.c:
+ * - Every time you run PGP, especially when responding to one of PGP's
+ *   prompts, PGP samples the keystrokes for use as random numbers.
+ *   It is a shame to throw this entropy (randomness) away just because
+ *   there is no need for it in the current invocation of PGP
+
+[... Further down...]
+
+/*
+ * Performs an accumulation of random bits.  As long as there are fewer bits
+ * in the buffer than are needed (the number passed, plus pending bits),
+ * prompt for more.
+[heavily cut]
+
+void
+trueRandAccum(unsigned count)	/* Get this many random bits ready */
+{
+LANG("\nWe need to generate %u random bits.  This is done by measuring the\
+\ntime intervals between your keystrokes.  Please enter some random text\
+\non your keyboard until you hear the beep:\n"), count-trueRandBits);
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

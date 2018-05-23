@@ -1,0 +1,51 @@
+From: Mixmaster <lucifer@dhp.com>
+Date: Sat, 21 Dec 1996 20:50:41 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Security hole in premail
+Message-ID: <199612220408.XAA03397@dhp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 20 Dec 1996, Mixmaster wrote:
+
+> *** premail.orig	Fri Dec 20 18:46:01 1996
+> --- premail	Fri Dec 20 18:55:54 1996
+> ***************
+> *** 3574,3579 ****
+> --- 3574,3582 ----
+>       }
+>       for ($triesleft = 2; !$done && $triesleft; $triesleft--) {
+>   	$pass = &getpass ($x);
+> + 	if(!-O $ps) {
+> + 		&error ("Secrets file exists and is owned by another user\n");
+> + 	}
+>   	$status = &decrypt_secrets ($ps_pgp, $ps, $pass);
+>   	if (!-s $ps) { unlink $ps; }
+>   	$done = (!$status && -e $ps);
+
+That patch doesn't work.  It will always return an error.  I have tested the
+following patch and it does work as intended:
+
+*** premail.orig	Wed Oct 30 22:25:10 1996
+--- premail	Sat Dec 21 15:45:41 1996
+***************
+*** 3631,3636 ****
+--- 3631,3639 ----
+      $invoc .= ' > '.$ps;
+      $invoc .= ' 2> '.$errfile;
+      &pdv ("Invoking PGP as $invoc\n");
++     if(-e $ps) {
++ 	&error ("Premail secrets file already exists\n");
++     }
+      $status = &open_pgp ($invoc, $pass, '');
+      $err = &read_and_delete ($errfile);
+      &pdv ($err);
+
+Sorry about the previous mistake.
+
+
+
+
+
+

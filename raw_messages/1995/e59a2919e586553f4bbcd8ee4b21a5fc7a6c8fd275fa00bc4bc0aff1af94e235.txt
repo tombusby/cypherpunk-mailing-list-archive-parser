@@ -1,0 +1,63 @@
+From: Alex Tang <altitude@cic.net>
+Date: Wed, 4 Oct 95 13:20:55 PDT
+To: sameer@c2.org (sameer)
+Subject: Re: New Netscape bug (in version 1.12)
+In-Reply-To: <199510041800.LAA07074@infinity.c2.org>
+Message-ID: <199510042020.QAA01358@petrified.cic.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Wed Oct  4 14:00:26 1995: you scribbled...
+>
+> > How do I decide what is too long?  For example, when tracking down buffer
+> > overflow problems for the security patch, we found an undocumented
+> > static buffer limit of 64 bytes for the hostname passed to gethostbyname()
+> > on IRIX.  Before we stumbled across this problem, we had a discussion
+> > about what length we should truncate host names to.  People thought
+> > that 128 characters was a reasonable limit, but it turned out that it
+> > was too long.
+>
+>
+> 	Isn't there a resolver #define or something in limits.h called
+> MAXHOSTNAMELEN ? Something like that? (Perhaps not, but that's what I
+> recall..)
+
+The DNS RFC specifies that the max hostname should be 255 characters, with
+a 63 character limit for each segment of the name (RFC1035, section
+2.3.4.)
+
+- --> 2.3.4. Size limits
+- -->
+- --> Various objects and parameters in the DNS have size limits.  They are
+- --> listed below.  Some could be easily changed, others are more
+- --> fundamental.
+- -->
+- --> labels          63 octets or less
+- -->
+- --> names           255 octets or less
+
+But, some older systems (SunOS4, and IRIX, amongst others) have the
+MAXHSTNAMELEN defined as 64 characters, so this limits the max name to 64.
+Solaris2 has MAXHOSTNAMELEN defined to 255 characters.
+(the define is in sys/param.h for sunos and solaris).  
+
+just a point of interest...
+
+...alex...
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Alex Tang <altitude@umich.edu> or Alex Tang <altitude@cic.net>
+
+iQCVAwUBMHLsMaNd+TOtm9v5AQGbGQQAiFMaOyaLQlJgO+47dkw4H4O4FP8dJooR
+lkFmooBTFr/BWaZ7Zl9KFwCSwm/COH5ZfQpf6zo0pWlvGYDVAYPomaV90Z1zg+dk
+0jNhidLwCrxlNOKa+MyqBJiUpfyq76OW46A9V1VDa5OH8g8bbv8zn//GJCGlF+6K
+3s+zjFkR4tM=
+=0I/O
+-----END PGP SIGNATURE-----
+
+
+

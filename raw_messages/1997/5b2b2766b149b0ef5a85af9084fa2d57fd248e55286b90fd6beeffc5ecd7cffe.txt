@@ -1,0 +1,107 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 13 Dec 1997 19:20:07 +0800
+To: phelix@vallnet.com
+Subject: Re: hashcash spam prevention & firewalls
+In-Reply-To: <34921c6b.2682714@128.2.84.191>
+Message-ID: <199712131036.KAA00930@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Phelix <phelix@vallnet.com> writes:
+> 
+> >The Right Way to do it perhaps is as an SMTP extension, however I
+> >consider this impractical in the short term because as far as I know
+> >there is no SMTP extension plug-in mechanism [...]
+> 
+> How does PGP do it with their policy enforcer?
+
+Their controversial GAK ready policy enforcer works as a a local SMTP
+proxy.  You set up your normal SMTP server on another machine, and
+configure the policy enforcer to forward mails to the normal SMTP
+server.  Or presumably if you can configure your SMTP server to accept
+connections on a port other than 25 you could have the SMTP enforcer
+on the same machine.
+
+The same thing could work for a hashcash filter, and it is one
+feasible solution.
+
+> >Secondly the proxy approach prevents some of the SMTP server functions
+> >from operating properly because the process on the other end of the
+> >socket is our hashcash proxy on localhost rather than the remote mail
+> >hub (modern sendmails can be configured to perform reverse name
+> >lookups on IP addresses, call ident (ident sucks anyway IMO), or block
+> >based on IP address or domain, etc.)  Is this kind of thing likely to
+> >be a big problem?
+> 
+> I don't see why.  Just have the proxy work both ways.  Isn't it possible
+> for the proxy to keep track of which message came from which address and
+> relay server requests back to the right user?  (I'm not familiary with how
+> sendmail works, so I'm probably missing something)
+
+The functionality which is lost is the possibility for the sendmail to
+be configured to do a reverse DNS lookup on the IP address which is
+connecting to it, and check that that domain is the same as the domain
+in the From field.  Also ident lookups don't work anymore either.
+However I am not sure how reliable either of these mechanisms are, and
+I'm not sure that many people are using them because they would be
+unlikely to be reliable in the general case.
+
+So probably this is not a problem.
+
+> >This still leaves open the question of the user generating their own
+> >hashcash postage.  Again this could be problematic for neophytes.  One
+> >solution is to include a URL for a web page including a javascript
+> >hashcash generator -- this means that no new software must be
+> >installed, the user cut and pastes the generated hashcash into their
+> >message.
+> 
+> How many of the popular email pacakges have support for plug-ins?
+> Netscape Communicator is the only package (that neophytes will use) I know
+> of that doesn't support email plugins.  Perhaps in this case a small proxy
+> could be installed on the user's machine.  The only thing it would have to
+> do is generate hashcash for outgoing messages.  
+
+A local SMTP proxy to add hashcash on the way out should work fine.
+
+> >require valid hashcash on all mail, _until_ the
+> >recipient replies to a mail.  This is good because people rarely reply
+> >to spammers.
+> >
+> >Then you add some hashcash accounting so that users who overspend
+> >(consuming more than say 1 minutes CPU consumption on the server in a
+> >24 hour period have their email bounced with explanation of how to
+> >generate their own hashcash as a heavy user).
+> 
+> What's the difference between this and simply keeping track of how many
+> messages each user sends in a 24 hour period and blocking people who are
+> obviously spamming?
+
+The difference is that it allows the ISP which is hit by spam attacks
+to install a hashcash filter.
+
+With simple resource metering at the spammers ISP side, the spammers
+typically abuse other peoples open SMTP agents to forward their spams
+for them.
+
+Their ISPs can do little about this.
+
+Really it's best if the sender is left to generate his own hashcash,
+the motivation for working out ways to have the originators ISP's
+outgoing SMTP hub generate hashcash for them is that it is simpler to
+install in the short term.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

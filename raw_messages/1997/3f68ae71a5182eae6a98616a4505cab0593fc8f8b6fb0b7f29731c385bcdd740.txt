@@ -1,0 +1,48 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Tue, 2 Dec 1997 09:25:50 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Digital Signatures
+In-Reply-To: <fbbcab88ba06fee2a7cfdfe70620c8e5@anon.efga.org>
+Message-ID: <199712020101.BAA01602@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Anonymous writes:
+> > You also need to be able to compute SHA1 hashes.  I've been using
+> > something called "sha1file" which, I believe, originated at Adam
+> > Back's web site.
+> 
+> That program has a bug.  The routine SHA1_update in the file sha1.c
+> is missing a line:
+> 
+>    while ( ctx->mlen == 64 )
+>    {
+>       convert_to_bigendian( (word32*)ctx->M, 64 );
+>       SHA1_transform( ctx );
+>       use = min( 64, data_len );
+>       memcpy( ctx->M, data, use );
+>       ctx->mlen = use;
+>       data_len -= use;
+> ***   data += use;  ***  MISSING  ***
+>    }
+> 
+> Correcting this will make your hashes be correct.
+
+The version on my web pages for the last couple of versions has this
+bug fixed.  http://www.dcs.ex.ac.uk/~aba/eternity/sha1.tgz
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

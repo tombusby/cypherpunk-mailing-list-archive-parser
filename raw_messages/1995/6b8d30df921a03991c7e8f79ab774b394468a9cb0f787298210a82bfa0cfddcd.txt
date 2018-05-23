@@ -1,0 +1,55 @@
+From: Laurent Demailly <dl@hplyot.obspm.fr>
+Date: Thu, 9 Nov 1995 22:15:26 +0800
+To: Raph Levien <raph@CS.Berkeley.EDU>
+Subject: Mime/multipart (was Re: PGP Comment feature weakens remailer security)
+In-Reply-To: <199511080454.UAA05765@jobe.shell.portal.com>
+Message-ID: <9511091356.AA09725@hplyot.obspm.fr>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Raph Levien writes:
+ >    On an unrelated topic... cypherpunks like to count bits, right?
+ > What is the correct number of pseudorandom bits to use in a MIME
+ > multipart separator? If the data has a line which matches the
+ > separator, the message is corrupted. Of course, if you can take
+ > multiple passes through the data, you can simply verify that it does
+   ***************
+No need !
+ > not contain a line which matches the separator. But if you're
+ > restricted to a single pass, then the only way to do it is to use a
+ > randomly generated separator.
+I've waited a bit, but as nobody seem to have pointed out, you can
+definitly find a unique stream in a *single* pass (but maybe what you
+really want is no pass at all ?)
+{you add a new random byte each time you find your sequence in the
+stream, and goes forward (as the previous separator was not in the
+"past" of the stream, you don't need to go back)}
+
+What am I missing ? (anyway, see below)
+(I hope my answer is not as clueless as the "A-dice anonymous" one)
+
+ >    I figure that 128 bits should _definitely_ be enough (that's what
+ > is in the new premail code now). Even 64 bits should ensure that it is
+ > unlikely that anyone will ever experience message corruption over the
+ > expected lifetime of premail. However, it makes me nervous. What do
+ > people think?
+
+Isn't PGP encoded stream containing only base64 chars ? Why not use
+"====PGP part #===="  (as you can't have more than 2 = in a base 64,
+and only at the end anyway)
+or "@PGP part #" or whatever starting with a non base64 char ?
+
+so "@" = 8 bits is my anwser, do I win ;-) ?
+
+dl
+--
+Laurent Demailly * http://hplyot.obspm.fr/~dl/ * Linux|PGP|Gnu|Tcl|...  Freedom
+Prime#1: cent cinq mille cent cinq milliards cent cinq mille cent soixante sept
+
+Greenpeace Uzi NORAD DES NSA [Hello to all my fans in domestic
+ surveillance] Clinton
+
+
+
+

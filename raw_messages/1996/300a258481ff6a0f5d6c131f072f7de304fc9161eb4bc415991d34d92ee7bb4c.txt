@@ -1,0 +1,136 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 10 Nov 1996 14:34:35 -0800 (PST)
+To: ph@netcom.com
+Subject: Re: Why is cryptoanarchy irreversible?
+In-Reply-To: <v02140b02aeaa6d2cfe8f@[192.0.2.1]>
+Message-ID: <199611102034.UAA00143@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Hendrickson <ph@netcom.com> writes:
+> At 3:30 AM 11/9/1996, Adam Back wrote:
+> >Peter Hendrickson <ph@netcom.com> writes:
+> >> Where will you keep your secret key?  Remember, when they go through
+> >> your house they bring 20 young graduates from MIT who are just dying
+> >> to show how clever they are and save the world at the same time.
+> 
+> > Keep your secret key in your head.
+> 
+> I think this is hard to do in practice.  I have tried.
+
+You could probably keep a hashing function around plausibly, then you
+could do as usual and remember the passphrase and use the hash
+function to construct the actual key.
+
+> > Your plausible deniability has to get quite low before it will stand
+> > up as "proof" in court.
+> 
+> My idea is that the lack of noise is used as evidence to get a search
+> warrant.  The search warrant is used to get the evidence to put you away
+> forever.
+
+Your plausible deniability has to drop below 100%, your data has
+deviate from "indistinguishable from normal data distributions" to get
+yourself investigated in the first place.
+
+If your stego techniques are any good, the feds will never get beyond
+that point.  They will then be left with the option of doing random
+`spot-checks'.  Having been on the cypherpunks list probably would
+increase your chances of having your system checked.
+
+> > Your real challenge is keeping your stego programs safe.  Boot
+> > strapping a stegoed encrypted file system while leaving no stego code
+> > lying around isn't that easy.
+> 
+> Excellent point, especially since you don't have an encrypted virtual
+> disk.  Can anybody resolve this?
+> 
+> > rc4 in C:
+> >
+> > #define S,t=s[i],s[i]=s[j],s[j]=t /* rc4 key <file */
+> > unsigned char s[256],i,j,t;main(c,v)char**v;{++v;while
+> > (s[++i]=i);while(j+=s[i]+(*v)[i%strlen(*v)]S,++i);for(
+> > j=0;c=~getchar();putchar(~c^s[t+=s[i]]))j+=s[++i]S;}
+> 
+> (Under 3.3)  I would have a hard time memorizing these programs.  This
+> pretty much guarantees that the number of cryptoanarchists will be small.
+
+That program is optimised for size rather than ease of memorizing.
+
+RC4 is an elegantly simple algorithm, and I sumbit that you could
+remember it.  Barring that you could just leave around a few
+cypherpunks archives, or sci.crypt archives or whatever, and cut and
+paste it form one of my posts :-)
+
+Because RC4 is a stream cipher, you shouldn't reuse the key.  However
+you shouldn't need to for this application.  You just use it to boot-
+strap the real code.
+
+You'd need to put in the appropriate stego decoder (say getting the
+bytes from the LSbit of an audio file.  Linux loop back devices
+already provide the stego capability directly.  But then linux loop
+back devices provide IDEA encryption.  (I'm talking about Ian
+Goldbergs patch to the loopback filesystem, which may not have been
+folded back in yet).
+
+Also you may be able to get somewhere with algorithms which are
+plausible to have coded on your system anway.  Say, RC4 makes a good
+PRNG, so what's wrong with having it in a standard library.  That
+makes coding RC4 really simple.  Just reseed the PRNG with your key,
+and XOR it's output with the encrypted file.
+
+Also I did hear tell that Bruce Schneier was working on a crypto
+algorithm which was designed to work with playing cards, for a book
+which Neal Stephenson is writing.  Presumably painful to use, but
+maybe good plausible deniability, all that you need is a pack of
+cards.
+
+> (I am deeply envious of your legal right to post this code, however.
+> Now, why was it that we broke away from the Mother Country?)
+>
+> I would like to see a longer exposition of your approach.  Given
+> a hostile environment, how would I operate a small anonymous perl
+> coding service using your techniques?  
+
+Once you've bootstrapped to your cryptoanarchists toolkit, you can
+have anything you want, even a virtual TCP/IP layer, a hidden level of
+TCP/IP in stego data.  TCP/IP itself is a likely candidate for a stego
+carrier.  Non-predictable sequence nos are required to stop things
+like the spoofing attack, and so are perfectly plausible.
+
+The real pain at the moment is that bandwidth is so darned low.
+You're talking 28.8k for most users, and I'd quite merrily pay $2000 a
+year for a fractional T1 for personal use, but prices over here are
+too high yet.
+
+Once we get to everyone having enough bandwidth, lots of people with
+permanent connections, lots of people using video conference software,
+audio, downloading feature length films, etc. there's no stopping
+crypto anarchy.  The LSbits in that lot would make a fairly responsive
+subliminal channel by todays standards.
+
+> Don't forget to tell me how I get paid and when I get to spend my
+> "ill-gotten" gains and how nobody will notice that I am doing it.
+
+You get paid in ecash, paid on the BlackNet bank.  You take a holiday
+to a tax-haven and get paid off by a getting "lucky" at a BlackNet
+affiliated casino.  The casino takes a their "currency exchange fee",
+and you get US$.  Translations into paper currencies, I'll admit are
+the weak link if you need paper currencies.  
+
+However there are two ways to get anonymous electronic cash, either
+you start with anonymous electronic cash, or you add the anonymity
+afterwards via `privacy brokers', once there are a few dozen systems,
+and trillions flowing around using these systems, it's going to be
+hard to keep track of it all.
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

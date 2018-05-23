@@ -1,0 +1,41 @@
+From: edgar@spectrx.Saigon.COM (Edgar W. Swank)
+Date: Sat, 6 Mar 93 04:24:28 PST
+To: Cypherpunks          <cypherpunks@toad.com>
+Subject: Kill lines
+Message-ID: <k6JZZB4w165w@spectrx.saigon.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I agree with Eli Brandt that Chael Hall's simple implementation of
+a standard "kill" line is preferable to the complicated "Regexp"
+specification.  I could manage it, but I agree with Eli that many
+could not.
+ 
+Eli offers an alternative of
+ 
+   Signature-Lines: <count>
+ 
+Assuming that this can be inserted in the body of the message with
+the :: convention as well as among the headers, this is acceptable,
+but is still more complicated than the "kill line".  The proper
+number for "signature-lines" will have to be found by trial and
+error, by sending messages to oneself.
+ 
+One caveat here.  Any remailer which implements "signature-lines" will
+have to -remove- that line from the header (or change <number> to
+zero) when it removes the <number> of signature lines from the end of
+the body.
+ 
+Otherwise, a chain of "signature-lines" remailers would -each-
+see the "signature-lines" header and would -each- remove <number>
+lines from the end of the message body.
+
+--
+edgar@spectrx.saigon.com (Edgar W. Swank)
+SPECTROX SYSTEMS +1.408.252.1005  Silicon Valley, Ca
+
+
+
+
+

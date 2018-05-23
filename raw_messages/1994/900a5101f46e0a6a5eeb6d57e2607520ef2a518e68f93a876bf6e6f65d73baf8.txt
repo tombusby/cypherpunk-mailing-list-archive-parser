@@ -1,0 +1,49 @@
+From: ekr@eit.COM (Eric Rescorla)
+Date: Tue, 13 Dec 94 09:09:06 PST
+To: perry@imsi.com
+Subject: Re: HTTP security
+Message-ID: <9412131708.AA25651@eitech.eit.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I sent a slightly less polished version of this to Perry, and then
+realized he'd cc'ed Cypherpunks.. but it was gone by then...
+
+Perry Metzger sez:
+>Eric Rescorla says:
+>> In the email world, you don't necessarily have any sort of prior
+>> relationship with the person you're communicating with and that public
+>> key cryptography is relatively cheap. (When it takes minutes to
+>> ship mail across the net, who's going to notice a second or two
+>> of signature verification?) However, in the case of the Web,
+>> things are very different.
+>Since one can sign pages just once (they are written once and read
+>often) and one can pick one's signature algorithm to speed up
+>verifications relative to the signatures (using small exponents is the
+>usual trick fo this), I'm not sure its that big a problem.
+You are of course correct. I should have chosen the example of
+encryption, where you can't preenhance.
+
+>I'd like these algorithms to support the serving of signed pages from
+>hosts that do not know the keys that the pages have been signed with
+>-- offline signature schemes like the one I just described will
+>support that nicely.
+Yes. Conveniently, we've anticipated this requirement. The
+content type of an SHTTP message can be set to indicate that the
+enhanced content is actually an enhanced document rather than
+an enhanced HTTP request/reply. So, you just cons up some
+headers and drop in the presigned page...
+
+But this is a very good point. I'm glad I'm not the only person
+who thinks this is an important requirement.
+
+Details on this can be found in the current SHTTP spec (Section 2.3.3)
+<http://www.commerce.net/information/standards/drafts/shttp.txt>
+
+-Ekr
+
+
+
+
+

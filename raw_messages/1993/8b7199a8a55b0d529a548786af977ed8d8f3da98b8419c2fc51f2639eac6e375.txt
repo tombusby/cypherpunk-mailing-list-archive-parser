@@ -1,0 +1,65 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Fri, 16 Apr 93 20:26:05 PDT
+To: cypherpunks@toad.com
+Subject: Re: ANON: Chaining suggestions
+In-Reply-To: <930416165143_74076.1041_FHD34-1@CompuServe.COM>
+Message-ID: <9304170325.AA25696@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Hal <74076.1041@CompuServe.COM>
+> I don't think the idea quite works in this form, since I don't see how 
+> messages to Julf get translated to an12345.  Presumably only messages 
+> from one specific user should get posted under this ID (the user whose 
+> address is buried in the encrypted return address to which Julf's 
+> remailer will forward replies).  Perhaps another set of commands is 
+> needed to tell the remailer what ID to use to post under.
+
+I don't know what Eric was thinking, but I was thinking as follows:
+  * I send a message to the nymserver, telling it to create a nym
+entry.  The body of the message is a public key.  All further
+commands to the server must be signed by this key.
+  * I then send a message to the nymserver, telling it to add a
+return block to the nym's list of return addresses.  (signed)
+  * Another (signed) command sets up a human-readable name, if I
+wish.  Now we're in business.
+
+  * Joe User sends a message to eli-alias@nymserver.  The server
+looks up eli-alias, picks the preferred return path, and richochets
+the message out.
+  * or, I tell the nymserver to post vitriol to alt.fan.clinton
+under the name "eli-alias".  Again, the command must be correctly
+signed.
+
+(Can PGP let me rename my eli-alias private key to something
+innocuous -- like "test3"?  This would provide some deniability if
+they seize my secring.pgp -- they need no passphrase to see the
+names of the keys on it.  Denied this information, can `they'
+associate private and public keys in some way?)
+
+Hopefully, all commands to the nymserver would be encrypted with its
+public key.  They might well be bounced to it through anonymous
+remailers, or sent with whatever other anonymity tech -- such as
+DC-nets -- is available.  Yanek, were you setting up an experimental
+DC-net?  How's it look?
+
+Any holes here?  The requirement of a signature on all commands is
+parallel to the present use of a password, but far more secure.  It
+provides continuity of identity, rather than the present use of
+return address.  Attack this protocol, folks.
+
+Now, this does look like a lot of hair to add to penet.  Maybe I
+should learn perl and write a remailer.  Heh.
+
+(Aside: anybody here running linux?  Do you know of a
+non-destructive repartitioner?)
+
+> Hal Finney
+
+   Eli   ebrandt@jarthur.claremont.edu
+(with a big disk and a small flaky tape drive)
+
+
+
+

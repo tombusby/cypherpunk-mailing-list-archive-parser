@@ -1,0 +1,45 @@
+From: Mike Fletcher <fletch@ain.bls.com>
+Date: Wed, 10 Apr 1996 14:32:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: WWW User authentication
+In-Reply-To: <199604091558.LAA22026@jafar.sware.com>
+Message-ID: <9604092033.AA27923@outland.ain_dev>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> AFAIK, none.  I don't see how this would be helpful anyway.  If you 
+> MD5 the password, I won't be able to snoop the password off the wire,
+> but I can simply snoop the MD5 hash off the wire instead and since 
+> that's what your authentication check must now be against, what does
+> this buy you?
+
+	It would require a previous shared secret, but wouldn't the
+following protocol work (pardon my ASCII diagram):
+
+	Q - Shared secret; Both server and client know this
+	R - Random challenge;  Server sends in clear to client wanting
+		to be authenticated.
+
+	Server			Client
+1)				Request auth
+2)	Send R 
+3)				Send back MD5( R, Q )
+4)	Compare recieved value
+	to computed value	
+
+	Granted this straight off the cuff, and you can't securely
+change Q via this protocol (unless you store previous MD5(R,Q)'s and
+use that as the next Q (i.e. Q_n+1 = MD5(R,Q_n))).  Once someone gets
+MD5 in Java done, you could send an applet that would handle the
+protocol client side.
+
+---
+Fletch                                                     __`'/|
+fletch@ain.bls.com  "Lisa, in this house we obey the       \ o.O'    ______
+404 713-0414(w)      Laws of Thermodynamics!" H. Simpson   =(___)= -| Ack. |
+404 315-7264(h) PGP Print: 8D8736A8FC59B2E6 8E675B341E378E43  U      ------
+
+
+
+

@@ -1,0 +1,32 @@
+From: jon@balder.us.dell.com (Jon Boede)
+Date: Mon, 8 Nov 93 15:28:54 PST
+To: cypherpunks@toad.com
+Subject: Modem taps/Caller ID
+Message-ID: <9311082326.AA20402@balder.us.dell.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The recent discussions of tapping modem transmissions reminds me of
+> a scrap of data I saw about Caller ID [the service provided by the 
+> phone company that displays the caller's phone number whenever your
+> phone rings]. Supposedly, the phone company transmits the caller's 
+> number as a burst of 1200 or 2400 baud ASCII between the first and
+> second rings; if your modem is set up 'just right,' you can capture
+> the number with a PC.
+
+I don't know if this is particularly true but you can purchase modems
+that recognize caller-id and distinctive ring data.  The caller-id
+information is printed between the RING and CONNECT strings.  In
+particular, I have re-written the UNIX getty program in order to take
+these strings and put them in an environment variable before calling
+login.  Since the getty actually uses ATA to answer the phone rather
+than setting S0=1, we have considered building a database of known
+troublemakers' phone numbers and then have getty let the phone ring
+away to NO CARRIER when said tarbs call.  ZyXEL makes such a modem.
+
+Jon
+
+
+
+

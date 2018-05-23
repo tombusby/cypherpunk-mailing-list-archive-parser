@@ -1,0 +1,77 @@
+From: wcs@anchor.ho.att.com
+Date: Tue, 2 Mar 93 16:17:34 PST
+To: cypherpunks@toad.com
+Subject: Re: A novel (?) return address idea
+Message-ID: <9303030015.AA23087@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+John Gilmore writes:
+> There seems to me to be a serious problem with the "novel return
+> address" idea.  The information that ties together multiple anonymous
+> messages from the same person is out in the world, encrypted by a
+> single key in a conventional cipher.
+
+I'm not sure there IS a good answer for anonymous news-posting with replies.
+For email, you can create a use-once-then-delete anonymous reply address,
+which hangs around until a reply happens or garbage-collection hits,
+but this isn't practical for news or multiple-recipient email -
+you need to keep an alias around for multiple replies to use.
+You can assign a new reply address for each posting, which is in some sense
+more secure, but it means that there are now many copies of the poster's
+email address and public-key (though multiple public keys may be a win.)
+But if the remailer site gets compromised, these are about as risky as
+multiple messages cryptically pointing to one copy of the address.
+(Unless the mapping from anon-reply-id to real-id is cryptographically 
+protected.)  (These comments also apply to the dossier problem below.)
+
+If the key-compromise issues you bring up below can be fixed,
+then this method is more secure than the one-anon-address-per-user for all
+postings method that seems to currently be in use,
+and if users can get a new return-address-id on request, 
+and delete old return-address-ids on request (features you really need anyway),
+it's basically equivalent.
+
+> Furthermore, breaking the key will be possible by sending test-probes
+> and doing exhaustive search.  E.g. if you add 128 bits of salt,
+> someone can send five or ten messages to themself through the
+> remailer, and accumulate ten encrypted addresses that are known to be
+> for the same sender.  When decrypted, these keys will have maybe a 16-
+> or 32-bit "return address ID" and 128 bits of salt.  The attacker can
+> then search the key space for keys that include large numbers of
+> identical bits when decrypting those ten keys.  This search is easily
+
+Hmm.  So it's not good enough to just lump 32 bits of address-id and 32 bits
+of salt together, because a key-search over 56-bit keys will trigger on
+the ones that get the same first 32 bits for multiple cyphertexts.
+What if you use triple-DES instead of single-DES as the cypher,
+which increases the key search space to at least 112 bits?
+This is presumably big enough, especially since the return-address-id
+doesn't directly give you the address, though that can be easier to crack.
+ 
+> The idea also suffers from the dossier problem -- all the information
+> about return addresses will exist in a single place (at the remailer
+> site) where it's tempting for a government (or other adversary of
+> privacy) to try for it.
+
+Deleting old addresses and getting new ones helps.
+Joe's suggestion of changing the keys also helps: including a few bits in the
+crypted address that are essentially another salt to let you pick the crypt key,
+but of course this means you need to keep ALL the older keys loaded in the 
+system (or at least the last N), either stored (bad) or typed in (also bad.)
+I suppose you'd at least store them crypted.  If you periodically dispose of
+the oldest ones, then you've limited the amount of time the correspondence is
+exposed, which is a good thing, but you've also made it impossible to reply
+to really old messages.  (I guess a certain fraction of the postings will be
+requests for the poster of <message-ID> to repost something?)
+
+Also, this kind of remailer/reposter may still be chained - 
+there's no need for the return address to be a _real_ return address.
+
+				Bill Stewart
+
+
+
+
+

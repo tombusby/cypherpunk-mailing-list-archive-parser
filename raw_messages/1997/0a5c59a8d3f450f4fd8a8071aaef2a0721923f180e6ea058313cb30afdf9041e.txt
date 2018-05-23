@@ -1,0 +1,157 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 20 Oct 1997 03:19:22 +0800
+To: kent@bywater.songbird.com
+Subject: Re: why we are arguing for more resistant variants (Re: Is PGP still private?)
+In-Reply-To: <19971019100620.06593@bywater.songbird.com>
+Message-ID: <199710191815.TAA04506@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Kent Crispin <kent@bywater.songbird.com> writes:
+> On Sun, Oct 19, 1997 at 10:25:08AM +0100, Adam Back wrote:
+> > Also I must raise the point that it is not a lone stand.  Other people
+> > are arguing against PGP Inc's CMR proposal, and are arguing for more
+> > GAK resistant variants, and alternatives.  
+> 
+> Apparently for some internal reason you must raise the point, but it
+> is irrelevant.  I said your *proposals* were vaporware, not your
+> motivations.  It is, as I have said, a waste of time (and yes, mental
+> masturbation) to argue about motivations. 
+
+Motivation is irrelevant.  The road to hell is paved with good
+intentions.  All the sides in the argument (except for Freeh and the
+USG/NSA) have good intentions (and perhaps even Freeh from his
+perspective).  Fooh on good intentions.  Let's keep this discussion
+focussed on:
+
+  The design of systems which are hard for governments to abuse in
+  introducing GACK
+
+You made one contribution in this area in your last post.  Keep up the
+technical contributions, and scenario likelihood evaluations.
+
+> > However the biggest point of all is that: communications keys are more
+> > valuable to any attacker (government, unscrupulous little brother, or
+> > industrial spy) than storage keys.
+> > 
+> > I would be interested to see any one willing to burn their
+> > reputational capital refuting that simple point.
+> 
+> *Long term* communication keys.  Nobody is going to burn reputation
+> capital on that point because it's obvious, and really doesn't need to
+> be argued.  
+
+If it doesn't need to be argued, why does pgp2.x and pgp5.x use long
+term communication keys?  Why does pgp5.x then go exacerbate this
+problem encouraging use of not one but two long term communications
+keys.  Why does it provide recovery methods for long term
+communications keys when the stated user requirement is to recover
+stored email archives?
+
+ie. the discussion just took this form:
+
+Adam: X is a bad security idea.  X is used in pgp2.x and pgp5.x
+
+Kent: modification Y to pgp5.x doesn't make it any worse
+
+Adam: So?  It's still a bad idea, and here are ways to make it more
+      secure, and harder for governments to abuse to boot
+
+Kent: ?  (we're waiting)
+
+Surely the most straight forward way to provide recovery for email
+archives is to archive the emails encrypted to a storage-only key,
+with this key escrowed in some way?  You then don't need to recover
+email in transit -- you don't even have a copy of it.
+
+This is clearly more resistant to government abuse.  Do you disagree?
+
+(The above paragraph is basically all my CDR proposal is .. it seems
+straight forward, intuitive, more secure; I went through and countered
+your previous objections to worked example #1, you did not reply to
+those counter-points).
+
+> Furthermore the point applies just as well to current PGP keys.  The
+> *only* additional vulnerabilities of CMR come from 1) the volume of
+> data makes it a more interesting target and 2) the management of the
+> CMR key(s) may be problematic.
+
+You missed a couple:
+
+3) the goverment will love to get come ask for your CMR key because it
+protects all past emailed ciphertext
+
+4) some governments (eg France) will probably ask for one of the CMR
+keys to be theirs
+
+> However, in a large organization the management of *user* keys is
+> problematic, as well, and management of the CMR key(s), on balance,
+> will probably be better.  So the additional vulnerability of CMR comes
+> from the fact that it makes a lot of data accessible from one key. 
+> This vulnerability could be reduced by having multiple CMR keys -- the
+> accounting dept has one, the CEO has one, and it is the same as his
+> private key that is not escrowed anywhere, etc etc etc.
+
+Yes.  Several people have suggested this.  Also secret sharing is
+being considered by PGP Inc for the next version I think.
+
+> [Is it true that the private key associated with a CMR public key 
+> could simply be discarded, rather than escrowed, and everything would 
+> still work? -- except that you couldn't recover anything, of course...]
+
+I would think so.  This would argue for updating the CMR
+communications key as frequency as is practicable to minimise danger.
+(Same argument as update requirements for user communications keys).
+Hal Finney discussed this requirement of matching expiry frequency on
+comms keys & corresponding CMR keys a few messages back.
+
+> A more interesting argument is as follows: what is the real level of
+> security needed for the business communications that will be covered
+> by CMR? It seems obvious that the level of security required, on
+> average, is really quite low.  Note that businesses send all kinds of
+> important documents through regular mail, only protected *gasp* by
+> PAPER ENVELOPES. 
+
+This suggests that Tim May is right, and the simplest solution is to
+store the decrypted received emails in clear on the disk.  Most of the
+companies are in fact storing on disk.
+
+> Anyway, Adam, I anxiously await the paper you are working on that 
+> gives the real details of your proposals.  I'm sure it's readability 
+> will be vastly improved if you religiously avoid the use of the word 
+> GAK :-)
+
+Could you provide a less emotive suitable alternative word which I can
+use as a replacement to describe government communications key
+grabbing attempts?  GACK is what Carl Ellison proposed as a more
+accurate way to express "Goverment Access to Communications Keys" than
+terms such as "key escrow", "key recovery", which are government
+coined terms.  PGP Inc themselves being mostly cypherpunks and
+pro-privacy people use the term GACK also.
+
+GACK seems a pretty good acronym to me, accurate, descriptive.  Are we
+getting goverment-correct now as well (as politically-correct)?  So
+that we must not use terms which are offensive to governments?
+
+(I will attempt to avoid negative political comments about PGP Inc's
+implementation, and phrase in terms of constructive criticisms though,
+and perhaps this was your point given my earlier outbursts in this
+regard; perhaps you can help proof read for this).
+
+Cheers,
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

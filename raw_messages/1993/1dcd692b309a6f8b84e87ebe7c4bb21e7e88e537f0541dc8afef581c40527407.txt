@@ -1,0 +1,43 @@
+From: jim@tadpole.com
+Date: Sat, 10 Jul 93 03:08:23 PDT
+To: jpp@markv.com
+Subject: Re: Secure comm program, Sockets + LINK
+Message-ID: <9307101007.AA22836@ono-sendai>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>   Supose you opened up a socket on the local machine.  And that you
+> ran your usual telnet to connect to it.  The program listening on the
+> local socket would be responsible for running one end of a 'LINK' like
+> secure protocol.  It would connect to either the remote telnet socket,
+> or a special purpose socket at the remote end.  There either you can
+> use a pipe to a pty (standard telnet -> login shell -> LINK -> pty),
+> or in a special socket through LINK out the telnet socket.  (There is
+> an obvious extention with multiple hops through LINK-socket programs
+> which should provide the same kind of anonymity that is provided by
+> the CP remailers.)
+
+This is the kind of thing which is just perfect for a streams-based
+tty/networking environment.  Create a streams module that implements
+Link and DH key excng.  Push it on your tty stream at both ends.  Works
+over modems, telnet/rlogin, what-have-you.  A similar module could be
+created to sit below the IP module in SVRx-based Un*xes.
+
+>  It is also likely to be obsoleted as soon as secure-ip gets out.
+
+And once the vendors for both endpoints update to it.  Could be a while.
+
+>   Infact it would be nice to see some socket (perhaps 32?) become the
+> standard for the secure telnet service.
+
+I think it would be much better to develop something that will work with
+the current port numbers, else we stand a good chance of asking for a 'new'
+secure port foreach well-known service.  (Secure SMTP, Secure ftp-cmd, secure
+ftp-data,...)
+
+Jim
+
+
+
+

@@ -1,0 +1,75 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Mon, 9 Jun 1997 10:40:00 +0800
+To: pooh@efga.org>
+Subject: Re: PGP Key generation
+In-Reply-To: <3.0.2.32.19970608190515.007152dc@mail.atl.bellsouth.net>
+Message-ID: <Pine.LNX.3.96.970608211659.3887A-100000@purple.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Sun, 8 Jun 1997, Robert A. Costner wrote:
+
+> I have a question for any of you that may know the answer.  This is for a
+> paper I am giving to the Social Security Administration on Tuesday, so I
+> would appreciate any answer I get.
+> 
+> If I generate a personal PGP keypair on some machine it takes a specific
+> period of time to do the intensive calculations, let's assume ten minutes for
+> this example.  If I needed 10,000 such individual keyspairs for a unspecified
+> authentication attack, does this have to take 10,000 times 10 minutes (over
+> two months with this CPU), or is there a faster way to generate a large
+> number of keypairs to appear to be a large number of people.
+
+There are a few shortcuts you could take.  For instance, instead of finding
+two random, prime numbers for every key, just keep one prime constant and
+generate another random prime for each key.  This has the disadvantage
+that any one key factored would allow the other keys to be factored
+trivially.  I know there are other ways, but I'm not very good with number
+theory.
+
+Using this technique, it would take about half as long to generate 10,000
+public keys.
+
+> The larger question is since 10,000 unique written signatures seems to
+> indicate that 10,000 unique individuals exist, would 10,000 unique PGP
+> signatures also seem to indicate that these are not from the same person?
+
+The basis of PGP is the web of trust.  Keys are signed by people who are
+trusted to be competent and truthful, so the user can be sure to a certain
+degree that the key really is owned by the person listed in the ID field.
+There are problems that arise with this simplistic key management system,
+but I won't reiterate what has been discussed many times before.  There
+are a few papers that discuss this in detail.  Here are some pointers:
+
+ds.internic.net/internet-drafts/draft-ietf-spki-cert-req-00.txt
+                                draft-ietf-spki-cert-structure-01.txt
+research.att.com/dist/mab/policymaker.ps
+http://theory.lcs.mit.edu/~rivest/
+
+So the simple answer to this question is that one would not be able to
+get all 10,000 keys signed, so there would only be one key that could
+be trusted to belong to that person.
+
+
+Mark
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQEVAwUBM5teJSzIPc7jvyFpAQF68wf/YiMlEkZV0axYIAp+WNCGlhuG9JTmu5st
+4YUXGvkxwg4icePatfz+yttWfpYEmnSKP/9ZiLAAegsfuWcaK9frnntguUsH5jxE
+SZMXVWQzIqjW8sTNWY5KtDLbAkNE99gLCbPGq4zaksryzWYwwqOukHFXHFZkKWF6
+0sEk3H+AVY5SOCUf/MuNZACc1d6CLsWBHoUl2BFCi0seUcFqdBnEmydIaIyI4fee
+Kdezl/QPnVWQKBmZVuYfUtIrP+Kc1cD30D7LAqcPd+rr9UkstOv0rsRR5vH2SZwp
+7T8MFCeRQx1gs/j4QUvKgS/Y+vYrewTUmjdpADBF70ck0io23z4JZQ==
+=n5hc
+-----END PGP SIGNATURE-----
+
+
+
+
+

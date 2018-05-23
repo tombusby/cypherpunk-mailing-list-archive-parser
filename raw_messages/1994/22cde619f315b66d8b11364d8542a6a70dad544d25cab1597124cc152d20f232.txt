@@ -1,0 +1,105 @@
+From: rel@lipo.st.co.at (Roland E. Lipovits)
+Date: Thu, 26 May 94 16:01:42 PDT
+To: cypherpunks@toad.com
+Subject: Re: Patches to make PGP2.3a compatible with 2.6
+In-Reply-To: <Pine.3.89.9405251813.P180-0100000@newdaisy.ee.und.ac.za>
+Message-ID: <5PbBKl1bwfB@lipo.st.co.at>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello Alan!
+
+You wrote at 25.05., Topic "Patches to make PGP2.3a compatible with 2.6":
+
+ > Here's a set of patches relative to PGP 2.3a to make it do the following:
+ >
+ >   * Display and accept hexadecimal key IDs with 8 digits.
+
+To avoid crippled output because of 8 digit key-IDs you have to change  
+some more lines in source of v2.3a.
+
+Here the necessary changes I found, line numbers are of the original  
+unpatched source. (Sorry for the format, I have no diff-utility therfore  
+it's made by hand.)
+
+mfg Lipo
+
+- ---------------8<---------------8<---------------8<---------------8<-------
+***** KEYMAINT.C
+***** 425,427
+ 				if (pk->pk_userids)             /* more than one user ID */
+- -					fprintf(pgpout, "        ");
++					fprintf(pgpout, "          ");
+ 				fprintf(pgpout, "  %s\n", LOCAL_CHARSET(userid));
+***** 783,785
+ 			} else
+- -				fprintf(pgpout, "         %*s ", trustlst_len, "");
++				fprintf(pgpout, "           %*s ", trustlst_len, "");
+ 			fprintf(pgpout, " %-*s", legitlst_len, legit_lst[kc&KC_LEGIT_MASK]);
+***** 795,797
+ 			}
+- -			fprintf(pgpout, "%c        ", (kc & KC_CONTIG) ? 'c' : ' ');
++			fprintf(pgpout, "%c          ", (kc & KC_CONTIG) ? 'c' : ' ');
+ 			fprintf(pgpout, " %-*s", trustlst_len, trust_lst[TRUST_LEV(kc)]);
+*****
+***** KEYMGMT.C
+***** 1230,1232
+ 	}
+- -	fprintf(pgpout,PSTR("\nType bits/keyID   Date       User ID\n"));
++	fprintf(pgpout,PSTR("\nType bits/keyID     Date       User ID\n"));
+ 	for ( ; ; )
+***** 1300,1305
+ 				else
+- -					fprintf(pgpout,"                             ");
++					fprintf(pgpout,"                               ");
+ 				if (compromised && firstuser)
+ 				{       fprintf(pgpout, PSTR("*** KEY REVOKED ***\n"));
+- -					fprintf(pgpout,"                             ");
++					fprintf(pgpout,"                               ");
+ 				}
+***** 1390,1395
+ /*      Here's a good format for display of key or signature certificates:
+- -Type bits/keyID   Date       User ID
+- -pub  1024/xxxxxx yyyy-mm-dd  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+- -sec   512/xxxxxx yyyy-mm-dd  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+- -sig   384/xxxxxx yyyy-mm-dd  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++Type bits/keyID     Date       User ID
++pub  1024/xxxxxxxx yyyy-mm-dd  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++sec   512/xxxxxxxx yyyy-mm-dd  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++sig   384/xxxxxxxx yyyy-mm-dd  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ */
+***** 1497,1502
+ 				else
+- -					fprintf(pgpout,"                             ");
++					fprintf(pgpout,"                               ");
+ 				if (compromised && firstuser)
+ 				{       fprintf(pgpout, PSTR("*** KEY REVOKED ***\n"));
+- -					fprintf(pgpout,"                             ");
++					fprintf(pgpout,"                               ");
+ 				}
+***** 1541,1543
+ 					else
+- -					{       fprintf(pgpout,"                               ");
++					{       fprintf(pgpout,"                                 ");
+ 						fprintf(pgpout,PSTR("\007***** BAD SIGNATURE! *****\n"));
+*****
+- ---------------8<---------------8<---------------8<---------------8<-------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLeP45MRGkei8OaXNAQGXMAP9G/OV1OGTa2g75W9UuAKM3ugzb3Recaxb
+diF6FBu/OjEgTjEbTZiFe+zLwFdYBnqqWZCsxYHx3iJL7mb9AW8+RBMxEyuy4UJp
+80yUyZGiUFP+w7WnzcK/7CAPrMbellhT5k3gDi+TunXIg5noggL46CPpyHcdAie0
+wfJca9gNlAc=
+=gQI0
+-----END PGP SIGNATURE-----
+## CrossPoint v3.02 ##
+
+
+
+
+

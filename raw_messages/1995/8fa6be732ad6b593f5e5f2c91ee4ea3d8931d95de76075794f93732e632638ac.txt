@@ -1,0 +1,47 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Wed, 13 Dec 1995 22:33:48 +0800
+To: Peter Monta <pmonta@qualcomm.com>
+Subject: Re: Timing Cryptanalysis Attack
+In-Reply-To: <199512120056.QAA16055@mage.qualcomm.com>
+Message-ID: <IAA03848.199512131330@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <199512120056.QAA16055@mage.qualcomm.com>, Peter Monta writes:
+>> Of course, this works against a remote adversary, but not against one
+>> on the same machine who can look at actual CPU consumption (which doesn't
+>> increase when the target is blocked).
+>
+>Maybe this is a good reason to spinwait, rather than sleep, until
+>the timer expires.  It would be pretty subtle to distinguish that
+>from "real" computation.
+
+Across a net it should be hard.  On the same CPU it may be easy.  Some
+CPUs with hardware branch prediction keep track of how many branches were
+correctly and incorrectly predected.  These registers are not allways
+protected, and not allways "made virtual" by the OS.
+
+If your spin wait is of the form:
+
+LOAD #big_number, R1
+L1:
+DEC R1
+BNE L1
+
+(a.k.a "for(i = big_number; i--;) { }")
+
+Then the "number of correctly predicted branches" will go up by approximatly
+big_number...
+
+(in all honesty the only CPU I am sure "allows" normal user programs to
+see the performance registers is the AMD29xxx series, and that is only
+if the OS sets the right bit in the register protection mask.  I know
+the P6 has such performance registers, but don't know if they are protected,
+and I think the P5 has them, but again I don't know if they are protected.
+I think some of the Alpha's have them, but seem to remember them being
+protected (and I use to think it was a dumb idea...))
+
+
+
+

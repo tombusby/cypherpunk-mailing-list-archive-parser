@@ -1,0 +1,81 @@
+From: Sameer <sameer@uclink.berkeley.edu>
+Date: Sun, 21 Nov 93 13:57:25 PST
+To: cypherpunks@toad.com
+Subject: Does someone know about irc "/on"?
+Message-ID: <m0p1Mhd-000J6pC@infinity.hip.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+	Like I posted earlier, I'm working a bit to do diffie-hellman
+key exchange for the IRC. I was hoping to incorporate it into the
+source, and implement it via /dcc, but that's too tough. I've figured
+out a scheme which will work, but I don't know how to implement it in
+irc.. I'm wondering if anyone here knows how to do what I want--
+
+	(I still don't have my RNG working correctly, but I could
+probably grab one from someplace.. or leech off the ~/pgp/randseed.bin
+file.)
+
+	Here's my scheme:
+
+	Suppose I want to initiate an encrypted conversation with Alice.
+
+In irc, I do /startdh Alice
+
+What startdh does is call
+	"ircdh Alice"
+
+	"ircdh Alice" computes XB, saves it to a file /tmp/dh.Alice,
+and outputs to stdout, YB.
+
+	startdh should then take the output of ircdh Alice and send it
+to alice, as a /ctcp send of type "dh-key"
+
+When Alice receives the
+	/ctcp of type "dh-key"
+
+irc automatically should call:
+
+	"ircdh Sameer YB" (YB is the information in the ctcp packet.
+
+	ircdh will create an XA, and output YA and the key to stdout.
+
+	on getting this information, irc should send YA to Sameer, and
+do /encrypt Sameer <key>. (The standard encryption routine in irc is
+insecure, but there's a facility for an external crypt program..)
+
+When I receive the
+	/ctcp of type "dh-key"
+
+irc automatically should call
+	"ircdh Alice YA" (where YA is the information Alice sent me)
+
+	ircdh will see that a /tmp/dh.Alice already exists, so it will
+grab the XB from that file, and then compute a key, which it returns.
+
+	Then irc should take the output of "ircdh Alice YA" and have
+it do /encrypt Alice <key> where <key> is the output from ircdh Alice
+YA.
+
+
+	So I have the program ircdh working, except for my RNG. I need
+help with the interface with irc. Any ircII wizards out there? Thanks.
+
+- -Sameer
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLO/jAni7eNFdXppdAQH2FgP+OtP68BVfli92iPLBH7x+d7AV+GdTXkie
+4Gy4BqlbiVwcSUERehZKcvnrrI0sm22Fb2YSNMLGQIekJDQczcSXu04NkJHoKFMY
+cig6f4MvySaHedqX3Sfvtg9vh8QM0g0/i4TAtWKq0w0WaTNgvJGQPDP/B4Bl5Zyf
+9JI/e3jGIP0=
+=tv31
+-----END PGP SIGNATURE-----
+
+
+

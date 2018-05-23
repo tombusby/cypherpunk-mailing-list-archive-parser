@@ -1,0 +1,135 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 12 Oct 1997 05:30:05 +0800
+To: hal@rain.org
+Subject: PolicyMaker & GAK compliance
+In-Reply-To: <199710111842.LAA03434@s20.term1.sb.rain.org>
+Message-ID: <199710112123.WAA05223@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Hal Finney <hal@rain.org> writes:
+> Adam Back writes:
+> > I would be nice to see the topic of the recipient refusing email based
+> > on policies relating to third party access to messages in transit
+> > being addressed in the standard when and if PGP gets to that stage.
+> >
+> > [ecash processing]
+> 
+> This is a good example of a possible future kind of key assertion.
+> Are you confident that you can decide which kinds of recipient refusal
+> are morally correct and which kinds are not?
+
+Not automatically, no, I doubt it would work.
+
+> Is it the role of the IETF and the Open-PGP process to make this
+> determination?  I would say not.  Rather, we should standardize data
+> structures and conventions which allow people to express those
+> conditions and assertions which are useful to them.
+
+Yes.  I agree.
+
+> There are a whole range of possible assertions which you might object to:
+> 
+>  [examples of PolicyMaker style policies]
+> 
+> You can take these case by case and decide for yourself whether each
+> one is acceptable or not by your own standards.  But I don't think it's
+> going to be possible to come up with a set of objective rules which will
+> decide whether any given assertion is allowed.
+> 
+> Fundamentally, you are asking to make it illegal for a key to request
+> encryption to an additional recipient.  That's what it comes down to.
+> You want to forbid this class of assertions.
+
+Yes.  I was getting carried away.  It would be too complex, most
+likely.
+
+The thrust of your argument seems to be that there would be little use
+making pgp 5.5 non-GAK compliant, because PolicyMaker style statements
+will be so flexible that they will be GAK compliant anyway.
+
+So, when are PGP starting work on PolicyMaker?  Is it intended to
+introduce this functionality in this first round standardisation?  It
+seems to me that adding PolicyMaker functionality could take some
+considerable time due to the huge complexity of the task.
+
+
+Also, just because GAK compliance will become possible if and when
+PolicyMaker style extensions are implemented, doesn't mean that PGP
+can expect popular support for actually going ahead and implementing
+GAK compliancy in pgp5.5; nor can it expect to gain popular support
+for the uncharacteristic big brotherish mentality displayed by those
+working at PGP in implementing the SMTP policy enforcer behind closed
+doors to enforce other people to modify their behaviour to honour
+third parties GAK or CAK requests.
+
+I think the whole thing is a huge PR fluff up.  I'm suprised that
+those at PGP were all able to agree to do it without arguments being
+expressed by employees, and without those arguments leaking out of the
+company (given the picture Jon Callas painted of strong privacy and
+freedom biases at PGP).  If there had been open discussion of the
+product's design prior to development, this feed back could have been
+obtained earlier.
+
+I presume the PGP PR person (who ought to get the sack in my opinion)
+thought that a sudden press release of such marvelous new feature as
+PGP snoopware and a snoopware enforcer for third parties would go down
+well.  It doesn't.  The enforcer is rudely enforcing the companise
+opinions on people who have no connection with the companies snoopware
+policies.  You should keep such matters within the company by using
+escrowed storage keys to acheive snoopware.
+
+For these reasons I still argue that we should:
+
+- add storage keys to the standard
+
+   It's more secure to do this.  That should be argument enough in
+   itself.  It also is much cleaner separating key functionality out
+   into separate keys where those keys have vastly different recovery,
+   life time, and security requirements.
+
+- use storage key escrow to implement PGP snoopware instead of burdening
+  the OpenPGP standard with the stigma of GAK compliancy
+
+   This method ties in with the use of storage keys.  It is nearly as
+   effective a snoopware design.  It also isn't GAK compliant.  It
+   also doesn't result in cypherpunks shouting at you.
+
+- don't use the special sub-packet type to flag GAK compliancy
+
+   I think the above shows that the neither the standard, nor PGP Inc
+   needs the GAK compliant sub-packet, so scrap it, and save the
+   argument up for the much more defensible position of a generalised
+   PolicyMaker style  key usage restriction assertions
+
+- scrap the controversial SMTP snoopware policy enforcement app
+
+   Use storage key escrow to implement PGP snoopware instead of
+   burdening the OpenPGP standard with the stigma of GAK compliancy
+
+
+It's difficult to get standards which don't reflect big brotherish
+aims when the good reputation of PGP Inc and Phil Zimmermann is
+apparently behind it.  Something weird is going on at PGP
+headquarters.  PRZ is also silent.  Are all the people at PGP Inc in
+accord in thinking that the snoopware policy enforcer is a really cool
+pro-privacy app?  Some of the usually more vocal PGPers have remained
+silent throughout the entire episode.  Also as Tim note's the lack of
+a Zimmermann Telegram (tm) getting suspiciously overdue.  Is he
+dragging his feet of snoopware and GAK compliancy?
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

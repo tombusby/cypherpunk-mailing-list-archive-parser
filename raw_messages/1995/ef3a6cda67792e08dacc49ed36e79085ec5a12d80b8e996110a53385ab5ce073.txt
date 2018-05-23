@@ -1,0 +1,244 @@
+From: Mats Bergstrom <asgaard@sos.sll.se>
+Date: Wed, 18 Oct 95 02:42:06 PDT
+To: cypherpunks@toad.com
+Subject: The Anonymous Bounty Claim
+In-Reply-To: <199510180451.VAA23663@infinity.c2.org>
+Message-ID: <Pine.HPP.3.91.951018101847.20167A-100000@cor.sos.sll.se>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> sameer wrote:
+> > Phil Karlton wrote:
+
+> > I am not quite sure what problem you are talking about? NFS and MITM
+> > ftp attacks?
+
+> 	This character has been going on and oon regarding some big
+> hole he apparently found in netscape, but no one else on the list
+> seems to have noticed anything, or replicated any alleged claims he
+> may have made. Maybe if the person in question would repost this
+> alleged post describing some massive hole, it would help us all.
+
+I am not technically competent to judge if his/her claim is worth
+reposting, but here it is, clipped from the very long Friday 13
+rant, as found at Raph's index site (Subject: Bugs Bounty??...shhh...
+I'm huntin wa'bits... From:anonymous-remailer@shell.portal.com).
+
+Mats
+___________________________________________________________________
+
+<long first part deleted; general aspects on the Bounty Hunt>
+
+And this is where we introduce a little old document called pushpull.html.
+from Netscape's Web site. It's titled: An Exploration of Dynamic
+Documents. 
+
+> The Great Idea
+> 
+> The general idea is that browsers have always been driven by user
+> input. You click on a link or an icon or an image and some data comes
+> to you. As soon as people saw they could do that, they wanted to give
+> a server the ability to push new data down to the browser. (An
+> obvious example is a stock trader who wants to see new quote data
+> every 5 minutes.) Up until now, that hasn't been possible.
+
+And I can think of many people who would _also_ like to push down data
+to a browser. But, that's not a great idea. Guess what?? It's not even 
+a good idea. It might even be a bad idea.
+
+> Netscape Navigator 1.1 gives content creators and server
+> administrators two new open standards-based mechanisms for making this
+> work. The mechanisms are similar in nature and effect, but
+> complementary. They are: 
+>
+> Server push -- the server sends down a chunk of data; the
+> browser display the data but leaves the connection open; whenever
+> the server wants it sends more data and the browser displays it,
+> leaving the connection open; at some later time the server sends
+> down yet more data and the browser displays it; etc.
+
+Yes, the client "processes data" and then possibly displays it, while in
+
+> Client pull -- the server sends down a chunk of data,
+> including a directive (in the HTTP response or the document
+> header) that says "reload this data in 5 seconds", or "go load
+> this other URL in 10 seconds". After the specified amount of
+> time has elapsed, the client does what it was told -- either
+> reloading the current data or getting new data.
+
+Hmm. Netscape's clients blindly trust and follows server's instructions
+and does what it is told to do. If it's told to load a particular
+document in five seconds. It does that. It dances to the server's
+instructions. Something which should cause any Security Administrator's
+hair to stand on end, as the server takes control of the client's machine 
+and "manipulates it".
+
+> In server push, the magic is accomplished by using a variant of the
+> MIME message format "multipart/mixed", which lets a single message (or
+> HTTP response) contain many data items. In client pull, the magic is
+> accomplished by an HTTP response header (or equivalent HTML tag) that
+> tells the client what to do after some specified time delay. 
+>
+> For server push we use a variant of "multipart/mixed" called
+> "multipart/x-mixed-replace". The "x-" indicates this type is
+> experimental. The "replace" indicates that each new data block will
+> cause the previous data block to be replaced -- that is, new data will
+> be displayed instead of (not in addition to) old data. 
+> 
+> So here's an example of "multipart/x-mixed-replace" in action: 
+
+>>Content-type: multipart/x-mixed-replace; boundary=ThisRandomString
+>>
+>>--ThisRandomString
+>>Content-type: text/plain
+>>
+>>Data for the first object.
+>>
+>>--ThisRandomString
+>>Content-type: text/plain
+>>
+>>Data for the second and last object.
+>>
+>>--ThisRandomString--
+> 
+> The key to the use of this technique is that the server does not push
+> the whole "multipart/x-mixed-replace" message down all at once but
+> rather sends down each successive data block whenever it sees
+> fit. 
+
+And this is the problem. We have a pipe. And we have a server making a
+decision when it will send the next data block. I guess the server could
+also decide dynamically what that data block is going to be once it has
+opened it's pipe to the client. 
+
+That is way too much trust for a client to place in a server that it 
+doesn't know if it can trust.
+
+> The HTTP connection stays open all the time, and the server
+> pushes down new data blocks as rapidly or as infrequently as it wants,
+> and in between data blocks the browser simply sits and waits for more
+> data in the current window. The user can even go off and do other
+> things in other windows; when the server has more data to send, it
+> just pushes another data block down the pipe, and the appropriate
+> window updates itself. 
+
+Yep, the appropriate window just "updates" itself at the command of 
+the server. A good faith update ... or let's call it a good faith 
+process. 
+
+> So here's exactly what happens:
+>
+> Following in the tradition of the standard "multipart/mixed",
+> "multipart/x-mixed-replace" messages are composed using a unique
+> boundary line that separates each data object. Each data object
+> has its own headers, allowing for an object-specific content type
+> and other information to be specified.
+
+Let's emphasize that what we have is a slave client at one end of a pipe
+accepting an object-specific content-type from any server. 
+
+This is not within the tradition of multipart/mixed. 
+
+And this is a problem.
+
+> The specific behavior of "multipart/x-mixed-replace" is that each
+> new data object replaces the previous data object. The browser
+> gets rid of the first data object and instead displays the second
+> data object. 
+>
+> A "multipart/x-mixed-replace" message doesn't have to end! That
+> is, the server can just keep the connection open forever and send
+> down as many new data objects as it wants. The process will then
+> terminate if the user is no longer displaying that data stream in
+> a browser window or if the browser severs the connection
+> (e.g. the user presses the "Stop" button). We expect this will
+> be the typical way people will use server push. 
+>
+> The previous document will be cleared and the browser will begin
+> displaying the next document when the "Content-type" header is
+> found, or at the end of the headers otherwise, for a new data block.
+> The current data block (document) is considered finished when the
+> next message boundary is found. 
+>
+> Together, the above two items mean that the server should push
+> down the pipe: a set of headers (most likely including
+> "Content-type"), the data itself, and a separator (message
+> boundary). When the browser sees the separator, it knows to sit
+> still and wait indefinitely for the next data block to arrive. 
+
+Now let's play with the prior example. Let's say that we utilized
+different types of objects. I'll use multipart/parallel and
+application/postscript. 
+
+>>Content-type: multipart/x-mixed-replace; boundary=ThisRandomString
+>>
+>>--ThisRandomString
+>>Content-type: application/postscript
+>>
+>>Data for the first object
+>>
+>>--ThisRandomString
+>>Content-Type: multipart/parallel; boundary=ThisSecondRandomString
+>>
+>>--ThisSecondRandomString
+>>Content-Type: application/postscript
+>>
+>>Data for the second object
+>>
+>>--ThisSecondRandomString
+>>Content-type: application/postscript
+>>
+>>Deletefile
+>>Renamefile
+>>Filenameforall
+>>File
+>>
+>>--ThisSecondRandomString--
+>>
+>>--ThisRandomString--
+
+I think that the foregoing explains itself without me having to draw any
+more maps, than is absolutely necessary. The first data object sent is
+application/postscript. The second object is multipart/parallel. 
+
+And it's where we conflict with federal requirements:
+
+> b. Unauthorized manipulation of the computer and its associated
+> peripheral devices."[8, sec. I B.3]
+
+And I think that this is applicable across the entire product line.
+
+I wonder if this makes me eligible for a bounty for each product where 
+there is this Security Bug?? That would be very chivalrous of Netscape
+to offer me that. Then maybe I could get a real computer rather than 
+this crufty old Mac Plus (a yellow one) and my 2400 baud modem... and 
+then, I might just be able to do some virtually real hunting.
+
+Alice de 'nonymous ... (doing a bad impression of Elmer Fudd with 
+thoughts of Bugs Bounty in his lil mind.)
+
+...just another one of those...
+
+P.S. And yes I brought this whole issue (tangentially) to the 
+attention of netscape.com yesterday afternoon. I think I asked 
+whether they were going to have a formal specification and register
+their x-mixed-replace with IANA. They haven't gotten to my email
+yet, (I think). Or maybe, I'm in the Bulk response group. <shrug>
+
+P.P.S. I give permission to have this propogate freely through 
+the cyber-aethyr. All other rights are of course reserved.
+C. S. U. M. O. C. L. U. N. E.
+
+_____________________________________________________________________
+
+end quote
+
+
+
+
+
+
+
+

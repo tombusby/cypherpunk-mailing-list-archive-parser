@@ -1,0 +1,59 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 15 Aug 1997 17:37:57 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: PGP in < 100 lines of perl
+In-Reply-To: <wiLeBe21w165w@bwalk.dm.com>
+Message-ID: <3.0.2.32.19970815021912.02ff4d54@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 08:30 AM 8/14/97 +0100, Adam Back wrote:
+>I once started trying to implement full PGP functionality in as few
+>lines of perl/dc as possible.
+>
+>I got pgp signature verification working.
+>and PGP compatible IDEA PRZ style CFB mode in 9 lines.  
+>and PGP key lookup in 7 lines.
+>and MD5 in 8 lines.
+>
+>(Several of those were other peoples contributions)
+>
+>If you used /dev/random for random numbers plus a bit more glue, it
+>would've worked.  Everything put compression and key generation.
+
+If you want to skip PGP file format compatibility, 
+and type the occasional key in in hex, it should be even shorter;
+the ideal is to fit in about 60 lines for faxing on one page :-)
+
+Steve Reid did an RSA key generation program that, in squashed form,
+looks like this (there's an expanded version with comments.)
+It depends on the user entering a lot of random junk, but
+that's what your N monkeys and keyboards are for.
+
+#!/usr/local/bin/perl
+$k=768;$e=sprintf'%X',65537;print"Please enter a LOT of random junk.\n"
+;$a=<STDIN>;print"Working. This may take a while.\n";for(1..(length($a)-
+1)){$b[$_&31]^=unpack('C',substr($a,$_,1));$b[$_&31]=(($b[$_&31]<<5)|($b
+[$_&31]>>3))&255;}for(0..255){$c[$_]=$_;}$a=$d=$f=0;for(0..255){$a=($a+
+$c[$_]+$b[$a&31])&255;($c[$_],$c[$a])=($c[$a],$c[$_]);}open(F,'|dc');
+select F;print"16dio[$e+]sa";for(1..50){for(1..$k/32){printf'%02X',&g;}
+print"Sr";}for(1,2){printf'%02X',&g|128;for(2..$k/16){printf'%02X',&g;}
+print"d$e%-2+d2%0=aSP";}print"[d2%SA2/d0<X+d*LA1=ZlP%0]sX[lR*]sZ[1+Q]sQ[
+la1+sa0sc]sA[lAxlb1+sb]sB[ld1+sdLrddSssR1lP1-2/lXx+1+lP%99scd0=A2=Bclcla
++32>C]sC[LsSrld1-dsd0<D]sD[le1+se0ddsasbsdlCxlDxlP2 $e*+sPlc99=Elb32=ElP
+2 $e*-led1>QQ]sE_1selExsq_1seLPlExsp[p=]Plpp[q=]Plqp[n=]P*p[e=]P$e p1-lp
+1-lq1-**1+$e/[d=]Pp\n";close(F);sub g{$d=($d+1)&255;$f=($f+$c[$d])&255;(
+$c[$d],$c[$f])=($c[$f],$c[$d]);return($c[($c[$d]+$c[$f])&255]);}
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#   (If this is a mailing list or news, please Cc: me on replies.  Thanks.)
+
+
+
+
+

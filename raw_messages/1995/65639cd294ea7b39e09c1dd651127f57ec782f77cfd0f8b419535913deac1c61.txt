@@ -1,0 +1,44 @@
+From: shamrock@netcom.com (Lucky Green)
+Date: Sat, 14 Oct 95 22:06:46 PDT
+To: cypherpunks@toad.com
+Subject: Macintosh [and perhaps other OS] Security Alert
+Message-ID: <199510150505.BAA10774@book.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+A number of months ago, I discovered that various Macintosh "unused
+diskspace" wipe utilities (Norton, Burn) fail to wipe the unused
+slackspace at the end of the last block allocated to a file. This leaves
+NumberOfFiles*512Bytes/2 = several kB of recoverable data on your average
+drive.
+
+I had assumed that this data was left there by other files previously
+using the same block. This would certainly be a problem. But I discovered
+that matters are much worse. The Macintosh file system will always write
+an entire block. The extra data can therefore not come from an old file.
+It comes from the memory space immediately following the data to be
+written. This is a very serious security risk. Your decrypted secret key,
+ANYTHING in memory might be written to disk and remain there, unerasable
+by disk wipe utilities.
+
+I would appreciate some comments.
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBFAwUBMICWfCoZzwIn1bdtAQFDyAF/QLI0RJQ/E2+wktITd+3SBCCB8L24Y/vV
+rq0hPikG9pELYcC/bMwXvD+utoW/E8NQ
+=IHqi
+-----END PGP SIGNATURE-----
+
+
+
+

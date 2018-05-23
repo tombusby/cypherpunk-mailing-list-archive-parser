@@ -1,0 +1,43 @@
+From: rparratt@london.micrognosis.com (Richard Parratt)
+Date: Thu, 12 Jan 95 06:26:18 PST
+To: brendan@moe.oc3s-emh1.army.mil
+Subject: Re: Cryptanalysis
+Message-ID: <9501121425.AA03332@pero>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 	I light of recent threads about recognising whether or not a given 
+> message/file is encrypted, and using CBW and things along those lines, is there
+> any way to determine how something was encrypted?  For example, I know that
+> a statistical analysis of the cyphertext will uncover simple substitution
+> cyphers fairly quickly.  Does the same sort of analysis apply to determining
+> whether something was encrypted using IDEA or DES or RSA?  I realize that they
+> attempt to maximize the entropy of the cyphertext -- perhaps there is some
+> characteristic amount or range of amounts of entropy associated with these
+> cyphers?  Not every package is as nice as PGP in labeling everything it
+> encrypts with headers...   Any pointers would be greatly appreciated....
+
+If the encryption method is any good, the output will be pseudo-random
+with no digit being more frequent than any other. This certainly applies
+to IDEA and DES. With RSA, you usually have a random (IDEA) session key
+encrypted using the senders private key. This will also be an effectively
+'random' number.
+
+> PS.  What I'd like to be able to do is take a given chunk of cyphertext and
+>      analyze it and say: "There is an x% probability that this was encrypted
+>      using method y...."  Hopefully I'd have a reasonable chance of recognizing
+>      how it was encrypted, and not all of the percentages would be so low as
+>      to make the exercise meaningless.
+
+This would only work for ciphers that are effectively 'broken'. Also, many
+packages and users compress data before encryption. Compression algorithms
+work by removing patterns from data, so the resultant compressed plaintext
+becomes fairly random anyway, removing the utility of frequency analysis.
+
+--
+Richard Parratt
+
+
+
+

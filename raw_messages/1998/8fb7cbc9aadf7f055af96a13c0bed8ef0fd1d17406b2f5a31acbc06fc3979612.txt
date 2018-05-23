@@ -1,0 +1,49 @@
+From: Michael Paul Johnson <mpj@ebible.org>
+Date: Wed, 5 Aug 1998 21:03:10 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: Noise source processing
+In-Reply-To: <Pine.LNX.3.96.980805210406.11770A-100000@albert>
+Message-ID: <199808060403.XAA32439@yeti.host4u.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:12 PM 8/5/98 -0400, mgraffam@mhv.net wrote:
+...
+>After a little bit of work I have put together a white noise source 
+>(hacked FM reciever, heavily shielded to reduce local EMR bias) and
+>have it jacked into a mic port on one of my machines. I would like
+>to develop of bit of code (oh, horror :) to take bits from the sound
+>card, and bits from /dev/random, and mix them together to get a
+>random number stream.
+>
+>The noise coming off of the sound card is more beige than white though..
+>
+>Does anyone know of any papers, articles or whatever on good techniques to
+>remove bias from the audio source? 
+...
+If I were doing it, I would probably feed the raw bytes into a stream
+cipher with feedback, like Sapphire II, and then select every nth byte from
+the output stream (just to match the output bit rate to the estimated
+actual entropy in a conservative fashion and improve the effective
+avalanche performance of that particular algorithm). This would be faster
+than a hash like SHA-1. Indeed, you could just use a good mixer, like a CRC
+or non-cryptographic hash to whiten the noise if speed is an issue. As long
+as you restrict the output bit rate to less than the actual estimated
+entropy of the source, you should be alright, provided that your noise
+source is as random as you think it is.
+
+Then again, the truly paranoid may beg to differ.
+
+
+
+
+_______
+
+Michael Paul Johnson                   
+mpj@ebible.org    http://ebible.org    http://cryptography.org
+PO BOX 1151, Longmont CO 80502-1151, USA Jesus Christ is Lord!
+
+
+
+

@@ -1,0 +1,82 @@
+From: solman@MIT.EDU
+Date: Fri, 15 Jul 94 00:29:12 PDT
+To: perry@imsi.com
+Subject: Re: Probabilistic Encryption
+In-Reply-To: <9407141627.AA17963@snark.imsi.com>
+Message-ID: <9407150728.AA13894@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Graham Toal says:
+> >>> How secure do you guys think Probabilistic encryption using a BBS
+> >>> generator is? It looks like its every bit as good for key
+> >>> exchanges as RSA and somewhat better because of its speed.
+
+> >> The technique you mention is not one I've heard of. What is a BBS
+> >> generator? Could you please explain?
+
+> > BBS is Blum-Blum-Shub, a cryptographically strong RNG I believe.
+
+> Ah, the Blum-Blum-Shub generator is familiar to me. However, how can
+> you possibly use this for key exchange?
+
+> > How he plans using this in some way to get the effect of an RSA
+> > public key system I have no idea.  I hope we're not about to get the
+> > usual kiddy PRNG exor encryption lecture.
+
+> Ditto.
+
+Well it is based on a PRNG exor, but the hardness of the encryption is
+based on the hardness of factoring the modulus used in the BBS RNG so I
+don't think you need to give me a "kiddy" lecture. (And I'm not using it
+for authentication, something which I belive is necessarily weak in any
+cypher being encrypted and decrypted via exor)
+
+I first saw a useful version of this in Schneier although I had previously
+seen versions that generated ciphers twice as large as the plaintext (which
+are uninteresting to me since I'm working ona VERY bandwidth conscious 
+application).
+
+Here is how it works:
+
+First, choose two large prime numbers that are one less than a multiple of
+four. Since the security of this algorithm is based on the difficulty of
+factoring, I guess hard primes would be nice but I don't know if it really
+matters.
+
+Next choose a random number. Since you only need one random number, you
+probably don't need it to be very secure, but just in case its a good
+idea.
+
+In each iteration of a BBS you modify the seed by the following operation:
+seed(new) = (seed(old))^2 mod n [n is the product of your primes].
+
+Throw your seed in there, if you question its security iterate it once
+before using any numbers.
+
+If your seed has 2^n bits, the lowest n bits will be randomly generated
+bits that are sufficiently secure for any cryptographics application you
+can think off. Exor the the stream of random bits with the stream of
+plaintext and append the final seed and you get your cyphertext.
+
+NOW, in order to remove the cypher, you need to figure out what the initial
+seed was. For a BBS generator, the only way you can do that is by factoring
+the modulus. The private key then, is the two factors. The public key is the 
+modulus n. Clearly you can't authenticate by this, but there are much better 
+algorithms for that anyway. What this provides is a public key system based
+on the hardness of factoring that is faster than RSA and apparently not
+covered by the RSA patent. (although I've asked for opinions on this last
+point in another post)
+
+I really believe that this is secure, but I wanted opinions before I
+implemented it as the algorithm users can use when they want to say
+"screw you RSADSI".
+
+Cheers,
+
+Jason W. Solinsky
+
+
+
+

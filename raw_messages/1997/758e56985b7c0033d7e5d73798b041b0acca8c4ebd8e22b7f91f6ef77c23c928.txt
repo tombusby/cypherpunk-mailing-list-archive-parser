@@ -1,0 +1,114 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 16 Oct 1997 14:56:54 +0800
+To: rfarmer@HiWAAY.net>
+Subject: Re: Encyrption Program
+In-Reply-To: <199710141958.MAA22050@k2.brigadoon.com>
+Message-ID: <3.0.3.32.19971015185531.006aa87c@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 12:58 PM 10/14/1997 PST, semprini@theschool.com wrote:
+>This is in response to the several posts regarding the assumed 
+>weakness in the program I wrote:
+>    While it is true that PRNG's are not very good, because of the 
+
+There are lots of kinds of random number generators.
+Many of them are good for simulations and totally useless for crypto,
+and not even very good for the intermediate problem of gambling.
+It's worth getting a copy of PGP and reading the section in the
+user documentation about Snake Oil - Phil Zimmermann describes
+how he invented a cool new cryptosystem using PRNGs and was surprised
+to find breaking it as a textbook exercise.  He's gotten better since then :-)
+
+By far the most commonly used is the Linear Congruential Generator;
+	x[n] = ( a * x[n-1] + c ) mod m
+They're popular because they're fast, simple, and for well-chosen
+values of a, c, and m, they produce reasonable-quality random numbers.
+Another very popular class of random number generators is 
+Linear Feedback Shift Registers, which look roughly like
+	b[n] = a[0] + a[1]*b[n-1] + .... + a[k]*b[n-k]
+where the a[] and b[] variables are bits and it's all modulo 2.
+
+The definitions of "random" used here imply that the
+value of x[n] is statistically well-distributed even if you know
+	x[n-1], x[n-2] .... x[0].  
+That doesn't mean that _you_ can't easily calculate them,
+nor does it mean that you can't easily calculate 
+	x[n-k], x[n-k-1], ... x[0]  given x[n] ... x[n-k+1].
+
+For both LCG and LFSR, there's a lot of mathematical theory
+about how to do this, and especially LCGs are pretty useless.
+Among other things, if anybody knows the first N bits of your message,
+for instance they know some plaintext -- knowing the first two 
+characters is enough for a known LCG using 16-bit integers,
+such as the "Fr" in "From: alice@acme.com", or the 
+magic number in the first 2-4 bytes of a file that indicates
+it's a GIF or EXE or a.out or whatever.  If you don't know
+which 16-bit LCG it is, having the first 4 bytes helps a lot.
+And if you don't know, there are only 65536 possibilities,
+so just try them all and look for text.  Even if you're
+using 32-bit LCG random numbers, that's not very many for a
+Pentium to crunch on over the weekend.
+
+>To work around the lattice problem, I used a systm of cubic arrays.
+>The program first creates sixteen cubic arrays, and fills 
+>them one space at a time with random characters. 
+>When the stream of characters to be XORed with the plaintext is 
+>generated, it picks a random cube and a random location with that cube. 
+
+You're probably generating the set of random characters from the LCG,
+which means if you know one, you know them all (or at least,
+if you try it 65536 times you do, for a 16-bit LCG.
+This _is_ more annoying for 32-bit LCGs, but not particularly
+harder; maybe you need a lab-full of Pentia.)
+Similarly, your "random" cube and "random" location are
+probably chosen from the same stream.  So for each starting value,
+we know the contents of the cubes, and which cube and byte are chosen, 
+so we XOR them with "F", and if that works XOR them with "r",
+and work our way down the line.
+
+> you can download both the compiled version *and* the source
+Providing source is important - thanks; at least there's some chance that
+people can look at your algorithm and see if it's been done before.
+A good description of what the algorithm is and why it's strong
+are also helpful, especially for people who don't know the
+syntax of whichever programming language you're using very well.
+
+> "http://www.brigadoon.com/~semprini/3dmx". 
+Only connect once every hundred years?  No thanks!  :-)
+
+Also, is there any way to jump ahead in the LCG?  
+	x1 = ( a*x0 + c ) mod m
+	x2 = ( a*a*x0 + c*x0  + c ) mod m = ( (a*a+c)*x0 + c ) mod m
+Is it easy to extend this to x2, x4, x8, x16, x32 ....?
+This would make it much faster to calculate the "random" cube and cell,
+and would let you only calculate the values you need in the cube
+instead of calculating them all, so you only do about 
+log(16*cubevolume) calculations instead of 16*cubevolume.
+If that doesn't work, it still gives you a set of values 
+	a[k] such that x[k] = ( a[k]*x0 + c ) mod m
+which lets you calculate the coefficients for the cube _once_
+(the same amount of work you needed to do to use the encryption),
+and then for each value of x[0], calculate x[RandomCubeNumber]
+and x[RandomCellNumber], then calculate the value of that
+cell in that cube (which takes another lookup+multiply+add+mod).
+That means you need to do a dozen or so operations per key,
+so even if you're using the 32-bit LCG, that's about 50 billion ops,
+which is a thousand or so Pentium-seconds.  If you're using the
+16-bit LCG, setting up the cubes will take about as long as cracking,
+which says you can crack this version of the algorithm in only
+2-3 times as long as it would take to use it as a user....
+
+LFSRs are probably harder.....  somewhat....
+
+				Thanks!
+					Bill
+Bill Stewart, stewarts@ix.netcom.com
+Regular Key PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

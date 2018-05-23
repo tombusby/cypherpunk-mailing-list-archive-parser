@@ -1,0 +1,119 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sat, 27 Apr 1996 15:47:46 +0800
+To: cypherpunks@toad.com
+Subject: Re: The Joy of Java
+In-Reply-To: <ada697c601021004c3a0@[205.199.118.202]>
+Message-ID: <199604270221.TAA17097@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I wrote:
+
+ > The complete specification of the Java Virtual Machine means
+ > that the behavior of Java programs is perfectly
+ > well-defined, and one does not have to tweek anything which
+ > is processor or operating system dependent.
+
+Scott Brickner <sjb@universe.digex.net> writes:
+
+ > Unfortunately, this last statement isn't really true.  To
+ > quote from the "Java Security" paper from some Princeton
+ > researchers:
+
+ >      The Java language has neighter a formal semantics nor
+ >      a formal description of its type system.  We do not
+ >      know what a Java program means, in any formal sense, so
+ >      we cannot reason formally about Java and the security
+ >      properties of the Java libraries written in Java. Java
+ >      lacks a formal description of its type system, yet the
+ >      security of Java relies on the soundness of its type
+ >      system.
+
+This is overly pessimistic.  Java primitive data types are fully
+specified and Java operators are well-defined in the sense that
+their results are unambiguous with specified input.  One
+certainly does not have situations as one has in C, where things
+like "int" or what happens to the sign bit on certain shifts is
+left up to the implementor's discretion.  Even the typical "side
+effects" tricks with passed parameters should be impossible with
+Java programs.
+
+While it is true that formal meta-language descriptions of Java
+semantics and the universe of Java types are not currently
+provided for the language, and the traditional kinds of formal
+correctness proofs haven't been published, the language is
+sufficiently simple and restricted to make it unlikely that major
+loopholes will be discovered in this area.  I would be truly
+surprised, for instance, if instruction sequences which
+unbalanced the stack, wrote out of bounds, or accessed memory
+locations as inconsistant types, were discovered to slip past a
+bytecode verifier correctly implemented according to Sun's
+recommendations.
+
+Saying that the current specification does not support formal
+proofs of correctness is far different than saying that the
+language itself is broken.
+
+ >      The Java bytecode is where the security properties
+ >      must ultimately be verified . . . .  Unfortunately, it
+ >      is rather difficult to verify the bytecode. . . .  The
+ >      present type verifier cannot be proven correct, because
+ >      there is not a formal description of the type system.
+
+Again, he is not saying that the type verifier isn't correct,
+merely that the materials with which to construct a proof have
+not yet been dumped on top of his desk.
+
+ >      Object-oriented type systems are a current research
+ >      topic; it seems unwise for the system's security to
+ >      rely on such a mechanism without a strong theoretical
+ >      foundation.  It is not certain that an informally
+ >      specified system as large and complicated as Java
+ >      bytecode is consistent.
+
+Not certain, but very very likely.  Due to the restricted nature
+of Java and the bytecode, the checks that need to be done are
+fairly simple transitive closures of relations involving local
+program structure.  While the general theory of object-oriented
+runtime structures can get hairy, Java's elimination of things
+like multiple inheritance makes its own corner of this universe
+considerably more tractable.
+
+ >      We conclude that the Java system in its current form
+ >      cannot easily be made secure.  Significant redesign of
+ >      the language, the bytecode format, and the runtime
+ >      system appear to be necessary steps toward building a
+ >      higher-assurance system. . . . Execution of remotely-
+ >      loaded code is a relatively new phenomenon, and more
+ >      work is required to make it safe.
+
+This summary might be a bit more impressive if the author had
+included a bytecode fragment or two as a concrete example of
+where such changes were necessitated.
+
+ > I do think that the ideas embodied in Java are very
+ > important, and will significantly shape the future of
+ > computing, but Java itself may be just a stepping stone on
+ > the way.
+
+I think Java, as currently specified, is going to be around for
+quite a while.  I further think that the concerns expressed above
+will be addressed by augmentation of the existing specifications
+and by construction of the necessary proofs of correctness, and
+not by drastic surgery on the language and virtual machine as
+they currently exist.
+
+In any case, the anarchy of the free market rarely takes notice
+of the theoretical musings of academicians.  Until Java
+experiences a catastrophic and public train wreck, people will
+continue to use it and its reputation will continue to grow.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

@@ -1,0 +1,69 @@
+From: mrm@netcom.com (Marianne Mueller)
+Date: Sun, 5 May 1996 07:07:28 +0800
+To: minow@apple.com (Martin Minow)
+Subject: Re: Calling other code in Java applications and applets
+In-Reply-To: <v02140b00adb14064cf1e@[17.128.200.85]>
+Message-ID: <199605041755.KAA26669@netcom20.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> >people need to be aware up front
+> >that calling native code from a Java applet disables
+> >any security that might otherwise be enforced for the applet.
+> >
+> 
+> Would it be more accurate to state that native code called by a
+> Java applet disables Java virtual machine security, but is still
+> bound by security policies enforced by the operating system itself?
+> 
+> It would be most unfortunate if a browser run by an unprivileged
+> user could attain "root" privileges by running a Java applet that
+> called an appropriate (or inappropriate) native method.
+
+yes, that's exactly the case.  I wouldn't call it the virtual machine
+security, though, but the application security, since the applet
+restrictions are enforced at the application level by the SecurityManager.
+(the browser is the application in this case) 
+
+Whether or not this is a problem depends on the quality of implementation
+of the DLL, and whether or not you care about this level of insecurity,
+given that the browser and other software runing on the machine
+may or may not be secure.   People routinely "click here" to download
+and install some plug-in, so probably those folks are willing to place
+their bets and take their chances.  
+
+Note that in all this I'm not claiming that the Java setup as
+currently implemented is without bugs.  I'm just talking about the model. 
+
+As far as the Java applet sandbox goes, I think we can do a better job of
+specifying a minimal TCB and enforcing the applet restrictions at the
+application level.   There are people who think that the sandbox model
+itself is not do-able.  I think reasonable people can disagree on that
+point.   
+
+> 
+> Of course, on inherently unprotected systems (PC's), there is
+> indeed no protection.  Perhaps Java will cause vendors to improve
+> overall operating system robustness.
+> 
+
+If there's a market for security, then vendors will respond to that. 
+I think it's interesting that the internet might provide that
+market demand.    Other people on this list who have worked on 
+secure products can probably testify as to whether or not customers
+were willing to wait longer and pay more for higher quality, more
+secure software, or if they're more interested in buying something today
+that provides some needed feature.    I'm not saying this is good
+or bad - I'm just observing that market forces are real.    Another
+way of saying this is, perhaps software that previously was only
+deployed in special-purpose applications will move into consumer
+mainstream.   
+
+Marianne
+
+
+
+
+

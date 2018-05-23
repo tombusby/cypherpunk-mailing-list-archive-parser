@@ -1,0 +1,60 @@
+From: Nickey MacDonald <i6t4@jupiter.sun.csd.unb.ca>
+Date: Fri, 9 Jul 93 01:02:12 PDT
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: USENET newsreaders and cryptography: features/suggestions/questions
+In-Reply-To: <m0oE9c2-000ZDIC@genesis.mcs.com>
+Message-ID: <Pine.3.05.9307090439.A21528-b100000@jupiter>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 8 Jul 1993, Sameer wrote:
+
+> CRYPTOPROGRAM=pgp
+> 
+> system(strcat(getenv("CRYPTOPROGRAM"), " -m foobar"))
+> 
+> 	(I'm not well-versed in strcat, so this could be wrong, but you
+> know what I mean.)
+
+I know you put a disclaimer, but I'll warn you that the above code is very
+dangerous...  strcat() concatenates to its first argument, and the value
+returned by getenv is not a suitable argument in this case...  the fix:
+
+char enccmd[100];
+strcpy(enccmd, getenv("CRYPTOPROGRAM"));
+strcat(enccmd, " -m foobar");
+system(enccmd);
+
+However, I still find this unsatisfying, as the'-m' is probably a PGP
+sepcific option, and it seems to me that a more general solution would be
+either some form of template in the environment variable:
+
+CRYPTOPROGRAM="pgp encode=-e decode= sign=-s stdin=-f text=-t ascii=-a
+conventional=-c userid=-u %u forcepager=-m pagemode=-m wipeorig=-w
+recoverorigfilename=-p detatchsig=-b leavesigintact=-d adresseelist=%a
+...and so on..."
+
+or a set of environment variables, such as:
+
+CRYPTOENCODE=
+CRYPTODECODE=
+CRYPTOSIGN=
+CRYPTOVERIFYSIGNATURE=
+...and so on...
+
+Either way is a lot more work, but probably a lot more general as well...
+This is a piece of code that only needs to be written once...  would take
+more work to do the documentation that the code...  Any takers, or should I
+put this on my TODO list as well?
+
+--
+Nick MacDonald               | NMD on IRC
+i6t4@jupiter.sun.csd.unb.ca  | PGP 2.1 Public key available via finger
+i6t4@unb.ca                  | (506) 457-1931    ^{1024/746EBB 1993/02/23}
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+From: wcs@anchor.ho.att.com
+Date: Sun, 29 Jan 95 01:35:47 PST
+To: cypherpunks@toad.com
+Subject: Re:  Even more unix holy wars.
+Message-ID: <9501290933.AA08361@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(Undeleting files is a security issue that's still got 
+_some_ tenuous connection to cypherpunks :-)
+
+> How would I go around undeleting a file under Unix?  It's easy on the
+> Mac.  Doing it under DOS is ugly, but it works.  But with unix, there
+> is no way.
+
+Sure there is.  Multiple ways, depending on your objectives.
+All with different syntax, since this _is_ Unix :-)
+
+The simple way, implemented by lots of universities, is a fake delete,
+which actually renames or moves the file to some hidden location
+instead of deleting it; the undelete program renames it back,
+and there's a space-scavenger that genuinely deletes old
+rename-deleted files after a few days.  Undeletes after that
+consist of getting the file from tape backup.
+
+While the System V filesystem doesn't save enough pointers to 
+guarantee getting complete files back from deletion (if the space
+they used hasn't been reused already), there have been undeletes
+that scrounge up the newest n blocks off the free list.  Of course,
+those were the first blocks to get used in new files, so it wasn't
+much use in a multi-user system, but it was there.  Besides,
+disk drives on multi-user machines are always >95% full,
+and often over 98% full, so deleted files are fair game anyway...
+
+		Bill
+
+
+
+

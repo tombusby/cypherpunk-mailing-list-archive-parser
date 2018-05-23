@@ -1,0 +1,71 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 15 Apr 1996 09:12:57 +0800
+To: Duncan Frissell <frissell@panix.com>
+Subject: Re: Open Systems, Closed Systems, & Killer Apps
+Message-ID: <199604142149.OAA28361@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:14 AM 4/10/96 -0400, you wrote:
+>-----BEGIN PGP SIGNED MESSAGE-----
+>
+>Various correspondents have pointed out that X.25 is an "open system" in
+>that it is not proprietary.  I knew that.  I was thinking more of
+>hierarchical vs peer-to-peer.  I have been under the impression that
+>TCP/IP connections are more peer-to-peer between different sorts of
+>networks (or nodes) than X.25.  Isn't X.25 more of a standard for a
+>single network?  Don't X.25 networks need someone more "in charge" than
+>TCP/IP networks, or am I mixing up different layers on the OSI reference
+>model?  
+
+X.25 is an interface between a Data Terminal Equipment and a Data Communications
+Equipment, rather than a whole-network format like IP and TCP.
+X.25 networks often have random proprietary internals, and they're designed
+for a world where there IS only one network, because after all, there's only
+one Phone Company; the X.75 protocol lets X.25 networks talk to each other.
+But if you look at the higher levels of the protocols, they're not really
+that different than TCP applications - you've typically got a listener 
+application waiting around for connections from client programs.
+It feels a bit less peer-to-peer because usually the service you want
+is the X.3/X.28/X.29 stuff that's X.25's equivalent to telnet,
+so the server end is a MainFrame, and the client end is a terminal pad
+that you've connected your 3270 or dumb terminal to.  But you can do other 
+things as well, if your computer environment will support it.
+
+Simon Spero wrote:
+} you can call X.25 a lot of things, but proprietary is not one of them. 
+} X.25 did not fail because it wasn't open; X.25 failed because it was crap
+
+It's not dead yet, and you can't even say it's failed, given that it's still
+in wide use in much of the world.  X.25 was design to work on networks with
+really bad bit loss - we're talking modems on barbed wire here, or whatever
+the French use instead of barbed wire, and in days when computers were _slow_.
+Yes, it's bureaucratically designed, and parts of it genuinely are ugly,
+and it does lots of work at Layer 2 that these days you'd do at a higher layer.
+And, yes, it's a lousy environment to do full-duplex character echo over.
+But it works ok for a large fraction of the world's data communications,
+which are designed for less interactive environments.  It's fine for email.
+It's fine for 3270 fill-in-the-blanks applications.  It's fine for pre-Web
+online service applications like CompuServe.  It reeks badly
+for client-server applications which do a dozen little handshakes per
+transaction,
+which are designed assuming they're on a LAN and fail badly when stretched
+across an ocean, but you'll find they often do badly on frame relay as well.
+
+Are the Internet and Frame Relay both better ways to do anything than X.25?
+Yeah.
+Would I want to do interactive work on it?  Of course not.  Would I like to do
+another project getting vendors to modify their X.25 and CLNP to support a set
+of seldom-used options that some security consultant once convinced one of my
+customers they needed?  No way.  Was I susprised that not only does AT&T still
+use X.25 in some of its older dialup networks, but that it's still very big
+overseas?
+Well, yeah :-)
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

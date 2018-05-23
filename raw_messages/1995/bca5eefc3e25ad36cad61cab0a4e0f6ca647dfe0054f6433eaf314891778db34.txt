@@ -1,0 +1,33 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Wed, 1 Nov 1995 07:48:45 +0800
+To: cypherpunks@toad.com
+Subject: Perfect Forward Secrecy - is it worth it?
+Message-ID: <Pine.SOL.3.91.951031141506.1151H-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Quick survey; how important is perfect forward secrecy to you? I've asked 
+three people locally so far and gotten four different answers, so in the 
+spirit of spreading divisiveness where'er I go, I'll try and get a few 
+more opinions here :-) 
+
+In general, schemes offering PFS require a extra PK-op, and an extra 
+round-trip when compared to  non-PFS schemes. This cost is incurred once 
+per "session", but can add on the order of seconds to startup times. 
+Should key-management schemes where PK is available always provide PFS, 
+allow PFS, or not provide PFS? The amount of code needed to implement 
+each choice point is similar, if you're using something like BSAFE. 
+
+Simon
+---
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1)  ((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

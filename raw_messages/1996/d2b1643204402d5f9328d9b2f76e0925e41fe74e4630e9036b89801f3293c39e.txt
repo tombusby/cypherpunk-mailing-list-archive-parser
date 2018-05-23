@@ -1,0 +1,109 @@
+From: "Paul S. Penrod" <furballs@netcom.com>
+Date: Thu, 23 May 1996 15:02:09 +0800
+To: cypherpunks@toad.com
+Subject: Re: Floating Point and Financial Software
+In-Reply-To: <199605221618.JAA04180@netcom7.netcom.com>
+Message-ID: <Pine.3.89.9605221209.A6231-0100000@netcom4>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+While I wont argue the veracity of floating point use in financials, I 
+will make a point or two for your consideration.
+
+The basic issue in the micro world has been imprecision - primarily due 
+to word size (8 and 16 bit). Frankly I view it more as a pain tolerance 
+to estimation. 
+
+Now that 32 and 64 processors are handy (yes the 80 bit x87 has been 
+around for a while), it becomes more of an issue of hair splitting. 
+
+I never incorporate floating point into any of the financial software I 
+have written over the years, primarily just on a matter of principle. 
+Secondly, since most of it was written to the Intel platform (read 
+washing machine controller), there is a very distinct advantage in doing 
+integer only from purely a performance basis.
+
+As to acuracy. Normally it doesn't matter when the rounding error sits 
+some 18 to 23 decimal places out, when you are calculating dollars and 
+cents, but many of the calculations I have been forced to endure center 
+around such mathematical abuses as compound interest. Here, it is not 
+only probably, but expected to work thousands of recalculations in a 
+series, with each building upon the last. Rounding error grows very 
+quickly in these types of circumstances. However, just to be fair, there 
+is a plethora of business math done in software that limits itself from 
+one to several recalcs, and the accuracy only needs to be to the penny or 
+at worst 4 to 6 decimal places out.
+
+Even Intel can handle this.... :-)
+
+>From alt.humor.pentium:
+
+DId you hear that Intel has found a home for all those pentiums with the 
+floating point error ? They sold them to Mattel.
+
+Now when you pull Barbie's string, she says "Math is hard..."
+
+...Paul (politically incorrect and loving it..)
+
+On Wed, 22 May 1996, Mike Duvos wrote:
+
+> There seem to be a few mini-flames on the list over whether
+> floating point data representations are appropriate for financial
+> software.
+> 
+> In a nutshell, the answer is "YES", and the use of floating point
+> arithmetic is common in such applications.
+> 
+> One argument heard against the use of floating point is that it
+> is inherently "imprecise." In reality, floating point
+> representations and the results of floating point operations are
+> perfectly well defined, and the points on the real number line
+> which are exactly representable by double-precision floating
+> point values are usually a superset of those representable by the
+> default integer on most machines.
+> 
+> Storing monetary values as double-precision floats having integer
+> values in cents is even common in COBOL programs, where the
+> "COMP-3" data type allows the use of fast floating point in lieu
+> of the default and slow manipulation of packed decimal and
+> decimal data.
+> 
+> It is even common in certain CPUs, like CDC Mainframes and
+> SPARCS, which are primarily floating point engines, to omit
+> integer divide and sometimes even multiply, and to provide a
+> subroutine which employs floating point calculations to emulate
+> these operations. This is completely transparent to the user of
+> the machine, and there is no problem in using floating point to
+> do integer operations.
+> 
+> In fact, when running financial applications on large engineering
+> mainframes, which generally lack a business instruction set,
+> floating point is not only commonly employed, it is the obvious
+> way to get the maximum performance out of the machine.
+> 
+> --
+>      Mike Duvos         $    PGP 2.6 Public Key available     $
+>      mpd@netcom.com     $    via Finger.                      $
+> 
+> 
+
+-------------------------------------------------------------------------
+
+"Faced with the choice between changing one's mind and proving that there
+ is no need to do so, almost everybody gets busy on the proof"
+
+                                            -- John Kenneth Galbraith
+
+"Success is attending a funeral as a spectator"
+
+                                            -- E. BonAnno 
+
+-------------------------------------------------------------------------
+
+
+
+
+
+

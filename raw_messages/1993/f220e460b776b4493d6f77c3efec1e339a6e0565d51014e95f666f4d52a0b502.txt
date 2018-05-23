@@ -1,0 +1,76 @@
+From: eric@Synopsys.COM (Eric Messick)
+Date: Wed, 30 Jun 93 13:32:26 PDT
+To: cypherpunks@toad.com
+Subject: Remailer pings
+Message-ID: <9306302032.AA23540@tiedye.synopsys.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've gotten responses from the following remailers:
+
+hfinney@shell.portal.com
+hh@soda.berkeley.edu
+remail@tamsun.tamu.edu
+nowhere@bsu-cs.bsu.edu
+phantom@mead.u.washington.edu
+elee7h5@rosebud.ee.uh.edu
+hal@alumni.cco.caltech.edu
+dis.org!remailer@merde.dis.org
+hh@pmantis.berkeley.edu
+hh@cicada.berkeley.edu
+remail@tamaix.tamu.edu
+ebrandt@jarthur.claremont.edu
+remailer@rebma.mn.org
+
+And have not recieved (in two days) a response from:
+
+00x@uclink.berkeley.edu 
+
+I used the perl script appended to this message.
+
+-eric messick (eric@toad.com)
+
+#!/usr/local/bin/perl
+
+$me = "eric@synopsys.com" ; # put your email address here
+
+sub begin_mail {
+	local ($addr, $from, $subject) = (@_);
+
+	if (!open(MAIL, "| /usr/lib/sendmail '" . $addr . "'")) {
+		&log("error", "Error sending mail to $addr") ;
+		return;
+		}
+	print MAIL "To: $addr\n" ;
+	print MAIL "From: $from\n" ;
+	print MAIL "Reply-To: $from\n" ;
+	print MAIL "Subject:  $subject\n" ;
+	print MAIL "\n" ;
+}
+
+$home = $ENV{'HOME'} ;
+
+open(REMAILERS, "$home/remail/currentremailers") || die "Can't open $home/remail/currentremailers: $!\n" ;
+
+while (<REMAILERS>) {
+	chop;
+	($addr) = split ;
+	next if ($addr eq "#") ;
+
+	print "$addr\n" ;
+
+	&begin_mail($addr, $me, "ferd");
+	print MAIL "::\n" ;
+	print MAIL "Request-Remailing-To: $me\n" ;
+	print MAIL "\n" ;
+	print MAIL "mailed to $addr\n" ;
+	close MAIL;
+
+	}
+
+
+
+
+

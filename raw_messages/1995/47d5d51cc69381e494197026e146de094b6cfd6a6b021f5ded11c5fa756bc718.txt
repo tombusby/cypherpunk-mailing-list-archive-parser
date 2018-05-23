@@ -1,0 +1,173 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Tue, 24 Oct 95 10:50:17 PDT
+To: jeffb@sware.com (Jeff Barber)
+Subject: Re: Does your software?
+In-Reply-To: <199510241710.NAA18747@jafar.sware.com>
+Message-ID: <9510241747.AA02533@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> Fred Cohen writes:
+> 
+> > The differences between my secure http server and Netscape's browser
+> > are quite dramatic, [snip]
+> 
+> No doubt about that.  One's a real product, one's (primarily) a piece
+> of puffery.
+
+A secure get-only server for those of us who want security and the
+normal functions required by most Web users most of the time. 
+
+> > My get-only server cannot run outside applications, and hence does not
+> > have the vulnerability of Netscape's browser.  Note also the distinction
+> > between a server and a browser.
+> 
+> Note in particular the distinction between Fred's server and a real HTTP
+> server:
+> It does not run CGI scripts (i.e. no forms support).
+
+That certainly increases the security.  Actually, we are now experimenting
+with an execution server that allows some level of security while running
+executables - have you tried using our secure forms interface?  Probably
+not.
+
+>  It does not have
+> per-user access control.
+
+Actually, it uses TCP wrappers, which provides a different sort of access
+control.
+
+>  It does not have URL mapping.
+
+It is a secure, get-only server - as advertised.
+
+>  It cannot
+> redirect.
+
+Actually, it does redirect, but not in the way you are used to.
+
+>  All configuration is hard-coded into the binary.
+
+That's one of the ways it is made secure.  If you want to change
+configurations, you have to recompile.  Otherwise, dangerous config
+changes can easily be made - that would be risky.
+
+>  It doesn't
+> support user directories (e.g. http://site/~yourname).
+
+It doesn't allow access to the whole file system, thus gaining
+additional protection from configuration errors, misuse, mismanagement,
+etc.
+
+>  It doesn't do
+> server-side includes.
+
+Get only - that's what it claims and that's what it does.
+
+> It can't process the HEAD method.
+
+Get only - that's what it claims and that's what it does.
+
+>  It cannot create
+> a directory index (if no index.html is present).
+
+Get only - that's what it claims and that's what it does.
+
+>  It does not support
+> conditional retrieval (i.e. "If-modified-since").
+
+Get only - that's what it claims and that's what it does.
+
+>  It is slow (requires
+> a separate process for each request).
+
+Actually, it's faster (I've clocked it) than the NCSA server.
+
+>  It is initiated by inetd for each
+> HTTP connection and hence relies on that program's security as well (the
+> "line-by-line analysis" of inetd is conspicuously missing from Fred's
+> self-congratulatory whitepaper -- not to mention the OS on which it is
+> intended to run). 
+
+The claim is that it does not weaken the security provided by the
+operating system.  Nothing else.
+
+> It does not even have the capability to identify the
+> content type of the retrieved file (apparently you must embed
+> "Content-type: text/html\n\n" [or whatever] at the beginning of each HTML
+> source file).
+
+Get only - that's what it claims and that's what it does.
+
+> I'm not saying it's completely useless, only that it does not constitute
+> an HTTP server in the usual sense of the word.
+
+Right.  It's a SECURE get only http server.  The usual sense of the word
+means insecure.
+
+>  Hence, Fred's continued
+> boasting of this prodigious feat of programming prowess is complete
+> bullshit.
+
+I never boasted it was a prodigious feat at all.  In fact, I published
+the fact that it was written in a few hours because I got tired of
+worying about and fixing the insecure servers available over the net. 
+It is in the process of being proven to meet the security requirements,
+which is a prodigous feat (and which I am not doing).
+
+>  And, incidentally, the programming style, with its reliance
+> on global fixed-length buffers, shared variables, lack of prototypes,
+> forgotten function arguments,
+
+Actually, not true.  The global fixed-length buffers, shared variables,
+and lack of prototypes provide protection against allocation problems
+which sould result in denial of service, corruptions at near-capacity
+load, and other similar security problems.
+
+> absence of error checking on system call
+> returns, 
+
+The error checking on system call returns is quite thorough for the
+purposes required.  Where no check is done, it is because the check
+is not required.
+
+> etc. is more suggestive of a first year CS student than an
+> alleged PhD, *and* demonstrates a style more typical of a BASIC
+> programmer than a C programmer.
+
+I realize now that you think that all Ph.D.s program like you do, but in
+this case, the style of the program is intended to meet the requirement
+of the task.  Unlike many who learned in the "structured programming"
+method, I believe that different program requirements call for different
+programming styles.  This program is in a style suited to the
+requirements which include, among other things, verifiability, small
+size, ease of unsderstanding, controls on the flow of information,
+integrity, availability, confidentiality, and redundancy.  But at any
+rate, there's no accounting for taste.
+
+>  Don't try this at home, kids; this is
+> NOT the way to write "secure" software unless your whole program fits
+> in 80 lines too.
+
+If it doesn't, it's probably going to be very hard to demonstrate security.
+
+> > My get-only server is available in source form, is 80 lines long and
+> > thus easily understood, has been shown to meet security properties,
+> 
+> [blah blah]
+> 
+> Big deal.  It is the web equivalent of "Hello World".
+
+Yet it services more than one request per minute, 24 hours, 7 days, and
+has done so without denial of services, corruption, or leakage since its
+first implementation.  It's so small it can be verified, it's faster
+than the retail brand, and it doesn't have all the holes we keep finding
+in tho other servers.  Different strokes for different folks.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

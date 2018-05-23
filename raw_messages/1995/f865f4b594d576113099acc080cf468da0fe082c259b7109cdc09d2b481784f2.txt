@@ -1,0 +1,55 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Tue, 1 Aug 95 09:15:27 PDT
+To: patl@lcs.mit.edu
+Subject: Re: a hole in PGP
+In-Reply-To: <199508011530.LAA00429@skyclad.lcs.mit.edu>
+Message-ID: <199508011615.MAA19157@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> >>>>> "warlord" == Derek Atkins <warlord@mit.edu> writes:
+> 
+>  warlord> This is where you are very wrong.  I am not saying that "if
+>  warlord> you can't find any holes it must be secure".  What I am
+>  warlord> saying is that the source is available, and thousands of
+>  warlord> people have looked at the source, and none of them have
+>  warlord> found any holes in it.
+> 
+> While I largely disagree with Dr. Cohen's conclusions, I do think we
+> should extinguish the "Examine the source!" mantra.
+> 
+> I find it surprising that people so familiar with public key
+> cryptography would be reassured by the argument, "Here, this algorithm
+> has been examined by thousands and nobody has found a trap door."
+> Public key cryptography demonstrates that it is possible, in
+> principle, to construct an algorithm with a trap door that nobody else
+> is *ever* going to find.  I wonder whether Rivest could construct a
+> hash function which only he could invert...  :-)
+
+  That's a neat metaphor, but it doesn't always apply. It shouldn't
+apply to algorithms which are primitive recursive. Elementary
+algorithms like multiprecision add, sub, multiply, divide, modmult,
+and modexp (the basis of public key encryption) are all provably
+correct and all terminate. (the basis is polynomial operators over a
+ring) It is possible to verify the implementation (assuming the
+correctness of the compiler). Now there could be a "factoring"
+trapdoor in RSA, but that's a trapdoor not in the implementation of
+PGP, but in the algorithm itself. RSA-in-4-lines-perl is probably
+provably correct.  To guard against trapdoors in PGP, you should
+verify the correctness of the PRNG, Key Generator, and that no private
+key bits or session key bits are leaked. I would suspect this could be
+difficult, but approximations could be determined to within a high
+degree of confidence.
+
+-Ray
+
+
+   
+
+
+
+

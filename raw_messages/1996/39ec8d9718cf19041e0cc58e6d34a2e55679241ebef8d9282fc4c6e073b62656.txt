@@ -1,0 +1,81 @@
+From: ph@netcom.com (Peter Hendrickson)
+Date: Mon, 18 Nov 1996 20:01:28 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Playing Cards - Caution!
+Message-ID: <v02140b00aeb6e056bb78@[192.0.2.1]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A few days ago I suggested that playing cards are a good source
+of entropy.  This was based on claim by Persi Diaconis which
+was quoted in The Economist.
+
+I've researched the claim and I now believe it would be wise not to
+use playing cards as a source of entropy for cryptographic
+applications.
+
+A fully random deck of 52 cards has about 225 bits of entropy.  That
+means that each riffle shuffle introduces about 32 bits of entropy.
+Intuitively, that seems like a lot of entropy for one riffle shuffle.
+I've tried a few riffle shuffles with a sorted deck.  While hardly
+scientific, the level of randomness does not look like 32 bits.  Most
+of the time the cards alternate.
+
+The claim that 7 riffle shuffles of a deck of 52 cards will bring
+the deck to a state of near randomness appears in this book:
+
+Diaconis, Persi "Group Representations in Probability and Statistics"
+Hayward, California: Institute of Mathematical Statistics, 1988.
+ISBN 0-940600-14-5
+
+The section "An Analysis of Real Riffle Shuffles" begins on page 77.
+
+A model is presented which Diaconis believes is similar to how people
+shuffle in real life.  What is troubling from a cryptographic point of
+view is that there is little empirical evidence to back this up.  What
+is more, Diaconis mentions that there is some variation in shufflers.
+A neat shuffler will be less random.  (Side note: The Economist claims
+Diaconis can execute 8 perfect shuffles in less than a minute.  This
+means the deck is returned to its original order!)
+
+>From the point of view of cryptography, neatness is not a very precise
+term and should not be relied upon.
+
+The book says that in the late 1960s, tournament bridge players
+started using computers (!) to shuffle the cards as hand shuffling was
+considered suspect.  This is less than reassuring.
+
+Nothing I have written here is intended to reflect poorly on Dr.
+Diaconis.  We were not solving the same problem, nor have I fully
+understood his work.
+
+In my first article I said this:
+
+"Playing cards are a nice source of randomness because they are widely
+available and their behavior has been under study for a long time by
+people with strong financial reasons for finding flaws.  I slightly
+prefer cards to dice because dice may be slightly predictable or even
+loaded."
+
+The study of randomness in cards looks much harder to me now.  Also,
+flaws which may be exploitable for financial reasons when real money
+is on the table may have to be substantially more dramatic than the
+flaws required to exploit, for instance, an alleged one-time pad.
+
+Here's why I now prefer dice: Dice are simple.  Each die throw can be
+made to be quite independent of all other die throws.  Even loaded dice
+may be used by throwing them repeatedly and adding the results mod the
+number of sides to the die.  Dice which are suspect may be studied by
+repeated throwing.  Non-independence can be more easily studied as
+it can be assumed that a throw of the die is, at most, related only
+to the previous throw and none before.
+
+Peter Hendrickson
+ph@netcom.com
+
+
+
+
+
+

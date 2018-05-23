@@ -1,0 +1,58 @@
+From: norm@netcom.com (Norman Hardy)
+Date: Mon, 16 Oct 95 18:03:05 PDT
+To: cypherpunks@toad.com
+Subject: Using deterministic programs to select private RSA keys.
+Message-ID: <aca8b0fa01021004bc41@DialupEudora>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Much has been said recently here about how to produce truly random primes.
+Suppose you are selecting a secret key to be used by a bank to sign its
+documents. Short of examining the code very closely, or writing your own,
+you are vulnerable to a program that selects primes from a vastly reduced
+set. If this program behavior is known then discovering the secret primes
+may be vastly easier. Writing your own code, or examining other's code, is
+error-prone and requires trusting someone who knows more math than most
+programmers. Here is an alternative that requires only simple high school
+math to understand.
+
+I define a simple protocol and commission several independent programmers
+to implement it. The protocol is to accept a sequence of key strokes for
+printable ASCII characters. Whitespace is ignored except that two
+successive newlines terminate the input. MD5 is applied to the input stream
+and the result is used to start the search for the prime.
+
+The required entropy must come from the keyboard. Each of these programs
+are used with the same input and the yields are compared. It is even better
+if the programs are bought on the open market. The more divers the
+interests of the programmers, the less likely there can be an undetected
+conspiracy.
+
+The naive objection to this is that the keyboard input will be less than
+perfectly random. That is certainly true. The input need not be random--it
+is only necessary that there be sufficient entropy. There is a real hazard
+that the user does not understand the issues and will merely type in the
+first paragraph of the Gettysburg address, having heard that there is about
+one bit of entropy per character in the English language.
+
+If several bank officers trust each other but not the other's grasp of
+entropy they can each enter text since the accumulated entropy only
+increases. (They need not hide the text from each other.)
+
+MD5 only produces 128 bits. It might be wise to require more than 128 bits
+of entropy. The scheme as described can only ever produce 2^128 distinct
+primes. That is small compared with the number of 1K primes. But having to
+test 2^128 primes seems hard enough. Are there other attacks?
+
+You might argue that trusting a program to choose secret keys is no worse
+than trusting your operational signing software. True. You can confine that
+operational software and compare the yields of programs by different
+programmers. (The software of the Space Shuttle uses such redundancy.) The
+confinement program must supply any required random salt or padding.
+
+
+
+
+
+

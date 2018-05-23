@@ -1,0 +1,75 @@
+From: Jim McCoy <mccoy@communities.com>
+Date: Mon, 16 Dec 1996 14:52:17 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: RE: Securing ActiveX.
+In-Reply-To: <01BBEB6C.A6148AA0@bcdev.com>
+Message-ID: <v03007805aedb7d667ad1@[205.162.51.35]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Blake Coverett <blake@bcdev.com> wrote:
+[...]
+>Digitally signed code, a la ActiveX, is another approach to the same
+>problem.
+>If the digital signatures and infrastructure around them are sound, which
+>they
+>appear to be for ActiveX, this is also a useful solution.  The built-in
+>gotcha
+>with this model is the all or nothing nature, either I trust the software
+>publisher  to run arbitrary native code on my machine or I don't run it at
+>all.
+
+The other problem is that the proposed Authenticode system and other "signed
+applet" systems only provide accountability after the fact.  This is little
+help when your hard drive is toast and the only proof you had was a logfile
+which was the first thing erased...  The illusion that only "trusted software
+puslishers" will be given blanket authorization is a pipe dream: users are
+sheep who will hit that "OK" dialog box as many times as necessary to get the
+tasty treat they are anticipating (and there is actual experimental evidence
+to back this up :)  I expect that the first post-Authenticode ActiveX virus
+will be one to modify the signature checking routines or add additional keys
+to the registry which makes the second round of the attack appear to be a
+valid OS update from Microsoft. What exactly does a signature get you other
+than someone to point a finger at?  In case you don't read those legal weasel
+words in software licenses there is no claim made that the product will work
+as intended and the company does warn you that if the product fries your
+disk then it is not their fault...
+
+>Specify technical issues follow:
+>
+>> It can be done under 95 but Microsoft will have to write a Sandbox
+>> Virtual Machine (a Virtual x86 session whose API's are filtered to
+>> prevent access to certain things like the file system, and disables
+>> direct I/O.)  Not that easy under '95, but it already exists for NT.
+>
+>But of course it's not enough to filter out filesystem calls.  The entire
+>windowing system would have to be separated as well.  For example
+>a rogue control might watching all edit controls for ones
+>that have the ES_PASSWORD style and grabbing the contents.
+>
+>An equivalent Unix problem would be to allow an open-access guest
+>account with the ability to transfer in and execute arbitrary binaries.
+>While doing this securely may be possible in theory I don't think the
+>state of the art is up to it today.  (I sure wouldn't allow it on my system.)
+
+The state of the art was up to it quite a while ago.  Check out KeyKOS and
+other OSes which use capability semantics for access control.  Rather than
+the all or nothing approach to security which is currently built into Java
+and continued with the code signing initiatives (albeit allowing you to
+delegate responsibility regarding trust) what is needed is to extend the
+signatures to granting the capability to perform a certain task and nothing
+more.  If the signature could express things like "this ActiveX control
+needs access to a writable file in C:\WINDOWS\TEMP which will not exceed
+1 Megabyte in size" then the system would be flexible enough to succeed
+and would allow users to express much more complex trust relationships than
+the simple boolean expressions which current code signing mechanisms allow.
+
+jim
+
+
+
+
+
+
+

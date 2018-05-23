@@ -1,0 +1,39 @@
+From: m5@vail.tivoli.com (Mike McNally)
+Date: Mon, 29 Nov 93 06:27:03 PST
+To: hfinney@shell.portal.com (Hal Finney)
+Subject: Re:  Cryptosplit 2.0
+In-Reply-To: <9311290404.AA27229@jobe.shell.portal.com>
+Message-ID: <9311291426.AA20155@vail.tivoli.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal Finney writes:
+ > But I did go to some
+ > effort with the random-number generation on which the security of the
+ > scheme depends.  My code uses the IDEA.C module from PGP for the
+ > pseudo-random generator, seeding it with the time of day and an MD5
+ > hash of the file being split.  So I think this should be pretty secure
+ > in terms of the randomness involved.
+
+On UNIX systems, where keystroke timing can be problematic, couldn't a
+collection of various system metrics be used to provide a bunch of
+reasonable pseudo-random bits?  Things like:
+
+*	Disk space in /
+*	Network activity (in/out packet counts)
+*	load average
+*	swap space available
+*	time of day (duhh)
+
+Of course, one would want to ensure that no monitoring or logging
+software (like the stuff I work on :-) keeps coherent snapshots around
+anywhere... 
+
+--
+Mike McNally
+
+
+
+

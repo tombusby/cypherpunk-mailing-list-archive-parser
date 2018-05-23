@@ -1,0 +1,31 @@
+From: Phil Karn <karn@unix.ka9q.ampr.org>
+Date: Sat, 24 Dec 94 03:11:54 PST
+To: eric@remailer.net (Eric Hughes)
+Subject: Re: Thoughts on 15 day CJ crypto
+Message-ID: <199412241111.DAA01099@unix.ka9q.ampr.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In article <94Dec16.08.5320@qualcomm.com>, you write:
+|> So it's possible the RSA requirement is in there to provide an
+|> assurance that the right key was selected.
+
+Isn't it common practice to pad out a plaintext block with random
+garbage to the size of the modulus before you RSA-encrypt it? E.g., if
+you have an 8-byte DES key and you want to encrypt it with an RSA
+public key having a 512-bit modulus, you'd stick 56 bytes of random
+stuff in front of the DES key before you do the exponentiation.  When
+you decrypt with the secret key, you simply throw away the random
+padding.
+
+At least RSAREF does this.
+
+Wouldn't this thwart the kind of attack you describe?
+
+Phil
+
+
+
+

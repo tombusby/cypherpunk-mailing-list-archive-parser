@@ -1,0 +1,76 @@
+From: doug@netcom.com (Doug Merritt)
+Date: Mon, 11 Oct 93 19:56:43 PDT
+To: cypherpunks@toad.com
+Subject: Re: Breaking DES
+In-Reply-To: <pmetzger@lehman.com>
+Message-ID: <9310120254.AA04001@netcom6.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+pmetzger@lehman.com said:
+>Karl Lui Barrus says:
+>> plaintext with 2^56 keys, and decrypt the ciphertext with 2^56 keys.
+>
+>Tell you what, Karl -- when you build the device that can store 2^56
+>encryptions, let us know.
+
+2^56 bytes equals 10^7 gigabytes. At roughly $1000 per gigabyte,
+that equals 10^10 bucks...10 billion dollars. Or say there's a quantity
+discount in orders totalling a million units, and you get the whole
+capacity for 1 billion dollars.
+
+Well, that's a bit steep for me, but there's no question but that the
+NSA could afford it. Still, what do you say I wait a few years until it
+comes down to 10 million dollars, which I happen to have available in
+the year 2003 in my company budget? Ten years should do it, estimating
+conservatively.
+
+> Also let us know how you'll index and fetch the encryptions
+>in any reasonable time while you are at it, but by comparison thats a
+>tiny problem.
+
+That ten years also means that rather than searching 10^7 units in parallel,
+we will then be searching only 10^5 units in parallel. It'll still take
+a few hours, but that's ok.
+
+This all suggests that the NSA could do such a thing *now* if they *really*
+cared to, and could do so fairly trivially in 10 years.
+
+>> The work for this attack is 2^56 + 2^56 = 2^57, which suggests that
+>> double encryption doesn't increase the complexity of breaking your
+>> text very much.
+>
+>Karl, are you sure that you want people to think you believe this?
+
+I did a double take on this at first too, since naively one would expect
+the search to be (2^56)^2. However, this can be improved, for instance
+by sorting each set in N lg N time (56 * 2^56 operations), and then doing
+interleaved comparisons in N lg N time again, which can be mostly parallelized
+over those 10^5 computers that are running those 10^5 disks, so that the
+total time would be (since 10^16 = 2^56) 10^16 / 10^5 machines = 10^11 cycles,
+and given 10^3 MIP machines, this gives 10^4 seconds (20 minutes) for each
+phase...call it an hour total.
+
+(In other words, as a first approximation, Karl is accurate to assume
+linear rather than quadratic speed for this.)
+
+This neglects coordination of the networked machines, which one might
+expect to add a factor of 5 to 10 to those numbers.
+
+This rough analysis demonstrates that Karl's scenario is merely expensive
+now, and "cheap" (by NSA standards) ten years from now, rather than
+completely inconceivable.
+
+I guess the weakest point of the above back-of-the-envelope estimate
+is that each e.g. plaintext & cyphertext is assumed to be representable
+within one byte, but that's *not* fatal. You could use hashing to get
+down to one byte, and when a hit is detected, try again using two
+bytes. When hits are detected there, use four bytes...and so on. That
+approach allows the real world scheme to be reasonably close to the
+back of the envelope gross assumptions.
+	Doug
+
+
+
+

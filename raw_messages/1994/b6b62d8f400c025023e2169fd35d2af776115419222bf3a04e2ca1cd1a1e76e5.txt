@@ -1,0 +1,172 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 6 Dec 94 10:13:17 PST
+To: cypherpunks@toad.com
+Subject: Re: One-shot remailer replies
+In-Reply-To: <01HKB4JDI40290QGGZ@delphi.com>
+Message-ID: <199412061812.KAA23245@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike Ingle <MIKEINGLE@delphi.com> writes:
+
+>True, the path has to be there, or the message can't go. I can't think of a
+>fix for that one, can you? Mostly I just don't want an endlessly growing
+>amount of information out there. I want old information to die after a
+>while, as keys are erased or expired.
+
+No, I can't think of a fix, although your idea at the bottom might be
+workable in some form.
+
+>[ DH exchange / Key broadcast approach ]
+
+>Broadcasting a list of keys is one possibility; what if someone else uses
+>the same key? Birthday theorem makes this hard to prevent.
+
+You would want some confirmation that you got the key you requested.  The
+broadcasted key list could be updated to show which ones have been
+reserved already, marked with a "nonce" (a one-time use secret random
+number you sent with your request) to show who reserved them.  In this
+case you might not even need to request a specific one, just ask for one
+to be assigned to you and then look and see which one you got.  Of course
+this assumes a broadcast mechanism but perhaps this is tolerable if there
+aren't too many remailers.
+
+>Pigeonhole holds a one-time reply address. Every week or two it expires and
+>you send a new one. If a mail comes in, it uses it, and you send a new one.
+
+You'd have to watch out for attackers who constantly ping the pigeonhole
+address and try to see which messages leave the remailer network in a
+correlated way.
+
+>Methinks I'd make it a little more robust than the existing systems (easy
+>with perl) like being able to grep out a reply header anywhere in the
+>message, ignore > indentation, and similar safety precautions.
+
+Yes, that is a good idea.  Many of the existing remailers are also
+written in perl (calling PGP for decryption) but not much work has been
+done to improve them in this way.  I think there is recognition that the
+biggest security improvement would come with message quantizing (and not
+passing subject lines through!) and until we have that the rest is
+pretty pointless.
+
+>RSAREF is useful for public key and DH. Secret sharing we have to get for
+>ourselves. I looked at Shade v1.0, and it seems to be broken on
+>little-endian machines. It works on an HP-UX machine, but fails on a 
+>PC running linux with small-endian enabled in shade.h. The half-hour setup
+>delay is not encouraging, either. Your SECSPLIT is nice and simple, but each
+>shade is the size of the message. What I need is an error-correcting
+>protocol to build a no-growth secret splitter.
+
+I have not looked at the Shade source.  Here is the posting I made to
+cypherpunks on Krawczyk's method.  I wasn't very well organized but if
+you read through to the end you may be able to get the gist of it:
+
+> From inbox/cpz Sat Aug 13 19:00:00 1994
+> From owner-cypherpunks@toad.com  Sat Aug 13 14:10:33 1994
+> Date: Sat, 13 Aug 1994 14:06:25 -0700
+> From: Hal <hfinney@shell.portal.com>
+> Message-Id: <199408132106.OAA13869@jobe.shell.portal.com>
+> To: cypherpunks@toad.com
+> Subject: Secret sharing made short
+> Sender: owner-cypherpunks@toad.com
+> Precedence: bulk
+> 
+> I came upon a paper with this title in the 1993 Crypto conference proceedings,
+> by Hugo Krawczyk.  He pointed out that with the Shamir-type secret splitting
+> which we discuss here periodically you have considerable space expansion.
+> Splitting a message of M bits into N shares causes each share to itself be M
+> bits.  Krawczyk shows a simple system which basically has each share be only
+> M/N bits.  (I will ignore for simplicity the issue of providing a threshold
+> K<N such that any K of the N shares are sufficient to restore the message.)
+> 
+> He achieves this be foregoing "pure" information-theoretic secrecy in favor
+> of "mere" computational secrecy.  This is a reasonable tradeoff since most
+> implementations of Shamir sharing end up relying on computational secrecy
+> for their random numbers, anyway.
+> 
+> Krawczyk's idea, in the simple subset I am describing, is almost embarrassingly
+> easy.  Take your message M and encrypt it using a random IDEA or DES key.
+> Split the resulting cyphertext into N pieces (just carve it up) and give each
+> piece to a shareholder.  Take the IDEA/DES key and Shamir-split it into
+> N pieces and give those out as well.  (Shamir splitting for this case can
+> be done simply by having N-1 of the pieces be totally random, and having
+> the last piece be the xor of the IDEA/DES key and the N-1 random pieces.
+> Only by xor'ing all N pieces can the original key be recovered.)
+> 
+> Everyone ends up with slightly over M/N bits; they have M/N plus the size
+> of a DES or IDEA key.  But that is pretty close.  And unless IDEA or DES can
+> be broken they will have to recover all of the shares in order to recon-
+> struct the key and read the message.
+> 
+> For generalization to the K<N case you still use Shamir splitting on the
+> IDEA or DES key, but the message itself gets split up using an error-cor-
+> recting code concept so that K pieces are enough to reconstruct the message.
+> This requires M/K bits per share, plus the overhead for the DES/IDEA key.
+> 
+> This sounds like it would be a good enhancement to the Shamir splitting code
+> that was posted here.  The IDEA or DES module could be a source of random
+> bits for the Shamir splitting.  PGP's IDEA module is pretty self-contained
+> and has a random-number entry point.
+> 
+> (Oh, well, I've come this far, I might as well finish it.  The message
+> distribution scheme Krawczyk gives is this: split the message into K
+> pieces.  Treat each piece as the coefficient of a K-1 degree polynomial.
+> Evaluate the polynomial at X=0,...,N-1 and let the results be the shares.
+> Now any K of the shares will allow the polynomial to be reconstructed, and
+> by concatenating the coefficients we recover M.  This is similar to Shamir's
+> scheme but is not informationally secure and has shares of size M/K.)
+> 
+> Hal
+
+>>Considering all the pros and cons, I am afraid that even the security of
+>>the one-shot return address is probably insufficient, especially when the
+>>simple "post replies to usenet encrypted with this key" is so easy and
+>>safe.  Granted it will be a problem once everybody starts doing that, but
+>>flooding is going to be hard to beat for safety.
+
+>Yes, broadcast is the most secure, but it has a fundamental problem:
+>security scales linearly with bandwidth. If you have a pool of 100 users and
+>one of them gets a message, your uncertainty is 1 in 100. I've tried without
+>success to figure out a broadcast mechanism where security scales faster
+>than linearly with bandwidth.
+
+This is true, but you said you are talking about things that can be done
+today, and today Usenet already has a pool of probably a million users.
+That is plenty of security.  The problem is if everyone starts using it
+for their replies, but that won't be more than a drop in the bucket for a
+long time.
+
+>We need a mechanism where there is either a circulating data stream or a
+>large file on a server. An incoming message alters the data somehow,
+>diffusing the changes over a large area. A request for information selects
+>out some transformation of the selected data in such a way that the server
+>cannot correlate the incoming message with the outgoing message. I don't see
+>any way to do this.
+
+This is an interesting idea.  It is sort of like broadcast except you
+would be reducing the bandwidth requirements by only sending certain
+information to each user.  One way to formalize it would be to say that
+you have two datasets, D1 and D2.  These get combined into D12 = f(D1,D2)
+for some combinging function f.  Then we ask whether there is a g(D12)
+which allows reconstruction of just D1 or D2 in such a way that we can't
+tell which one it will get just from knowing f and g.  Plus, g must
+output data which is no larger than D1 or D2.
+
+In this strict form I don't think it can be done, because you could
+change D1 and see if g(D12) changed.  If it did, then it was getting D1,
+and if it didn't, it was getting D2.  However if we let g be a little
+bigger then perhaps it wouldn't be so clear.  I don't know...
+
+>Elimination of the replay traffic-analysis problem is major progress. As for
+>step-by-step coercion back to the source, I don't see a fix, and we will
+>probably have to live with that unless there is a major breakthrough.
+
+Again, users may not be willing to live with it since they have an
+alternative right now in usenet.
+
+Hal
+
+
+
+

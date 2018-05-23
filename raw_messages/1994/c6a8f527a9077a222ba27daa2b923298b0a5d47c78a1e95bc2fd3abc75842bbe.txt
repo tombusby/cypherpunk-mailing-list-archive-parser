@@ -1,0 +1,56 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 7 Feb 94 03:26:15 PST
+To: cypherpunks@toad.com
+Subject: Re: PGPTOOLS and Magic Money
+In-Reply-To: <199402071025.CAA13685@jobe.shell.portal.com>
+Message-ID: <9402071121.AA04510@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+PC> 
+> I've got the code written to check the whole coin, and I found another
+> subtle bug caused by precision setting. Since setting precision does not
+> seem to affect the speed of the decryption (I think the mpi library sets
+> it internally during modexp) I'm just going to fix it at MAX_UNIT_PRECISION
+> and leave it there. Tomorrow I will strip out all of these damn things.
+
+Yea, MPI lets the precision.  This is not a bug -- the MPI library
+needs to know how big the number is.  (The bug is that its done in a
+global variable and not as a part of the number internally, but thats
+a different matter).  The reason it needs to know is so that it
+doesn't need to perform large operations for small numebers.  For
+example, there is no reason to perform a 1024-bit modexp when you are
+dealing with 384-bit numbers!
+
+FYI: I have both big-endian and little-endian machines at my disposal.
+Also, I was having problems building PGP Tools under mips-ultrix --
+you have some global variables in ptd that you expect from time.h
+which don't exist.  In particular, timezone and daylight.
+
+-derek
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.3a
+
+hIwCwagUhZdVih0BA/0XHyUO7jSVHijFk98o3X3YK+pYZNQxmg+QfiNKvVXjPk6B
+HqM2kKTZXMngoBBl1dC+ps1jFdFI5Anxwdb/Sjg3VpQVvv/fsiK6G9V7Om6xp3Li
+5v7xQ6dPRtcgmvI9WHje9OM2fhdgNsgPePEOj4odfuoYHp+9b2qlmyPYY4lChqYA
+AAIYLZFtfA3yFO8Lq719Jh5oIGS+JfLG6VA2Q3Tzkf7iGob17yN9poa4GvnQZP23
+m1nsBYAajPKp0Odvrs3yrb1LrQAxDRNqV4hj/YTbIITqDCqdXYrUYf64JyWjaqXS
+lMBQG0hHDgWYLewtYEtS7VDI/yOGk4/qrJxN39xcYNVhkiD6ETTi6/wUnWCLL6aW
+EIM0rjwIyydaeqQmAPsj+AP+qZioyuqXNibMg95tLs5HVsDUIO7BLqhIFcnrX0Vj
+EIO4qBXRT2fxCnM0sxFN+vsbE+8ZNx8l1Y4dWjOQCQVpzU11IBr3Gs0Ql9U5BUAc
+lgD3qjf4zTTMDniTRf+r/h8PUVyj10T9C2LOylDDJ0H/uRKpMUrliA3xFvUjThc5
+ORVdp1BEhnxDViArn5+MfUm37L8J81bTUMYvFBz5BLsxjznnfZoactQ6x1al3tgF
+1k/c7mjIUSGA1Btxo+zkS140Jd3lJ+alXQkCOr6Zgg/nPy1nQa+vdVPN38zzzhUn
+fkRbvgFb9Eq5QYZTuhcXg4gsQIKT519zMVgx4LnJWyGhxKM01YA3jr7XFZ9apKfE
+Ot4ry1P7mR2oPykKENucWRAqgzc91YvNw471wANcbbyJkIgZxeWg/oXidocfWonR
+gyZLGxfyOB+9LbVIOxHJc+wskPUAQhdN+BEdp+Y3uBjJGRJalAWwLdcAPrNmvnyX
+DELrdVfLGFZ3xwE=
+=uBDq
+-----END PGP MESSAGE-----
+
+
+
+

@@ -1,0 +1,59 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Sun, 20 Mar 94 13:17:30 PST
+To: cypherpunks@toad.com
+Subject: Random Number Generator (was Re: brainstorming on cpunks' eve)
+In-Reply-To: <Pine.3.89.9403112006.A15246-0100000@stein1.u.washington.edu>
+Message-ID: <8hX=xVu00VomEQdm1T@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matt Thomlinson <phantom@u.washington.edu> wrote:
+
+> Other possible net services: random number services, which don't keep
+> logs of the numbers it produces -- have it spit a statistically-correct
+> random stream each time a port is opened? Would this be that useful?
+
+Well, I don't know if it's useful or not, but for sake of
+curiousity/experimentation, I set up a random number server.  Send mail
+to mg5n+random@andrew.cmu.edu and it'll spit out 256 bytes of random
+data.  :)
+
+The RNG is the same one I use for my remailer.  The random numbers are
+generated from (among other things) taking a hash of a listing of the
+users who are currently logged-on, so it's impossible to predict what
+will come up from one minute to the next.  (Try fingering
+@unix.andrew.cmu.edu)
+
+wcs@anchor.ho.att.com
+ (bill.stewart@pleasantonca.ncr.com +1-510-484-6204) wrote:
+
+> For crypto use that's not very helpful - if the numbers go across
+> the net, other people can see them.  But they may be somewhat
+> helpful as seed material for your own random number generator,
+> along with hashes of your memory, random Ethernet traffic, etc.
+
+Right.  Always crypto-launder random number files before and after
+each use.  :-)
+
+
+Bill Stewart wrote (re timestamps/digital notary):
+
+> There's certainly a need for such services.  You have to be
+> careful to avoid stepping on Bellcore's work, since I think it's
+> patented, but related services may be practical and profitable.
+> You have to decide how much you're willing to trust the
+> timestamp that the service generated, as you would for a
+> human notary.  With a digital notary, there's a risk someone
+> could hose the clock on the notary's machine, get something
+> notarized, and reset the clock, so even if the notary's being
+> perfectly honest it's not risk-free.
+
+This shouldn't be too hard to do.  Considering many of the remailers
+already support PGP, it shouldn't be too much work to modify the current
+remailers to take a message, add a date/time, sign it with PGP, and send
+it back.
+
+
+
+

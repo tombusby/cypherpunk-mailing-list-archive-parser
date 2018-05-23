@@ -1,0 +1,91 @@
+From: "R. J. Harvey" <harveyrj@vt.edu>
+Date: Thu, 18 Jan 96 10:42:17 PST
+To: perry@piermont.com
+Subject: Re: noise levels and hack-Microsoft
+Message-ID: <199601181841.NAA19754@sable.cc.vt.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:47 AM 1/18/96 -0500, you wrote:
+>
+>"R. J. Harvey" writes:
+>> At 10:20 AM 1/18/96 -0500, Perry wrote:
+>> >
+>> >Posts on windows registration wizards, gun control, unemployment,
+>>           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>    Well, I'm sure you're correct on most of those,
+>> but the post on Microsoft using ENCRYPTED databases
+>> of competitor programs as part of its plan to surreptitiously
+>
+>Actually, the database isn't encrypted -- its plaintext -- and the
+>wizard isn't surreptitious and tells you everything its doing and lets
+>you stop it if you like. In short, the topic has no cryptography
+>or security relevance *AT ALL*.
+>
+   I don't mean to sound argumentative, but I'm wondering if you 
+actually read the article cited earlier today by the person you were 
+criticizing for 'noise.'  To quote from Andrew Schulman, the author 
+of the piece he referenced, and a person who has more than a little 
+credibility on such topics, 
+
+        REGWIZ.EXE in turn loads a dynamic-link library,
+        \WINDOWS\SYSTEM\PRODINV.DLL. This is the "Product 
+        Inventory DLL," normally used for compliance checking of 
+        upgrades to Microsoft Office programs such as WinWord.
+        (In fact, PRODINV.DLL's internal module name is "COMPLINC," 
+        for "compliance checking.") Of course, when you buy the 
+        upgrade edition of something like WinWord, there needs to 
+        be a mechanism to check that in fact you really are upgrading 
+        from some previous word processor -- be it a previous version 
+        of WinWord, or a competitor's word processor, such as AmiPro 
+        or WordPerfect.  So there's an encrypted database (the reasons 
+                                    ^^^^^^^^^^^^^^^^^^^^^
+        for this encryption are discussed below) inside PRODINV of about 
+        100 products, 
+
+        ...
+
+        At this point, it was trivial to locate the beginning and end 
+        of the buffer, and write it to disk. (Recall that the database 
+        is stored on disk in encrypted form; this is why a search of 
+                          ^^^^^^^^^^^^^^^^^
+        the entire hard disk did not find it.) 
+        
+        ...
+
+        The database is encrypted because otherwise it would be trivial 
+        to fool this "wizard" (hmm...; examination of RegWiz/ProdInv 
+        shows it to be anything but wizardly) simply by creating an 
+        appropriately-sized file with the appropriate name in the 
+        appropriate subdirectory.
+
+   Although I haven't personally verified the above, I'm quite
+confident that Schulman is correct here.  Of perhaps greater
+relevance to this list, the final passage cited above should
+provide a potentially very interesting "project" for those
+list-readers who are interested in the "hack Microsoft" project.
+Schulman got at the cleartext by looking at the program in
+a debugger, AFTER it had decrypted the database and loaded its
+contents into memory; he didn't try to crack the encryption
+method itself.
+  My point is, if the crypto used here is as poor
+as has been seen in the password area, and somebody were
+to come up with a way to fool this "compliance checking"
+protocol (which would defeat BOTH the "voluntary" registration
+function and the potentially much more interesting reduced-
+price product upgrading authentication mechanism), I think
+that might constitute very poor PR for Micro$oft, as well
+as a highly crypto-relevant issue.  That is, a hell of a
+lot more people might exploit a flaw like that in order to 
+falsely qualify for cheap upgrades than would ever be involved 
+in exploiting the password cache problem.
+   For those who missed it, and who care, the URL is 
+ftp://ftp.ora.com/pub/examples/windows/win95.update/regwiz.html
+
+rj
+
+
+
+
+

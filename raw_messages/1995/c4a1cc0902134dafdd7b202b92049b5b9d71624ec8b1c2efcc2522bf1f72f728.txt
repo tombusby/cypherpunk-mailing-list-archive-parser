@@ -1,0 +1,142 @@
+From: Enzo Michelangeli <enzo@ima.net>
+Date: Sat, 22 Jul 95 04:47:59 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Netscape the Big Win
+In-Reply-To: <199507211727.KAA06527@jobe.shell.portal.com>
+Message-ID: <Pine.LNX.3.91.950722185511.3139A-100000@ima.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 21 Jul 1995, Hal wrote:
+
+> This sounds very good if it already is almost working.  The TCP
+> connection which is opened would have to be to a server on the local
+> machine, so it would be important that the software support that.  Also,
+> the local SOCKS relay would of course not want its winsock calls to be
+> intercepted and translated in this way, so there would need to be some
+> alternative way to access "vanilla" winsock.  Can you give any
+> more information on the NEC work?
+
+I can only quote the original posting to the SOCKS mailing list - I answered 
+their call for beta-testers, but I haven't heard back from them, yet:
+
+-------------------------------- 8< ---------------------------------------
+>From cornell@syl.dl.nec.comSat Jul 22 18:50:10 1995
+Date: Thu, 20 Jul 1995 10:05:47 -0500 (CDT)
+From: Cornell Kinderknecht <cornell@syl.dl.nec.com>
+To: socks@syl.dl.nec.com
+Cc: Cornell Kinderknecht <cornell@syl.dl.nec.com>
+Subject: Good news for Windows/Winsock users
+
+New SOCKS application for PC/Windows/Winsock.  Looking for beta
+volunteers...
+
+We've developed an MSWindows .DLL (Windows version 3.1) that allows
+unmodified TCP-based Winsock applications and TCP/IP stacks to
+communicate through a SOCKS4.2 server.  This will hopefully be
+available for general release sometime soon.  Currently, I'm looking
+for volunteers to do some beta testing.
+
+If interested, willing to provide feedback, and don't mind rebooting
+your PC when when it locks up :-), email the following information
+about your environment to scbeta-apply@syl.dl.nec.com:
+
+1. Winsock stack type and version (Trumpet, NetManage, etc.).
+2. Other network OS/drivers (Netware, IPX, packet drivers, SLIP, etc.).
+3. Winsock applications (trumptel, wsftp, netscape, etc.).
+4. Your email address.
+5. Anything else relevant...
+
+I'll keep the number of beta testers limited and so unfortunately I
+might not be able to include everyone who requests.
+
+Oh, BTW, here are some requirements:
+1. MS Windows3.1.
+2. Installed and operating Winsock TCP/IP stack.
+3. Installed and operating SOCKS server (v.4.2).
+4. PC running Winsock stack must be able to use DNS to resolve
+   names and IP addresses (including its own).
+
+--- Cornell
+| Cornell Kinderknecht          Email: cornell@syl.dl.nec.com |
+| CSTC                            			      |
+| NEC Systems Lab.              Phone: 214-518-3509           |
+| Irving, TX (Dallas)             			      |
+-------------------------------- 8< ---------------------------------------
+
+
+[...]
+> non-blocking connect as there is in Windows.  Maybe Windows 95 will allow
+> a more Unix-style communication model, though.  Should the proxy require
+> Windows 95, or will Windows 3 still be in widespread use for another
+> year or two?
+
+I'm afraid we'll have to live with async socket calls for a while...
+
+> 
+> Also IMO the requirements for the Internet relay are pretty different
+> than for the Windows relay.  The Internet relay needs only to be able to
+> decrypt/encrypt on the port where the request comes from while sending
+> plain data the other way.  It needs a config file so the owner can
+> control what kinds of outgoing TCP connections can be done.  The Windows
+> one needs to be able to do nested encryption (if chains will be allowed
+> eventually), to set up chains, etc.  So for these reasons I am inclined
+> to think that the two relays would be separate programs.
+
+Well, a config file would be necessary for the windows one too. For 
+example, we could want to socksify only connections to some sites/ports, 
+socksify+encrypt some others, and open direct TCP connections to others 
+yet, such as servers on the same net (I presume that NEC's DLL will 
+attempt to socksify all the connections, so we should de-sockisfy some of 
+them intoducing sockd functionality.
+
+> The Windows version would need to decrypt incoming data; you don't want
+> that coming in the clear.
+
+Oh yes, I actually meant that it should only be able to issue, and not also
+accept, "client hello" requests (as per SSL model).
+
+> 
+> I am a little unclear on the certificate situation.  As we saw with the
+> PGP key servers before RSAREF PGP existed, RSA put pressure on these
+> public sites which they saw as contributing to the use of infringing
+> software.  Similarly having a certificate created by infringing software
+> might be seen as illegal, even if RSAREF was actually used for the
+> handshaking in the protocol.  Server operators are quite vulnerable to
+> threatening letters from RSA.
+
+RSA patents (I mean RSA, not RSADSI's) are only valid in USA. If I set up 
+a certifying authority, say, here in Hong Kong, using EAY's code written in 
+Australia, how could RSADSI complain? Server operators would import 
+data created under perfectly legal conditions.
+
+> Another problem with RSAREF is that it does not allow you to exchange a
+> session key using RSA encryption in a straightforward manner.  The entry
+> points you have legal access to choose a random session key, PK encrypt
+> it, send it, and then encrypt the message using that session key with DES
+> or 3DES.  However I notice that SSLREF calls undocumented entry points
+> like RSAPrivateDecrypt and RSAPublicEncrypt.  I am not sure how they are
+> able to do this.  Maybe they got special permission from RSA.  I don't
+> know whether the SSLEAY library would be able to do this without such
+> special arrangements.
+
+That should be investigated. Is RSAREF's licence only valid for some 
+entry points? In any case, I suppose that SSLREF may be used with any 
+certificate, unlike Netscape (am I wrong?).
+
+> One other problem is the risk taken by people running the relay servers
+> on the net.  These could be used to launder connections by hacker /
+> cracker types.  So probably only a limited set of outgoing ports would be
+> permitted, say, 80 and 1080 which are the most common http ports.  This
+> would restrict the utility of the SOCKS approach for other uses like
+> secure telnet, unfortunately.
+
+Well, the same problem exists for illegal uses of the present remailers, 
+but hasn't stopped their operators.
+
+Enzo
+
+
+
+

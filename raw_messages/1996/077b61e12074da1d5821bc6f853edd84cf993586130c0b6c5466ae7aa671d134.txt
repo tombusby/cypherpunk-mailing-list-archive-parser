@@ -1,0 +1,45 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 22 Apr 1996 18:08:51 +0800
+To: cypherpunks@toad.com
+Subject: Re: Memorized secret keys
+Message-ID: <199604220655.XAA10327@dfw-ix10.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 03:16 PM 4/19/96 -0700, Hal <hfinney@shell.portal.com> wrote:
+>Choose x bits of good random numbers (x defined below), calling it X.
+>Seed an MD5 iteration or some other crypto RNG with X and generate
+>random starting points for p and q.  Search for the next primes after
+>these starting points to get p and q, multiply to get n, and choose the
+>first exponent >= 3 or 17 or 65537 (choose by taste) as e.  Burn p and
+>q but memorize the random seed X.
+
+An interesting approach; given enough spare computing, the passphrase
+is the key.  Remember to transform the passphrase space into some
+wide-enough space that it will include a bunch of primes, to avoid
+having multiple passphrases generating the same prime.  Primes density
+is approximately log n (ln n?), e.g. 1/512 for a 512-bit number,
+so a crude approach like using a 128-bit hash as the most significant bits
+should do fine.
+
+>The main question is, can x be both long enough that it is not the
+>weakest length in factoring, say, a 1024 bit key, while being short
+>enough that it can be memorized?
+>My guess is that x must be 80-120 bits, somewhere in there.  This would
+>be 6 to 9 words chosen from a 16K word list: marginaly doable. 
+
+Almost by definition, you want at least 128 bits, since you'll probably be
+using the public key crypto to protect a 128-bit session key.  (Keys for
+signatures may need a bit less slack, though I'd still be wary of <90 bits.)
+Also, if you're starting by taking an MD5 of the passphrase (after looking up
+the words in the dictionary or whatever), you're limited to 128 bits of
+entropy; it's probably worth using SHA, or at least picking p from the MD5
+and q from the MD5 of the reverse of the passphrase.
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

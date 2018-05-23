@@ -1,0 +1,77 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Wed, 2 Feb 94 08:15:32 PST
+To: cypherpunks@toad.com
+Subject: On return addresses
+Message-ID: <9402021609.AA17192@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've been troubled for many months by an invariant in all forms of
+return address schemes: The outside world contains sufficient
+_persistent_ information to find a real adress.  There are lots of
+clever schemes to split this information up so as to require
+reassembly between many parties, but the information is still out of
+one's control.  (I use 'reassembly' rather than 'collusion' since the
+latter indicates an intent; see my rant of a few days ago.)  The
+fundamental problem seems impenetrable.
+
+So how do we solve it?  By abandoning return addresses and using mail
+spool facilities.
+
+Consider the following service.  
+
+1. I have a machine and I'll sell you an address on it, say
+"onyma@privacy.net".  This address is _not_ an account, merely an
+address.  Your mail is password or public key protected.
+
+2. When mail come in for you, it sits in a spool.  This service comes
+with a spool of a certain size and an allowance for checking your mail
+at a certain rate, with overages at extra cost for both.  (This is to
+bound known promised capacity of the machine by a sufficient amount of
+money to pay for it.)
+
+3. Your mail sits in the spool until you access it with, say, a POP
+client like Eudora.  Just point the client at a different address to
+pick up mail.  The server can further support a number of protocols
+for getting the mail, including a mail server command of "send me a
+mailbox file of my waiting mail".
+
+The main advantage is that the only _persistent_ information out in
+the world is the address itself and the authenticator (password or
+public key).  The address is already public and the authenticator is
+arbitrary, so no identity information is persistent.  
+
+A complete chain could still be forged between sender and receiving
+pseudonym, but we now have some amount of forward secrecy.  If in fact
+an intermediate link does discard connection information, it is gone
+forever.  With any kind of SASE, however, the information therein,
+however encrypted, still contains a full path back.
+
+Now consider two ways of getting your mail out of this service,
+supposing you don't trust the service with your identity.
+
+A IP redirector can be with POP service to conceal origin from the
+mail service.  An IP redirector is a remailer for packets, with a
+bidirectional link set up when the service starts and removed when it
+goes away.  Matt Blaze has a name for this--'packet laundry'--which is
+a wonderful but politically unfortunate term.  The IP redirectors can
+be chained just like remailers.
+
+With a mail server, the command to 'send me my mailbox' can be sent to
+a remailer address with an encrypted remailing block prepended.  In
+this case, however, the encrypted remailer block is provided with the
+mail command that requests the mailbox and it is not by design stored
+persistently.  (By design.  It could, of course, actually be stored.)
+The address on the other side of the first remailer hop could be
+another mail spooing service, in addition.
+
+The elimination of persistent identifying information for return paths
+is a worthwhile design objective.  I propose that we start thinking
+about it more thoroughly.
+
+Eric
+
+
+
+

@@ -1,0 +1,41 @@
+From: proff@suburbia.net
+Date: Sat, 14 Dec 1996 12:56:13 -0800 (PST)
+To: ghio@myriad.alias.net (Matthew Ghio)
+Subject: Re: Secure Erase for PCs?
+In-Reply-To: <199612141959.OAA00409@myriad>
+Message-ID: <19961214205552.1079.qmail@suburbia.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Dale Thorn <dthorn@gte.net> wrote:
+> > It's a hundred times easier to do tools for the IBM PC.  I make
+> > utilities for the PC, and it would take no more than ten or fifteen
+> > minutes to cook this one up.
+> 
+> It took me less than ten minutes...
+> 
+> > But nobody answered my question:  Is there a shortcut way to do the
+> > wipe, say, thirty times?  Ordinarily, I'd run the program thirty
+> > times, which would consist of a data write followed by a flush,
+> > which would take 30x amount of time.
+> 
+> Try this in Linux...
+> 
+> #!/bin/csh
+> set n=1
+> loop:
+> cat /dev/urandom >/tmp/fill
++ sync;df >/dev/null
+> rm /tmp/fill
+> @ n = $n + 1
+> if ( $n < 30 ) then
+>   goto loop
+> endif
+> 
+
+and it just might work.
+
+
+
+

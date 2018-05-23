@@ -1,0 +1,67 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 24 Feb 1996 16:45:10 +0800
+To: cypherpunks@toad.com
+Subject: Anonymous access to certificate revocation lists?
+Message-ID: <199602240737.XAA14996@ix3.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[Hmmm - a crypto-related technical discussion that looks like it's 
+coderpunks material?]
+
+The article on Digital Signature Legislation by Brad Biddle <biddle@acusd.edu>
+Privacy Rights Clearinghouse, Ctr for Public Interest Law
+http://pwa.acusd.edu/~prc
+had good coverage of the legal issues related to the Utah digital signature law,
+but it touched on one interesting technical point - signature verification
+systems that use Certificate Revocation Lists are vulnerable to traffic analysis
+because you need to check the CRL at a CA every time you want to verify a
+signature from a user certified by that CA.  (There's also denial-of-service
+risk.)
+
+For example,  Alice wants to check the signature on Document D, 
+which is signed by Bob, whose key is certified by Carol's CA.
+Alice may have Bob's public key, or may need to fetch it from somewhere
+(this is only a minor traffic analysis risk; she can get it from Bob
+or from some public server, or even download all keys from the server.)
+If the signature on Document D is good, Alice needs to verify Bob's key.
+Alice can check Carol's signature on the key (perhaps fetching Carol's),
+but she also needs to know if Bob's key is still good or if it's been revoked.
+In a PGP environment, Bob is the only one who can revoke a key, and he's
+responsible for shipping out revocations.  In a X.509 environment,
+Carol the certifier can revoke her certification of Bob, so Alice has to
+check with Carol to be sure she hasn't.  This creates a transaction record.
+
+Biddle's article is concerned about the privacy implications of
+Carol knowing about everybody who wants to verify Bob's key, because
+the law doesn't address who she can sell the data to.
+For cypherpunks, there are more concerns - it's tough to have a 
+private conversation if you've got to exchange messages with
+your friendly Government Post Office Certification Authority.
+
+Is there a need to build anonymous CRL-checking proxies so people can
+check X.509 signatures (e.g. the ones used by Netscape) anonymously?
+How much caching can you do?  How would you decide how much to trust it?
+The failure modes look different from anonymous remailers, where
+a dishonest remailer can save your address, but you can protect yourself
+by chaining remailers in serial.  With anonymous CRL proxies,
+a dishonest proxy can tell you that "Bob"'s key isn't on Carol's CRL when it is;
+to avoid this problem, you need to ask a bunch of proxies in parallel,
+which means that any dishonest proxy can reveal your queries.
+
+There's also the denial of service problem - depending on your policies,
+and their implementation in software (especially packaged software),
+what happens if you don't get a reply saying either yes or no on revocation -
+what if Carol or a Man In The Middle decides not to respond to Alice's requests,
+or to requests for certifications on Bob's key?  Are you hosed?
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

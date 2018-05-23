@@ -1,0 +1,319 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Mon, 6 Nov 1995 19:02:23 +0800
+To: cypherpunks@toad.com
+Subject: Java insecurity - long - argumentative - you are warned.
+Message-ID: <9511061047.AA13370@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+WARNING - THIS MESSAGE CONTAINS INFORMATION THAT MIGHT BE CONSIDERED AS
+A FLAME BY SOME READERS - IT IS LONG AND TEDIOUS - YOU ARE WARNED!
+
+>From the Java Web pages (as combined in Firewalls/BoS):
+
+> The language's security features (not just applets):
+> 
+> (http://java.sun.com/whitePaper/javawhitepaper_6.html#HEADING15)
+> 
+> 4.2 Security in the Java Environment
+> 
+> Security commands a high premium in the growing use of the Internet
+> for products and services ranging from electronic distribution of
+> software and multimedia content, to "digital cash". The area of
+> security with which we're concerned here is how the Java compiler and
+> run-time system restrict application programmers from creating
+> subversive code.
+
+But not non-subversive code?  Sounds like a value judgement to me.
+Subversive code is not otherwise defined in these documents.
+
+> The Java language compiler and run-time system implement several
+> layers of defense against potentially incorrect code.
+
+Is incorrect code subversive?  Vica versa? Does Java provide defenses
+against my code not properly calculating numbers?
+
+> One of the Java
+> compiler's primary lines of defense is its memory allocation and
+> reference model. Simply put, Java does not have "pointers" in the
+> traditional C and C++ sense--memory cells that contain the addresses
+> of other memory cells.
+> 
+> Memory layout decisions are not made by the compiler, as they are in C
+> and C++. Rather, memory layout is deferred to run-time, and will
+> potentially differ depending on the characteristics of the hardware
+> and software platforms on which the Java language system is
+> executing. The Java interpreter references memory via symbolic
+> "handles" that are resolved to real memory addresses at run time. Java
+> programmers can't forge pointers to memory, because the memory
+> allocation and referencing model is completely opaque to the
+> programmer and controlled entirely by the underlying run-time system.
+
+Just because it is opaque, doesn't mean you can't happen across a valid
+(but perhaps undesirable) handle.  Sounds like a good issue for attack
+by crypto-types.  How do we guess the handle of the disk IO routines?
+
+> Very late binding of structures to memory means that programmers can't
+> infer the physical memory layout of a class by looking at its
+> declaration. By removing the C/C++ memory layout and pointer models,
+> the Java language has eliminated the programmer's ability to get
+> behind the scenes and manufacture pointers to memory. These features
+> must be viewed as positive benefits rather than a restriction on the
+> programmer, because they ultimately lead to more reliable and secure
+> applications.
+
+Is the language un-predictable? The same program executes differently
+each time? A pseudo-random allocation? What is the technique used to
+implement this, and why should we believe it is in fact secure in some
+sense.  And if so, in what sense?
+
+> The Byte Code Verification Process
+> 
+> What about the concept of a "hostile compiler"? Although the Java
+> compiler ensures that Java source code doesn't violate the safety
+> rules,
+
+What are these "safety rules"?  No reference to them in this document!
+
+> when an application such as the HotJava web browser imports a
+> code fragment from anywhere, it doesn't actually know if code
+> fragments follow the Java language rules for safety--the code may not
+> have been produced by a known-to-be trustworthy Java compiler. In such
+> a case, how is the Java run-time system on your machine to trust the
+> incoming byte code stream? The answer is simple--it doesn't trust the
+> incoming code, but subjects it to byte code verification.
+> 
+> The tests range from simple verification that the format of a code
+> fragment is correct, to passing through a simple theorem prover to
+> establish that the code fragment plays by the rules--that it doesn't
+> forge pointers, it doesn't violate access restrictions, and it
+> accesses objects as what they are (for example, that "InputStream"
+> objects are always used as "InputStreams" and never as anything
+> else). A language that is safe, plus run-time verification of
+> generated code, establishes a base set of guarantees that interfaces
+> cannot be violated.
+
+Wait a minute.  If it's so safe, what code can possibly be sent in that
+would cause a violation? If the prover is so simple, how can it show
+things (e.g., program correctness) in real-time on a PC that the rest of
+the world can't show with supercomputers over extended periods? What
+EXACTLY are these things doing, and why should we believe they are safe?
+
+> The Byte Code Verifier
+> 
+> The last phase of the byte code loader is the verifier. It traverses
+> the byte codes, constructs the type state information, and verifies
+> the types of the parameters to all the byte code instructions.
+
+
+> The illustration [see the HTML] shows the flow of data and control
+> from Java language source code through the Java compiler, to the byte
+> code verifier and hence on to the Java interpreter. The important
+> issue is that the Java class loader and the byte code verifier make no
+> assumptions about the primary source of the byte code stream--the code
+> may have come from the local system, or it may have travelled halfway
+> around the planet. The byte code verifier acts as a sort of
+> gatekeeper. The byte code verifier ensures that the code passed to the
+> Java interpreter is in a fit state to be executed and can run without
+> fear of breaking the Java interpreter.
+
+So there are byte code sequences that can break the interpreter!
+
+> Imported code is not allowed to
+> execute by any means until after it has passed the verifier's
+> tests. Once the verifier is done, a number of important properties are
+> known:
+> 
+>       There are no operand stack overflows or underflows
+
+Not so easily proven, is it?
+
+>       The types of the parameters of all byte code instructions are
+> 	known to always be correct
+
+Huh? I thought you couldn't have incorrect types.  Do they mean that you
+can have incorrect types but that they are detected by the verifier at
+load time?
+
+>       No illegal data conversions are done, like converting integers
+> 	to pointers
+
+How about legal ones - like converting integers to pointers via case
+statements?
+
+>       Object field accesses are known to be legal--private or public
+> 	or protected
+
+What exactly does this mean?
+
+> While all this checking appears excruciatingly detailed, by the time
+> the byte code verifier has done its work, the Java interpreter can
+> proceed knowing that the code will run securely. Knowing these
+> properties makes the Java interpreter much faster, because it doesn't
+> have to check anything.  There are no operand type checks and no stack
+> overflow checks. The interpreter can thus function at full speed
+> without compromising reliability.
+
+Can computers actually "know" anything?
+
+No runtime checking whatsoever.  Get past the supposed verifier, and you
+have free run of the machine.  A single verifier bug or inadequacy, and
+the world is unsafe for electronic commerce.  And has the Java code been
+verified to prove the claimed properties?  Against what criteria?  Where's
+the beef?
+
+> Security Checks in the Class Loader
+> 
+> After incoming code has been vetted and determined clean by the byte
+> code verifier, the next line of defense is the Java class loader. The
+> environment seen by a thread of execution running Java byte codes can
+> be visualized as a set of classes partitioned into separate name
+> spaces. There is one name space for classes that come from the local
+> file system, and a separate name space for each network source.
+> 
+> When a class is imported from across the network it is placed into the
+> private name space associated with its origin. When a class references
+> another class, it is first looked for in the name space for the local
+> system (built-in classes), then in the name space of the referencing
+> class.  There is no way that an imported class can "spoof" a built-in
+> class. Built-in classes can never accidentally reference classes in
+> imported name spaces--they can only reference such classes
+> explicitly. Similarly, classes imported from different places are
+> separated from each other.
+
+But they can explicitly reference each other? I can only explicitly open
+a file called command.com on your PC?
+
+> Security in the Java Networking Package
+> 
+> Java's networking package provides the interfaces to handle the
+> various network protocols (FTP, HTTP, Telnet, and so on). This is your
+> front line of defense at the network interface level. The networking
+> package can be set up with configurable levels of paranoia. You can:
+> 
+>       Disallow all network accesses 
+> 
+>       Allow all network accesses 
+> 
+>       Allow network accesses to only the hosts from which the code was
+> 	imported
+> 
+>       Allow network accesses only outside the firewall if the code
+> 	came from outside
+
+Who wants to bet that 99+% of all users configure "Allow all network
+accesses".  Hot Java today is defaulted to this state. 
+
+> Applet-specific security: (written for the 1.0a3 release of
+> HotJava(tm)... there will be a rewrite for the 1.0b release when that
+> occurs.  I'm assuming, perhaps incorrectly, that the Netscape
+> implementation is similar.  As I understand it, they licensed the HJ
+> code from Sun, so I think it's all very close to the truth.)
+> 
+> (http://java.sun.com/1.0alpha3/doc/security/security.html)
+> 
+> [ A rehash of the above text, snipped ]
+> 
+> Security level four: protecting the file system and network access
+> 
+> HotJava enforces security policies confident that its security
+> interfaces are secure.
+
+In other words, it assumes the other three levels worked properly.
+If they don't, you're screwed.
+
+> The three lower levels of security guarantee
+> that all local classes, e.g., the file access primitives, are
+> themselves protected from being supplanted, replaced, or extended by
+> imported code.
+
+You're screwed.
+
+> The file access primitives implement an access control list that
+> controls read and write access to files by imported code (or code
+> invoked by imported code). The defaults for these access control lists
+> are very restrictive[*]. If an attempt is made by a piece of imported
+> code to access a file to which access has not been granted, a dialog
+> box pops up to allow the user to decide whether or not to allow that
+> specific access. These security policies err on the conservative side
+> in order to ensure maximum security. This conservative approach may
+> make writing some applets more difficult or awkward.
+
+By default - ask the user.  That's restrictive? Please press the OK
+button to have our free Lotus update loaded into your computer.
+
+> For network security, HotJava provides a variety of mechanisms that
+> can provide information about the trustworthiness of imported
+> code. These mechanisms cover a wide range of possibilities. At the
+> simple end the system can check on the origin of a code fragment to
+> determine if it came from inside or outside a firewall.  At the
+> sophisticated end of the range a mechanism exists whereby public keys
+> and cryptographic message digests can be securely attached to code
+> fragments that not only identify who originated the code, but
+> guarantee its integrity as well. This latter mechanism will be
+> implemented in future releases.
+
+So today, if the admin specifies the proper IP address ranges when
+loading Java into each computer in the network, and if no user ever
+installs Java on their own, "code" downloads from external machines
+may be stopped - unless the user says OK.
+
+> The security policies implemented by the runtime system can be
+> dynamically adjusted based on the information available concerning the
+> origin of a code fragment. The Socket class provides such an example.
+> 
+> The Socket class implements security policies that are adjusted to
+> reflect the trustworthiness of the code that invoked it, and
+> transitively, the code that invoked the invoker. The information about
+> what code began the chain of execution is available to the class in
+> the form of which namespace contains the invoking code and what
+> parameters are associated with that class. The class loader puts the
+> classes it has loaded in a specific namespace, allowing the Socket
+> class to determine the network host from which a class is loaded.
+> 
+> Knowing the network host allows the HotJava security mechanism to
+> determine whether the class originated inside or outside a
+> firewall. Knowledgable users of HotJava can decide which category of
+> hosts to trust when loading executable code.
+
+How about the more than 99.99% of users who are not knowledgable of HotJava?
+
+> For example, the Socket
+> class can implement the policy of only allowing new connections to be
+> created that terminate at the host from whence the code was
+> loaded. This restriction means that code loaded from outside a
+> firewall cannot connect to other machines on the net behind the
+> firewall.
+
+Unless that machine acts as a gateway for further processing.
+
+> Code that comes from more trusted sources can be allowed
+> more freedom to make connections to other machines. As an additional
+> defense against untrusted sources HotJava's security can be set to
+> prevent any code from being loaded. The level of security is
+> configurable by HotJava users.
+
+The user dictates the security policy.  Any user in your site can
+potentially, through error or omission or intent, open up a hole to your
+entire network by accidentally pressing the OK button one time or by
+setting a configuration parameter incorrectly.  And your firewall will
+not save you.
+
+ASBESTOS SUITS MAY NOW BE REMOVED - FLAME OFF.
+
+P.S.
+
+When: Tuesday, November 7, 8AM
+Where: The Hilton, Washington D.C. (the CSI conference)
+The talk: 50 Ways to Attack Your World Wide Web Systems
+
+If you want a chance to heckle - be there.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+
+

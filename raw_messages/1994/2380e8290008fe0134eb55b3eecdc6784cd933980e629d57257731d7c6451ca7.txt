@@ -1,0 +1,40 @@
+From: Phil Karn <karn@qualcomm.com>
+Date: Wed, 28 Sep 94 15:00:52 PDT
+To: psmarie@cbis.com
+Subject: Re: 3DES
+In-Reply-To: <9409282126.AA00174@focis.sda.cbis.COM>
+Message-ID: <199409282201.PAA07492@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Quick question.  There's a brief mention in Applied Cryptography that
+>triple DES uses:
+
+	Eabc(x) = Ea(Db(Ec(x)))
+
+>as opposed to:
+
+>	Eabc(x) = Ea(Eb(Ec(x)))
+
+>in order to preserve some symmetry properties.  Can anyone give a
+>better explanation?
+
+This should probably be in a FAQ somewhere. As I understand it, the
+intent is to build 3DES chips that can be backward compatible with
+single DES by simply setting all three keys to the same
+value. Naturally, nobody would be stupid enough to do single DES in
+this way in a software implementation, but it doesn't really cost
+anything extra when operating in 3DES mode either. DES decryption is
+the same as encryption with a reversed key schedule, so the work
+factor for both ciphering and attacking should be the same.
+
+Question to the group: are there any precise standards for how 3DES
+keys are specified?  Also, a 3DES verification suite similar to NIST's
+suite for single DES would be very nice.
+
+Phil
+
+
+
+

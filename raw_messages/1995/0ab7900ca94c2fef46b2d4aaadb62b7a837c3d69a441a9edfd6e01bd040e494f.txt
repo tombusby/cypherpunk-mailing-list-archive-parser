@@ -1,0 +1,66 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Mon, 28 Aug 95 12:51:56 PDT
+To: ab411@detroit.freenet.org
+Subject: Re: Pre-allocating key segments
+In-Reply-To: <199508281854.OAA23029@detroit.freenet.org>
+Message-ID: <"swan.cl.cam.:251330:950828195006"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> I'd prefer to keep the number of segments "lost" if a brloop ceases.
+> Keep down, I guess you meant.
+
+Indeed -- Ta.
+
+>> ... if any keys were allocated to machines which failed to ask for another
+>> segment -- you should assume that that segment was not searched.
+> I agree that is the best policy -- it fails safe -- but I still think the
+> prefetching of some more segments would be useful.
+
+I'm seeing calls from calpoly.edu and albany.net taking less than a second.
+Are you **REALLY** worried about wasting that sort of time, when even a single
+segment usually takes a quarter of an hour even on the faster machines ?
+
+> The goal is to suck up as many idle cycles as is practical.
+
+I don't think a second's overhead (practical with local cache) is significant.
+
+>> That means that if it crashes, 8 segments are left unACKed :-(
+> And if it had grabbed 8 segments to begin with and crashed, it still
+> would have been 8 segments left unACKed.
+
+Sure, but I'd prefer you allocate single segments .....
+
+> Plus, it's only 8 segments unACKed if it crashes before it finished that
+> last segment, since it will start trying to ACK the first four segments
+> when it finishes the fourth -- at the same time starting on the next
+> four segments.
+
+Sure.
+
+[ Getting down to the implementation details
+  1) it would be hard for brloop to know that brutessl is 3/4s done.
+  2) I can't think how to do prefetching in a safe way, and without disc use
+]
+
+> Would you see it any differently if I had said, "For instance, if it has
+> two segments allocated and it is halfway through the second segment, it
+> should request two more segments *while* it is scanning the last segment"?
+
+No.
+
+If you gave me code which would guess how long the request for the next
+segment will take, and then know when brutessl is that many milliseconds from
+completion, and can tell that brloop isn't going to die within that time,
+sure :-))
+
+
+If someone supplies info for my "PS3:", I can generate central stats on what
+%age of Hal3 was wasted waiting on the server.
+Otherwise, brloop users will have to scan their own logs (if enabled) and work
+it out (latest brloop happens to log when brutessl starts and finishes).
+
+
+
+

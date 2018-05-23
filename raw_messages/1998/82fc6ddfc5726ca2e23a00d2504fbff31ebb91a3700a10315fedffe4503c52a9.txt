@@ -1,0 +1,79 @@
+From: ichudov@Algebra.COM (Igor Chudov @ home)
+Date: Tue, 20 Jan 1998 06:46:29 +0800
+To: cypherpunks@www.video-collage.com
+Subject: Distributed stock trading system
+Message-ID: <199801192238.QAA03188@manifold.algebra.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+I would like to hear your feedback on a project that I have just
+thought about.
+
+It is called a Distributed Asset Trading Network. It consists of
+Traders and Nodes. They trade Products (asset classes). A Product may
+be an Intel share, or a bond, or an option on S&P 500, or whatever. Who
+and how defines what the Product unit is is beyond the scope of this
+document. 
+
+Each Node in the Network is a clearing corporation that is supposed
+to be a legitimate operation. To cover possible liabilities, Nodes can
+post [ecash] bonds to each other. They are ultimately liable for all
+counterparty defaults in Trades.
+
+Traders are clients of Nodes. They have Accounts. To buy or sell Products,
+they place Orders to these Nodes. The Nodes broadcast the Orders and
+collect Potential Trades (opposing orders that have not been filled yet).
+Nodes may have Policies that require Traders to meet certain requirements,
+in order to avoid potential liability. (ie, to sell stock, you have to
+have it on your Account, or have enough equity to cover the short sale
+liabilities, etc).
+
+The receiving Node has a short period of time (seconds) to decide which
+counterparties and which amounts to choose. The sending Node acquires
+Locks on the submitted Potential Trades and is liable to produce the
+Asset (or Cash) if the positive response comes back within that time
+period.
+
+This architecture can create a trading environment that is a) independent
+of borders and national laws, at least to some extent and b) eliminates
+certain forms of arbitrage, and c) more resistant to denial of service
+attacks (??), and possibly eliminates the bid-ask spreads and a whole
+lot of highly-paid intermediaries, and c) potentially increases privacy
+for transactions.
+
+The technical issues that are open, at the moment, are 1) clock
+synchronization, 2) the need for a central authority to clear liability
+issues and 3) potential denial of service attacks through acquiring too
+many locks (again, maybe with the proper liability agreement, it is not
+an issue).
+
+I think that such a system is not all that impossible to develop. Whether
+it will, or can be made to, work in the technical and social environment
+that we have is another question.
+
+I am curious if something like this has aleready been implemented.
+
+Thank you.
+
+
+----------------------------------------------------------------------------
+char*p="char*p=%c%s%c;main(){printf(p,34,p,34);}";main(){printf(p,34,p,34);}
+
+                \=/,         _-===-_-====-_-===-_-==========-_-====-_
+                |  @___oo   (                                        )_
+      /\  /\   / (___,,,}_--=                                          )
+     ) /^\) ^\/ _)        =__       Anything is good and useful if    )
+     )   /^\/   _)          (_                                        )
+     )   _ /  / _)            (                                        )
+ /\  )/\/ ||  | )_)            (_       it's made of chocolate.       )
+<  >      |(,,) )__)             (                                     )
+ ||      /    \)___)\             (_                                 __)
+ | \____(      )___) )___           -==-_____-=====-_____-=====-___==
+  \______(_______;;; __;;;
+
+
+
+
+

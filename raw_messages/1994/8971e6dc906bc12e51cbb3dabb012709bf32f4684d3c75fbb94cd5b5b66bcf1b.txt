@@ -1,0 +1,48 @@
+From: rjc@gnu.ai.mit.edu (Ray)
+Date: Sun, 10 Apr 94 23:44:13 PDT
+To: cypherpunks@toad.com
+Subject: Zero Knowledge Authentication and StrongBox
+Message-ID: <9404110643.AA14883@geech.gnu.ai.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Derek Upham says:
+Look at "Strongbox: A System for Self-Securing Programs" by J. D.
+Tygar and B. S. Yee in the "CMU Computer Science 25th Anniversary
+Commemorative" proceedings (from 1991).  As the paper describes:
+
+    ``Strongbox uses an authentication protocol derived from Rabin's
+    observation about the square root operation: if one can extract
+    square roots modulo  n  where  n=p*q ,  p  and  q  primes, then
+    one can factor  n .  [That should be `if and only if', i.e.,
+    finding the square roots is too hard unless you created  n  in the
+    first place.]  
+
+Donald Knuth sez in Seminumerical Algorithms p389:
+"However, the system [SQRT Box] has a fatal flaw. Anyone with access
+to a SQRT box can easily determine the factors of its N. This not
+only permits cheating by dishonest employees, or threats of
+extortion, it also allows people to reveal their p and q, after which
+they might claim that their "signature" on some transmitted
+document was a forgery."
+
+     I don't really get Knuth's comment since the "secret key" (p and q)
+can be stored in the SQRT Box with a passkey just like PGP stores
+encrypted secret keys, unless of course Knuth means "given a 
+SQRT box, by feeding it lots of numbers and getting the resulting
+SQRT, one can determine the factorization of its internal modulus."
+On the preceding page, Knuth describes RSA and RSA signatures but he
+doesn't make the same comment that "people could give our their
+p and q and claim signatures were forged." I usually trust Knuth,
+so is he wrong, or does he just have something against sqrt(x) mod N
+cryptosystems?
+
+-Ray
+-- Ray Cromwell        |    Engineering is the implementation of science;   --
+-- rjc@gnu.ai.mit.edu  |       politics is the implementation of faith.     --
+
+
+
+

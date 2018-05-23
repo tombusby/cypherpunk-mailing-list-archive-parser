@@ -1,0 +1,50 @@
+From: jim@bilbo.suite.com (Jim Miller)
+Date: Mon, 31 Jan 94 17:55:27 PST
+To: cypherpunks@toad.com
+Subject: Re: 2-way anonymous via SASE
+Message-ID: <9401312310.AA04927@bilbo.suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jon Boone writes
+
+>   Isn't it true that no matter how many remailers you use, the full spec
+>   of the return path has to be included?  And if the last remailer is 
+
+>   keeping a log of all messages passed, then the reciever/replier need
+>   only interrogate the last remailer to find out the sender's address?
+
+At no time do any of the remailers see a "full spec of the return path",  
+especially the last remailer in the chain of remailers used for the reply  
+message.
+
+You might view the SASE as a "full spec of the return path", however, only  
+the receiver of the original message sees the full SASE, and the SASE is  
+mostly a bunch of encrypted information nested in layers that only become  
+readable as the SASE gets "unwrapped" in its trip back to the original  
+sender.  Each remailer involved in the return trip sees only the layer of  
+the SASE that becomes readable when it decrypts the portion of the SASE it  
+received from the previous hop.  By the time reply gets to the last  
+remailer (inner most layer of the SASE), the reply contains no information  
+about any of the outer layers of the SASE.  All it contain is:
+
+(Bob, D, (stuffN))Rx,  (((reply)A)B)C
+
+(A, B, and C, indicates keys used to re-encrypt the reply.  They are not  
+addresses of previous hops.)
+
+If Bob was really unlucky, it is possible he could build an SASE using  
+only remailers that are under the control of Ted.  If this happend, then  
+Ted would be able to trace back to Bob.  However, "Bob" could be an  
+anonymous Penet-style account and Ted would still not have learned who  
+"Bob" really is.
+
+
+Jim_Miller@suite.com
+
+
+
+
+

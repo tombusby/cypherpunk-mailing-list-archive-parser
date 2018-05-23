@@ -1,0 +1,107 @@
+From: Jim Choate <ravage@EINSTEIN.ssz.com>
+Date: Tue, 22 Sep 1998 20:55:15 +0800
+To: cypherpunks@EINSTEIN.ssz.com (Cypherpunks Distributed Remailer)
+Subject: Re: Stego-empty hard drives... (fwd)
+Message-ID: <199809230223.VAA07985@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Forwarded message:
+
+> Date: Tue, 22 Sep 1998 20:29:28 -0400
+> From: Sunder <sunder@brainlink.com>
+> Subject: Re: Stego-empty hard drives... (fwd)
+
+> Why would they implement it when they can simply have their software scan the
+> BIOS code if that's what they feared?  It may cost them $10k each, but it'll
+> cost them millions to design and scan every notebook type on the planet, and
+
+No, again, they only have to scan the BIOS types and there are only a couple
+thousand (if that many) of those. It really isn't that complicated, there are
+only a few cpu's, there are only a few glue chip sets, only a few video driver
+chip sets, only a few LCD panels, etc. Admitted when multiplied together
+there are a lot of combinations. Now the board manufacturers, the BIOS
+manufacturers, and the various glue chipset makers get together and share
+data and the manufacturers look to their marketing to define their target
+point. Then they do a cost analysis on the chipset combo's and pretty soon 
+you find the market only handles a handful of fundamentaly different
+machines.
+
+If there was as much variety at the hardware level as you assume nobody
+could afford to introduce new computers every few months.
+
+> then they'll have to get their hands on newer models as soon as they hit the
+> market.  You're talking about a project that's bigger in magnitude than the
+> NSA.
+
+No it isn't. All it takes to get the BIOS before it hits the market is get a
+license agreement with the BIOS manufacturer. Hell, when I worked at
+Compu-Add we did this sort of stuff with Award and Phoenix all the time. We
+would get alpha copies to test in our new hardware on a regular basis.
+
+> Why should YOUR BIOS need to contain encryption code or device drivers for that
+> matter?  All it needs to do is to HIDE the existance of the extra partition. 
+
+And the code in the BIOS which means it needs to be hidden just like some 
+viruses.
+
+Realisticaly it isn't this complicated. All one needs to do is write a
+program that allows the operator to talk directly to the hard drive
+controller. At that point it's a trivial matter to go out and find those
+hidden partitions. You could use normal drive recovery software if you had a
+mind, and that only costs a few hundred to a few thousand dollars and can be
+bought in the back of Computer Shopper.
+
+> You patch your BIOS by replacing a few bytes of code with CALL's and NOP's. 
+> Maybe 4-8 bytes at most to modify.  The routine that checks for the track range
+> is only several bytes:
+> 
+> 
+> Somehwere in INT13 code:
+>             blah
+>             blah
+>             blah
+>             CALL biospatch
+>             NOP ; to fill in the overwritten code to the next opcode
+> 
+> 
+> biospatch  PUSH AX         ;save the register if you need it
+>            MOV AX,switch   ;get the value of the hack switch switch
+>            JE  popbye
+>            POP AX
+>            CMP AX,1234 ;or whatever register or whatever value
+>            JLE bye
+> deny       MOV AL,FAIL ;some reg and some value that says error, likely AL
+>            RET
+>            
+> popbye     POP AX
+> bye        ;insert the code that you overwrote with your CALL to this patch
+> re           
+>            RET
+> 
+> 
+> Homework: Someone please take this code, optimize it for size and build a TSR
+> patching INT 13 that JIM can install and run under DOS.
+
+Don't bother, I already know how to do that.
+
+This would stand out like a sore thumb.
+
+
+    ____________________________________________________________________
+
+                            The seeker is a finder.
+
+                                     Ancient Persian Proverb
+
+       The Armadillo Group       ,::////;::-.          James Choate
+       Austin, Tx               /:'///// ``::>/|/      ravage@ssz.com
+       www.ssz.com            .',  ||||    `/( e\      512-451-7087
+                           -====~~mm-'`-```-mm --'-
+    --------------------------------------------------------------------
+
+
+
+

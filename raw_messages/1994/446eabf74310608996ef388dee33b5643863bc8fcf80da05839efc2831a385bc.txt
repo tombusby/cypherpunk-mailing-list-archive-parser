@@ -1,0 +1,56 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 1 Oct 94 10:56:50 PDT
+To: cypherpunks@toad.com
+Subject: Re: Technical Remailer Analysis.
+In-Reply-To: <199410010435.AAA10221@ducie.cs.umass.edu>
+Message-ID: <199410011756.KAA17377@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Louis Cypher" writes:
+
+>The attack on the reordering remailer is simple. The attacker sends a 
+>stream of marked messages through the remailer.  After the waiting 
+>messages have been flushed out, any incoming real message will be 
+>flushed out of the remailer before more arrive, allowing it to be 
+>uniquely identified coming and going.  The defense against this is to 
+>only check the group and send excess messages after a time delay. This 
+>delay should be the typical time for n real messages to arrive. A 
+>mixing of approximately n messages is ensured by this process. If 
+>there is no attack, then the mixing is not quite as good as keeping a 
+>group of 2n messages.
+
+Good point.  There is a related attack which Chaum pointed out in his
+1981 CACM paper: the attacker intercepts and keeps a copy of an incoming
+message, then later re-sends it.  This one will go to the same place and
+by repeating this multiple times we can figure out where the original
+message went.
+
+>[Interesting math deleted]
+
+>The second issue for consideration is:
+>Given a web of perfect remailers, how easy is it to identify 
+>corespondents? Tim has been asking this one for a while.
+>[...]
+>The probability of a 
+>given pair of corespondents in a given tick is
+>	f^2
+>The probability of a pair of corespondents occurring m times in n 
+>ticks is
+>        m
+>p= 1 - Sum [(f^2)^i (1 - f^2)^(n-i) n! / (i! (n-i)!)]
+>       i=0
+
+If I follow this, the attack is something like, every time Alice sends
+a message Bob receives one.  Observing this happening over a period of
+time we conclude they are communicating.  Could this be defeated by
+sending dummy messages so that Alice sends exactly 10 messages every day?
+Then the fact that Bob receives messages on some day can't very well
+be associated with Alice.
+
+Hal
+
+
+
+

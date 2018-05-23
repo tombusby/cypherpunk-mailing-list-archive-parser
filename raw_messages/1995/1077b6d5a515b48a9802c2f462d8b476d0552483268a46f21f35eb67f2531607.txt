@@ -1,0 +1,76 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Tue, 15 Aug 95 15:41:16 PDT
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: Use of the IV in DES & stuffing the first block w/ random stuff
+In-Reply-To: <199508152039.NAA15590@ix7.ix.netcom.com>
+Message-ID: <SAA03523.199508152240@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <199508152039.NAA15590@ix7.ix.netcom.com>, Bill Stewart writes:
+>At 09:52 AM 8/15/95 -0400, you wrote:
+>>I have recently started writing a small pair of encription and
+>>decription programs.  I was planning of gennerating the key by
+>>taking the MD5 of the text password supplied by the user.
+>
+>A reasonable approach, but be careful in your implementation.
+>I haven't seen the book "A Million Wimpy Passwords and their MD5s" yet,
+>but the CD-ROM version may be out soon :-)  And you can probably
+>ftp it from dockmaster.
+
+I don't know what can be done here other then encuraging the user
+to use a long password.
+
+[...]
+>IVs are designed to let you put random stuff in them to discourage
+>known-plaintext attacks, replay attacks, etc.   However, suppose you
+>take a known 64 bits from MD5(password) and put them in the IV -
+>instead of the Bad Guy needing to brute-force 168-bit-deep Triple DES,
+>he gets to brute force MD5s of human-selected passwords instead,
+>which makes a lot of pre-computation possible.
+
+Don't I need to know what goes into the IV?  I can't just stick
+random stuff in it - I need to stick something that is a function
+of the passphrase into it (or make the user remember something
+my program spits out).
+
+>Also, for 3-Key Triple-DES, how do you get 168 bits of key from
+>128bits of MD5?  (for 2-Key 3-DES, you only need 112 bits...)
+>If you do something like M1=MD5(Key), M2=MD5(M1,Key), realize 
+>you've got at most 128 bits of real key instead of 168, 
+>though that probably needn't worry you too much...
+
+Oh, I was going to do a MD5 of half of the passphrase to get one
+key pair, then MD5 the other half to get another key, and that
+left about 64 bits to play with....
+
+[...]
+>>Or am I better off putting the extra 64 bits of "key" into the IV,
+>>and generating a strong random number to stuff in the first block
+>>- since the decoder can just ignore that block anyway.
+>Put the strong random number in the IV, if you've _got_ a source
+>of strong random numbers...
+
+Don't I need to reproduce the same IV during the decryption?
+
+>You might want to do something fancy like choose a random salt,
+>use the salt for the IV, and use MD5(salt,human-selected-key) for the key.
+>This makes pre-computation much less useful (unless you're careless
+>and use MD5(key,salt) instead if MD5(salt,key)...), and means that
+>you use a different session key for each batch of stuff you encrypt,
+>even though you're using the same key.  If you're paranoid about replay
+>attacks, you could let some of the bits of the salt be random and some 
+>be a counter, and never accept a key smaller than the one from the
+>previous successfully-decrypted message.
+
+Hmmmm, so I should put the salt in the clear at the start of the file?
+This looks like an intresting idea.
+
+(it occurs to me that I never mentioned what my "sample application"
+was - I was thinking of encryption backup tapes so they can safely
+be transported off site and stored.)
+
+
+
+

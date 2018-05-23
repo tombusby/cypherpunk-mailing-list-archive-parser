@@ -1,0 +1,65 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Thu, 14 Dec 1995 18:46:29 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: The Elevator Problem
+In-Reply-To: <199512130413.XAA04532@pipe4.nyc.pipeline.com>
+Message-ID: <199512140944.EAA18499@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+tallpaul writes:
+> Alice says to Bob, in front of all of the other people on the elevator: "I
+> have generated a large(ish) amount of large(ish) prime numbers and have
+> recorded all of them. I have multipled two of the numbers to get an even
+> larger non-prime number. I have done this a large(ish) number of times
+> until I have a 'large(ish)/2' set of non-prime numbers. The elements of
+> this set are [Alice reads off the set of non-prime numbers and Bob along
+> with the other people on the elevator record them.] Bob, go home and pick
+> one of the non-prime numbers in the set. Factor it. Use the largest prime
+> as a private key in your message to me. Since I know what the numbers all
+> are, I'll try all of them to see which one decrypts your message." 
+>  
+> Bob has to factor one large(ish) prime. 
+>  
+> Alice has to *try* an average of "large(ish)/2" private keys to decrypt
+> Bob's message. 
+>  
+> The other people on the elevator have to *factor* an average of
+> "large(ish)/2/2" number of large(ish) numbers to decrypt the message. 
+>  
+> The *relative* security then depends on the number of digits in the
+> large(ish) primes and the number of products in the set Alice reads to Bob.
+>
+[...example with a set of 2 * 10^6 primes...elided]
+
+I think there are two main (related) problems with this protocol:
+
+(1) It does not offer great security. The time required for a brute force 
+attack is only linear in the time required to execute the protocol. So Alice 
+will want to start out with an enormous number of primes (the linear factor). 
+Even so, the attacker's job is relatively easy.
+
+(2) It is rather impractical. The time required to execute the protocol is
+prohibitive (assuming Alice uses a huge number of primes). 
+
+Consider the numbers in your example. Alice generates N = 2*10^6 large primes 
+and transmits the 10^6 pair products -- that's on the order of .1 gigabits, or
+about 12 megabytes, to transmit (assuming products around 100 bits long, so
+Bob can factor one before the heat death of the universe). Bob factors one of 
+the products, which should take a while for all this to be at all worthwhile.
+Let's say it takes Bob approximately an hour to factor.
+
+This will take too long to do online. Alice and Bob won't generate new keys 
+for each session this way. But to limit the chance that Eve can start to 
+decrypt their communications in real time to 10%, if Eve has 100
+times the computing power of Bob, they'll need to negotiate a new key every
+6 weeks or so. This is not so hot.
+
+Comments ?
+
+-Futplex <futplex@pseudonym.com>
+
+
+
+

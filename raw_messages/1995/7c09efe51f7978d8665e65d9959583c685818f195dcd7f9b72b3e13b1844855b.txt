@@ -1,0 +1,54 @@
+From: Enzo Michelangeli <enzo@ima.com>
+Date: Mon, 23 Oct 95 01:58:45 PDT
+To: Tatu Ylonen <ylo@cs.hut.fi>
+Subject: Re: Encrypted TCP Tunneler
+In-Reply-To: <199510230100.DAA00697@soikko.cs.hut.fi>
+Message-ID: <Pine.LNX.3.91.951023161515.27409A-100000@ima.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 23 Oct 1995, Tatu Ylonen wrote:
+
+> > an ETT client and an ETT server, using Diffie-Hellman and DSA for
+> 
+> You are aware that RSADSI claims they have exclusive licensing rights
+> for DSA?
+
+Adding MD5 support wouldn't be a bad idea. Same for algorithms 
+alternative to Blowfish (3DES etc.) and DH (e.g., with Elliptic 
+functions-based key exchange), all automatically negotiated at connection 
+time.
+
+> Are you familiar with ssh [http://www.cs.hut.fi/ssh]?  It has many of
+> the features that you are planning.
+
+I think that Wei's idea is for something more general, similar to the
+CryptoTCP 0.9 posted a few months ago by ModX and available from 
+ftp://utopia.hacktic.nl/pub/replay/crypto/CRYPTOapps/ctcp.0.9.tar.gz
+(that one used unauthenticated DH key exchange and 3DES, IMHO with a 
+highly questionable PRNG for the generation of the session key).
+
+It would be enormously more useful and popular if someone could write a
+Winsock redirector loadable after WINSOCK.DLL but before any Winsock
+application, hooking the API functions used to open TCP connections. That
+would mean instant transport-level crypto capability for most Winsock
+apps, just like NEC's SocksCap provides instant SOCKS (alas, V.4)
+compliance. 
+
+Also Perry's invitation to join the IPSEC effort should be given proper
+attention (I would do it, if only my spare time were not in such short
+supply). I would try to implement it on SLiRP, a free SLIP/PPP simulator
+largely based on BSD TCP/IP code (but running in user mode). That would
+allow to experiment without having to hack the kernel, and would have a
+practical value for converting conventional login accounts into
+IPSEC-compliant SLIP/PPP accounts (instant crypto, again). Networking
+technologies gain much faster popularity once a critical mass of users
+actually use them. And to reach that mass, we must enlist all the 
+non-techies who just run unmodified Windows applications.
+
+Enzo
+
+
+
+

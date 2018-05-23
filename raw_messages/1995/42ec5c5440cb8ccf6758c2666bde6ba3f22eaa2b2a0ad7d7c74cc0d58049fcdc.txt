@@ -1,0 +1,47 @@
+From: Eric Murray <ericm@lne.com>
+Date: Sat, 30 Sep 95 16:22:50 PDT
+To: jbass@dmsd.com (John L. Bass)
+Subject: Re: NetScape's dependence upon RSA down for the count!
+In-Reply-To: <9509302239.AA11407@dmsd.com>
+Message-ID: <199509302336.QAA23456@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ 
+> >   jbass@dmsd.com writes:
+> >    > client ->       filter                          Client sends packet with K(c)
+> >                 filter ->       Server          filter forwards packet with K(f)                filter       <- Server          Server sends encrypts with K(f)
+> >    > client       <- filter                          filter re-encrypts with K(c)
+> >    >
+> >    > As the protocol progresses the filter also uses the master key,
+> >    > and follows the renegotiation as the master key expires.
+> > 
+> > Yeah, but in order for this to work, the fake server needs to know
+> > netscape.com's private (secret) key, no?
+> > 
+> > -jon
+> 
+> No ... the public part of any server private key is held by the filter
+> and not returned to the client. The client only encrypts with public
+> keys provided by the filter. The Server only encrypts with public keys
+> provided by the filter. The filter has cleartext of the entire session.
+
+What you have described is the classic 'man in the middle' attack.
+Netscape claims that SSL V.3 is immune to the MITM attack in
+appendix D.4 of the SSL V.3 spec. 
+
+You will need to get the 'filter' (MITM) key signed by Verisign.
+Or hack Verisign's server-key-signing key.
+
+
+BTW your 'offer' is silly- this is not a trivial amount of work, and you
+would not deserve any credit for coming up with so ordinary an
+attack.  Write the code yourself, or pay the market rate for it.
+
+-- 
+Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+

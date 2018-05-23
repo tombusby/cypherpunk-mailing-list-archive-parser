@@ -1,0 +1,62 @@
+From: Anonymous <nowhere@bsu-cs.bsu.edu>
+Date: Sat, 19 Mar 94 22:25:18 PST
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <9403200625.AA10085@bsu-cs.bsu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+From:  A Certain Monk at a certain village in Hanoi
+
+I thought I'd share this with you:
+
+-----------CUT HERE-------------
+program Hanoi(input,output);
+
+type Pegnumber = 1..3;
+var N: integer;
+
+Procedure WriteMoves (N: integer; Peg1, Peg2, Peg3: PegNumber);
+
+begin {Moves}
+  if N=1
+    then writeln('Move a ring from ', Peg1:1, ' to ', Peg2:1)
+    else
+    begin {else}
+      WriteMoves(N-1, Peg1, Peg3, Peg2);
+      writeln('Move a ring from ', Peg 1:1, ' to ', Peg2:1);
+      WriteMoves(N-1, Peg3, Peg2, Peg1)
+    end {else}
+ end; {Moves}
+
+begin {Program}
+    writeln{'Enter the number of rings and');
+    writeln('I''ll explain how to play Towers of Hanoi.');
+    readln(N);
+    writeln (' To move ', M,' rings');
+    writeln (' from peg 1 to peg 2 proceed as follows:');
+    WriteMoves(N, 1, 2, 3);
+    writeln (' That does it.')
+end. {Program}
+------------AND HERE-----------
+
+I've used it on 64 rings, and it works fine.
+
+Of course this runs slowly and does tend to use a lot of storage.  
+The stack really grows too large.  I'm hoping that it may be possible
+to use this type of call with some bandwidth growth to help defeat 
+analysis.  
+
+     "Would you tell me, please, which way I ought to go
+from here?"
+     "That depends a good deal on where you want to 
+get to." said the Cat.
+
+                           --Lewis Carroll
+
+
+
+
+

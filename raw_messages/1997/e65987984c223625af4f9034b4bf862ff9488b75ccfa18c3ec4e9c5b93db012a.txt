@@ -1,0 +1,209 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 19 Oct 1997 17:36:43 +0800
+To: fabrice@math.Princeton.EDU
+Subject: Re: Security flaws introduced by "other readers" in CMR
+In-Reply-To: <19971019014419.47580@math.princeton.edu>
+Message-ID: <199710190903.KAA00780@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Fabrice Planchon <fabrice@math.Princeton.EDU> writes:
+> Adam Back <aba@dcs.ex.ac.uk> writes:
+> > (Jerome Thorel interviewed the head of SCSSI (NSA equivalent),
+> 
+> [clarification of SCSSI functionality, and french government organisations 
+> who would tap communications.]
+> 
+> > Now I understand the French have switched position: you can use
+> > encryption without a license *provided* that it has master key access
+> > for the government.
+> 
+> I would say people who wrote the current law 2 years ago didn't have a
+> clue on the technical issues, anyway. That's why we are still waiting
+> for the "decrets d'application", which are the set of rules on how the
+> law will be enforced. Somehow I would bet they are waiting to see where
+> the wind blow at the international level.
+
+I talked to some people at CESG (Communications Electronics Security
+Group) (they are part of GCHQ, UK NSA equivalent) in a business
+setting.  It was they who said that France was changing position to
+going over to "key escrow" or TTPs (Trusted Third Parties).  From
+their point of view they seemed to view this as a good development,
+because they could use France as an example of a progressive, socially
+responsible government which the UK government should follow the
+example of.  They were very happy with this because they could use it
+in their arguments to attempt to persuade the UK government and
+people.
+
+Perhaps the CESG are exaggerating because they would like this to be
+the case because it suits their argument.
+
+But on the other hand, it seems likely that CESG have had talks with
+DGSE and SCSSI and it seems probable this really is what these French
+government organisations really are planning for.  Probably there are
+opposing elements in the French government also.  But CESG/GCHQ are
+vying for those elements which are in favour of "TTPs" to win.
+
+You can see how each new government that takes the TTP or key escrow
+stance allows the secret services and governments in other countries
+to clamour for their countries to follow suit.
+
+People can also see I hope how PGP Inc in influencing an
+international standard (IETF OpenPGP) to include explicit support for
+third party access to communications traffic is dangerous.  However
+this is not the biggest danger, the biggest danger is that PGP Inc are
+implementing software solutions (pgp5.5) which as far as I can see, in
+all honesty, could literally be useful to the French government and
+others like it.  If the French government adopt it, or a system
+implemented by a European company with the same functionality (that
+pgp5.5 has this functionality means others must follow for financial
+reasons in being compatible), then pro-GAK government agencies will
+point to this as a success story.  Already Bruce Schneier quoted from
+the US congressional record where some GAKkers were praising pgp5.5
+functionality in demonstrating their case that GAKware is possible.
+
+> > With the pgp standard as is french government could insist that people
+> > use pgp5.x.  pgp5.x provides a reasonablly useful framework for the
+> > french government to adapt to be used as a master access system.
+> 
+> http://www.lemonde.fr/multimedia/sem4297/textes/act42972.html
+> 
+> It's in french, so I won't quote. The article has a very neutral
+> position, but they point out exactly the same thing as you.
+
+Do they actually mention PGP software, or OpenPGP standard?  Or just
+the general principle?
+
+It is reasurring to hear that my analysis is supported by others.  I
+am trying to think through what a GAKker would want and predict what
+they will be interested in seeing in standards and in off the shelf
+products.  From that I am interested to use this estimate as a basis
+to design systems which resist the GAKkers desires, by denying any
+functionality which supports their requirements where this can be done
+within the normal user requirement constraint.
+
+It is difficult with arguments against a company such as PGP Inc which
+has a very high reputation capital due to Phil Zimmermann and large
+privacy following, because some people will oppose what you are saying
+just on principle without listening to the logic, they will say "you
+must be wrong, because PGP would never do that."
+
+But, the simple fact is that I think PGP Inc have not evaluated these
+indirect implications for GAK politics.  This means I think that they
+have pure intentions.  Unfortunately these pure intentions do not help
+us if the effect is as I fear: that the result helps the GAKkers to
+some significant amount.
+
+> > Because this will then be explicitly allowed, more people are likely
+> > to use it.  (Current people using pgp2.x illegally are one suspects
+> 
+> I know at least one academic site where system administrator were
+> prevented from switching to ssh because of the legal issue. Seems the
+> campus administration folks wanted to protect their asses...
+
+You confirm my suspicions.  I have several people I know in France who
+use encryption illegally.  Not least of these is Jerome Thorel himself
+:-) (He who interviewed the SCSSI and had it spelt out to him that it
+was illegal, but they wouldn't bother you if you didn't ask
+permission).  However those that I know are effectively anti-GAK
+activists, or cypherpunk type individuals.
+
+> I don't have the technical expertise to discuss your proposal, so I
+> won't (seems less snoop friendly to me than the PGP5.5 solution,
+> still). 
+
+It is not really that technical an idea.  The idea is simply that
+communications keys are more valuable to government than storage keys.
+Keyword scanning is what governments want; they probably don't care
+too much about storage keys, they are much more expensive to collect
+ciphertext for (dawn raids for disks), and are much more difficult to
+enforce (who knows what keys are really being used to encrypt data on
+your disk, until the point of the dawn raid).
+
+> But what I certainly fail to understand is why PGP inc (and people
+> who support them) is focusing on a solution which allows to
+> intercept and read e-mail in transit. That inherently evil, no
+> matter you put it.
+
+The reason is that they consider it purely a recovery mechanism for
+stored emails.  That it has this side effect of making a product which
+could be used for other purposes is currently considered an
+insignificant risk by them, I think.  I think their analysis in this
+regard is flawed.
+
+> And the "hit by a truck" hypothesis doesn't stand a minute
+> in real life (Yah, shit happens, so what ?). The (legitimate) needs of a
+> company can be achieved via an agreement with its employees, on how data
+> are stored, backed, duplicated, whatever, and it has merely nothing to
+> do with cryptography. 
+
+There you have the Tim May proposal.  Do not recover, just store in
+clear.  Most data on disks already is, so why bother.  If you want to
+encrypt work out those problems when you come to them, as a separable
+issue.  This is a very compelling argument to me.
+
+> Or am I missing something obvious ?
+
+Not that I can see.  I think it really is that obvious.
+
+> So why isn't everybody focusing on being sure the transport layer is
+> secure, and leave to social interaction at both end of the communication
+> process the problem of recovery of whatever was transmitted ? (which, I
+> feel dumb for saying it, was in clear at some point before being sent,
+> and will be when it will be read...)
+
+I agree, my confusion also: why do people not understand this.  There
+are some very bright people at PGP Inc, why do they not see it in
+these terms.
+
+> > Big brother is hindered very significantly if you do recovery locally,
+> > rather than on the communications link as PGP Inc CMR does.  This is
+> > because big brother does not have access to the ciphertext on disks.
+> > He must come and take them.  Whereas for communications he can
+> 
+> And he needs proper authorization before coming. And yes, it takes time
+> but that's the price to pay in a system with separation of powers.
+
+He may not need authorization.  I'm not sure MI5 (UK military
+intelligence branch) asked authorization before sending an SAS swat
+team into BBC head-quarters to confiscate tapes of a secret service
+documentary.  Still that one failed because the BBC had hidden backups
+:-) (Smart cookies:-) They aired the film later.  No one knows I
+suppose whether it was edited before airing.
+
+Also this is the status quo.  Already the police, or terrorist
+prevention investigators can inflitrate, perform dawn raids, etc. and
+this is as it should be.
+
+> > For data storage recovery, your data is again in two halves: you have
+> > one, the _key_, your employee/you have the other, the _ciphertext_ on
+> > disk.  Your employee can recover that info anyway.  The NSA can't
+> > easily.  It is much more logistically expensive to collect or randomly
+> > sample disk contents.
+> 
+> Yes, yes, yes. And still I am sure that we will hear objections to
+> that... sigh....
+
+I can't believe anyone who understands cryptography even remotely
+could possibly argue against the fact that communications keys are
+more valuable to an attacker.  This seems very obvious.
+
+Readers may note Bruce Schneier's remark earlier in this discussion
+that he too couldn't believe someone would not separate storage keys
+from communications keys.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

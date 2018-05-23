@@ -1,0 +1,111 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Wed, 5 Nov 1997 06:53:21 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Privacy Software
+In-Reply-To: <199711031141.DAA01497@sirius.infonex.com>
+Message-ID: <199711042232.WAA04306@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Monty writes:
+> >What language did you have in mind?  modula-3?  iso-pascal/borland
+> >pascal?
+> 
+> Hadn't thought of Modula-3, but that is an excellent idea.  Java would
+> be a candidate, although performance is an issue.  
+
+Java isn't so bad.  Just in time compilers are being shipped with some
+browsers (netscape on some platforms).  Sun now has native bigint
+library (good for you know what, and exportable because they haven't
+included the few lines required to implement public key encryption
+with it).
+
+Modula-3 is also fairly clean... garbage collection, bounds checked
+arrays, etc.  A `safe' language.  There is indeed a m3 -> c
+translator.  I think GNU were working on a m3 module for their
+retargetable gcc compiler suite (to go with ada, C, fortran, pascal).
+I did hear talk of a java gcc front end also.
+
+> While it may seem crazy to toss compatibility, it has some advantages.
+> For instance, the only people who will use it are the hardcore types.
+> I like the idea of an exclusive crypto system that only cool people
+> who are fairly with it use.
+
+I think there would be advantages to always tunneling the encrypted
+messages inside PGP, that way no snoops know you're using it, until
+it's too late.
+
+> How about finding a way to eliminate indicators?  It's nice not to
+> leak any information at all.  It also makes super-encryption stronger.
+> If each encrypted layer looks like noise, the total key size is the
+> sum of the bits of each layer.
+
+That's a reasonable idea if you're going to use things like IDEA( k1,
+3DES( k2, data ) ).
+
+> If the protocol doesn't accept multiple keys for a message it is
+> slightly CAK/GAK resistent.  And, it's a nice statement of intent.
+> It's also nice to have tools which help you to behave securely without
+> carefully thinking about it when you are using them.
+
+Forward secrecy is what you want for GAK resistance -- can't get much
+more GAK hostile than burning your keys seconds after message receipt.
+
+> The randseed.bin file has always bothered me.  What we really want is
+> some good sources of entropy in which we have tremendous confidence.
+
+What's wrong with the randseed.bin and the public and private key
+rings is that they should all be encrypted with a key derived from
+your passphrase.
+
+> >If you use PGP's random pool, one suspects that if IDEA becomes
+> >attackable at some point in the future the random pool will start to
+> >look more like a predictable PRNG to the attacker.
+> >
+> >I wonder how good linux's /dev/urandom would be if MD5 becomes even
+> >more suspect.
+> 
+> Well, neither of these would be good for a one time pad, of course.
+
+Linux's /dev/random might not be bad.  There is some real entropy in
+key strokes and mouse movements, and they are quite conservative about
+entropy estimation.  You can easily make it more conservative -- XOR
+together a load of it to derive a smaller key.
+
+> It would be neat to have, say, three sources of hardware randomness
+> and then XOR the result with the above pseudo random output.
+
+That'd be fine.  Personally not being a hardware type, I am suspicious
+of hardware RNGs.. I can't tell when they are going wrong.. failure
+modes can be dangerous (whoops lead fell of geiger tube), etc.
+Software and computers are easier to understand.  Provided you XOR the
+lot together you should be fine though.
+
+> You know, it would be cool to define a software architecture for
+> remailer software.  Different remailers have different properties and
+> different strategies.  They may continue to differentiate.
+
+One thing that is sorely needed in my opinion is a simple way to
+integrate with existing mailers.  Ie to have some code which acts as
+an interface between various extensible email based functions
+(remailers, signatures, DC nets, keyservers) and MUAs.  Then someone
+gets to fight with the plugin API once, and after that we can
+automatically add features which work with lots of MUAs.
+
+The future is in extensibility.  Java is pretty good for this.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,67 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Sun, 29 Sep 1996 21:57:39 +0800
+To: cypherpunks@toad.com
+Subject: Re: Transforming variable-length to fixed keys
+Message-ID: <84399947820692@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>If the speed of your key generation is an issue, you could do something like:
+>
+>   key[] = { 0 };
+>   const int nhashes = 4;
+>   typedef void (*hashfnptr)(byte*, byte*, int);
+>        /* array of hash functions */
+>   hashfnptr hash[ nhashes ] = { md5, sha1, haval, ... };
+>
+>   state = hash[ 0 ]( algorithm, mode, parameters, userKey );
+>
+>   for count = 1 to iterations
+>      for length = 1 to keyLength (in hash_output_size blocks)
+>                /* selecting a hash function based on the state */
+>         state = hash[ state % nhashes ]( state );
+>         key[ length ] = hash[ state % nhashes]( state, userKey );
+>
+>This provides more expense in hardware for the same expense in software, so
+>for the same CPU time you get more hardware expense, and could reduce the
+>iterations for the same security.
+>
+>`nhashes' determined by the number of digest algorithms you consider
+>trustworthy.
+>
+>(They need hardware for `nhashes' different digest algorithms).
+>
+>You need to do something about resolving the differing output and state sizes.
+ 
+Yeah, that's a particularly evil way of making things harder for people with
+keysearch engines.  That's why in cryptlib when I'm doing something like key
+exchange I encrypt all the parameters (algorithm, mode, etc etc) along with the
+session key, so an attacker can't even tell what algorithm you're using[1]. I'd
+thought of adding some sort of "choose a random algorithm and mode" capability
+to cryptlib, but the user interface was too difficult to handle (finding a way
+to let the user specify "We want a choice of DES-CFB, IDEA-OFB, DES-EDE-CBC, or
+Blowfish-PCBC" is a bit of a pain).  In the end I took the easy way out by
+adding an extended initialisation mode which allows the user to specify the
+algorithm if they want, but left the possibility of one-algorithm-per-round
+hashing alone.  A problem with using one of a fixed selection of algorithms is
+that as you add new modes the selection changes, so you need to add more state
+information to the key which specifies the choice of algorithms, which starts
+to get messy.
+ 
+I'd still love to add this in some form to keep the NSA amused... perhaps a
+bit vector of allowable algorithms and modes passed to the setup function.
+
+Peter.
+
+[1] There's a story from IBM when they were testing a new IBM-internal 
+    encryption system for long-haul telecoms applications.  They were 
+    playing around with bouncing encrypted transmissions off an IBM-owned 
+    satellite when they were contacted by the NSA who said "You're not using 
+    DES.  Stop it".
+
+
+
+
+
+

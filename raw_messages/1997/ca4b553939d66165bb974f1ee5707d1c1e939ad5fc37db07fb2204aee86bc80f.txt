@@ -1,0 +1,151 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 1 Aug 1997 18:47:16 +0800
+To: cypherpunks@cyberpass.net
+Subject: using perl-rsa
+Message-ID: <199708011035.LAA01061@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+[managed to type kent instead of keng this time, touch typist and not
+watching the screen either].
+
+Kent Crispin <kent@songbird.com> writes:
+> [...]
+> 
+> >print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+> >)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+> 
+> BTW, how do you use this code?  I'm not a big "dc" user, I must admit.
+
+You first of all extract your a PGP key with pgpacket.  (You'll need
+to change the password to be no password (press enter when prompted
+for password), so that PGP doesn't encrypt the private key.
+
+Next, you can do:
+
+	% perl rsa.pl [e] [n] < plaintext > ciphertext
+	% perl rsa.pl [d] [n] < plaintext > ciphertext
+
+to encrypt and decrypt.
+
+Here's a small example (Fred is a notional eternity user who's key,
+both public and private is included in the eternity distribution):
+
+Fred's public key:
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.6.3i
+
+mQBNAzPfUPsAAAECAMn6jtL3ZNjmBrkDLIktHNmBGc+a59BSvFPN8howj5zAj1U8
+5QOfVtV4kOliK2AkCcL2yyz3Wz+AHiYdVyuQJF0ABRG0FEZyZWQgPGZyZWRAZXRl
+cm5pdHk+iQBVAwUQM99Q/B4mHVcrkCRdAQECQQH/YZqss3VQZwZi5KfylAzFOnz8
+/pXOSh8Rf9pTsF2TbsAKIK4xL9PzYoicy/KAZdIN+AJO8dX/xY0a1v5A8xobeg==
+=iWoN
+-----END PGP PUBLIC KEY BLOCK-----
+
+Fred's secret key (no password):
+
+-----BEGIN PGP SECRET KEY BLOCK-----
+Version: 2.6.3i
+
+lQD4AzPfUPsAAAECAMn6jtL3ZNjmBrkDLIktHNmBGc+a59BSvFPN8howj5zAj1U8
+5QOfVtV4kOliK2AkCcL2yyz3Wz+AHiYdVyuQJF0ABREAAfsEPkWwiGybJRn00/dB
+RLZjOZHAmMRVDH6UC9si+GpHDsOs5/eLbK6GUqmbWXG4I4LadxRQz/nplQ+lCVYP
+ecrbAQDixLjtXlj9ks1e9ZcroU71Pvk84oQjpUhiU1rAIkKh9wEA5APIvVJETEjm
+DxEpdE6hJkty+nb6v8VNOYlslo8Ol0sA/iwRycjjcNs4A2c9Owt+xLCiMp2JIb0z
+yf7d4xEcLI1vUXG0FEZyZWQgPGZyZWRAZXRlcm5pdHk+
+=CHwS
+-----END PGP SECRET KEY BLOCK-----
+
+(to extract public key do:
+
+% pgp -kxa fred fredpub ~/.pgp/pubring.pgp 
+
+and to get private key do:
+
+% pgp -kxa fred fredpri ~/.pgp/secring.pgp 
+
+)
+
+Next get pgpacket.pl, see ftp://ftp.ox.ac.uk/pub/crypto/pgp/utils/ or
+something like that.
+
+Then run pgpacket on the fredpri.asc (it contains all the info that
+you want, without looking at fredpub.asc, ie the values for e, d and
+n):
+
+% pgpacket fredpri.asc
+
+The values for e, d, and n are:
+
+e = 11
+d = 043E45B0886C9B2519F4D3F74144B6633991C098C4550C7E940BDB22F86A470E
+    C3ACE7F78B6CAE8652A99B5971B82382DA771450CFF9E9950FA509560F79CADB
+n = C9FA8ED2F764D8E606B9032C892D1CD98119CF9AE7D052BC53CDF21A308F9CC0
+    8F553CE5039F56D57890E9622B602409C2F6CB2CF75B3F801E261D572B90245D
+
+Now you can encrypt for fred like so:
+
+% echo hello world | perl rsa.pl 11 C9FA8ED2F764D8E606B9032C892D1CD98119CF9AE7D052BC53CDF21A308F9CC08F553CE5039F56D57890E9622B602409C2F6CB2CF75B3F801E261D572B90245D > hello.rsa
+%
+
+and to decrypt:
+
+% perl rsa.pl 043E45B0886C9B2519F4D3F74144B6633991C098C4550C7E940BDB22F86A470EC3ACE7F78B6CAE8652A99B5971B82382DA771450CFF9E9950FA509560F79CADB C9FA8ED2F764D8E606B9032C892D1CD98119CF9AE7D052BC53CDF21A308F9CC08F553CE5039F56D57890E9622B602409C2F6CB2CF75B3F801E261D572B90245D < hello.rsa
+hello world
+%
+
+Now dc can do modular exponentiation like so (reverse polish notation):
+
+dc> m e ^ n %
+
+but that's going to take a long time because it will evaluate m ^ e
+and then do mod n.
+
+So the clever thing that the program does is to implement Knuth's
+modexp algorithm which reduces the work factor immensly. 
+
+Actually GNU dc 1.1 (distributed with GNU bc-1.04) now includes "|" as
+a modular exponentiation operator, so you can do: "m e n |" and it'll
+do it directly.  This feature was a special, just for perl rsa because
+Ken Pizzini, author of GNU dc, happens to be one of the major
+contributors of hacks to shorten the perl program, and so have a
+vested interest.
+
+With the dc 1.1 | operator, Ken got the script down to:
+
+$/=$z;exec"dc -e'16i0[lN*lMlKlN|+lMlN/dsM0<J]dsJ\U@{[
+pop,pop,unpack'H*',<>]}\EsMsKsNx[II*~aSad0<ZLaP]dsZx'"
+
+a considerable improvement over:
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+> I dug out a midi interpreter I wrote a number of years ago, 
+> and it is indeed trivial to modify it to read any text as input.  
+> Unfortunately, I wrote that long before the midi file spec was 
+> finalized, and the hardware I wrote it for is also long gone.  But 
+> it's probably not much work to get file output working again...and 
+> the thought of a general text-to-midi translator is rather 
+> entertaining -- I could play this entire mail message through it, for 
+> example... It would definitely make better music if some rhythmic 
+> variation was part of the coding, but that would make it a little 
+> harder to make an automatic decoder...
+
+I'd find it most cool to hear an audio file of the above.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

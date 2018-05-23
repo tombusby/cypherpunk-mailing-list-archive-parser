@@ -1,0 +1,28 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Mon, 25 Apr 94 13:06:59 PDT
+To: cypherpunks@toad.com
+Subject: Re: taming the wild pgp
+In-Reply-To: <Pine.3.89.9404251059.A16173-0100000@stein1.u.washington.edu>
+Message-ID: <chj29ry00Vp=9J5UZs@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matt Thomlinson <phantom@u.washington.edu> wrote:
+
+> I can only think of one way around it -- recompiling with the
+> key-adding procedure commented out (at least for the version
+> the remailer uses). If you need to add keys, use the version
+> you've already compiled.
+
+Couldn't you just modify your remailer to search for the string "BEGIN
+PGP PUBLIC KEY BLOCK" and dump the message if it finds it?  Or will PGP
+recognize if even if it doesn't have that header...?
+Anyway, PGP puts ID bytes at the beginning of its files, and in
+ascii-armor, public keys always begin with mQ and crypted messages begin
+with hE or hI.  You could probably just dump the message if the first
+line of the ASCII-armoring began with mQ...
+
+
+
+

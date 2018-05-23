@@ -1,0 +1,43 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Fri, 13 Sep 1996 06:24:31 +0800
+To: John Young <jya@pipeline.com>
+Subject: Re: Panix attack
+In-Reply-To: <199609121743.RAA13735@pipe3.t1.usa.pipeline.com>
+Message-ID: <Pine.SUN.3.91.960912152105.966A-100000@tipper.oit.unc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 12 Sep 1996, John Young wrote:
+
+> WSJ and WaPo have reports on Panix-jamming by info-request bombardment, and
+> Bell Labs security expert Bill Cheswick's attempt to solve it. 
+
+This particular attack has been known for some time; kind of suprising it 
+hasn't been used before. It is defensible, but it can take a lot of 
+memory to give full protection.
+
+The best way IPV4 way I know of to stop the listen queue being filled is to
+use a special structure to hold half-open incoming connections, and not
+allocate the full TCB until the ack of the syn-ack comes in; that way, the
+listen queue can be made large enough to keep enouygh connections to cover
+the number of SYNS recievable before the half-open connection times out 
+
+This ensures that there's at least a traceable return address for the 
+connection. Sort of like photuris cookies but without the forced RTT delay
+
+(The timeout was added to most stacks in 94 after backbone fuckups caused
+queues to wedge on most of the big web servers with all sorts of asymetric
+routing problems. It's not strictly legal TCP)
+
+
+
+----
+Cause maybe  (maybe)		      | In my mind I'm going to Carolina
+you're gonna be the one that saves me | - back in Chapel Hill May 16th.
+And after all			      | Email address remains unchanged
+You're my firewall -    	      | ........First in Usenet.........
+
+
+
+

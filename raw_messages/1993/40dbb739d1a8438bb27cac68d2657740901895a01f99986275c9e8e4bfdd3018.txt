@@ -1,0 +1,48 @@
+From: jim@tadpole.com (Jim Thompson)
+Date: Sun, 7 Feb 93 02:58:06 PST
+To: thug@phantom.com
+Subject: Re:  Compressed/Encrypted Voice using Modems
+Message-ID: <9302071056.AA00916@ono-sendai>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> And why are you limiting this to V.32 (9600bps)?  V.32bis (14.4k bps) modem
+> chips cost maybe 20% more than v.32 chips in quantity.
+> 
+> Even higher speeds are available if you're willing to go that far.  Zyxel
+> v.32bis modems have proprietary 16.8 kbps and 19.2 kbps full duplex raw
+> modulation rates, but they use DSPs instead of modem chips like the
+> ones from Rockwell, AT&T, and Intel.  I believe there are some v.FAST
+> (not CCITT compliant) modems like the one's from Motorola (Codex) that
+> can do 21.6 kbps and 24.0 kbps.  I believe the final speed of v.FAST once
+> standardized by the CCITT will be 28.8 kbps.
+
+I don't see how a 28.8kbps (raw) data rate is possible, as the Shannon
+limit for a POTS line is 22kbps.  Certainly parts of the phone system
+no longer impose the narrow bandwidth that are part of the 'spec', but
+one can not always depend on getting a line that exceedes the published
+parameters of the phone system.
+
+The Rockwell (RC96AC/RC96ACL/RC144AC/RC144ACL) modem chip (set) has an
+on-board codec that does ADPCM in hardware.  It makes for a very nice
+programable answering machine.  Interestingly, the designers guide has
+someting to say about bit rates.
+
+At a sampling rate of 7.2 KHz, (the only sample rate this chipset
+supports) 8 bit samples are presented at a bit rate of 57600 bps.  Add
+in a start/stop bit, and you now need a DTE rate of 72,000 bps.  Most
+UARTS don't support this rate, and thus you will need to find one that
+will run at 115.2 Kbps.
+
+Drop to 4 bit samples, and you get a bit rate of 28,800 bps, for a
+required async DTE speed of 36,000.  (or 38400 bps on most uarts.)
+
+I'm also fairly sure that recent Zyxel modems (e.g. the U-1496) use
+this Rockwell chip(set), and not a dedicated DSP.
+
+Jim
+
+
+
+

@@ -1,0 +1,89 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sun, 6 Mar 94 18:37:08 PST
+To: cypherpunks@toad.com
+Subject: some technical steganography
+In-Reply-To: <9403070012.AA20650@bilbo.suite.com>
+Message-ID: <9403070228.AA09368@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>How many different "notions of randomness"  
+>are there?
+
+Notions of randomness fall into two basic categories, probabilistic
+and statistical.  The dividing line between the two of them is whether
+you are doing inference forward or reverse.  In both cases the
+randomness means evenly distributed.  
+
+Probabilistic randomness is inference forward.  One assumes a
+distribution of states before, the priors, and calculates the expected
+distribution of states after, the posteriors.  Quantum mechanical
+randomness is probabilistic randomness, since quantum randomness is
+held to be inherent in nature, and from that predictions can be made
+about the future.  The analysis of gambling strategies is
+probabilistic, since one assumes something random, like dice rolls or
+deck shuffles, and infers what the likely outcomes might be.  
+
+Statistical randomness is inference backward.  One takes an observed
+set of posteriors and tries to deduce whatever is available about the
+priors.  Cryptographic randomness is of this nature, since one is
+presented with ciphertext and asked to figure out the plaintext.  Two
+major questions about statistical randomness and decidability, "Can I
+see a pattern in it?", and compressibility, "Can I make a smaller
+representation of it?"  Something is statistically random if one
+cannot answer questions about it more accurately than by guessing.
+
+There are various sorts of statistical randomness, depending on what
+analytical tools are available.  If you allow any Turing machine, you
+get algorithmic complexity concepts like Kolmogorov-Chaitin
+randomness.  There is randomness which is incompressibility to a
+particular coder.  There is randomness with respect to statistical
+measures; one can take the difference of an observed posterior
+distribution and a probabilistically calculated posterior distribution
+and apply standard statistical tests.  How far is this distribution
+from expected, and is the likelihood for this difference?
+
+>I prefer random bit  
+>sequences.  Or perhaps I should say - bit sequences with no apparent  
+>structure.
+
+Your clarification makes a difference.  Randomness as lack of
+structure can be quantified by looking for conditional probabilities.
+E.g. P( x_0 = 1 | x_3 = 0 ) is the conditional probability that x_0 is
+1 in the case that x_3 = 0.  If this probability is not 1/2 exactly,
+then you have a correlation.  Conditional probabilities in general get
+hairy fast, even when the predicates, i.e. the events, are limited to
+particular bits equalling zero or one, and the standard propositional
+connectives "and", "or", & "not".  There are questions of independence
+whose resolution requires a detour into predicate logic.  
+E.g. P( x = 0 | x = 1 ) = 0, clearly, because the two events are
+logically dependent.
+
+One of the ways of measuring these probabilities in the aggregate is
+with entropy measures.  The entropy of a probability distribution is
+the expected value of the negative logarithm.  If you can determine an
+entropy which is not maximal, then you've found a correlation, even if
+exploiting the correlation might not be obvious.  This maximality
+must be exact, and not approximate.
+
+For example, in the example I gave with 16 zero bits prepended to a
+random message, the bit entropy deviates ever so slightly from
+maximal, but that indicates a correlation.  The problem is that that
+entropy is a probabilistic entropy, not a statistical one.  Had we
+measured the same entropy value, it would not have allowed us to
+conclude anything, if all we had was the entropy.  We could have also
+just looked at the first few bits.
+
+Anyway, since entropies are expected values on probabilities, one can
+also have conditional entropies as well.  The criteria for
+non-recognizability is that all conditional entropies are maximal.
+This, again, is a probabilistic notion, since the calculation of all
+conditional entropies for a particular message is an exponential time
+algorithm.
+
+Eric
+
+
+
+

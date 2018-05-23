@@ -1,0 +1,44 @@
+From: Phil Karlton <karlton@netscape.com>
+Date: Wed, 27 Sep 95 21:02:43 PDT
+To: cypherpunks@toad.com
+Subject: NIS library code exposure
+Message-ID: <14539.812260953@ghoti.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Once again I speak for myself and not Netscape.
+
+While investigating one of the crashes we ended up decompling some of
+the code in the C library. It turns out that in some UNIX systems, the
+code in gethostbyname_yp will copy the hostname argument onto a stack
+local buffer. That buffer appears to be of size MAXHOSTNAMELEN. [This
+is very efficient code at destroying the stack: it does not use strcpy
+or sprintf; there is an inline loop copying characters until it finds a
+NUL.]
+
+An unstated (in any documentaton I could find) limitation on calls to
+gethostbyname is that the "name" parameter must be a limited size
+string for it to work at all. I suspect this bug has been in the NIS
+(nee YP) code for some time.
+
+Do you have any daemons that run as root and do networking? Are you
+sure that all of them check the length of the host name before passing
+it to gethostbyname?
+
+[Avoid the fencepost error: MAXHOSTNAMELEN is really the size of the
+buffer and not the maximal string length. You need room for the
+trailing NUL.]
+
+We have not looked into the networking libraries that are typically
+found on a PC or Macintosh. The exposure may also be present there.
+
+PK
+--
+Philip L. Karlton			karlton@netscape.com
+Principal Curmudgeon			http://www.netscape.com/people/karlton
+Netscape Communications Corporation
+
+
+
+

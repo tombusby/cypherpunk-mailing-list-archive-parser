@@ -1,0 +1,60 @@
+From: Jamie Zawinski <jwz@netscape.com>
+Date: Fri, 29 Sep 95 16:26:29 PDT
+To: cypherpunks@toad.com
+Subject: Re: Netscape hole without .Xauthority (fwd)
+In-Reply-To: <Pine.3.89.9509291503.A1295-0100000@jamarillo>
+Message-ID: <306C804A.3CE1CFB@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jyri Kaljundi wrote:
+> 
+> There's a huge hole in the Netscape remote control mechanism for the
+> X-Windows based clients.
+> Potential impact : anybody can become any user that uses Netscape on any
+> system without sufficient X security.
+
+Did you bother to read the spec?  This doesn't matter; if I can
+connect to your X server at all, you have already lost.  The spec
+(at http://home.netscape.com/newsref/std/x-remote.html) contains:
+
+
+                              SECURITY CONCERNS
+ 
+Any client which can connect to your X server can control a Netscape
+Navigator process running there; authenticating the originator of the
+request is beyond the scope of this protocol. It is assumed that the
+underlying X security mechanisms will prevent unauthorized people from
+accessing your server.
+ 
+It is important (in general) that everyone be aware of the security
+risks associated with allowing unlimited access to your X server.
+Regardless of whether you use Netscape Navigator, allowing arbitrary
+users and hosts access to your X server is a gaping security hole. If
+hostile forces an connect to your server, it is trivially easy for them
+to execute arbitrary shell commands as you, read and write any of your
+files, and watch every character you type.
+ 
+Again, this has nothing to do with Netscape Navigator. It is a property
+of the X Window System. If you have turned off security on your X server
+with the xhost + command, or if you have announced that a host is
+``trusted'' by using xhost or by listing that host in your /etc/X0.hosts
+file, then you should be aware of the consequences. If this causes
+access to be possible from a host which is not, in fact, trusted, then
+you have left your doors wide open.
+ 
+For more information about the security mechanisms one can use with an X
+server, consult the manual pages for X(1), Xsecurity(1), xauth(1), and
+xhost(1), or talk to your system administrator.
+
+-- 
+Jamie Zawinski    jwz@netscape.com   http://www.netscape.com/people/jwz/
+``A signature isn't a return address, it is the ASCII equivalent of a
+  black velvet clown painting; it's a rectangle of carets surrounding
+  a quote from a literary giant of weeniedom like Heinlein or Dr. Who.''
+                                                         -- Chris Maeda
+
+
+
+

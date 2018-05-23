@@ -1,0 +1,53 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Tue, 31 Oct 1995 11:36:57 +0800
+To: Mark Murray <mark@grondar.za>
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <199510302148.XAA00832@grumble.grondar.za>
+Message-ID: <VAA13893.199510310259@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <199510302148.XAA00832@grumble.grondar.za>, Mark Murray writes:
+[...]
+>> I don't agree that restricting read access is useful.  First of all, if
+>> the pool of entropy is depleted, someone who tries to obtain entropy by
+>> reading /dev/random will know that they didn't get enough entropy.  So
+>> assuming a program that actually checks return values from system calls,
+>> this is at worse a denial of service attack, and there are much easier
+>> ways of performing those srots of attacks: "while (1) fork()", for
+>> example.
+>
+>Hmm. Lemme think about this...
+
+When /dev/random doesn't have "enough" enthropy left does reading
+from it return an error, or block?  I would strongly suggest
+blocking, as the non-blocking behavur is not really all that useful.
+
+Either can simulate the other, but I think it comes down to:
+
+non-blocking worst-case:
+ a program calls /dev/random, doesn't get randomness, ignores
+ error code, poorly protects some valuable thing, as a result
+ the valuable thing gets stolen.
+
+blocking worst-case:
+ a program calls /dev/random, waits a long time to get random numbers,
+ user curses the slow machine/program, valuable thing gets sent late,
+ but is not stolen.
+
+non-blocking best-case failure:
+ a program calls /dev/random, doesn't get randomness, informs smart
+ user, who finds the bad guy sucking all bits from /dev/random,
+ has them ejected from system.
+
+blocking best-case failure:
+ same as worst-case (i.e. the worst-case is lots better, the best-case
+ is worse).  This can be transformed to the non-blocking best-case 
+ failure by clever programming (threads, or fork, or sigalarm), the
+ people who do this are far more likely to actually try to issue a
+ good error message then the people who get non-blocking by default.
+
+
+
+

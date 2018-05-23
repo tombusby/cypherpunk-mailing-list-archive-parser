@@ -1,0 +1,37 @@
+From: mixmaster@remail.obscura.com (Mixmaster)
+Date: Fri, 30 Aug 1996 21:41:09 +0800
+To: cypherpunks@toad.com
+Subject: Ian's Linux Filesystem Patches
+Message-ID: <199608300740.AAA05386@sirius.infonex.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I installed Ian's filesystem patches for Linux 2.0.11, and then patched the
+kernel up to 2.0.15. Unfortunately I soon realized that the entire system 
+grinds to a halt as the kernel performs cryptographic operations on a block
+of data. 
+
+I lack enough crypto expertise to fix this, but I believe it just needs to
+be made preemptable, however that works. The filesystem patch, while a
+definite step in the right direction, is all but useless in its present form.
+
+For an idea of what I'm talking about, kill your turbo switch, or install on
+a slow machine so that this is a bit more noticable. Users may want to kill
+their internal chip cache. Patch the kernel up to 2.0.15, and install the 
+kernel. Setup the loopback device as the README file states. Then make a 
+filesystem on that device. The system will slow to a halt about the time that 
+it actually needs to write some data to the filesystem, probably during the 
+superblock write in mke2fs. Then, mount the filesystem and try to write a 
+large block of data to the device. Again, it dies.
+
+This will need to be fixed if everyone wants to install such a patch into
+their kernel to reduce suspicion, or if it is to be included as standard in
+the kernel source tree. I would fix this if I knew more about the way the
+kernel is set up. I do fear making it preemptable may open a large can of
+worms, at which point it may be more useful to implement this in userspace,
+maybe by the creation of a seperate entry in the device hierarchy.
+
+
+
+

@@ -1,0 +1,65 @@
+From: lcs Mixmaster Remailer <mix@anon.lcs.mit.edu>
+Date: Tue, 1 Dec 1998 03:09:26 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Securing data in memory (was "Locking physical memory (fwd)
+Message-ID: <19981130180002.17576.qmail@nym.alias.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Bill Stewart wrote:
+
+> Back in the mid-80s, Princeton University got some SDI money for the
+> Massive Memory Machine Project, researching what you could do if
+> you had enough memory for anything you wanted.  Even with the
+> CS approaches of the time, you'd do a lot of things differently.
+> Their non-massive toy machine was a 1.5MIPS VAX with 128MB RAM -
+> which took 10 extension racks to hold all the RAM.
+> These days 128MB is cheap, as are 500 MIPS P2s, but 50GB of RAM
+> is still bigger than most machines' busses will hold,
+> and even 2GB of DRAM is a lot bigger and more power-hungry than
+> most laptops can really support, much less 2GB of fast SRAM.
+
+There used to be a rule of thumb that you'd want roughly a megabyte
+per megahertz.  Today, with our 200+ MHz processors, we tend to have
+considerably less memory than this.  My Gateway PC from a couple of
+years ago came with a 200 MHz Pentium Pro but only 32 MB of memory.
+
+Most PCs today are not well balanced architecturally.  They should
+really have a couple hundred megabytes of memory.  Memory is cheap
+enough today that this can be added, but the motherboard configuration
+may limit the amount.  If you had this much memory, swapping to disk
+would be a smaller problem.
+
+As for the idea of running without a disk drive, see the handheld PDAs
+like the PalmPilot and the Microsoft WinCE machines.  The problem with
+these from the security standpoint is that the memory is non-volatile.
+With a PC, we don't worry too much about junk in memory because we turn
+it off occasionally.  We are concerned about the disk because that is
+where the persistent storage is.
+
+But with a memory-only machine, you end up using your memory as a de-facto
+disk drive, so that the contents of memory become just as sensitive as
+the contents of disk would be on a PC.  Someone who gets hold of your
+PDA can dump out memory and find sensitive data which is stored there.
+Theoretically you can use a password to protect data, but then there are
+tradeoffs between security and ease of use, and you may end up leaving
+data exposed for extended periods.
+
+But speaking of using passwords to protect data, how about an encrypted
+swapfile for a PC?  There are fast enough ciphers today that the virtual
+memory system could encrypt data as it swaps to the disk, and decrypt
+as it loads back into memory.  You'd type in the passphrase at boot time.
+
+This would solve the problem of sensitive data leaking onto the disk via
+the swapfile.  There could still be traces in memory, but at least this
+most obvious leak would be plugged.  You don't have to wait for apps to
+be rewritten to use secure memory allocation drivers, you get the benefit
+immediately.
+
+Can existing encrypting-filesystem drivers be used for swapfiles?
+
+
+
+

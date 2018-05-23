@@ -1,0 +1,57 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 18 Oct 1996 10:07:39 -0700 (PDT)
+To: shamrock@netcom.com
+Subject: Re: DES cracker.
+In-Reply-To: <Pine.3.89.9610172224.A7082-0100000@netcom9>
+Message-ID: <199610180223.DAA00349@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Lucky Green <shamrock@netcom.com> writes:
+> On Fri, 18 Oct 1996, Geoffrey C. Grabow wrote:
+> > Tell me what you need.  A large part of my job is providing hardware
+> > security modules to banks to secure (among other things) their ATM networks
+> > (Automated Teller MAchines, not Async Transfer Mode).  Do you need PIN
+> > encryption formats, transmission message protocols, or what?  Just LMK.
+> 
+> It would be best to attack something that has broader use than just a 
+> single pin. At best, that would allow an hostile to clean out a single 
+> account. A target that would allow one to attack, say an account held 
+> *by* a bank would be more attractive.
+
+Account transfers was what I had in mind also, the higher value
+transactions that they are used for, and the more widely used the
+better.  So being able to break the authentication on transmission
+message protocols, might be enough, if being able to forge the
+authenticed payment transfer requests would be possible.
+
+Any protocols you can point us to involving inter-bank or
+international transfers would be great, if there are any which are
+still using DES rather than 3DES.
+
+Hope these protocols use include known plaintext, either fixed message
+parts, or predictable (account numbers), or use an integrity check
+which we can also (ab)use.  (Netscape's SSL used (is this still
+present in SSL3.0?) such an integrity check and this was the toe hold
+for the SSL brute force.)
+
+(As a fall back, ATMs might be useful if the protocol used the same
+key to encrypt all PINs.  However, one might hope that the protocols
+use diferent DES keys for different PINs.)
+
+Some time ago, there was a Russian guy with some other accoplices who
+got caught transferring several millions out of some US banks, this
+was in the news, and some news clips were posted to cypherpunks, but
+I've never seen the details of how he did it discussed.  Was this an
+inside job, or was it black cryptanalysis?
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

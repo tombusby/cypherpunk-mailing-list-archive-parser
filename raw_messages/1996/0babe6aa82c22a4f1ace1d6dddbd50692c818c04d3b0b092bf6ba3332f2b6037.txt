@@ -1,0 +1,101 @@
+From: JMKELSEY@delphi.com
+Date: Sat, 13 Jan 1996 00:27:54 +0800
+To: cypherpunks@toad.com
+Subject: Limiting Reuse of Certificates
+Message-ID: <01HZW0SKW2K29BX1TS@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[To: cypherpunks list ## Date: 01/11/96 02:25 pm ##
+ Subject: Limiting reuse of certificates. ]
+
+>Date: Mon, 08 Jan 1996 17:31:24 -0500 (EST)
+>From: Michael Froomkin <froomkin@law.miami.edu>
+>Subject: Certificates: limiting your liability with reuse limitations
+
+>Suppose I am a CA.  I am worried that by issuing a certificate with
+>a lifespan of more than 2 milliseconds I am opening myself up to
+>unlimited liability if for some reason, despite my best efforts, I
+>issue an erroneous certificate.
+
+>I know I can put an expiration date on the certificate, but that's
+>not enough.  I can accumulate a lot of exposure in a few seconds,
+>much less weeks.
+
+>I know I can put a reliance limit in the X.509 ver 3 certificate,
+>but that's not enough.  Even a $1 limit could be used many millions
+>of times.
+
+>Is it feasabile to say: Can only be relied on once per
+>day/week/month? Is this something the relying parties can reasonably
+>be expected to monitor?
+
+This is a hard problem.  The only way I can see to do this is to
+require interaction with the CA (or its proxy) for each signature.
+The good news is that if you're doing certificate revokation lists
+online, then there is probably already some interaction with the
+server to verify that a certificate is still valid, before it is
+accepted.
+
+The trick here is to flip around who has to check the CRL server.
+
+a.   Bob forms
+     D = document he wants signed,
+     ID_B = Bob's ID,
+and sends to Alice
+     M_0 = ID_B, D.
+
+b.   Alice forms
+     T = timestamp
+and sends to the Server
+     M_1 = T, hash(ID_B, D), Sign_{SK_A}(T, hash(ID_B, D)).
+
+c.   The Server verifies the timestamp, the signature, and that
+Alice is currently allowed to sign things (her certificate is valid
+and hasn't been overused today).  If not, it drops the connection
+and ends the protocol.  If things all check out, however, it forms
+     M_2 = T, Sign{SK_S}(T, hash(ID_B, D), Certificate_A).
+
+d.   Alice now has (until the timestamp T becomes too stale) an
+authorization to sign D.  She does so, and sends to Bob (who's been
+waiting all this time)
+     M_3 = T, ID_B, D, Certificate_A, M_2, Sign_{SK_A}(ID_B, D).
+
+Now, the trick is to redefine valid signatures as only those that
+look like M_3.  The recipient has to verify the timestamp, and that
+he hasn't received an identical signature from Alice recently, and
+has to verify the two signatures.
+
+(I make no promises about the soundness of this protocol--it's meant
+to illustrate the idea, not to be used directly.)
+
+Other than that, I can't think of anything that will fit the bill.
+
+>A. Michael Froomkin        | +1 (305) 284-4285; +1 (305) 284-6506 (fax)
+>Associate Professor of Law |
+>U. Miami School of Law     | froomkin@law.miami.edu
+>P.O. Box 248087            | http://www.law.miami.edu/~froomkin
+>Coral Gables, FL 33124 USA | It's warm here.
+
+Note:  Please respond via e-mail as well as or instead of posting,
+as I get CP-LITE instead of the whole list.
+
+   --John Kelsey, jmkelsey@delphi.com
+ PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMPV110Hx57Ag8goBAQFVggP+P9ilz7cM8BQX+nDgjByG4avAoHxgDpDw
+cWsx7dw31MQsPCEkzvuvCcwf36e4xEQd3jKMh5rYmWrYRAMQAoB4yGm7ixN4tqXH
+1g6Xw9QPCLnW4OJvjfynzFfKb5i8KcvOSBnCXzOd1Z/LYEI23/6phdNd9rRf/YjL
+mxbKS7gDrHI=
+=dn6t
+-----END PGP SIGNATURE-----
+
+
+
+

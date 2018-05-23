@@ -1,0 +1,62 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Wed, 5 Nov 1997 21:48:19 +0800
+To: mark@unicorn.com
+Subject: Re: PGP and Compliance with SEC and Liability Rules
+In-Reply-To: <878730951.18011.193.133.230.33@unicorn.com>
+Message-ID: <199711051331.NAA01409@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Mark Grant <mark@unicorn.com> writes:
+> Tim May quoted from macweek:
+> >"The Gartner Group's Wheatman pointed out that PGP Policy Management Agent
+> >allows corporatins for the first time to centralize control over
+> >encryption: "For encryption to be accepted, IT had to gain control. This
+> >isn't Big Brother; this is necessary to comply with liability laws and SEC
+> >regulations.""
+> 
+> However, this doesn't seem to work, unless I'm mistaken about CMR
+> enforcement and the SEC regulations. CMR will only allow the snoops 
+> to read incoming email, not outgoing, and hence if Joe Blow at 
+> Foo-Bah.com wants to send me some handy insider trading tips CMR will 
+> not stop them. So this seems to be another justification for CMR 
+> which just doesn't make sense.
+
+I think that there is also a facility in the pgp5.5 for business
+client to add yet another recipient: the sending companies snoop key.
+
+I also got the impression that the policy enforcer could be set up to
+bounce mail internally which did not have this extra recipient.
+
+(Note, not having pgp5.5 for business to play with I am going on what
+others have said.)
+
+So now you've got mail headed out encrypted to 3 long term keys... if
+the sender uses encrypt to self that will be 4 long term keys!  Then
+the spooks in the sending country will want to be another recipient,
+and spooks in the receiving country will also, bringing us to a total
+of 6 long term keys.  Wew talk about security risks!
+
+I thought it would be a good feature to put into the SMTP agent to
+strip encrypt to self and recipients intended for internal snooping --
+that would bring the recipients back down to 2 (or 4 with spooks).
+
+Better still would be one recipient (as happens with adhoc local
+escrow), and make that key a short term key which is burned after
+expiry also.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

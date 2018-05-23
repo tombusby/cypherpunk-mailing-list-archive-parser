@@ -1,0 +1,50 @@
+From: sander@ankh-morpork.hacktic.nl (Sander Plomp)
+Date: Wed, 4 May 94 14:56:38 PDT
+To: cypherpunks@toad.com
+Subject: Re: Hiding data in gzip files (forwarded)
+Message-ID: <050494202613Rnf0.78@ankh-morpork.hacktic.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+kafka@desert.hacktic.nl (-=[ Patrick Oonk ]=-) writes:
+
+>The attached patches will allow you to hide information inside GZIP
+>compressed files.
+
+[...]
+
+>HOW IT'S DONE
+>
+>gzip uses LZ77 which compresses data by storing length/offset pairs
+>that refer back in the uncompressed data stream to previous
+>occurrences of the information being compressed. gzip considers a
+>length of 3 to be the shortest acceptable length. We allow gzip to
+>find the length/offset pairs and then do the following.
+>
+>If the length is at least 5 then we subtract 1 and set bit 0 to the
+>value of the bit that we need to hide. We have now hidden information
+>in the length without pushing it beyond a valid value.  Drawbacks are
+>a slight decrease in compression (very slight) since we have to
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>disallow lengths of 4 and some of our meddling will decrease the
+>actual matched length by 1. The hidden file is totally invisible to
+>the normal operation of gzip, gunzip et al and (if encrypted) will
+>only be visible to those in the know. When the "-s" flag is not used
+>gzip performs as normal.
+
+Doesn't this mean everyone can detect that data is hidden by decompressing
+and recompressing? If the recompressed file is smaller, you know data was
+hidden and it can be extracted using gunzip -s.
+
+In contrast, data hidden in the LSB of sound samples or pictures cannot
+be detected. The reason seems to be that gzip compression is non-lossy,
+while most stego-tricks work by introducing a sight amount of noise-like
+`damage' to the data used as hiding place. You need to loose a bit 
+information to make room for the secret data.
+
+So it's a nice idea but it doesn't really work....
+
+
+
+

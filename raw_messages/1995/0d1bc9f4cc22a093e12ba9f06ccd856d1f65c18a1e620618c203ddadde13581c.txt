@@ -1,0 +1,68 @@
+From: skapp@cix.compulink.co.uk (Stephen Kapp)
+Date: Wed, 30 Aug 95 03:50:36 PDT
+To: cypherpunks@toad.com
+Subject: Re: Netscape's RNG
+Message-ID: <memo.573779@cix.compulink.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In-Reply-To: <199508300512.BAA23185@calum.csclub.uwaterloo.ca>
+> -----8<-----8<-----
+> struct RNG
+> {
+>     unsigned char md5bytes[0x10];
+>     unsigned char randbytes[0x10];
+>     int size;
+>     void *md5data;
+> };
+> 
+> RNG_GenerateRandomBytes(struct RNG *i0, char *i1, int i2)
+> {
+>     char buf[0x20];
+>     int o1,o2;
+> 
+>     while (i2 > i0->size)
+>     {
+>       memcpy(i1, &(i0->randbytes)+0x10-i0->size, i0->size);
+>       i1 += i0->size;
+>       i2 -= io->size;
+>       if (err = MD5_Begin(i0->md5data)) return err;
+>       if (err = MD5_Update(i0->md5data, &(i0->md5bytes), 0x10)) return 
+err;
+>       if (err = MD5_End(i0->md5data, &(i0->randbytes), buf, 0x10)) 
+return err;
+>       i0->size = 0x10;
+>       o2 = 0;
+>       o1 = &(i0->md5bytes[0x0f]);
+>       do
+>       {
+>           if ((*o1)++) break;
+>           --o1;
+>       } while (++o2 <= 0x0f);
+>     }
+> 
+>     /* i2 <= i0->size */
+>     memcpy(i1, &(i0->randbytes)+0x10-i0->size, i2);
+>     i0->size -= i2;
+>     return 0;
+> }
+> -----8<-----8<-----
+> 
+
+This looks very much like the RSAREF random number code, there are a few 
+minor differences, but it still looks very similar.
+
+--------------------------------------------------------------------------
+-
+E-mail: skapp@cix.compulink.co.uk, 
+        skapp@sourcery.demon.co.uk
+PGP fingerprint: 78 1C CD F4 A4 44 D2 CB  DD A5 CF EF F1 DD D8 6A
+--------------------------------------------------------------------------
+-
+RSAEURO:        rsaeuro@sourcery.demon.co.uk
+
+
+
+
+

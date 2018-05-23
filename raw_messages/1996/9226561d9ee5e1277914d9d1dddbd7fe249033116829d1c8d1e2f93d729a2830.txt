@@ -1,0 +1,95 @@
+From: aba@atlas.ex.ac.uk
+Date: Tue, 23 Jul 1996 14:55:10 +0800
+To: Peter Trei <trei@process.com>
+Subject: DES brute force? (was: Re: Borders *are* transparent)
+Message-ID: <18527.9607222028@dart.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Trei <trei@process.com> writes:
+> [...] Last September, three or four semi-overlapping efforts
+> succeeded in brute-forcing 40 bit RC4 (used in export-quality SSL).
+>
+> This had three main effects:
+> 
+> 1. Raising the issue in the media, and thus in the public consciousness.
+> 
+> 2. Within a month, the government was starting to talk about permitting the
+> export of stronger (but GAK'd) encryption products.
+>
+> 3.  It enabled people like Jeff to argue successfully that releasing
+> only an export-strength product was no longer a viable option.In
+> practical terms is probably the most important effect of the crack:
+> I know of at least one other company where it led directly to the
+> release of both domestic and export versions.
+>
+> Any one up for a distributed brute force attack on single DES? My 
+> back-of-the-envelope calculations and guesstimates put this on the
+> hairy edge of doability (the critical factor is how many machines can
+> be recruited - a non-trivial cash prize would help).
+
+Hmm, 56 bits is a lot of bits... 
+
+Here's some calcuations of my own for your criticism...
+
+using libdes-3.23 
+
+	ftp://ftp.psy.uq.oz.au/pub/Crypto/DES/libdes-3.23.tar.gz
+
+running the "speed" application, on a 100Mhz SGI R4000 Indy, I get
+~600k key shedules / sec.  (With the ~Mb/s throughput for encrypt, the
+bottle neck for simplistic brute force is going to be key scheduling).
+
+56 bits = 72057594037927936 worst case
+	= 3800 years
+
+ouch!
+
+So ideally for a break you would like the whole thing to be completed
+in say 2 weeks wall clock time, which gives rise to the need for
+~100,000 machines of similar throughput, full-time for two weeks.
+
+Possible?
+
+As far as cash prizes go how much could cypherpunks and friends
+generate for such a purpose?  I'd guess individuals could come up with
+a fair bit of money... 1000+ list members x 10$ = 10k (or whatever).
+
+Also perhaps there are some commercial backers with interests in
+seeing ITAR squished who might be persuaded to donate?
+
+Somebody would need to spend a fair bit of effort publicising it on
+USENET, to get a good response.
+
+There may be problems associated with offering prize money... what if
+some employees at DES hardware vendors `borrowed' some time on their
+top of the range DES cruncher?  Perhaps this doesn't matter, as it
+would just make the point even more strongly :-)
+
+Also I can't help wondering if there isn't some lateral thinking we
+can do to reduce the cost...
+
+Are there cheap (<100$) PC DES cards which would help significantly?
+
+What DES modes are used in typical banking situations?  (I am
+presuming a challenge involving a widely used banking funds transfer
+protocol would be a suitably juicy targets, based on a criteria of
+demonstrating the greatest financial risk).
+
+Are there any practical published attacks on DES which have space /
+time trade offs which improve on simplistic brute force whilst still
+having relatively low memory requirements for each node, and very low
+communication requirements?
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+
+

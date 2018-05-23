@@ -1,0 +1,82 @@
+From: Antonomasia <ant@notatla.demon.co.uk>
+Date: Fri, 3 Oct 1997 07:27:50 +0800
+To: cypherpunks@ssz.com
+Subject: Re: Quor's cipher
+Message-ID: <199710022135.WAA02655@notatla.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Antonomasia <ant@notatla.demon.co.uk> wrote:
+
+> My attack takes a long chunk of known text and looks for repetition.
+> 
+> ppppppppppppppp.11.pppppppppppppppppppppp
+> ccccccccccccccc.22.cccccccccccccccccccccc
+> 
+> When a two neighbouring p-c pairs are the same you can test
+> whether they have the same value of a and b.
+> (That is a_n == a_n+1 and b_n == b+n+1,   a != b usually.)
+> 
+> This involves 16 inputs to each byte - very cheap.
+> What I really want next is to know "a".
+
+
+nobody@REPLAY.COM wrote:
+
+> Wouldn't this only happen (on average) in one out of every 65536 p-c
+> pairs?
+
+Yes (counting only those we test).
+
+>         Since the state array is changed entirely with every 128 bytes
+> encrypted, 1 out of 2^16 doesn't seem to help much.
+
+This finding doesn't uncover a great deal, I agree, and what it does
+uncover is transient.
+
+1 out of 2^16 is the number of pairs we test to find a point
+with the property we're looking for.  The measures to compare
+this to are:
+          message length                 several times 65k is fairly low
+          cost of testing                low
+          benefit of test when passed    also low  :-(
+
+The changes are regular though, progressing through the array in two
+places.  That's why I proposed testing neighbouring p-c pairs because
+you can be almost sure the relevant state (and it's which part of the
+state array is relevant that's uncertain) is the same for the two.  In
+fact it would be nice to spot this:
+
+ppppppppppppppp.11.ppppppppppppppppppppp
+ccccccccccccccc.22.ccccccccccccccccccccc   
+
+and see that a and b were the same, but the underlying
+state array changed in a relevant way.  This would be indicated by
+a slightly less than total match, but still rare enough not to be
+a fluke.  This could allow you to test possible values of a and b,
+and perhaps get 4 bits of a.  But a and b don't persist over nearby
+bytes so I'm not clear what I'd do if I got them.
+
+What it would be nice to have next is a more damaging result emerge
+from this or some other observation so that we could determine more
+of the state without going to long range comparisons.  This cypher
+is constructed differently from RC4 or fish - not as simple as WAKE
+but broadly comparable to Sapphire II.   I think I'll enlist the help
+of a search engine.  It's more than likely there other things waiting
+to be done to this.  Quor's friend 'nobody' has actually put some crypto
+on the list -let's see what we can do with/to it.
+
+
+--
+##############################################################
+# Antonomasia   ant@notatla.demon.co.uk                      #
+# See http://www.notatla.demon.co.uk/                        #
+##############################################################
+
+
+
+
+

@@ -1,0 +1,78 @@
+From: "David Klur" <dklur@dttus.com>
+Date: Thu, 28 Dec 1995 14:12:55 +0800
+To: cypherpunks@toad.com
+Subject: Re: Misconfigured Web Servers
+Message-ID: <9511278200.AA820083186@cc2.dttus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+     
+     Re: the "trick" below... an even more effective search is the 
+     following...
+     
+     http://www.altavista.digital.com/cgi-bin/query?pg=aq&what=web&q=url%3A
+     etc%2Fpasswd&r=&d0=&d1=&Submit.x=51&Submit.y=14
+     
+     which searches all URLs that contain etc/passwd 
+     
+     See for yourself!
+     
+     
+     David Klur
+     
+     
+_____________________________ Reply Separator _________________________________
+Subject: BoS: Misconfigured Web Servers
+Author:  nobody@mail.uu.net at Internet-USA
+Date:    12/26/95 3:57 PM
+
+
+     Everyone,
+     
+     A friend of mine showed me a nasty little "trick" over the weekend. He 
+     went to a Web Search server (http://www.altavista.digital.com/) and 
+     did a search on the following keywords -
+     
+             root: 0:0 sync: bin: daemon:
+     
+     You get the idea. He copied out several encrypted root passwords from 
+     passwd files, launched CrackerJack and a 1/2 MB word file and had a 
+     root password in under 30 minutes. All without accessing the site's 
+     server, just the index on a web search server!
+     
+     Well, the first thing I did was check my site and it's ok. The second 
+     thing I did was check my ISP for my home account, and it's okay. But 
+     by trying various combinations of common accounts on web searches, 
+     dozens of passwd files were found.
+     
+     It seems that a large number of locations who use httpd and ftpd on 
+     the same server often copy the regular passwd file to ftp/etc or 
+     ftp-users/etc for ftp user access. A few sites have left the root 
+     password in the file, and many contain user accounts' passwords. The 
+     problems I see here are as follows:
+     
+     1. You can get the passwd file in some cases by simply pointing your 
+     URL to http://target.com/ftp/etc/passwd or 
+     http://target.com/ftp-users/etc/passwd. Not good. Anon ftp can't get 
+     it but a web browser can. Many passwd files are shadowed but you can 
+     see some legit account names. Yes, I realize that this may be a dummy 
+     file but hey, not always the case.
+     
+     2. Some sites do not have the passwd file world readable, but the 
+     entire passwd file stills exists indexed on the web search server. I 
+     don't know about you, but I don't think I'd want my passwd file 
+     indexed and searchable on a world accessible web server.
+     
+     3. A ton of etc/group files turned up as well.
+     
+     The guy that showed me this found it funny, but I find it disturbing. 
+     Are there that many sites that are that poorly configured?
+     
+     Mark_W_Loveless@smtp.bnr.com
+     
+
+
+
+
+

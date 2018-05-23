@@ -1,0 +1,74 @@
+From: JMKELSEY@delphi.com
+Date: Thu, 26 Oct 1995 23:53:01 +0800
+To: cypherpunks@toad.com
+Subject: MD4-derived hash functions
+Message-ID: <01HWW4G5KUE69LV2GV@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>Date: Tue, 24 Oct 1995 13:14:41 -0400
+>From: hallam@w3.org
+>Subject: Re: MD5 weakness
+
+>Ron has not mentioned such an event to me and if that were the case I would
+>seriously doubt that he would not have been told about it. The only comment he
+>generally makes is that he wrote MD5 because "MD4 was making me nervous".
+
+In the MD5 RFC, I seem to recall the statement that MD4 was trading
+off too much strength for additional speed.  However, sometime
+around that time, it came out that there were attacks on two-round
+variants of MD4, which is the stated reason for the development of
+RIPE-MD.  Does anyone know whether Rivest was motivated to design
+MD5 by the partial attacks on MD4, or whether those came later?
+(This is totally idle curiousity.)
+
+>NIST and the NSA trusted MD4 sufficiently to base SHA upon it. SHA is preferable
+>in many ways to MD5, it has a different approach to extending the scheduling and
+>resist differential cryptanalysis. There is a problem with the compressor
+>function of MD5 which I dislike.
+
+All of the well-known software hash functions seem to be based on
+MD4 these days, but that doesn't mean much about the security of
+MD4--3DES with three independent keys looks pretty strong, as does
+3DES with two independent keys, but that doesn't mean that single
+DES is a strong enough cipher for modern applications.
+
+One issue that exists with MD5, but not with SHA or the longer hash
+versions of Haval, is that MD5 has only a 128 bit hash function
+output, which corresponds loosely to having a 64-bit key.  This
+implies that a wealthy enough opponent could determine a pair of MD5
+inputs that collide, and conceivably use this in an attack.  I think
+we should stick to 160 bit or longer hashes for future designs.
+(See P. van Oorschot and M. Weiner, "Parallel Collision Search with
+Application to Hash Functions and Discrete Logarithms," in the
+proceedings of the 1994 Fairfax Conference, for example).
+
+As an aside, what hash functions are there out there that look
+reasonably strong, have hash outputs of at least 160 bits, and
+aren't based on MD4?  Some of the Snefru variants with many passes
+(eight?) come to mind, and the GOST hash function fits all the
+criteria, except I have a hard time convincing myself it's as strong
+as it claims to be.  Is there a generic construction for
+arbitrary-length hash functions from good block or stream ciphers?
+
+>	Phill
+
+   --John Kelsey, jmkelsey@delphi.com
+ PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMI+Mc0Hx57Ag8goBAQFJ9gP/VMvNefSm77prSY/NMbJfGO1EVmQrUAHn
+kEQEse+cXiaoJTe7njxUqycuDX0PN09C4XhNVOQJ6IBpCPZOKQMiXsI9FwAfjGWb
+mibwSfzyiXwxny1kYgfDCffS8KwdlWiVjxj1+MhvqhGQnxPsVA6UVrSCyAyHPZVJ
+UTXUWBJlJho=
+=2Pti
+-----END PGP SIGNATURE-----
+
+
+
+

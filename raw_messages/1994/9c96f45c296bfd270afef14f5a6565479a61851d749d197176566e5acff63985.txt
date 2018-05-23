@@ -1,0 +1,79 @@
+From: p.v.mcmahon.rea0803@oasis.icl.co.uk
+Date: Tue, 29 Nov 94 15:42:37 PST
+To: cypherpunks@toad.com
+Subject: (re-tx) RE: Transparent Email (WAS disable telnet to port 25)
+Message-ID: <9411292035.AA01114@getafix.oasis.icl.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I sent this yesterday, but it apparently didn't through.
+--
+
+
+
+
+
+
+
+
+
+
+> > I don't have an answer to your question, but you did bring up something 
+> > I've been meaning to ask about for some time and I never really got 
+> > around to it; Are there any short-term plans to press for an RFC 
+> > utilizing digital signatures?  With the exponential increase of mail 
+
+Existing standards track RFCs support PEM-based security of RFC-822
+email (RFC 1421, RFC 1422, RFC 1423, and RFC 1424).
+
+Recent work on security of MIME has allowed for an alternative content
+protection and certification mechanism (i.e. PGP). See Internet Drafts
+draft-ietf-pem-sigenc-02.txt and draft-ietf-pem-mime-07.txt which 
+respectively define the framework and the PEM-specific parts.
+
+
+> The best answer that I can come up with for this problem is to allow for 
+> several webs of trust to function simultaneously.  Perhaps we would have 
+
+The intent of the MIME extensions is to enable either PGP or PEM to be used,
+although the standard for the former is I believe still pending. I am
+not aware of efforts to integrate the two certification mechanisms.
+
+
+> A web could be defined by a single top-level public key and a set of 
+
+This is the function for the IPRA (as discussed in RFC 1422).
+
+
+> rules.  Perhaps a text based program -- a sort of "meta-pgp" -- could 
+> check chains of signatures to validate a key.
+
+This is what a PEM-conformant user agent does.
+
+
+> Suppose, for example, that I'm administering a web of trust.  I set up 
+> the web so that I can deputize notaries who can in turn sign user keys.  
+
+The PEM WG used to call these organisational notaries, but they have been
+dropped from the standards. They are also referred to in related work as
+Local Registration Agents or Authorities - and are necessary for large
+organisations' use of certification services.
+
+
+> Lets further assume that all signatures are good for a year.  A keyserver 
+> would return a text file containing: (a) the user's key, concated with a 
+> notary's key, concated with a header specifiying the date it was singed 
+> by me.
+
+This sounds similar to the certification message in RFC 1424. There isn't
+a requirement for certificate retrieval as certificates are sent with the
+message or handled using (as yet unspecified) directory facilities -
+probably an extended DNS in the Internet environment.
+
+- pvm
+
+
+
+
+

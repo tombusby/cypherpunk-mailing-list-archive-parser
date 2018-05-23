@@ -1,0 +1,72 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 19 Apr 1996 12:11:33 +0800
+To: cypherpunks@toad.com
+Subject: Re: why compression doesn't perfectly even out entropy
+Message-ID: <199604182255.PAA13373@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: daw@cs.berkeley.edu (David Wagner)
+> My entropy cruncher takes in random noise from a number of diverse
+> sources (some possibly of dubious quality).  I take *all* the noise
+> and run it through a hash function to distill entropy.
+> 
+> Now I need to have some method to estimate when I have enough entropy
+> in the random noise I'm crunching.  First rule: be conservative.
+> One can never have too much entropy in the input to the hash function.
+> 
+> Therefore, I suggest making a *copy* of the input noise stream,
+> running it through Jon Wienke's "this shouldn't happen" filter, and
+> feeding the result to some entropy estimator.  When the entropy
+> estimator says "I've got 1000 bits of entropy", I stop crunching.
+> 
+> This is conservative design, folks.  Using Wienke's filter in this manner
+> can't be any weaker than not using it at all. (agreed?)
+
+I see two problems with this.
+
+The first is whether this mysterious black box, the entropy estimator,
+is really possible.  In practice the only way to know how much entropy
+you've gotten is to have a model for how the data is being generated,
+and to deduce from that an estimate of the entropy rate.  So the entropy
+estimator can't be a general-purpose calcluation, but it must be one
+which is specifically chosen, developed and tuned for the specific source
+of entropy you are dealing with.
+
+Given this, what is the point of filtering?  You already have a model.
+If you want to be conservative, why not just take 50% more bits than your
+model says you needed?
+
+The other problem is the functioning of this filter.  I haven't followed
+Jon's proposals closely, but at one point he was talking about
+histogramming the input and throwing out data which he had seen too
+often.  Now this is an implicit model as well - it assumes that the data
+is supposed to be uniformly distributed on a per-byte (or whatever the
+data elements are) basis.
+
+Suppose your random noise from dubious sources includes some timing
+values which vary in the range 90-110, roughly normally distributed.  You
+have good reason to believe that it actually is a normal distribution,
+and that there are 2 or 3 good bits of entropy per sample.  If you didn't
+use Jon's filter you could just collect data, hash it, and figure that
+each datum gave you this much entropy.
+
+But now if you throw Jon's filter in there, it may start throwing out all
+the values in the range 90-110.  Where are the 0-80's?, it wonders.  Where
+are the 120's and up?  There are way too many 100's here!  If the filter
+isn't smart about the data like your model is, it could end up throwing
+the whole data set out.  Your entropy counter would be spinning its
+wheels waiting for more data, and you'd think you never got enough.
+
+So I think the lesson is that there is only one way to estimate entropy,
+and that is to study your source.  I have to agree with Perry that this
+filtering concept is not the way to go.  It is a red herring that lures
+you in the direction of automatic entropy estimation, and that is really
+not safe.
+
+Hal Finney
+
+
+
+

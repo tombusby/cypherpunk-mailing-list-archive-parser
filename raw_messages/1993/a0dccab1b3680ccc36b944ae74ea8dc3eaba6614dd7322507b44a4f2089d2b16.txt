@@ -1,0 +1,47 @@
+From: Phil Karn <karn@unix.ka9q.ampr.org>
+Date: Fri, 5 Feb 93 00:02:23 PST
+To: jpp@markv.com
+Subject: spread spectrum synchronization
+Message-ID: <9302040757.AA02215@unix.ka9q.ampr.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Synchronization is indeed one of the more complex parts of a spread
+spectrum system. But there are standard, well studied ways to do it,
+and any of several textbooks have good descriptions. It's more tedious
+than difficult. A good job for VLSI.
+
+The "gold codes" you mention are simply one family of spreading
+sequences.  There are others.  You'd search for signals that use them
+in the same way you'd search for any kind of spreading sequence -- by
+searching the sequence space until you find a correlation between the
+incoming signal and your local copy of the spreading sequence. You
+detect this by the sudden increase in narrowband signal energy seen at
+the output of the despreader around the nominal carrier frequency when
+you're within a chip of the correct time. You then lock onto and track
+the spreading sequence with a circuit very similar to a phase locked
+loop.
+
+Practical spread spectrum systems aid this process either by
+synchronizing the spreading sequence to a common clock source, or by
+using a small enough spreading sequence to make searching the entire
+sequence feasible.
+
+In our CDMA cellular system, we use both approaches and several
+ordinary LSFR PN sequences (not Gold codes). There's a "short PN" code
+(2^15 chips long) common to all cells that can be found by a mobile
+within a few seconds of being turned on, and an additional per-user
+"long code" (2^47-1 chips) that is synchronized with the aid of GPS
+receivers at the cells. Both operate at the same chip rate (1.2288
+Mhz).
+
+The gory details can be found by anonymous FTP to lorien.qualcomm.com,
+in /pub/cdma. Read the "overview" document first.
+
+Phil
+
+
+
+
+

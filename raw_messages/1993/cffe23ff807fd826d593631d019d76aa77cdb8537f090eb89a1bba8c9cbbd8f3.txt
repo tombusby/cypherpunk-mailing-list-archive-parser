@@ -1,0 +1,74 @@
+From: edgar@spectrx.Saigon.COM (Edgar W. Swank)
+Date: Tue, 20 Jul 93 01:15:41 PDT
+To: Cypherpunks          <cypherpunks@toad.com>
+Subject: PGP: "Stealth" mode
+Message-ID: <c8ew7B5w165w@spectrx.saigon.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+J. Michael Diehl wrote:
+
+    Many encryption tools such as ripem, pgp, and dolphin can
+    recognize their own output...which indicates that there is a
+    footprint to that particular implimentation.
+
+There has been discussion among us PGP developers (I guess I am one
+now; see my recent posts to alt.security.pgp) of implementation of
+a "stealth" option, which would remove all the identifying footprints
+from encrypted output.
+
+RSA-Encrypted files would start with the (random) IDEA key followed
+by IDEA-encrypted data.
+
+Conventionally encrypted files (-c) would contain only encrypted data.
+
+Possibly the armor format wouldn't change, since PGP can be used
+to convert any binary file to armored form (-a). But it would probably
+be better to convert PGP binary output to e-mailable form using a
+common external utility like UUENCODE to make it look even more
+ordinary, especially if you change the UUENCODE BEGIN statement
+to specify, say, xxx.ZIP instead of XXX.PGP.
+
+Of course, the UUDECODED file wouldn't be recognized by PKUNZIP. "Oh,
+what a shame, the file must have got corrupted somewhere on the net".
+
+That's the easy part.
+
+The hard part is designing decryption procedures. PGP would have
+to prompt something like:
+
+"unrecognized input file. May be stealth mode. Select procedure
+
+   1. Assume RSA file with your default secret key
+   2. "     "       " Prompt for userid of secret key to try.
+   3. "     "       " try all your secret keys (may be impractical on
+                      slower CPU's)
+   4. Assume conventional file. prompt for pass phrase."
+
+Also note that for each secret key tried, PGP must prompt for its
+pass phrase. Of course, once decryption is successful, then the
+usual footprints can be there for signatures and compression.
+
+AFAIK, this idea is still just in the talking stage.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a.1/EWS
+
+iQCVAgUBLElab94nNf3ah8DHAQFIEwP/RR1+oUMpJL75smnHJCfP+8e8b4+P6uEm
+uFpyN1LOpVbuKwNG73tu2c/wvdmABDH39xDDs5C29rOj/RFjpGWj40wTXJcvJ878
+dSI/Dmj1pAZXCay9qSOldxxrtXes/wsCuQtHL/PX9y+tcXGIaduP4TYlxMSCqXvr
+rwNTH1jeM5I=
+=t5A8
+-----END PGP SIGNATURE-----
+
+--
+edgar@spectrx.saigon.com (Edgar W. Swank)
+SPECTROX SYSTEMS +1.408.252.1005  Cupertino, Ca
+
+
+
+
+

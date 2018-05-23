@@ -1,0 +1,65 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sun, 28 Jul 1996 13:48:06 +0800
+To: ichudov@algebra.com
+Subject: Re: Twenty Beautiful Women
+In-Reply-To: <199607280248.VAA20048@manifold.algebra.com>
+Message-ID: <199607280354.UAA06579@netcom3.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ichudov@algebra.com (Igor Chudov @ home) writes:
+
+ > Also, I would appreciate if someone specified what exactly
+ > the goal function is.
+
+Me too.
+
+This is an interesting problem, vaguely reminescent of the pie
+judging contests commonly used as examples of non-parametric
+statistics.  Given two pies, (or two women), a judge can
+subjectively order them by tastiness, (or beauty), but there is
+no concept of an continuous metric in which the ratings of
+particular items are embedded.
+
+This makes it somewhat difficult (at least for me) to determine
+the function being maximized in this problem.  Do we mean a
+strategy which gives the highest probability of choosing the most
+beautiful woman over all possible orderings? If not, then we need
+some way of saying whether we value N dates with the woman having
+rank I over M dates with the woman having rank J, which requires
+information the problem does not give us.  The first case is
+ambiguous, since there are numerous strategies which differ only
+in the probability of selecting items having other than the
+highest rank, and the second implies the existence of some sort
+of metric.
+
+Indeed, what a person would regard as an strategy maximizing the
+chances of choosing the "best" item overall depends very much
+upon the choice of such a metric.  If we have 20 women whose
+attractiveness is evenly spaced, one might proceed quite
+differently than if the top 18 were attractive and almost
+indistinguishable, and the other two had a contagious and fatal
+disease.
+
+If we make the leap of assigning the integers 1 to 20 to the
+individuals, and seek a strategy which maximizes the mean
+attractiveness over all possible orderings, then the problem can
+be solved by backtracking from the last choice made.  This
+results in a variable threshold at each stage in which we select
+the current candidate if its rank in the items seen so far
+exceeds the threshold, and proceed if this is not the case.
+
+If we want a single partition point at which we choose the first
+item better than any item before the partition point, then 1/e
+seems believable, although I haven't personally worked out the
+math.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

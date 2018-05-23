@@ -1,0 +1,69 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Tue, 31 Jan 95 22:08:49 PST
+To: cypherpunks@toad.com
+Subject: The security characteristics of crypto modules with secrets
+In-Reply-To: <9501310546.AA09683@merckx.info.att.com>
+Message-ID: <199502010607.WAA04942@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: Matt Blaze <mab@research.att.com>
+
+   I think better than expecting the world to switch over to
+   cumbersome, multilevel secure OSs is to equip such servers with
+   inexpensive tamper-resistant cryptographic modules that never reveal
+   their secrets.
+
+This is certainly the first step to take, even if it's not a complete
+answer.
+
+   At least then you're guaranteed that there can be only
+   one instance of a machine's identity out there at a time, and have some
+   hope of detecting the theft of the key material.  
+
+Unfortunately, this isn't really true.
+
+Let's take as our model general purpose computers which can't store
+secrets connected directly to crypto modules which can.  Furthermore,
+let us assume that these general purpose computer are subject to
+intrusion.  In other words, it's today's servers with attached crypto.
+
+Now, the crypto module can't authenticate the machine it's plugged
+into, because, by definition, that machine can't keep a secret.  One
+ends up in an infinite regress here in one tries to assume a secret in
+the place we have assumed otherwise.  Because the crypto module can't
+authenticate the machine, it will reply to service requests from both
+the local and approved machine and any remote and unapproved machines
+that can gain access to the module.  The software on the server can be
+subverted in order to allow the local crypto module to service remote
+requests.
+
+The attack works like this.  First, subvert the system software on
+some server, probably through existing implementation defects.  Now,
+install new software on that server that allows other machines to make
+remote procedure calls to the module.  Set up a client on an
+impersonating machine that make remote calls to the subverted server
+whenever it needs to spoof.  The remote calls will most likely be an
+encrypted protocol, to boot.  The easiest way to detect this
+externally will be an additional delay in response, that is, doable
+but not particularly reliable.
+
+This is not to say that crypto modules are useless.  They have a great
+use in recovery.  Because the secret doesn't leave the module, you
+have an assurance after recovery (reboot from CDROM, for example) that
+nobody else has the secret.  There won't be a need for an immediate
+key change, at least.  What you don't get is a complete loss of
+assurance of identity.
+
+The prevalent use of modules further reduces the likelihood of initial
+attacks based on spoofing.  Since active IP attacks require the
+subversion of routers, and since router software is much more
+difficult to subvert than general purpose servers, adding crypto
+modules to routers would be a big win.
+
+Eric
+
+
+
+

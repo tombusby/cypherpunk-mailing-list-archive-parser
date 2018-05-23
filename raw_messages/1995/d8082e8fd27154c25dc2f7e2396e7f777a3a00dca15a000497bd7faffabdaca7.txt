@@ -1,0 +1,36 @@
+From: rross@sci.dixie.edu (Russell Ross)
+Date: Fri, 21 Jul 95 14:48:59 PDT
+To: Andre Turgeon <andre@oscar.cs.byu.edu>
+Subject: Re: Problem synchronizing sockets...
+Message-ID: <v01520d00ac35d2195066@[144.38.16.209]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>        I'm a newbie at socket programming so this is probably going to
+>be an easy question (I hope). I've been developing a client/server
+>project using SSLeay and I'm having problem synchronizing my messages.
+>More specifically, I use a combination of SSL_read and SSL_write to
+>exchange messages bix my client and server. The problem is that my
+>client is reading (SSL_read) before the server is done writing and reads
+>an empty buffer. This does not occur all the time but often enough to
+>make things quite unreliable... I've tryed using the select() command
+>but that doesn't solve it. Help.....
+>
+>        Andre
+
+This is generally true of sockets programming.  You don't know that you'll get
+as many bytes as you request.  The simplest solution is to loop your read
+calls until you get what you need.  See BSD Sockets: A Quick & Dirty Primer
+for a sample solution.  The URL is http://www.ntua.gr/unix/sockets.html
+
+-----------------------------------------------------------
+Russell Ross                     email: rross@sci.dixie.edu
+1260 N 1280 W                    voice: (801)628-8146
+St. George, UT 84770-4953
+
+
+
+
+
+

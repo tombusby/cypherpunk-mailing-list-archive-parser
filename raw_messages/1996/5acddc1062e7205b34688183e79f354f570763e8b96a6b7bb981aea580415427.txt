@@ -1,0 +1,58 @@
+From: azur@netcom.com (Steve Schear)
+Date: Thu, 17 Oct 1996 18:39:13 -0700 (PDT)
+To: Hal Finney <hal@rain.org>
+Subject: Re: Anonymous Auth Certificates [was: Re: Blinded Identities]
+Message-ID: <v02130503ae8c25d431bc@[10.0.2.15]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> >> >Steve Schear <azur@netcom.com> writes:
+>> >
+>> >[much cut]
+>> >>
+>> >> I've been charged with developing an Internet service which needs to
+>>assure
+>> >> its clients of anonymity.  However, we fear some clients may abuse the
+>> >> service and we wish to prevent the abusers from re-enrollment if
+>> >> terminated for misbehavior. (In your example, it would be the person(s)
+>> >> trying to discover the service host via flood).
+>> >>
+>> >> My thought was to base enrollment on some sort of 'blinding' of their
+>> >> certified signature (e.g., from Verisign) which produces a unique result
+>> >> for each signature but prevents the service from reconstructing the
+>> >> signature itself (and thereby reveal the client's identity).  I'm calling
+>> >> this negative authentication.
+>>
+>
+>(Sorry about quoting so much, but I liked Steve Schear's succinct problem
+>statement.)
+>
+>I don't see how authorization certificates solve this problem.  How
+>would you determine if someone was qualified to receive an authorization
+>certificate?  And what would you do to make them stop using the service
+>if they abuse it, and to stop them from getting new authorization
+>certificates?
+>
+>Thanks,
+>Hal
+
+It seems that one crux of the problem revolves around the CA and its method
+of certificate issuance.  A CA which uses biometric data to
+reduce/eliminate the chance that an applicant could get several, unrelated,
+certificates issued would provide a basis for negative authentication
+(similar to a negative credit file).
+
+A one-way function performed, by the client, on their certificate from this
+CA would yield a token which unambiguously binds it to a valid certificate
+of the CA (and therefore uniquely identifies them) w/o revealing the
+certificate itself.
+
+-- Steve
+
+
+
+
+
+

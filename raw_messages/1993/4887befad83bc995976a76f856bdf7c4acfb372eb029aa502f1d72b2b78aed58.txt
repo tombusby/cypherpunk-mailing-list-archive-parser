@@ -1,0 +1,50 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Mon, 22 Feb 93 20:34:43 PST
+To: CYPHERPUNKS <CYPHERPUNKS@toad.com>
+Subject: Remailer to anon.penet.f
+Message-ID: <930223033603_74076.1041_DHJ26-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Chael Hall points out that remailer operators who use their personal
+accounts for the remailing are vulnerable to having their anon.penet.fi
+pseudonyms (if any) discovered by users who request remailing to that
+site.
+
+For those operating remailers based on the Perl scripts originally
+written by Eric Hughes which I modified, I use the following maildelivery
+file to prevent the attack Chael mentioned:
+
+#
+# field                 pattern action/ string 
+#                               result  (quote included spaces)
+#
+Request-Remailing-To	anon.penet.fi	file	A	Bitbucket
+Anon-To			anon.penet.fi	file	A	Bitbucket
+Request-Remailing-To    ""      pipe A  remail.pl
+Anon-To			""	pipe A  remail.pl
+Encrypted               PGP     pipe A  pgpmail.pl
+*                       ""      pipe ?  recurse.pl
+
+
+This puts any message to anon.penet.fi into a file called Bitbucket.
+My slocal.pl script does not support the slocal/maildelivery feature
+which deletes a message, so this is the closest I can come.  (I suppose
+another alternative would be to pipe it into "cat > /dev/null".  That
+would look like:
+
+Request-Remailing-To	anon.penet.fi	pipe	A	"cat > /dev/null"
+
+I haven't tried this one.)
+
+BTW, if anyone has made changes to the remailer scripts, please send
+them to me.  I would like to clean up the scripts a little, add more
+error checking, and submit a new version to the FTP site.
+
+Hal Finney
+
+
+
+
+

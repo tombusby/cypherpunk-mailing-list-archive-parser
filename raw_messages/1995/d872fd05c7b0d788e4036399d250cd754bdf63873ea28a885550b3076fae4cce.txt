@@ -1,0 +1,49 @@
+From: Robbie Gates <gates_r@maths.su.oz.au>
+Date: Tue, 5 Dec 95 16:03:36 PST
+To: solman@MIT.EDU
+Subject: Re: Secure versus ?
+In-Reply-To: <9512051652.AA17214@ua.MIT.EDU>
+Message-ID: <30C4DED5.15FB@maths.su.oz.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+solman@MIT.EDU wrote:
+> Alice wants to use the inner loop to send bit b.
+> 1. Alice randomly chooses seven bits of salt, and prepends b to them
+>    creating an 8 bit M
+> 2. Alice randomly chooses an (Na,Ea) pair from the list of possibilities.
+> 3. Alice calculates D such that E*D mod (N-1) equals 1
+> 4. Bob randomly chooses an (Nb,Eb) pair from the list of possibilities.
+> 5. Bob calculates D
+> 6. Alice sends Bob the nine bit number (M^Ea) mod Na = C1
+> 7. Bob sends Alice (C1^Eb) mod Nb = C2
+> 8. Alice sends Bob (C2^Da) mod Na = C3
+> 9. Bob calculates (C3^Db) mod Nb = M, the bit being the MSB.
+
+i don't think the maths works here ... let
+Na = 257, Ea = 13, Da = 197, Nb = 263, 
+Eb = 11, Db = 143
+
+choosing M = 2, i calculate
+C1 = 225, C2 = 144, C3 = 205, C4 = 33 != M
+(and bottom bit is different)
+choosing M = 7, i get
+C1 = 127, C2 = 53, C3 = 19, C4 = 139 != M
+(and top bit is different)
+
+so your channel doesn't get the bit from alice to bob ...
+
+the problem is that you are mixing reduction modulo two different numbers
+Na and Nb ... this screws up the powering law you are trying to use.
+
+ - robbie
+-- 
+----------------------------------------------------------------------
+      robbie gates      | it's not a religion, it's just a technique.
+  apprentice algebraist |    it's just a way of making you speak.
+    pgp key available   |       - "destination", the church.
+
+
+
+

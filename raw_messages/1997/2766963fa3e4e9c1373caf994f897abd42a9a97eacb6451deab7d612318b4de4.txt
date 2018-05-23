@@ -1,0 +1,57 @@
+From: Alan Barrett <apb@iafrica.com>
+Date: Tue, 13 May 1997 16:28:24 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: key recovery vs data backup
+In-Reply-To: <19970512230928.46454@bywater.songbird.com>
+Message-ID: <Pine.NEB.3.95.970513093606.21416m-100000@apb.iafrica.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 12 May 1997, Kent Crispin wrote:
+> > What I meant was, you can make n-of-m hardware stuff for both cases.
+> > Surely you don't disagree with that?
+>
+> I don't disagree that you *could* do it.  I think it unlikely that you
+> would do it for the multiple recipient case.  I believe that in the
+> MR case the master key(s) (especially if there are multiple master
+> keys) would use exactly the same encryption algorithm as the normal
+> encryption case.  That is the obvious, straightforward way to do it.
+> If you use another encryption algorithm for the master then you have a
+> whole raft of other problems to deal with.
+
+You can have the same algorithm (visible at the user side) whether or
+not you have special hardware for protecting the private half of the key
+pair from exposure.
+
+> > Finding out which key to encrypt to in the MR case is analagous to
+> > finding out which key safe to talk to in the KS case.  Securing and
+> > authenticating the channel to the key safe in the KS case is an
+> > extra issue that does not have a counterpart in the MR case.
+>
+> ?? How do you know that the channel through which you get the master
+> key in the MR case is secure?  You surely don't just pull it off the
+> net.  It's signed?  Then the problem just recurses -- how do you
+> know the signature is good?  This is exactly the problem you have
+> contacting the keysafe.
+
+Knowing the right key in the MR case is static information, analagous
+to knowing the network address of the key safe in the KS case.  For
+example, in the MR case, the key could be distributed on a floppy disk
+along with the special software, while in the KS case the location
+of the key safe could be so distributed.  OK, you also need a way of
+changing the (MR) key or of moving the (KS) key safe, but that doesn't
+happen often and similar issues would appear to arise in either case.
+
+But in the KS case, there would also need to be a mechanism to protect
+the channel between the user and the key safe every time the channel is
+used, and that extra mechanism does not appear to have a counterpart in
+the MR case.  Not really a big deal, but it is a whole extra protocol to
+be designed.
+
+--apb (Alan Barrett)
+
+
+
+
+

@@ -1,0 +1,40 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sat, 22 Feb 1997 09:36:14 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Security hole in Solaris 2.5 (sdtcm_convert) + exploit
+In-Reply-To: <Pine.GSO.3.95.970222170729.18883B-100000@sundy.cs.pub.ro>
+Message-ID: <199702221736.JAA10536@netcom14.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Someone in Romania writes:
+
+> Another hole in Solaris
+
+Horrors no!  
+
+> The exploit is very simple. Change the permision mode of your calendar
+> file (callog.YOU) from /var/spool/calendar directory (usual r--rw----) and run
+> sdtcm_convert. sdtcm_convert 'll observe the change and 'll want  to
+> correct it (it 'll ask you first). You have only to delete the callog file
+> and make a symbolic link to a target file and your calendar file and said to
+> sdtcm_convert 'y' (yes). sdtcm_convert 'll make you the owner of target
+> file ...  
+
+Where would Unix be without symbolic links and race conditions?  
+
+This is cute, in that rather than having to mung a symbolic link on
+the fly, the program conveniently asks for user input with suid set,
+and then pauses while you set the trap.  
+
+Good work. 
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

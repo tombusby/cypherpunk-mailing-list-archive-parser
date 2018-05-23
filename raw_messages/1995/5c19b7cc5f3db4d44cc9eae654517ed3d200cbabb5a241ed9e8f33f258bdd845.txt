@@ -1,0 +1,44 @@
+From: philip@cs.brandeis.edu (Philip Trauring)
+Date: Mon, 6 Feb 95 10:59:56 PST
+To: cypherpunks@toad.com
+Subject: MD5 coding
+Message-ID: <ab5c1c670202100461ba@[129.64.123.61]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I am looking to put together an MD5 message digest program and have
+extracted the MD5.c and MD5.h files from PGP(excerpt of the MD5.h file
+below) but I'm not sure how it all works. Can someone who is familiar with
+the functions and the data structure please e-mail me with a bit of
+guidance as to what each one does and how to implement it. If anyone can
+lead me to a good description of the processes involved I would appreciate
+that too. Thanks.
+
+----====----
+struct MD5Context {
+        uint32 buf[4];
+        uint32 bits[2];
+        unsigned char in[64];
+};
+
+void MD5Init(struct MD5Context *context);
+void MD5Update(struct MD5Context *context, unsigned char const *buf,
+unsigned len);
+void MD5Final(unsigned char digest[16], struct MD5Context *context);
+void MD5Transform(uint32 buf[4], uint32 const in[16]);
+----====----
+
+        Philip Trauring
+
+--=--=====--=--=====--=--=====--=--=====--=--=====--=--=====--=--=====--=--
+    Philip Trauring                     Brandeis University MB1001
+    philip@cs.brandeis.edu              P.O. Box 9110
+    (617) 736-5282 ['94/95]             Waltham, Ma  02254-9110
+--=--=====--=--=====--=--=====--=--=====--=--=====--=--=====--=--=====--=--
+
+
+
+
+
+

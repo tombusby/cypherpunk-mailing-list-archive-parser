@@ -1,0 +1,94 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 10 Oct 95 09:06:08 PDT
+To: cypherpunks@toad.com
+Subject: Re: Certificate proposal
+In-Reply-To: <199510100721.AAA20956@ix.ix.netcom.com>
+Message-ID: <199510101604.JAA17611@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart <stewarts@ix.netcom.com> writes:
+
+>As far as privacy goes, this set of keys and certifications lets you create
+>private communications (using signed DH, etc.) with the entity that owns
+>the private key for Bank Account X.  No, you don't know if that entity
+>is really Alice or really MITM; in fact you don't know Alice's name, if it's
+>done right.  You just know that the Bank says it will honor requests for money
+>from Bank Account X (assuming you know where to find the Bank, which is a
+>separate
+>but similar problem.)  So assuming you're selling politically correct
+>widgets and not
+>pharmaceuticals or financial privacy consulting services, you probably don't
+>care too much about who's on the other end - the person who's giving you
+>the money is the person you want to be talking to.
+
+Still, there is a problem here: how did the bank know that it _should_
+honor requests to withdraw money from bank account x if they are signed
+with a certain key?  How did it determine that that is a valid key, if it
+never had a secure channel to the person opening the account?  I think
+the answer is clearly that it cannot, that it must have had a secure
+channel.  Would a certificated key presented by Alice have been
+sufficient to create such a channel, do you think, or would a face to
+face meeting have been necessary?  (Or would an uncertificated key be
+adequate?)
+
+>In the case of the Bank, the reason you trust the Bank isn't that you know
+>them physically (though it was interesting when I started dealing with a
+>local bank where the tellers knew me by name after only two or three visits);
+>knowing your local Savings and Loan by name doesn't guarantee you can get any
+>money out of them if there's a bank run, nor does it really guarantee that they
+>won't embezzle the funds and head for Argentina.  The reason you trust them
+>is that they (in this case the "they" identified by their key) are doing
+>business
+>dealings with a lot of people and it's more profitable not to abscond.
+>And the reason you know it's really the Bank and not MITM is that they've
+>always identified themselves by their key from the beginning.
+>Just like the credit card who's owner we've been calling Alice has.
+>And because you've successfully withdrawn money from the Bank before,
+>and because you're clearing Alice's credit card transaction reasonably promptly.
+
+What if you are accessing the bank via a MITM?  Consider this example:
+Alice writes you a check, signed with a key (without her name) which
+has a credential from the bank saying that it will back up the check.
+But you need the bank's key to check the credential, so Alice gives it
+to you, or you get it from a public cache.  Suppose the bank's key is
+fake, and Alice is defrauding you.  How do you tell?  Wouldn't a
+certificate on the bank's key be necessary, one which ties the bank's
+name and reputation to the key?
+
+Or what if the bank really is and has always been behind a MITM?  You say
+that it is more profitable for the bank not to abscond with your money.
+What about the MITM?  He doesn't make any profits until he cheats.  He
+might well be collecting information which will allow him at some point
+to abscond very successfully.  Would you really trust a bank which was
+known to you only by a key and by a record of never having defaulted,
+knowing this was a possibility?
+
+>Checks and credit cards are especially good examples for this - the current
+>systems need your name on them, because your name and signature are the
+>closest they have to an authentication system.  However, with digital
+>signatures,
+>the fact that you can sign a document verifiable by the public key is
+>all the authentication that's needed; your name isn't.  If the card has an
+>account number for convenience, and Alice substitutes Carol's account number
+>for hers on a statement, her signature won't match the public key the bank
+>wants on the request, and it'll bounce.  (In this case, the certificate
+>from the bank would probably include the account number as well as the key,
+>but it's not critical for on-line systems, just more efficient.)
+
+Same problem as before: how does the credit card company know that the
+key it is putting on the card is really Alice's?  What if Alice discovers
+unauthorized charges because Carol was a MITM and substituted her key?
+We can't just ignore this possibility.
+
+It seems to me that a lot of protocols assume the existence of secure
+channels.  Yet the MITM attack shows that public key cryptography does
+not in and of itself provide a secure channel.  This is a problem which
+IMO should not be ignored simply because it is inconvenient.
+
+Hal
+
+
+
+

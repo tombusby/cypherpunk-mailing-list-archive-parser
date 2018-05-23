@@ -1,0 +1,84 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Sat, 13 Jan 96 17:22:40 PST
+To: doclulu@infobahnos.com
+Subject: Re: (none) [httpd finding your identity]
+In-Reply-To: <199601140024.TAA20599@rizzo.infobahnos.com>
+Message-ID: <30F8596B.5611@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The snoop program is using FTP to find out the user's e-mail
+address.  The image on the page is an ftp: URL.  Our FTP code
+was sending the user's e-mail address as the password for
+anonymous FTP, which is the usually requested by FTP sites.
+The perl script was waiting for the FTP to happen, and then
+looking at its log to figure out the email address.
+
+  I've removed the code that uses the e-mail address as the
+FTP password for anonymous FTPs.  You can still enter it by
+hand by using a URL of this form 'ftp://anonymous@ftp.netscape.com'.
+This will cause the navigator to prompt the user for the 
+password to send for anonymous.  This is a little known feature
+that will also allow users to access non-anonymous ftp
+accounts via netscape.
+
+  The fix for this will be in the next beta, and the final
+version of 2.0.
+
+	--Jeff
+
+doclulu@infobahnos.com wrote:
+> To: Rich Graves <llurch@networking.stanford.edu>
+> Cc: cypherpunks@toad.com
+> Subject: Re: (none) [httpd finding your identity]
+> 
+> At 11:28 96-01-12 -0800, you wrote:
+> 
+> >On Fri, 12 Jan 1996, sameer wrote:
+> >
+> >> > > control what information is passed out to the other end.
+> >> > > Specifically, I'd like http://anonymizer.cs.cmu.edu:8080/prog/snoop.pl
+> >> > > to come up nearly blank.)
+> >> >
+> >> >   We do not send the HTTP 'From:' header.  I will look into where
+> >> > they are getting the user name and location from.  There is really
+> >> > nothing I can do in the Navigator to stop them from getting your
+> >> > IP address or DNS name.
+> >>
+> >>      I beleive that it uses finger. If you really want to prevent
+> >> people from finding out where you're coming from, use the
+> >> anonymizer. Not at CMU? Don't worry.
+> >
+> >On most UNIX machines or a Mac or PC running most common talk clients?
+> >Worry. Not just finger, but also identd will identify you. I think Eudora
+> >Pro has an identd option, too.
+> >
+> >-rich
+> >
+> >
+> 
+>         On Win 3.1 using Netscape 1.22, you can improve your 'lack of
+> output' by removing in the PREFERENCES menu: Your Name:
+>                                   Your Email:
+>                                   Your Organization:
+>         The bad side is that you cannot mail from Netscape without filling
+> the Email entry with a valid Email address and putting an anonymous address
+> (ex.:an123456@anon.penet.fi) would cause
+> http://anonymizer.cs.cmu.edu:8080/prog/snoop.pl
+>  to report your REAL hostname with your anonymous username
+> (ex.:an123456@myhost.com)
+> so if privacy is a must and you cannot use the anonymizer, this could reduce
+> your output to your computer type and operating system and your browser and
+> version number. For my part, after removing my Email, it was all that was
+> left (-: ( It will stay that way... )
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

@@ -1,0 +1,55 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 16 Jul 1996 16:53:42 +0800
+To: cypherpunks@toad.com
+Subject: Re: How I Would Ban Strong Crypto in the U.S.
+In-Reply-To: <ae0efb9f020210046227@[205.199.118.202]>
+Message-ID: <199607151920.MAA08142@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Raph Levien <s_levien@research.att.com> writes:
+>4. Thus, the best leverage for the TLAs to win is to guide the 
+>development of a key management infrastructure with the following 
+>property: if you don't register your key, you can't play. I believe that 
+>this is the true meaning of the word "voluntary:" you're free to make 
+>the choice not to participate.
+
+>5. This is _important_. If you can't get the keys for your 
+>correspondents, you can't use encryption. If they build a key management 
+>infrastructure that actually works, people will use it.
+
+There has been some discussion at the last couple of crypto conferences
+about possible ways around this plan.  (I guess the idea goes back at
+least a year or two.)
+
+One idea is to register a 2048 bit public key.  You have to give the
+secret key to the government in order to use the registry.  But what you
+do is to create a second key and embed it in the first.  It is, say, a
+1024 bit key which is the lower half of the 2048 bit key.  It has
+different secret factors that nobody but you knows.  Then when people
+send you messages they encrypt using this modulus rather than the
+official one.
+
+You get the benefit of the government-sponsored key certificate
+infrastructure, but the government is not able to crack your
+communications.
+
+The discussion at the crypto conferences has centered on how to design
+key systems which don't have this "subliminal key" property, where it is
+impossible to create pairs of keys such that publishing one reveals the
+other.  I think they were looking at some of the discrete log systems
+since in RSA it is pretty easy to do what I have described above.  You
+just create the 1024 bit key first, at random, then choose the 2048 bit
+key so its modulus matches the 1024 bit key in its low bits.  This is the
+same basic method as the so-called "dead beef" attacks against PGP key
+ID's which were published earlier this year.
+
+So it will be interesting to see whether any government sponsored PK
+infrastructure takes care to avoid subliminal keys.
+
+Hal
+
+
+
+

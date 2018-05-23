@@ -1,0 +1,44 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Sat, 1 May 93 12:54:38 PDT
+To: cypherpunks@toad.com
+Subject: clipper and public key
+Message-ID: <9305011951.AA27289@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tim mentions that the Clipper chip requires public key in order to be
+useful.  This is not quite right.
+
+The clipper chip is only a symmetric-keyed block cipher with a
+peculiar (and condemnable) key setup feature.  the chip _per se_ does
+not involved public key.
+
+The problem is that you have to get the same key on both end of the
+link without transmitting it.  There is a "public key" way of doing
+this: Diffie-Hellman key exchange.  That would require licensing from
+RSADSI.
+
+This is not, however, the only way to do this.  If you have a
+symmetric cipher and a secret system key not known to the
+participants, i.e.  embedded in hardware, then you can also transmit a
+session key simply by encrypting it.  Of course if you know the system
+key then you can read the traffic, LEEF's aside.  Such a system master
+key could fairly easily be discovered, unless it's burned into the
+chip by the manufacturer and the secret ends there.  (Yeah, right)
+
+Hence in order for a reasonably (?) secure implementation of a
+telephone which uses the clipper chip, D-H seems to be necessary.  In
+fact, the AT&T 3600 phone does use D-H for key exchange.
+
+Some have asked how come AT&T doesn't get sued by RSADSI.  Easy:
+they're a licensee.
+
+In summary: Does clipper require public key?  In itself, no.  In
+implementation, likely.
+
+Eruc
+
+
+
+

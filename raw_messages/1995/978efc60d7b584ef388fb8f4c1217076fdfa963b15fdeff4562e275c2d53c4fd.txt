@@ -1,0 +1,54 @@
+From: tjb@acpub.duke.edu (Tom Bryce)
+Date: Thu, 12 Jan 95 19:25:28 PST
+To: cypherpunks@toad.com
+Subject: Re: RELEASE: Secure Edit beta 0.5
+Message-ID: <v01510102ab3ba3ffa431@[152.3.113.8]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Ben Goren wrote:
+
+>At 5:18 PM 1/12/95, Tom Bryce wrote:
+>>[. . .]
+>>* the salt is concatenated with MD5[passphrase] many times and this
+>>concatenated string hashed to generate the 'session key' for the file
+>>from your pass phrase. The number of times it is concatenated is
+>>calibrated to make it take about half a second - not a big performance
+>>loss, but it makes brute force attack of weak passphrases up to
+>>thousands of times more costly.
+>>[. . . .]
+>
+>This is only going to work if MD5 is not a "group"--that is, if there is no
+>simple algorithm which is equivialent to md5(md5(x)). I doubt that's been
+>proven.
+
+This is not exactly what secure edit does. It hashes in the following
+manner to generate a session key:
+
+MD5 [ (128-bit salt) MD5[passphrase] 0 MD5[passphrase] 1 MD5[passphrase] 2 ... ]
+to get the session key. The 0, 1, 2 is a single byte. So there is only one
+level of nesting of the hashes. This is actually a common and well-regarded
+technique for increasing the security of weak passphrases.
+
+Tom
+
+
+
+------------------------------------------------------------------------
+             /~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/~~\
+            |               Tom Bryce                  |____|
+  ___       |               Duke  Med                  |         ___
+{~._.~}     |           tjb@acpub.duke.edu             |       {~._.~)
+ ( Y )      |   PGP keys: finger tjbryce@amherst.edu   |        ( Y )
+()~*~()     |personal:9B6088464ED86413 0F5E55E45CF1C961|       ()~*~()
+(_)-(_)     |miyako                                    |       (_)-(_)
+            |software:02646F0B06DCFE03 E6DD367DB4E1010F|
+         /~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/   |
+         \_________________________________________\__/
+
+
+
+
+
+

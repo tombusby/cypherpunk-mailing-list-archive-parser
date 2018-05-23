@@ -1,0 +1,43 @@
+From: "James A. Donald" <jamesd@echeque.com>
+Date: Fri, 19 Jan 1996 00:52:07 +0800
+To: "Timothy L. Nali" <tn0s+@andrew.cmu.edu>
+Subject: Re: Random Number Generators
+Message-ID: <199601181557.PAA06221@mailx.best.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Timothy L. Nali" writes:
+> The most promising design I've seen so far (that I can actually
+> do) is based on clocking a D flip-flop in the following way:
+> 
+> [Shifts the output of a clock that he hopes will be sloppy into
+> a shift register]
+
+If you want noise, your circuit needs a known noise source, with 
+known good properties
+
+Your circuit has no known noise source, you are just hoping 
+that there will be noise in it somewhere.
+
+Johnson noise is amplified thermal noise thus it is known to 
+be good:  Amplify johnson noise to signal levels, and then 
+shift this random analog output into a long shift register.  
+(You will need a long shift register to suppress metastable 
+states.)  You should set up your low frequency analog 
+feedback to get near equality of ones and zeros, and you 
+should have digital feedback (similar to a CRC
+generator) to get perfect equality of ones and zeros.
+
+ ---------------------------------------------------------------------
+              				|  
+We have the right to defend ourselves	|   http://www.jim.com/jamesd/
+and our property, because of the kind	|  
+of animals that we are. True law	|   James A. Donald
+derives from this right, not from the	|  
+arbitrary power of the state.		|   jamesd@echeque.com
+
+
+
+
+

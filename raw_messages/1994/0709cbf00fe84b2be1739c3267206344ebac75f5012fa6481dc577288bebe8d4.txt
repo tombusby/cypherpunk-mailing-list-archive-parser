@@ -1,0 +1,40 @@
+From: Jim Gillogly <jim@rand.org>
+Date: Fri, 16 Sep 94 12:24:04 PDT
+To: perry@imsi.com
+Subject: Re: thoughts on RC4
+In-Reply-To: <9409151452.AA03618@webster.imsi.com>
+Message-ID: <9409161923.AA06121@mycroft.rand.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> perry@imsi.com (Perry E. Metzger) writes:
+>         Can anyone see any reason why one could not change RC4 to
+> being a word oriented stream cipher, call it "ERC4"?
+
+> The reason I ask is because this would speed things up by a factor of
+> four on 32 bit machines, which would mean modest hardware could
+> possibly break 100mbps speeds. The 64 bit extension on 64 bit RISC
+> processors could go far, far, faster still.
+
+Is mbps megabits per second?  If so, I'm within a factor of 3 of confirming
+your numbers.  If it's megabytes, I'm more than an order of magnitude away
+from understanding what "modest hardware" means.
+
+The original code plods along on my 50 Mhz '486 laptop (Borland C++ Pro)
+at a paltry 1.43mbits/s.  Turning the inner loop into obfuscated C picks up
+a little to 3.84mbits/s, and doing it with 8086-compatible assembler
+yields only 8.40mbits/s.  The compiler could certainly be a lot smarter,
+but the assembler probably couldn't be improved by a factor of 2 without
+modifying the algorithm as you suggested -- the current incarnation is at
+15 instructions per encrypted byte.
+
+Anybody else have timing numbers?
+
+	Jim Gillogly
+	25 Halimath S.R. 1994, 19:18
+
+
+
+

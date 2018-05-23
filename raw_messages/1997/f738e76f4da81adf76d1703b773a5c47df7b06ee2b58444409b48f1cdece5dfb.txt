@@ -1,0 +1,122 @@
+From: Phillip Hallam-Baker <hallam@ai.mit.edu>
+Date: Sat, 30 Aug 1997 01:10:24 +0800
+To: "'Myron Lewis'" <coderpunks@toad.com>
+Subject: RE: ASK ToolKit Clarifications
+Message-ID: <01BCB47B.90764B60.hallam@ai.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+For my comments on snakeoil see:
+
+http://crecy.ai.mit.edu/snakeoil/
+Follow the navigation bars through 'key distribution" to "Monkey Wrench"
+
+
+Despite the hype KeyGen does not "throw a monkey wrench" into anything.
+It is unfortunately nothing particularly new. It is simply an example of the
+type of technique that is commonly used in conjunction with a public key
+system to keep keying material fresh while avoiding additional public key
+exchanges.
+
+
+>Unfortunately, I cannot talk about those things that are being patented, but
+>maybe in the near future.
+
+I hope you are not about to claim a patent on the use of one way hash 
+functions to create keying material. I have prior art on that dating back to 
+1993 and I wasn't the first to discover it by a very long chalk. I suspect that
+the internals of Photuris probably contains most of the KeyGen proposal.
+
+
+>The keys are both random and unpredictable -- meaning that you will not be
+>able to deduce what the next key is even if you have any key that was used
+>in the past.   The system does not depend on the secrecy of internal
+>algorithms for security.
+
+What about hard coded internal parameters?
+
+If you can avoid the need for an initial insecure exchange your magic box
+means you don't need the synchronisation technique at all.
+
+
+>We are not blindly implying that applications using the ASK ToolKit are
+>unbreakable.  However, the toolkit provides the means for intrusion
+>detection and prevention.  We know of no method this simple that does that.
+
+I know of many, the problem is that most of them arn't much good.
+
+The only exceptionaly simple schemes I know are Diffie Helleman and 
+RSA. D-H is certainly simple. It is astonishingly simple in fact and much
+easier to explain to someone than MD5 or SHA.
+
+
+>The toolkit provides a number of bells and whistles to allow the developer
+>of an appliction using it to do many things like change keys as often as
+>wanted -- even every bit (not practical) or re-synchronize (which is
+>different from re-initializing).  It also allows the last session
+>information to either be stored in encrypted form on the machine or removed
+>to a portable medium.
+
+OK how about the symmetric key exchange system from Shen? You already
+have exchanged a private key S beteeen the parties (e.g. used public key
+or you have a password established). You don't want to exchange the password
+over the wire en-clair of course. Nor do you wish to use the shared secret as 
+the encryption key over long periods of time.
+
+One option is for party Alice to chose a random session mask M and send Bob M,
+The session key is then K = M XOR S. If the encryption system used is secure 
+both parties can use the derrived session key without problems.
+
+A better solution however is for Alice to chose a random token R and send
+Hash (K, R), R to Bob. She can also use the XOR mask trick as well to 
+decouple key exchange and session key choice. This is a massive advantage
+if the text you want to exchange has already been encrypted. i.e. we
+calculate M = K XOR S rather than chosing M at random.
+
+>The ToolKit does not provide the initial strong authentication needed to
+>start the process off.  There are many very good methods for doing this, so
+>why should we bother.
+
+BECAUSE YOU GREAT PUDDING HEAD THAT IS THE ONLY HARD PART.
+
+Techniques to keep symmetric key material fresh indefinitely have been
+known for years. Kerberos is full of them. So incidentaly is Windows NT
+which happens to have a lot of similar ideas at least with respect to
+authentication. The GSSAPI probably has the same stuff burried inside
+it somewhere.
+
+>The claims we make are not so much for the ToolKit itself but for the
+>applications that we envision can be developed given the ingenuity of the
+>developer.    We invite everyone who has a genuine interest in possibly
+>using the ToolKit,
+>and who is not just tossing flame about, to contact us with their questions.
+>If you are a responsible consultant or represent a responsible organization
+>and can sign an NDA, then we would be glad to fill in the details.
+
+This is the whole big problem. Most people I know who are interested in
+security worry about the competence of their security expert. So the obvious
+thing to do is to hire another security expert to audit their work. That is not
+possible if there are NDAs. Signing an NDA to not reveal source code is
+one thing, signing one to not use a mechanism is quite another. The 
+capabilities you describe can be easily performed using conventional
+techniques.
+
+The only case in which NDAs normally come up in security work is when
+actual source code is being exchanged. Even then the norm is for the 
+provider of the security toolkit to be providing their their trade secret source
+to the purchaser rather than this happening the other way round.
+
+As for licensing terms that relate to the utility of the functionality rather than
+the cost of doing the work these tend to be limited to cases where the
+selling party has an established product of known quality protected by 
+credible patents. Jim Bizdos meets these criteria, you do not.
+ 
+
+		Phill
+
+
+
+
+

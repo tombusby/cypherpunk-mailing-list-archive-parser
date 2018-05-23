@@ -1,0 +1,59 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Fri, 29 Mar 1996 23:15:34 +0800
+To: Eric Young <eay@mincom.oz.au>
+Subject: Re: Edited Edupage, 24 March 1996
+In-Reply-To: <Pine.SOL.3.91.960328154547.17117D-100000@orb>
+Message-ID: <Pine.SOL.3.91.960328094418.7389F-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 28 Mar 1996, Eric Young wrote:
+
+> On Wed, 27 Mar 1996, Phil Karlton wrote:
+> > My apologies for misunderstanding what you wrote. It could be that I am
+> > oversensitive on the issue since SSL has been "accused" of being
+> > proprietary in many forums.
+
+A lot of the aura of "proprietariness" of SSL comes from the early 
+history, which I don't think we need to go into again.
+
+> ASN.1 BOOLEAN type, and I have only just been able to get hold of the 
+> actual full specification of X509v3.  The UNIVERSALSTRING type?  Only 
+> found out about it's existance 3 days ago.
+
+DER BOOLEAN :  [UNIVERSAL 1]
+	
+	true - 0x01 0x01 0xff
+	false- 0x01 0x01 0x00
+
+I never had any problem getting hold of ASN.1 information for free (I 
+even managed to get a change into the PER spec without being a government).
+Marshall Rose's "The Open Book" really helped.  protectzia rules, even if 
+Tim doesn't know what it means :)
+
+Mind you, when I was working on z39.50 I had tremendous fun working on 
+debugging when just about everybody had hand-rolled their own compilers 
+or codecs, and nobody actually had a real copy of the ASN.1 specs 
+
+The real problem with asn.1 is that it is so easily abused; unless you 
+stop and think about what the spec you're writing is going to look like 
+in terms of structs and bits on the wire it's way too easy to come up 
+with something completely unimplementable. 
+
+When used correctly it can be a life saver, and when used with PER, the
+encodings generated are often way better than you'ld end up with if you
+designed the encodings manually, especially for modern cache
+architectures; however if the spec is fucked up there's not a lot you can 
+do. 
+
+
+Hmm - hi abuse potential - now there's something that really needs federal
+regulation. 
+
+Simon
+
+
+
+
+

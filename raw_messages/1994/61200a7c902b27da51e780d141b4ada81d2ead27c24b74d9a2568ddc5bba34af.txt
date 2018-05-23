@@ -1,0 +1,66 @@
+From: Sergey Goldgaber <sergey@delbruck.pharm.sunysb.edu>
+Date: Sun, 27 Feb 94 18:43:42 PST
+To: Jef Poskanzer <jef@ee.lbl.gov>
+Subject: Re: standard for stegonography?
+In-Reply-To: <9402280205.AA06567@hot.ee.lbl.gov>
+Message-ID: <Pine.3.89.9402272112.A8495-0100000@delbruck.pharm.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Sun, 27 Feb 1994, Jef Poskanzer wrote:
+
+> On reflection, it seems that some users will want an interoperable
+> standard, and other users will want complete stealth.  So what I'll
+> do is add a bunch of switches to pnmstego and pnmdestego, so that
+> the user can specify all sorts of different formats.  Letting the
+> switches default will get you a simple interoperable mode, so you
+> can send stuff to people without prior arrangement or put stuff on
+> an ftp server; but an attacker will be able to extract the bits and
+> try to decrypt them.  Specifying things like offsets and bit-usage
+> schedules will mean that the attacker won't even be able to extract
+> the bits; but the settings you use will be equivalent to that much
+> more key material that you have to communicate or remember.
+> ---
+> Jef
+> 
+
+What about this as a standard?:
+
+Have the offset default to the checksum-value of the reciever's public key!  
+The sending program could have the user specify the reciever, look his key
+up in the public-keyring and offset the message accordingly.  While, the 
+recieving program would automatically scan the file starting at the 
+appropriate offset based on the same public key checksum-value.
+
+No secure channels would be necessary for dissemating offset values.  
+And, one's opponents wouldn't know where to look unless they knew:
+
+  1 - That there may be a message hidden in the file.
+  2 - That it is hidden with this particular stego standard in mind.
+  3 - The reciever's public key.
+
+Adopting this as a standard would, in my oppinion, offer a great advantage
+over simply using a constant offset.
+
+Of course, as it has been pointed out, there should always be the option
+of providing a custom (non-standard) offset in the intrest of greater 
+security.
+
+
+                        All feedback welcome,
+
+                               Sergey
+
+
+PS:  This could also be implemented using any combination of the 
+     checksum-value(s) of the sender's and/or the reciever's 
+     public/private keys.  However, this will have very different
+     implications from the suggested method.
+
+
+
+
+

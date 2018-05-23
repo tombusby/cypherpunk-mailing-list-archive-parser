@@ -1,0 +1,101 @@
+From: "Jonathan Shekter" <jshekter@alias.com>
+Date: Wed, 12 Jul 95 10:00:16 PDT
+To: cypherpunks@toad.com
+Subject: Re: general RC4 key searcher: optimisations anyone?
+Message-ID: <9507121259.ZM1196@lennon.alias.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>/* RC4 Brute Force Key Searcher, by Andy Brown 1995
+>
+>This part of the package is meant to be portable between most systems
+>so that Unix users can take part in the searching. After all, the
+>kind of really high powered systems that can make a large dent in the
+>key space are not running Windows NT. You will, however, require
+
+	Umm... ever hear of an Alpha? Besides which, this will compile on NT,
+and just about every other OS known to man, so it's a moot point.
+
+
+>#define SwapByte(a,b) ((a)^=(b),(b)^=(a),(a)^=(b))
+
+	If the two values are in memory (which they are as you swap state
+vector elements) then this xor trick requires three read-modify-write cyles --
+slow on any architecture. Use a temp variable instead.
+
+>/* prepare the key */
+>
+>for(counter=0;counter<256;counter++)
+>state[counter]=(unsigned char)counter;
+
+	This is bad. Use either a) memcpy as in bruterc4 or b) an unsigned
+long, starting at either 0x00010203 or 0x03020100 depending on endianness,
+ adding 0x04040404 at each iteration to generate four bytes per shot. Remember,
+on most machines a 32-bit store is the same speed as an 8-bit store. The fastes
+I have been able to do on this section was obtained by unrolling the loop
+manually, and using *two* long variables, alternating, to remove instruction
+dependancies.
+
+>for(counter=0;counter<256;counter++)
+>
+>index2=(key[index1]+state[counter]+index2) & 0xFF;
+>SwapByte(state[counter],state[index2]);
+>
+>if(++index1==keybytes)
+>index1=0;
+
+1) This loop needs to be unrolled! Using direct array offsets instead of
+incrementing the counter is a speedup on many machines. Also, experiment with
+the unroll size. Making it larger increases performance until you get too big
+to fit in the cache, at which point it slows down. My experiments on a few
+different types of machines showed that unrolling the inner loop 16 or 32 times
+was usually about right. See the inner loop of bruterc4. Use macros to do the
+unrolling.
+
+2) You can avoid the if statement for checking for key wrap around as follows:
+in your initialization, construct an array as follows:
+
+for (i=0; i<keysize-1; i++)
+  transtbl[i] = i+1;
+transtbl[i] = 0;
+
+Then, after each iteration:
+
+index1 = transtbl[index];
+
+Viola, no if statements, no divides or mods. On many architectures this is
+worth the trouble as branches are expensive. Obviously, though, test this
+
+
+
+>/* do two RC4 operations as a preliminary test. If this fails then test
+>the next one, then the rest. This should result in a lot of rejections
+>before the rest of the loop is entered */
+
+	I like the early-out test.
+
+>x=(x+1) & 0xFF;
+>y=(state[x]+y) & 0xFF;
+>SwapByte(state[x],state[y]);
+
+  Again, swapping with xor probably hurts you here. Use a register temp
+variable.
+
+
+	My personal keycracker accepts general length keys and is not too much
+ slower than bruterc4. So it can be done.
+
+
+	- Jonathan
+
+-- 
+    ____________________________________________________
+   /   Jonathan Shekter   /                            /
+  /   Graphics Hack      /   "Probability alone       /
+ /  Alias/Wavefront     /   dictates that I exist"   /
+/______________________/____________________________/
+
+
+
+

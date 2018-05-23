@@ -1,0 +1,106 @@
+From: Jim Choate <ravage@einstein.ssz.com>
+Date: Thu, 25 Jul 1996 18:17:15 +0800
+To: cypherpunks@toad.com
+Subject: Re: Digital Watermarks for copy protection in recent Billbo (fwd)
+Message-ID: <199607250621.BAA07021@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Hi all,
+
+The Sampling Theorem in operation is a little more complicated than the
+model that is being discussed.
+
+Forwarded message:
+
+> From: mpd@netcom.com (Mike Duvos)
+> Subject: Re: Digital Watermarks for copy protection in recent Billbo
+> Date: Wed, 24 Jul 1996 21:38:36 -0700 (PDT)
+> "Perry E. Metzger" <perry@piermont.com> writes:
+> 
+>  > The Nyquist Theorem states you need exactly twice the
+>  > samples, not over twice. The magic number isn't something
+>  > like 2.2, its exactly 2.
+> 
+> The Sampling Theorem states that equally spaced instantaneous
+> samples must be taken at a rate GREATER THAN twice the highest
+> frequency present in the analog signal being sampled.  If this is
+> done, the samples contain all the information in the signal, and
+> faithful reconstruction is possible.
+
+Actualy the sampling theorem states that if you want to reproduce a signal
+reliably it must be sampled at a frequency AT LEAST TWICE that of the
+highest frequency of interest in the FFT of the signal. This means the
+signal must be deformable into sine waves, not all signals qualify for this
+particular limitation and in general are not good signals for sampling.
+An example is a step change from v1 to v2. since there is no change in
+voltage except for a brief moment the output of the FFT is pretty much flat.
+What comes out the other end looks like a spike (similar to what happens when
+you feed a square wave to a transformer and look at the output). If you
+reconstruct this via the sampling theorem you get a sign wave of extremely
+low amplitude and frequency.
+
+If you think of a FFT as taking a signal and breaking it down into componant
+frequencies. Then think of a hair comb where the lowest frequencies are the
+bigger teeth (put them to the L. when looking at it). Because sign waves
+have zero crossings a single sample per cycle is not enough. By taking at
+least two samples a cycle you are guaranteed not to miss the presence or
+absence of a componant frequency. So this guarantees that we get a accurate
+count of componants and their phase relations to each other (where the
+arbitrary time reference comes in - really a fixed frequency clock). Back to
+the comb. Where a given signal has a componant leave the teeth. Where there
+is no componant break them off. You are left with a ratty looking comb. Now
+to each of the remaining teeth assign an amplitude for that specific
+frequency that is consistent with the FFT you calculated. The way this FFT
+is implimented in practice is called a 'Comb Filter' where it samples the
+signal (wide bandwidth) over a set of very small bandwidth filters in
+parallel. Scanning the output of the filters at a fixed rate you get a phase
+relation as well. Digitize the signals in a particular pattern and you are
+ready to cut your CD or whatever.
+
+It does NOT guarantee faithful representation of the original signal but
+rather a signal with the same energy spectrum and phase characteristics.
+One of the basic ideas of Algebra is that any given curve can be explained
+by a arbitrary set of equations. The Sampling Theorem just gives you a
+rationale for picking from that set.
+
+> Exactly twice the highest frequency won't do, and it should be
+> obvious that sampling a sine wave at twice its frequency yields
+> samples of constant magnitude and alternating sign which convey
+> nothing about its phase and little useful about its amplitude
+> either.  (Drawing a little picture might be helpful here.)
+
+Exactly what the theorem is supposed to produce. You take your original
+signal and run it through a FFT. You look at the bandwidth you desire. The
+highest frequency of interest is 1/2 or less your sampling frequency. With
+this information you can build a set of sine waves whose amplitude is given
+by the FFT along with phase relations. Since you are breaking the signal
+into sine waves (which happen to be well defined) all you realy need is to
+know the maximum and minimum amplitudes as well as their phase to some
+arbitrary but constant time reference. Sum them back together on the other
+side and what you got? A reasonable useable copy of your original signal.
+
+This is why DSP's are optimized for multiplication (multiply the amplitude
+of that componant by its presence in the FFT) and summing (add them together
+to get the target signal). Generaly because of noise and similar phenomena
+it is commen to multiply and add windows of samples (ie averaging).
+
+> Although anything over twice the highest frequency will work in a
+> theoretical sense, a small fudge factor does wonders for digital
+> signal processing, if only to reduce to a reasonable value the
+> width of the window into the sample stream needed for various
+> signal manipulations.
+
+Actualy I believe the decision was made by Philips (the inventor of the CD)
+to settle on the 44kHz sample rate because of some design option it
+simplified. I unfortunately don't remember anything more specific than that.
+Anyone got the CD Rom bible?
+
+                                              Jim Choate
+
+
+
+
+

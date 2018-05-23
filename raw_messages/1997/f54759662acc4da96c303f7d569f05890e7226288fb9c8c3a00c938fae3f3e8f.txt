@@ -1,0 +1,175 @@
+From: Jim Choate <ravage@ssz.com>
+Date: Fri, 3 Oct 1997 14:50:48 +0800
+To: cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: Re: Traffic Analysis (fwd)
+Message-ID: <199710030707.CAA30296@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Forwarded message:
+
+> Date: Fri, 03 Oct 1997 01:34:56 -0400
+> From: "Robert A. Costner" <pooh@efga.org>
+> Subject: Re: Traffic Analysis 
+
+> Remailers in general will throw away messages at times.  Sometimes on
+> purpose, sometimes by accident.  This is not replaced by any cover traffic.
+
+Perhaps this should be added.
+
+>  For purposes of argument, we could say that a remailer throws away
+> messages that violate usage policies.  This accounts for some amount of
+> traffic, let's just say 10% to name a figure.
+
+Way too high for commercial use. Get it down to something like .01 and that
+would be workable I suspect (haven't done the math). Course this raises the
+issue of who pays for dumped mail on a commercial box. Should the customer
+pay since it was their action that instigated the drop? Or perhaps the
+remailer since they were selling a service which they didn't provide at
+their discretion?
+
+>  Of course this sounds
+> reprehensible,
+
+Not to me. It's your box and your money, set any policy that you desire.
+If I as a user don't like it, I'll beat feet...
+
+> so you ask what sort of message gets thrown out?  Some
+> examples might be:
+> 
+>  * 3,000 copies of the same message to the same person
+>  * Any mail from Sanford Wallace at Cyberpromo.com
+>  * A 300MB mailbomb
+
+Let's generalize a bit to see if we can get a clearer picture.
+
+ -   traffic that seems to be duplicate.
+
+     What if the digital signature on each one is valid implying the
+     originator intended to send the 3,000 pieces. Do you dump them
+     and take the money?
+
+ -   traffic from specific parties whose reputation capital is low.
+
+     As a business should this really matter as long as the creetin
+     pays the bill?
+
+ -   traffic of an abnormal format
+
+     Don't see any issues with this one.
+
+Are there any other classes that you can think of that you might want to
+filter on?
+
+> Basically some messages that constitute abuse (without examining actual
+> content) get tossed. 
+
+Ok, so you are doing header filtering.
+
+> These are "valid" messages from people which the
+> remailer might decide to not continue to send.  Much of this mail never
+> even reaches the remailer code as it gets tossed at an earlier level.
+> Since about 10% of incoming traffic gets tossed, it would seem that this
+> would somehow effect traffic analysis.  This traffic is not replaced, and
+> much of the dropped traffic is not even know to the remailer.  How much
+> would this actually effect traffic analysis?
+
+Let's see if we can put some numbers to it...
+
+We receive n pieces of mail. n/10 is tossed at reception based on header
+filtering. For each mail that gets to the remailer code we sent m cover
+messages and 1 real message.
+
+So the remailer handles a total of (n - n/10) + (m + 1)(n-n/10)  pieces in a
+given time period, t. Let z stand for (n - n/10) the actual number of
+processible traffic, we can reduce this to z + (m + 1) z.
+
+Let's assume now that we go ahead and transmit cover for those emails we get
+something like z + (m + 1) z + m ( n/10 ). We don't add a 1 to the m(n/10)
+because we don't have a real outgoing to process.
+
+So the total traffic load of the remailer can be represented by:
+
+ L = z + (m + 1) z + m ( n/10 )
+
+or,
+
+ L = (n - n/10) + (m + 1)(n - n/10) + m(n/10)
+
+Now if you look at a travelling salesman problem you see quickly that the
+complexity grows quite quickly. This produces a traffic analysis load of
+something of the form,
+
+ T = L ^ v
+
+Where v represents the complexity factor in dealing with the possible
+combinations possible.
+
+So, without actualy plugging numbers in there, I would say it looks like a
+small increase in output could grow pretty quickly because of the power
+growth factor in the extra traffic and processing it.
+
+> As a side point, software problems will at times cause chained messages to
+> get tossed.  From time to time certain remailers become incompatible with
+> each other, or user held public keys do not get updated properly.  This
+> will also cause messages to get tossed.
+
+Ok, let's add a 'software failure' category.
+
+> Cracker sends messages as "Anonymous" and does not allow replies to be
+> returned to the sender.  Redneck on the other hand allows each user to pick
+> a pseudonym and allows relies to be returned to the sender.  This is known
+> as a "nym".  The whole point of a nym is to be able to receive replies (as
+> well as establish reputation capital).  People who have nyms on the
+> remailer want to receive email back to them.  Nyms are managed and
+> authenticated with PGP.  My question is would it foil traffic analysis if a
+> number of remailer server generated messages were to go out to the nyms
+> without ever having matching incoming traffic?
+
+If I understand you the remailer would send outbound traffic to its input
+for distribution to your subscribers? I don't believe it would factor into
+the analysis at all if all the source destinations are the same. Outbound
+traffic from party A that went to party B would be important to track. So,
+if you wanted to do this sort of stuff and you wanted Mallet to chase their
+tail I would randomly pick source addresses from my subscriber base and send
+the bogus messages to my subscribers making shure nobody received an email
+from themselves. Then it looks like everyone is involved in a conspiracy...
+
+> >A commercial remailer should not keep records of its use. However, I suspect
+> >that eventualy remailers will be required to keep usage records by law.
+> 
+> I'd be willing to be involved in a first amendment challenge against any
+> such law.  I suspect we would win in the US.  At least we won the last 1st
+> amendment challenge against remailers.  (ACLU vs Miller)
+
+It has nothing to do with limiting speech so I doubt you'd have a 1st leg to
+stand on. Furthermore, the 1st doesn't guarantee the right to anonymity. If
+you want to claim that as a fundamental right you'd need to use the 9th and
+10th. It does have to do with being able to trace the perp back if
+needed. I am not saying I agree with it, just recognize that reasonable
+people will see this lack of tracability via a court order as a clear threat
+to their security at all levels.
+
+
+    ____________________________________________________________________
+   |                                                                    |
+   |    The financial policy of the welfare state requires that there   |
+   |    be no way for the owners of wealth to protect themselves.       |
+   |                                                                    |
+   |                                       -Alan Greenspan-             |
+   |                                                                    | 
+   |            _____                             The Armadillo Group   |
+   |         ,::////;::-.                           Austin, Tx. USA     |
+   |        /:'///// ``::>/|/                     http:// www.ssz.com/  |
+   |      .',  ||||    `/( e\                                           |
+   |  -====~~mm-'`-```-mm --'-                         Jim Choate       |
+   |                                                 ravage@ssz.com     |
+   |                                                  512-451-7087      |
+   |____________________________________________________________________|
+
+
+
+
+

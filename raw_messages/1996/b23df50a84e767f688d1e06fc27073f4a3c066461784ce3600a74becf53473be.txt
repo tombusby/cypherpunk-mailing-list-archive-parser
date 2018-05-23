@@ -1,0 +1,59 @@
+From: Matt Blaze <mab@research.att.com>
+Date: Sun, 7 Jan 1996 06:42:51 +0800
+To: cypherpunks@toad.com
+Subject: "trust management" vs. "certified identity"
+Message-ID: <199601062232.RAA12812@nsa.tempo.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The discussions here of the limits of PGP's certification and
+revocation model are close to the core of some work I've been doing
+(with Joan Feigenbaum and Jack Lacy) on what we call the "trust
+management" problem.
+
+Essentially we consider the consequences of abandoning the notion
+of "certified identity" implicit in systems like X.509 and PGP and
+subsuming identity under the more general umbrella of specifying
+and determining what a key is trusted to do.
+
+We've built a system, called "PolicyMaker", that allows the certifier
+of a key to specify what the key is trusted to do rather than to
+whom the key is trusted to belong.  The same mechanism is also used
+to specify and interpret local policies.  The PolicyMaker system
+is designed to be called as a service by local applications,
+which could be email systems like PGP or network-layer security
+protocols or any other application that requires complex trust
+relationships.
+
+Some early, local experience suggests that this approach is a good
+one.  It's easy to specify X.509- and PGP-style policies and
+certificates, but you can also say things like "valid for transactions
+over $500 only if countersigned" in a fairly natural way.
+
+I'll be happy to send a (very early) draft of our paper, "Decentralized
+trust management" to anyone who's interested.  I've made the draft
+available in the CFS-users email archive server.  To request a copy
+(PostScript format) by email:
+   echo get cfs-users pmdraft.ps | mail cfs-users-request@research.att.com
+(For non-unix shell people, just send a message to
+	cfs-users-request@research.att.com
+With the line:
+	get cfs-users pmdraft.ps
+in the BODY of the message (NOT on the subject line).)
+
+Comments and discussion appreciated.
+
+This is an early draft, and I'd appreciate it if it not be directly
+quoted, cited, or re-distributed.
+
+-matt
+
+PS  We expect to give away our reference implementation, too.  (Probably
+by May or so.)  Note that this is just research, and does not represent
+any current, past, or future product or service offering on the part
+of AT&T or anyone else.
+
+
+
+

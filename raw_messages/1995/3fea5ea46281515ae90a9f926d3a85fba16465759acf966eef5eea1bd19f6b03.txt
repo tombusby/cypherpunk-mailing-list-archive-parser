@@ -1,0 +1,34 @@
+From: Scott Brickner <sjb@austin.ibm.com>
+Date: Fri, 1 Sep 95 09:57:15 PDT
+To: droelke@rdxsunhost.aud.alcatel.com (Daniel R. Oelke)
+Subject: Re: SSL search attack
+In-Reply-To: <9509011225.AA20540@spirit.aud.alcatel.com>
+Message-ID: <9509011655.AA11645@ozymandias.austin.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Daniel R. Oelke writes
+>The only way this can work is if the server is told it is a 50%/75%/etc
+>size ACK, and then latter the server is ACKed for the full 100%. 
+>
+>Why?  Because what happens if the client dies immediately after doing 
+>the ACK - maybe only 51% of that space has been searched, yet 
+>the server has already seen an ACK for it.
+>
+>IMO - a % ACK is to much complexity and extra work on the server,
+>which is already having trouble keeping up.
+
+I agree.  ACKing partial segments is a bad idea.  But, when a client
+is given a block of segments, partial ACKing can let poorly connected
+clients communicate with the server via e-mail, and still stay busy.
+When the client completely finishes half of its segments, it ACKs them
+and asks for that many more segments.  The fraction can be adjusted as
+mean communications latency to the server is measured.  Ideally the
+new segments arrive just as the client finishes the second half of its
+original segments.  This way the segments are allocated as late as
+possible, letting better connected clients have a better shot at them.
+
+
+
+

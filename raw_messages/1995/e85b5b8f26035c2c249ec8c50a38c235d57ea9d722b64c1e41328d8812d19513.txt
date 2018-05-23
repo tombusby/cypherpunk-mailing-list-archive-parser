@@ -1,0 +1,70 @@
+From: Mike Ingle <inglem@adnetsol.com>
+Date: Tue, 26 Sep 95 22:53:38 PDT
+To: digitaliberty@phantom.com
+Subject: Coercion-proof remailers (solved?)
+Message-ID: <199509270552.WAA00475@cryptical.adnetsol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+For a while I've been talking about the importance of a robust
+infrastructure for anonymity, including coercion-resistant remailers.
+Here is an approach that appears to eliminate the problem of
+after-the-fact coercion.
+
+Existing remailers chain messages by using a fixed public/secret key
+pair in each remailer. This leaves them open to after-the-fact
+compromise from the sender end. If you capture a message as the sender
+sends it, you can later get the key of the first remailer, and decrypt
+the first layer. You can then proceed on down the line to the
+recipient. This creates a motive for an attacker to coerce remailers,
+and it means the value of the remailers' keys continually increase as
+more messages are sent.
+
+Instead of using a fixed key, the sender can perform a Diffie-Hellman
+exchange with the recipient at each point in a message's passage. This
+eliminates the coercion problem, since there is no permanent key to
+steal, but allows a corrupt remailer to see where the message is going.
+If the first remailer is corrupt, the whole path is compromised.
+
+The next step is to make sure there is no first remailer.
+
+The sender S generates a message and header requesting mailing     S
+to the recipient R. The sender splits it into two pieces using    / \
+a method that requires both pieces to recover any data. Then he  1   2
+adds a header to each piece requesting remailing to remailer 3.   \ /
+He sends one piece to remailer 1 and one piece to remailer 2.      3
+The transmissions are protected by DH exchange and encryption.     |
+Remailers 1 and 2 each send their pieces to remailer 3. These      R
+transmissions are also protected by DH exchanges. Remailer 3
+combines the two pieces, recovers the header requesting remailing
+to R, and sends the recovered message to R.
+
+This approach is secure against after-the-fact coercion or key theft,
+because there is no persistent key to recover. It is also secure
+against any one of the three remailers being corrupt. If 3 is corrupt,
+it sees both pieces as it combines them, and knows they came from 1 and
+2, but does not know where 1 and 2 got them from. If 1 is corrupt, it
+knows that a message from S went to 3, but it has only half of the
+split message, so it can't find out where 3 sent it to. If any two of
+the three are corrupt, the path is exposed.
+
+It is possible to add more levels. This one uses seven remailers,  /S\
+and can survive any two being corrupt. Some questions I don't    / | | \
+know the answers to: What is the best possible arrangement of   1  2 3  4
+remailers, so that the highest percentage of them have to be     \ / \ /
+corrupt before the path is revealed? If any continuous line       5   6
+from S to R is corrupt, the path is revealed. And if any two       \ /
+remailers in a 'triangle' are corrupt, the whole triangle is        7
+corrupt. For example, 1 and 2, 1 and 5, or 2 and 5.                 |
+Is there a better arrangement, reusing some remailers, that         R
+allows the message to remain secure with a higher number of corrupt
+remailers in the path?
+
+							Mike
+
+  
+
+
+
+

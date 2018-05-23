@@ -1,0 +1,227 @@
+From: "William H. Geiger III" <whgiii@invweb.net>
+Date: Mon, 13 Oct 1997 18:53:08 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: D-H Forward Secrecy for E-Mail?
+In-Reply-To: <199710130438.FAA02474@server.test.net>
+Message-ID: <199710131045.GAA20731@users.invweb.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In <199710130438.FAA02474@server.test.net>, on 10/12/97 
+   at 11, Adam Back <aba@dcs.ex.ac.uk> said:
+
+
+>William Geiger <whgiii@invweb.net> writes:
+>>    at 02, Adam Back <aba@dcs.ex.ac.uk> said:
+>> >As pgp 5.0 uses key servers directly from the mail client (and some other
+>> >clients do also), this all works out because you just publish your new
+>> >weekly communications key on the keyserver, and this eliminates the need
+>> >for interactive communications with your recipient which true DH PFS
+>> >requires.  
+>> 
+>> Have you considered the logistical nightmare that this would cause?? I can
+>> see that you are unaware of the precarious state the current PGP Public
+>> Key Server Network is in. 
+
+>The keyservers using pgp2.x as the key lookup engine are struggling
+>because the database code isn't very good.  But the experimental MIT
+>keyserver, and Tage Stabell-Kulo's key server code on the key server in
+>Norway fairly whistle through key lookups.  PGP Inc also is using the
+>better keysever code -- I think based on the one at MIT implemented by
+>Marc (surname escapes me right now).
+
+Actually the it is the new pgp5.0 servers that are having the problems.
+The PGP Inc. server may be doing ok but they are not part of the Network
+(they have cut-off their connection and are not sending out nor receiving
+keyring updates to the other servers).
+
+>> Right now it is getting by but this increase in load would bring it
+>> all to a screeching halt. 
+
+>It all depends on how up to date you are on keyserver performance
+>problems; perhaps you are more up to date than myself, perhaps not.
+
+>The answer I think which must come in any case is a distributed key
+>server system because the current 100% replication method seems unlikely
+>to scale to likely future demands, with or without forward secrecy.  If
+>your company holds keys for it's employees on it's openly accessible key
+>server, this distribution will be very similar to DNS, and similarly
+>scalable.
+
+I agree that the 100% replication can't last the number of keys and key
+requests will become beyond what a PC based system can handle.
+
+>> There have been suggestions of moving key distributution to the DNS
+>> but I seriously doubt even it would handle the traffic.
+
+>I think this is taking it too far.  Have you considered how much traffic
+>DNS handles right now?  I would have thought it would be many orders of
+>magnitude more than forward secret email is going to cause. Web traffic
+>is the bulk of network communications, just imagine the DNS lookups
+>caused by 50 million netters clicking away. 
+
+Yes but everyone's Ip's aren't changing every week. It's not just a matter
+of the multitude of requests that would be required in this systems as
+everyone will need to update all their keys on a weekly basis but also the
+DNS records will be having this turnover. the DNS system has enough
+problems as it is let alone what would happen with the implementation of
+forward secrecy would cause (my best guess that within a week or two the
+whole thing would crash and burn).
+
+>Bear in mind also hear that most users will probably be entirely
+>satisfied with a communications key update time of 1 week.  It is
+>probably mostly cypherpunks, or people with high value communications to
+>secure who would opt for more frequent key updates.
+
+Even a weekly turnover of all keys would be too much.
+
+>Bear in mind also that once the new key has been issued, you could also
+>release a deletion request for the previous one on the keyserver in the
+>form of a revocation certificate.
+
+You would have to otherwise you would run out of storage very quickly.
+
+The best I can think of handleing the key distribution problem is to
+attach a copy of your key to every correspondence and then have the client
+automatically check and see if it has changed and update the keyring as
+needed. If find both the automatic processing & sending the key with every
+messages quite bothersome (these are PKS implementation issues that should
+be covered in a different thread).
+
+>> Also what happens to the "web of trust" in such a system of high key
+>> turnover?
+
+>Nothing.  It is unaffected.  The WoT is only based on signature keys. You
+>personally certify your communication with your signature key.
+
+>> Exactly how much added security is provided by all of this?? 
+
+>Lots.  Consider: you are the average PGP user, you have one key generated
+>per year if you are lucky (probably more like once per life time).  You
+>are in a company, and the company has a heck of a time persuading people
+>not to use dumb passwords, or leave their passwords on yellow sticky
+>notes conveniently stuck to the corner of the screen.
+
+>Scenario: the cleaner is bribed to switch on a machine with a supplied
+>boot floppy to put in the drive, and writes down the password on the
+>sticky note.
+
+>So, without forward secrecy the attacker now has all the traffic said PGP
+>user wrote in the life time of his encryption key.  What's that 1 years
+>traffic?  (He'll have collected the ciphertext by eavesdropping on SMTP
+>traffic travelling over the internet).
+
+>With say once-a-day forward secrecy, the attacker gets nothing, no
+>previous communications, and no future communications.
+
+>Granted the attacker can install a replacement version of PGP to try to
+>get future traffic, but the company can run automated audit checks of
+>varying sophistications each morning to check if machines have been
+>switched on, and if files have been altered.  If tampering is detected,
+>or perhaps every morning you re-install the machine from scratch
+>remotely, as the MIT project did.  (Reckoned to be a human resource
+>efficient method of running networks -- got a problem with your machine
+>-- reload it, the lot no arguments).
+
+Well IMHO this scenario does not forward your cause much. If the physical
+security is that bad (unrestricted access to equipment, weak passphrases,
+Post-it-Notes, ...ect) then the information an attacker is looking for is
+more than likely going to be available to him without messing with the PGP
+keys. If the reverse is true and the physical security is strong the the
+case for short-term separate keys is gone as the risk of exposure to a
+long term key is greatly reduced.
+
+>> While Forward security via DH "may" be more secure is the added
+>> expense of implementing such a system justified??
+
+>Forward secrecy in a way is not something you need to argue about adding
+>or not as such, because in a sense you've already got it, built in to
+>pgp5.0.
+
+>To see what I mean you'd need to read Hal Finney's recent post on the
+>OpenPGP list, where he described how you could already achieve forward
+>secrecy using the fact that you've got a separate encryption key and
+>signature key.
+
+>You just set the encryption key to have a short expiry, and generate a
+>new one when it does expire.  You sign the encryption keys with your
+>signature key to transfer the WoT based trust to them.
+
+>The only extra functionality I am arguing for over what PGP5.0 already
+>has is some built in support for this type of usage, so that pgp will
+>manage the generation of new keys at the key expiry point transparently. 
+>That much as such doesn't need any modifications to the current PGP
+>standard.  It's an implementation issue.  Another vendor could easily
+>already implement this type of functionality.
+
+I have some serious reservations of the security implications of frequent
+changes to the keys. It has the potential for the user to disregard all
+changes to the keys (think how quick the warning pop-ups in Netsacpe get
+ignored and/or disabled by the user). The other possibility it to make the
+key changes transparent to the user which I do not like at all for obvious
+reasons (I do not see complete isolation of the user from the cryptosystem
+as a Goodthing(TM) ).
+
+>Also I'm arguing for separate communications and storage keys, I think
+>this is almost essential once PGP starts to work with escrow schemes,
+>because there are similar arguments for separating storage and
+>communications keys as there were for creating separate signature and
+>encryption keys from the original single key.
+
+Well I have been thinking more on this. I still am not sold that separate
+keys are needed but even if they are I am inclined to believe that PGP is
+not the place for them. I am leaning towards the opinion that file
+encryption should be handled by the files system along with other disk
+security features. This seems more appropriate than having your e-mail
+client doing individual file encryption.
+
+>> We all could switch to using OTP's for maximum security but I doubt
+>> that few if any would justify the cost of such a system.
+
+>Actually I hear Fred Piper was semi-seriously arguing for this ... his
+>argument went like this: mass storage is cheap and getting cheaper fast;
+>often the communications needed could be covered for years worth of comms
+>between to organisations by exchanged of a small read only storage
+>device.  Simple, and fool proof, etc.  But I digress.
+
+>> PS: current PGP key format does have a field for key expiration. Until 5.0
+>> it was only used in the Viacrypt version.
+
+>I know, convenient for implementing this type of feature.
+
+>I was also arguing for support for once per message forward secrecy. You
+>should like that one because I was arguing that this should be done with
+>out keyservers.  Just send the key to the person your communicating in
+>the email you would like a forward secret reply to.
+
+>I also personally prefer people to send me keys in email, because the pay
+>per second phone lines here at home mean that I tend want to avoid doing
+>too many online key lookups, so I think this would be an individually
+>useful feature.
+
+I do my keylookups automatically durning the msg filtering process which
+is done in parallel to the message Dl's. The outbound message lookups are
+a little more time consuming but is compensated by fewer keys to look for
+both because fewer messages on the outbound side and the use of key caches
+on the client machine for the most used keys for sig verification and
+encryption. Also logging of e-mail addresses that do not use PGP cuts down
+on the number of lookups needed ( I only keep trusted keys in my pubring
+all others are kept in the cache for performance reasons ).
+
+
+-- 
+---------------------------------------------------------------
+William H. Geiger III  http://www.amaranth.com/~whgiii
+Geiger Consulting    Cooking With Warp 4.0
+
+Author of E-Secure - PGP Front End for MR/2 Ice
+PGP & MR/2 the only way for secure e-mail.
+OS/2 PGP 2.6.3a at: http://www.amaranth.com/~whgiii/pgpmr2.html                        
+---------------------------------------------------------------
+
+
+
+
+

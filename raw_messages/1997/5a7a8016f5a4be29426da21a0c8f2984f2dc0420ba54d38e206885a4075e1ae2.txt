@@ -1,0 +1,63 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Sat, 16 Aug 1997 05:30:37 +0800
+To: Alan <alan@ctrl-alt-del.com>
+Subject: Re: Getting ecash without an MTB account
+In-Reply-To: <Pine.LNX.3.95.970815101917.1090E-100000@www.ctrl-alt-del.com>
+Message-ID: <Pine.LNX.3.96.970815145024.635A-100000@purple.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Fri, 15 Aug 1997, Alan wrote:
+
+> > I thought that in this scenario, Bob can spend the coin before he gives
+> > it to Alice, so she runs the risk of receiving a coin that has already
+> > been spent. Is it impossible to spend a blinded coin if you can't
+> > unblind it? Or are you thinking of something totally different?
+> 
+> My understanding of the protocol is that the identity of the purchacer is
+> revealed only if the coin is double spent.  What prevents the person
+> wanting to find out the identity of Bob from just spending the cash more
+> than once?
+
+There are two ways of handling the double spending problem.  One is online
+clearing where the bank keeps a database of all deposited coins.  The
+merchant immediately deposits the coin and the bank compares it to a
+database of all spent coins.  If the coin has already been spent, the bank
+sends an error message to the merchant, and presumably, the transaction
+is halted.  If the coin has not been spent, the bank adds the coin to its
+database of spent coins and credits the merchant's account.  This simply
+prevents double spending and does not attempt to identify the person
+responsible.
+
+The other protocol is very complex and involves an interactive protocol
+to reveal one half of the payer's identity which is split using a simple
+XOR.  When a coin is double spent using this protocol, the payer's identity
+is revealed.  I don't know if this protocol can be used for double-blinded
+coins, but even if it could, there wouldn't be many advantages over
+online clearing.
+
+
+
+
+Mark
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3i
+Charset: noconv
+
+iQEVAwUBM/SqvyzIPc7jvyFpAQHvnAf+I0M5S/SIurUtHVtnuGha/k/AjhkCocJJ
+iRxXti3Gqn5ifs05NU9VvR7G0eNTuPBMHfvFveR5uanc222iOKZzCpgJKSqxPHU2
+MvcK6e76q67NGHf3ypadZsqAU7GAcT6DGWWt8chq7FKtzAZg9Nv1VIyof2Mw68dw
+R9UiQEh7NX6YvvJa7I9tcALbCvJUEvhMPV6WEu7lKCKTNchdSdEOth5EZrgvvQAZ
+bx3pqa+yPhzRn2AJ62HmhMxqEtDfKWyIfB7lvmXJ6a1P/BzMfo+ZELa1qlmd6X+u
+C0+qzBqEtvxgxWmFm5CwKD02dRv/KuxNIIE/83Z216lTT8WTnoG9JA==
+=GrB9
+-----END PGP SIGNATURE-----
+
+
+
+
+

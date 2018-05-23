@@ -1,0 +1,85 @@
+From: nobody@qwerty.org
+Date: Wed, 2 Feb 94 09:15:32 PST
+To: cypherpunks@toad.com
+Subject: Re: New Remailer Up.
+Message-ID: <199402021713.JAA08629@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jon Boone wrote,
+"  Is the sendmail (I assume you are using sendmail for SMTP services) daemon
+  set up so that it *doesn't* log to /usr/spool/mqueue/syslog [or any other
+  syslog facility]?  Otherwise, it may well be possible to track the usage
+  of the remailer through browsing the syslog logs.
+
+  This is one of the problems (it seems to me) with using a remailer and
+  *not* having root access.  Unless you can convince your sysadmin to
+  remove the syslog mechanism that sendmail uses, you may be exposing your
+  users (presumably by accident)."
+
+No, fortunately for other users, I do not have root access on Netcom ;-).
+So who is going to be doing this browsing? Other Netcom users can't read
+the mqueue:
+
+qwerty: cd /usr/spool
+qwerty: ls
+cron        lpd.lock    news        news4       uucp
+locks       mail        news2       rwho        uucppublic
+lpd         mqueue      news3       secretmail  uumaps
+qwerty: cd mqueue
+mqueue: Permission denied
+qwerty: ls -la
+total 480
+drwxr-sr-x 15 bin           512 Feb  2 01:38 .
+drwxr-xr-x 13 root          512 Feb  2 01:38 ..
+drwxr-sr-x  4 root          512 Feb  2 01:38 cron
+drwxr-sr-x  2 uucp          512 Feb  2 08:30 locks
+drwxrwsr-x  2 daemon        512 Feb  2 03:47 lpd
+-rw-r--r--  1 root            4 Feb  2 01:38 lpd.lock
+drwxrwsrwt  4 root       430080 Feb  2 08:37 mail
+drwxr-s---  2 root        18944 Feb  2 08:37 mqueue
+drwxr-xr-x284 netnews     12288 Feb  2 05:29 news
+drwxr-sr-x  2 netnews       512 Aug 28 17:03 news2
+drwxr-sr-x  2 netnews       512 Aug 28 17:03 news3
+drwxr-sr-x  2 netnews       512 Jan 16 19:56 news4
+drwxr-sr-x  2 root          512 Jan 31 14:40 rwho
+drwxrwsrwx  2 bin           512 Nov  3 08:49 secretmail
+drwxr-sr-x 11 uucp          512 Feb  2 01:38 uucp
+lrwxrwxrwx  1 root           20 Nov 26 15:48 uucppublic -> /usr/hack/uucppublic
+drwxrwxr-x  5 netnews     12288 Feb  2 05:48 uumaps
+
+"Is the sendmail (I assume you are using sendmail for SMTP services) daemon
+  set up so that it *doesn't* log to /usr/spool/mqueue/syslog [or any other
+  syslog facility]?  Otherwise, it may well be possible to track the usage
+  of the remailer through browsing the syslog logs."
+
+I'm using Hal's remailer, so ask him the details of what I have running.
+How many of those private sites with remailers having root, keep NO personal
+logs? Any? I would like to compile a more detailed listing of the details
+about each remailer's capabilities, situation, and policy statements.
+
+If someone sends anonymous mail through my mailer victimizing someone in
+a criminal manner, and law enforcement convinces Netcom to check the logs,
+then more power to them. If someone sends mail discussing large doses of
+vitamin C, when vitamin supplementys are banned a year from now, and the
+FDA wants to arrest them, and Netcom allows them to see the mqueue then
+that would be unfortunate indeed. I am running a remailer. Here is the
+situation. What more can I offer? I would ask people to look at the
+various remailers and ask in a street smart practical manner what the
+pros and cons of each one is.
+
+What, exactly, does the mqueue record? How long does it get saved? I
+needed remailers to maintain some simple privacy by distancing myself
+from the character Xenon. No 5AM fone calls and letters from people
+asking me to send them PGP.... I figured if I was going to become the
+largest volume user of the remailers, I should become a remailer
+myself. The other option was to use the Netcom account to directly
+mail out what I am sending to people, but that wasn't as fun of an
+idea.
+
+-Xenon
+
+
+
+

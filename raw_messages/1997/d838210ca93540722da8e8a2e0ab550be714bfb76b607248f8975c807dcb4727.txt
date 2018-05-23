@@ -1,0 +1,41 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 1 Feb 1997 12:55:41 -0800 (PST)
+To: Toto <toto@sk.sympatico.ca>
+Subject: Re: Key Security Question
+Message-ID: <199702012055.MAA26123@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> My computer went into the shop a few days ago, and I was unable to take
+>> my PGP keys off it before it went in.  What are the security risks here?
+>> If the repairman chooses to snoop through the files, what would he be
+>> able to do with my key pair?  Will I need to revoke the key and make a
+>> new one, or will I be relatively safe since he doesn't have my
+>> passphrase?
+
+Passphrases are MD5-hashed into 128-bit IDEA keys and used to
+encrypt the secret key; there's a "pgpcrack" program out there
+that does dictionary-style searches to find if you've got 
+wimpy passphrases.  So if your passphrases is "secret", you lose,
+but if it's "fjhw;doifvjuc-[09efiu v` 2	4rnhc;ljoipcvjpoiewujfgv;loik"
+you're probably pretty safe, unless that's written on the yellow
+sticky you left on the side of the PC.
+
+On the other hand, if the "repairman" replaced your pgp executable
+with version 2.6.3kgb, which uses your hashed passphrase as the
+session key, you're hosed.  Or if he installed a keystroke sniffer,
+or added a small radio transmitter to your keyboard, or whatever.
+Depends on your threat model.  If you need to be paranoid,
+they've already gotten you....
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#     (If this is a mailing list, please Cc: me on replies.  Thanks.)
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+From: mjr@netcom.com (Matthew Rapaport)
+Date: Tue, 2 Mar 93 11:22:43 PST
+To: cypherpunks@toad.com
+Subject: Re: anon.penet.fi hacking
+Message-ID: <9303021921.AA12649@netcom2.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>       Body-Termination-Regex: ^--$
+>
+>Ok... Now.. Show me the regex that strips anything starting with '--',
+>such as '-----------------------------', except a PGP boundary line...
+>
+>        Julf
+
+Ok... How about:
+
+        Body-Termination-Regex: ^--$
+        Body-Termination-Exclude-Regex: ^-----BEGIN PGP [ A-Z]*-----$
+        Body-Termination-Exclude-Regex: ^-----END PGP [ A-Z]*-----$
+
+Just EXPLICITLY exclude anything you don't want stripped...
+
+(Don't know if I got my regular expression just right, but I think you
+get the idea)
+
+At some point (maybe already) the average header collection will exceed
+the average message in size... Talk about overhead... :-)
+
+matthew rapaport     Philosopher/Programmer At Large      KD6KVH
+           mjr@netcom.com     70371.255@compuserve.com
+
+
+
+

@@ -1,0 +1,61 @@
+From: Johnathan Corgan <jcorgan@aeinet.com>
+Date: Mon, 6 Feb 95 14:09:54 PST
+To: eric@remailer.net>
+Subject: Re: "encrypt tcp connections" hacks
+Message-ID: <Chameleon.4.01.950206140937.jcorgan@comet.aeinet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>It's certain that IP security will greatly increase the overall
+>security of the Internet.  I'm not advocating its removal but rather
+>the acknowledgement that higher (and lower) level abstractions will
+>require their own cryptography.
+
+This resolves to a layered quality-of-service issue.  Encryption and
+authentication at the network layer provides an excellent base for
+improving security, and in and of itself solves a lot of problems like
+packet payload sniffing, session stealing, etc.
+
+But as you so aptly point out, trust boundaries do not coincide with
+network boundaries.  Applications that "ride" on top of TCP and UDP may
+have their own, very different, threat models.  And sniffing the
+physical layer provides most of what you need for traffic analysis
+unless some sort of sophisticated packet laundering is used.
+
+You pointed this out to me at the last cpunks meeting--each layer in the
+network model needs to be able to ask for and use security facilities in
+the lower layer, as well as advertise its security features to the next
+layer up. 
+
+Of course, it is perfectly reasonable for me to expect to write an
+email, encrypt it with PGP and send it via an encrypted SMTP protocol to
+my mail gateway.  On its way, it will ride on top of an encrypted TCP
+session to port 25, with the physical T1 link between my site and the
+internet encrypted as well.  This is an example of security features
+present at most of the layers between 1 and 7 of the OSI model.  These
+should remain independent.
+
+==
+Johnathan Corgan       "Violence is the last refuge of the incompetent."
+jcorgan@aeinet.com                    -Isaac Asimov
+WWW:                    http://ftp.netcom.com/pub/jc/jcorgan/home.html
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLzad6E1Diok8GKihAQExdAP+LZvM2rbJWf6WwIs2oHPjfWRCyXAQTnYm
+gpMld86xiJeM5AKudlH2YW+b12lv+9wdH71Fo38FNOdLDX7xDkXQzmkz2creV7sQ
+GCfrJOAObLro8vwpZ5LVwin0qvmZzH4PO7to2Th3iYGbrXh4zoOdr5GNLU8j+wTd
+HcV9N6nELxg=
+=iNH8
+-----END PGP SIGNATURE-----
+
+
+
+
+
+
+

@@ -1,0 +1,300 @@
+From: paul@hawksbill.sprintmrn.com (Paul Ferguson)
+Date: Thu, 15 Sep 94 04:34:53 PDT
+To: cypherpunks@toad.com
+Subject: (fwd) A new PGP
+Message-ID: <9409151238.AA02015@hawksbill.sprintmrn.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+For those of you who haven't already seen this -- my apologies for
+the post if you already have....
+
+
+Forwarded message:
+
+> From: pgut1@cs.aukuni.ac.nz (Peter Gutmann)
+> Newsgroups: alt.security.pgp,sci.crypt,talk.politics.crypto
+> Subject: A new PGP
+> Followup-To: alt.security.pgp
+> Date: 13 Sep 1994 16:01:08 GMT
+> Organization: University of Auckland
+> Lines: 263
+> Sender: pgut1@cs.aukuni.ac.nz (Peter Gutmann)
+> Message-ID: <354ic4$t54@ccu2.auckland.ac.nz>
+> NNTP-Posting-Host: cs13.cs.aukuni.ac.nz
+> X-Newsreader: NN version 6.5.0 #7 (NOV)
+> Xref: news.sprintlink.net alt.security.pgp:18448 sci.crypt:31730 talk.politics.crypto:7169
+> 
+> 
+> 
+> [NB: Followups redirected to alt.security.pgp]
+>  
+> This posting is a call for participation in a complete rehash of PGP to
+> parallel the existing PGP effort in the US.  All contributions are welcome,
+> although any cryptographic material from the US won't be usable by anyone else,
+> so it'd be best if all crypto work was done outside the US.  I believe Phil is
+> aware of this project but can't comment on it due to legal advice - please
+> don't pester him (or me) about this.
+>  
+> The following sections are a preliminary sketch of what's to be done, see the
+> end of this message for more information on how to participate.
+>  
+> Design goals for the new PGP:
+>  
+>   - Proper key database for fast lookup of keys.
+>   - Something like DER-encoded ASN.1 keys and data, PKCS/X.509 compatible with
+>     extensions for PGP's trust model and also i18n features not found in X.509
+>     (exact details still under debate).
+>   - Ability to plug in alternative routines, eg RSAREF instead of independant
+>     RSA code.
+>   - Backwards compatibility with 2.x.
+>   - MIME security extension compliant encoding of messages.
+>   - Flexible, planned message/key format which allows easy expandability.
+>  
+> The universal PGP rewrite emphasizes flexibility of design, modularity and
+> Chinese-wall seperation for ease of development, and abstraction of messy
+> details like low-level I/O.  Some rules to go by:
+>  
+> - All functional units are kept in seperate modules.  There is one header file
+>   giving the interface to that module.  Only the interface given in the header
+>   file is available to the outside world.  All non-public information should be
+>   in header files which are private to that module.  This should vastly simplfy
+>   development by multiple people since all the content-coupling of the existing
+>   code is eliminated.
+>  
+>   The whole of PGP is too big for one person to get an overview of, by
+>   enforcing modularity with a preset interface we can allow independant teams
+>   to work on the parts they're best at, as well as allow independant developers
+>   to user the libraries they want in PGP support software without having to
+>   worry about all the API's breaking every time there's a new release.
+>  
+> - None of the library routines perform any user I/O.  This is all handled by
+>   higher-level code, using callbacks if really necessary.  The libraries should
+>   be usable in any CLI or GUI environment without needing changes made for
+>   different operating environments.
+>  
+> - All routines return an integer status with well-defined codes.  Status values
+>   are defined in the module interface header and are of the form <3-char module
+>   name>ERR_<error type>, eg DBXERR_READ would indicate a read error in the
+>   database access code.  No mysterious constants buried seven nesting levesl
+>   down in routines somewhere!
+>  
+> The basic modules are:
+>  
+>  
+> Streams
+> -------
+>  
+> A generalized stream I/O library.  A stream can be a block of memory, a FILE *,
+> a file-descriptor-based file, a TCP socket, an X.25 virtual circuit, or
+> whatever.  The use of memory streams does away with PGP2's overuse of temporary
+> files.
+>  
+>     int newStream( STREAM *stream );
+>     int attachStream( STREAM *stream, ??? );
+>     int ioctlStream( STREAM *stream, ??? );
+>     int readStream( STREAM *stream, void *buffer, size_t length );
+>     int writeStream( STREAM *stream, void *buffer, size_t length );
+>     int lengthStream( STREAM *stream );
+>     int deleteStream( STREAM *stream );
+>  
+> The attachStream() and ioctlStream() attach a stream to an interface, eg a
+> block of memory, a file, or a network connection, and change its
+> characteristics.  The end user is never aware of any difference, or of the fact
+> that, for example, for a small message they might be R/W memory, but for a
+> larger one they might be R/W a temporary file.  Perhaps an existing PD streams
+> library can be adapted to the task.
+>  
+> Error codes: STMERR_xxx
+>  
+>  
+> PKC
+> ---
+>  
+> A PKC library.
+>  
+>     int rsaEncrypt( PUBKEY *pubKey, STREAM *stream );
+>     int rsaDecrypt( PRIVKEY *privKey, STREAM *stream );
+>     int rsaKeyGen( ??? );
+>  
+> Error codes: PKCERR_xxx
+>  
+>  
+> Crypto
+> ------
+>  
+> A conventional-key crypto library.
+>  
+>     int encrypt( CRYPTINFO *cryptInfo, STREAM *stream );
+>     int decrypt( CRYPTINFO *cryptInfo, STREAM *stream );
+>  
+> The CRYPTINFO struct contains all the information you need to specify
+> encryption algorithms and modes, so you'd have something like:
+>  
+>     cryptInfo->algorithm = CRYPT_ALGO_IDEA;
+>     cryptInfo->mode = CRYPT_MODE_CFB;
+>     encrypt( cryptInfo, stream );
+>  
+> This fixes another complaint with PGP, that for every job you do there are 15
+> different functions to do it, all with slightly different parameters and
+> options.  With the unified interface, the call to encrypt data is *always*
+> called encrypt() (rather than encryptIdeaCfb(), encryptFooBar(),
+> encryptThisThatAndTheOther(), etc), and the CRYPT_INFO struct contains all the
+> parameters you need.  A library could then implement a number of different
+> algorithms and you choose which one you want without having to know that the
+> function name for that option is encryptQwertyFoo().  You could even have a
+> getCryptInfo() call which queries a library as to which algorithms and modes it
+> implements, or the call could return CRYERR_ALGO_UNAVAIL (algorithm
+> unavailable) or CRYERR_MODE_UNAVAIL (encryption mode unavailable).
+>  
+> Error codes: CRYERR_xxx
+>  
+>  
+> Configuration
+> -------------
+>  
+> Get configuration information for PGP routines.  Use a proper grammar
+> definition, perhaps lex+yacc (tcl has also been suggested), read into (private)
+> vars, make available to outside world via getXXX() calls.  NO GLOBAL CONFIG
+> VARS!
+>  
+>     int readConfigFiles( void );
+>     int getFooInfo( char *fooPtr );
+>     int getBarInfo( int *barPtr );
+>  
+> Error codes: CFGERR_xxx
+>  
+>  
+> Random Number Handling
+> ----------------------
+>  
+> A random number management library.
+>  
+>     int openRandomStream( STREAM *stream );
+>     int readRandomStream( STREAM *stream, void *buffer, size_t count );
+>     int closeRandomStream( STREAM *stream );
+>  
+> This could use the existing keystroke latency method, or connect the stream to
+> custom hardware, or whatever.
+>  
+> Error codes: RNDERR_xxx
+>  
+>  
+> Key Database Management
+> -----------------------
+>  
+> All keys can (and should be) stored in a database, which encapsulate the full
+> DER-encoded keys inside a database allowing fast lookup.  The general format
+> will be:
+>  
+>     { keyID, userID, encapsulated key }
+>  
+> The keyID is a hash of the key (making it independant of the key itself and not
+> prone to denial-of-service attacks), the userID is simply the user
+> ID/address/whatever, the encapsulated key contains the full key.  Lookup is
+> done on the keyID and userID which locate the required key.  Details of the
+> exact mechanism to be decided by the database experts - need to define message
+> format, kludges like storage of encapsulated keys in XMS for peecee's, etc etc.
+>  
+>  
+> En/decoding
+> -----------
+>  
+> ASN.1 DER-encoding of keys/data, MIME en/decoding.  Needs to be discussed.
+>  
+>  
+> Compatibility
+> -------------
+>  
+> Backwards-compatibility code to handle old PGP keys and messages.   Presumably
+> keys will only need to be converted once, then we need to read old messages and
+> (possibly) write them.
+>  
+>  
+> Low-Level
+> ---------
+>  
+> Low-level OS interface code.  All OS-specific code is hidden in this module.
+>  
+>  
+> I18n
+> ----
+>  
+> A proper i18n system which reads the appropriate messages from a database once
+> and then keeps them in memory.
+>  
+>     int readInternationalizationDatabase( void );
+>  
+> All user I/O then uses strings from the i18n database.  The database is
+> generated by a precompiler from some user-friendly input format, so that a
+> group of seperate language scripts for eg English, French, German, Russian, etc
+> are fed into one and, and the output is the full i18n database.  Adding a new
+> language to PGP then involves simply creating a new script in that language and
+> running the database compiler on it.
+>  
+>  
+> Installation
+> ------------
+>  
+> Not part of PGP, but we need someone to do a decent install script which
+> removes from end users the need to fiddle makefiles and options.
+>  
+>  
+> Others
+> ------
+>  
+> Other routines as required.  For example, we each library should have an init
+> call which registers an exit handler with a function called by atexit() to
+> allow a clean shutdown no matter how we exit the program.  This does away with
+> the current need for PGP to explicitly perform exit handling all over the
+> place, and hides the messy details from the end user (who may not even think
+> about things like this).
+>  
+>  
+> What we need:
+>  
+> - A well-connected site outside the US to run mailing lists, one per developers
+>   group:
+>  
+>     pgp-streams - streams interface for I/O
+>     pgp-crypto - public and private-key encryption, random number management
+>     pgp-dbx - key database management
+>     pgp-compat - PGP 2.x backwards-compatibility management
+>     pgp-protocol - PGP data/key format and protocol redesign
+>     pgp-lowlevel - low-level OS-specific glue code
+>     pgp-misc - everything else, eg config code, i18n, installation
+>  
+>   There may also be a need for a seperate group to handle key-related routines
+>   such as trust-level checks and whatnot, which is a fairly complex task.  The
+>   idea is to mimimze the amount of unnecessary traffic people will need to read
+>   in order to get their job done.
+>  
+>   The only communication which should be necessary between these groups is the
+>   header file which defines the data structures and interface and/or a written
+>   specification of the interface to a module.  This means that the PKC group
+>   can work on the PKC code without having to worry about what the streams,
+>   database, crypto, and os-specific groups are doing.
+>  
+>   An attached FTP site for distribution of code would also be nice.
+>  
+> - Groups of developers with expertise in PKC crypto, conventional crypto,
+>   database management, low-level OS-specific stuff, code optimization, protocol
+>   design, software i18n, and everything else imaginable.
+>  
+> Until the mailing lists are set up (someone volunteer a site, quickly!) I'll be
+> handling things in email, which means that it could take quite a while for me
+> to extract myself from the flood of messages I'm expecting.  Please try and
+> keep non-essential messages to a minimum, and be patient when waiting for
+> replies.
+>  
+> Peter (Hmm, maybe I'd better mount /usr/spool/mail on a seperate drive).
+>
+
+
+- paul
+ 
+
+
+

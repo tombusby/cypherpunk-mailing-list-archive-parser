@@ -1,0 +1,83 @@
+From: "E. Allen Smith" <EALLENSMITH@ocelot.Rutgers.EDU>
+Date: Mon, 17 Feb 1997 21:11:25 -0800 (PST)
+To: reece@taz.nceye.net
+Subject: Re: Anyone have the complete info on CP list alternatives?
+Message-ID: <199702180511.VAA23635@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From:	IN%"reece@taz.nceye.net"  "Bryan Reece" 17-FEB-1997 23:23:10.06
+
+>>   use. However, I do have one problem with this recipe: lack of
+>>   loop prevention if a news2mail gateway is going in the other direction.
+
+>All the mailing-list hosts are supposed to check for duplicates before
+>forwarding anything, so this shouldn't do anything worse than have a
+>few extra copies of each post get discarded, loading the network and
+>the hosts a bit more.  But posting the list to a widely-distributed
+
+	Umm... IIRC, the only person who's announced how he's filtering
+for duplicates is Igor, and he's just checking for messageIDs. Won't
+those get chunked on going through a mail2news gateway, and thus
+possibly come back through a news2mail gateway? The filtering
+mechanism could be improved via MD5 digests, etcetera (someone's
+already given a recipe for such; thank you), but even so various
+mungings could still set up a mailing loop. (Yes, I'm paranoid
+about those; I may have been reading list-managers for too long and
+seen too many stories on there.) The sensible place to keep
+track of possible duplicates is at the gateway; it can
+certainly filter based on that it (or, for that matter, another
+known bidirectional gateway) sent a message out.
+
+>newsgroup seems wrong for noise (both to the list itself and to
+>posters) and delay reasons.
+
+	Delay reasons being that mail will go to Usenet, go
+all over the place there, and then get replied to later than if
+it were just on the mailing list(s)? A potential problem, yes.
+But (especially given the options I mentioned below), this
+would appear to be a matter for individual users to decide
+by which list they go with and any added control headers.
+Maximum individual sovreignty (sp?).
+
+>>   In regards to your later query about whether people want their postings
+>>   going to Usenet, might I suggest that this be individual to the given
+>>   distributed mailing list? In other words, since the recipe is logically
+>>   going to have to not forward to a gateway messages from other mailing
+>>   lists (since it's not a good idea to have multiple copies of the same
+>>   message arriving at the gateway if it can be helped; better to filter
+>>   it out beforehand),
+
+>It doesn't seem an especially bad idea, since it 
+
+	Thank you. Were you cut off?
+
+>>   some of the mailing lists can forward and the
+>>   others cannot. (One could even determine this behavior on application
+>>   of the proper X-header, although I never trust various mailing systems
+>>   to forward such intact.) The same could also be done with gatewaying
+>>   _from_ Usenet - if the news2mail gateway feeds to whatever individual
+>>   lists sign up to it and they _don't_ forward such messages to others,
+>>   people can decide whether or not to receive Usenet postings on
+>>   alt.cypherpunks.* by which list they subscribe to.
+
+>The code currently running is a perl script that turns typical email
+>messages into something INN is happy with.  It is probably possible to
+>get your message rejected by INN if you put obsolete or otherwise
+>unusual and illegal headers in.  This may be a bug.
+
+	That would probably depend on: A. if any other circumstances
+other than deliberately sabotaging your message's translation would
+also disrupt its chances of getting through seriously, particularly
+if they weren't something you'd spot; and B. if sufficiently bad
+messages would disrupt INN's operations too much. You'd know a lot
+more than I would in regard to the latter, and probably the former.
+I was last a serious participant on USENET on a Vax running VMS
+(via Bitnet, as a matter of fact... a while back).
+	-Allen
+
+
+
+
+

@@ -1,0 +1,50 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Tue, 24 Oct 95 15:39:02 PDT
+To: fc@all.net (Dr. Frederick B. Cohen)
+Subject: Re: Does your software?
+In-Reply-To: <9510241549.AA19649@all.net>
+Message-ID: <199510242238.SAA19929@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+  Umm, your get only server sounds like it is secure, but what is the
+point advertising it to this list? I could program a GET only
+server in far fewer than 80 lines in just a few hours. You could
+do it in even fewer lines of perl, or /bin/sh. A real HTTP server
+must support all of HTTP/1.0 however for it to be considered a server.
+Since yours doesn't, it isn't, it's just a toy. a better project would be
+to make HTTP requests under CERN more secure.  In fact, if you don't
+handle CGI, you can't handle forms, which means you can't handle
+commerce securely.
+
+
+
+secure perl "get only" server server
+copy perl to a secure filesystem
+have a chroot c-wrapper there
+the wrapper chroot's to this directory and runs the perl script
+perl is effectively boxed in
+
+
+#!/securedir/perl
+
+$line = <STDIN>;
+($method, $url, $protocol)=split(/\s+/, $line);
+$url =~ s/[^a-zA-Z0-9_]/g;
+if($method =~ /^GET/i)
+{
+   open(FILE, "$url");
+   print "HTTP/1.0 200 OK\nContent-Type: text/html\n\n";
+   print <FILE>;
+   close(FILE);
+}
+
+exit 0;
+
+
+ 
+
+
+

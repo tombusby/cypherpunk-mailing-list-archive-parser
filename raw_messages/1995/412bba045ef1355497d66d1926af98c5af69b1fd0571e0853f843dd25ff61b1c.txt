@@ -1,0 +1,109 @@
+From: Carl Ellison <cme@TIS.COM>
+Date: Mon, 2 Oct 95 15:03:37 PDT
+To: raph@cs.berkeley.edu
+Subject: Re: Certificate proposal
+In-Reply-To: <199510021713.KAA15419@kiwi.cs.berkeley.edu>
+Message-ID: <9510022200.AA15553@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>From: Raph Levien <raph@CS.Berkeley.EDU>
+>Date: Mon, 02 Oct 1995 10:13:08 -0700
+
+>I am extremely glad to hear Carl propose this. Let me propose something
+>just a bit more concrete (Carl might not like it because it contains just
+>a hint of ASN.1, but what the hell).
+
+I'll hold my nose while reading :-).
+
+>I propose that the unique name be the MD5 hash of the MOSS public key, as
+>formatted according to the MOSS specification (ASCII and all). PGP keys
+>can easily be converted into MOSS ones, so it's pretty easy. The hash
+>should be expressed as 32 hex digits, so that it can easily be typed in
+>or spoken. The only ambiguity in this proposal is where to put the
+>newlines, if any. For concreteness, I propose that there be no newlines
+>in the public key value.
+
+I see no problem using a hash.  I might use SHA rather than MD5.  MD5 is a
+wee bit too short.  But, for what we're doing, MD5 is just fine -- and as a
+hash of a public key, the cost of finding alternatives is high enough that
+MD5's shortness probably isn't a problem.
+
+However, why convert PGP keys to MOSS and then hash?  Hash the PGP key
+straight.
+
+You're right that my proposal was not concrete at all.  To make it
+concrete, you'd want to specify the signed message which takes the place of
+a certificate.  I tried this once before, roughly, but I never gave it the
+effort it deserves.
+
+Let me call this non-certificate a blurk (waiting for a real name).
+
+		------------------------------
+
+For example, you need to identify:
+
+the signee (a public key or hash of a key)
+	the public key needs to be identified as to type (RSA, D-H, DSA, ...)
+	and the package using it can also be identified (e.g., PGP, MOSS, ...)
+
+the signer (a public key or hash of a key -- as used in the blurk which
+	grants authority to the signer)
+
+a text string (or paragraph) giving the attribute being attested to --
+	and possibly giving validity dates, etc.
+
+the signature (in some algorithm)  [You might want to allow for multiple
+	signatures in different algorithms and/or different packages
+	-- to keep the signee from having to send out dozens of blurks
+	or storing dozens in a database.]
+
+		------------------------------
+
+The entire thing could be a signed cleartext message:
+
+	signer's key; [signee's key; text] signature (of [])
+
+Alternatively, you could modify the PGP UserID field (or make something
+very similar) with raw text (not treated as an ID on the key) and a sig on
+the text and signed key.
+
+Signing a cleartext message has some appeal.
+
+As for how this would be used -- my guess from looking at X.509 is that
+it's meant for machine parsing and understanding (although I know of no
+programs which follow them beyond sig checking).  A cleartext signed
+message requires human reading and filing.  However, that's fine.  After
+all, it is a human who decides whether to act or not.
+
+If there is a computer deciding whether to act based on the blurk, the
+signed text could include SMTP-style tagged text lines for the program to
+go find.
+
+Looking forward to more concrete elaborations....
+
+ - Carl
+
++--------------------------------------------------------------------------+
+|Carl M. Ellison      cme@tis.com    http://www.clark.net/pub/cme	   |
+|Trusted Information Systems, Inc.   http://www.tis.com/                   |
+|3060 Washington Road          PGP 2.6.2:  61E2DE7FCB9D7984E9C8048BA63221A2|
+|Glenwood MD  21738         Tel:(301)854-6889      FAX:(301)854-5363       |
++--------------------------------------------------------------------------+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMHBgrVQXJENzYr45AQG7wgP+MzX/uQsIw5G4YjaRFzPFGV1z6MV5RV5g
+xvH6/wv6XLyeZ3DTn/akiwiFO5nl8aSUEq5F7huMByiYctXjlI/05l5KFUxpjNY5
+QpQH8hRAIO8PnrItyK0Fg3uFbDzfloSuhhCoJIFlrkAxEXj1CoMKWkN6hlEz1jmy
+fY2ceAz6KPo=
+=Jdrm
+-----END PGP SIGNATURE-----
+
+
+
+

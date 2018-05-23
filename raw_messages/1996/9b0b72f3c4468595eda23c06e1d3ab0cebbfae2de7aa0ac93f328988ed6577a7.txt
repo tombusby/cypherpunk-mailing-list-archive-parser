@@ -1,0 +1,53 @@
+From: Hal Finney <hal@rain.org>
+Date: Fri, 18 Oct 1996 08:21:12 -0700 (PDT)
+To: hal@rain.org
+Subject: Re: Anonymous Auth Certificates [was: Re: Blinded Identities]
+Message-ID: <199610181520.IAA05554@crypt>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: azur@netcom.com (Steve Schear)
+> It seems that one crux of the problem revolves around the CA and its method
+> of certificate issuance.  A CA which uses biometric data to
+> reduce/eliminate the chance that an applicant could get several, unrelated,
+> certificates issued would provide a basis for negative authentication
+> (similar to a negative credit file).
+
+Yes, biometric data is another way of preventing multiple credentials.
+However it will not work well in electronic form.  What you'd need would
+be a network of stations to take fingerprints and give credentials,
+("is a person" credentials) which would then be used for getting access
+to other services where you're supposed to only use them once (voting
+for example).  This requires a fairly elaborate infrastructure and social
+commitment to this solution to the problem.
+
+Somehow too it is hard to see how to sell a system as a privacy enhancement
+when its first step is to take fingerprints of the whole country.  "But
+we're not saving your names, honest!"  I don't know if it would fly.
+
+Tim May argues that alternative solutions which are more local will be
+better.  In the case of the abuse situation, maybe you could just have
+people put down a deposit of $100 or so.  Then they get an anonymous
+credential which they can use for access.  If they abuse their access,
+their credential gets disabled.  As long as their abuse is worth less
+than the deposit you'll be OK.  And at any point they can turn in their
+valid credential and get their money back.  No identities are needed at
+any point in the scheme.
+
+> A one-way function performed, by the client, on their certificate from this
+> CA would yield a token which unambiguously binds it to a valid certificate
+> of the CA (and therefore uniquely identifies them) w/o revealing the
+> certificate itself.
+
+Actually I think you need to use a blinding protocol when you acquire
+the certificate, rather than trying to run a one-way function on the
+unblinded cert.  The output of a one-way function looks random and
+meaningless unless you supply the input.  And if the input identifies
+the user then you've lost the anonymity.
+
+Hal
+
+
+
+

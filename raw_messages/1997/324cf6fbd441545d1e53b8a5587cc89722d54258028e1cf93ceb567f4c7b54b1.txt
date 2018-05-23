@@ -1,0 +1,117 @@
+From: Ryan Anderson <randerso@ece.eng.wayne.edu>
+Date: Sun, 12 Oct 1997 05:03:47 +0800
+To: Adam Back <jon@pgp.com
+Subject: Re: Why Jon Callas keeps picking nits (Re: Why Corporate Message Recovery isn't Key Escrow)
+In-Reply-To: <3.0.3.32.19971010145353.00ad9330@mail.pgp.com>
+Message-ID: <3.0.2.32.19971011155857.0069ea28@ece.eng.wayne.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+At 02:12 AM 10/11/97 +0100, Adam Back wrote:
+
+>You should have 3 types of key:
+>
+>1. signature keys
+>2. transient encryption keys
+>3. storage keys
+
+>
+>The signature keys you never escrow.  You certify.  If something goes
+>wrong you re-issue, release revocation cert, and re-certificate.
+>
+>The transient encryption keys are for communications, you delete them
+>immediately after use.  Yes I'm talking forward secrecy here.  If you
+>don't like forward secrecy, well at least don't escrow the encryption
+>keys.
+
+Huh?   Okay, PGP uses IDEA for transit keys.  These are encrypted to two 
+different PGP public keys.   
+
+These are only used once.  (Well, you make that assumption, but with even a 
+decent PRNG it's a reasonably safe assumption)
+
+The signature keys (in the proposed method) are the PGP keys (either RSA or 
+DH, it's not important) are the personal keypairs of each person.  The 
+company doesn't keep a copy of these.  They can sign with this in an 
+unforgable manner.  (Well, in practice I doubt that's true, because I've seen 
+very few places that have even mild local-workstation security, but that's 
+besides the point)
+
+Is there a problem here?
+
+- From the description Jon gave of the system, you can designate anyone as
+the 
+other key-id to encrypt to in your signature block.  (Or whatever that part 
+of the key is called).  The guy in the next cube, your boss, one company-wide 
+key, etc.
+
+So yes, in theory this could be used to implement GAK.  Supposedly in the 
+version of PGP in use it's trivial to remove this extra recipient from the 
+list of encryption keys.  It's not even needed if you don't have that key on 
+your ring.  (From what Jon said)
+
+When you compalin about use of storage keys/communication keys your clouding 
+the issue.
+
+The storage keys can be (and probably are in some cases) simply pgp encrypted 
+files, as if they were in transit.  I tend to encrypt some files on my hard 
+drive with pgp, by encrypting to myself and signing  so that onyl I can 
+decrypt them, and I've got record that I did create the archive.  I can see 
+this being done in a company to simplify shared storage usage without 
+security problems.  Using the multiple recipient option your recovery key-id 
+can be used to decrypt these files.  Of course, if they're modified, they 
+can't be resigned, so you'd know, but...
+
+This is a *simple* solution that eliminates problems with encrypting hard 
+drives, etc. 
+
+Where is the problem with this system?  This is software that (according to 
+Jon's claim) at least one company has decided they need for their security, 
+and it keeps the number of pass phrases that employees need to memorize at 
+one - their PGP key.
+
+>Storage keys you make damn sure you can recover.  You escrow these for
+>real.  Company safe sounds about right.  Secret splitting could be
+>nice also.
+
+Why not just encrypt it to yourself with PGP?  Isn't that simpler?  Add a 
+recipient of the recovery id.  Boss, coworker, person's key in another 
+division, whatever.  Everybody gets different storage keys.  No need to worry 
+about accidently compromising one of the storage keys (IDEA symmetric keys, 
+of course).  You then just need to keep the secret  halfs of the public keys 
+secure.  Not a big deal if you have the rest of the system working.
+
+>You shouldn't be recovering transient messages, you should be
+>recovering stored data.
+
+What the hell is the difference?  Speed of recovery?
+
+Give an example of the difference between what he's doing and what you would 
+propose. Otherwise you're just rejecting this system blindly.
+-----BEGIN PGP SIGNATURE-----
+Version: PGP for Personal Privacy 5.0
+Charset: noconv
+
+iQCVAwUBND/agDc3ytqHnNyNAQExygP/fjl70OenYyTLc86OgFNZf5fkM+b3RUxw
+WFsYNme/thDSdsnmfTCTTqE63b3ZRoj/mR0jjb4aloXw83TxWuEY9j9sQql8yTBt
+SoRQAxPnP33bWlCTbQrOBPFvMw2lyfCrL307mXnfBpnW3h0cngRxjfu7IBBBPzVF
+/5TzMK47WBY=
+=RLoK
+-----END PGP SIGNATURE-----
+
+
+-----------------------------------------------------------------------
+Ryan Anderson - <Pug Majere>     "Who knows, even the horse might sing" 
+Wayne State University - CULMA   "May you live in interesting times.."
+randerso@ece.eng.wayne.edu         
+PGP Fingerprint - 7E 8E C6 54 96 AC D9 57  E4 F8 AE 9C 10 7E 78 C9
+-----------------------------------------------------------------------
+
+
+
+
+

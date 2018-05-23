@@ -1,0 +1,64 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Sat, 1 Jan 94 10:38:53 PST
+To: cypherpunks@toad.com
+Subject: Re: Anonymous Video on Demand
+In-Reply-To: <9401010055.AA27523@bilbo.suite.com>
+Message-ID: <9401011821.AA24360@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In cypherpunks you write:
+...
+>(The following is adapted from the oblivious transfer protocol described  
+>in "Applied Cryptography" on page 98.)
+
+>Say Alice is the Video Vendor and Bob is the customer...
+
+>Alice generates a public/private key pair for each movie in her video  
+>database and publishes the public keys in an electronic catalog.  Each  
+>public key would be paired with a movie description and a catalog index  
+>number.
+
+>Bob downloads Alice's catalog and browses through it offline.  Bob makes a  
+>selection, and also randomly picks 99 (or any large number) other catalog  
+>numbers
+
+>Bob generates a random DES key and encrypts this key with the public key  
+>associated with his selection.
+
+>Bob sends the encrypted DES key and the list of 100 catalog numbers to  
+>Alice.
+
+>Alice decrypts the DES key with the private key associated each catalog  
+>number received from Bob.  In only one case will Alice successfully  
+>recover Bob's DES key, only she doesn't know which case.
+
+>Alice encrypts each movie selection with the resulting DES keys from the  
+>previous step and sends all 100 encrypted movies to Bob.
+
+>Bob will only be able to decrypt and view the movie he selected and Alice  
+>wont know which of the 100 movies Bob selected.
+
+>Ta Da!
+....
+
+It just occured to me that when this protocol is implemented with RSA, 
+it is subject to a minor (and unlikely) failure that can allow Alice
+to determine which video Bob has selected (or at least eliminate some
+of them).  If each video keypair has a different modulus and the one
+Bob selects has a larger modulus than some of the "dummy" videos, then
+if the encryption of Bob's session key with his selected video public key 
+results in a message that is close to the modulus itself, the keypairs
+with moduli that are smaller than Bob's message can be trivially eliminated
+as candidates.
+
+Of course, Bob can easily test for this condition and simply select a new
+key (or diddle a random confounder in the message) until the encrypted
+message is smaller than the modulus of any dummy keypairs.
+
+-matt
+
+
+
+

@@ -1,0 +1,80 @@
+From: Martin Minow <minow@apple.com>
+Date: Sun, 4 May 1997 10:02:34 +0800
+To: "Vladimir Z. Nuri" <vznuri@netcom.com>
+Subject: Re: Java woes on compatibility
+In-Reply-To: <199705032325.QAA11796@netcom13.netcom.com>
+Message-ID: <v03102803af9180e5ea78@[17.219.103.113]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Vladimir Z. Nuri writes about Java compatibility:
+>
+>unfortunately, this same story happened with Unix and C such that the
+>libraries out there did not fully adhere to a standard, even when the
+>standard went into meticulous detail.
+
+Actually, much of the meticulous C and Unix detail described the permitted
+loopholes. For example, there is no definition of <newline>, which is 0x0D
+<carriage return> on Mac, 0x0A <line feed> on Unix, both on DOS, and neither
+on VMS (it's a record boundary in the simplest case, and don't ask about the
+complex cases). Look, if VMS is "Posix-complient," which it is, it can't be
+a really robust specification, no matter how meticulous.
+
+Java goes into great detail to define floating-point representation,
+to take one example, and the "end of line" sequence is a system parameter,
+rather than a static character.
+
+> is it the same insurmountable
+>problem all over again? can there ever really be a totally portable
+>language?
+
+Yes, but it won't solve many interesting problems. Java is a good
+balance between portability and capability.
+
+>
+>what's the solution? it hasn't been implemented yet, but I believe the
+>solution is an extremely sophisticated verification package for the
+>correctness of the Java language.
+
+Check out the 100% pure program that you can download from JavaSoft.
+Look at <http://www.javasoft.com/100percent/> Their static verification
+package is free, along with a programming guide. (You have to pay for
+dynamic testing and certification.)
+
+> this type of idea is hinted in the
+>makefiles of some C programs that compile based on complex attempts
+>to avoid/workaround portability glitches.
+
+Been there, done that (look for the Decus-CPP Preprocessor I did in the
+mid 1980's, or my Lempel-Ziv implementation for VMS). Preventing problems
+by design is a better approach.
+
+>
+>note that some people think that you should have a certification process.
+>I don't like this at all because then the verification tools are caught
+>up inside the Java company when it makes sense to *distribute* these tools
+>so vendors can debug their own software without going through a
+>bureacracy to get the stamp of approval. the verification suite is actually
+>an extremely powerful utility that can test Java conformance and should
+>be available to anyone trying to support the standard.
+
+Again, the 100% pure test package is freely available. Sun does, however,
+charge for stress testing, which runs the application on a number
+of Java implementations.
+
+>
+>if anyone from Java/Sun is listening, I would be happy to consult on this.
+><g>
+
+Sun is hiring. Check out their web pages.
+
+Martin.
+minow@apple.com
+
+
+
+
+
+
+

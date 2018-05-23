@@ -1,0 +1,50 @@
+From: Nathaniel Borenstein <nsb@nsb.fv.com>
+Date: Fri, 3 Feb 95 07:26:27 PST
+To: hfinney@shell.portal.com>
+Subject: Re: Remailing in safe-tcl
+In-Reply-To: <5122.791772273.1@nsb.fv.com>
+Message-ID: <MjAYfK70Eyt5AxSd8B@nsb.fv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Excerpts from mail: 2-Feb-95 Remailing in safe-tcl Hal@shell.portal.com (2397)
+
+> I don't see any straightforward way for a script to suspend itself and
+> re-activate on some future event (such as the arrival of another
+> message).  Maybe it could put its whole self into the config database as
+> a {key, value} pair and rely on future messages to pull it out and
+> execute it.  But that doesn't seem too great.
+
+The problem is that this is a very hard -- perhaps impossible -- thing
+to build in at the level of a safe-tcl interpreter, because the safe-tcl
+interpreter is supposed to be a relatively stand-alone thing.  To
+activate something based on a future event requires some hooks into
+external event management -- e.g. a cron job, or the message receipt
+facilities of a specific mail tool, etc.   The challenge, I think, is to
+figure out how to make sure safe-tcl has the right hooks for such an
+external environment without REQUIRING one particular such environment
+in order to run safe-tcl.
+
+In other words, I think the best to be hoped for is for safe-tcl to have
+the facilities that are needed by such an environment.  I'm not entirely
+sure what those facilities are, but I'm optimistic that this could be
+layered on using the "declareharmless" mechanism of safe-tcl.  Thus, you
+could write (in full tcl) a procedure that essentially queues an event
+for future processing, and make that procedure available to the safe-tcl
+environment.  Is this plausible in your application context?
+
+> There is a lot of interest in this notion of mail messages as scripted
+> agents which go zipping about the network gathering data which they send
+> home.  I am optimistic that we will be able to get remailing capabilities
+> out of this infrastructure largely for free.
+
+I think there's a good chance of that, yes.  Part of the safe-tcl
+experiment, actually, is the attempt to figure out, cooperatively, what
+all is needed in the way of infrastructure.  So what I'm most interested
+in knowing is whether there are features you can imagine adding to
+safe-tcl that would make this easier to do on your end...  -- Nathaniel
+
+
+
+

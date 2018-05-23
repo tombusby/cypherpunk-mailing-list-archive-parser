@@ -1,0 +1,45 @@
+From: Paul Koning               1695 <pkoning@chipcom.com>
+Date: Wed, 8 Nov 1995 01:32:15 +0800
+To: Cypherpunks mailing list <cypherpunks@toad.com>
+Subject: Re: using pgp to make an otp
+Message-ID: <309FBAB3@mailer2>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Will it ever sink in that NO algorithm produces a "random" bitstring, and
+therefore NO algorithm can be the driver of a one time pad?
+
+The output of an algorithm is (at best) PSEUDOrandom.  While a stream
+cypher constructed that way may be strong, it is NOT a one time pad and
+does NOT share with one time pad the unique property of being absolutely
+unbreakable from first principles.  (It may very well have the property that
+it is too hard to break in practice -- if so it makes a useful cryptosystem.
+But to call such a thing "OTP" indicates a fundamental misunderstanding.)
+
+See the sci.crypt FAQ for more details.
+
+     paul
+
+ ----------
+From: owner-cypherpunks
+To: Adam Shostack
+Cc: Alan.Pugh; cypherpunks
+Subject: Re: using pgp to make an otp
+Date: Monday, November 06, 1995 11:31PM
+
+>       PGP output is not random enough to be used for a one time pad.
+> The security of a OTP is *entirely* based on the quality of the random
+> numbers; they should come from some strong generator.  Building good
+> one time pads is tough, and usually not worth the effort.
+
+No, however the output of "pgp +makerandom=XXX filename.dat" _IS_
+random enough for an OTP.  The problem then becomes distributing this
+data.
+
+ -derek
+
+
+
+

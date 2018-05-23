@@ -1,0 +1,41 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 7 Mar 1996 22:33:14 +0800
+To: cypherpunks@toad.com
+Subject: Re: Looking for code to run an encrypted mailing list
+Message-ID: <199603060542.VAA28896@ix9.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>John Pettitt <jpp@software.net> wrote:
+>> Poster cryptes mail with pgp using list exploder key. List exploder decrypts
+>> mail and recrypts with keys for all current list members and then sends the
+>> mail.
+
+At 09:24 PM 3/4/96 -0800, abostick@netcom.com (Alan Bostick) 
+suggested having the mailing list handler decrypt the session key
+using its private key, and re-encrypt with the public keys of the
+list members, but not do the IDEA decryption and re-encryption N times
+of the message body.  This has the further advantage that the cleartext message
+body is never sitting around on the server where it might end up in swap space
+or file system leftover blocks.
+
+On the other hand, it really only costs you one IDEA encryption if you
+want to use the multiple-recipients options to PGP.  With the current PGP,
+this means you don't have to hack your own crypto code; the toolkits in PGP 3.0
+will make that easier, though.
+
+>> [I don't want all the list members to need to know every other list members
+>> public key]
+
+The multiple-recipients PGP doesn't give away everyone's public keys,
+only their keyIDs.  If you want to remain pseudonymous, just create a
+public key that you use only for subscribing to the list.  
+
+(Hmmm - multiple recipient support probably makes stealth-PGP harder to
+implement...)
+
+
+
+
+

@@ -1,0 +1,80 @@
+From: miron@extropia.wimsey.com (Miron Cuperman)
+Date: Fri, 29 Jan 93 04:11:48 PST
+To: cypherpunks@toad.com
+Subject: ARA security
+Message-ID: <1993Jan29.105734.1737@extropia.wimsey.bc.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Proposition 1:
+All remailing schemes are vulnerable in the case that all remailing
+sites in the chain are compromised before transmission.
+
+Proposition 2:
+With ARAs and direct transmission (one recipient at each hop), if the
+first n-1 hosts in a chain are compromised then the n_th host identity
+is known.  If all hosts are compromised, the originator is known.
+
+Corollary 1:
+Direct-transmission ARAs are vulnerable to an adversary that can
+compromise any small subset of all hosts.  This is done by sequentially
+compromising the next host, and using that information to find
+the identity of the next host after that.  No amount of "random"
+routing has any effect in this case, since the randomness is implemented
+by each host, but each host is compromised before it makes the delivery.
+
+Proposition 3:
+Normal anonymous transmission (not ARA) is "unconditionally" secure
+after *one* passage through an uncompromised host, assuming no
+traffic analysis and no log files.  (With log files, normal
+transmission is as insecure as direct-transmission ARAs.)
+
+Therefore, it seems like direct-transmission ARAs are much less
+secure than normal anonymous transmission.  For better security,
+we must find some other ARA scheme.
+
+A proposal: broadcast ARAs and Message Pools
+- --------------------------------------------
+
+All messages to a message pool are sent to all subscribers to the
+pool.  Messages to the pool are encrypted with the (pseudonymous)
+public key of the recipient.  The ARA can thus belong to any of
+the subscribers to the pool.  The connection between public keys
+and subscribers is not maintained anywhere.  The subscribers have
+attempt decryption of messages marked with their pseudonyms.
+
+Once the key of a subscriber is destroyed, it is not possible to
+prove that any message was destined for that subscriber, affording
+a last resort to a subscriber suspecting that an attack is in
+progress.
+
+Pools must have a large number of subscribers in case it is possible
+to compromise the key of any particular subscriber.  Pools can be
+implemented as Usenet groups for a low-cost delivery medium.  Each
+pool should be geographically limited in order to further minimize
+costs (the Distribution: header works well here).  If costs are
+minimized, the pools can be increased, affording better security.
+For experimental, low-volume tests, mailing lists can be used.
+- -- 
+        Miron Cuperman <miron@extropia.wimsey.com> | NeXTmail/Mime ok
+                       <miron@cs.sfu.ca>           | Public key avail
+        AMIX: MCuperman                            |
+cyberspacecomputingcryptoimmortalitynetworkslaissezfaire
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK2j60ZNxvvA36ONDAQFKiAP+JFWWeke6rADXFfK4d4LPHNUWJ9NwcjH4
+5XDC+Veg8h3JgwSQ7f0J8JM9LqwbHBWHObm4bPJKeBa1fSIP2L8xNMsA0dQnriwE
+EWVR6oUPy3ANMefEa9CHMS+bkOnuGRXV4Ntsi6Eh1kLyK340jUheWKjVMtWl37Cb
+d9qe12GqSlU=
+=LHSz
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,39 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Mon, 22 Nov 93 21:48:05 PST
+To: karn@qualcomm.com (Phil Karn)
+Subject: Re: Can NSA crack PGP?
+In-Reply-To: <199311230337.TAA00569@servo>
+Message-ID: <9311230533.AA17556@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In cypherpunks Phil Karn writes:
+
+>3. Attacking the random number generators. This is often the weakest
+>part of many conventional cryptosystems, but the techniques now used
+>in PGP are thought to be pretty good. Lest people think that timing
+>keystrokes is a poor way to generate random numbers, I should say that
+>I once watched somebody key a STU-III (NSA-designed secure phone). At
+>one point the phone prompted him to hit the "*" key 20 times. It
+>didn't say why, of course, but it was pretty obvious to me.  And if
+>it's good enough for NSA...
+
+Minor nit: I agree that keystroke timing is good in principle for getting
+"true" random bits, but we should be careful not to extrapolate too much from
+the STU-III for general purpose computer systems.  The STU may have a
+specially designed keypad timer, while god knows how often some random OS/
+hardware combination delivers keyboard interupt times back to user processes.
+Compounding the issue is knowing which bits in the interarrival time are
+the "hotest" ones to measure on a particular system, which may be surprisingly
+far from the lowest order bits depending on the clock granularity and skew.
+
+Obviously the technique works well in some configurations, but there may
+be others where it fails badly.  PGP seems to use it too good advantage, but
+I'd still be suspicious before trusting it on an untested platform.
+
+-matt
+
+
+
+

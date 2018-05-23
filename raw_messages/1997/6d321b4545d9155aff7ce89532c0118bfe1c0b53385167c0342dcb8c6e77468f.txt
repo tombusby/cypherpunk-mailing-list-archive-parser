@@ -1,0 +1,43 @@
+From: Hal Finney <hal@rain.org>
+Date: Fri, 9 May 1997 23:52:18 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: El Gamal
+Message-ID: <199705091530.IAA00261@crypt.hfinney.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The next version of PGP will offer the combination of El Gamal for
+encryption and Digital Signature Standard (DSS) for signatures, as
+an alternative to RSA.  These are based on the discrete log problem.
+
+El Gamal is really almost the same as Diffie-Hellman.  You have a
+secret x, he has a secret y, and together you calculate g^(xy) which
+is your shared secret.  With DH you then just use that shared secret
+as your message encryption key; with El Gamal you multiply (or xor,
+or add...) your key with the shared secret.  PGP uses El Gamal so that
+we can send along not only key info but also which algorithm to use for
+the message body encryption, and also a checksum.
+
+It is true that El Gamal encrypted messages will be about 128 bytes bigger
+than RSA for 1024 bit keys.  DSS on the other hand produces somewhat
+smaller signatures than RSA, by about 85-90 bytes.  But neither of these
+is really significant in typical applications.
+
+The Diffie-Hellman patent expires September 6, 1997.  I gather that it
+would also cover El Gamal since that is a variant.  The Hellman-Merkle
+"knapsack" patent, which claims to cover all public key cryptography,
+expires October 6, 1997.  After that date, at least some forms of public
+key cryptography will be unpatented in the U.S.  The RSA patent expires
+September 20, 2000.  It is possible that the next three years will see
+greater use of discrete log cryptography because of the patent state,
+although RSA has a significant "brand" advantage in the business market.
+(This patent info is from "Handbook of Applied Cryptography", from
+Menezes et al, which I recommend as a supplement to Schneier.)
+
+Hal
+
+
+
+
+

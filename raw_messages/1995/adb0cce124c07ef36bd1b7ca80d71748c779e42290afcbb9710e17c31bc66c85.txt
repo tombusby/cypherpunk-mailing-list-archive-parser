@@ -1,0 +1,58 @@
+From: Ben.Goren@asu.edu
+Date: Thu, 12 Jan 95 17:17:50 PST
+To: cypherpunks@toad.com
+Subject: Re: How do I know if its encrypted?
+Message-ID: <v02110100ab3b6fb73f29@[129.219.97.131]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's a solution:
+
+Alice sends a file to Dave's DataHaven. When Alice wants her file back, she
+sends to Dave a secure hash of the file, a key with which to decrypt it,
+and a handful of plaintext at the beginning of the file. Dave decrypts the
+file that matches the hash with the key Alice gave him; if the file begins
+as Alice says it should, Dave returns the file to Alice.
+
+This way, only those people who have an intimate knowledge of the files can
+recover them.
+
+The hash isn't vital; Dave could try to decrypt each file on the server
+with the key Alice gives him until he matches the plaintext--but that's
+neither elegant nor friendly to the CPU.
+
+People can send Dave whatever kind of file they like, but they'll only get
+it back if it's been encrypted properly. If Dave charges to store a file,
+he'll gladly welcome as much spammage as people want to send him. If he
+likewise charges to return a file, he'll just as glady send a file to
+whoever gives him the cash and can identify it.
+
+Dave can have a policy whereby he deletes a file after returning it, unless
+Alice pays more to keep it there. Thus, Bad Bobby can send his naughty
+pictures to Dave, tell the 'net how to get them--but the first person who
+neglects to include the fee to leave the pictures there winds up blocking
+out everybody else. Similarly, Samaritan Sam could get into a spending war
+with Bobby. Each time Bobby sends Dave his smut, Sam retrieves the file
+without paying for its continued storage--and takes a sneak peak at the
+pictures before deleting them himself.
+
+Dave has no way of knowing what people are storing on his machine until the
+owner asks for the file back, and so cannot be held liable for the storage
+of "undesirable" files. Mallet could seize the entire archive and have
+nothing useful. Eve could recover information leaving the haven, but
+presumably Alice will further encrypt her files however she chooses. Or, as
+a service, Dave could agree to encrypt the file with an assymetric cipher
+before returning it.
+
+b&
+
+--
+Ben.Goren@asu.edu, Arizona State University School of Music
+ Finger ben@tux.music.asu.edu for PGP public key ID 0xCFF23BD5.
+
+
+
+
+
+

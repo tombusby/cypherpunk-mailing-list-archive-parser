@@ -1,0 +1,54 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Tue, 2 Jul 1996 17:49:25 +0800
+To: root@edmweb.com
+Subject: Re: rsync and md4 [NON-CRYPTO ALGORITHM]
+Message-ID: <199607020623.XAA19699@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:50 AM 6/30/96 +1000, Andrew Tridgell wrote:
+>It effectively creates binary diffs of the two files, without direct
+>(local) access to both files. As far as I know this is a new type of
+>algorithm.
+
+I worked with an algorithm which sounds similar to this one back about 20
+years ago when creating a diff for VM/370 at Tymshare.  Here's a quick
+description of the algorithm so you can see how much the hashing discussion
+below applies to your problem.
+
+(1) Chose a way to break the files into "units".  We chose line ends.
+(2) Hash each unit in both files making two vectors of hashes.
+(3) Identify which units exist once and only once in a file by:
+(3a) Initialize a (large) vector of 2-bit entries to all zeros.
+(3b) Use the hash of each unit to index the vector.  If the entry is 00
+change it to 01.  If it is 01 change it to 10.  If it is 10 leave it alone.
+(4) And the two 2-bit entry vectors together to get the units that exist
+once and only once in both files.  These units are anchors of similarity
+between the files.
+(5) Find the hashes which represent these anchors of similarity in both
+files and link them together.
+(6) Link the neighbors of already linked units.
+(7) The unlinked hashes represent differences between the two files.
+
+Note that this algorithm finds units that have been moved.  I had to do
+something intelligent with this information to allow for diff-like output.
+
+To handle binary files you may need to change the definition of "unit".
+
+
+We used a simple barber poll hash.  We went for a number of years before we
+had a hash failure.  (I know, there was a bug in the code that handled hash
+failures.)  A hash based on a CRC calculation would probably be better.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | The Internet may fairly be | Periwinkle -- Consulting
+(408)356-8506     | regarded as a never-ending | 16345 Englewood Ave.
+frantz@netcom.com | worldwide conversation.    | Los Gatos, CA 95032, USA
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Tue, 16 Apr 1996 08:42:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: RSA-130 Falls to NFS - Lenstra Posting to sci.crypt.research
+In-Reply-To: <199604151824.LAA07600@netcom6.netcom.com>
+Message-ID: <199604152038.NAA03204@netcom10.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Vladimir Z. Nuri" <vznuri@netcom.com> writes:
+
+ > I have been wondering about malicious hackers getting into
+ > these pools. would it be possible for them to contribute
+ > false data that screws up the end results? or are such
+ > anomalies easily discarded or disregarded by the final
+ > processes?
+
+If you are doing a distributed search of a key space, then it is
+of course possible that people, either accidently or
+deliberately, may fail to correctly do their part of the search
+and report misleading results.  You may recall a hostile attack
+on SSL a while back where the design was flawless but the desired
+key failed to appear when the results of the individual searches
+were merged.
+
+Fortunately, where integer factorization is concerned, it is
+trivial to verify the full and partial relations for correctness
+and discard any bad data during the counting process.  Thus there
+is no chance of garbage making it into the final reduction.
+
+ > there is a reduction step in the NFS (number field sieve,
+ > technique used to factor large numbers) in which all the
+ > collected data is mashed. how sensitive is this process to
+ > spurious data? i.e. if there was a little bit of bad data
+ > in its computation, does it completely screw it up, or is it
+ > robust and resistant to this kind of problem?
+
+The input to the reduction step is simply a large number of ways
+of making the number "1" by multiplying together elements of the
+factor base, all modulo the number of be factored.  Given an
+overdetermined set of such relations, one can can search for
+linearly dependent combinations of their exponents modulo 2. Each
+such dependency permits one to construct a relation in which all
+the exponents are even, and possibly a non-trivial square root of
+1 modulo N.  Since each dependency has at least a 50-50 chance of
+yielding a factor of N, only a handful of them are needed.
+
+Certainly bad data in the matrix could cause problems, but the
+matrix is sparse and damage would probably be localized.  You
+might get out some dependencies that weren't real, but unless you
+had quite a lot of garbage data, you would probably get enough
+good ones to succeed.  Non-relations involving small primes would
+probably be more poisonous than ones involving the high end of
+the factor base.  In any case, as I stated earlier, it is trivial
+to guarantee all the data going into the final reduction has been
+sterilized.
+
+ > it seems to me that in many cases, these collaborative
+ > projects virtually cannot check the validity of the
+ > supplied data without repeating the computation effort,
+ > although there may be good tests that tend to screen out
+ > "most" bad data.
+
+ > future implementors of these programs might amuse
+ > themselves with trying to create such safeguards or
+ > anticipate such "attacks" which are pretty significant the
+ > more the processes become distributed.
+
+The only safeguards I can think of when doing a distributed
+search of a keyspace are to randomly assign each area to be
+searched to multiple participants, and to encapsulate the
+software in some sort of hack-resistant module, possibly
+calculating a running hash which could be checked when results
+were submitted to the central authority.
+
+If you have 10,000 volunteers, each searching 0.01% of the
+keyspace using a klutz-proof software module, quite a few
+sophisticated users would have to collaborate to create a
+significant chance of missing the key.
+
+In cyptography, as in life, there are no guarantees.
+
+--
+     Mike          $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

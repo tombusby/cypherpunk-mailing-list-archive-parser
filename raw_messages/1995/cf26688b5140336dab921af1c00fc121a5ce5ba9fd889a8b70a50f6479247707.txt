@@ -1,0 +1,35 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Tue, 26 Sep 95 06:32:16 PDT
+To: Jeff Weinstein <jsw@neon.netscape.com>
+Subject: Re: SSL Man-in-the-middle
+In-Reply-To: <447bes$7ai@tera.mcom.com>
+Message-ID: <Pine.SUN.3.91.950925201850.4260C-100000@tipper.oit.unc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jeff - there are two ways to get the document information right (or wrong).
+
+The first approach is to use redirects to point the client back at the 
+original server once you've grabbed whatever info you want for the 
+request. Redirects from https -> https don't trigger a warning box. You 
+may need to rewrite the URL slightly to prevent loop detection (stick a . 
+at the end of the hostname, or add a port, etc. 
+
+The second approach is to only intercept requests for inline images. 
+These don't affect the document information window, and give you full 
+access to the whole request, which may have user authentication information 
+associated with it, in the URL or in  header fields. Image requess can be 
+identified reliably through simple traffic analysis.
+
+Simon
+
+Contract with America - Explained!			|Phone: +44-81-500-3000
+Contract: verb						|Mail: ses@unc.edu
+1) To shrink or reduce in size - the economy contracted +-----------------------
+2) To become infected -My baby contracted pneumonia when they stopped my welfare
+
+
+
+
+

@@ -1,0 +1,74 @@
+From: This is _intense_!  12-Aug-1993 1536 <yerazunis@aidev.enet.dec.com>
+Date: Thu, 12 Aug 93 12:58:13 PDT
+To: cypherpunks@toad.com
+Subject: Subliminal channels in signature functions may be unavoidable.
+Message-ID: <9308121955.AA20556@enet-gw.pa.dec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I  was considering the subliminal-channel-in-the-digital-signature question
+in the shower, and came to an interesting handwaving proof of the following
+statement:
+
+	All signature systems (public key and otherwise) that allow 
+	timestamped messages contain subliminal channels of bandwidth 
+	proportional to the timestamp resolution.
+
+Fortunately, this mailing list is wide enough to contain the essence of 
+the proof.
+
+1) Hypothesize an arbitrary signature system that simply provides 
+authentication via a randomish-looking bitstream that is a function
+only of the input document and (possibly) a secret or public key
+known to the sender and intended recipient, and that an 
+"external monitor" exists who will verify that each message is
+indeed signed appropriately; 
+
+2) The job of the monitor is to censor communications between the 
+sender and recipient; hie does this by examining the contents of
+the messages and if 
+	1) their visible contents are innoucuous
+	2) their signatures do verify
+he passes the message; otherwise he refuses the message back to the sender.
+
+3) Assume the signature-generating algorithm is published, and is
+a strongly random function of the input stream.
+
+4) Assume any number of messages may be passed.
+
+5) Assume that the sender and intended recipient have previously 
+arranged for an unknown-to-the-censor second signature and bit 
+count.
+
+6) To send a subliminal-channel message, the sender generates an
+innocuous message, time-stamps it, and signs it, then signs the 
+signature with the "secret second signature".  If the [bit-count]
+low-order bits of the second secret signature match the desired 
+first N bits of the desired subliminal channel message, then
+the message plus first (authenticating) signature is handed
+off to the censor to examine and transport.  If the bits don't
+match, the time-stamp of the original message is updated, and
+the process repeated until the bits _do_ match.  The loop of
+innoucuous-message/first-signature/second-signature/compare is
+then repeated again until all the bits of the desired subliminal
+channel message have been sent.
+
+Since for any good signature scheme all bits in the output bitstream are
+strongly random functions of all bits in the input stream, changing one
+bit (in the timestamp) has a chance of 1 in 2^bitcount bits of giving
+the desired secret-signature bitset.
+
+Proof of the bandwidth of such a scheme is proportional to 1/2 the
+resolution in bits of the time-stamp is left to the student.  (I just
+_had_ to say that.  :-)  ).  
+
+Extension: If the number of messages per unit time allowed by the censor 
+is limited, then the bandwidth becomes MIN ( [1/2 timestamp resolution] , 
+[bitcount * allowed-message-frequency] 
+
+	-Bill
+
+
+
+

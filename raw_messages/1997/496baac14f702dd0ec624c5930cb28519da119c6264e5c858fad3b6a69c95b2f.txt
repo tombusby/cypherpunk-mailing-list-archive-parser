@@ -1,0 +1,70 @@
+From: Eric Young <eay@cryptsoft.com>
+Date: Thu, 6 Nov 1997 22:02:19 +0800
+To: Jyri Kaljundi <jk@stallion.ee>
+Subject: Re: SSL Browser info
+In-Reply-To: <Pine.GSO.3.95.971106130526.15882G-100000@nebula>
+Message-ID: <Pine.GSO.3.96.971106233321.905P-100000@pandora.cryptsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Thu, 6 Nov 1997, Jyri Kaljundi wrote:
+> On Thu, 6 Nov 1997, Gary Howland wrote:
+> > 	http://www.hotlava.com/demos/ssl-query.html
+> > which displays the SSL version and cipher types of your browser.
+> Which for me shows only Unknown - try again in the white window.
+
+If you have SSLeay 0.8.1, run
+ssleay s_server -port xxxx -www
+
+and when you connect to the port, it will return a page like
+---
+s_server -www 
+Ciphers supported in s_server binary
+SSLv3:RC4-SHA                  SSLv3:RC4-MD5         
+SSLv3:EDH-RSA-DES-CBC3-SHA     
+SSLv3:EDH-DSS-DES-CBC3-SHA     SSLv3:DES-CBC3-SHA
+SSLv3:IDEA-CBC-MD5             
+SSLv3:EDH-RSA-DES-CBC-SHA      SSLv3:EDH-DSS-DES-CBC-SHA
+SSLv3:DES-CBC-SHA              
+SSLv2:RC4-64-MD5               SSLv2:DES-CBC3-MD5
+SSLv2:DES-CBC-MD5              
+SSLv2:IDEA-CBC-MD5             SSLv2:RC2-CBC-MD5              SSLv2:RC4-MD5                  
+SSLv3:EXP-EDH-RSA-DES-CBC      SSLv3:EXP-EDH-DSS-DES-CBC-SHA
+SSLv3:EXP-DES-CBC-SHA          
+SSLv3:EXP-RC2-CBC-MD5          SSLv3:EXP-RC4-MD5
+SSLv2:EXP-RC2-CBC-MD5          
+SSLv2:EXP-RC4-MD5              
+---
+Ciphers common between both SSL end points:
+EXP-RC2-CBC-MD5
+---
+Reused, SSLv3, Cipher is EXP-RC2-CBC-MD5
+SSL-Session:
+    Cipher    : EXP-RC2-CBC-MD5
+    Session-ID: 846612DBD344FBD663A000A621BD80C19786E2B38B352F38E17783282B8EEDB1
+    Master-Key: D285F2AB4A9EC7D5D97E83480878CA24FF38E071FCD423C6BFE7C8A06BB77EADFF16A48BF1E3B45FEA4D1265ECBE2D50
+    Key-Arg   : None
+    Start Time: 878813292
+    Timeout   : 7200 (sec)
+---
+   1 items in the session cache
+   0 client connects (SSL_connect())
+   0 client connects that finished
+   4 server accepts (SSL_accept())
+   4 server accepts that finished
+   3 session cache hits
+   0 session cache misses
+   0 session cache timeouts
+   0 callback cache hits
+   0 cache full overflows (128 allowed)
+---
+no client certificate available
+
+
+
+
+
+

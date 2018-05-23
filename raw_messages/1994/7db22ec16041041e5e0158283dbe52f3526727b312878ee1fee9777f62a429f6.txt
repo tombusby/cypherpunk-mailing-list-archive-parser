@@ -1,0 +1,47 @@
+From: jpp@markv.com
+Date: Wed, 27 Apr 94 21:47:48 PDT
+To: cypherpunks@toad.com
+Subject: Weak IDEA keys...
+Message-ID: <9404272147.aa04864@hermix.markv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+  Well, I re-read the article, and here is the real dope.
+
+In Crypto '93 Joan Daemen, Rene' Govaerts, and Joos Vandewalle write:
+
+Abstract.  Large classes of weak keys have been found for the block
+cipher algorithm IDEA, previously known as IPES [2].  IDEA has a
+128-bit key and encrypts blocks of 64 bits.  For a class of 2^23 keys
+IDEA exhibits a linear factor.  For certain class of 2^35 keys the
+cipher has a global characteristic with probability 1.  For another
+class of 2^51 keys only two encryptions and solving a set of 16
+nonlinear boolean equations with 12 variables is sufficient to test if
+the used key belongs to this class.  If it does, its particular value
+can be calculated efficiently.  It is shown that the problem of weak
+keys can be eliminated by slightly modifying the key schedual of IDEA.
+
+[Typo's are probably mine :)]
+
+  So, it isn't as bad as I thought.  Chances are about 2^51/2^128 ==
+1/2^77 that you will get a bad key if you choose keys at random with
+even distribution from the IDEA key space.  PGP tries to do exactly
+this.  Once again, though, let me ask: has any one done anything about
+implementing the _very_simple_ patch the authors describe?  PGP 2.5,
+or 2.6 anyone?
+
+  I am not _really_ paranoid, but I would hate it if a critical
+message about the March 15th assassination plot were to fall into the
+wrong hands because of a bad choice of IDEA keys.
+
+  A related technical question: are there other easy to compute 2^n x
+2^n -> 2^n 'invertable' functions than the three used in IDEA? (namely
+(1) xor, (2) sum mod 2^n and (3) product mod (2^n)+1 with 0 taken to
+represent 2^n.)
+
+j'
+
+
+
+

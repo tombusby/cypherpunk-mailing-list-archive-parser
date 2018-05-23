@@ -1,0 +1,56 @@
+From: norm@netcom.com (Norman Hardy)
+Date: Thu, 4 Jan 1996 14:33:36 +0800
+To: cypherpunks@toad.com
+Subject: A Mondex like Protocol
+Message-ID: <ad10d63504021004e0fc@DialupEudora>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Two Mondex units, upon command of their respective operators, can pass
+money from one to the other via infra_red signals. I think that this
+requires tamper proof units.
+
+I understand that the Mondex protocol is currently undisclosed. I have no
+information about that protocol but am merely trying to find a protocol
+that fits the little that I know about Mondex. Are there other guesses?
+
+Here is one way it might work. Upon an operator receive command, the payee
+unit transmits a DH greeting along with the value of a counter located in
+the payee unit. (The integrity of the counter value in the greeting is
+somehow ensured.) It continues to send this greeting while it awaits a
+greeting.
+
+Upon a pay command from its operator, a payer unit transmits a DH greeting
+and continues to send that while it awaits a greeting. When either unit
+receives a greeting it computes the shared secret key ala DH. The payer
+decrements its cash value and generates a pay order enciphered under the
+secret key. The pay order includes the counter value from the payee's
+greeting. This order is transmitted repeatedly until an acknowledgement is
+received or times out. If it times out then the money is lost. When the
+payee receives a pay order, it verifies that the counter value is correct
+and then increments the counter, preventing replay. The payee then
+increments its cash value and sends ciphered acknowledgements for a brief
+period. The payer may give one final acknowledgement acknowledgement which,
+if lost, merely means that the receiver will time-out sending
+acknowledgements.
+
+The common DH modulus is known to all units and but otherwise secret. This,
+of course, requires a extraordinary tamper resistance. Only the state must
+be kept secret, not the hardware behavior.
+
+Here is the money integrity argument for this protocol. The units are
+collectively responsible for preventing counterfeiting. For counterfeiting
+to happen some unit must increment its cash value when there was no
+corresponding decrement in another unit. A unit increments its cash value
+when it decodes a pay order from someone who knows the global secret DH
+modulus. That someone must have been a legitimate unit that decreased its
+cash value. Replay is impossible because each such transaction is uniquely
+identified by the recipient's counter value. The recipient never increments
+its cash value twice for the same counter value.
+
+
+
+
+
+

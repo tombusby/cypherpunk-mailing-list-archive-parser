@@ -1,0 +1,37 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Thu, 21 Jan 93 08:38:55 PST
+To: cypherpunks@toad.com
+Subject: random remailers
+In-Reply-To: <9301160118.AA14215@toad.com>
+Message-ID: <9301211636.AA02255@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Has anyone thought about the consequence of randomly picking a
+>> remailing path instead of using the same one?  
+
+>what if the remailer flips a coin, choosing between final delivery
+>and remailing through another of its ilk.  "message delivery with
+>probability one ..."
+
+This is an excellent suggestion.  I have to think about the
+mathematical properties some more, but a few spring to mind.  Assume,
+for discussion, that there is constant probability of delivery at each
+hop, say p.
+
+First, the expected number of hops is 1/p.  To see this just sum the
+following series.
+
+	$ E(p) = \Sum_{n=1}^{\infinity} n p (p-1)^{n-1} $
+
+Thus the syntax for routing can be extremely simple, just specifying
+the expected number of hops wanted.  If you want to have guaranteed
+minimum delivery, you can manually route through a few hops, then
+randomize.
+
+Eric
+
+
+
+

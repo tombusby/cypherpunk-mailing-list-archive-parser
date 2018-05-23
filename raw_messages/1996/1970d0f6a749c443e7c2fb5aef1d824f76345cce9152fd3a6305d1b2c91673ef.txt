@@ -1,0 +1,91 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Fri, 2 Feb 1996 11:26:57 +0800
+To: Clay Olbon II <olbon@dynetics.com>
+Subject: Re: Visa & MC Std
+In-Reply-To: <v01540b09ad367ceb54a3@[193.239.225.200]>
+Message-ID: <31117ABA.611B@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Clay Olbon II wrote:
+> 
+> At 8:25 AM 2/1/96, pj ponder wrote (much elided):
+> 
+> >AN FRANCISCO -- Hoping to remove a major impediment to credit card
+> >transactions over the Internet, a business group led by Mastercard
+> >International
+> >and Visa International plans to announce an industry-standard technology
+> >Thursday for protecting the security of electronic payments.
+> ...
+> >
+> >The software standard, called Secure Electronic Transactions, or SET,
+> >will permit a user to send a credit card account numbers to a merchant
+> >in a scrambled
+> >form.
+> >
+> >The scrambled number is supposed to be unintelligible to electronic
+> >eavesdroppers and thieves -- and even to the merchants receiving the
+> >payment.
+> >
+> >But a special code is supposed to enable the merchant to check
+> >electronically and automatically with the bank that issued the credit
+> >card to make sure that it is a
+> >valid card number and that the customer is the authorized user of the
+> >card. The number-scrambling part of the system is based on a well-known
+> >and widely used
+> >national software standard known as the Data Encryption Standard.
+> 
+> ----------------
+
+  First a disclaimer.  I have not studied the drafts of the protocol,
+or been directly involved with its development.  I do know a few things
+and I will try to answer to the best of my abilities.
+
+> A few psueudorandom points regarding this post:
+> 
+>         First, it seems silly to implement a separate standard that only
+> works for the credit card number.  What about the privacy of the rest of
+> the info (what I am ordering, how much, etc.).
+> 
+>         Can (or will) this be layered with Netscape's SSL?
+
+  I don't know if the spec will specify SSL as the required transport, but
+I think that our products will use it.
+
+>         How is this to be implemented?  It sounds like the merchants will
+> just pass the encrypted number to the credit card company.  If this is the
+> case, key management could become an issue.  I suppose this could easily be
+> implemented using public key crypto, but only DES was mentioned.  If only
+> DES is used and everyone uses the same DES key, that would be a valuable
+> key to break!
+
+  RSA will be used in addition to DES (or perhaps something stronger).
+
+>         How about a MITM attack.  Get the encrypted credit card #, and
+> change the purchase amount, delivery info, etc if that is not encrypted.
+
+  There is stuff in the protocol to prevent MITM and replay attacks.
+I'm not familiar with the details, but I know that they have been
+thinking about these problems for a long time.
+
+> If there is anyone on the list with more info on this, I would love to hear
+> it (heopfully we will hear something from Netscape, since they are quoted
+> in the article).  From what I know so far, it seems like a poor compromise.
+
+  It is hard to get even the flavor of the protocol in a press release that
+has been dumbed down for the general population.  I believe that the spec
+will be released for a public review period before it is finalized, so you
+should have a chance to review it and get your comments in.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

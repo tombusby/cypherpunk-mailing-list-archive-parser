@@ -1,0 +1,110 @@
+From: jdd@aiki.demon.co.uk (Jim Dixon)
+Date: Tue, 23 Aug 94 06:03:28 PDT
+To: ianf@simple.sydney.sgi.com
+Subject: Re: NSA Spy Machine and DES
+Message-ID: <7148@aiki.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <9408221018.ZM4791@simple.sydney.sgi.com> Ian Farquhar writes:
+> On Aug 18,  8:13pm, Jim Dixon wrote:
+> >In message <9408190809.ZM4528@simple.sydney.sgi.com> Ian Farquhar writes:
+> >>Actually, I would be surprised if the "SIMD" processors were not a huge
+> >>array of reprogrammable FPGA's, quite possibly Xilinx's.  The possibilities
+> >>of a large array of these chips, each with local memory, is quite
+> >>interesting.  I have personally seen an array of 64 Xilinx chips in a DEC
+> PeRL
+> >>box doing RSA, at speeds similar or better to almost all available custom
+> >>hardware implementations of the cipher.
+> 
+> >The delays in getting data on and off the chip are too large and the amount
+> >of space wasted in redundant functions is too great.
+> 
+> That is a rather sweeping statement.  Want to back this up with some facts
+> and figures from real FPGA implementations?  Certainly the early bit-slice
+> designs you mention later on did suffer from these problems, but FPGA's
+> bear little relationship to those rather venerable devices.
+
+1.  I have been using various kinds of programmable logic devices in
+    designs for years.	In doing such designs, you avoid using one device
+    to drive another, because the effect of this is usually to increase
+    your delays by 80% or so.  There are a number of reasons for this.
+    (a) You almost invariably duplicate functions if logic is spread over
+    more than one chip.  (b) The impedance and capacitance of the device
+    pins and PCB tracks are far greater than those on-chip.  As a result,
+    for example, the setup time on an input flip-flop on an Actel A14100A
+    is 3ns, but the setup time on an internal flip-flop is 0.8ns, about 75%
+    less.  In general off chip delays are an order of magnitude higher
+    than on chip delays.
+
+    FPGAs use longer internal routes than would be necessary on an ASIC
+    and as I understand it the fuse impedance is a significant problem
+    Both of these factors increase capacitance and impedance, slowing
+    down the circuits.
+
+2.  The redundancy should be completely obvious.  An FPGA is programmable.
+    It has circuits whose sole function is to program the device.  These
+    occupy space.  They cover the entire device.  Once the device is
+    programmed they serve no purpose.
+
+    An ASIC also has a fairly high level of redundancy, because logic is
+    assembled out of elementary logic blocks.
+
+    A custom circuit, such as a microprocessor, has very little redundancy.
+
+    To understand the effect of this, go price a 64K bit static RAM. ($5?)
+    Then calculate the cost of implementing the same function in FPGAs,
+    especially with comparable speed.
+
+> >You might prototype
+> >it using FPGAs, but even this is unlikely.  Why not just buy one of the
+> >existing SIMD processors and simulate your target system?
+>
+> Because the FPGA solution is obviously less flexible, but a hell of a lot
+> faster than software simulation of another architecture.  In this application
+> speed will win every time.
+
+For prototyping, speed is not usually a major consideration.  What you
+are trying to do is to get the system to work, you are debugging it.
+
+> > People used to build fast processors out of separate chips (bit slices).
+> > They don't do that any more because it's too slow and too expensive if you
+> > are building in volume.
+> 
+> But this application is NOT building in volume.
+
+It was my understanding that the project involved on the order of 10^4 to
+10^6 chips.
+
+If the size of the system is small and the number of chips is low, then
+the use of FPGAs would be justifiable (and I myself have justified this
+in another context).
+
+>						    And yes, people do still
+> built multichip CPU's: most traditional supercomputing and mainframe vendors
+> for a start.  Indeed, I would be surprised if this application didn't design
+> it's own FPGA (for ease of interfacing with the comms network for a start),
+
+? what do you mean by 'design [an] FPGA' ?  Do you just mean "do the design
+using FPGAs" -- easy --  or literally, "design a new type of FPGA"?  This
+would be very expensive and pointless.	Commercial designers are almost
+always going to do something cheaper and better than something done under
+a government contract.
+
+> but I'd argue that a SIMD configuration of reconfigurable FPGA arrays (ie.
+> a fixed array of reconfigurable arrays) would be an awesome system for
+> many problems that the NSA would deal with.
+
+Why SIMD?  Why not a reconfigurable architecture as well?
+
+-- 
++-----------------------------------+--------------------------------------+
+|  Jim Dixon<jdd@aiki.demon.co.uk>  |	    Compuserve: 100114,1027	   |
+|AIKI Parallel Systems Ltd + parallel processing hardware & software design|
+|	     voice +44 272 291 316  | fax +44 272 272 015		   |
++-----------------------------------+--------------------------------------+
+
+
+
+

@@ -1,0 +1,60 @@
+From: David Honig <honig@m7.sprynet.com>
+Date: Mon, 27 Jul 1998 11:05:09 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: encrypted FM radio hiss
+Message-ID: <3.0.5.32.19980727110437.007b8100@m7.sprynet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On the subject of RNGs.  Thinking about conditioning.
+	
+Suppose you have a "poor" random number stream, e.g., FM hiss digitized at
+say 8 Ksamples/sec.  Can you get a crypto-secure random-number stream by
+"whitening" the stream with a good block cipher?
+
+This scheme uses the RNG to "kick" the cipher out of the deterministic
+cycle its in, which is determined by the cipher key and initialialization
+vector.
+
+Poor RNG ----> XOR ----> BlockCipher ----> improved RNG?
+                 ^                    |
+                 |____________________|
+
+The output of a good block cipher in feedback mode will pass Diehard tests,
+though it is not crypto-secure.
+
+>From an information theoretic perspective, in the above scheme, you are
+slowly adding entropy to the output stream, at a rate determined by the
+actual number of bits/iteration and the bits/symbol of your poor random
+numbers.
+
+If you fed 64 bits of pure random values into a 64 bit cipher you would have
+a true RNG, filtered by the xor/ciphering, but still crypto-secure.  With
+fewer true bits, you have a 'smooth' way to introduce variable amounts of
+true entropy.
+If your RNG is 'stuck at' a constant value you are back to a deterministic
+PRNG.
+
+How do you cryptanalze the mix of a keyed PRNG and a true entropy source here?
+
+Is there any mathematical literature on this?
+
+Thanks
+
+
+
+honig@alum.mit.edu
+
+   "Speech is not protected simply because it is written in a language"	
+	Federal Misjudge Gwin on the Bernstein Case
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+From: Kent Crispin <kent@songbird.com>
+Date: Thu, 3 Jul 1997 04:11:50 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Jeff's Side of the Story.
+In-Reply-To: <199707020337.UAA17514@you.got.net>
+Message-ID: <19970702125735.31906@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, Jul 02, 1997 at 09:00:04AM -0700, Tim May wrote:
+> At 7:40 AM -0700 7/2/97, Kent Crispin wrote:
+> 
+> >This probably has been suggested 20 years ago, but wouldn't Jeff's
+> >problem have been solved if the following slight modification were
+> >made to the algorithm: If you are the last remailer in a chain, then
+> >with probability p you pick another randomly choosen remailer to send
+> >through.  If p is 1 end user mail would never come from you; if p is
+> >0.5 then half the time you send the mail on one more step.  The end
+> >user, then, can never be sure of which remailer will ultimately
+> >deliver the message.
+> ...
+> 
+> This general sort of thing has been discussed...though not 20 years ago! :-0
+
+Just teasing. 
+
+> I don't know about this particular mathematical algorithm, but things
+> generally like it.
+> 
+> Long before a remailer shuts down, he should certainly adopt a strategy
+> like this. Sending "his" traffic through randomly selected other remailers
+> is certainly an option. (Any remailer can at any point insert additional
+> hops, or even chains of hops, merely be addressing them correctly. Of
+> course, the "original" (which may not be the real original, of course, as
+> other remailers may have done the same thing) needs to "get back on track,"
+> else the decryptions won't work. But this is all a simple problem.
+
+I don't think it is so simple.  It is, as you say, easy to add
+interior hops, but they don't do the remailers any good -- they add
+cover for the end user only.  It is the "exterior edge" remailers that
+are at risk, and such a remailer has no easy way of knowing if it was 
+selected at random, or was chosen as a specific target.  At least, I 
+can't think of an easy way.  A particular remailer may have cohorts 
+it trusts to be sources of random selection, but remailer trust is a 
+flimsy foundation.
+
+> I don't know what gets discussed on the "remailer operators list," not
+> being on it, but it sure seems to me that remailers have stagnated, and
+> that some of the robust methods of reducing attacks on any particular
+> remailer are not being used.
+
+It's a problem with any infrastructure, though -- once it is in 
+place, change becomes hard.
+
+The next generation remailer infrastructure should support a great
+many remailers, and it should be impossible to target any single
+remailer.   The infrastructure as a whole should be resistant to 
+attack. 
+
+This seems to imply 1) that remailers be small, cheap, easy to install
+and run, 2) mail volume through any particular remailer should be
+small, 3) the infrastructure should support transient remailers -- I
+guess that is just a particular of a general robustness requirement;
+4) the infrastructure should support volume restrictions from source
+addresses -- for example, allow only 1 message per day from a
+particular address.
+
+Also, the "routing algorithm" should involve two stages -- the first
+stage should be for the benefit of and controlled by the end user, to
+bury the message in the network so that it can't be traced (unless a
+secure retrace path is built in to the message).  The second stage is
+for the benefit of the remailers, and controlled by them.  During the 
+first stage the message is masked, and the destination address is 
+unavailable, during the second stage the message is unmasked, and the 
+destination address and message (probably) are clear, and the 
+remailer network is trying to decide which remailer to make the final 
+delivery.  (When I say "unmasked" I mean only at the remailer node -- 
+not in transit -- the message is *always* encrypted in transit.)
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

@@ -1,0 +1,65 @@
+From: "Dave Emery" <die@pig.die.com>
+Date: Wed, 28 Dec 94 15:44:52 PST
+To: pfarrell@netcom.com
+Subject: Re: Why I have a 512 bit PGP key
+In-Reply-To: <35603.pfarrell@netcom.com>
+Message-ID: <9412282344.AA05935@pig.die.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>   Pat Farrell writes:
+
+> 
+> But I see it as more germane than Eric. It is not about
+> arbitrary self perpetuating bugs from source. It is
+> about serious security holes that are self perpetuatated
+> by the binaries of the complier. The compiler ignores
+> its own source and generates security hacked binaries,
+> even when the source looks like it is corrected.
+
+
+	I hate to remind everyone, but it is possible to actually
+inspect the compiled binary output by hand with a debugger and even
+trace its execution step by step through the usually small security
+sensitive sections of code.  While Thompson's famous hack was clever
+indeed, it basically depended on security by obscurity - if someone had
+looked at the generated machine code they easily could have spotted the
+hook that inserted the magic password.  Granted of course this is a lot
+of work, but so is modifying a compiler or perhaps several of them
+to selectively insert security hooks. 
+
+	On the other hand Eric's point about execs is more telling
+however, if the evil sysadmin controls the kernal it is quite possible
+for him to arrange to have the kernal recognize when the security
+program code is running and fudge the state of the security code
+variables by interupting its execution at a private to the kernal
+breakpoint and invoking code that patches the state of the data or stack
+areas and then returns to the user code.  Since the user process is
+effectively running on a virtual machine it would be very difficult to
+create code that would reliably detect such selective violations in the
+consistancy of the virtual machine, especially as code to check for such
+violations has to run on the same virtual machine and can also be
+diddled with by the kernel. 
+
+	In fact if the kernal one is running security code under is
+not 100% trustworthy no amount of cleverness at the user level
+can prevent it from obtaining any private information or modifying
+any private data it wants.  And if the hacker is clever enough this
+can be made nearly invisible to any application program and can be
+used to do almost anything desired.
+
+	And since the kernal (/vmunix or whatever) files are accessible
+to anyone with root and are not integrity checked on bootup, such a hack
+could be planted by some j. random hacker who had root momentarily and
+activated much later (perhaps via an obscure user level control file
+somewhere that specified the gory details of what to recognize and
+patch). 
+
+
+						Dave Emery 
+						die@die.com
+
+
+
+

@@ -1,0 +1,60 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 19 Sep 95 02:30:11 PDT
+To: cypherpunks@toad.com
+Subject: Re: NYT on Netscape Crack
+Message-ID: <199509190929.CAA23992@ix.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>   The New York Times, September 19, 1995, pp. A1, D21.
+> ......
+>   "The good news and the bad news of the Internet is that
+>   when you put something up there, many more people can test
+>   it," said Mike Homer, the vice president of marketing at
+>   Netscape. "You also give yourself the opportunity of having
+>   people point things out which you can fix quickly."
+
+That's a good, and realistic, attitude.
+
+>   Netscape officials said today that they would strengthen
+>   the system, by making it significantly harder to determine
+>   the random number at the heart of their coding system. They
+>   said they would no longer disclose what data would be used
+>   to generate the random numbers.
+
+I do hope this is just John Markoff's simplification of what Netscape's 
+folks said and not an endorsement of security-by-obscurity.
+I realize that some data does need to be kept around on disk
+or in the program, since obtaining a lot of random bits at the beginning
+of every transaction either requires annoying user interactions or
+takes too long to get decent quality, and certainly this data
+ought to be kept private by the algorithms involved.
+
+One concern I've had about the popular "crunch some bits repeatedly
+through MD5" approach to random number generation is that knowing
+one sample from the stream (e.g. by doing a transaction with the victim)
+gives you the rest of the stream.  There's a way to improve that.
+
+        let X(0) be some number you keep around from a previous
+                session, modified by whatever hardware randomness
+                is available, and seeded by user input the first time.
+        let X(i) = MD5(X(i-1))   
+        let Y(i) = hash(X(i)), where hash is something like MD5(key,X(i))
+        use Y(i) as the output random number.
+
+This eliminates the ability to determine X(i) or Y(i+1) as a function of Y(i),
+since the search space of X(i) is presumably too large to reverse (unlike
+the number of bits you can cheaply get in one session).  Keeping some of the
+bits of Y(i) around to use in addition to the other key for the hash, or to
+key the MD5(X(i-1)) with, may be useful as well.
+
+#---
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

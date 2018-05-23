@@ -1,0 +1,49 @@
+From: Jim choate <ravage@wixer.bga.com>
+Date: Tue, 30 Nov 93 12:07:43 PST
+To: tcmay@netcom.com (Timothy C. May)
+Subject: Re: Statistics of Low-Order Bits in Images
+In-Reply-To: <199311301914.LAA27327@mail.netcom.com>
+Message-ID: <9311301953.AA26009@wixer>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Some other factors one needs to consider when analyzing images are:
+
+* The lsb is going to be random if the image comes from any kind of a/d
+  process. This is because all convertors have a error of +/- 1 bit.
+
+* If an image is processed by software then the last significant bit will be
+  on or off consistantly for a given color.
+
+* By the use of exlusive-or operators it is possible to mask the data in a
+  suitable manner. This does require that both sender and reciever have a
+  copy or method of calculating the correct key.
+
+The process as I understand it now to use a graphical concealment cypher is:
+
+1. Both parties agree a priori on at least a way to generate suitable keys
+   for masking.
+
+2. You take your message and x-or it with a suitable bit stream.
+
+3. The resultant x-or bit stream is placed in the image as the lsb.
+
+4. Upon receipt, you strip out the x-or bit stream.
+
+5. Generate the appropriate key and use exclusive-or to return the data
+   stream.
+
+The real question is how do you generate keys?
+
+I see a method using the data bit stream itself as part of the answer. The
+algorithm would look at some parameter like character statistics or entropy
+of a text. It would look at the data stream and calculate its value. Then the
+hard part is to try various bit streams and measure their x-or value. The
+process is similar to Newtons Iterative Method for finding roots of
+polynomials.
+
+
+
+
+

@@ -1,0 +1,46 @@
+From: "David R. Conrad" <drc@russell.moore.com>
+Date: Tue, 26 Sep 95 04:57:51 PDT
+To: cypherpunks@toad.com
+Subject: Re: New Netscape RNG
+In-Reply-To: <199509250649.CAA27099@clark.net>
+Message-ID: <Pine.LNX.3.91.950926072411.866D-100000@russell.moore.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 25 Sep 1995, Ray Cromwell wrote:
+
+>   I just glanced at the new Netscape RNG source. I don't really see
+> anything bad, but I haven't analyzed it. However, I'm curious
+> as to why variables like the username or the language locality
+> are used as sources of entropy. These seem to provide almost nil.
+
+I, too, have only skimmed the code briefly.
+
+[Lots of good stuff deleted]
+
+>   Using those sources probably can't hurt, they just seemed
+> like odd choices, "grasping for straws" so to speak.
+
+What isn't clear to me is how much entropy they are assigning to these
+sources.  Certainly if they manage to get at least 128 bits of entropy
+then it doesn't matter how many non-random bits they mix into the hash.
+
+I think they are simply throwing everything but the kitchen sink in,
+and assuming that the overall result will be a sufficient number of
+bits of entropy.  But it would be nice to at least see a few comments
+on how many bits they expect each individual source to provide.
+
+I also noticed that they use $HOME/.pgp/randseed.bin under unix, but
+they don't bother with %PGPPATH%\RANDSEED.BIN on PCs.  I've sent Jeff
+a private message about this.
+
+David R. Conrad, conrad@detroit.freenet.org, http://www.grfn.org/~conrad
+Hardware & Software Committee  --  Finger conrad@grfn.org for public key
+Key fingerprint =  33 12 BC 77 48 81 99 A5  D8 9C 43 16 3C 37 0B 50
+No, his mind is not for rent to any god or government.
+
+
+
+
+

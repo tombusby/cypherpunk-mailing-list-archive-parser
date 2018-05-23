@@ -1,0 +1,48 @@
+From: ljo@ausys.se (Johansson Lars)
+Date: Thu, 14 Dec 1995 23:38:59 +0800
+To: ses@tipper.oit.unc.edu
+Subject: Re: Timing Cryptanalysis Attack
+Message-ID: <95Dec14.153934gmt+0100.53765@void.ausys.se>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Armadillo Remailer (remailer@armadillo.com) wrote:
+
+>Simon Spero <ses@tipper.oit.unc.edu> writes:
+>
+>>My gut & scribble-on-the-back-of-a-napkin feeling about this class of
+>>attack is that it could be a problem for smartcards (almost certainly)
+>
+>Is it a problem to create smartcards that do their calculations in
+>fixed time? I'd guess it should be easier than on multi-purpose
+>hardware.
+>
+>Does the attack work for existing smartcards?
+
+At first glance, smart cards would seem to be the most critical target
+to Kocher's timing attack since they usually operate in on-line
+environments.
+
+However, all RSA smart cards I'm aware of stores the result of the
+RSA computation (be it decryption, signing or authentication)
+internally and it can only be read using a Get_Response command.
+
+Of course this may not be satisfying since the terminal could get a
+(noisy) measure of the time by repeatingly use this command to
+see when the result is available.
+
+Most smart cards does nevertheless require that the user must first
+specify a PIN code before the RSA algorithms are operationable.
+This implies that even if the card gets stolen can't it be attacked
+with Kocher's method.
+
+/Lars Johansson
+ljo@ausys.se
+
+
+
+
+

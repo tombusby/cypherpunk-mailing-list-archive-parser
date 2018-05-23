@@ -1,0 +1,45 @@
+From: tomw@orac.engr.sgi.com (Tom Weinstein)
+Date: Wed, 1 Nov 1995 08:41:50 +0800
+To: cypherpunks@toad.com
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <DHAMpE.34y@sgi.sgi.com>
+Message-ID: <199510311648.IAA05877@orac.engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <DHAMpE.34y@sgi.sgi.com>, "Theodore Ts'o" <tytso@MIT.EDU> writes:
+
+>    Date: Mon, 30 Oct 1995 21:59:14 -0500
+>    From: "Josh M. Osborne" <stripes@va.pubnix.com>
+
+>    When /dev/random doesn't have "enough" enthropy left does reading
+>    from it return an error, or block?  I would strongly suggest
+>    blocking, as the non-blocking behavur is not really all that useful.
+
+> It acts like many character devices and named pipes in that if there is
+> no entropy available at all, it blocks.  If there is some entropy
+> available, but not enough, it returns what is available.  (A subsequent
+> read will then block, since no entropy will then be available.)
+
+> Actually, what's currently in Linux doesn't work precisely like this,
+> but it will soon.  After talking a number of people on both sides of the
+> block vs. non-blocking camp, this seemed to be a suitable compromise.
+> At least one Major Workstation Vendor is planning on using this behavior
+> for their /dev/random, to appear in a future OS release.  If we all can
+> standardize on this behavior, it'll make application writer's jobs that
+> much easier.
+
+One problem with this scheme is that if multiple processes have
+/dev/random open you can block unexpectedly.  If I try to avoid blocking
+by first checking if entropy is available there's a race condition if
+another process reads from the device.  Is there another way to avoid
+blocking?
+
+-- 
+Sure we spend a lot of money, but that doesn't mean | Tom Weinstein
+we *do* anything.  --  Washington DC motto          | tomw@engr.sgi.com
+
+
+
+

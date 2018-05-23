@@ -1,0 +1,69 @@
+From: JMKELSEY@delphi.com
+Date: Sat, 4 Nov 1995 16:09:30 +0800
+To: cypherpunks@toad.com
+Subject: video as a source of public randomness
+Message-ID: <01HX6SUGVCSI9AO7EU@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>Date: Thu, 02 Nov 1995 00:39:29 -0800
+>From: tcmay@got.net (Timothy C. May)
+>Subject: Re: Video as a source of randomness
+
+>Digitized video input, especially from something like a noisy channel (t.v.
+>channel, for example), is quite likely to produce a lot more entropy bits
+>per second than nearly any of us ever need. (One's PGP key could be seeded
+>in a fraction of a millisecond, for example.)
+
+This seems like a potential source of a stream of public random
+bits.  If these can be authenticated and matched, this kind of thing
+can be useful in a lot of protocols.  For example, if there is some
+packet structure in the digital video transmission which has at
+least 160 bits of entropy, then we can take the SHA1(packet[i]) to be
+public random bit block i.  (If we're worried about entropy, we can
+collect arbitrarily large numbers of packets to hash per 160-bit
+public random block.)
+
+For large-scale, above ground protocols, these packets would need
+some kind of signature or other authentication.  However, for
+protocols that could handle having the public random string checked
+offline later, this idea provides a reasonably good public random
+string that can be used without any knowledge or consent of the
+broadcaster/cable system/satellite system/whatever.  If the
+transmission is sent under encryption, so much the better.  This
+does still leave the possibility that an attacker could control the
+broadcaster's transmissions for a few seconds, but this seems
+unlikely in practice.
+
+An alternative might be the encrypted transmissions from any
+communications satellite.  How many telephone calls are your
+opponents able to reroute?
+
+>--Tim May, who has both audio and video digitizers built into his Power
+>Macintosh 7100av, but notes that none of the crypto programs he uses has
+>any provision for using them, and so he doesn't use them for crypto
+>purposes.
+
+Note:  Please respond via e-mail as well as or instead of posting,
+as I get CP-LITE instead of the whole list.
+
+   --John Kelsey, jmkelsey@delphi.com
+ PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMJmz3kHx57Ag8goBAQGYiwQAkx3dxUUcGjsEKqRAlc0CTq6EaTzBrLRz
+ifrKgZPxfyD9F+sBTJGGPpHWc3mtfwJwV8HeIa/MY1Z1hpssN1ZY6ELlEn+4FFIA
+3A+BNjB1PKrHebVZ0WHBJ3DI3h4/olF37bYNP261Uqd8CNig+fQ3VMtE0L0frBdr
+I+izpEMOwiw=
+=y7To
+-----END PGP SIGNATURE-----
+
+
+
+

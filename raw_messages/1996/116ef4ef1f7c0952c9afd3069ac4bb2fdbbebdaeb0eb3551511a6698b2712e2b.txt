@@ -1,0 +1,71 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Fri, 12 Apr 1996 01:35:06 +0800
+To: "Joseph M. Reagle Jr." <reagle@MIT.EDU>
+Subject: Re: Bank transactions on Internet
+In-Reply-To: <9604091701.AA29911@rpcp.mit.edu>
+Message-ID: <316C9EC4.405C@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Joseph M. Reagle Jr. wrote:
+> 
+> At 04:31 PM 4/8/96 -0700, you wrote:
+> >I agree with Jim at SFNB that the encryption made possible by VeriSign
+> >server certificates is an integral part of remote banking on the Web.
+> >However, I would encourage Security First and other banks looking at the Web
+> >to focus increased attention on client certificates AND to migrate away from
+> >their dependence on user passwords.
+> 
+>         I brought this up with SFNB a month or so ago (when I opened my
+> account) and the word then was that client side certificates would be
+> avaible within a month or so, my time guestimate (based on what they were
+> saying) was half-a-year.
+> 
+> >Admittedly, client certificate
+> >functionality has not yet been available but it will probably be standard by
+> >mid-1996.
+> 
+>         Let's hope so, I am not keeping significant funds in that account
+> until I have a certificate.
+
+  The release of Netscape Navigator that just started early beta, marketing
+named "Atlas", has support for client certificates.  A spec detailing
+how to interoperate with it, similar to the one I wrote on SSL 2 server
+certificates, should be available before the final release of the product.
+
+> >As Michael Karlin of SFNB noted and subsequently corrected, Netscape caches
+> >passwords.
+> 
+>         I suspected this, and was further exposed because of a common
+> problem with using Netscape and the like from student accounts (with a big
+> 10M quota), say on MIT's athena, where I like my disk cache to reside in the
+> workstations /tmp . I wipe(d) it whenever I log out, but I'm sure others
+> sprinkled their passwords in a million "public" cache's before SFNB stuck
+> the tag no-cache tag in.
+
+  The statement that "Netscape caches passwords" is not in itself true.
+It is true that if the no-cache header is not present, AND the site
+is using forms to enter passwords rather than HTTP auth, then the
+form post data(including password) will be cached.  I've said here
+before that this bug is being fixed in the next beta of the
+upcoming release.  The default for SSL pages will be not to cache
+at all.  If they used HTTP auth, their passwords would not
+have gone into the cache.
+
+> OBJava: do java applets have access to the cache, would it be possible to
+> write one of the little nasties that keep an eye on the cache?
+
+  No, Java does not have access to the cache, or any other file.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

@@ -1,0 +1,32 @@
+From: Carl Ellison <cme@TIS.COM>
+Date: Thu, 21 Sep 95 07:31:48 PDT
+To: jsw@netscape.com
+Subject: PRNG state (and conditioning) (was Re: netscape's response)
+In-Reply-To: <199509202031.NAA06951@comsec.com>
+Message-ID: <9509211428.AA21108@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If you are looking for PRNG conditioning code, feel free to snarf code from
+
+	http://www.clark.net/pub/cme/html/ranno.html
+
+I'm assuming your new PRNG has enough state (more than 64 bits) that the
+128-bit key (or later, larger keys) is worth its bits.
+
+I'm assuming you solve the problem of finding enough entropy bits for
+seeding the PRNG and considering how to keep as much of that entropy as
+possible in your PRNG seed (rather than, for a silly example, distilling it
+to an unsigned int for driving rand() ).
+
+For example, the state in ranG (from the giveaway code) or in ranM may not
+by itself lead to a secure PRNG, but when it drives a one-way function
+(e.g., ranH, ranD, ranN) the state is still serving a purpose.  [ranG
+keeps 186 bytes of state while ranM keeps 32KB of state.]
+
+ - Carl
+
+
+
+

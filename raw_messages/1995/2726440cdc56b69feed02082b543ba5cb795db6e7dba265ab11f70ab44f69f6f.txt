@@ -1,0 +1,37 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 29 Sep 95 10:16:59 PDT
+To: Andrew Roos <AndrewR@beetle.vironix.co.za>
+Subject: Re: Cryptanalysis of RC4 - Preliminary Results (Repeat)
+Message-ID: <199509291716.KAA06460@ix8.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:01 PM 9/29/95 S, Andrew Roos <AndrewR@beetle.vironix.co.za> wrote:
+>(This is a repeat because I posted the original 36 hours ago and it still   
+>hasn't bounced back to me.)
+Hmmm - I got it yesterday, so it did go out.
+
+>The attack is based on two particularly interesting three-byte key
+>prefixes which have a high probability of producing PRNG sequences
+>which start with a known two-byte sequence. The prefixes are:
+>1.  Keys starting with "00 00 FD" which have a 14% probability of
+>    generating sequences which start "00 00".
+>2.  Keys starting with "03 FD FC" which have a 5% probability of
+>    generating sequences which start "FF 03".
+[much interesting work deleted]
+
+It sounds like any application using RC4 with random session keys
+should start by testing session keys and rejecting any that
+start with 00 00 or 03 FD; it means doing 2**-15 more random key
+generations, and reducing the brute-force space by 2**-15,
+but it's a pretty small reduction.
+#---
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

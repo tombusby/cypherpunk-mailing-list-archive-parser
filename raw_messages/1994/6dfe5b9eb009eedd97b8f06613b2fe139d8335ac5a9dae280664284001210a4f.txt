@@ -1,0 +1,38 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Mon, 12 Dec 94 17:45:34 PST
+To: ianf@sydney.sgi.com
+Subject: Re: Time to exhaustively break 40-bit RC4?
+In-Reply-To: <9412131131.ZM13269@wiley.sydney.sgi.com>
+Message-ID: <199412130242.SAA00825@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: "Ian Farquhar" <ianf@sydney.sgi.com>
+
+   No, because as you're doing an exhaustive keysearch, you can "pipeline"
+   the key generation process in software.  Each key requires 256 swaps,
+   certainly, but there are only two swaps difference between the key
+   for "0000000000" and "0000000001" (assuming a 40 bit key).  
+
+Not by my count.  The key data length for a forty bit key is only 5.
+That means that each byte of the key data is used about fifty times in
+key setup (256/5).  Those initial changes in the internal key
+permutation table then propagate under iteration.
+
+Now I haven't looked very closely at how to optimize this search, and
+it's not even clear that it's possible.  There are 256! possible
+permutations for the internal key, which is a lot more than 2^40
+possible (external) keys.  It's quite possible that the internal keys
+are just not particularly close to each other.  Close here, say, is
+the minimum number of swaps needed to take one key to another.
+
+It's possible that some arrangement other than incrementing the key
+yields internal key correlations that speed up software internal key
+generation.
+
+Eric
+
+
+
+

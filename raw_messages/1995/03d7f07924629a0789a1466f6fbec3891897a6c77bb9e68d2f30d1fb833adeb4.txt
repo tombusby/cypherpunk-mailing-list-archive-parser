@@ -1,0 +1,52 @@
+From: Tom Weinstein <tomw@netscape.com>
+Date: Tue, 12 Dec 1995 11:25:32 +0800
+To: cypherpunks@toad.com
+Subject: Re: Timing Cryptanalysis Attack
+In-Reply-To: <199512120100.UAA00263@jekyll.piermont.com>
+Message-ID: <30CCD843.6231@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry E. Metzger wrote:
+> 
+> Tom Weinstein writes:
+>
+> > The problem with that approach is that if the system is heavily
+> > loaded, it can take an arbitrarily large amount of user time.
+> 
+> Totally untrue. The process can take an arbitrary amount of wall clock
+> time, not user time.
+
+Whoops.  You are absolutely correct.  Pardon my brain-damage.  I
+was thinking wall clock time, as you indicated.
+
+> > Somewhat better is to sleep for a random amount of time after you're
+> > done.
+> 
+> I don't think so. First of all, you can still extract some
+> information. If you have been gone as long as the maximum computation
+> plus the maximum random fudge, you know that you had to have conducted
+> the maximum computation. This means that some bits are indeed
+> leaking. Your approach also has the disadvantage that it is hard to
+> produce good random numbers -- you are perhaps familiar with that
+> problem?
+
+Yes, you are correct.  It's better than taking a fixed amount of wall
+clock time, but definitely not better than a fixed amount of user
+time.
+
+As Paul mentions in his extended abstract, there is actually an easy way
+to fix the problem without hurting either latency or throughput much. 
+If you blind and and unblind around the modular exponentiation, it
+appears impossible to perform this attack.  Because you don't know the
+inputs to the exponentiation operation, you can't make any predictions
+based on those inputs.
+
+-- 
+Sure we spend a lot of money, but that doesn't mean | Tom Weinstein
+we *do* anything.  --  Washington DC motto          | tomw@netscape.com
+
+
+
+

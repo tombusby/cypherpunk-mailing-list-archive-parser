@@ -1,0 +1,41 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Mon, 8 Apr 1996 12:51:21 +0800
+To: cypherpunks@toad.com
+Subject: Re: Was Cohen the first?
+In-Reply-To: <35960405162553/0005514706DC3EM@MCIMAIL.COM>
+Message-ID: <4k9hog$buj@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199604070321.TAA02171@myriad>,
+Matthew Ghio  <ghio@myriad.alias.net> wrote:
+>Despite this, the Apple II never became a popular virus-writing platform.
+>There are several possible reasons for this, but one of the main ones is
+>that few Apple II users had hard disks.  On the IBM PC, it was easy for a
+>virus to get on the hard disk, then systematically infect every floppy disk
+>put into the system.  Apple II users, in contrast, often booted from
+>floppies, and often rebooted when switching to a different software package,
+>thus purging the virus from memory.  (Pressing control-reset on the Apple II
+>keyboard would always pull the reset line on the CPU, so it wasn't possible
+>to trap the interrupt like it is possible to trap ctrl-alt-del on the PC.)
+
+Not true.  Pressing ctrl-reset jumped to the interrupt routine pointed
+to by the vector at (I think) 1010/1011, if the contents of that vector
+checksummed correctly with the contents of the next byte (1012), and
+otherwise reset the computer.  It certainly was possible (and useful)
+to trap ctrl-reset.  Also, even when a reset occurred, not all of the
+memory was cleared, so you could in fact keep code in memory across
+a reset, if you could arrange to have it run on the other side of the
+boot.
+
+As you pointed out, it was very easy to write viruses for the Apple ][.
+The "slave" disk layout contained two blank sectors (.5 K) within the
+DOS image that get loaded into memory.  The designers may as well have
+labelled it "put virus here".
+
+   - Ian "Been there; done that..."
+
+
+
+

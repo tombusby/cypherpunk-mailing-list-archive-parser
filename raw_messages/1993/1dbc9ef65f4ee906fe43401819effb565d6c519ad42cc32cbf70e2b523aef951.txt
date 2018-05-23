@@ -1,0 +1,49 @@
+From: "Robert J. Woodhead" <trebor@foretune.co.jp>
+Date: Tue, 26 Oct 93 02:34:51 PDT
+To: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Subject: Re: Totally Anonymous Remailing
+In-Reply-To: <9310260243.AA27775@toad.com>
+Message-ID: <9310260929.AA13959@dink.foretune.co.jp>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eli writes regarding my Totally Anonymous Mailing scheme:
+>A problem here.  The SEND system eliminates the risk of database
+>seizure, and encrypting mail to the remailer eliminates snooping on
+>incoming mail, but outgoing mail is unprotected.  Anybody watching
+>net traffic coming out of the TAR can snoop the destination of SEND
+>requests, and reasonably presume that address to be the owner of the
+>nym.  This is of course a problem with a penet-style setup too, but
+>it's something to fix if you want to be "totally anonymous".  
+
+I don't think this is a problem.  The send command is received by
+the mailing system encrypted by the mailer's public key.  An outside
+observer can't decode the message.  When it gets the message, the
+mailer decrypts the envelope, and gets the sender's pseudonym and
+an encrypted command (encrypted with the sender's private key).
+The mailer knows the pseudo's public key, so it can decrypt the
+command.  If it is a spoofed command, the mailer gets junk, and
+merely sends email into the psuedo's account giving details of
+the intrusion attempt (which might just be an error on the
+owner's part).
+
+The outgoing mail packet(s) would be encrypted by the pseudo owner's
+public key, so only he could read them.
+
+Some mechanism might have to be added to prevent an irritating "spoof"
+attack where the attacker records an incoming message and merely
+duplicates it.  This might involve having the server remember the last
+couple of weeks of command transactions, reject duplicates, and
+reject any messages more than a week "old."  This would require a
+timestamp in the encrypted part of the message.
+
+The part of the proposal that really needs work is methods to make
+traffic analysis prohibitive.  I suspect that a net of cooperative
+mailers, along with the ability to delay the relay of outgoing mail,
+might help in that regard.
+
+
+
+
+

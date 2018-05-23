@@ -1,0 +1,72 @@
+From: "Brian A. LaMacchia" <bal@martigny.ai.mit.edu>
+Date: Tue, 7 Nov 1995 01:46:44 +0800
+To: perry@piermont.com
+Subject: Re: Photuris Primality verification needed
+In-Reply-To: <199511051607.LAA08575@jekyll.piermont.com>
+Message-ID: <9511061646.AA25242@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   X-Authentication-Warning: jekyll.piermont.com: Host localhost didn't use HELO protocol
+   Cc: cypherpunks@toad.com, ipsec-dev@eit.com
+   Reply-To: perry@piermont.com
+   X-Reposting-Policy: redistribute only with permission
+   Date: Sun, 05 Nov 1995 11:07:25 -0500
+   From: "Perry E. Metzger" <perry@piermont.com>
+   Sender: owner-cypherpunks@toad.com
+   Precedence: bulk
+
+   "William Allen Simpson" writes:
+   > Folks, I was somewhat disappointed in the response to our previous
+   > requests for verification of the strength of the prime moduli.
+   > 
+   > Recently, someone asked for a smaller prime of only 512-bits for speed.
+   > This is more than enough for the strength of keys needed for DES, 3DES,
+   > MD5 and SHA.  Perhaps this would be easier to have more complete and
+   > robust verification as well.
+
+   I think that this is a very large mistake. Allow me to explain why.
+
+   La Macchia (sp?) and Odlyzko (sp?) have a very nice result which shows
+   that once you've done enough precalculation on a particular modulus,
+   you can break any subsequent Diffie-Hellman operation performed on
+   that modulus with (for our purposes) no effort. 512 bits is, from what
+   I can tell, not far out of the realm of possibility for what someone
+   could try to crack with current machines given enough effort.
+
+Perry is correct; allow me to add some details.  The discrete log
+problem is "brittle": for a given prime modulus p you have to spend a
+lot of effort to calculate the first discrete log modulo p, but
+subsequent discrete logs modulo p are easy to find.  Basically, you (a)
+do a lot of precomputation to compute discrete logs for a set of
+small(-ish) primes, and then (b) you combine these to find the
+particular discrete log you're interested in.  For the second (and
+subsequent) discrete logs modulo p you only have to do part (b), which
+is pretty easy.
+
+Our practical experiences with discrete logs suggests that the effort
+required to perform the discrete log precomputations in (a) is slightly
+more difficult than factoring a composite of the same size in bits.  In
+1990-91 we estimated that performing (a) for a k-bit prime modulus was
+about as hard as factoring a k+32-bit composite.  [Recent factoring work
+has probably changed this a bit, but it's still a good estimate.]
+
+Finally, remember that if the modulus in your appliation is public and
+fixed (as it usually is) then you've got a very tempting target for me
+to attack.  Once I do the precomputations I can break/subvert/read any
+particular D-H exchange I want for little additional effort.  You have
+to consider the amount of effort someone might bring to bear against
+your entire system, not only against a particular transaction.  Breaking
+a particular 512-bit RSA key might not be worth the effort if it just
+gets me your encrypted e-mail (or whatever), but a 512-bit D-H modulus
+in a widely deployed system is ripe for attack.
+
+See our paper (available from http://www-swiss.ai.mit.edu/~bal/) for all
+the juicy details.
+
+					--bal
+
+
+
+

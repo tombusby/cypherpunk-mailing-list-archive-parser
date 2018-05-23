@@ -1,0 +1,38 @@
+From: Brian A. LaMacchia <bal@martigny.ai.mit.edu>
+Date: Fri, 20 May 94 10:16:25 PDT
+To: hughes@ah.com
+Subject: Re: D-H key exchange - how does it work?
+In-Reply-To: <9405201655.AA11052@ah.com>
+Message-ID: <9405201716.AA22022@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Date: Fri, 20 May 94 09:55:36 -0700
+   From: hughes@ah.com (Eric Hughes)
+   Sender: owner-cypherpunks@toad.com
+   Precedence: bulk
+
+      I dunno. The paper by LaMacchia and Odlysko on how to break
+      Diffie-Hellman quickly once you've done a lot of precomputation on a
+      static modulus is sufficiently disturbing to me that I would prefer to
+      be able to change modulii fairly frequently if possible.
+
+   Quoting K. McCurley about the above mentioned work: "Their experience
+   seems to suggest that it is possible to compute discrete logarithms in
+   groups GF(p)^* with p \wavyequals 10^100." [in _The Discrete Logarithm
+   Problem_, collected in _Cryptology and Computational Number Theory_]
+
+Right.  Basically, what we found was that you needed the same amount of
+computation to factor a (k+10)-digit composite as to compute discrete
+logarithms in a field with k-digit modulus p.  The discrete log problem
+is brittle---you do a lot of precomputation for a particular modulus p
+and then finding individual discrete logs in GF(p) is easy---so you
+need to think carefully about the lifetime of the information you're
+going to encrypt and choose the size of your modulus accordingly.
+
+					--bal
+
+
+
+

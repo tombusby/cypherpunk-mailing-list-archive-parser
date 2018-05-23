@@ -1,0 +1,53 @@
+From: collins@newton.apple.com (Scott Collins)
+Date: Tue, 8 Feb 94 17:42:12 PST
+To: rcain@netcom.com (Robert Cain)
+Subject: Re: Some stuff about Diffie-Hellman (and more :-)
+Message-ID: <9402090138.AA04905@newton.apple.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>What you say seems to indicate that D-H as we know and
+>love it has been rendered obsolete because it depends on the modulus
+>being known.  What am I missing?
+
+DH exchange doesn't require a known modulus.  Most people implement it with
+a common alpha and small set of generators so that they don't have to
+invent a distribution or agreement protocol.  Authenticated DH exchanges
+(e.g., station-to-station protocol) can include these parameters as part of
+each parties signature; and provide an agreement policy (e.g., initiator's
+parameters unless receiver thinks they are weak).
+
+After each party has generated and exchanged an exponent, each verifies the
+`certificate' of the other, and the signature of the other over the
+exponent pair.
+
+The shared knowledge that makes this possible in this case is, of course,
+foreknowledge of the public key of the other party.  If you don't know it
+before you start the protocol, you can't really know who you're talking to.
+ Other protocols can be designed with other choices of shared knowledge.
+
+STS is immently practical, any other practical and fair scheme is likely to
+be similar, i.e., involve shared knowledge, independently generated random
+input from both parties, a mechanism for securely (but expensively)
+transmitting the random data (typically based on the shared knowledge),
+combining the disjoint random data symmetrically so that each party shares
+in a fresh secret session key, and finally authentication based in part on
+the original shared knowledge.
+
+Hope this helps,
+
+
+Scott Collins         | "Few people realize what tremendous power there
+                      |  is in one of these things."     -- Willy Wonka
+......................|................................................
+BUSINESS.   voice:408.862.0540  fax:974.6094   collins@newton.apple.com
+Apple Computer, Inc.   5 Infinite Loop, MS 305-2B   Cupertino, CA 95014
+.......................................................................
+PERSONAL.   voice/fax:408.257.1746    1024:669687   catalyst@netcom.com
+
+
+
+
+
+

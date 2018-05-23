@@ -1,0 +1,34 @@
+From: Derek Atkins <warlord@Athena.MIT.EDU>
+Date: Sat, 28 Aug 93 20:23:18 PDT
+To: Brad Huntting <huntting@misc.glarp.com>
+Subject: Re: PGP-MIME
+In-Reply-To: <199308292250.AA00175@mini.glarp.com>
+Message-ID: <9308290317.AA07547@podge.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> For PGP to really make use of MIME, it could use "multipart" types
+> to separate the objects being encrypted and/or signed from the
+> signatures and encrypted session keys associated with them.
+
+No, this is WRONG.  Take a look at the PEM-MIME Internet Draft.  You
+*do not* want to separate the signature from the body of text being
+signed, since then you lose the delimiters of the signed message, and
+MIME can do anything with the data (like transfer tabs to spaces,
+etc.)  This is BAD.
+
+If you keep the message and signature together, it will work better.
+MIME still does funky things, however, some times.
+
+Currently, you can easily use MIME as a transport mechanism for PGP
+messages.  However currently there is no way to use PGP security for a
+MIME message.  Hopefully we can take what the PEM-MIME effort has
+learned and apply that to PGP..
+
+-derek
+
+
+
+
+

@@ -1,0 +1,83 @@
+From: John Deters <jad@dsddhc.com>
+Date: Mon, 20 May 1996 17:52:25 +0800
+To: camcc@abraxis.com
+Subject: Re: Sendmail Question (was: SMTP Server for sending to  anonymous remailers?)
+Message-ID: <2.2.32.19960519234923.002f39e8@labg30>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:42 PM 5/19/96 -0400, you wrote:
+>At 12:09 AM 5/19/96 -0700, you wrote:
+>>If you use popmail (like Eudora), then just tell it the server to use in
+>>"SMTP Host".
+>>        -Lance
+>I have been following this with no little interest. Using Eudora Pro when I
+>attempt to replace host: smtp1.abraxis.com with *SMTP Host*, I receive the
+>message *Attempting to resolve host: SMTP Host*, and dat's all until I stop
+>the send command.
+>
+>Thanks
+>
+>Alec
+
+Alec,
+
+What he meant was that you should replace the contents of the SMTP server's
+field with the address of the first remailer in your chain.  For example, if
+I wanted to send this through the Holy Cow remailer, I'd put this in the
+SMTP server field:
+
+        haystack@holy.cow.net
+
+Remember, though, that several things OUT OF YOUR CONTROL have to happen for
+your mail to be anonymised successfully.
+
+First, if you are behind a "firewall" (i.e. doing this at work through your
+work's net connection) your firewall may be implementing what is known as a
+"proxy."  That means even though you're using the SMTP protocol, you may not
+be *directly* talking to the SMTP client of the remailer.  It may "look"
+like you're able to SMTP out to whoever you want to send mail, but in
+reality, the firewall can intercept your request, and "pretend" to be some
+other SMTP server.  It then accepts your outgoing mail, and forwards it to
+the real destination.  
+
+Abraxis sells firewalls.
+
+Also, your firewall may be configured to not pass SMTP out at all, but
+rather to require you to send any SMTP traffic directly to it.  That means
+you can not change your SMTP server to anything outside of your local net.
+
+In either case, firewalls are certainly capable (and employers within their
+rights, but that's another useless thread) to log and/or read your mail.
+Anonymity lost, at least to your employer.
+
+Finally, the anonymous remailer may (or may not) have some kind of logging
+turned on.  I don't know why they would (what's the value if they do) but if
+some law enforcement agency orders them to discreetly monitor traffic, you
+lose again.
+
+Unless you PGP encrypt your mail to the remailers before it leaves your
+machine for the big bad net, someone else can read it.  And, no matter what,
+persons unknown can tell that your machine sent some message to the
+remailer.  (This is known as "traffic analysis".)  Therefore, I'd *highly*
+recommend not e-mailing anything illegal over the net, remailer or no.
+
+-j, annoying, yes.  Illegal or harassing, no.
+--
+J. Deters
+>From Senator C. Burns' Pro-CODE bill, which I support and you can find at:
+http://www.senate.gov/member/mt/burns/general/billtext.htm
+"  (2) Miniaturization, disturbed computing, and reduced transmission
+ costs make communication via electronic networks a reality."
++---------------------------------------------------------+
+| NET:     jad@dsddhc.com (work)    jad@pclink.com (home) |
+| PSTN:    1 612 375 3116 (work)    1 612 894 8507 (home) |
+| ICBM:  44^58'33"N by 93^16'42"W Elev. ~=290m (work)     |
+| PGP Key ID:  768 / 15FFA875                             |
++---------------------------------------------------------+
+
+
+
+
+

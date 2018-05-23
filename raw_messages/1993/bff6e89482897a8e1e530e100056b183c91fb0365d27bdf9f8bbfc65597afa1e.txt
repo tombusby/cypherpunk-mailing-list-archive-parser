@@ -1,0 +1,50 @@
+From: Joe Thomas <jthomas@access.digex.net>
+Date: Tue, 4 May 93 14:18:38 PDT
+To: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Subject: Re: tripple des
+In-Reply-To: <9305042013.AA25148@toad.com>
+Message-ID: <Pine.3.05.9305041723.A14495-b100000@access.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 4 May 1993, Timothy Newsham wrote:
+
+> 
+> Crypto question:
+> why was the following chosen for tripple DES :
+>    EN(DE(EN(data,k1),k2),k3);   
+>
+> . . .
+> 
+> How would this compare with
+>    EN(EN(EN(data,k1),k2),k3);
+> 
+
+In fact, "triple" DES goes three times through the engine, but only uses
+two keys:
+
+     EN(DE(EN(data,k1),k2),k1)
+
+My understanding is that this was chosen for hardware implementations
+because it is equivalent to single DES when k1 = k2.  This is important,
+of course, when some people you want to talk to are still using single DES
+and the hardware is hard to reconfigure.
+
+Nowadays, when most DES (technically, DEA) is done in software, it would
+make more sense to use three separate keys.  Two key "triple" DES has 112
+key bits (56 * 2), while a three key system would have 168.  I've seen the
+latter system used recently, though I can't remember where...
+
+Joe
+--
+Joe Thomas <jthomas@access.digex.net>           Say no to the Wiretap Chip!
+PGP key available by request, finger, or pgp-public-keys@toxicwaste.mit.edu
+PGP   key   fingerprint:   1E E1 B8 6E 49 67 C4 19  8B F1 E4 9D F0 6D 68 4B
+
+
+
+
+
+
+

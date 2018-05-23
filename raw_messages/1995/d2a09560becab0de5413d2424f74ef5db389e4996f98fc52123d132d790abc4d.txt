@@ -1,0 +1,57 @@
+From: patrick@Verity.COM (Patrick Horgan)
+Date: Thu, 21 Sep 95 08:57:20 PDT
+To: perry@piermont.com
+Subject: Re: "random" number seeds vs. Netscape
+Message-ID: <9509211553.AA17620@cantina.verity.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Perry said:
+> 
+> Also be especially careful about how you run the thing! Don't use
+> popen or anything like it!
+
+There's nothing inherently wrong with using popen or system.  The problem
+arises when you use information given to you from outside as the argument
+to popen or system without checking it.  You should have an awareness that
+whatever you pass to system or popen is essentially being passed as the
+commandstring to a:
+
+    execl("/bin/sh", "sh", "-c", commandstring, (char *)0);
+
+Make sure you know the implications of this.  If you know that what you're
+passing can happily be exec'd directly, it's more efficient to do an exec 
+yourself instead of (effectively) having a sh exec'd to exec your code.
+Of course you can see that you shouldn't do something like:
+
+    cout << "Enter the directory to list: " 
+    cin >> buffer;
+    system(buffer);
+
+especially if you're running with any sort of priviledges.  Suppose someone
+entered:
+
+    / ; echo >>/etc/passwd "gotcha::0:0:Intruder Man:/:/sbin/sh
+
+Obviously if this program was being run as root you'd be in trouble.
+If it was running as a user it would let them do something like add
+an .rhosts for the user that would let them get on the machine.  Once
+on a machine it's often fairly easy to leverage that access into root
+access.
+
+Oh well, I could talk about security all day:)
+
+Patrick
+   _______________________________________________________________________
+  /  These opinions are mine, and not Verity's (except by coincidence;).  \
+ |                                                       (\                |
+ |  Patrick J. Horgan         Verity Inc.                 \\    Have       |
+ |  patrick@verity.com        1550 Plymouth Street         \\  _ Sword     | 
+ |  Phone : (415)960-7600     Mountain View                 \\/    Will    | 
+ |  FAX   : (415)960-7750     California 94303             _/\\     Travel | 
+  \___________________________________________________________\)__________/
+
+
+
+

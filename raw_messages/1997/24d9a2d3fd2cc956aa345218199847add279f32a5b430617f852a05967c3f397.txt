@@ -1,0 +1,58 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 27 Oct 1997 18:23:15 +0800
+To: shamrock@cypherpunks.to
+Subject: not escrowing signature keys (Re: PGP, Inc.--What were they thinking?)
+In-Reply-To: <Pine.BSF.3.96.971027082056.10658E-100000@pakastelohi.cypherpunks.to>
+Message-ID: <199710270936.JAA00696@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Lucky Green <shamrock@cypherpunks.to> writes:
+> On Fri, 24 Oct 1997, Adam Back wrote:
+> > 
+> > If this is the case, I reckon it's still better to just escrow their
+> > comms keys locally.  [..] To go with this kind of a company with this
+> > kind of policy, I would presume that sending or receiving super-
+> > encrypted messages would would be a sackable offense.
+> 
+> How does your system prevent the employer  from fabricating forged
+> signatures in a PK system that uses the same key for signing and
+> decrypting?
+
+PGP isn't using ARR (Additional Recipient Requests) for the old RSA
+keys either, I don't think -- so I think a copy of pgp5.5 for business
+which has been configured by an admin with the strictest settings
+would not be able to generate RSA keys.
+
+So the simple way seems to be to not escrow the private components of
+the DSA signature key.  If people forget their passphrase, they'll
+need to generate a new signature key and get it freshly certified by
+the admin while he's recovering their encryption key.
+
+> And if you don't use such a system, then how do you deal with future
+> versions of the software that will allow the user to swap DH keys
+> from underneath the ElGamal keys?
+
+Interesting question even if you are using separate signature keys.
+You've got a new signature key.  You want to bind your recovered EG
+keys to it.  So I guess you just strip the self-certificates from the
+EG keys, and add new ones made by the new signature key.  You can
+still decrypt messages, and even pgp5.0 would be able to cope with
+that (it'll try to fetch keys to check the certification on the
+signature key).
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,89 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 8 Aug 1997 20:39:11 +0800
+To: jbaber@mi.leeds.ac.uk
+Subject: Re: REPOST : Un-forgeable Cancels
+In-Reply-To: <12867.9708080920@misun2.mi.leeds.ac.uk>
+Message-ID: <199708081127.MAA00177@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Jon Baber <jbaber@mi.leeds.ac.uk> writes:
+> 1	When any message is sent a hash X is calculated as :
+> 
+> 			X = HASH(Mid,S)
+> 
+> 	where	Mid is the Message ID 
+> 		S is a secret controlled by the author (eg a pass phrase)
+> 
+> 2	The hash value Y is then calculated such that:
+> 
+> 		Y = HASH(X) = HASH(HASH(Mid,S))
+> 
+> Any comments/glareing weaknesses that I have missed?
+
+Sounds good to me.  I thought there was someone doing something like
+this with hashes.  But then I never really looked into any of the
+systems.  What does Greg Rose's PGPMoose do?  (One presumes it
+involves PGP sigs?)
+
+> This does assume that message IDs are available by the news program
+> and are not allocated after sending. If this is not the case then it
+> would be necessary to use other header information to calculate the
+> hash such as the date/time and subject, or to store some kind of key
+> at the authors end in order to reference the message (although in
+> this case X may as well just be generated randomly and stored).
+
+I think you don't even need this much uniqueness of hashing
+material...
+
+Say you just chose a random R and store it in ~/.news-preimage, and
+HASH( R ) in ~/.news-image.
+
+Now you post all of your posts with HASH( R ) in a header as you are
+suggesting.
+
+Now if you didn't want to be coerced in to cancelling your own posts
+you just remove .news-preimage instantly.
+
+You have to update your preimage for each cancel you do, but how many
+cancels do people do anyway?  (Not many for their own benefit I
+reckon).
+
+
+This is a low security application, and ease of use over user typed
+passwords will win I think.
+
+Conceivably you could cope with the above by making .news-image
+readable to the news system on your local net news service.  This
+could transparently do the job without needing to update any clients
+-- only an INN patch required.  Sounds like a phun project for
+someone.
+
+Issueing cancels would be more manual, but you could easily knock up a
+perl script to instruct the NNTP server to do that.  (Or windows
+program, or whatever).
+
+If you really wanted to integrate cancels without updating clients,
+for those that support them you'd have to give the NNTP news server
+access to your preimage, R.  Not sure this is a good idea, as now your
+ISP can be coerced into cancelling your message for you without your
+cooperation.
+
+Course all these problems go away if you do update clients, but it's
+usually nice to offer an easy interim migration path, else no-one will
+use it.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

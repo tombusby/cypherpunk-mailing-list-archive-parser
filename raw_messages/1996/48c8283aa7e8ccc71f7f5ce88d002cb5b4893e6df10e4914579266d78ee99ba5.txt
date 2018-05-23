@@ -1,0 +1,43 @@
+From: "E. ALLEN SMITH" <EALLENSMITH@ocelot.Rutgers.EDU>
+Date: Fri, 1 Mar 1996 09:43:40 +0800
+To: cypherpunks@toad.com
+Subject: Re: PGP to PC mail integration
+Message-ID: <01I1SHIHFEBKAKTPB8@mbcl.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: lmccarth@cs.umass.edu
+
+>Mike Ingle writes:
+>> Instead of messing with user interfaces, you set the POP and SMTP
+>> addresses of your mail program to "localhost". You run locally a Visual
+>> Basic program that sits on ports 110 (POP) and 25 (SMTP) listening for
+>> connections. The VB program is configured with the addresses of your
+>> real SMTP and POP servers, and acts as a proxy.
+> 
+>> When your mail program retrieves POP mail, it goes through the VB
+>> program, and the VB program decrypts any PGP mail it sees. When it
+>> sends mail, the VB program encrypts any mail it has a PGP key for the
+>> recipient of.
+
+>Would you be stuck if you wanted to send something unsigned and/or 
+>unencrypted ?
+
+	You'd put something into the mail message itself that would tell it
+"don't encrypt this" and/or "don't sign this". Hmm... you'd need to put in
+messages to be signed and/or encrypted your passphrase, or have it gotten some
+other way... which doesn't look very safe.
+	Of course, if you're just encrypting it to the person's public key off
+of your keyring, and for stuff that's coming in encrypted to someone else's
+private key or signed with someone else's private key on your keyring, that
+wouldn't be so much of a problem. For the stuff coming in with the
+verification message (could be spoofed), looking for such strings already in
+an incoming message would be good. An attacker could still potentially slip
+something in between the mail program and the proxy program, though - the same
+problem as with the passphrase in the message. 
+	-Allen
+
+
+
+

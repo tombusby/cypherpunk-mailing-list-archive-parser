@@ -1,0 +1,119 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Fri, 25 Aug 95 04:11:59 PDT
+To: jim@acm.org
+Subject: Re: Cypherpunk Brute Squad [Re: SSL Challenge: Server problems]
+In-Reply-To: <199508250059.RAA02668@mycroft.rand.org>
+Message-ID: <"swan.cl.cam.:226410:950825111043"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+**** Anyone participating in the SSL Challenge who has logs of their searches
+**** please ensure you read "What to do if you have logs" below
+
+** Anyone who is running a brclient earlier than 0.14 or a brloop earlier
+** than 0.05 please ensure you read "current requirements"
+
+> Live and/or learn
+
+The purpose of this project was the latetr ...
+
+> -- looks like the performance is a little better now that they're handing out
+> bigger chunks.
+
+That is just one of the tweaks I made ...
+
+> The important thing is to learn something new each time so the next one goes
+> more smoothly.
+
+Indeed -- the current project is a merge of three I had planned ...
+
+> Should be nicer with hierarchical servers and so on for the next challenge...
+> DES or lobotomized DES or whatever.
+
+Yeah .... :-)
+
+
+
+This project arose from the "failed" rc4-40 attempt.
+Personally I think it worked -- it showed that it was possible to scan a 40 
+bit address space performing the kind of manipulations needed for brute force 
+attacks.
+
+The WWW interface was a pain as it required users to do something, so the norm 
+was to allocate large chunks, etc.
+Also collating the results was a nightmare !
+
+So we decided that cutting the people out would be a good idea all round.
+We bolted it all together, and it seemed kind of OK.
+The plan was then to pass it round a wider audience to check that it ported to 
+other systems and environments, and once it was shown to bsasically work, see 
+how it stood up to heavy usage. Finally we could let it rip & see what it 
+could do.
+Unfortunately, due to various external pressures, we have ended up rolling all 
+these three into one. It has made it a lot messier than I would have hoped, 
+for which I apologise to you all.
+
+rc4-40 had shown that 40bit address spaces could be scanned.
+hal1 slipped through our fingers, and showed somewhat more than we had 
+planned, i.e. that actual code could be broken by a *single* person (this 
+sounds more impressive, but is technically easier !).
+We asked for hal2 and hal3 to "check it works" and "watch it zip" repectively.
+Before he left, Hal gave us hal2, so we combined the two remaining stages.
+
+SO: this project is:
+    1) to shake down the code on different systems
+    2) to see how it works under real load
+    3) to see how quickly a 40bit address space can be scanned.
+
+Again I apologise to you all that (1) has been non-trivial and that (2) has 
+had unpleasant effects of (1). I think next time we may be ready for (3) ...
+
+I was going to summarise some of the lessons so far, but things are getting 
+congested again, so I shall send out this PLEA to ensure recent code is used !!
+
+current requirements
+====================
+
+PLEASE ensure that you are using a brclient of at least 0.14
+("grep comment.inffo brclient" to discover what you are using)
+You can updare brclient while brloop is running.
+Some people are still running old versions, and this is hammering the server.
+
+It also helps to run at least brloop 0.05 ("grep BRLOOPCOMMENT brloop").
+
+What to do if you have logs
+===========================
+
+During the early part of the project, the server was highly congested, and I 
+fear that many ACKs may have been lost :-(
+
+If you have logs of the searches your machine(s) did, it would be useful to 
+check  that all ACKs got through.
+
+Look at the stats page http://www.brute.cl.cam.ac.uk/cgi-bin/brute?op=stats
+(or something like
+http://www.brute.cl.cam.ac.uk/cgi-bin/brute?op=stats&project=&proj=2977+Hal%27s
++second+challenge&substring=YourID&patt=unacknowledged
+but with YourID repleaced by the ID ypou use)
+and look for all the NOACKs. e.g:
+	008f      NOACK 008f   1 Piete Brooks <pb@cl.cam.ac.uk>
+See if there is a corresponding entry in your logs
+	grep -h '2977 [0-9a-f]* 008f [0-9]* [n0-9a-f][o0-9a-f]'
+and if so, ACK it
+	brclient -Ltssl -a'2977 2a07 008f 1 no'
+
+[ If your a HACKer, you can automate it, as in
+
+	lynx -dump 'http://www.brute.cl.cam.ac.uk/cgi-bin/brute?op=stats&project=&proj
+=2977+Hal%27s+second+challenge&substring=Piete.Brooks&patt=unacknowledged' |
+	grep ' NOACK ' | while read a b; do
+	   grep -h '2977 [0-9a-f]* '$a' [0-9]* [n0-9a-f][o0-9a-f]' ~/BR-*;
+	   done | while read a; do brclient -Ltssl -a"$a"; done
+
+  of the like ....
+]
+
+
+
+

@@ -1,0 +1,48 @@
+From: Steven Champeon - Imonics Development <schampeo@imonics.com>
+Date: Wed, 16 Aug 95 11:05:41 PDT
+To: pcw@access.digex.net
+Subject: Re:  Phone call for Mr. Doligez, was Re: SSL challenge -- broken !
+Message-ID: <9508161804.AA26353@fugazi.imonics.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+|   Subject: Re:  Phone call for Mr. Doligez, was Re: SSL challenge -- broken !
+|   From: Peter Wayner <pcw@access.digex.net>
+|   
+|   I don't think that there is any serious worry for Netscape. Their
+|   security is fine-- it's just crippled by the US Government. They
+|   could probably start distributing binary versions of their software
+|   that used full 128 bit keys in several hours. It's just that the
+|   Government gets pissed off about these things.
+
+The netscape client already has these capabilities built in. During the
+negotiation stage, the client talks to the server, which announces which
+strength to use. For exported versions of both the client and the server
+they are limited to 40 bit RC4. For US versions, all available strengths
+are supported with an option to enable them.
+
+Pull up Netscape, and for the URL type: "about:". It will tell you which
+algorithms are used, but not their key bit length. 
+
+When you configure their Commerce server, you have the option to enable
+any of the supported bit lengths and algorithms, including RC2 and RC4,
+IDEA, 40 -> 128 bits, 64 -> 192 for DES.
+
+Netscape's server, since it must service foreign requests, probably doesn't
+even waste its time asking for >40 bit, since that would add to the time
+it takes to negotiate a common scheme.
+
+If anyone has any insight into this, please fill me in. I just wanted to
+clarify a few things.
+
+Steve
+
+--
+Steve Champeon
+Technical Lead, Imonics Web Services
+
+
+
+
+

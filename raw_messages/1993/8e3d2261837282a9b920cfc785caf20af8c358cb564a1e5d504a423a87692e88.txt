@@ -1,0 +1,31 @@
+From: hfinney@shell.portal.com (Hal Finney)
+Date: Tue, 5 Oct 93 11:34:57 PDT
+To: cdodhner@indirect.com
+Subject: Crypto Idea; Multi-Part Sigs
+Message-ID: <9310051612.AA03681@jobe.shell.portal.com.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Some parts of what Christian asks about can be done; some can't.
+
+You can't have it that each of three individuals can decrypt messages
+sent to a key, while they all have to cooperate to sign messages.
+Generally speaking, decryption and signing are identical in the RSA
+cryptosystem.  Having enough information to do one implies teh a  the
+ability to do the other.
+
+However, you can divide a key so that people must cooperate to sign OR
+decrypt.  Normally, in RSA, you choose a public exponent e, and find d,
+the secret exponent, such that e*d = 1 mod (p-1)(q-1), where p and q are
+the primes.  Instead, you can choose d1..d3 such that e*d1*d2*d3 = 1.
+Choose d1 and d2 at random, choose e, and find d3 as in regular RSA.
+Give d1, d2, and d3 to each of the three people.  Now they must apply
+their exponents to the RSA block in order to sign or decrypt.
+
+Hal Finney
+hfinney@shell.portal.com
+
+
+
+

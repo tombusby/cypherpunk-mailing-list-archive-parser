@@ -1,0 +1,39 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Fri, 12 Nov 93 04:49:31 PST
+To: cypherpunks@toad.com
+Subject: Mounting a "Secure" filesystem in UNIX
+Message-ID: <7322@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <m0oxo8a-000J5iC@infinity.hip.berkeley.edu> sameer@uclink.berkeley.edu writes:
+ >         I was wondering if it was possible to mount a "secure"
+ > filesystem/partition using Linux or some other free version of UNIX,
+ > so that it's inaccessible if logged in remotely, but accessibly when
+ > logged in locally.
+ >         That way I can store my PGP secret key on the "secure"
+ > filesystem, and keep telnetd enabled.
+ > 
+ >         Any thoughts?
+
+I think the best you can do is to create a secure chroot subshell which
+anyone logging in anywhere but from the console gets put into.
+
+[When I wrote such a shell as an experiment, I found it very difficult
+to do properly when the system had multiple partitions - I could only
+get it to work on a machine that had a single pack.  So if you're starting
+from scratch, my suggestion is to use netbsd and start off with your
+entire disk on a single partition - don't have the traditional small
+root partition.  If you get that far I have some code I can mail you.]
+
+G
+-- 
+Personal mail to gtoal@gtoal.com (I read it in the evenings)
+Business mail to gtoal@an-teallach.com (Be careful with the spelling!)
+Faxes to An Teallach Limited: +44 31 662 4678  Voice: +44 31 668 1550 x212
+
+
+
+
+

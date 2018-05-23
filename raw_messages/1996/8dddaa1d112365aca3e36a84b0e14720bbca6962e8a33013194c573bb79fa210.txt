@@ -1,0 +1,51 @@
+From: "John Hemming - CEO MarketNet"  <johnhemming@mkn.co.uk>
+Date: Fri, 30 Aug 1996 02:00:15 +0800
+To: cypherpunks@toad.com
+Subject: Re: MSIE cryptography
+Message-ID: <1996-Aug29-150212.1>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> Just downloaded the most recent English Version 2.1 for Windows 3.1.
+>> This does appear to do the same in terms of no encryption at all after
+>> the server hello.
+>I understand that some versions of MSIE support SSL level 3. SSL3 includes a
+>capability to switch 'cipher suites' in mid-session, or pick one at the start of the
+>session. One of the standard cipher suites performs authentication, but not 
+>encryption. This is consistant with your description.
+
+>Please ensure that the server you are connecting to is not configured for
+>authenticate-only. It would be a pity to raise a big ruckus over what may be
+>just a mis-configured server.
+
+The server is one which interoperates correctly with Netscape and my
+own routines.  It does strike me that this change is potentially the source of 
+the bug.  However, to have a "locked" symbol on the bottom right hand
+of the display would indicate to me as a user that a secure session has 
+occurred.
+
+For SSL devotees the records sent are:
+
+1.  Client hello (from the client)
+2.  Server hello (from the server).
+3.  Plaintext data packaged up in SSL records from the client.
+4.  The client then accepts plaintext data packaged up in SSL records.
+
+SERVER_VERSION_MSB and
+SERVER_VERSION_LSB 
+indicate version 2 of SSL.
+
+I have not changed the code in any way to deal with version 3 of
+SSL making I think the valid presumption that browsers using 3 and
+2 should be able to cope with a server using 2.
+
+I shall reboot my system, trace a bit of a session and post that.
+
+
+
+
+
+
+
+

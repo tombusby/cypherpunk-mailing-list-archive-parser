@@ -1,0 +1,52 @@
+From: Bill Frantz <frantz@netcom.com>
+Date: Sun, 15 Dec 1996 15:32:49 -0800 (PST)
+To: Dale Thorn <trei@process.com
+Subject: Re: ASM vs portable code [WAS: Re: Java DES breaker?]
+In-Reply-To: <199612131459.GAA06660@cygnus.com>
+Message-ID: <v03007821aeda1d02eb3c@[205.187.203.136]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 9:28 PM -0800 12/14/96, Dale Thorn wrote:
+>I remember sitting down with some ASM programmers in the mid 1980's
+>(using x86 PCs), and at that time, looking at the Codeview tracings,
+>it occurred to me that ASM would nearly always run 2x faster than 'C',
+>something that is inherent in the processes.
+
+Modern compiler peephole optimizers are quite good, and there is not much
+to be gained by trying to beat them.  The real gains come from being able
+to make more restrictive assumptions than a compiler based on your superior
+knowledge of the program.
+
+For example, most operating system kernels have a global pointer to the
+current process.  Assembly language kernels normally dedicate a register to
+hold that pointer.  In C, each separately compiled routine must re-load it
+from its memory location because they can not coordinate register usage.
+Parameter passing is another place this kind of global register assignment
+can improve assembly programs.
+
+Another place where this global view of a program helps is in re-loads
+after calling externally compiled routines.  The compiler must assume that
+the external routine has changed the variable while a smart programmer can
+know better and save the re-load.  Even if the data is in the level 1
+cache, most architectures can do at most one memory reference instruction
+per cycle, and memory accesses seem to be the critical path for OS kernels.
+
+These optimizations work better with register rich architectures such as
+the R4000, Sparc, PowerPC etc. than they do on the popular Intel
+architecture because there are more registers to use.
+
+BTW - My experience with Assembler over C is more like 4:1 than 2:1.  YMMV!
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | I still read when I should | Periwinkle -- Consulting
+(408)356-8506     | be doing something else.   | 16345 Englewood Ave.
+frantz@netcom.com | It's a vice. - R. Heinlein | Los Gatos, CA 95032, USA
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+From: owner-cypherpunks@toad.com
+Date: Mon, 25 Dec 1995 05:44:32 +0800
+Subject: No Subject
+Message-ID: <QQzvny09200.199512242137@relay2.UU.NET>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eric Murray wrote:
+
+| Where we're headed is mail filters with PGP imbedded (PGP 3 will
+| make this much easier) that check incoming mail for a valid signature
+| for certain PGP keyid/fingerprints and pass that mail along.
+| Other mail that doesn't match gets tossed into a 'junk' folder
+| or thrown away if you really don't want to talk to anyone that you
+| don't already know.
+
+I agree with the assesment of where we may be going, but the
+technology is available now.  (Marshall Rose uses it; if you want to
+get mail into his private mailbox, offer him some $ via imbedded FV
+authorizations in the mail, and it goes into his inbox.  If he thinks
+it was worth his time, he doesn't charge you.)
+
+Anyway, the code is defeintely available now.  The back end is a
+little kludgy, but it was needed for an auto ley retreival script.
+This could easily be hacked to include a +pubring=$people line.  The
+script gives you a keyid, which you can then use to filter on, ie:
+
+:0BW
+* -----BEGIN PGP
+KEYID=|sender_unknown
+# the sender unknown script is below
+
+:0:
+? [ $KEYID = (`cat .buddies`) ]
+| /var/spool/mail/adam
+
+:0e:
+junk
+
+#!/bin/sh
+# unknown returns a keyid, exits 1 if the key is known
+# $output is to get the exit status. Othierwise, this would be a one liner.
+OUTPUT=`pgp -f +VERBOSE=0 +batchmode  -o /dev/null`
+echo $OUTPUT | egrep -s 'not found in file'
+EV=$? 
+if [ $EV -eq 0 ]; then 
+        echo $OUTPUT | awk '{print $6}' 
+fi
+exit $EV
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

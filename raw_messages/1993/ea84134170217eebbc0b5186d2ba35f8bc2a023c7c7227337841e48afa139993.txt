@@ -1,0 +1,47 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Sun, 17 Oct 93 22:42:07 PDT
+To: cypherpunks@toad.com
+Subject: Re: crypto technique
+In-Reply-To: <kgkO9UG00awF4Pr0lK@andrew.cmu.edu>
+Message-ID: <9310180538.AA21321@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matthew J Ghio wrote:
+
+>we can mod each term by 256.  Which gives:
+>
+>          4      3         2
+>y = (.125x + .25x + 63.875x + 63.75x + 223) mod 256
+>
+>which still produces the same values for y, but the factoring technique fails.
+
+I still don't know about that - I think all it does is remove the
+problem one step from immediately solvable.
+
+Is that P term public knowledge (here P = 256)?  If so, the revised
+equations are:
+
+c1/2 + 1/4 = 63.75   ===> c1 = 127
+
+c1/2 + 1/4 x1^2 + c2 = 223 + 256k  ===> c2 = -7905 + 256k
+
+And this will yeild either c2 = -225 or c2 = 31.  The computational
+expense of trying both is small.
+
+If it does turn out that the magnitude of the constants must be less
+than P, I don't think taking the mod of each coefficient obscures the
+problem very much at all.  It still boils down to solving systems
+of simultaneous equations, which isn't the same complexity as solving
+discrete logarithms or factoring.
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

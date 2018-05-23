@@ -1,0 +1,58 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Tue, 7 Oct 1997 02:23:45 +0800
+To: frantz@netcom.com
+Subject: Re: Secure phone
+In-Reply-To: <v0300784db05ec180b158@[207.94.249.144]>
+Message-ID: <199710061757.SAA01293@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Frantz <frantz@netcom.com> writes:
+> At 6:25 PM -0700 10/5/97, Adam Back wrote:
+> >On the other hand, using persistent key public key crypto, Tim has
+> >been signing his posts recently, and I have an ancient public key of
+> >his stashed away which his new key is signed with.  If we were able to
+> >construct a protocol to bolt on top of the reading of hashes, we could
+> >have much greater protection against MITM.
+> 
+> Of course if you can use PGP as well as the secure phone, you can use PGP
+> to exchange a pad of one-time passwords.
+
+The passwords alone don't do you any good: if you read them out over
+the phone, Eve can just repeat them.
+
+You need to combine the password with the part of the D-H parameter
+hash displayed on the dinky little secure phone display in such a way
+that Eve can't fake it without knowledge of your password.  It would
+be nice if you didn't need a computer to perform this operation, but I
+guess you could live with needing a computer.  It would also be nice
+if the number of digits you had to read was relatively short.
+
+XOR doesn't work, because Eve can undo that; XOR isn't very easy to do
+mentally anyway.
+
+Encrypting the display value with a symmetric cipher and a key formed
+from the password and reading out a selection of digits from the
+ciphertext would do.  But most/all symmetric ciphers worth speaking of
+are beyond doing in your head, or with a piece of paper in a
+reasonable amount of time.
+
+How many digits are on the display of one of those phones?  It seems
+that you should be able to concoct something which is easy to compute,
+and offers as much surety as the few digits on the display.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

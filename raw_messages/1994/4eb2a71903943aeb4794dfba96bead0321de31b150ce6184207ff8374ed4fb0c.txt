@@ -1,0 +1,40 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Thu, 7 Jul 94 08:48:18 PDT
+To: cypherpunks@toad.com
+Subject: Re: Counting Bits
+Message-ID: <199407071547.QAA09077@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	From: SINCLAIR DOUGLAS N <sinclai@ecf.toronto.edu>
+	The only sane way to count the number of 1 bits in a byte is to use
+	a lookup table:
+
+		return table[result];
+
+	On an intel chip this produces ONE opcode:
+
+		XLAT
+
+Do you think we'd all be spending weeks on it if it were that easy?
+
+Or are you suggesting that 32-bits of address space of RAM is reasonable
+for this problem?  Even if it's a 16-bit table you still have to do the
+add; worse, the non-local access shits all over the bus timings and
+the cache.  Much better to avoid going off-chip and keep the CPU
+running at full speed (which might be 100 times faster than memory).
+
+Again, remember we're nottalking about PCs here but real computers.
+
+G
+PS I dunno what superoptimisizer Perry is talking about but I've
+never heard of a real one that works.  You have to feed in a complete
+machine description at register transfer level and i don't know if
+those exist for real machines; also the problem is almost certainly
+exponential time for a *guaranteed* solution as Perry claims is
+possible.
+
+
+
+

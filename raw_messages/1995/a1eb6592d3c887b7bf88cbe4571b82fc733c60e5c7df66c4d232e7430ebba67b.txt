@@ -1,0 +1,35 @@
+From: "Theodore Ts'o" <tytso@MIT.EDU>
+Date: Tue, 31 Oct 1995 11:52:56 +0800
+To: "Josh M. Osborne" <stripes@va.pubnix.com>
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <VAA13893.199510310259@garotte.va.pubnix.com>
+Message-ID: <9510310316.AA26268@dcl.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Date: Mon, 30 Oct 1995 21:59:14 -0500
+   From: "Josh M. Osborne" <stripes@va.pubnix.com>
+
+   When /dev/random doesn't have "enough" enthropy left does reading
+   from it return an error, or block?  I would strongly suggest
+   blocking, as the non-blocking behavur is not really all that useful.
+
+It acts like many character devices and named pipes in that if there is
+no entropy available at all, it blocks.  If there is some entropy
+available, but not enough, it returns what is available.  (A subsequent
+read will then block, since no entropy will then be available.)
+
+Actually, what's currently in Linux doesn't work precisely like this,
+but it will soon.  After talking a number of people on both sides of the
+block vs. non-blocking camp, this seemed to be a suitable compromise.
+At least one Major Workstation Vendor is planning on using this behavior
+for their /dev/random, to appear in a future OS release.  If we all can
+standardize on this behavior, it'll make application writer's jobs that
+much easier.
+
+						- Ted
+
+
+
+

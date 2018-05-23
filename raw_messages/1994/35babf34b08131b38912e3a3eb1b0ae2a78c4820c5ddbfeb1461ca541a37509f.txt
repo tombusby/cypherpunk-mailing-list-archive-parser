@@ -1,0 +1,138 @@
+From: rcain@netcom.com (Robert Cain)
+Date: Tue, 8 Feb 94 14:52:02 PST
+To: cypherpunks@toad.com (cypherpunks)
+Subject: Re: Some stuff about Diffie-Hellman (and more :-)
+In-Reply-To: <199402052205.OAA06854@jobe.shell.portal.com>
+Message-ID: <199402082250.OAA13339@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal sez:
+> 
+> Quite a few misconceptions here, I'm afraid:
+
+That'll teach me to write these things purely from memory without
+my references.
+
+> 
+> From: rcain@netcom.com (Robert Cain)
+> > In the Diffie-Hellman exchange there is a well-known-prime, w, and a
+> > well-knwon-modulus, m.
+> 
+> w is supposed to be a "generator" of the group of integers mod m.  It does
+> not have to be prime.  It is supposed to be such that the series w**0, w**1,
+> w**2,...,w**m-1 does not repeat but goes through all the integers less than m.
+> Testing for such w's is pretty easy if you know the factorization of m,
+> involving a few arithmetic tests.
+
+Yes, I remember that now about w but I believe that m should be prime.
+
+> 
+> > For those interested that don't know I think
+> > it then proceeds as follows (don't have notes in front of me so please
+> > someone correct me if I'm misremembering it) where ** is the power or
+> > exponentiation operator and % is the modulus operator:
+> > 
+> > 	1) Bob generates a one time random prime, b, then computes
+> 
+> b does not have to be prime; it is a random number less than m.
+
+Absolutely correct.
+
+> 
+> > 		B = (w ** b) % m
+> > 	   and sends B to Carol.
+> > 
+> > 	2) Carol generates a one time random prime, c, then computes
+> 
+> Likewise, c does not have to be prime; it is a random number less than m.
+
+Again, correct.
+
+> 
+> > 		C = (w ** c) % m
+> > 	   and sends C to Bob.
+> > 
+> > 	3) Bob generates a session key:
+> 
+> Carol does this, not Bob.
+> 
+> > 		K = (B ** c) % m
+> > 
+> > 	4) Carol generates a session key:
+> 
+> Bob does this, not Carol.
+
+Oops, one more check of those equations and that would probabaly have
+jumped out at me.  Sorry for swapping them (but as a newbie here I now
+know that you folks have your chops (a drumming term) when it comes
+to the math of this stuff.)
+
+> 
+> > Now, the tutorial over :-), the question is; is there a "standard"
+> > well-known-prime, w, and a "standard" well-known-modulus, m, and if
+>              ^^^^^-- generator
+> > not, let's define one.
+> 
+> I don't think there is a need for this.  The two sides need to agree on
+> a pair but they could just pick it at the beginning.  If everyone uses
+> the same m,w it would help attackers of the scheme to focus their efforts
+> on these numbers.  I believe there was some discussion of using well-known
+> numbers in the Digital Signature Standard (which is based on the same
+> problem as DH) but I don't know what the resolution was.
+
+Well, any two pair of boxes that are going to employ this have to use
+the same numbers obviously so they will be available to crunch any
+given exchange against and the only thing anyone can "focus their
+efforts" on is the exchange itself and I don't think knowing w amd
+m for a long time helps that problem any.
+
+I am just think that a pair should be selected, every implementation
+should use them to help with interoperability and they should be
+defined with simply stated, remembered and coded algorithms rather
+than just a long string of digits.
+
+> 
+> > I suppose that PGP uses a well known pair but
+> > they are big and not easy to hand around without going through media (I
+> > think.)
+> 
+> PGP does not uses DH and has no well known numbers.
+
+Ah, I assumed it did somewhere because Phil and I had a fair bit of
+email about this last year and he convinced me that D-H was the way to
+go because cracking one session gives no help toward breaking the next
+one.
+
+> 
+> If you do want well known numbers, I really think it will not be that bad
+> just to put them into the program.  Coming up with an algorithm to choose
+> and test a generator from scratch is probably going to be larger and
+> certainly going to be far slower than just hard-wiring the number in.
+
+Maybe larger but I'll bet a lot easier to remember.  :-)  The slowness
+need not be a factor since a developer only need generate them once and
+save them in non-volatile ram which will be required for public keys
+anyway.  If they just exist as numbers, we have to get them on some
+media that we can then use to transfer them into a device or type them
+in.  It just seems easier if a simple algorithm could be specified.
+I'm not anal about this I just thought it an easier way and one that
+is more likely to insure interoperability.
+
+
+Peace,
+
+Bob
+
+-- 
+Bob Cain    rcain@netcom.com   408-354-8021
+
+
+           "I used to be different.  But now I'm the same."
+
+
+--------------PGP 1.0 or 2.0 public key available on request.------------------
+
+
+

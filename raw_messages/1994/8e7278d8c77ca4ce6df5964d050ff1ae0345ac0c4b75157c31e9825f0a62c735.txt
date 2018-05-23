@@ -1,0 +1,72 @@
+From: rarachel@prism.poly.edu (Arsen Ray Arachelian)
+Date: Sat, 9 Jul 94 23:48:34 PDT
+To: ifarqhar@laurel.ocs.mq.edu.au (Ian Farquhar)
+Subject: Re: Bit counting
+In-Reply-To: <199407070257.AA00900@laurel.ocs.mq.edu.au>
+Message-ID: <9407100636.AA21021@prism.poly.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> 
+> >Why bother when you can simply do an eight line function?
+> 
+> >int bitcount(char b)
+> >{
+> >register int retval=0;
+> 
+> > if (a & 1) retval++;
+> > if (a & 2) retval++;
+> [...]
+> 
+> Because on a lot of architectures this implementation may be hideously
+> inefficient.  All the world is not an Intel chip, thank god.
+
+Okay, I'll bite this one again.
+
+6502:
+LDX #$00
+LDA b
+BIT #$01
+BEQ +2
+INX
+BIT #$02
+BEQ +2
+INX
+/\/\/\/\//\
+TXA
+STA returnvalue
+RTS
+
+There.  On a 6502, this too would take about 5 bytes per test * 8 tests, that's
+40 bytes.  So that's about 60 bytes or so maximum for this function.  Now for
+68000:
+
+MOVE.B 0,D1
+LEA A0,[address_of_parameter_b_from_stack]
+MOVE.B [A0],D0
+MOVE.B D0,D2
+ANDI #01,D0
+BEQ [skip three instructions]
+ADDI #1,D1
+MOVE.B D2,D0
+ANDI #02,D0 
+BEQ [skip three instructions]
+/\/\/\/\/\/
+MOV D1,[return_value_on_stack]
+RET
+
+Same commands, but on the 68K, it'll take up a bit more space, though the 68K
+will run faster.
+
+Now granted on certain machines the XOR method is faster, but is it more
+obvious?  I've seen lots of "cool" code in my time.  The verdict on it is
+that while it's neato whiz bang cool, it's hard to debug or update if it
+needs fixing, and tends to be very non obvious.  If you use a good compiler
+which has register optimization, the function done the long way will be
+as fast as the XOR method, and cleaner, and in some cases actually faster.
+
+
+
+
+

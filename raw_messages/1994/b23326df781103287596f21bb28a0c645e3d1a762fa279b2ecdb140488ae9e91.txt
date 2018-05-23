@@ -1,0 +1,44 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Sat, 17 Dec 94 21:16:55 PST
+To: cactus@seabsd.hks.net (L. Todd Masco)
+Subject: Re: QUERY: S/Keyish PGP?
+In-Reply-To: <199412180038.TAA03190@bb.hks.net>
+Message-ID: <199412180516.AAA21349@bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+| A quick question: Has anybody considered the possibility of hacking
+| something into PGP's password protection to allow an S/Key like access?
+
+	I thought of this, bounced it off a few people, none of whom
+caught the flaw.  When I got around to implementing it, I realized
+that for it to work, your key would have to be securely stored on your
+unix box without encryption.
+
+	The way S/key works is it uses your ability to provide the
+input to a one way function whose expected output S/key knows.  There
+is no secret data stored on the server.  In contrast, PGP needs secret
+data which it uses to encrypt your key while it is stored.
+
+	Offhand, I doubt it can be done without storing your key in
+the clear, or trusting the local CPU.  If you can store your key in
+the clear because you feel the comprimise of your key is an acceptable
+risk, you are all set.  Similarly, if you trust the local CPU, you can
+probably do an encrypted telnet or somesuch.
+
+	Don't take that to mean it can't be done; I'm not even an
+amateur cryptographer, and there may well be some clever way of doing
+this that I haven't thought of.
+
+Adam
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+						       -Hume
+
+
+
+

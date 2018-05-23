@@ -1,0 +1,52 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Sat, 30 Sep 95 19:20:06 PDT
+To: Eric Murray <ericm@lne.com>
+Subject: Re: NetScape's dependence upon RSA down for the count!
+In-Reply-To: <199509302336.QAA23456@slack.lne.com>
+Message-ID: <Pine.SOL.3.91.950930185650.4661A-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 30 Sep 1995, Eric Murray wrote:
+
+> What you have described is the classic 'man in the middle' attack.
+> Netscape claims that SSL V.3 is immune to the MITM attack in
+> appendix D.4 of the SSL V.3 spec. 
+
+I think you're misunderstanding the claim somewhat - what D.4 does is warn 
+implementors that they should perform  some means of associating 
+hostnames and certificates. You can't just use SSL out of the box without 
+doing anything in the application to check. 
+
+My currently recommended approach is to enforce the verisign requirement 
+that all valid hostnames for the server be included in the certificate as 
+CN values. This allows the check to be made below the application layer. 
+Unfortunately a lot of currently issued certificates are non-compliant 
+(even Verisign and netscape :-); any fully automated implementation needs 
+a static table of hostnames aliases- interactive applications can 
+display certificates for manual review.
+
+> 
+> You will need to get the 'filter' (MITM) key signed by Verisign.
+> Or hack Verisign's server-key-signing key.
+
+This is not really much protection. Getting hold of any key is much 
+easier than getting a specific key, and don't forget there are a number 
+of vulnerable keys floating around until their expiration dates pass. 
+
+This attack has been known about for a long time, and is too obvious to 
+be really interesting; I implemented a demonstration of the attack as 
+part of developing a protection. If anybody is interested I can mail them my
+report. 
+
+The variant of the attack I implemented is useless for anything but 
+demonstration purposes, or I'd ask sameer for a T-shirt. The external fix 
+is a bit more useful, but there doesn't seem to be a patchnetscape alias :-)
+
+Simon
+
+
+
+
+

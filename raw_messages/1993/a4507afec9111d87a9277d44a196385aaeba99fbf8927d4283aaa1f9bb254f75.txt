@@ -1,0 +1,69 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Mon, 18 Oct 93 08:37:15 PDT
+To: cypherpunks@toad.com
+Subject: Re: crypto technique
+In-Reply-To: <kgkO9UG00awF4Pr0lK@andrew.cmu.edu>
+Message-ID: <9310181535.AA27722@great-gray.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matthew J Ghio wrote:
+
+>In summary, I see no method which would yeild the original input without
+>knowing the values added to the nested polynomials (the private key),
+>and there is no way to determine the private key if the modulus is
+>applied to the resulting function.
+
+I've been thinking about this (well, not too much since I'm in the
+midst of midterms week :-).
+
+I beleive the equation leaks information.  When you expand the
+equation symbolically, it is easy to solve for the constants by
+matching the coefficients of the highest powers and working backwards.
+If the constants can be negative as well as positive, the signs of
+some of the terms will reflect this.
+
+We know the magnitude of the constants must be less than P, which is
+public.  But can they be negative - will the decoding process still
+work?  Or, will you obtain the correct decoding for the correct choice
+and an incorrect decoding for the incorrect choice?  If it turns out
+that either choice will decode a number to the same value, or if the
+decoding won't work with negative numbers, then this method is too
+easy to invert.
+
+If the constants can't be negative, or if they can be but it doesn't
+make a difference in the decoding, then taking the modulus doesn't
+obscure anything at all.
+
+For example, suppose c = 127 and d = -225.  Then
+
+y1 = 7903. + 63.75 x + 63.875 x  + 0.25 x  + 0.125 x
+
+which becomes (after mod 256)
+
+y1 = 223. + 63.75 x + 63.875 x  + 0.25 x  + 0.125 x
+
+However, if c = 127, d = 31, then
+
+y2 = 8159. + 63.75 x + 63.875 x  + 0.25 x  + 0.125 x
+
+which becomes (after mod 256)
+
+y2 = 223. + 63.75 x + 63.875 x  + 0.25 x  + 0.125 x
+
+So y1 = y2.  Here, d = -225 and d = 31 yeild the same equation (after
+mod operation).  
+
+Now I need to try the decoding process to see if d = -225 or d = 31
+yeild the same or different answers.
+
+-- 
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

@@ -1,0 +1,49 @@
+From: daw@beijing.CS.Berkeley.EDU (David A Wagner)
+Date: Wed, 24 Jan 1996 12:06:35 +0800
+To: cypherpunks@toad.com
+Subject: Re: Why is blowfish so slow?  Other fast algorithms?
+In-Reply-To: <199601221851.NAA16938@amsterdam.lcs.mit.edu>
+Message-ID: <199601240032.TAA16837@bb.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <199601221851.NAA16938@amsterdam.lcs.mit.edu>,
+David Mazieres <dm@amsterdam.lcs.mit.edu> wrote:
+> The problem with RC4 is that it works in OFB only.  If I need data
+> integrity in the face of known plaintext, I will need to compute a MAC
+> in paralell with the encryption which could significantly slow things
+> down.
+
+If you want authentication, you must use a crypto-strength MAC.
+Encryption (be it RC4, DES, etc.) is not enough.
+
+>        With a block cypher in CFB, I can just re-encrypt the last
+> block of data.
+
+False.  CFB has limited error propagation, so if I modify any block
+before the next-to-last, it will not show up with your method.
+
+
+
+This seems to be a really common error.
+If you want message integrity guarantees, you must use a MAC.  Always.
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBFAwUBMQV+LioZzwIn1bdtAQF7pgGAm6GnmZqPSElx8mVyonD9BqScefdZLhul
+fv/qU/bsEDM2YyKuBpoFWyKMwIH0jyzx
+=Bp2Q
+-----END PGP SIGNATURE-----
+
+
+
+

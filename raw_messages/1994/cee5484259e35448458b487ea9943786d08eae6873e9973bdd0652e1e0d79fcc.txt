@@ -1,0 +1,83 @@
+From: Nathaniel Borenstein <nsb@nsb.fv.com>
+Date: Thu, 15 Dec 94 12:38:30 PST
+To: eric@remailer.net (Eric Hughes)
+Subject: Re: properties of FV
+In-Reply-To: <23696.787506983.1@nsb.fv.com>
+Message-ID: <giw_XSP0Eyt5RL_b0K@nsb.fv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Excerpts from fv: 15-Dec-94 Re: properties of FV Eric
+Hughes@remailer.net (3987)
+
+> I'm not trying to imply that you couldn't cobble something up fairly
+> quickly, but I have my doubts that a good quick hack will scale
+> appropriately for even a modest sized operation.
+
+Assuming that thing that you're "cobbling together" is based on a
+reasonably robust database engine, it should scale a long, long way. 
+Basically all you need is a set of three-part records:  account-id,
+cumulative amount, and timestamp of oldest transaction.  (You might want
+a fourth field that gives all the purchasing details as text, if your
+services sells a range of different kinds of things).  Any good
+commercial db system should be able to handle a LOT of such records.
+
+>    > The very nature
+>    > of such a net billing system requires linkability of transaction to
+>    > transaction, or in other words generates identity.  So FV is
+>    > unsuitable for small value anonymous transactions.
+
+> I would still like to you address this issue, if only to acknowledge
+> the above characterization.
+
+This goes back to the two kinds of anonymity that you so usefully
+defined in your earlier message.  These small transactions would have
+counterparty anonymity -- all that the seller knows is your first
+virtual id, which is essentially a user-chosen pseudonym -- but not
+issuer anonymity.
+
+> As I had recalled from reading your materials, you were charging 29
+> cents plus 2% on one leg of the transaction plus an additional 2% on
+> the other.  Rereading, this is not the case.  Am I remembering a
+> previous situation?
+
+No, you're just confused.  Our charges have not changed, this is what
+they've always been.  Probably our materials weren't clear enough
+somewhere, in which case I apologize.
+
+> Partial security is better than no security.
+
+That's a *very* interesting statement.  I'm not at all sure what it
+means, so I'm not sure if I believe it or not.  Sometimes partial
+security is worse than no security because it gives people a false
+*sense* of security.  (People who know their email is going in the clear
+are likely to be more prudent than people who believe their email is
+"encrypted" even though the encryption algorithm might be a very poor
+one.  I've even known people to pass real secrets around using rot13,
+amazingly enough.  People can be quite naive.)
+
+> One of the underlying conceptual problems with allowing a key to be at
+> risk is some sort of belief that compromises of secret keys should
+> never ever EVER be allowed to happen.  This is ludicrous.  When the
+> benefit of the use of a private key means that it might be
+> compromised, don't rely upon it's not being compromised.
+
+This is a very good point.  It is one that is often missed in analyses
+of digital banks, in particular, where the consequences of compromising
+the bank's keys are often not sufficiently considered.
+
+> In particular, if a digital signature does not, by agreement, carry an
+> implied warrantee of identity, then there's no problem at all.  Use
+> the crypto entirely for transit security.  If someone hacks your
+> machine and grabs your passphrase and forges a transaction, at least
+> the intruder has to grab your passphrase.
+
+This is exactly the way we would expect to use crypto layered on top of
+First Virtual's protocols, if and when such cryptographic protocols are
+deployed widely enough to have penetrated af meaningful portion of our
+market.  -- Nathaniel
+
+
+
+

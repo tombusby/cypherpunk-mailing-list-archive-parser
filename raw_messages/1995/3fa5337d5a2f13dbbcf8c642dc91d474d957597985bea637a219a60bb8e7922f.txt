@@ -1,0 +1,40 @@
+From: Tom Gillman <syshtg@gsusgi2.Gsu.EDU>
+Date: Thu, 24 Aug 95 14:46:28 PDT
+To: tedwards@src.umd.edu (Thomas Grant Edwards)
+Subject: Re: brloop not working
+In-Reply-To: <Pine.SUN.3.91.950824172624.22646F-100000@thrash.src.umd.edu>
+Message-ID: <199508242146.RAA21529@gsusgi2.Gsu.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> > The first arg of brutessl is the file from which to read the config info.
+> > "-" is a unix convention for the file "stdin".
+> 
+> OK - I dig this, but brutessl on my Linux box is still complaining about 
+> usage...(sorry about the bandwidth but I assume other people are probably 
+> having similar problems)
+> 
+> ++ nice -20 brutessl -
+> usage: brutessl [-q] <filename> <checksum> <start segment> <no of 
+> segments>
+>        brutessl [-q] -r <filename> [<no of segments>]
+>        brutessl [-q] -t [<hours>[:<minutes>]]
+>
+
+Use 'nice -20 brutessl -- -' instead. The '--' tells getopts() not to parse
+anything else as arguments, then the next '-' will be interpreted correctly.
+
+Tom
+
+-- 
+ Tom Gillman, Unix/AIX Systems Weenie  |"For a privacy advocate to determine
+ Wells Computer Center-Ga. State Univ. |the best way to do key escrow is like
+ (404) 651-4503 syshtg@gsusgi2.gsu.edu |a death penalty opponent choosing
+ I'm not allowed to have an opinion.   |between gas or electricity"-D.Banisar
+                                    
+  key to UNIX: echo '16i[q]sa[ln0=aln100%Pln100/snlbx]sbA0D4D465452snlbxq'|dc
+
+
+

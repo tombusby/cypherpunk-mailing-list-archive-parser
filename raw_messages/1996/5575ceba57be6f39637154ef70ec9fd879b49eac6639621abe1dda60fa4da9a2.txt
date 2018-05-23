@@ -1,0 +1,69 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Tue, 3 Sep 1996 10:19:17 +0800
+To: cypherpunks@toad.com
+Subject: Re: strengthening remailer protocols
+Message-ID: <ae50bfcc03021004f4a7@[207.167.93.63]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 9:25 PM 9/2/96, John Anonymous MacDonald wrote:
+>I don't really see the use of this complicated scheme.  The main
+>problem seems to be that if M floods remailer R with messages to B,
+>and A sends a message to C through R, then it will be clear to M that
+>A's message was destined for C.
+>
+>Rather than divert messages, then, I propose that for each input
+>message there is a 10% chance that a piece of cover traffic is
+>generated.  Thus, if M sends 50 messages through R and sees 6 outgoing
+>messages going to remailers C, D, and D, he will now know which
+>messages correspond to the message that A send through.
+
+This type of attack is why "reply-block" schemes are fundamentally flawed.
+Any such scheme gives an attacker (a traffic analyst) a wedge with which to
+deduce mappings. It is a kind of "chosen plaintext" attack (loosely
+speaking). Or a "forcing attack." Maybe a "flooding attack" is as good a
+name as any. One floods the reply block and simply watches where the water
+goes.
+
+(If there were more academics in the crypto community looking at digital
+mix issues, there would likely be clever names for the various attacks.)
+
+Several folks on this list, including (from memory), Scott Collins, Wei
+Dai, Hal Finney, myself, and others, have noted this weakness over the
+years.
+
+Note that merely fiddling around with probabilities of transmission, such
+as described above, will not be enough. This just adds a layer of noise,
+which will disappear under a correlation analysis.
+
+(For newcomers, there are interesting parallels between statistical
+analysis of ciphers and similar analysis of remailer networks. And lots of
+statistical tools can be used to deduce likely mappings based on
+source/sink correlations, digram analysis, etc. Making a remailer network
+robust against such analyses will take a whole more basic thinking. Merely
+increasing message volume is not enough. Nor is increasing latency enough.
+Generally speaking, of course.)
+
+Instead of reply blocks, I think use of message pools (a la BlackNet) is a
+more robust reply method, as it uses "widely-distributed messages" (a la
+Usenet newsgroups) to get around the source/sink correlation issue.
+
+--Tim May
+
+
+We got computers, we're tapping phone lines, I know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Licensed Ontologist         | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+From: Theodore Ts'o <tytso@MIT.EDU>
+Date: Thu, 7 Sep 95 15:25:19 PDT
+To: cypherpunks@toad.com
+Subject: Re: Kerberos v5's experience with ASN.1
+In-Reply-To: <9509071925.AA17839@toad.com>
+Message-ID: <9509072225.AA26823@dcl.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+   To: Cypherpunks Lite <cp-lite@comsec.com>
+   Date: Sat, 2 Sep 1995 13:55:38 -0400
+   From: jis@mit.edu (Jeffrey I. Schiller)
+
+   However, the problem with ASN.1 isn't its waste of space (which actually
+   isn't that bad for a mechanism for encoding arbitrary objects). 
+
+While I won't argue about the rest of Jeff's note about the use of ASN.1
+being a mistake, I do want to point out that certain ASN.1 types are in
+fact very wasteful of space.
+
+Most notable of these is the ASN.1 Generalized Time --- which encodes
+the a timestamp in ASCII.  ASN.1 GeneralizedTime therefore requires 17
+bytes to encode, an over four-fold increase in the amount of space
+needed to store a time, compared with a 4 byte representation of "number
+of seconds since 1970".  This is deadly in a protocol which has to store
+lots of timestamps, which is the case in Kerberos V5.
+
+We could have gotten around this problem by merely storing an integer
+whenever we needed to store a timestamp, instead of using the ASN.1
+abstract type.  Then it would have only taken 6 bytes (ASN.1 adds a
+2-byte overhead for each object which you store).
+
+					- Ted
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.1
+Comment: Processed by Mailcrypt 3.2, an Emacs/PGP interface
+
+iQCVAwUBME9xO0QVcM1Ga0KJAQGiQwQAhSu4WpeVZ+hsN+o+NvWMwP8JK0GojhuI
+vWE1M3iIZttz4iMEbsziZ1KzWlkFTL8AKVWkzDAZ8t5lNMis9qObCfaQPQkKTLwJ
+UV20GjebckOzFx7Rp9OPDDI536cepvcjFN0cQkWtmiW2KP04TU9zr4caD4cfozDJ
+XYGZavYmpBQ=
+=9YUm
+-----END PGP SIGNATURE-----
+
+
+

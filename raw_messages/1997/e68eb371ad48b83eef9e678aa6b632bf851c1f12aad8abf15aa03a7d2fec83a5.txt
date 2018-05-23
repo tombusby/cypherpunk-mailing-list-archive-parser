@@ -1,0 +1,50 @@
+From: nospam-seesignature@ceddec.com
+Date: Tue, 12 Aug 1997 03:16:33 +0800
+To: Cypherpunks Mailing List <cypherpunks@toad.com>
+Subject: Re: Can't touch this, ugly Americans! (PGP License file)
+In-Reply-To: <199708111344.JAA24033@homeport.org>
+Message-ID: <97Aug11.145941edt.32258@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Mon, 11 Aug 1997, Adam Shostack wrote:
+
+> First off, congratulations and thanks to Stale and everyone else for
+> scanning in the source to PGP5.0i (http://www.ifi.uio.no/pgp/)
+> 
+> However, theres an ugly problem with the license.
+> (http://www.ifi.uio.no/pgp/pgp50i-license.txt)
+> 
+> In Section 1.c.(d), permission is given to port PGP to other
+> platforms.  However, permission to distribute those ports is
+> explicitly denied.
+> 
+> Could the license be modified to allow people who port the software to
+> redisctribute ports?  There is enough FUD about using PGP without PGP,
+> Inc contributing to that by overly tight licensing.
+> 
+> Adam
+
+Or what do you do about bugs?  It mentions corrections, but not who to
+send them to.
+
+On DEC Alpha/axp under Linux, include/pgpUsuals.h has a test for a big
+ULONG_MAX that defines HAVE64 as 1 on 64 bit machines like the alpha
+
+But the very next test has #ifndef HAVE64 where there is a typedef for
+word64, which won't happen.  But if HAVE64 is 1, in pgpMD5.c it will
+really want word64 defined or it will bomb. 
+
+Something is wrong, but if I copy the typedef, it seems to get further
+(compiling as we speak - the old UDBs aren't the fastest alphas).
+
+Now, where should I send this information or the patch?
+
+--- reply to tzeruch - at - ceddec - dot - com ---
+
+
+
+
+

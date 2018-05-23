@@ -1,0 +1,63 @@
+From: llurch@networking.stanford.edu (Rich Graves)
+Date: Thu, 2 Nov 1995 14:55:54 +0800
+To: unicorn@holly.ACNS.ColoState.EDU (Scott McCormack)
+Subject: Re: Win95 password caching
+In-Reply-To: <478rbq$o31@yuma.ACNS.ColoState.EDU>
+Message-ID: <199511020642.WAA17156@Networking.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(A copy of this message has also been posted to the following newsgroups:
+csu.windows95,
+comp.os.ms-windows.win95.misc,comp.os.ms-windows.win95.setup,comp.security.misc,alt.security,comp.os.ms-windows.networking.misc,comp.os.ms-windows.networking.windows,comp.os.ms-windows.nt.admin.networking)
+
+[A little more context and Message-ID added from the original post;
+cross-posted to nt.admin because it will affect some of you, followups
+out]
+
+In article <4791l0$4n14@holly.ACNS.ColoState.EDU>,
+unicorn@holly.ACNS.ColoState.EDU (Scott McCormack) wrote:
+
+> In article <478rbq$o31@yuma.ACNS.ColoState.EDU>,
+> Jim Carlson (jimc@cnr.colostate.edu) wrote:
+> : Does anyone know how to stop Win95 from caching the windows password?
+> : We are thinking of using Win95 as the client for a student lab and 
+> : need to find a way to stop it from caching passwords.  As it is, when
+> : you log into a machine for the first time it creates a .pwl file in 
+> : your windows directory for each person who logs into windows.  This 
+> : is not acceptible for a lab situation.
+> :
+> : I can turn this off in WfWG by placing the line "passwordcachine=no" 
+> : in the system.ini under [NETWORK], but this does not work in Win95.
+> :
+> : I am running MS networking in Win95, so when you first log into, 
+> : windows it asks you to log into the MS Network.  It then comes up with 
+> : a second box asking you to enter your Win95 password.  You can enter 
+> : a blank password (""), but it still creates a .pwl file and places a
+> : line in win.ini.
+> 
+> Change the password for the login (or when you first login) to a blank 
+> line (ie don't enter a password) and you'll never see that login prompt 
+> again. :)
+
+This was not the question. He wants to prevent local Windows passwords
+from being created for network-only users. This is a serious security
+issue, because if a user enters her real network password for the Windows
+password, and someone else later picks up the .PWL files, which are not
+encrypted in a particularly secure way, then someone can get unauthorized
+access to the network as the previous user(s).
+
+We believe we have found answers in the Registry and in POLEDIT. We've
+also turned up another related security bug. When it's confirmed, we'll
+post. In the mean time, you can read the last couple messages archived at
+gopher://quixote.stanford.edu/1m/win95netbugs.
+
+-rich
+ llurch@networking.stanford.edu
+ moderator of the win95netbugs list
+ http://www-leland.stanford.edu/~llurch/win95netbugs/faq.html
+
+
+
+

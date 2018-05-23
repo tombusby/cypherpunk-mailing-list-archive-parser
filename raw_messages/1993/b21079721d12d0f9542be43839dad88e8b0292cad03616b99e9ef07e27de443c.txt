@@ -1,0 +1,56 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Mon, 9 Aug 93 20:01:56 PDT
+To: perobich@ingr.com
+Subject: Secure voice software issues
+In-Reply-To: <199308100132.AA26355@poboy.b17c.ingr.com>
+Message-ID: <9308100259.AA24433@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I recommend a signed Diffie Hellman key exchange for a secure phone.
+That is, you generate a session key with Diffie Hellman, and you sign
+your exchanges with RSA to guard against the meet-in-the-middle attack.
+
+I agree that RSA public keys could be exchanged as needed during the
+call, although this might require a few iterations before a party gets
+a signature that it can trust. Finding a path through the PGP "web of
+trust" back to a trusted public key that the other party already has
+may be tricky. This is one thing that is much easier with a simple
+tree a la PEM, as you simply give the path back up to a common, shared
+root. 
+
+I'm not sure how to do this with PGP. Perhaps the challenger could
+list the public key(s) it trusts (perhaps just its own) and ask the
+challenged party to find a (the) route through the web that connect
+itself with the challenger's trusted key, and to return those keys and
+signatures.  This might be easier than having the challenger remotely
+"grope" through the paths in the challenged party's key database, one
+signature/key at a time. Of course, keys and signatures ought to be
+cached to speed the process the next time around. Or the users could
+sign each others keys directly once they're satisified with their
+identities.
+
+If you first do Diffie Hellman and then immediately use the session
+key it generates to conventionally encrypt the rest of the protocol,
+including any RSA public key exchanges, this has the added benefit of
+denying passive eavesdroppers any information that would identify the
+parties to the call. The best an *active* eavesdropper (conducting a
+man-in-the-middle attack against Diffie Hellman) could do is to trick
+the parties into revealing their RSA public keys, and thus their
+identities.  But the parties would quickly discover this at the
+signature step, before the voice conversation actually starts.
+
+Again, the *really* nice thing about this protocol is that once the DH
+session key is destroyed, there's no way to recover it even if the RSA
+secret keys are later compromised. And nothing (other than the
+availability of CPU cycles) prevents you from rekeying periodically
+during a single call.  The worst that could then happen if the phone
+is captured and read out before it could be zeroized would be the
+compromise of the conversation since the last rekey.
+
+Phil
+
+
+
+

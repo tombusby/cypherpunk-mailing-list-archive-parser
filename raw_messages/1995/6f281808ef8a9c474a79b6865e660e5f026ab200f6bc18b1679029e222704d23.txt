@@ -1,0 +1,51 @@
+From: ab411@detroit.freenet.org (David R. Conrad)
+Date: Mon, 28 Aug 95 07:11:03 PDT
+To: cypherpunks@toad.com
+Subject: Pre-allocating key segments
+Message-ID: <199508281410.KAA16345@detroit.freenet.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Christian Wettergren <cwe@Csli.Stanford.EDU> writes:
+>If the client is unable to retrieve a block from the server, I suggest
+>it just picks a random block and starts working on it. I may very
+>well not be allocated to someone else, and then the client was able
+>to do something good in the meantime even though it didn't get a
+>proper key alloc. 
+
+Not only that, but the client ought to allocate some keyspace before it
+needs it, as I think one other cpunk suggested.  For instance, if it has
+four segments allocated and it's done three of them, it should fork a
+process to begin requesting four more segments *while* it is scanning
+the last segment, rather than waiting until after it is done and leaving
+the machine idle until it can alloc more keys.
+
+David R. Conrad, ab411@detroit.freenet.org, http://www.grfn.org/~conrad
+Finger conrad@grfn.org for PGP 2.6 public key; it's also on my home page
+Key fingerprint =  33 12 BC 77 48 81 99 A5  D8 9C 43 16 3C 37 0B 50
+Jerry Garcia, August 1, 1942 - August 9, 1995.  Requiescat in pace.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCUAwUBMEHCiREcrOJethBVAQHqfwP4xfVbdkyR19WA5k4oC0GjW80s3nNrLkXZ
+mYspBE8e01waJ+6NYkeyvE4lPzW4OwkKTAtZV64GWovpjsyYh4bb7/mkpkdOktAZ
+J9DkHXouQ5M23FImbIcfkVUqQdR5tmSdHQqOpUNYPVqT3JZR6IC9vzwYoqcnQWyY
+WIIGs8DTUA==
+=9Y8g
+-----END PGP SIGNATURE-----
+
+--
+David R. Conrad, ab411@detroit.freenet.org, http://www.grfn.org/~conrad
+Finger conrad@grfn.org for PGP 2.6 public key; it's also on my home page
+Key fingerprint =  33 12 BC 77 48 81 99 A5  D8 9C 43 16 3C 37 0B 50
+Jerry Garcia, August 1, 1942 - August 9, 1995.  Requiescat in pace.
+
+
+
+

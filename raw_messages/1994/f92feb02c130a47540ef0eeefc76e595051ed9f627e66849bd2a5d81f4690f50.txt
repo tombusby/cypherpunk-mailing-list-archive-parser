@@ -1,0 +1,95 @@
+From: Pierre Uszynski <pierre@shell.portal.com>
+Date: Mon, 12 Dec 94 12:23:28 PST
+To: cypherpunks@toad.com
+Subject: Re: Broadcasts and the Rendezvous Problem
+In-Reply-To: <199412112248.RAA25113@bb.hks.net>
+Message-ID: <199412122023.MAA15209@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+L. Todd Masco said:
+> [...]
+> bringing a new remailer on line could be achieved by broadcasting a message
+> through a newsgroup specifying the location and type of the remailer.  If
+> necessary, one or more pseudonymous automatic testing agents could pick up
+> the message and put the remailer through a barrage of tests, broadcasting
+> a "remailer certification" with a certain duration.  "Premail++" and
+> remailers could find their next hop by examining current certifications
+> and choosing one with desired characteristics, scoring by trusted testing
+> agents and other criteria (including the passage of time since the last
+> certification).
+> [...]
+> My question is whether this strikes anybody else as a
+> desirable design: we would end up with a net of remailers that is fairly
+> resilient and not dependent upon any one list of remailers.  If a node
+> goes down, the net adjusts in rather short order and service is not
+> disrupted.  
+
+Handling unreliable remailers is even more important if you want to
+encourage the "every-one-a-remailer" view. Numerous, low traffic,
+remailers will not be run professionally.
+
+I'd like to complete such a view of a remailer plan with:
+
+1) Acknowledgements, or Bounces, or broadcast drop-ids: When a mail is
+sent through a chain of remailers, it should be dealt with reliably
+from the user perspective. That means either the user gets an ack that
+the message got there when they do, or the user gets a bounce when they
+don't. Either way he should know what to expect. You could do that with
+response blocks (but they themselves can fail), or you can do that by
+broadcasting the ids of messages that are dropped because the next node
+in a chain is down. An id is just a large random number. Again, here
+you can use a broadcast medium. This could also be achieved if the
+recipient's mailer filters out duplicate copies of messages: the
+sender's mailer would monitor the reviews of the remailers used in
+transit, and re-issue messages that came too close to a break in the
+chain. Nobody ever needs to look at all this info, it would be handled
+by your personal Premail++.
+
+2) Amateur remailers need a flow control mechanism. You cannot expect
+somebody (or his internet provider) to be happy when his personal
+account remailer suddenly becomes the most popular in the current
+premail++ rating and gets flooded by everybody and his brother
+(randomizing premail++ or not). It does not need to be a very smooth or
+precise flow control, but it should be enough to prevent catastrophic
+events. Current systems tend to do that by refusing the mail, or
+dropping the packets on the floor, but we do not have this luck: the
+personal mail of the account holder must still go through. I do not
+know a good way to do that. Posting the remailer as being down when a
+flood occurs is too rash and too late. One way to do that would be for
+these "small" remailers to issue tickets (say 700 message tickets a
+week, each valid for the transport of one message).  The remailer agent
+(premail++) of a remailer-net user who expects to use the net for
+around 15 messages a week would try to reserve, say, 6 tickets each
+from 20 "small" remailers (for chaining, and to account for "sold-out"
+remailers). In the message, with the info for each successive remailer,
+it would paste in a ticket (which is then spent.) But now some ticket
+distribution system is needed: ticket distribution could be done by the
+remailer itself, but then we would be back to a flooding problem. So
+ticket distribution is better handled by "seriously" run "ticketing
+agents", just like the review process is better done by "review
+agents". A "small" remailer would hand out a provision of tickets to a
+small set of "ticketing agents", and would post to the broadcast medium
+that it is up and that tickets can be obtained from this set of
+agents.  A ticket is simply a short string of random numbers.  They can
+be re-used fairly quickly by the "small" remailer (say used one week
+out of 4), as we are only trying to avoid fortuitous flooding, not
+criminal mail-bombing.
+
+Finally, I'd say that a well propagated Usenet News group is a
+convenient medium to do this on, but needs not be the only one
+considered.  A not-so-well propagated broadcast can be reached by
+anybody's premail++ through yet a third set of robot mailers,
+advertised in an ad-hoc fashion, just like the remailers themselves
+now.
+
+I know this is a lot of different entities, but I firmly believe that
+(soon enough :-) nobody will use chained remailers manually, Premail
+is only the beginning.
+
+Pierre.
+pierre@shell.portal.com
+
+
+

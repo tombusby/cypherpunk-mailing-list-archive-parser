@@ -1,0 +1,59 @@
+From: Alan Ruttenberg <alanr@media.mit.edu>
+Date: Mon, 1 Nov 93 16:24:51 PST
+To: cypherpunks@toad.com
+Subject: anonymity and privacy in email
+Message-ID: <9311012346.AA06090@media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've looked over the instructions for the anonymous remailer and hals'
+instructions, and I have a few thoughts concerning the attempted
+guarantee of anonymity and privacy.
+
+In all cases, privacy is guaranteed only if you trust the remailer.
+I'll take as a given that this is the case.
+
+But suppose that a response is mailed in plaintext using an encrypted
+return address method. The privacy of that message can be violated by
+someone who had enough power and interest to monitor incoming mail to
+the destination site, since mail and message are unencrypted as the
+response enters its destination's mail queue. This is not very much
+power to have. The sysop the destination can do this, as can a person
+at any gateway between the final remailer and you.
+
+That much can be prevented if you trust the originater of the message
+and you have them encrypt their reply using your public key. But
+suppose that you have a malicious respondant who wishes to expose your
+identity, and has a good guess as to where you might be. Then the
+responder needs to send a tagged message and their accomplice needs to
+monitor incoming mail looking for that tag. The only way around this
+that I see is to have a trusted remailer to which you have given a
+public key to use when remailing mail addressed to you.
+
+A second problem concerns the time ordering of incoming and outgoing
+messages from a remailer. Consider the one remailer case, as I believe
+that the argument holds for chained remailings as well. Suppose that
+you are able to monitor the incoming and outgoing feeds of the
+remailer. Further, you can identify mail which goes to the remailer
+(as opposed to other persons at that site) by reading the to: header.
+Suppose that you have a method to identify outgoing mail from the
+remailer (from some header) such as "From: nobody@alumni.cco.caltech.edu".
+
+If messages are processed by the remailer in a fifo manner, then you
+can identify the recipient of any incoming message assuming that you
+get synchronized at some point.  One can to get around this, I think,
+is by deliberately scrambling the message processing order, and
+perhaps inserting enough fake messages that the monitoring agent can
+no longer reliably synchronize.
+
+I'm new to the list, and apologize if I'm repeating previous
+commentary. 
+
+-alan
+
+
+
+
+

@@ -1,0 +1,100 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Wed, 30 Mar 94 13:39:58 PST
+To: alt-security-pgp@demon.co.uk
+Subject: Zero Knowledge Trust? (was Re: Very funny, Polyanna :-( [namespace pollution])
+In-Reply-To: <199403301844.TAA19801@an-teallach.com>
+Message-ID: <9403302139.AA07928@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Gtoal@an-teallach.com said:
+>     What I see
+> as desirable for such people is that their mail is encrypted whenever
+> possible, but they don't have to do anything to make it happen.  This
+> means that the current web of trust scheme is not an applicable model,
+> because these people have defined *no* trusted paths at all.
+
+No, you want to give the user the option to sign and/or encrypt the
+message.  Just like I can optionally sigh a letter, or optionally
+write it on a postcard vs. putting it in an envelope.  It should be an
+option, not a mandate.  It *shouldn't* be automagic.  It should be
+configurable.  It should give the user a choice.  Maybe that user
+decides "encrypt all the time"...  That is his/her perogative to do
+so.
+
+> We need some relatively trustworthy mechanism for getting pgp keys
+> that will foil a denial-of-service attack - either the one I suggested
+
+No, this is not a reasonable goal.  No, let me rephrase that.  This is
+a reasonable goal, but the current implementation of PGP is not the
+answer.  If you want zero-knowledge authentication of total strangers,
+then you *require* a certification hierarchy, and the most effiecient
+is one similar to that defined in RFC 1422.
+
+PGP has a more grass roots method of determining key validity.  Let me
+give you an example where PGP *works* -- Today.  Say, for example,
+that I own a retail store.  I print my key on all my receipts, and
+anyone can get it.  It is published widely, so basically there is no
+easy way to spoof it.  But this doesn't matter.  The only reason I use
+my key is because I want to be able to certify customer's keys.  Ok, a
+customer comes in and gives me, somehow, a credit-card and a PGP key.
+I can validate the credit card, and if it validates, then I sign this
+key.  Now, anytime this person wants to buy something, all they have
+to do is sign an order slip with their key, and I can validate it, and
+I know that this is a "valid" customer.
+
+There is no way to perform a denial of service attack (except load me
+down with bogus email, but lets disregard that attack).  You can't
+forge a PGP key, and I only accept keys that I've certified myself.
+
+Ok, maybe you don't like that idea.  Ok, say that VISA starts signing
+PGP keys for it's customers.  I can get the VISA Public Key directly
+from VISA, then I know that any key signed by VISA is a valid key, and
+I should accept orders from them.  Same thing.  No way to spoof it.
+
+However, all of these require some out-of-band communication to make
+sure you have the real key.  Unfortunately, *every* Privacy Enhanced
+Mail system has this *feature* (or mis-feature, or bug, or however you
+feel like looking at it).
+
+> To me it looks like this has to be done by heavy-handed control
+> coming from the keyserver admins, though I'd prefer that there
+> was a more democratic way.  Please suggest anything you think is
+> appropriate...
+
+Basically, what you want is the RFC 1422 Certification Tree.  With
+that tree, you can verify the authenticity of a key with zero
+knowledge about that tree.  The only knowledge you need to know a
+priori is the root key of the tree.
+
+Before many people start responding to me saying that the 1422 CA Tree
+is a Bad Thing, let me state for the record that I believe that there
+are valid uses for the tree.  What Graham wants is a valid usage of
+the tree.  What I am saying, however, is that there are other uses for
+other trust mechanisms.
+
+Graham: It is not the keyserver's job to certify keys.  It never has
+been, and I still believe that it shouldn't be its job.  However, it
+sounds like you are requesting that PGP have imbedded in it knowledge
+about the RFC 1422 Hierarchy.  I believe this is a valid goal, and
+should be pursued.  In fact, the PEM-DEV group is looking at adding
+alternative turst models to the PEM system, which would merge the
+current PGP web-of-trust model with the current PEM Strict Hierarchy
+model, blending them into something which will solve both Graham's
+problem of zero-knowledge trust, and also allow my retailer example to
+work without all the overhead of applying to ISOC to get into the
+tree.
+
+What do people think?
+
+-derek
+
+         Derek Atkins, SB '93 MIT EE, G MIT Media Laboratory
+       Member, MIT Student Information Processing Board (SIPB)
+    Home page: http://www.mit.edu:8001/people/warlord/home_page.html
+       warlord@MIT.EDU    PP-ASEL     N1NWH    PGP key available
+
+
+
+

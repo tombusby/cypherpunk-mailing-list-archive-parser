@@ -1,0 +1,38 @@
+From: Tyler Yip - UnixWeenie(tm) <davros@ecst.csuchico.edu>
+Date: Sat, 17 Jul 93 17:48:36 PDT
+To: cypherpunks@toad.com
+Subject: No-Brainer elm script
+Message-ID: <9307180045.AA24848@hairball.ecst.csuchico.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+#!/bin/ksh
+# use the elm "pipe" feature to automatically detect which type of privacy
+# enchanced mail the message is under, and then automatically send the message
+# with the correct options to the cipher program.
+# usage from elm
+#			| elm2pem
+# you can also put this as the default reader in elm, but sometimes it barfs
+# if you get a pgp signed message and don't have the sender's key.
+umask 077
+clear
+cat > $HOME/.tmp/mbox.enc
+PGP="BEGIN PGP"
+PEM="BEGIN PRIVACY"
+
+if grep "$PGP" $HOME/.tmp/mbox.enc > /dev/null
+then
+	pgp -m $HOME/.tmp/mbox.enc
+elif grep "$PEM" $HOME/.tmp/mbox.enc > /dev/null
+then
+	ripem -d -i $HOME/.tmp/mbox.enc | more -d
+else
+	more $HOME/.tmp/mbox.enc
+fi
+
+rm -f $HOME/.tmp/mbox.enc
+
+
+
+

@@ -1,0 +1,41 @@
+From: Jef Poskanzer <jef@ee.lbl.gov>
+Date: Mon, 19 Dec 94 17:33:22 PST
+To: Derek Atkins <cypherpunks@toad.com
+Subject: Re: Hiding strings in objects code
+Message-ID: <199412200132.RAA12865@hot.ee.lbl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I assume you mean so that running "strings" on the binary will not
+>lead you to anything, right?  You can use an XOR with some weird value
+>to hide the strings.  Just make sure the value you use will, for
+>example, set the high bit on the string bytes...
+>
+>Its is a cheap, free way to hide strings.  It is, by no means, secure.
+
+When rtm used this technique in his worm I'm sure a lot of people,
+such as myself, spent the five minutes necessary to hack up a program
+that tries XORing the input with all 256 possible bytes.  I had the
+program pipe the output of each try through strings and wc, to check
+whether any significant text was uncovered.  Only 0x00 and the single
+now-forgotten value he used got hits - no second XOR value.
+
+Anyway the point is it's *really* by no means secure, and you can do
+much better with a few minutes thought.  Set up a basic framework
+using a Makefile that takes a file of
+    MNEMONIC	"text string"
+and runs it through an encoding program to produce a .h file of
+    static char* text[] = {
+	...
+    #define MNEMONIC 17
+	"vb4hv7789sd",
+Then in your actual program you just call decode(text[MNEMONIC]);
+Given that simple framework you can experiment with lots of different
+encoding and decoding functions.
+---
+Jef
+
+
+
+

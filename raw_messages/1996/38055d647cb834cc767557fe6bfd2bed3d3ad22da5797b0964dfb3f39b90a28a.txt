@@ -1,0 +1,32 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 29 Jan 1996 14:03:02 +0800
+To: cpunk@remail.ecafe.org (ECafe Anonymous Remailer)
+Subject: Re: pgp on linux
+In-Reply-To: <199601290513.FAA30591@pangaea.hypereality.co.uk>
+Message-ID: <199601290541.AAA19848@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hi.
+
+There is a known problem in the PGP 2.6.2 distribution.  In order to
+compile it for Linux/ELF, you will need to make a change to the
+sources.  The quick change is to add "ASMDEF=-DSYSV" to the Linux make
+rule in the makefile.  However this will not allow it to compile under
+Linux/a.out anymore.
+
+The proper fix, which is detailed on the PGP FAQ, Buglist, Fixes, and
+Improvements Page is to modify 80386.S and zmatch.S to look for the
+symbol __ELF__ in addition to SYSV.  This page, by the way, is
+available at this URL:
+
+	http://www.mit.edu:8001/people/warlord/pgp-faq.html
+
+Enjoy!
+
+-derek
+
+
+
+

@@ -1,0 +1,56 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Sun, 2 Jun 1996 12:23:03 +0800
+To: cypherpunks@toad.com
+Subject: Compressed data vulnerable to known-plaintext?
+In-Reply-To: <199606020009.CAA03429@basement.replay.com>
+Message-ID: <Pine.LNX.3.93.960601212148.1195A-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Sun, 2 Jun 1996, Anonymous wrote:
+
+> Someone who claimed to be David F. Ogren said on Sat, 1 Jun 1996:
+> 
+> > > The brute force system decrypts the first, and second blocks (8
+> > > bytes each) of the cyphertext, XORs them, and compares the result
+> > > with "PKZIP2.1".  If the comparison is equal it has the key.
+> 
+> > I will concede that having a known header, such as a PKZIP header,
+> > does weaken a crypto to certain degree, but I still believe that it is
+> > not a significant problem.  Here's why:
+> 
+> Why not simply use two session keys, and encrypt the headers with one 
+> while encrypting the actual data with the other? That seems to solve both 
+> problems, except that more CPU cycles are required.
+
+An easier solution would be to just strip of the headers.  If the header is
+always the same, then it is redundant.  If it varies, then it cannot be used
+as known-plaintext.
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xe3bf2169
+http://www.voicenet.com/~markm/ | d61734f2800486ae6f79bfeb70f95348
+"In Christianity neither morality nor religion come into contact with
+reality at any point."
+                -- Friedrich Nietzsche
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMbDtYrZc+sv5siulAQETVQP8DtIyI+pKr/cP7dNrQbnCeqSL+Dzu24ZR
+4IL6FdaxYaGNQsT+GYBh1iFW++V1mtnyx8JNKKZ7huiLIMKqp1Iw+92q+tc+4T/o
+Owd8a70Ld4rT6ma0pZOskLzLZCov4FitSfYKAonIsTYiMenmsYwo/rz6tdzKHPrg
+oM6wdHfv1hg=
+=fhBX
+-----END PGP SIGNATURE-----
+
+
+
+

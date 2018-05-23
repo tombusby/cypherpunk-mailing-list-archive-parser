@@ -1,0 +1,74 @@
+From: jsw@neon.netscape.com (Jeff Weinstein)
+Date: Sun, 1 Oct 95 13:44:28 PDT
+To: cypherpunks@toad.com
+Subject: Re: NetScape's dependence upon RSA down for the count!
+In-Reply-To: <199510010812.BAA11516@ix4.ix.netcom.com>
+Message-ID: <44muie$59h@tera.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199510010812.BAA11516@ix4.ix.netcom.com>, stewarts@ix.netcom.com (Bill Stewart) writes:
+> Or hack the Web of Trust used to verify the server's identity.
+> It _is_ still a Web of Trust even if it's a fascistly-hierarchical tree;
+> as long as it's possible to get a certificate without heavy contractual
+> obligations, you can hack it, since the software has no way to check,
+> now that Netscape is being nice and open and allowing non-Verisign certs.
+> Remember that anybody can be a CA, and keys can be signed by multiple CAs.
+> 
+>         Verisign Business CA signs Carol's Certification Consultants' key.
+>         Carol signs Bob's Better Browser Business's key.  
+>         Bob runs a server, selling really cool web tools.
+>         Verisign Business CA signs Moriarty's Mallet Makers' key.
+>         Moriarty signs Mr. X's personna key (trust us.)
+>         Mr. X makes a key called Bob's Better Browser Business,
+>         looking suspiciously like the real thing, only it's
+>         signed by Mr. X, and nobody bothered telling Bob about it.
+> 
+>         Alice, using Netscape, encounter's http://www.Bob'sBetterBrowser.com/,
+>         and decides to order a Better Browser.  She gets Bob's public key
+>         and X.509 certificates by pressing a button, and receives a key
+>         and a pile of certs.  Since it's not a secure session yet, is Mr. X
+>         intercepting them and sending her _his_ key and cert for "Bob" and his
+>         personna key with cert from Moriarty and his key and cert from Verisign?
+>         
+>         So Mr. X rips off Alice and/or Bob somewhere here, and Alice decides to sue
+>         Bob, who says "Hey, that's not my key, see my real set of certs",
+>         so they go off after Mr. X, who they can't find, and then go after
+>         Moriarty, who says "Hey, it's just a personna certificate; all I
+>         guaranteed was that I didn't sign more than one with the same name on it",
+>         which in fact appears to be true, and while after one case you can't 
+>         be sure that there really wasn't a Mr. X somewhere, if three or four
+>         people start walking in saying Mr. X ripped them off using a key
+>         that Moriarty signed, maybe somebody'll think it's a movement...
+
+  You are making a lot of assumptions here.  Lets say that the browser
+software is allowing certificate chaining (browser traverses certificate
+issuers until it finds one it trusts, then accepts the entire chain).
+There could be an attribute in the certificate that indicates whether
+the issuer is certifying it to be a subordinate CA.  Presumably when
+Moriarty signs a persona certificate, it does not have this attribute.
+
+> Now, X.509 certs don't limit themselves to hierarchical or Web use, and most
+> advice on using them recommends limiting the depth of a tree/web that you're
+> willing to trust.  Unfortunately, X.509 certs don't even have a comment field,
+> much less a standardized "how much do you trust this person you're signing"
+> field,
+> though I suppose you can cram a bit into the X.400/500-style name formats.
+
+  X509 version 3 does support arbitrary extensions.  We are making use of
+this feature in Netscape Navigator 2.0.  Giving certificates attributes
+such as "how was their identity verified" and "what operations are they
+certified for" is an obvious application of this.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

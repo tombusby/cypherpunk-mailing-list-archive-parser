@@ -1,0 +1,45 @@
+From: mccoy@ccwf.cc.utexas.edu (Jim McCoy)
+Date: Wed, 7 Apr 93 11:36:18 PDT
+To: 0005857625@mcimail.com (Michael McMahon)
+Subject: Re: Real-time BBS Encryption??
+In-Reply-To: <01930407174710/0005857625DC2EM@mcimail.com>
+Message-ID: <9304071836.AA26678@flubber.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Michael McMahon <0005857625@mcimail.com> writes:
+[...]
+> I'm wondering if there is a way to do [end-to-end encryption] with PCs?
+> Is there a way to encrypt a remote users entire connection with the BBS,
+> so that they would have to have a special term program to access the
+> system?
+
+Sure, no problem, provided you are willing to do a lot of coding...
+
+The basic idea would be to use public-key encryption to do a short
+negotigiation of a one-time key to use for DES/IDEA encryption of the
+session.  You could then use a public key for the system as a whole (with
+which the users can encrypt thier personal public keys for uploading during
+the initial connection) and the user's public key to send the key
+transmitted from the BBS for the session.
+
+All that would be necessary is for you to add a bit of code to the comm
+program so that it would recognize when it was talking to a system such as
+this and do the right thing when needed (the actual encryption code is
+readily available in systems like PGP and the various DES implementations
+out there.)  The downside is that there are a lot of terminal programs out
+there for microcomputers and not many supply source code for such
+modifications.  I had thought about using such a system when planning out a
+raid-proof 386BSD system and the hassles of trying to get at least one
+program to do this for every platform that might want to connect to such a
+BBS was more work that I wanted to do.  Perhaps as an option (e.g. one line
+using end-to-end encryption and others normal) for connecting to a system,
+but if all the lines are done like this you will probably find making it
+difficult for people to connect like this keeps people away from the
+system.
+
+jim
+
+
+

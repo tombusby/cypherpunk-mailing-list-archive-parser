@@ -1,0 +1,45 @@
+From: "Mordechai Ovits" <movits@syndata.com>
+Date: Mon, 11 May 1998 12:10:06 -0700 (PDT)
+To: "Jesús Cea Avión" <jcea@argo.es>
+Subject: Re: Chaffing & winnowing without overhead
+In-Reply-To: <35571323.D109A0D2@argo.es>
+Message-ID: <35574C41.816CA545@syndata.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jesús Cea Avión wrote:
+
+> In the Rivest's paper you transmit, indeed, all the 2^n plaintexts for a
+> n bit length };-).
+
+Not so. In his paper (before the package tranform stuff), he had the following expansion.
+Assuming a 32 bit serial number and a 160 bit MAC, n bits would expand to 388n.
+This is because Ron is sending it out like this:
+quote from http://theory.lcs.mit.edu/~rivest/chaffing.txt
+>To make this clearer with an example, note that the adversary 
+>will see triples of the form:
+>        (1,0,351216)
+>        (1,1,895634)
+>        (2,0,452412)
+>        (2,1,534981)
+>        (3,0,639723)
+>        (3,1,905344)
+>        (4,0,321329)
+>        (4,1,978823)
+>        ...
+>and so on.
+
+Every bit is getting 2 32-bit serial numbers, its own complement, and 2 160-bit MACs.
+a 10KB file would explode into a 3.789MB file.
+Not too practical, eh? :-)
+-- 
+o Mordy Ovits
+o Programmer / Cryptographer
+o SynData Technologies Inc.
+o Download A Free Copy Of Our Software At:
+o http://www.syncrypt.com
+
+
+
+

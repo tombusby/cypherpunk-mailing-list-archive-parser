@@ -1,0 +1,41 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Sun, 24 Apr 94 01:24:42 PDT
+To: cypherpunks@toad.com
+Subject: Clipper LEAF Holes?
+Message-ID: <01HBJGK3864I9TDZ96@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+As I understand the Clipper/Capstone LEAF, it works like this:
+
+Take 80-bit session key. Encrypt with device-unique key. Add 32-bit
+serial number and 16-bit checksum. Encrypt resulting 128-bit packet
+with family key.
+
+One of the EES chips, the type designed for cellular and other phones,
+operates in "1-bit CFB mode". This would seem to indicate that it is a
+straight-thru device - that the data input and output rates are the same.
+So the LEAF is only sent once; it is not repeated throughout the output.
+
+The user is forced to send a valid LEAF because the receiving chip will
+not set up without receiving a LEAF. But how does the receiving chip check
+to see if the LEAF is valid? The obvious way is to decrypt it with the
+family key, and then verify the checksum. But EES chips for different
+countries will have different family keys. So if an American EES chip
+sends a LEAF to a foreign one, how does the foreign one verify the LEAF?
+
+Even if the receiver can decrypt the first level of the LEAF and examine
+the checksum, it doesn't have your device-unique key, so it cannot check
+to see if the session key in the LEAF is the same session key that you
+sent to it. So it would seem that any valid LEAF would work, even if it
+is not the one for the current session key.
+
+Am I missing something in the Clipper design which prevents this?
+
+--- Mike
+   
+
+
+
+

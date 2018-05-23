@@ -1,0 +1,86 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Tue, 20 Feb 1996 14:30:12 +0800
+To: IPG Sales <ipgsales@cyberstation.net>
+Subject: Re: Internet Privacy Guaranteed ad (POTP Jr.)
+In-Reply-To: <Pine.BSD/.3.91.960219183616.5326D-100000@citrine.cyberstation.net>
+Message-ID: <199602200306.WAA11013@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I, too, am interested in seeing the underlying algorithms.  Not
+because I don't believe that they work, but because I'm interested in
+seeing what you may have found that no one else has.  However from
+your recent mailing I think I know what you're doing:
+
+> Starting with an OTP as seed? The algorithm may be fixed in a sense, but 
+> it employs a truse hardware random OTP to select intial settings, adds, 
+> and limits, so every one is new and unique - a lot of algorithnms can 
+> generate pseudfo trandom numbers, but onece you knw the algorithm, you 
+> can generate the random sequence. Our system does not do that - in 
+> oReder to solve the system, you must know what OTP was used, that is what 
+> was the true hardware generated OTP. Unless you know what that was, 
+> knowing the algorithm does nothing for you. If you understand that 
+> principle you understand the system. 
+
+I think this is the key.  Question: if I knew the starting "OTP" that
+seeded your algorithms, would I be able to re-create the whole stream
+and decrypt a message?  I suspect the answer is "yes".  However if I
+knew the algorithm you were using, could I decrypt the message without
+the use of the "OTP" key?  I don't know the answer to this question.
+I hope the answer is no.  Assuming it is no, then I ask you: when can
+I see the algorithm you are using.  Following is an example of why
+knowledge of the algorithm is useful but not harmful:
+
+Example: Let's assume I can securely exchange a "OTP" (key) with
+someone.  I now run some algorithm using that "OTP", add in the
+plaintext, and out comes a random stream which is the encrypted
+message.  Is this similar to what POTP does?  I believe the answer is
+"yes".  Let me submit that what I described here I can do with DES
+using ofb mode to generate a random number stream with which I encrypt
+the message.  The fact that I know I used DES does not help me decrypt
+the message.  I still need the "OTP" key in order to figure out which
+stream of random bits were used to encrypt the message.
+
+> Perhaps so, but our system does employ a true hardware generated OTP, and 
+> operates similiar to what you describe -  however, the important 
+> differernce is that we use a smal;l OTP to generate a larger OTP, like 
+> stringing the cable across the Golden Gate narrows. Just becuase we 
+> convert over from a full OTP to a prime number wheel system configured 
+> from the OTP doers not mnean that the result is not an OTP - in theory it 
+
+Actually, this statement is false.  What you have is a pseudo one-time
+pad, not a true one-time pad.  It's close, though.  The problem is
+that the means that you use to convert the smaller OTP to a larger OTP
+may be "flawed", and that is the algorithm that I think most people
+here want to see.  I do believe that the 5600-bit OTP key material
+that you distribute is random.  You claim it is hardware generated; I
+believe that.  However that doesn't help me feel any less wary about
+the algorithm you use to convert that 5600-bit OTP to a larger
+pseudo-random stream.
+
+At best, you have a cipher with a 5600-bit key.  If this is so, I
+congratulate you on it.  However I think that I, and others on this
+list, would like to see how it is accomplished.  This is mostly
+because I believe people here are wary of such systems; key management
+and random number generation is a tricky business, and its very easy
+to make a slip and get it wrong.  Just look at Netscape and other
+systems which have fallen to simple attacks.
+
+I think that people here would like to prove whether or not your
+system is vulnerable to such attacks.  Just remember that if it is not
+vulnerable, as you claim, then you have nothing to worry aout and you
+will gain the acknowledgement of the cypherpunks behind you.  On the
+other hand, wouldn't you rather that you know if your system has a
+flaw, rather than having some cracker discover it and try to exploit
+it rather than inform you?  That is a choice you will have to make.
+
+I believe the cypherpunks offer still stands:  to test your algorithm.
+
+The choice is yours.
+
+-derek
+
+
+
+

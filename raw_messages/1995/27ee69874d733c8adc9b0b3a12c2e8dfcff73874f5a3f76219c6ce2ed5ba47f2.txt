@@ -1,0 +1,56 @@
+From: monty.harder@famend.com (MONTY HARDER)
+Date: Thu, 31 Aug 95 20:44:44 PDT
+To: CYPHERPUNKS@toad.com
+Subject: Re: SSL search attack
+Message-ID: <8B034A5.00030003CF.uuout@famend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+D > >  The odds can be improved somewhat by scaling the granularity of the
+D > >sweep to the size of the sweep. (Align larger chunks on large-chunk
+D > >boundaries, eliminating the chance of overlap with other large chunks.)
+D >
+D > Some kind of step (ie, round-down) function performed on the random (I
+
+  More like deciding ahead of time that if you are going to take 1/n of
+the keyspace, you should take a chunk aligned on a 1/n boundary. That
+way, you don't have two people take chunks right next to each other,
+just missing the key, or take chunks that overlap each other massively,
+duplicating effort.
+
+  If a random protocol were to be used, each person would roll up an
+appropriate starting spot, and then simply search sequentially
+thereafter, so that he would not double up on his =own= previous
+efforts. The point of scaling the starting point is basically the theory
+that says:
+
+     "I will generate a random number of the form xxxxxx0000, because if
+     I trust that a person has scanned any given number, I also trust
+     that he has scanned the next FFFF keys, so it would be
+     counterproductive for me to start anywhere not so aligned."
+
+  And the number of 0s is based on my pathetic amount of computing power
+being estimated as 2**(-24) of the total effort. For those who made the
+Big Boys list, a few more zeros are in order.
+
+D > is searching an X segment area around where the dart hit. In order to
+D > get any kind of boundry, you have to scale the allowed segment blocks, by
+D > powers of two, for example, or something, so everyone knows where the
+D > borders are. Its a nice thought but I don't see that it's necessary.
+
+  It should improve the odds just a bit. Instead of throwing darts at
+2**40 targets, we are only throwing them at 2**24 small ones, and people
+with large darts to throw can worry about, say, 2**16 or even 2**12
+targets to hit.
+
+
+
+ * You always carry weapons, 'cause you always carry cash.
+   -Glenn Frey.
+---
+ * Monster@FAmend.Com *    
+
+
+
+

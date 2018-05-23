@@ -1,0 +1,124 @@
+From: Andrew Lowenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Thu, 17 Nov 94 14:28:50 PST
+To: cypherpunks@toad.com
+Subject: Re: Islands in the Net
+Message-ID: <9411172229.AA01226@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+tcmay@netcom.com (Timothy C. May) writes:
+>  What's the common theme? Agents. Chunks of code which also have
+>  local processing power (brains, knowledge).
+>
+>  Someone sent me private e-mail on this "Islands in the Net" topic,
+>  and talked about "payloads of data carrying their own instructions,"
+>  in reference to the Telescript model of agents. (I wish he'd post
+>  his comments here!) This approach, also typified in some
+>  object-oriented approaches, seems to be the direction to go.
+
+<note: this message was originally the one Tim references in the above, but I  
+have edited and added much to it after letting it percolate in my brain for a  
+day or so...>
+
+Naked data is dumb and computers aren't much smarter.  Computers need  
+instructions from humans to act on that data, and when you separate the data  
+from the instructions that act on it you have problems.  If a hunk of data  
+arrives on your machine and you don't have any code to make sense of it, you  
+are SOL.  Likewise if the code that interprets that data isn't "correct" for  
+that data you run into problems.  By making the instructions that act on data  
+an integral part of that data, you can avoid problems.  This is just the  
+object-oriented programming concept of encapsulation of course.
+
+Of course, encapsulation (or OOP for that matter) is no silver bullet for  
+solving this problem at least in the way we are approaching it.  It takes a  
+lot of code and a lot of agreement among people.  I think it's the human  
+error (including shortcuts) and the lack of communication among humans that  
+contributes the most to software fragility and lack of robustness.  What's  
+more is the distinction between data and code is very well entrenched in  
+modern computing.   The executable code is nearly always a separate entity  
+from the data it acts on.  Not only does the hardware and OS make the  
+distinction between code and data, most programmers do as well.  Even though  
+C++ seems like the de facto standard for new software these days, few  
+applications written with it practice strict encapsulation.
+
+There is a blurb in last month's Wired (the one with "Rocket Science" on the  
+cover) where they touch on this subject a bit (I don't have it handy), but  
+the author there draws the same conclusion as I:  it will take a very radical  
+and fundamental change in computing before this becomes reality.  No amount  
+of committee meeting (CORBA) or application level software sugar (OpenDoc,  
+OLE, whatever) is going to change this, or at least make it work.  At the  
+core every machine makes the distinction between data and code.  Operating  
+systems make distinctions between applications and data files.  Until the  
+hardware and the OS start believing that data and code are one as well as the  
+programming languages and APIs, we won't get anywhere.  Heck, computers have  
+been around for 40+ years and the primary data interchange format between  
+systems is still just a dumb stream of bit encoded characters.
+
+Maybe.... Agents like TeleScript really intrigue me... and I think the are  
+closer to what we need to do this than any of the myriad suggestions coming  
+out of the OOP community (like CORBA, OLE, OpenDoc, etc...).  Intelligent  
+agents carrying their payload of data through the network.  However, the  
+agents have to be able to run their code on any machine and without having  
+the capability to do 'damage' (most institutions _prefer_ to be islands on  
+the net because of fear of 'hackers').  In addition, the agents, as a  
+collection of code and data, have to mutatable is some way to be able to  
+process the data in new ways.
+
+What if remailers were implemented using 'agents'?  Instead of me sending a  
+dumb message to a smart remailer, what if I could send smart remailer, with  
+an encrypted message embedded in it, to a friendly machine offering agents  
+access to SMTP (i.e. a machine that allowed any authorized agent to arrive  
+and initiate an outgoing tcp stream to the SMTP port of any other machine).   
+Now I can make my remailer system as convoluted as I want, simply by  
+programming this agent to cruise around machines that answer when it knocks.   
+Once it has moved between enough hosts, it moves to a host that offers  
+outgoing SMTP connections and delivers it's payload.  No longer am I limited  
+by the time and effort of the remailer operators to implement fancy new  
+features.  Any machine that gives access to my agent becomes another hop in  
+my remailer chain (or whatever purpose I want).  All my remailer agent needs  
+to operate is one host, the final destination, that will let it make an  
+outgoing SMTP connection, which could be provided by the hosts currently  
+running remailers.
+
+What if this e-mail message you are reading was really an agent instead of  
+just data?  A basic e-mail message protocol would be needed for your  
+mail-reading software to interact with it.  I'm using protocol here in the  
+sense that NeXT uses it in their version of the Objective-C language.   
+Protocols there are a formal interface definition for an object that isn't  
+tied to a class.  If my mail message object (or agent) conformed to the mail  
+protocol, it would have to implement all of the methods defined in the  
+protocol (maybe methods like "giveMeTheMessageContents", "deliverThisReply:",  
+"forwardToThisAddress:", etc...).  Wow, now I have a smart e-mail message.  I  
+could recode the "deliverThisReply" method to go through anonymous remailer  
+systems or basically anything it wanted.  Now instead of praying that the  
+recipient is savvy enough to handle using an encrypted remailer reply block,  
+the recipient just replies as normal and their mail-reader hands the reply to  
+my agent which goes off and does it's magic.
+
+I know very little of TeleScript (i.e. I haven't gotten my grubby little  
+hands on it), but I do know that it implements some crypto features for  
+authentication and the like.  This type of system won't work unless people  
+are absolutely sure it's secure.  By secure I mean people should be confident  
+that when they open their hosts to agents there is no way for agents to  
+access services not explicitly granted to them...  I think this is the future  
+of distributed network computing...  servers on the network provide basic  
+services (by basic I mean CPU time, network connections, disk storage,  
+etc...) to be utilized by smart agents, as well as smart agents carrying  
+payloads and interacting with 'normal' software (like in my mail message  
+example).
+
+There is pretty much no chance that a fundamental paradigm shift in the  
+relationship between code and data will occur at all levels, at least not all  
+at once, there's just too much stuff out there already.  But it seems to me  
+that a well-engineered agent system could be a decent compromise, or a move  
+towards the end of code/data duality, that has a good chance of gaining  
+widespread acceptance.
+
+
+enough,
+andrew
+
+
+
+

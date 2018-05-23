@@ -1,0 +1,47 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Mon, 19 Feb 1996 02:46:05 +0800
+To: stewarts@ix.netcom.com (Bill Stewart)
+Subject: Re: PING packets illegal?
+In-Reply-To: <199602181745.JAA08949@ix5.ix.netcom.com>
+Message-ID: <199602181819.NAA10431@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Bill Stewart wrote:
+
+| >From a legal perspective, it's tough to assert that the US user had scienter,
+| given that it pings scarcely reach the machine's consciousness, much less
+| the human users', since they're handled by ICMP rather than by a user-space
+| TCP or UDP
+| socket.  (Obviously, if there's a sniffer around this is slightly different.)
+| 
+| Is it possible to send out forged ping packets, pinging machine B with a From
+| address of C (fake) instead of A (real), so that Alice can talk to China via
+| Bob?
+| If so, it might be an interesting method for traversing some firewalls,
+| and also (if you write a ping-collector program) for back-channel
+| communications.
+
+It should be possible to fake a source address.
+
+Also, if you want to traverse a firewall from the inside, its usually
+pretty easy to do with mail, or over telnet.  Stego in ping would show
+up in a firewalls logs more prominently than a lot of mail.
+
+| If you want to really abuse the protocols, 53 bytes probably fits into the
+| 64 you can send in a ping, so you could implement ATM-over-ICMP :-)
+
+Err, you can put up to 1500 bytes into an ICMP echo request, if its
+properly implemented.
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

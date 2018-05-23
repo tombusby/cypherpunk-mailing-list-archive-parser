@@ -1,0 +1,44 @@
+From: Eric Blossom <eb@sr.hp.com>
+Date: Thu, 3 Mar 94 15:46:41 PST
+To: wex@media.mit.edu
+Subject: YA semi-novice question
+In-Reply-To: <9403031930.AA19033@media.mit.edu>
+Message-ID: <9403032345.AA12469@mwmax.sr.hp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Alan Wexelblat writes:
+   Can someone please tell me how 3-way calling would work under Clipper (or
+   other encrypted phone system)?  That is, I'm Alan talking to Betty.  During
+   the conversation Clive calls me and I want to "add" him so that we have a
+   3-way conversation.
+
+   How do the key/session exchanges happen?
+
+Basically it doesn't, unless you have extra hardware.  This is the
+same problem that you have with ISDN phones.  No extensions.
+
+If you were going to do it, somebody acts as a hub, call it H, and the
+other two users A and B connect to the hub.   Note that A and B are
+not directly connected.
+
+	A <----> H <----> B
+
+A and H negotiate a session key.
+B and H negotiate a session key.
+
+H acts as a digital mixer.
+H decrypts input from A using the A/H key and forwards it to B
+encrypted under B/H.  H decrypts input from B using the B/H key and
+forwards it to A encrypted with the A/H session key.
+
+In the middle of all this (H) all components of the conversation are
+in the clear.  They are mixed appropriately and sent out to the other
+participants encrypted under the respective session keys.
+
+Eric Blossom
+
+
+
+

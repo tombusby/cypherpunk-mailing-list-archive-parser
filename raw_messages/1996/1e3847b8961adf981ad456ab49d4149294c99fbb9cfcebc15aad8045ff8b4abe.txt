@@ -1,0 +1,38 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Wed, 31 Jan 1996 07:18:26 +0800
+To: Alexandra Griffin <cypherpunks@toad.com
+Subject: Re: PPP link encryption?
+Message-ID: <199601301931.LAA02253@netcom6.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At  6:36 AM 1/30/96 -0500, Alexandra Griffin wrote:
+>Is there any software out there on the net for doing real-time,
+>transparent encryption of a PPP link?
+>...
+>Finally, could someone make a ballpark estimate as to the amount of
+>additional latency that would be added?
+
+Ballpark estimate:  If the encryptor receives a complete packet before
+encrypting and forwarding it then there would be an additional
+packetSize/byteRate + encryptionTime seconds added to the packet's transit
+time.
+
+If the encryptor encrypts "on the fly", passing the bits of a packet as
+their are received, then it would add almost no latency.  However, the
+encryption algorithms would be limited to stream cyphers, which have
+security and error recovery implications.  See "Applied Cryptography" for
+details.
+
+
+-----------------------------------------------------------------
+Bill Frantz                   Periwinkle  --  Computer Consulting
+(408)356-8506                 16345 Englewood Ave.
+frantz@netcom.com             Los Gatos, CA 95032, USA
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+From: tomw@orac.engr.sgi.com (Tom Weinstein)
+Date: Fri, 22 Sep 95 17:04:54 PDT
+To: perry@piermont.com
+Subject: Re: netscape bug
+Message-ID: <199509230003.RAA06024@orac.engr.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <DFALB4.A5u@sgi.sgi.com>, "Perry E. Metzger" <perry@piermont.com> writes:
+
+> I can tell you in general terms -- I don't write MIPS assembler
+> myself. However, I will point out to you that you use an ancient
+> Sendmail, and that it uses syslog(3) on user produced data, and that
+> syslog uses a static buffer. Trick sendmail into logging something
+> very big, and you can do what you like. The 8lgm people wrote a demo
+> for Sparc as a proof of concept.
+
+Hmm, after having looked at the syslogd code, it looks like this
+particular bug has been fixed for at least several years.  However,
+there sure are a hell of a lot of fixed size buffers being alocated off
+the stack and some of them are being used in unsafe ways.
+
+-- 
+Sure we spend a lot of money, but that doesn't mean    |  Tom Weinstein
+we *do* anything.  --  Washington DC motto             |  tomw@engr.sgi.com
+
+
+
+

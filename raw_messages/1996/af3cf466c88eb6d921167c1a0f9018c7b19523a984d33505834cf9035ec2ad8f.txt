@@ -1,0 +1,55 @@
+From: Rich Salz <rsalz@osf.org>
+Date: Thu, 25 Jan 1996 18:07:52 +0800
+To: cypherpunks@toad.com
+Subject: Hack Java
+Message-ID: <9601231630.AA07540@sulphur.osf.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This illustrates the difference between a language with no dangerous
+constructs, and one where you must trust the implementation.
+>From some internal OSF email:
+---------- Begin Forwarded Message ----------
+
+class Data { // an object storing 16 bytes 
+	byte word[16];
+}
+
+
+class Trick {
+	Data data;
+	long tricky_pointer;
+	}
+
+
+Now suppose, I fake a compiler (or I have a malicious compiler)
+and I generate by hand malicious byte code such that
+in the symbol tables, tricky_pointer and data have the same
+offset.
+
+
+Then if I have the code
+
+	tricky_pointer = 10000;
+	for (; tricky_pointer < 50000 ;) {
+		dumptofile(trick.data)
+		tricky_pointer += 16;
+	}
+
+what I am doing with this code is that I am actually setting the data
+object reference to point to address 10000, then I am core dumping the
+contents of memory upto address 50000, 16 bytes at a time! The byte
+code is completely legal, I have cheated with the field offsets so
+that I can access to the same memory as two different types.
+
+In order to detect that the byte code verifier must verify that
+all the fields of an object do not overlap in their memory
+layout. That's what has to be checked.
+
+----------- End Forwarded Message -----------
+
+
+
+
+

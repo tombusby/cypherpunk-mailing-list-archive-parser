@@ -1,0 +1,72 @@
+From: pdh@best.com (Peter Hendrickson)
+Date: Thu, 13 Feb 1997 09:47:54 -0800 (PST)
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: distributed mailing list architecture
+Message-ID: <v02140b01af28fcafe195@[206.184.146.15]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:11 PM 2/7/1997, Adam Back wrote:
+>Igor Chudov <ichudov@algebra.com> writes:
+>> I'd suggest a simplier solution: to connect each server with a couple,
+>> or maybe three, other servers. This scheme is rather robust, does not
+>> consume too much CPU time and bandwidth, and is easy to implement.
+
+> I'm not sure what the architecture you are suggesting is, but this is
+> what I suggest as the simplest to set up.
+
+> Have one main majordomo.
+
+> Have many mail-exploders.
+
+> You subscribe to the main majordomo request address, and it forwards
+> your subscription request to a random mail-exploder.
+
+> You unsubscribe to the main majordomo request address, and it forwards
+> your subscription to all the mail-exploders request addresses
+> (unsubscribe traffic is low anyway, keeping track of who is subscribed
+> where at the main major domo doesn't seem worth it).
+
+> Each person who wishes to run an exploder is subscribed (manually) to
+> the main majordomo.
+
+> You submit articles to the main majordomo, and it sends copies of the
+> articles to it's subscribers (the mail-exploders).
+
+> The mail-exploders send mail to the address on their subscriber lists.
+
+> (John Gilmore suggested this architecture, as a simpler alternative).
+
+This mostly solves the performance problem, but performance was not the
+only choke point.  It is important to have many machines which accept
+posts and which send them to other machines.
+
+(Also, many interconnections means that few messages have to go through
+more than two machines which should make message distribution
+extraordinarily fast and highly redundant.  Standing in the way of
+the cypherpunks list will be like standing in the way of the wind.)
+
+I suggest we consider the problem of subscriptions to be independent
+of the problem of posting and distributing messages.
+
+Some machine owners may wish to pool subscription activities.  The
+fast and easy approach is to have an official cypherpunks subscription
+page which lists all of the mail servers which will accept new
+subscribers.  (The person who maintains this page would ideally not
+be somebody running a mail server.)  The interested person looks
+at the page and then picks a majordomo to subscribe to.
+
+It seems beneficial to me from a technical and social standpoint to
+have a web of relationships between list managers and subscribers.
+If as a subscriber you have some sort of problem (technical or social),
+it will work better if there is just one person to talk to rather than
+a loose network of volunteers.
+
+Peter
+
+
+
+
+
+

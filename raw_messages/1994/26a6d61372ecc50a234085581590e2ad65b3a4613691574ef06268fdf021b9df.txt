@@ -1,0 +1,30 @@
+From: Eli Brandt <ebrandt@jarthur.cs.hmc.edu>
+Date: Sun, 3 Jul 94 11:24:03 PDT
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: Dr. Dobbs Dev. Update 1/5 July 94 & Schneier
+In-Reply-To: <4i5by0G00WBMA0jZF6@andrew.cmu.edu>
+Message-ID: <9407031823.AA25826@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Note that some compilers might not be smart enough to use logical shift
+> ops and instead use expensive division ops.  Just to be safe...
+> 
+> int byte_ones(int a)
+> {
+>          a = (a & 0x55) + ((a & 0xAA) << 1);          // 0x55 == 01010101b
+>          a = (a & 0x33) + ((a & 0xCC) << 2);          // 0x33 == 00110011b
+>          a = (a & 0x0F) + ((a & 0xF0) << 4);          // 0x0F == 00001111b
+>          return a;
+> }
+
+One advantage of writing it as division is that it's hard to accidentally
+reverse, as above.  :-)  I was just trying to cut down on parens...
+
+   Eli   ebrandt@hmc.edu
+
+
+
+
+

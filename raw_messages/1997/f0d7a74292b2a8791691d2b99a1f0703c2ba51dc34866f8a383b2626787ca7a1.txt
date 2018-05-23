@@ -1,0 +1,42 @@
+From: nospam-seesignature@ceddec.com
+Date: Thu, 14 Aug 1997 05:36:30 +0800
+To: Ray Arachelian <sunder@brainlink.com>
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <Pine.SUN.3.96.970813145505.7599M-100000@beast.brainlink.com>
+Message-ID: <97Aug13.172635edt.32257@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, 13 Aug 1997, Ray Arachelian wrote:
+
+> On Wed, 13 Aug 1997 nospam-seesignature@ceddec.com wrote:
+> 
+> In terms of padding does it matter WHERE I put the padding info?  Is it
+> better to put random stuff in the front or at the end?  The reason I ask,
+> say that you're going to encrypt an N byte block where N is bigger than
+> your block cypher's key size?
+> 
+> If my intution is correct, and you have the same data encrypted with many
+> keys (even RSA) but have the padding at the end, the 1st block would still
+> be breakable.  I suppose putting the data at the end would also result in
+> the same kind of problem, though it might be a bit harder to attack than
+> putting the data 1st...
+> 
+> Would it not make sense to scatter the random padding throughout the
+> block?   How is this normally done?  Front?  Back?  Middle?  Scattered?
+
+The location does not matter.  The standard RSA libs place the padding at
+the front - it is one of those PKCS specifications.
+
+You would simply need to break the conventional key down to a few bytes
+smaller than the modulus size, so each would be padded with a few random
+bytes.
+
+--- reply to tzeruch - at - ceddec - dot - com ---
+
+
+
+
+

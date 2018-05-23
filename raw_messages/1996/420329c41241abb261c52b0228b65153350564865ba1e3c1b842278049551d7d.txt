@@ -1,0 +1,47 @@
+From: "Matt Smith" <msmith@rebound.slc.unisys.com>
+Date: Thu, 16 May 1996 06:40:54 +0800
+To: cypherpunks@toad.com
+Subject: distributed keys
+Message-ID: <199605151447.OAA17650@rebound.slc.unisys.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Has anyone heard of an algorithm for managing keys automatically in a 
+distributed system?  
+
+For instance, if some low level security were to be implemented in a
+a networking stack where authentication was to be implemented, you would want
+to have each node have it's own signature so that signature checking can 
+take place when one node connects to another node.  The trick is then 
+getting every node's keys distributed to every other node.
+
+Here are some ideas that I had, but neither is very desireable:
+
+-  Manual distribution.  User configures every node's key into every node.
+   Configuration becomes a major hassle and mistakes are a pain to debug.
+   An advantagous side effect is the user can configure which machines can 
+   talk to which machines if they're feeling particularly facist.
+
+-  At connection time, each node determines whether or not it has the other
+   node's key.  If not, a symmetric key is generated via DH and public keys
+   are exchanged.  The problem comes in if someone is spoofing the machine
+   to begin with.  Then you'll have the wrong public key.  Chicken, egg.  
+   Egg, chicken.  
+
+-  Having a certifying node which every other node has the public key to and
+   who has everyone else's public key.  Requests are made of this server.  
+   The trick is making this server secure and forcing the user to devote
+   resources to this endeavour.
+   
+Thoughts?
+
+-- 
+Matt Smith - msmith@unislc.slc.unisys.com
+"Nothing travels faster than light, with the possible exception of bad news, 
+which follows its own rules." - Douglas Adams, "Mostly Harmless"
+Disclaimer:  I came up with these ideas, so they're MINE!
+
+
+
+

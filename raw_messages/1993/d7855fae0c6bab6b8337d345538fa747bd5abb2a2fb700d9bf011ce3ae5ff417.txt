@@ -1,0 +1,77 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Mon, 4 Jan 93 23:41:21 PST
+To: CYPHERPUNKS <CYPHERPUNKS@TOAD.COM>
+Subject: Re: Remail addresses...
+Message-ID: <930105070855_74076.1041_DHJ43-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: edgar@spectrx.Saigon.COM (Edgar W. Swank)
+>
+>         Anon-To: <next destination>
+>         Encrypt-With: <some DES or IDEA key>
+> 
+> I'd like to point out that the "-ca" function of PGP could be used
+> to perform this function if Encrypt-With: specified a PGP pass-phrase
+> rather than a direct key.
+
+This sounds like a good idea.  The user would have to have some
+scripts to decrypt incoming anonymous-address messages using this
+pass phrase (or some sequence of pass phrases if more than one
+remailer was used for the anonymous address).
+
+> I'd also like to suggest that the message-
+> body to be encrypted require heading and trailing delimiters such as:
+>  
+> -----BEGIN MESSAGE BODY-----
+> -----END MESSAGE BODY-----
+>  
+> Note delimiters would not be part of message body and would not
+> be encrypted.
+
+These anonymous addresses do need a distinction between the "message
+address" (or "envelope") and the message body.  The anonymous address
+gets decrypted at each step, and the message body gets encrypted
+at each step using the scheme above.
+
+But Eric Hughes pointed out that we already have such a distinction
+in the RFC822 message headers vs body.  We should use that existing
+structure rather than try to create our own.  That means that anonymous
+addresses should be designed to fit into mail headers.  Unfortunately
+many mail agents make this difficult or inconvenient right now, but
+perhaps that is an area where we could make some improvements.
+
+In this model, we would not need message body delimiters, since mail
+already has its message body delimited distinct from its headers.
+
+If we do process the message body with encryption at each stage,
+I do have an idea which could be useful.  If the body which is
+being encrypted is already in the format of an ASCII-encoded message
+using the standard RFC822 encryption used in PGP, RIPEM and PEM,
+then rather than just encrypting it it could be de-ASCII'd, then
+encrypted, then re-ASCII'd.  This would keep it from increasing
+in size by a factor of 4/3 at each encryption step.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK0kHvKgTA69YIUw3AQHBuwP/ekp1feh06tLHwxws49DE3wVxnu/36Yg7
+oW2l43n3llgRJC+r/KYJ2+5LTG0/f1Ib/R8c4qxUJzZeCj7zABSdJ6KSwIlwmfP6
+Djz0vOBnife6CvhQRi+T/8NuFqFIzlxO1vK+7tG9KWshxP+7AMayGOLuY0pOTREX
+7brcJHnn7Mg=
+=9Uss
+-----END PGP SIGNATURE-----
+
+
+Distribution:
+  CYPHERPUNKS >INTERNET:CYPHERPUNKS@TOAD.COM
+
+
+
+
+

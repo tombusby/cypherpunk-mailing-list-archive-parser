@@ -1,0 +1,41 @@
+From: Jyri Poldre <jp@pitsa.pld.ttu.ee>
+Date: Sat, 26 Nov 94 07:14:54 PST
+To: Chris Wedgwood <cwedgwood@cybernet.co.nz>
+Subject: JPR1: PC MSDOS hardware key
+In-Reply-To: <m0rBMUl-000SgAC@mserve>
+Message-ID: <Pine.3.07.9411261643.A5759-b100000@pitsa.pld.ttu.ee>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Extensive control of program flow might be very difficult to program and
+> quite cumbersome.
+exactly. But to my mind this is the big point. (Although i am very often
+wrong) It seems to me, that the problem lies in the function of HW key in
+program. If it is used in "check the existance" way then you can easily
+remove the checks from binary code. And it does not matter what is the
+essence of checking- You will always have 
+CMP KNOWN_DATA, HW_KEY RESPONSE. 
+that makes me sad. If you are planning to use RND generator then here is
+the weak point- it only takes some time to locate it (even physical one )
+and in case of everybody-reads-everything-and-writes-too situation you
+could feed this program what uses HW signatures with known data. And the
+program will never know the difference.    
+> Another thing - how practical is this hardware? If it is implemented on a 
+> micro-controller then it can be disassembled is the code inferred via other
+
+OH, I have not given it a really good thought. ucontroller seems to work
+fine - since for obvious reasons you cannot put there 2^32 bits of
+ROM. I have used MC68HC705 with printer ports.  But of cource you must
+concider the time it takes and breaks.( And maybe it is better to use some
+Unix system to begin with where root must be the 'responsible one'  with
+license servers.)    
+
+JP.
+
+
+
+
+
+
+

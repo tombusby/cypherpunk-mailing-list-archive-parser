@@ -1,0 +1,62 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Tue, 2 Mar 93 23:01:06 PST
+To: CYPHERPUNKS <CYPHERPUNKS@toad.com>
+Subject: REMAIL: Usage stats.
+Message-ID: <930303065109_74076.1041_DHJ45-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I got mail from a remailer operator asking how he could keep some
+information about how much his remailer was being used without keeping
+logs of the messages.  This seemed like a good feature so I have added
+it to my maildelivery file.  This is how it looks now:
+
+#
+# field                 pattern action/ string 
+#                               result  (quote included spaces)
+#
+Request-Remailing-To    ""      pipe R  "date >> LOG.REMAIL"
+Request-Remailing-To    ""      pipe A  remail.pl
+Anon-To		        ""      pipe R  "date >> LOG.REMAIL"
+Anon-To			""	pipe A  remail.pl
+Encrypted               PGP     pipe R  "date >> LOG.ENCRYPTED"
+Encrypted               PGP     pipe A  pgpmail.pl
+*                       ""      pipe ?  recurse.pl
+
+The lines which say "date >> LOG.XXX" will append one line to the
+LOG.* file each time a remailing or decryption is done.  That line
+will tell when it is done.  No other information is kept to allow
+reconstruction of who sent the message or what it was.  You can use
+"wc" to count how many lines are in the files, archive and/or delete
+them periodically, or do whatever you like.
+
+A couple of notes: When you have more than one line that matches a
+particular field/pattern (defined in the first two columns), use the
+letter R for the result code for the first ones, and A for the last.
+
+Also, be SURE you put quotes around the command string if it is more
+than one word.  Otherwise ALL of your mail will DISAPPEAR!  (I need to
+do a little work on the slocal.pl script to make it more robust about
+this. :-)
+
+If you're using slocal rather than slocal.pl this should still work.
+
+Hal Finney
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK5Qqe6gTA69YIUw3AQEYiAQArkTzGy4b2oFetX/AOzXjZ9Wpv8zlthCa
+rDs54X0mhw2fqe1zRt8VNw4X66qNwV1niyBMJV37IQsiCJVKXYI1ey3bRD5xNKGx
+FSZogubeoxIJFvKcVnLTe0l6bsRZpzSPRaePslXZsxb0t3ysDKKnzX0GJe0Zg8k0
++4d1mh8q5qQ=
+=+Bo3
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,50 @@
+From: Jay Prime Positive <jpp@markv.com>
+Date: Wed, 27 Jan 93 20:45:22 PST
+To: cypherpunks@toad.com
+Subject: thresholding to enhance secrecy
+Message-ID: <9301272043.aa08979@hermix.markv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+  Summary: You can improve the secrecy of weak cypher systems by using
+thresholding.  You can gain linear (or better) improvements for linear
+increase in the cyphertext size.  No claim for change in signature
+strength is made.
+
+  Thresholding is the name for a way of breaking up a peice of
+information into X peices so that Y <= X peices are needed to recover
+the information.  If even Y-1 peices recovered, you still have no idea
+what the original information is.  A simple thresholding system which
+requires 2 out of 2 peices to recover the original is to transform M
+into R and R+M where R is a random bit stream, and R+M is the same
+random bit stream xored with the message.
+
+  Concider the weak cypher systems S1, S2, S3...  where each has a
+probability of being 'broken' X1, X2, X3...  requireing the (expected)
+expense of E1, E2, ... EN effort.  Threshold your message P into N
+peices, P1, P2, P3, PN, such that all N are required to recover the
+message.  Send S1(P1), S2(P2), S3(P3)... SN(PN).  I belive that the
+probability of breaking this system should be (1-X1)*(1-X2)*(1-X3)*
+...*(1-XN) and that the effort to break it to be E1+E2+...EN (with a
+smaller deviation that the sum of the deviations of Ei).  This is only
+a linear increase in effort, but more than linear increase in the
+probability of secrecy.  (right?)
+
+  If people fear that PGP doesn't provide strong enough secrecy, we
+could switch to PGP^3, or even PGP^10.  And if people are going to
+compress their messages anyway, there doesn't seem to be any good
+reason NOT to switch to PGP^2.
+
+  There is probably a similar system which increases the strength of
+signatures too.  Any ideas?  (I suspect the naive aplication of
+thresholding here will DECREASE signature strength.)  How about a way
+to *exponentialy* increase the effort and probability?  Then it
+wouldn't matter much how weak our cyphers were!
+
+j'
+
+
+
+
+

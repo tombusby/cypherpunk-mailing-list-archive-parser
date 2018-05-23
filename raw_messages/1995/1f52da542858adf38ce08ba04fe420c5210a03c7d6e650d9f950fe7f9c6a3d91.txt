@@ -1,0 +1,99 @@
+From: todd@lgt.com (Todd Glassey)
+Date: Thu, 2 Nov 1995 00:42:28 +0800
+To: dan.schutzer@citibank.com
+Subject: Re: Please send cash
+Message-ID: <v02110102acbd48783387@[204.156.156.4]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> While HotJava prevents applets from actively opening connections that
+>> violate the user-selected security policy, it allows an applet to accept
+>> connections from anywhere.  At this point, an applet only has to use any one
+>> of a number of channels to communicate where it is, and have the remote end
+>> do the active open.
+>
+>What if I start a Java applet then send it a faked TCP/IP packet from another
+>host? Can I hotwire an outgoing connection that appears to be from the victim
+>host?
+>
+>TCP/IP connections are not really all that directed. It is only the startup
+>phase that is trully directed - someone has to start a conversation.
+>
+>Planned sequence of events :
+>
+>Mallet:
+>        Send out Java applet to Alice
+>        Send Bob a connection request packet on port 22
+>        Alice's Java applet is accepting connections.
+>        Send Alice a "request" packet claiming to come from port 22
+>        Should now have an outgoing connection.
+>
+>???? I'm not a TCP/IP hacker (much). I'll ask our guru tommorow after we
+>are done with the NSA.
+>
+>
+>                Phill
+
+
+For the most part this scenario would work. The Java Applett that is doing
+secure or authenticated work clearly must employ some form of embedded
+authenticatation.
+
+A cute trick we are employing in one applet under development here at LGT
+is an embedded stream based bi-directional encryption engine. It provides a
+direct mechanism to encrypt the data stream within the TCP datagram rather
+than outside of it. Since the datagram itself is untouched the simple
+interface that Java employs is unfettered. However this proces adds some
+performance overhead but allows for a virtual private network to be
+constructed directly from the server to the applet context.
+
+This project/concept will be released sometime in January along with some
+underpinnings to plug into the FSTC EPayment Handler and its Architecture
+along with the applett itself... Yes we will share it with the
+CypherPunks... It's the best way I know to get a public testing/err bashing
+and beta cycle on a concept.,
+
+We really are not trying to build a product in this effort, rather the
+intent  is to prove that although the general "external transport" is/may
+be unsecured, that the internal or upper layers do not necessarily suffer
+from the same security leakage or process models, and that secure
+transactions can successfully be layered upon these "existing"
+underpinnings if they are adapted properly.
+
+This is especially true with both HiJacking and Spoofing attack modalities.
+But in our model with the upper layers events are synchronized and
+validated such that there is little chance for these attack modalities to
+succeed.
+
+Again for the world to hear - The Java concept is a Transport Harness, not
+the entire magilla. Clearly that is what is going on here... Without thewse
+upper layers it is no safer than normal netscape or any other browser
+transport.
+
+Sincereley,
+
+Regards,
+
+T. S. Glassey
+Chief Technologist
+Looking Glass Technologies
+todd@lgt.com
+
+(415) 324-4318
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQB1AwUBMFu5E6gNRnWhagU5AQHI+gL+Mwpcd3lAWd8FF06qcG6rnLhIYveHW71a
+XC7xh1T0uu8qnYX31yMp17OG28jWpKUbWec1IM9/eXOi+gInA7rKICWczV8zo9Z0
+0puxjRRN7yO4KfRb3cPpk+r0p6pDg01Y
+=bTYb
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

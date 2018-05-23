@@ -1,0 +1,67 @@
+From: David Mazieres <mazieres@pa.dec.com>
+Date: Sat, 22 Jul 95 17:30:45 PDT
+To: cypherpunks@toad.com
+Subject: Re: Ssh "security hole": proposed fix
+Message-ID: <9507230027.AA10524@venus.pa.dec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Well, a while ago I suggested the following as simplified (and
+therefore easier to find bugs in) ssh protocol:
+
+> PREAMBLE:
+> 
+> (1)  A -> B: A
+> (2)  B -> A: Cb, PKsb, PKb
+> (3)  A -> B: {Kab}_PKsb, {A, B, Cb}_Kab
+> (4)  B -> A: {{A, B, Cb, Kab, PKsb}_SKb}_Kab
+> 
+> SSH_AUTH_RHOSTS:
+> 
+> (5)  A -> B:  0
+> 
+> SSH_AUTH_RHOSTS_RSA:
+> SSH_AUTH_RSA:
+> 
+> (5)  A -> B: {{A, B, Cb, Kab}_SKa, PKa}_Kab
+> 
+> SSH_AUTH_PASSWORD:
+> 
+> (5)  A -> B: {Ka}_Kab
+
+I was assuming that you would basically have to tolerate
+man-in-the-middle style attacks if A did not know PKb before the
+exchange.  However, I have since realized that it is easy to have
+one's public key in an NFS mounted home directory when talking to a
+host one has never talked to before.  Thus, B can know PKa even if A
+does not know PKb.  This is enough to prevent man in the middle
+attacks if we modify the protocol slightly:
+
+PREAMBLE:
+
+(1)  A -> B: A
+(2)  B -> A: Cb, PKsb, PKb
+(3)  A -> B: {Kab}_PKsb, {A, B, Cb}_Kab
+(4)  B -> A: {{A, B, Cb, Kab, PKsb}_SKb}_Kab
+
+SSH_AUTH_RHOSTS:
+SSH_AUTH_PASSWORD:
+
+(5)  A -> B:  0
+
+SSH_AUTH_RHOSTS_RSA:
+SSH_AUTH_RSA:
+
+(5)  A -> B: {{A, B, Cb, Kab, PKsb}_SKa, PKa}_Kab
+                              ^^^^
+IF AUTHENTICATION NOT SUFFICIENT:
+
+(6)  B -> A: {"Passwd:"}_Kab
+(7)  A -> B: {Ka}_Kab                           ; Ka is A's password
+
+David
+
+
+
+

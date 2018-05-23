@@ -1,0 +1,39 @@
+From: Robert Rothenburg Walking-Owl <rrothenb@ic.sunysb.edu>
+Date: Thu, 2 Feb 95 18:26:52 PST
+To: Nobody@eniac.ac.siue.edu
+Subject: Re: How much entropy in a key press?
+In-Reply-To: <199502021456.IAA01951@eniac.ac.siue.edu>
+Message-ID: <199502030226.VAA22341@libws2.ic.sunysb.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> Can anyone tell me how many bits of entropy there are per 7-bit ASCII
+> character.  More specifically, a program wishes to generate a session
+> key by prompting the user to type N random key presses.  The characters
+> entered are hashed down to 128 bits by MD5 for subsequent use as a key.
+
+Depends. You could use a fast timer and sample between keystrokes, then
+use the least significant byte of the difference like PGP does (for DOS,
+anyway).  You could change that so it samples bits instead of bytes,
+but it's conceivable that you'll have less randomness that way.
+
+I've experimented with speeding up the timer IRQs on my PC for that but
+found it was superficially less random (in a pool of 256 bytes there
+were more duplicates).
+
+> What should the value of N be, such that the entropy of the user's
+> string does not unnecessarily exceed the entropy of the hash?
+
+With a decent timerr that samples bytes, I'd say 16 keystrokes. Use
+a cypher overtha random data to garbe it a bit.
+
+Rob
+
+> 
+
+
+
+
+

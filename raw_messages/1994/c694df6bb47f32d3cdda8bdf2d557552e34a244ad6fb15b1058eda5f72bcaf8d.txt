@@ -1,0 +1,40 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Fri, 27 May 94 21:16:33 PDT
+To: cypherpunks@toad.com
+Subject: on detectability of PGP versions
+Message-ID: <9405280422.AA25479@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The issue has arisen of whether displaying some particular version
+number of PGP on the inside of messages or signatures implies that one
+is using that version number.
+
+How could it?  The format that one bit of public software makes can be
+duplicated by another.  If there are two bodies of code which produce
+the same output, an external observer can make no decision as to which
+one was used if the only evidence were one of format.  If, however,
+there were only one piece of code (say PGP 2.6), there would be a
+statistically valid judgement that a 2.6 version number indicated a
+2.6 use.
+
+Let's say we want to avoid that.  I'd suggest that a future derivation
+of the 2.3a code base or the as-yet-mythical 3.0 code base use the
+version number in the PGP formats (both binary and ascii) as format
+version numbers, and let the version numbers of PGP proper diverge.
+To make it really convenient, the config file might have a
+version_output flag which indicated what kind of message to generate.
+
+There's no good functionality reason why such a PGP shouldn't write
+post-Sept. 2.6 messages, 2.3 messages, 2.4 messages, even non-PKCS 2.2
+messages.  Ditto for reading and verifying all those kinds of
+messages.
+
+Could anybody really tell the difference?
+
+Eric
+
+
+
+

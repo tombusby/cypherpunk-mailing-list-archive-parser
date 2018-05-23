@@ -1,0 +1,89 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Thu, 27 Mar 1997 17:19:36 -0800 (PST)
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: junk mail analysis, part 2
+Message-ID: <Pine.SUN.3.96.970327170208.2629A-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Last time I gave the equilibrium for the junk mail game.  Now I will look
+at a modified game that allows the sender to include an ecash deposit with
+his email.  (Note that there is a slight change of notation from the game
+tree given last time.) 
+
+      A: Send mail?
+        /     \
+    no /       \ yes
+      /         \
+    (0,0)    A: Decide deposit d
+                |
+                |
+                |
+             B: Read mail?
+               /   \
+           no /     \ yes
+             /       \
+         (-d,d)   B: Accept offer?
+                    /  \
+                no /    \ yes
+                  /      \
+               (-d,d-c)  (s,r-c)
+
+Solution
+
+We again apply the method of backward induction.  In the last stage B
+accepts if r >= d.  Therefore in the next to last stage, B knows that if
+he reads, his expected payoff is P(r<d)*(d-c)  + P(r>=d)*E(r-c|r>=d). 
+However, in equilibrium it is not possible that P(r<d) > 0 since A is
+always better off by offering a deposit of 0 instead of any deposit
+greater than r. Therefore B reads if E(r|r>=d)-c >= d.  Now we come to A's
+deposit decision.  A knowns that if he offers any d such that r >= d and
+E(r|r>=d)-c >= d, B will read and accept.  A is indifferent between any
+such d, so he might as well offer the smallest such d if it exists.  If it
+doesn't exist, A offers d=0.  Finally A again always sends regardless of
+the parameters, since A can get a payoff of at least 0 by sending, and may
+do better if there is a small probability of B making a mistake.
+
+Conclusions
+
+We saw that if there exists a d such that r >= d and E(r|r>=d)-c >= d, A
+offers the least such d, and B reads and accepts.  Otherwise A offers d=0,
+and B does not read.  Interestingly, if E(r) > c, d=0 satisfies r >= d and
+E(r|r>=d)-c >= d, so we reach the same outcome as before.  However, if
+E(r) < c, the outcome of the new game represents a Pareto-improvement
+since for realistic distributions of (s,r)  it seems likely that for all
+sufficiently large r there exist d such that r >= d and E(r|r>=d)-c >= d,
+and for these values of r both the sender and the receiver do better than
+they did in the previous model.  Let's call the smallest such r t. 
+Unfortunately the outcome is still not Pareto-optimal if t > c. 
+
+This conclusion opens the question of whether a better solution exists.
+One possibility is the following (called the pre-payment solution).
+
+      A: Send mail?
+        /     \
+    no /       \ yes
+      /         \
+    (0,0)    A: Decide pre-payment p
+                |
+                |
+                |
+             B: Read mail?
+               /   \
+           no /     \ yes
+             /       \
+         (-p,p)   B: Accept offer?
+                    /  \
+                no /    \ yes
+                  /      \
+               (-p,p-c)  (s-p,r+p-c)
+
+If there is enough interest, I'll follow up with a comparison between the
+pre-payment solution and the deposit solution.
+
+
+
+
+
+

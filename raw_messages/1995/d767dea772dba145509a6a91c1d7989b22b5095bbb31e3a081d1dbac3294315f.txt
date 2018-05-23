@@ -1,0 +1,38 @@
+From: aba@dcs.exeter.ac.uk
+Date: Thu, 24 Aug 95 14:06:52 PDT
+To: jered@mit.edu
+Subject: BruteSSL: WTF? 0c2b-cf7a NOACK 0c2b 50000 Joe Thomas <jthomas@ogi.com>
+Message-ID: <13509.9508242106@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> It appears that Joe Thomas <jthomas@ogi.com> has more or less locked
+> (until things start getting reassigned) most of the keyspace.  Even
+> if he had a MasPar, it would still take him more than 2 days to
+> check this space.  
+
+Presumably it's just an error, never attribute to malice what can be
+explained by simple error (as the saying goes).
+
+> Does anyone know what the deal with this is?  A simple error?  A
+> malicious attack? (I think that the SKSP is far to insecure to be
+> effective....I could falsely ACK parts of the keyspace if I wanted
+> to be mean.)
+
+You could falsely ACK keyspace, but it's designed so that it would be
+hard to do this by accident, one of the nos is a checksum, which is
+trivial to calculate (for a malicious user who cared to read the
+source), but 1/65536 of getting it right by accident.
+
+It'll sort itself out tho', because the way Piete Brooks has written
+it, when keyspace reaches FFFF, it starts re-assigning the ones which
+aren't acked yet, so the 50000 keys will start getting assigned again.
+
+Adam
+
+
+
+
+

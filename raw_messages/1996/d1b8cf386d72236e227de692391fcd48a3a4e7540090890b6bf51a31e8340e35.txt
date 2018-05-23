@@ -1,0 +1,45 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Mon, 22 Jan 96 23:01:19 PST
+To: die@die.com
+Subject: Re: IPSEC == end of firewalls (was Re: (fwd) e$: PBS NewsHour, Path Dependency, IPSEC, Cyberdog, and the Melting of Mr.)
+In-Reply-To: <9601230342.AA04490@pig.die.com>
+Message-ID: <Pine.SOL.3.91.960122224319.8040C-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I tend to oscillate between the two positions; at the moment I think that 
+firewalls are still needed with IPSEC.
+
+Firewalls cannot be removed if
+
+	1) You need to control outbound as well as inbound traffic
+	2) There are still non IPSEC machines on the network.
+	3) There are network services on IPSEC machines that do not 
+	   understand IPSEC security, and which cannot be easily secured 
+	   through IPSEC aware wrappers.
+
+I can't see anyway to cope with the first problem- however the latter two 
+are legacy headaches, which tend to clear up given time.
+
+What I do see happening is more and more IPSEC machines moving out into
+a quasi-DMZ as it becomes much easier to make ordinary machines secure 
+enough to go over-the-top; however, it'll take more than just IPSEC to 
+make this fool-proof enough to move everybody out there.
+
+One worry I do have is that if such a machine is misconfigured it could 
+cause more damage as that machine is trusted more because it's using 
+IPSEC. 
+
+Simon
+
+
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

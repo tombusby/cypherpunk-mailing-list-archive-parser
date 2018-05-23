@@ -1,0 +1,34 @@
+From: Phil Karn <karn@qualcomm.com>
+Date: Thu, 23 Jun 94 14:20:06 PDT
+To: sommerfeld@orchard.medford.ma.us
+Subject: Re: Another Cellular Vict
+In-Reply-To: <199406221242.IAA00419@orchard.medford.ma.us>
+Message-ID: <199406232119.OAA16482@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Well, I'm not sure how well that would work...  The "dither" on the
+>RTT can't go negative (for obvious reasons :-) ).
+
+Sure it can. We're not talking RTT in the Internet sense.  In a spread
+spectrum system, deterministic pseudo-random sequences are used for
+the spreading codes; the receiver always knows the future of the sequence.
+
+We generate ours with conventional linear feedback shift
+registers. The mobile phone tracks the code phase of the cell site and
+slaves its own coded transmissions to that. All you'd have to do is to
+add a random time-varying phase to the tracking loop. That would cause
+the measured delay to be either greater than or less than the real
+value.
+
+There would be limits to how far you could vary the delay, but the
+tolerance at the cell has to be on the order of the cell radius for
+the system to work anyway.
+
+Phil
+
+
+
+
+

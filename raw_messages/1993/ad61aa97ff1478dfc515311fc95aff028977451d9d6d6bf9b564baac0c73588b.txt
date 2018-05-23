@@ -1,0 +1,56 @@
+From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+Date: Tue, 1 Jun 93 09:35:14 PDT
+To: ryan@rtfm.mlb.fl.us (RYAN Alan Porter)
+Subject: Re: Crypto anarchy in a VW? (not the bug)
+In-Reply-To: <Pine.3.03.9306010040.A26846-d100000@rtfm>
+Message-ID: <199306011712.AA08151@ccwf.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Ryan Alan Porter <ryan@rtfm.mlb.fl.us> writes:
+[...]
+> An aside:  has anyone dealt with the concept of on-the-fly encryption for
+> mass storage, kind of like the way the PCs can be 'stacked' or 'doubled'
+> or whatever with on-the-fly compression?  I was thinking about trying to
+> write some drivers for this for a 486 but I have never tried to write a
+> device driver before and was wondering if anyone might have any suggestions.
+
+Sort of.  I am still trying to work out a few design problems on a system
+such as this for unix hosts.  At the moment it looks like I will be doing
+this in linux but I still have a few issues to hammer out before I start
+coding. 
+
+>     1) these public key algorithms that we are working on are slow as
+> balls, any idea if this would be feasable, given how PC users like to
+> equate hard drive speed with penis size?
+
+The PKE stuff would only need to handle the key management, so this could
+conceivably be done in software.   The actual file encryption/decryption
+must be done in hardware if you want to have any sort of speed at all.
+This is actually the part I am still trying to figure out.  A research lab
+in Switzerland designed a chip to do IDEA rather quickly, but I have still
+not been able to get any information on how/when this might be marketed or
+available outside the research lab (although I might be able to get one for
+research purposes...)  Lacking an available IDEA chip I will have to use
+DES (multi-pass or some other variant to get around the limits on DES
+keyspace) in order to get the necessary throughput on the disk.
+
+>     2) it seems that having your private key hanging around somewhere in
+> memory the whole session would be horribly insecure, [...]
+
+This I why I am hoping to use linux.  For those who don't know what linux
+is, it is a fairly popular free unix for 386/486 intel machines.  With
+linux I can start by burying the private key in the kernel during runtime
+to give it some protection against snooping and hope to add a few kernel
+hacks to make it a little more secure against examination.  Linux provides
+a dos emulator for those who need PC programs and unix/x11/whatever for the
+rest of us...
+
+Such a system would not be completely secure but would provide some
+protection for files, which is more than they get now...
+
+jim
+
+
+

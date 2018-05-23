@@ -1,0 +1,49 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Tue, 10 Jan 95 08:44:22 PST
+To: cypherpunks@toad.com
+Subject: Re: Fwd: Re: netcom discussion in news.admin.misc
+In-Reply-To: <199501100351.TAA05721@ix3.ix.netcom.com>
+Message-ID: <199501101633.IAA07416@netcom19.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+johndix@ix.netcom.com (John Dix) writes:
+
+ > I've mentioned to Netnews that a good first step would be to
+ > make it harder to forge messages by changing the news
+ > software to no longer accept a user-supplied "Sender:" line
+ > in the article header, and he has agreed.  However, I fail
+ > to understand just *what* is taking so long to make this
+ > (much needed) change.
+
+The problem here is that the news transport mechanism is not
+particularly resistant to arbitrary text being posted by a user.
+Newsreaders can check for forged "From:" or "Sender:" lines, but
+newsreaders then call shell scripts like inews and injnews to
+process their material.  Users can call these scripts directly
+and bypass any checks by the newsreader.  None of this requires
+any special privs, and only the lowest level of the news
+transport mechanism, relaynews, requires set-user-id netnews to
+function.
+
+The latest version of Tin does check for forged "From:" lines,
+but the version Netcom runs allows anything to be posted.
+
+Fudging the lower levels of the news transport mechanism to check
+"From:" and "Sender:" lines can mess up other things, since
+processes may need to inject news into the news stream which they
+themselves did not author.
+
+One solution to the problem is to have a secure level of the news
+transport mechanism add an "Originator:" line to every message
+which it handles. This will identify users attempting forgeries,
+and will not require munging of an existing header line.
+
+-- 
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+

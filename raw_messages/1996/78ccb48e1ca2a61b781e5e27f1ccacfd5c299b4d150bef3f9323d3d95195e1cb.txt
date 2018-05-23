@@ -1,0 +1,115 @@
+From: "baldwin" <baldwin@RSA.COM (Robert W. Baldwin)>
+Date: Tue, 9 Jan 96 13:55:05 PST
+To: mark@unicorn.com
+Subject: Can you break my encryption protocol ? - improvements
+Message-ID: <9600098212.AA821224351@snail.rsa.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mark,
+        The protocol works well as long as you trust the ability of
+clients to generate random numbers and you are not too worried about 
+replay or message modification attacks.  If you are, then the session 
+key should be a function of random values chosen by both the client 
+and the server.  That way, a replay of the initial connection message 
+will not cause the server to use the same key.  
+        You may also want to add key verification in case the application
+does not already provide a simple way to tell if both parties are using 
+the same key.  For example, the client and server could exchange known 
+values encrypted under the session key before continuing.
+        Here's a protocol based on the ISO standards that has both
+dual key determination (both parties influence the key value and neither 
+can control the range of possible keys in any useful way), and dual
+key validation (both parties end up knowing they are talking to someone 
+who can compute the common key).
+
+Client computes:
+  Mc = unpredictable 128 bit value.  Serves as authenticator and
+       as a value that is unknown to the attacker.
+  Nc = H(Mc)  // Hash of Mc like MD5(Mc)
+
+C->S: C, S, Nc
+    The names or IP addresses of C & S are included to avoid various
+replay and reflection attacks.  Message integrity is done later.
+
+Server computes:
+  Ms = unpredictable 128 bit value.
+  Ns = H(Ms)
+  P = shared passphrase padded with zeros to multiple of 64 bytes
+      which is the block size of the hash function's compress operation.
+  K = H(P || H(P || C || Nc || S || Ns)) 
+  Vs = Enc(K, Ms)
+       The value Ms is unknown to the attacker, so this value does not
+       help with mounting a brute force key search.
+
+S->C: S, C, Ns, Vs
+
+Client computes:
+  P = shared passphrase padded with zeros to multiple of 64 bytes
+      which is the block size of the hash function's compress operation.
+  K = H(P || H(P || C || Nc || S || Ns)) 
+  X = Dec(K, Vs)
+  Test that H(X) = Ns, if not return error and close connection. 
+  Vc = Enc(K, Mc)
+
+C->S: C, S, Vc
+
+Server computes:
+  X = Dec(K, Vs)
+  Test that H(X) = Ns, if not return error and close connection.
+  
+All subsequent communication should be encrypted with K.
+
+                --Bob Baldwin
+
+
+
+______________________________ Forward Header __________________________________
+Subject: Can you break my encryption protocol ?
+Author:  ,"Mark Grant, M.A. (Oxon)" <mark@unicorn.com> at INTERNET 
+Date:    1/9/96 8:10 AM
+
+I'm trying to put together a simple protocol for encrypting confidential 
+but typically low-value data (i.e. I don't want people to be able to read 
+it, but in most cases it wouldn't be catastrophic if they could). I want 
+it to be completely license-free, so I can't use RSA or other patented 
+algorithms. It also would only be used inside one organisation, so key 
+management isn't so much of a problem, and the main attack it has to 
+defend against is packet-sniffing on the Net. It also has to support 
+variable-length keys for ITAR.. 
+
+The idea is as follows..
+
+
+Client and server both have copies of a passphrase, of any length.
+
+When starting the connection, client sends 128 random bits to the server.
+
+Both ends take this data, append the passphrase, and use MD5 to generate 
+a session key. If a key of less than 128 bits is required for legal 
+reasons, then the appropriate number of bits are retained, and the rest 
+replaced with bits from the random data that was sent in the clear.
+
+That is, if you're only allowed 40 bit security, you take the first 88 
+bits that you were sent, and append the last 40 bits of the generated key 
+to give you the session key to use.
+
+You then go off and encrypt the session (probably using 3DES or Blowfish). 
+
+
+Can anyone spot any flaws in this system ? The only potential problem I 
+can see would be that by cracking a number of sessions you could work out 
+the passphrase. However, I think the number required would still be 
+infeasible. 
+
+Also, are there any known problems with using Blowfish for encrypting a 
+data stream ? I'm assuming it's OK as it's used in PGPfone. 
+
+ Mark
+
+
+
+
+
+

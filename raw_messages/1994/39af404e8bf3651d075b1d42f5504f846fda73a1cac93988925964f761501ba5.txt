@@ -1,0 +1,48 @@
+From: Derek Upham <upham@cs.ubc.ca>
+Date: Sun, 10 Apr 94 18:16:13 PDT
+To: Cypherpunks mailing list <cypherpunks@toad.com>
+Subject: Re: Zero Knowledge, Hamiltonian Cycles, and Passwords
+Message-ID: <199404110115.AA23628@grolsch.cs.ubc.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> A potential use for such systems is for passwords--one can prove one
+> has the knowledge without actually producing it (by typing in a
+> password, for example). I don't know that anyone is actually
+> exploring this application, yet, but I expect it'll come.
+
+Look at "Strongbox: A System for Self-Securing Programs" by J. D.
+Tygar and B. S. Yee in the "CMU Computer Science 25th Anniversary
+Commemorative" proceedings (from 1991).  As the paper describes:
+
+    ``Strongbox uses an authentication protocol derived from Rabin's
+    observation about the square root operation: if one can extract
+    square roots modulo  n  where  n=p*q ,  p  and  q  primes, then
+    one can factor  n .  [That should be `if and only if', i.e.,
+    finding the square roots is too hard unless you created  n  in the
+    first place.]  Both our protocol and FFS are *zero-knowledge
+    authentication protocols_*  [. . .]  And in contrast to Needham
+    and Schroeder's authentication protocol, zero-knowledge
+    authentication protocols require no central authentication server
+    and thus there is no single point of failure that would cripple
+    the entire system.''
+
+In addition to zero-knowledge authentication, the paper provides an
+algorithm for the secure exchange of sessional symmetric encryption
+keys, and ways of combining authentication and key-exchange steps.
+
+I managed to get the key-exchange working some months back (in C++,
+using GMP to handle the number-crunching), but it was hampered by my
+incredibly slow 386 on one side and odd bugs in the Sun4 environment
+on the other.  Contact me if you want to hack around on it.  I also
+know where to find unreleased GMP 1.9 sources for some additional,
+probably more reliable, functions for calculating the Legendre symbol
+(which the whole system depends upon).
+
+Derek
+
+
+
+
+

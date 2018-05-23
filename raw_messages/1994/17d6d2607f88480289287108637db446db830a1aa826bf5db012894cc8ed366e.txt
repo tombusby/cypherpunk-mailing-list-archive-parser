@@ -1,0 +1,82 @@
+From: smb@research.att.com
+Date: Sat, 5 Feb 94 14:35:45 PST
+To: rcain@netcom.com (Robert Cain)
+Subject: Re: Some stuff about Diffie-Hellman (and more :-)
+Message-ID: <9402052233.AA04867@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 
+	 In the Diffie-Hellman exchange there is a well-known-prime, w, and a
+	 well-knwon-modulus, m.  For those interested that don't know I think
+	 it then proceeds as follows (don't have notes in front of me so please
+	 someone correct me if I'm misremembering it) where ** is the power or
+	 exponentiation operator and % is the modulus operator:
+
+	 	1) Bob generates a one time random prime, b, then computes
+	 		B = (w ** b) % m
+	 	   and sends B to Carol.
+
+	 	2) Carol generates a one time random prime, c, then computes
+	 		C = (w ** c) % m
+	 	   and sends C to Bob.
+
+	 	3) Bob generates a session key:
+	 		K = (B ** c) % m
+
+	 	4) Carol generates a session key:
+	 		K = (C ** b) % m
+
+	 Carol and Bob have the same K because:
+	 	K == (C ** b) % m == (B ** c) % m == (w ** (b * c)) % m
+
+	 >From just the knowledge of B and C a snoop cannot determine
+	 b from B, within computational reason (the root modulus being as
+	 difficult as factoring), nor c from C, and because K cannot be 
+	 determined from B and C without knowing b or c, she is screwed.
+
+Close, but not quite.  The modulus m should be primed for best results.
+Some folks have used a power of 2 for m, since that makes the modulus
+operation easier, but it also makes cracking it easier, for comparable
+sizes.  Next, the base w should be a primitive root of the group GF(m).
+
+More seriously, your equations are subtly wrong -- Bob and Carol can't
+do the calculations you've given.  Bob should calculate (C**b)%m -- he
+knows b and C, but doesn't know c.  Similarly, Carol calculates (B**c)%m.
+
+	 Now, the tutorial over :-), the question is; is there a "standard"
+	 well-known-prime, w, and a "standard" well-known-modulus, m, and if
+	 not, let's define one.  I suppose that PGP uses a well known pair but
+	 they are big and not easy to hand around without going through media (I
+	 think.)  When defined algorithmically they might be easier to actually
+	 incorporate in a program or a product than great big numbers.  If this
+	 has not been done, I propose a simply stated algorithm for finding a
+	 "standard" w and m that will allow interoperation among all future
+	 implementations of D-H as follows:
+
+(deleted)
+
+Two problems...  First, many attacks on the discrete log problem are
+based on massive precomputation for a known modulus.  That probably
+isn't an issue when you get to ~1K bits (*not* digits!).  Second, you
+need to specify things far more concretely, and in particular define
+the random number generation process.  You can't pick w till you know m.
+
+	 I've found a solution to this that is more than sufficiently secure in
+	 practice and even theoretically secure in most practical situations.
+
+Well, I'd certainly be interested in hearing about it...  There have
+been a number of mechanisms for preventing eavesdropping with DH;
+a lot depends on what assumptions you want to make.  My attempts --
+which involve the two parties sharing a weak (i.e., PIN- or password-grade
+secret) can be found in /dist/smb/{neke,aeke}.ps on research.att.com.
+There's also Rivest and Shamir's Interlock Protocol (April '84 CACM).
+Davies and Price suggest using it for authentication, but Mike Merritt
+and I showed that that doesn't work under certain circumstances.
+
+		--Steve Bellovin
+
+
+
+

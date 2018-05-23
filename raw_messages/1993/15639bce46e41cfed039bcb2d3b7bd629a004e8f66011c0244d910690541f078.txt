@@ -1,0 +1,39 @@
+From: freeman@MasPar.COM (Jay R. Freeman)
+Date: Tue, 5 Oct 93 13:55:02 PDT
+To: cypherpunks@toad.com
+Subject: Re: Need Suggestions for Random Numbers
+Message-ID: <9310052053.AA29645@cleo.MasPar.Com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> Also, can anyone recommend a statistical test for randomness, or
+> for detecting repeating patterns in a "random" file?
+
+  Try using consecutive calls to your random-number generator to
+generate two-dimensional coordinate pairs, and plot them.  That is,
+you do something like:
+
+     for( i = 0; i < LOTS; ++i ) {
+        x[i] = rand();
+        y[i] = rand();
+        }
+     for( i = 0; i < LOTS; ++i ) {
+        plot_point( x[i], y[i] );
+        }
+
+It's surprising how fast this will demolish many psuedorandom
+generators (and how good the eye is at pulling patterns out of plots).
+
+  And as far as nominal sources of "white" noise, be careful to avoid
+contamination from 60-cycle power-line noise and its harmonics.  Do
+a Fourier transform and look for peaks, for sure.
+
+  I'm sure that the pros know lots of tricks like this.
+
+                                 -- Jay "not a pro" Freeman
+
+
+
+

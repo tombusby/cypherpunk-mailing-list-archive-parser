@@ -1,0 +1,54 @@
+From: ghio@cmu.edu (Matthew Ghio)
+Date: Sun, 10 Jul 94 13:20:44 PDT
+Subject: Re: Remailer chaining helper program.
+Message-ID: <9407102018.AA14810@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+roy@sendai.cybrspc.mn.org (Roy M. Silvernail) wrote:
+
+> Was it here that I saw mention of a program to generate chained remailer
+> traffic automatically>  Pointers appreciated, and thanks!
+
+Well, I've had this file in my ftp dir for awhile...
+but I don't think anyone knew where to find it.  Since it's short, I hope
+nobody will flame me for posting this.
+
+It's a csh script...  I'm sure you can follow the general format and adapt
+it.  You may need to replace 'queuemail' with 'sendmail' in the last line,
+depending on your system.
+
+
+cd ~/pgp
+~/pgp/pgp -feat hfinney <~/private/anonmsg >~/pgp/remailers/temp
+echo "::" >~/pgp/remailers/message
+echo "Request-Remailing-To: hfinney@shell.portal.com" >>~/pgp/remailers/message
+echo "" >>~/pgp/remailers/message
+echo "::" >>~/pgp/remailers/message
+echo "Encrypted: PGP" >>~/pgp/remailers/message
+echo "" >>~/pgp/remailers/message
+cat ~/pgp/remailers/temp >>~/pgp/remailers/message
+rm ~/pgp/remailers/temp
+
+~/pgp/pgp -feat catalyst <~/pgp/remailers/message >~/pgp/remailers/temp
+echo "::" >~/pgp/remailers/message
+echo "Request-Remailing-To: catalyst@netcom.com" >>~/pgp/remailers/message
+echo "" >>~/pgp/remailers/message
+echo "::" >>~/pgp/remailers/message
+echo "Encrypted: PGP" >>~/pgp/remailers/message
+echo "" >>~/pgp/remailers/message
+cat ~/pgp/remailers/temp >>~/pgp/remailers/message
+rm ~/pgp/remailers/temp
+
+echo "To: remailer@chaos.bsu.edu" >~/pgp/remailers/outgoing
+echo "From: mg5n@andrew.cmu.edu" >>~/pgp/remailers/outgoing
+echo "" >>~/pgp/remailers/outgoing
+cat ~/pgp/remailers/message >>~/pgp/remailers/outgoing
+rm ~/pgp/remailers/message
+/usr/andrew/etc/queuemail -f ~/pgp/remailers/outgoing -a remailer@chaos.bsu.edu
+
+
+
+
+

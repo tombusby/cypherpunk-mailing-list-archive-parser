@@ -1,0 +1,48 @@
+From: Amir Herzberg <amir@watson.ibm.com>
+Date: Tue, 14 Nov 1995 03:32:33 +0800
+To: tcmay@got.net (Timothy C. May)
+Subject: Re: Timed-release crypto - Proactive security plug
+In-Reply-To: <v02120d01acc4eb3a6eb1@[199.0.65.105]>
+Message-ID: <9511131904.AA21605@gimili.watson.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+A small note/plug: the schemes by Tim and Michael are based on `long lived'
+secret sharing, i.e. you trust each share of your secret to a server for a
+really long time. Some people may be concerned that such a long time would
+allow an attacker to break into most servers and reconstruct the secret (key).
+
+A solution to this is proactive secret sharing, as described in [HJKY95].
+In this protocol, the secret shares are periodically refreshed (i.e. new
+shares are computed distributively and then the old shares are erased).
+In this manner, an attacker has to break into most servers during the same
+period; shares from one period are worthless on the next period.
+
+Best, Amir
+
+[HJKY95] `Proactive Secret Sharing', A. Herzberg, H. Krawczyk, S. Jareski,
+M. Yung, Crypto 95.
+
+> At 12:09 AM 11/7/95, Michael Shields wrote:
+>
+> >In the May proposal, when you have a message to be encrypted, you
+> >encrypt it with a session key, optionally split that key with an n-of-m
+> >scheme, and then send the key into a network of escrow agents, which are
+> >instructed to hold the message for a given period of time.  You then
+> >hold onto the encrypted message, though you need not keep it secret.
+> >Conceptually, you have encrypted a message and then remailed the key to
+> >yourself in such a way that it will take X length of time to arrive.
+>
+
+> --Tim May
+>
+> Views here are not the views of my Internet Service Provider or Government.
+
+How do you know that?   :-)
+
+
+
+
+

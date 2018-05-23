@@ -1,0 +1,56 @@
+From: Anonymous <nobody@remailer.ch>
+Date: Mon, 21 Sep 1998 21:08:56 +0800
+To: cypherpunks@Algebra.COM
+Subject: Re: Stego-empty hard drives... (fwd)
+Message-ID: <19980922021542.29546.qmail@hades.rpini.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Mon, 21 Sep 1998, Jim Choate wrote:
+
+> 
+> Forwarded message:
+> 
+> > Date: Tue, 22 Sep 1998 00:46:03 +0000
+> > From: Michael Hohensee <mah248@is9.nyu.edu>
+> > Subject: Re: Stego-empty hard drives... (fwd)
+> 
+> > I believe that the idea was to set it up so that BIOS defaults to
+> > HD-hiding mode.
+> 
+> How do you propose to do this? Via a BIOS setting?
+
+By default. The machine boots. It is either told to accept a passphrase or
+is told nothing. If the latter, it boots normally, only with its HD-hiding
+code. If the former, it prompts, accepts a passphrase, and then boots
+normally, only with the HD-hiding code disabled.
+
+What I think you're asking is how the actual cryptography would be done. I
+wouldn't want to stick crypto code in the BIOS, or at least not the code
+which will be used all the time. 
+
+I think a better way to do this is to have the BIOS boot up in HD-hiding
+mode all the time, and require user-mode software to disable HD-hiding
+mode and then deal with the cryptography.
+
+> 
+> > When you're taking your laptop through customs, you do
+> > nothing while the machine boots up, the doctored BIOS does its thing,
+> > and everybody's happy.  When you want to get at the stuff on the rest of
+> > the HD, you reboot and type in your passphrase.
+> 
+> How do you propose to prompt the user for the correct time to type?
+
+You don't, at least not at first. If you hold down maybe the left and
+right shift keys, in combination with the left alt key while pressing the
+"R" key, it prompts "BIOS: ". You type your passphrase in. LILO (the LInux
+LOader) does this if you depress a shift key during boot. Obviously with
+LILO it's to specify kernel parameters, what OS to boot into, and things
+like that.
+
+
+
+
+

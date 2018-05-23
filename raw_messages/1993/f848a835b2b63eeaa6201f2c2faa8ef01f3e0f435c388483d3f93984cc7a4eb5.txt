@@ -1,0 +1,49 @@
+From: tribble@xanadu.com (E. Dean Tribble)
+Date: Sat, 2 Jan 93 19:57:51 PST
+To: cypherpunks@toad.com
+Subject: remailer architecture (and signatures)
+Message-ID: <9301030327.AA13331@xanadu.xanadu.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+First a brief description of the new (read not-yet-available) remailer
+architecture, then what's this means to signatures, etc.
+
+The new remailer design comes from the realization that mail systems
+are missing configurability on both sides of message delivery:  when
+you receive mail, and when you send it.  Most of the 'remailer' is
+just the infrastructure to allow programmatic modification to messages
+in those two phases of delivery.  With this infrastructure, remailers
+are trivial to construct.
+
+There will be an Incoming Mail Rewriting Agent (IMRA) and on Outgoing
+Mail Rewriting Agent.  The behavior of these agents is specified by
+production/rewrite rules (match a pattern and take corresponding
+action, possibly recurring) on the mail message they are processing.
+
+The incoming agent is much like the existing framework for remailers.
+It is invoked through .forward and handles mail before it gets to yout
+mailbox.  The outgoing agent is invoked when you send mail to do any
+rewriting necessary then (such as encryption, signture, etc.).
+
+Note that .signature handling is a grody hack in existing mail systems
+that directly implements a rather uninteresting piece of outgoing mail
+rewriting (I had fun writing that :-).  It should just be junked for
+the more general scheme, which can support real crypto signatures (and
+.sig files, of course) for pseudonyms, outgoing encryption, automatic
+remailer routing (a header: 'Hops: 3' that would route the mail
+through 3 remailers to the eventual destination), etc.
+
+It of course won't be junked immediately, but the default behavior of
+remailers should certainly not be to strip anything that looks like
+sigs.  Can we guarantee that all the tools that produce ascii
+encodings like uuencode will never produce the trivial pattern that
+the remailers thinks means 'signature.'  For example, hypertalk
+comments start with '--', just like signatures.
+
+
+
+
+
+

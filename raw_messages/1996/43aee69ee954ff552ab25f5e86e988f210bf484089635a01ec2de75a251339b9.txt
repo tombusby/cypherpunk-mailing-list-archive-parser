@@ -1,0 +1,30 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 6 Apr 1996 19:12:05 +0800
+To: Eric Eden <erice@internic.net>
+Subject: Re: Using crypt()
+Message-ID: <199604060645.WAA20225@dfw-ix10.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:47 PM 4/4/96 -0400, Eric Eden <erice@internic.net> wrote:
+>I'm testing a encryption program that includes use of crypt().  
+Out of curiousity, why use crypt() instead of, say, MD5, which is
+stronger and allows arbitrarily long passphrase input?  You could 
+add a crypt()-like salt to it as well, if that helps.
+And just as crypt() lets you distinguish between input and output
+based on length and character set, if you use MD5, you know the
+output is 128 bits, rendered either as raw bits or 32 hexes
+depending on your program environment.
+
+With crypt(), for users who don't remember their passwords, you can
+run crack to try and recover them.  This doesn't work, of course,
+if your stored "encrypted password" is really an unencrypted
+non-13-byte string which wouldn't ever be the output of crypt().
+MD5, on the other hand, allows enough passphrase space that a brute force
+search would take much longer.
+
+
+
+
+

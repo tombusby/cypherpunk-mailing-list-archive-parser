@@ -1,0 +1,69 @@
+From: jim bell <jimbell@pacifier.com>
+Date: Tue, 23 Jul 1996 20:32:01 +0800
+To: cypherpunks@toad.com
+Subject: Re: Brute Force DES
+Message-ID: <199607230741.AAA15203@mail.pacifier.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 04:55 PM 7/22/96 -6, Peter Trei wrote:
+>Single DES has the security of 56 bits of key - there are 64 bits in the
+>keys, but 8 of them are parity bits which add nothing to security.
+>2^56  = 7.205e16 keys (which is a whopping big number)
+>Let's guess that we can recruit the equivalent of full-time on 1000
+>machines.
+>7.205e13 keys/machine.
+>Let's guess that we have about a month before people start to lose 
+>interest - so we want to be more than 1/2 done by then. Lets say
+>we want to sweep the whole space in 40 days.
+>
+>1.8e12 keys/machine/day 
+>
+>~21,000,000 keys/machine/second
+>
+>The fastest general purpose, freely available des implementation I'm
+>aware of is libdes. by Eric Young. With this, I can do a set_key in 
+>15.8 us, and an ecb_encrypt in 95 us/block. That adds up to 
+>about 9,000 keytests/sec (this is on a 90 MHz P5, running NT).
+
+For grins, I decided to look at some old Intel data books; I had recalled 
+that they build a DES encrypt/decrypt chip.  It was the 8294A, which could 
+do 400,000 bytes per second, or 50,000 blocks per second.   That's fairly 
+good for 1983 technology.   Since the clock rate of the typical 
+microprocessor of the day was a 6-MHz 80286, and today's rate pushes 200 
+MHz, I think it's fair to conclude that a similarly state-of-the-art DES 
+chip should be similarly improved, about a factor of 30, or about 1.5 
+million blocks per second.  That's somewhat less than 2000 system-years of 
+operation.
+
+(In practice, a cracker might be even more improved:  The 8294A used an 
+8-bit I/O bus, which probably limited the rate at which encrypts could be 
+done:  400,000 bytes per second means 400,000 writes, and 400,000 reads per 
+second, or 1.25 microseconds per I/O byte throughput.  This is sufficiently 
+close to state-of-the-art for 1983 that I speculate the internal encryption 
+rate might be substantially faster.  And remember that a dedicated cracker 
+doesn't need to I/O very much:  Comparing with a previously-stored template 
+requires no I/O, unless the compare is good, and that will rarely happen.)
+
+Not that I think that such a dedicated chip necessarily exists; chances are 
+good that there isn't all that much demand for a 12-megabyte/second 
+encryptor.  However, appropriately-fast DSP chips tend to be at the cutting 
+edge for wide-word operations, so I'll guess that the best way to 
+implement DES today (absent a dedicated chip)  would be on a DSP.   It would 
+also be the cheapest, because DSP's are built in huge numbers for other 
+applications.  
+
+What this shows you is that there is a vast difference between doing a task 
+on a fairly optized platform, and a general-purpose computer.  This _also_ 
+shows you why the government is being highly dishonest by quoting the 
+difficulty in cracking ciphers on scalar machines, rather than 
+more-dedicated vector units.
+
+
+Jim Bell
+jimbell@pacifier.com
+
+
+
+

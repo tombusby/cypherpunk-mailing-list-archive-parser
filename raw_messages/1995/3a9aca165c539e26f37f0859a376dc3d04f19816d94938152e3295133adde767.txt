@@ -1,0 +1,70 @@
+From: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Date: Mon, 4 Sep 95 16:14:32 PDT
+To: cypherpunks@toad.com
+Subject: Re: Emergency File Wipe Algorithim
+In-Reply-To: <Pine.SUN.3.91.950904184522.20203A-100000@access5.digex.net>
+Message-ID: <199509042314.QAA18360@Csli.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Someone proposed that one could wipe the memory before power-down, for
+example during 1 second or something like that. Unfortunately, that
+wont help, unless I misread the paper. It is effectively the same as
+if the key had been stored in the cell for 1 second less, nothing else.
+
+The only way I can see how to avoid generating "imprints" of more or
+less static data is to make them non-static. Start circulating them
+around.
+
+One way that springs to mind for keys are to do something like
+inverting the meaning of the key every x milliseconds. Like this; 
+
+     /* pseudo code */
+     char master_key[KEYSIZE];
+     int  meaning = ZEROS;
+
+     void encryption(char *input, char *output); /* implicit master_key */
+     int using_key = FALSE;
+
+     main() {
+       input_from_keyboard(master_key);
+       timer(100 ms, flipem()); /* calls flipem every 20 ms */
+
+       main_loop(); /* occansionally using encryption() */
+     }
+
+     void flipem() {
+
+       if (using_key) /* risk of never being able to flipem() */
+         return;
+   
+       /* some kind of semaphored section */
+       using_key = TRUE;
+       master_key = inverse(master_key);
+       meaning = (!meaning);
+       using_key = FALSE;
+
+     }
+
+     void encryption(char *input, char *output) {
+
+      char real_key[KEYSIZE]; /* must be on stack */
+
+      copy_key(real_key, master_key);
+      if (meaning == ONES)
+        invert(real_key);           /* recovering real content */
+      encrypt(input, output, real_key);
+
+      write_random_key(real_key); /* so "real" key doesn't become 
+                                     imprinted as well. */
+     }
+
+Do don't care about the plaintext in the above. Nor stack content vrey
+much. Nor about coding style.
+
+
+
+
+

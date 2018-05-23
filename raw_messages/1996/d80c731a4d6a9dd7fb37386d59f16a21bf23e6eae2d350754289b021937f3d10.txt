@@ -1,0 +1,60 @@
+From: "geeman@best.com" <geeman@best.com>
+Date: Thu, 19 Sep 1996 04:53:26 +0800
+To: "'paul@fatmans.demon.co.uk>
+Subject: RE: Redundancy in XOR encryption
+Message-ID: <01BBA53A.2B7FC2A0@geeman.vip.best.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+in any practical or semi-practical application, you'll have to have a way to decompress the 
+perfectly compressed data.  A dictionary?  A Huffman-tree-ish sort of thing?  Are you going
+to transfer it out-of-band?  **It** becomes the target of interest.
+
+
+----------
+From: 	paul@fatmans.demon.co.uk[SMTP:paul@fatmans.demon.co.uk]
+Sent: 	Tuesday, September 17, 1996 12:33 PM
+To: 	cypherpunks@toad.com
+Subject: 	Re: Redundancy in XOR encryption
+
+> > 
+> > Compress P to get perfect compression (ie. 0 redundancy)
+> > Encrypt F (the compressed text) using a repeated key XOR
+> > 
+> > of course this is all rather theoretical as there is no such thing as
+> > perfect compression, but I just thought it might be interesting to
+> > see if this is indeed strong, superficially it appears so to me...
+> > 
+> 
+> Paul:
+>    I think that if the cryptanalyst knows that F has zero redundancy
+> that he can run searches from 0 to n bits for the key and have
+> the computer flag solutions that have zero redundancy.  
+
+I never though of that.
+ 
+>    I also think that a perfectly compressed file would have a relative
+> entropy value close to one also, hence the computer could flag possibles 
+> that have both characteristics.
+
+yeah, these two are reasonably unlikely to occur together (only a 
+reasoned guess, anyone got any comments on this?)
+so we really have a weakish system.
+ 
+>    Hence, instead of searching for plaintext by counting coincidences,
+> we are searching the decrypts for solutions that have zero redundancy
+> and a relative entropy value close to one.  How many solutions will
+> have both these qualities?  I don't know.  But if the compression method 
+> is known, brute force will be tried, and only having to try to 
+> decompress (read) data that has the resultant characteristics
+> of compressed information will speed things up by quite a bit.
+
+Yeah, this is still a form of brute force but I was thinking of this 
+in terms of a smallish (sub 200 bit) key, so brute force against 
+solutions with 0 entropy is a realistic possibility.
+
+
+
+
+

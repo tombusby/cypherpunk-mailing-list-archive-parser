@@ -1,0 +1,106 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 9 Oct 1998 04:36:48 +0800
+To: fod@brd.ie
+Subject: HTTPS:// hyperlink spoofing (Re: propose: `cypherpunks license')
+In-Reply-To: <361CE49F.C858A2CE@brd.ie>
+Message-ID: <199810081956.UAA14156@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Frank O'Dwyer writes:
+> In fact, it's funny that you tout a "secure web server" as "strong
+> crypto" since in that context SSL is usually vulnerable to being
+> end-run by web spoofing. Oops. Oh well, it uses strong crypto, so it
+> must be good.
+
+As to your web spoofing comments, (which I just read, see:
+
+	http://www.brd.ie/papers/sslpaper/sslpaper.html
+
+) this is a specific instance of the mapping problem, ie. how do you
+know that the web page you ended up at belongs to the company you
+heard about, or found by a web search or hypertext link on someones
+page.  The hierarchical CA model says that you believe it is so
+because the CA tells you it is so.
+
+(Franks comment on the (in)security of following an unsecured
+hypertext link was that the unsecured hypertext reference could be
+modified in an active attack to point to their own (secured) page, and
+then accept your payment instead of the company you intended to buy
+from).
+
+Netscape 4 behaves in the following way, depending on the situation.
+
+1) the site is using a cert signed by a CA the browser does not
+recognise
+
+In this case it shows you through a nice series of dialog box (in
+microsofts wizard style), which is quite useful in explaining the
+issues.
+
+2) the site is using a cert signed by a CA the browser does recognise
+
+In this case the browser does one of two things depending on whether
+you are currently viewing a secure page, or not:
+
+a) from insecure page shows dialog box telling you you are visiting a
+secured page, and to click security for more info (clicking security
+will show you the cert content, company name, CA details).
+
+b) from secure page shows _nothing_, just goes right into the page
+without further comment!  (default setup, freshly installed netscape
+4.04 / linux).
+
+(I tried this going from c2net, then typing in cypherpunks.to (Lucky's
+site)), if you do click on security button you then get the cert info
+again.
+
+  www.cypherpunks.to
+  Cypherpunks Jihad
+  Cypherpunks Tonga
+  Cyberspace, none, TO
+
+Part b) I view as a problem because it doesn't even by default show
+you anything.  They could at least present the click through.  They
+seem to be treating the secure / insecure as a binary state.
+
+Could someone verify this in later revisions of netscape?
+
+The basic problem though is that even if you do the `nagging dialog
+box' click throughs with option to disable, chances are most people
+will disable them, because they will get annoyed.
+
+The simplest way to reduce this risk would be for a company to secure
+all of it's web pages.  But this isn't going to do that much, because
+people often don't know the web page URL.  (Frank notes all this).
+
+Also spoofed company names which look similar to companies in real
+life also are possible, for example there was a case of a BT Telekom
+or something trying to spoof customers into parting with their money.
+This is a problem with gullible consumers.
+
+But if people started from print media advertisement, and typed in the
+URL and the URL was signed by a CA then they are at least as secure as
+the non-net situation.
+
+In general though, I think there is a solution to this problem:
+encrypt all the pages.
+
+The other hard problem is now that you know you are visiting the web
+page of FooBar Inc, as attested by Thawte (or whoever), how do you
+know that FooBar won't take your money and run.  This is a general
+reputation question, with the normal solutions.  If it's an expensive
+item, you perhaps check them out, ask around for others experiences,
+check with any reputation ratings services (trade groups, etc).
+
+Adam
+-- 
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

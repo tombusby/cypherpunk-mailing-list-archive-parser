@@ -1,0 +1,71 @@
+From: "Andrew Roos" <ANDREWR@real3.realtime.co.za>
+Date: Tue, 18 Jul 95 18:39:57 PDT
+To: Phil Fraering        <pgf@tyrell.net>
+Subject: Re: Here it is; bi-directional dining cryptographers
+Message-ID: <C189311569@real3.realtime.co.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Phil Fraering  <pgf@tyrell.net> observes:
+
+> If Alice and Bob are members of a reasonably non-compromised and
+> free of colluders dining-cryptographers network, with a protocol for
+> reserving blocks for the transmission of data packets, then if they
+> both send a data packet in the same block, they can each read what
+> the other is saying but to the rest of the DC-net it is garbled.
+> 
+> Since what is broadcast is the XOR of Alice's and Bob's data, Alice can
+> read Bob's data by XOR'ing the output of the DC-net with her attempted
+> input; Bob can recover her data the same way.
+>
+> Comments?
+
+I haven't been following the DC thread so forgive me if I've missed 
+something... 
+
+If the objective is to keep what Alice and Bob say SECRET then we 
+have a problem if the entropy per bit of Alice's data plus the 
+entropy per bit of Bob's data is less than one bit, because then 
+there is only one likely decryption of the "ciphertext", which will 
+reveal what both Alice and Bob are saying.
+
+The system is analegous to a variation on the old Vigenere/Beaufort 
+cipher where instead of using a single repeated keyword to generate 
+to encryption stream, you use another "plaintext" message such as a 
+passage from a book which is known to both correspondents. (Here the 
+addition is done mod 26 instead of mod 2).
+
+Since the entropy of natural language is 1-1.5 bits/char, the entropy of two 
+natural language texts added together is 2-3 bits per char, while the 
+no of ciphertext bits is about 5 bits per char, so there remains 2-3 
+bits per char of redundancy in the text, which can (quite easily) be 
+used to break the system even on a ciphertext-only basis.
+
+One way to do this is to search for "probable words" of one side of 
+the conversation, then see what the other text would have to have 
+been to generate the known ciphertext, and if this other text makes 
+sense then bingo, we have an initial break, and you can usually 
+extend this quite easily by extending one text, then seing what this 
+gives for the other, extending that, and so on.
+
+> (At the very least, it doubles the bandwidth for the two participants...)
+I have to agree here, though!
+
+Andrew
+___________________________________________________________________________
+
+#!/usr/local/bin/perl -s-- -export-a-crypto-system-sig -RSA-in-3-lines-PERL
+($k,$n)=@ARGV;$m=unpack(H.$w,$m."\0"x$w),$_=`echo "16do$w 2+4Oi0$d*-^1[d2%
+Sa2/d0<X+d*La1=z\U$n%0]SX$k"[$m*]\EszlXx++p|dc`,s/^.|\W//g,print pack('H*'
+,$_)while read(STDIN,$m,($w=2*$d-1+length($n||die"$0 [-d] k n\n")&~1)/2)
+
+Andrew Roos                                                 Realtime
+                                                            PO Box 15170
+                                                            Vlaeburg 8018
+Phone: +27-21-244350                                        Cape Town                                             Cape Town
+Fax:   +27-21-221507                                        South Africa
+
+
+
+

@@ -1,0 +1,71 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 31 Jan 1996 17:13:00 +0800
+To: "Michael E. Carboy" <carboy@hooked.net>
+Subject: Re: PGP Shell Integrity
+Message-ID: <199601310852.AAA04391@ix10.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:13 PM 1/29/96 -0800, you wrote:
+
+>Firstly, if this is viewed as "Noise" rather than "Signal", please accept
+my apologies.
+Looks like a real technical discussion instead of a flame - obviously the
+wrong list :-)
+
+>The matter at hand concerns my concern over my inability to check the
+> "integrity" of a PGP windoze shell written by Michael R. Lyman at Aegis
+Research Corp.
+>
+>I worry that since the shell has access to my secret ring that it might
+> be sending it somewhere without my knowledge.  
+I don't know that package, but most of them act as wrappers around
+DOS PGP rather than filtering keystrokes or doing PGP internals.
+
+There are several risks - getting your secret ring, getting your passphrase,
+getting the RSA parameters without the passphrase itself.
+Obviously, having your secret key ring file leak is not good,
+but the fun parts _are_ IDEA-encrypted using your passphrases,
+so it's not too much of a risk.  Having the passphrase or the
+raw keys stolen would obviously be worse.
+
+DOS/Windows is _not_ a secure operating system, if you believe
+that there's more than one person in the universe.  (DOS doesn't
+believe that, so in some sense it's perfectly secure. :-)
+Nathaniel Borenstein's recent postings are a good reminder that
+keystrokes can be stolen, easily, in that environment.
+
+>The freeware was, according
+> to Mr.Lyman, developed "Project Manager, Forward Air Missile Defense,
+> United States Army Missile Command".  That gvt. affiliation gives me
+> considerable pause as regards back doors and other ways my secret ring
+> and pass phrase could be compromised.
+>
+>Does anyone have any familiarity with this freeware?  I do not think
+> I am being paranoid.. just careful.  Lastly, if I am not a programmer,
+> what sort of inspection can I perform on the software to make sure it is
+not "bugged"?
+
+Without source code, if you're not a programmer, the things to look for are
+circumstantial evidence - is the copy of the program you got off the server
+PGP-signed by the purported author?  Or by any programmers you trust?
+That doesn't tell you the program is trustable, but it does tell you if
+it's a fake replacing the real thing.  Is the real thing trustable?
+(Well, probably...)
+
+There's also the problem of leaking your key back to the Bad Guys,
+but that's easy - the program could leak it out in your PGP messages
+(either obviously, as a second recipient, or in subtle nasty ways
+like playing with the system clock on timestamps.)
+
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, Pager/Voicemail 1-408-787-1281
+# http://www.idiom.com/~wcs
+
+
+
+
+

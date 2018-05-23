@@ -1,0 +1,36 @@
+From: nospam-seesignature@ceddec.com
+Date: Fri, 15 Aug 1997 05:12:19 +0800
+To: Ray Arachelian <sunder@brainlink.com>
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <Pine.SUN.3.96.970813170421.7599R-100000@beast.brainlink.com>
+Message-ID: <97Aug14.165930edt.32260@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, 13 Aug 1997, Ray Arachelian wrote:
+
+> On Wed, 13 Aug 1997, Bill Stewart wrote:
+> 
+> > The actual data is encrypted with IDEA, but the identical IDEA key is 
+> > encrypted with each recipient's RSA key.  To avoid this attack,
+> > PGP uses random padding after the IDEA key (which makes the message
+> > encrypted with RSA different for each recipient, avoiding the trap.
+> > Since IDEA keys are 128 bits long, and RSA moduli are typically 384-2047,
+> > there's plenty of room for random noise in the format.)
+> 
+> Would it not be more secure if it picked a different IDEA session key for
+> each recipient?  Would be slower, but...
+
+If there were random padding, I don't think it would increase the
+security.  PGP uses one conventional key and multiple PK encryptions of
+it, with different padding (I think).  Then you only have one message to
+send out, i.e. pk1,pk2...pkn,convenc instead of pk1,cenc1 pk2,cenc2...
+
+--- reply to tzeruch - at - ceddec - dot - com ---
+
+
+
+
+

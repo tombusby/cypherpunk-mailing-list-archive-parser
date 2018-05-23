@@ -1,0 +1,63 @@
+From: Tyler Yip - UnixWeenie(tm) <davros@ecst.csuchico.edu>
+Date: Sat, 19 Jun 93 00:28:31 PDT
+To: cypherpunks@toad.com
+Subject: The Computer Shopper cipher
+Message-ID: <9306190728.AA09090@hairball.ecst.csuchico.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Compared to the lines of the Computer Shopper program, how would this variant 
+evaluate out time-complexity wise?  I'm not sure how sophisticated the
+attacks on pseudo-random generators are.
+This one includes an random generator shift, based upon the random numbers.
+
+-----------------------------------------------------------------------------
+#include	<stdio.h>
+
+static int seed;
+
+int rand1(int seedval) { return (seed * 183041 % 183319 + 1); }
+
+int rand2(int seed) { return (seed * 502001 % 502441 + 1); }
+
+void main(int argc, char *argv[]) {
+
+	int	current;
+	FILE *input, *output;
+
+	if (argc !=3) {
+		fprintf(stderr, "Usage: %s input output\n", argv[0]);
+		exit(1);
+	}
+	if ((input = fopen(argv[1], "rb")) == NULL) {
+		fprintf(stderr, "Error opening inputfile %s\n",argv[1]);
+	}
+	if ((output = fopen(argv[2], "wb")) == NULL) {
+		fprintf(stderr, "Error opening outputfile %s\n",argv[1]);
+	}
+
+	printf("Enter cipher key: ");
+	seed = getc(stdin);
+	current = fgetc(input);
+	while(!feof(input)) {
+		fputc(current ^ seed, output);
+		current = fgetc(input);
+		if (seed && 8) {
+			seed = rand1(seed);
+		}
+		else {
+			seed = rand2(seed);
+		}
+	}
+	fclose(input);
+	fclose(output);
+}
+-- 
+Tyler Yip, UnixWeenie(tm)        \ God put me on Earth to accomplish a certain
+email: davros@ecst.csuchico.edu   \ number of things.  Right now I am so far 
+California State University, Chico \ behind I will never die. -Calvin & Hobbes
+
+
+
+

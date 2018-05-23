@@ -1,0 +1,36 @@
+From: Hal Finney <hal@rain.org>
+Date: Fri, 11 Oct 1996 21:25:38 -0700 (PDT)
+To: everheul@NGI.NL
+Subject: Re: AW: Binding cryptography - a fraud-detectible alternative to key-esc
+Message-ID: <199610120305.UAA05180@crypt>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Another flaw with schemes of this time (in terms of failing to meet their
+goals) is that they cannot detect superencryption and other forms of
+non-standard encryption of the message body proper.  All they can really
+do is verify from the outside that the same session key is encrypted for
+the two recipients (the intended recipient and the Government Access to
+Keys Party - let's not abuse the term by calling him a Trusted Third
+Party).  But they can't be sure that the session key is sufficient
+information to decrypt the message.
+
+The session key could itself be a PK encrypted form of the actual
+message session key, so that the true recipient would have to run the PK
+decryption algorithm through two iterations before he actually got the
+real message session key.  Or the message could be simply superencrypted
+using a non-escrowed encryption system, then encrypted using the GAK
+technique so that it looks fine from the outside.
+
+These kind of techniques could be detected by the recipient, but as
+Adam Back points out there are much simpler techniques if we just want
+the recipient to be able to tell whether the key has been encrypted for
+the GAKP.  For that matter if *he*'s really concerned about it he can
+forward the plaintext to whatever governments he likes.
+
+Hal
+
+
+
+

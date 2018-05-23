@@ -1,0 +1,98 @@
+From: JMKELSEY@delphi.com
+Date: Sat, 9 Mar 1996 13:10:04 +0800
+To: cypherpunks@toad.com
+Subject: Re: numbers don't lie
+Message-ID: <01I1YG03B2W29ELJNN@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[ To: cypherpunks ## Date: 03/04/96 07:59 pm ##
+  Subject: Re: Numbers don't lie... ]
+
+>Date: Sun, 18 Feb 1996 11:18:57 -0500 (EST)
+>From: "A. Padgett Peterson P.E. Information Security"
+>Subject: Numbers don't lie...
+
+>In their figures, they do seem to gloss over a couple of minor points:
+
+>The most compelling to me is "how do you know when you broke it ?".
+>Bruce has always used the "known plaintext" approach, however using
+>modern techniques for messaging, *every* message has a different
+>session key, negotiated using assymetric keying so the only message
+>that will be broken is one that you already have - not terribly
+>helpful.
+
+Coming up with a short length of known plaintext isn't usually a big
+problem.  For example, attacking DES, you need to know one 64-bit
+block.  In many cases, this is easy to do.  While it is possible
+(and a good idea) to build communications software so that it's
+relatively hard to get known plaintext, this shouldn't be necessary
+to use a cipher securely.  And in any case, if you're encrypting
+ASCII text, the bit distributions give you a big clue about whether
+this is a reasonable key guess or not, after just a few decrypted
+plaintexts.  This increases the cost of the search machines, but I'm
+not convinced that this will be an enormous increase in all cases.
+
+>This means that the strength of cryptography should be appropriate
+>to the value of the information protected. If less than U$10,000,
+>the message is individually encrypted, and has value only today,
+>then DES is probably "good enough".
+
+True, DES is probably good enough for the very lowest-value
+messages.  But why use something that's barely acceptable, when it
+costs you almost nothing at all to make it really secure against
+keysearch attacks.  Blowfish, SAFER-SK128, GOST, and 3DES are all
+apparently quite hard to break, and they are all far more resistant
+to keysearch attacks than DES.
+
+>Strategic information of higher value arguably needs "more" but how
+>much ? 64 bits is 256 times stronger than DES. This would indicate
+>effective security up to say U$2.5 million. More is better but I
+>would not be quite so alarmist nor would I dismiss the cost of
+>engineering. Non-trivial.
+
+The problem here is that it's not really reasonable to expect the
+users of a secure e-mail package to know what the state of the art
+is in terms of keysearch machines, and it's not always reasonable to
+expect the person that's sending some piece of information to know
+whether this is "you-bet-your-company" material.  There's no excuse
+for leaving yourself vulnerable to keysearch attacks, when there are
+so many good, unpatented ciphers with key lengths of more than 100
+bits.  It's like building a car with an engine that you know will
+catch fire if it's ever run at more than 80 MPH, but justifying it
+by saying "well, most trips don't require more than 80 MPH to get
+where they're going anyway.  In those special cases where greater
+speed is necessary, they'll just have to take a bullet train."
+
+>Still, at what point is it simply easier/cheaper to buy someone who
+>knows the secret ?
+
+Limiting your key to 56 bits means that an attacker has more
+options--if he can't bribe, blackmail, or threaten his way into your
+private communications, he can spend some money, and still get in.
+(Escrowing your key adds to the list, because he now has more people
+to bribe/threaten/blackmail, and he may also be able to carry out
+protocol attacks against the key escrow mechanism.)
+
+>						Warmly,
+>							Padgett
+
+   --John Kelsey, jmkelsey@delphi.com / kelsey@counterpane.com
+ PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMTujGkHx57Ag8goBAQElEwP/ZpzwCpwGUhbHJvEl+EiuseNEgy9To5yl
+RyX3VkdX+Xx6jksZeuLlSuRoMlahxyMHdH7uDY/8GFW2uxh8dFAJfwNdBCf3k0W8
+aYml2Z/CCVadeuiSrKgZEMvE3F/LlDSCXQwuIde1Su7ICxQz9pd8ZbAqvOdQQWyZ
+ZQPr9TPCo/s=
+=zM5N
+-----END PGP SIGNATURE-----
+
+
+
+

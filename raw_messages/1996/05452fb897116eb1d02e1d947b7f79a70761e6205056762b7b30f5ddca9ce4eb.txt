@@ -1,0 +1,66 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Fri, 9 Aug 1996 10:49:22 +0800
+To: cypherpunks@toad.com
+Subject: Re: Fixes to loop.c et al. for DES,IDEA,stego now done
+In-Reply-To: <199608062350.QAA10693@abraham.cs.berkeley.edu>
+Message-ID: <4ue0dk$2g4@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <Pine.LNX.3.91.890918054255.204A-100000@HellSpawn>,
+Damien Lucifer  <root@hellspawn.Berkeley.EDU> wrote:
+>
+>
+>On Tue, 6 Aug 1996, Ian Goldberg wrote:
+>> This directory contains patches to the Linux kernel to enable encryption and
+>> steganography of filesystems. Encryption allows you to have a scrambled
+>> partition or file that, with the proper pass phrase, you can mount, just
+>> like a normal filesystem. Steganography allows you to hide a filesystem in
+>> the low bits of, say, an audio file. You can even combine these two to hide
+>> a scrambled filesystem in the low bits of an audio file (see the example,
+>> below).
+>
+>
+<snip>
+>So the question on my mind, is can the loop device(s) be 
+>multi-threaded? I decided to be clever one evening and moved all my home 
+>directories to cfs directories.. unfortunatly when two instances of the 
+>same user try to hit their CFS home directory at once, the whole machine 
+>goes flubflub and and needs to be rebooted. Single threading didnt seem 
+>like such a terrible thing when I installed cfs, but lately its become 
+>rather restrictive and ugly to deal with. Please tell me theres a better 
+>way. :) 
+
+Well, unlike CFS, loop.c is part of the Linux kernel, which is single-threaded,
+so I guess loop.c is also single-threaded.  However, I took care that deadlocks
+be avoided (mounting a loop device as another loop device (for example,
+hiding an encrypted filesystem as stego) caused me to think a bit, but I'm
+fairly confident that it works now).
+
+   - Ian
+
+[For those that missed it, the URL is
+
+ftp://ftp.csua.berkeley.edu/pub/cypherpunks/filesystems/linux/index.html
+
+mirror site:
+
+ftp://csclub.uwaterloo.ca/pub/linux-stego/index.html
+]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMgqEI0ZRiTErSPb1AQGI2gP+Pxq4auOpMSqVvCT9a/LRuj8fUhbmoG95
+3hdYYRn/GWRZTK1IcdyUpVnIcHfS6SUz+0l39q/guMKfGGgPOOsWYMpL7rRcffZB
+ZzZ8lWxO0JCOTPE8NIEuvdI3T+8bnVROeQ9u/YjRPnhMMQaOTUoCclt2fUt2+6YD
+td9FWFl7Pvc=
+=d1Am
+-----END PGP SIGNATURE-----
+
+
+
+

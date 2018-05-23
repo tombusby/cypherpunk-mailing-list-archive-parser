@@ -1,0 +1,83 @@
+From: David Mazieres <mazieres@pa.dec.com>
+Date: Sat, 15 Jul 95 23:20:57 PDT
+To: ylo@cs.hut.fi
+Subject: Re: Ssh "security hole": proposed fix
+In-Reply-To: <199507151502.SAA01269@shadows.cs.hut.fi>
+Message-ID: <9507160615.AA06186@venus.pa.dec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Well, here is the proposed new ssh protocol as I understand it.
+
+  A -> B: A
+  
+  B -> A: PKb, PKsb, Cb
+
+    session_id := {PKb, PKsb, Cb}_MD5
+  
+  A -> B: Cb, {{session_id XOR Kab}_PKsb}_PKb        (*)
+  A -> B: {A}_Kab
+  A -> B: {PKa}_Kab
+  
+  B -> A: {{Nb}_PKa}_Kab
+  
+  A -> B: {{Nb, session_id}_MD5}_Kab
+
+It does seem to solve the two problems I pointed out.  However, I am
+troubled by how complicated the protocol is, and how much encryption
+is going on.  One of the principles I have heard stated says that more
+encryption does not mean more security.  A good example of that seems
+be the session key PKsb above.
+
+In line (*) of the protocol, you say the session key (or now I guess
+really session_id XOR Kab) is encrypted first with whichever of Kb,
+Ksb has the larger modulus.  Under normal circumstances (the ones
+depicted above), the first encryption will be with PKsb.  However, if
+ever PKb were to come first, then PKsb would be completely vulnerable
+to a "man in the middle" attack, and thus would be completely useless.
+
+Wouldn't it make sense to simplify the protocol significantly, so as
+to make it easier to understand and easier for us to convince
+ourselves of its robustness?  What about something like what follows
+this message?
+
+To come up with the protocol I appended, I took your protocol and
+stuck the the full context of each message into the message itself, so
+that none of the previous problems could occur.  Then I eliminated all
+complications like double encryption and challenges that did not add
+to the security of the protocol.  Now granted I'm no authentication
+expert and could easily have made a mistake here, but at least it will
+be easier to catch because the protocol is simpler.  Who know what the
+implications of that XOR really are?
+
+David
+
+
+PREAMBLE:
+
+(1)  A -> B: A
+
+(2)  B -> A: Cb, PKsb, PKb
+
+(3)  A -> B: {Kab}_PKsb, {A, B, Cb}_Kab
+
+(4)  B -> A: {{A, B, Cb, Kab, PKsb}_SKb}_Kab
+
+
+SSH_AUTH_RHOSTS:
+
+(5)  A -> B:  0
+
+SSH_AUTH_RHOSTS_RSA:
+SSH_AUTH_RSA:
+
+(5)  A -> B: {{A, B, Cb, Kab}_SKa, PKa}_Kab
+
+SSH_AUTH_PASSWORD:
+
+(5)  A -> B: {Ka}_Kab
+
+
+
+

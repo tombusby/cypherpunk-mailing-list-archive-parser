@@ -1,0 +1,131 @@
+From: nobody@alumni.cco.caltech.edu
+Date: Sun, 28 Feb 93 22:05:13 PST
+To: cypherpunks@toad.com
+Subject: Infrastructure
+Message-ID: <9303010605.AA10013@alumni.cco.caltech.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Some time back there was some debate here about whether MIME
+("Multipurpose Internet Mail Extensions") features could be exploited
+to make encryption easier to use.  I didn't pay much attention at the
+time, because I didn't know anything about MIME.  But then a couple of
+weeks ago John Gilmore posted about Metamail, a software system
+designed to make it easy to integrate MIME into commonly-used mailers.
+
+I've played with Metamail a bit, and I do think this could be a good
+approach.  Metamail basically performs a mail-sorting function,
+automatically passing mail which has the MIME "Content-type" header to
+a filter or display program based on a very flexible "mailcap" file.
+To add PGP (or PEM, or RIPEM) support would be a matter of defining a
+Content-type header for this application, then creating the
+appropriate 1-line entry in the mailcap file.  This does sound like a
+pretty easy way to add this capability.
+
+The nice thing is, Metamail has already done the work of figuring out
+how to patch a whole bunch of different mailers to add this support.
+By using metamail we would be leveraging off this already-existing
+work.  Here are some excerpts from the "mailers.txt" file that comes
+with the distribution, written by Nathaniel S. Borenstein:
+
+>  Abstract
+>  
+>  It is surprisingly easy to use the RFC1049 "Content-type" header to turn
+>  virtually any mail reading interface into a multi-media mail reading
+>  interface.  Mail readers are simply modified to use the new "metamail"
+>  program whenever they receive non-text mail.  The metamail program is
+>  itself easily customizable by the use of a "mailcap" file that specifies
+>  the media types supported by a given site or user.  Given the existence
+>  of the metamail program,  this document explains how to add multimedia
+>  support to sixteen very different mail reading programs, including all
+>  of the most popular UNIX mail reading programs and (so far) one DOS mail
+>  reading program.  
+>  [...]
+>  The Basic Idea
+>  
+>  Basically, there are only two things you have to do to each mail reading
+>  program:
+>  
+>  1.  Make the mail reader notice the special header ("Content-type") that
+>  marks a message as a non-text message.  (In the case of mail readers
+>  that already understand certain content-types, such as Andrew, the mail
+>  reader must be modified only to deal with the content-types it does not
+>  already know how to handle.
+>  
+>  2.  When the special header appears, instead of (or, if it's much
+>  easier, in addition to) showing the user the body of the message, the
+>  mail reader must send that body off to the metamail interpreter.  The
+>  metamail interpreter includes features that deal with the diverse
+>  situations of terminal-oriented and window-oriented mail readers.
+>  [...]
+>  A Variety of Mail and Bulletin Board Reading Interfaces 
+>  
+>  With this document, you can patch all of your site's mail reading
+>  interfaces to support whatever multimedia formats are deemed useful at
+>  your site.  This means that those who regularly use the multimedia tools
+>  can begin to send mail in those formats freely, without worrying about
+>  the ability of any local user to interpret the mail.  It is my intent to
+>  make this document exhaustive; as time goes on, I hope it will grow to
+>  include an ever widening set of mail reading interfaces.  Currently it
+>  includes all of the mail reading interfaces that I know to be in use
+>  anywhere in Bellcore's research laboratories.
+>  
+>  Currently this document describes how to add support for the following
+>  mail readers:
+>  
+>        Berkeley Mail (/usr/ucb/Mail, /usr/ucb/mail, and Tahoe mail)
+>        SunMail (another version of Berkeley mail, but rather different)
+>        Xmail (an X11 interface to Berkeley mail)
+>        Mailtool (older versions of a SunTools interface to Berkeley mail)
+>        Imail (Bellcore MICE mailer)
+>        PCS readmail/rdmail/sreadmail (another Bellcore mailer)
+>        MH -- Rand Message Handling System
+>        XMH -- X11 Interface to Rand Message Handling System
+>        Rmail -- GNU Emacs mail reading package
+>        VM -- Another GNU Emacs mail reading package
+>        MH-E -- Yet another GNU Emacs mail reading package (GNU interface to MH)
+>        CUI -- Andrew low-end mail reader 
+>        VUI -- Andrew termcap-based mail reader
+>        Messages -- Andrew multimedia mail reader
+>        BatMail -- Andrew Emacs mail-reading interface
+>        Elm -- Mail reader from HP.
+>        Mush -- Yet another popular mail reader
+>        Msgs -- simple Berkeley bulletin board reader
+>        UUPC --a mail reading program for MS-DOS
+>        TRN -- a threaded netnews reader.
+>  
+>  
+>  If you have mail readers that are not dicussed here, you will still
+>  probably find some of this code useful as a model.  If you develop a
+>  patch for some other mail reader, and you send it back to me, I'll
+>  include it in future versions of this document.
+
+I am very impressed with the range of mailers covered here.
+Unfortunately, access to source is needed for most of the patches.
+But my guess would be that patched versions would become available
+even to people who don't have source.
+
+I'm not really sure what is happening with PGP specifically in terms
+of MIME.  I think there has been some work done with PEM integration.
+There doesn't seem to be any reason why these programs can't integrate
+nicely with MIME, and this Metamail package looks like it might be the
+most cost-effective way of getting widespread encryption into use.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK5EwE6gTA69YIUw3AQHa3gP/d9rJg8FTE4glB3CbUy5skG8j0AS4qvGn
+ugFhor0RZYpZIrsZn+XXJaiaO6+7je8fdEuwO2SkFBS90p6D7vtR40hqPUPnc4io
+q4z4UYRwV3aIVMjWZqyDncYQUouUltXh9utwH7nsbZX4Md9vDWwuq9ck7DHZhT+m
+O7Zx1+44kRY=
+=4Kad
+-----END PGP SIGNATURE-----
+
+
+
+

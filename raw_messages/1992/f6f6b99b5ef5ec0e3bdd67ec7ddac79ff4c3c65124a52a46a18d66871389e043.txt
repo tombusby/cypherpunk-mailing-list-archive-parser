@@ -1,0 +1,47 @@
+From: avalon@coombs.anu.edu.au (Darren Reed)
+Date: Tue, 15 Dec 92 09:05:15 PST
+To: yanek@novavax.nova.edu (Yanek Martinson)
+Subject: Re: timeofday for randomnessness ?
+In-Reply-To: <9212151555.AA10507@novavax.nova.edu>
+Message-ID: <9212151704.AA15303@coombs.anu.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In some email I received from Yanek Martinson, Sie wrote:
+> 
+> > 	gettimeofday(&tv, NULL);
+> > 	rand = tv.tv_usec + tv.tv_sec;
+> 
+> Someone trying to break your code could find out approximately when
+> the number was generated, then they would have a much smaller search
+> space to try.
+
+Thats why you change key 'regularly'...even randomly ?
+
+Then they have to 'guess' when you change keys.  It might be easy
+to tell when an application starts, but how can you tell exactly or
+even approximately how long ago someone picked a menu that changed
+their key or it was otherwise changed ?
+
+By using the microsecound counted as a random number, its almost
+completely random unless you take steps to actually make less so.
+But a table of the required million entries and 'init' strings
+wouldn't be too hard for todays computers, hence the use of the
+time in seconds to 'bump' the offset a bit.
+
+For example, if you use a simple xor table for encoding/decoding,
+its pretty easy to decode.  If you change the table after it has
+been used, every time, then the required time to break the entire
+message is significantly larger than it would otherwise have been.
+
+Can anyone do some maths on exactly how long it would take given
+a fixed table size (contains random data) ?  And also with key/
+table changes at a fixed/random interval ?
+(seems 1:1 :( but I maybe wrong).
+
+darren
+
+
+
+

@@ -1,0 +1,57 @@
+From: Lutz Donnerhacke <lutz@IKS-JENA.DE>
+Date: Wed, 15 Oct 1997 01:23:53 -0700 (PDT)
+To: cosmos@microserve.net
+Subject: Security flaw in PGPverify of INN
+Message-ID: <v03102819b069bed85788@[207.155.93.30]>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="Boundary..3985.1071713746.multipart/mixed"
+
+--Boundary..3985.1071713746.multipart/mixed
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+I was urged to send you the following information. I noticed CERT and tale
+itself. But tale claims that the problem is not a problem of pgpverify, it's
+a problem of some krauts trying to send checkgroups monthly using a bot.
+
+The checkgroups mentioned were send since a year. They do not include Date:
+and Message-ID: because these values were not predictable by the human
+signer and the bot does not know the passphrase to work with.
+
+In consequence there are checkgroups out there which can be resend at any
+time causing a lot of trouble, because the signature is still valid even if
+a new Message-ID: and Date: line are used.
+
+The obvious fix is to modify pgpverify to block such control messages.
+ftp://ftp.iks-jena.de/pub/mitarb/lutz/ contains the necessary fixes.
+
+HTH
+
+Content-Type: application/pgp-signature
+
+
+
+--Boundary..3985.1071713746.multipart/mixed
+Content-Type: application/octet-stream; name="hqx00000.hqx"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="hqx00000.hqx"
+Content-Description: "Untitled"
+
+KFRoaXMgZmlsZSBtdXN0IGJlIGNvbnZlcnRlZCB3aXRoIEJpbkhleCA0LjAp
+Cgo6IyY5WkcnUGRFJzlOISRtcjJjbVksNWRZISEhISEhJWMhISEhISJSNiw1
+ZFksNWUjNDhHKjZMIjM0ZSFKOGRQCig2TiY4OTkqJiw1ZFksNWQwOVE5YkZm
+UFtFTVNKLUxpZixNMFRFSmQwRDkmJEQ4Jmg5OCoxNChUTjBoIidDOTQKVEhR
+KiQ1TmUrMzkmKUcnOWg4UWo2SE5LazVRWWlDUkNkOTlDZEJAJjJHJ2pjOGMi
+VTM5JiNEJUszQE5tZEYhZQprRyVlJDYmMFZGQFNqLWQ5QDknKis4aCJQNWZl
+UzVNRyY2QSo2NCU5UkBNIk41JXA1MUBpaTNMWWpGZiYjLWZlCiU4NlBQMTg5
+NkdkQ2o2OSI0NkBHNCRBSmYtKEpbMzkmUjM5QyYwNiVmOGMmJzVlOGk4Zjhb
+MCdQVEI2KkItJiIKSzA5NC0xJDlmK2QwLDBmSyNHUSpNM0FQNTNOUCxFZDks
+OE1QLEhARzAsZkIwOWNHaDElcFgwQTQmLUBCajZBQwpQSEA5QUZmMCIrZFRl
+SDYwVEVKZHBAUlQqNDNkWSw1ZFksODkxNCMiMzRlIUo4ZFAoNk4mODk5KiYs
+NWRZLDVkCjAkQEojISEhITo=
+--Boundary..3985.1071713746.multipart/mixed--
+
+
+

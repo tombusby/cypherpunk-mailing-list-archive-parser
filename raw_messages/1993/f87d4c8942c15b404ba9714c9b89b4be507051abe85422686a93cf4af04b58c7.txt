@@ -1,0 +1,118 @@
+From: RYAN Alan Porter <ryan@rtfm.mlb.fl.us>
+Date: Thu, 3 Jun 93 20:31:19 PDT
+To: A1 ray arachelian <rarachel@ishara.poly.edu>
+Subject: Re: CryptoStacker, long term vision
+In-Reply-To: <9306031900.AA02558@ishara.poly.edu>
+Message-ID: <Pine.3.03.9306032254.B28432-d100000@rtfm>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Thu, 3 Jun 1993, A1 ray arachelian wrote:
+
+> > 	2) does anybody know how the hell Stacker or DoubleStor or
+> > 	    whatever executes the actual interception of the read/write
+> > 	    routines and stacks them?  I don't get it at all.  I am
+> > 	    more than willing to learn to get this thing working though. 
+> > 
+> 
+> Anyhow to make the story short, if I wrote an image mounter device driver which
+> would be able to grab DIM files and pretend that they were on the A: or B: drive
+> then we could also install the programs without breaking out the recylced disk
+> box. :-)
+
+Couldn't you just do that with the assign command in DOS?
+
+or is that a new command?
+
+> I never got around to it because of other projects, but, what you need to do is
+> to write a device driver that becomes accessible via the IOCTL calls.  That's
+> the way logical drivers (such as Stacker) install themselves.
+
+Yeah, I am assuming that is the way I will have to organize the system.  I
+want it to be totally transparant, that seems like a good way.
+
+> Also, the program you're writing (I believe) has been already written and is
+> part of Norton Utilities, but uses either DES or some other weak form of
+> encryption.  You might want to buy Norton Utilities and play with that program
+> and see what makes it tick.  Basically a program like MSD (Microsoft Diags)
+> can tell you exactly what interrupts it patches itself into.
+
+I have heard this from someone else.  It kind of takes the wind out of my
+enthusiasm, but not too much... I still think that there is a need for a
+good, strong system out there with some seriously dedicated password key
+protection and such.  Also, it needs to be freeware (or shareware,
+depending on how long it takes to write) so that security won't just be in
+the hands of the people who can afford to buy it from companies.
+
+I also think that it would be a lot more valuable if it were distributed
+with code so that any user who wanted could inspect it for trapdoors.
+
+> On to the sector remapping.  The way stacker and doubledisk and the other
+> suite of driver level compressors work is basically, they allocate a huge
+> file on the hard drive, and then do a remapping at the sector level.  That
+> is you've got the data itself and an index table into the data for every
+> sector.  When a sector is written to the drive, the driver compresses the
+> sector, so say, it was 512 bytes, it now becomes 128 bytes (if we're lucky)
+> so what Stacker does is, looks in its index table, finds 128 bytes free in
+> the huge file it allocated, writes the data there, and then sticks the
+> position of the data, and it's size (after compression) in the index table.
+> (Of course it also marks that 128 bytes as taken.)
+
+Umm, perhaps this is overly optimistic, but I was hoping that I would be
+able to use an algorithm that did 1 byte in / 1 byte out encryption so
+that I wouldn't have to deal with sector remapping.  This would greatly
+speed up the process, make it more crashproof, and besides, it would be a
+hell of a lot easier...  I was thinking that I would even basically leave
+the FAT and such intact, or at least only slightly modified.
+
+> I believe it also does some other funky stuff like changes the allocation
+> table or the bytes free to twice the space it's got left, so that DOS
+> doesn't choke when it thought it had 10,000 sectors free and the hard
+> drive ran out of space when it tried to write #4,999. :-)
+> 
+> So you might want to do this with RSA.  But better yet, why don't you
+> find a quick compressor algorithm (say some sort of LZ type method)
+> and stick that in as well.  This way you are writing a public domain
+> version of stacker >WITH< encryption.  (Since you'd have to remap
+> the sectors anyhow, you might as well compress them too...)
+
+I have been pointed in the direction of the IDEA engine in PGP, which will
+take 1 byte in / 1 byte out.  This would be ideal (snicker) for the
+reasons that I mentioned before.  
+
+As for compressing also, that is a really good idea, but I think that I
+will leave that one up to posterity, or at least to the next guy that
+tries to midofy the thing, I am concerned enough with getting it to work
+at all, and compression would add the problem of having to do sector
+remapping, which I would like to avoid at first.
+
+> The above is just a theory and hasn't been tested.  I believe that
+> this is what Stacker does, but I'm not exactly sure. :-)  But it
+> does sound logically right.
+
+Sounds good to me, and it is consistent with the advice of others (thanks
+a lot guys, I really appreciate the help) and the books that I have found
+since this started two days ago...
+
+> So if I'm wrong, let me know as you've got my curiosity up in this
+> matter.
+
+
+I'll keep everyone updated no problem.  How else am I going to get
+suggestions and help?
+
+
+-Ryan 
+the Bit Wallah
+
+
+
+
+
+
+
+
+

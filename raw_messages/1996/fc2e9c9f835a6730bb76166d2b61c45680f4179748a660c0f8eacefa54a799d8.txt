@@ -1,0 +1,166 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Mon, 30 Sep 1996 02:18:35 +0800
+To: cypherpunks@toad.com
+Subject: Re: Making Remailers Widespread [REMAILERS]
+In-Reply-To: <199609290623.XAA25604@dfw-ix3.ix.netcom.com>
+Message-ID: <soR1uD70w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart <stewarts@ix.netcom.com> writes:
+> >Unfortunately, one-way remailers have much fewer uses than two-way remailers
+> >any many of these uses are abusive.
+>
+> I agree, it's a problem; the return address seems to reduce abuse.
+
+It's not only a question of traceability... Most "useful" uses of Julf's
+remailer involved scenarios like someone posting anonymously to a public
+forum and soliciting replies, or someone contacting another party
+anonymously and wanting to receive a reply. It was pretty easy for two
+anonmous parties to establish a dialog. An optional reachable return address
+(even if the sender can't be traced back and be punished for abuse) makes
+the system so much more useful for things other than anonymous farting.
+
+> >> - A centralized block list (e.g. http://www.remailer.net/block.txt)
+> >> which all of the form-based remailers could load and reference would
+> >> allow non-picky operators not to have to handle it themselves
+> >A single centralized point of failure is bad. Maybe 4 or 5 redundant ones.
+> >A blocking request sent to one will be replicated in the other automatically
+>
+> Good point.  A bit tough to implement in a no-brainer out-of-the-box remailer
+> you gain a bit by having the block list point to an address that's really
+> a round-robin DNS spinner of some sort, but that still leaves you with
+> centralization.
+
+How about: maintain a list of trusted blocking-list sites (comparable to the
+list of remailers used for chaining) and when it comes the time to update the
+local copy of the blocking list, ask a random one on the list; if it's down,
+ask another random one on the list. There may even be more than one list. :-)
+
+> >>         - special-case for "postmaster", who may want to block
+> >>                 all of foo.domain instead of just postmaster@foo.domain
+> >>         - special-special-case for postmasters of big sites, e.g. aol, net
+> >>                 who we may want to ignore?
+>
+> >I don't think it's a good idea to suport blocking receivers in an entire
+> >domain, like *@aol.com. Just say it's not supported.
+>
+> Blocking an entire domain like *@aol.com is mostly bad.
+> Blocking an entire domain like *@myconsultingfirm.com is fine.
+
+I think it's also bad, but I suppose the market wants it, so I'm showing
+below how this can be done.
+
+> >> - A sender-blocking list is harder, and may still take human attention
+> >I don't think it's a good idea to support sender blocking at all.
+>
+> There are some spammers you'd like to stop quickly when a Spam Event
+> is happening.  There are broken email gateways that may need blocking.
+> There are known abusers you might want stopped.  And there are folks like
+> president@whitehouse.gov who can be presumed to be forgeries :-)
+> A sender-blocking list administered by the Remailer Cabal* would be
+> a reasonable default for no-brainer remailers, and obviously it
+> should be possible for remailer-admins to override or ignore if they want.
+
+With most ISP's it's trivial to forge one's From: header in SMTP.
+Switching to another dime-a-dozen throwaway account is also trivial.
+Just admit that you can't block senders, and don't pretend that you
+can - false pretenses destroy one's credibility.
+
+Timmy the pathological liar posted a rant a few weeks ago on how
+"remailer operators can't be choose" - usually he's full of shit, but
+that time he had a point - he must have plagiarized it.
+
+> >Would the receiver blocking list be available to everyone to view? That
+> >sounds like a violation of privacy. Someone suggested on this list that
+> >(assuming that the entires are addresses that match exactly, not regular
+> >expressions), one can store hashes of addresses.
+>
+> That's worth doing, or at least thinking about seriously.
+> The most interesting regular expressions are *@domain (which you can
+> handle by keeping separate block lists for domains and full addresses
+> (or a merged list that the using remailer checks both)) and
+> *@*.domain and user@*.domain - e.g. alice@mailserver17.big-isp.com,
+> which would successfully deliver mail to alice@big-isp.com.
+> Perhaps the system needs to keep two hashes - hash(alice),hash(big-isp.com)
+> and check subsets of the domain name?  This is creeping featurism,
+> but it may be the right way to go to set a good precedent.
+
+I think I see a way to accomplish this without too much trouble.
+When an e-mail is directed at u@c4.c3.c2...c1, the code that checks
+for blocking will search for the following records in the blocking list:
+
+u@c4.c3.c2...c1     (exact match)
+*@c4.c3.c2...c1     (replace user by *)
+u@*.c3.c2...c1      (replace leftmost .-separated piece of domain by *)
+*@*.c3.c2...c1      (both)
+
+and repeat until there are only 2 components left in the domain name.
+
+E.g., if a message is addressed to dlv@under.bwalk.dm.com, the blocking
+code would compute hashes of the following strings and check for each one's
+presence in the blocked list:
+
+dlv@under.bwalk.dm.com
+*@under.bwalk.dm.com
+dlv@*.bwalk.dm.com
+*@*.bwalk.dm.com
+dlv@*.dm.com
+*@*.dm.com
+
+and here we stop. This shouldn't take much more CPU time than the blocking
+code in Lance Cotrell's mixmaster that I just looked at, which loops though
+all blocking patterns and checks if each one matches.
+
+Now, the question is, who would be allowed to add records containing
+'*' to the blocking list using the cookie protocol? I suggest that it be
+one of the contacts listed in Internic's database.
+
+E.g. joe@some.place.com can add himself to the blocking list using the
+cookie protocol. If joe tries to add *@*.place.com to the blocking list,
+the 'bot looks at Internic's database and sees only jim and jeff listed
+for place.com, so it refuses. On the other hand, jim@some.place.com can
+add *@*.place.com, joe@*.place.com, etc, because Internet says he's the
+admin for place.com.
+
+Thus a blocking record for cypherpunks@toad.com could be added by
+anyone listed in toad.com's Internic entry. There's no need for any
+Remailer Cabal [tinc] to maintain blocking lists.
+
+One other suggestion: instead of storing one bit of information (the
+address is on the list or not), why not have several flag bits.
+
+E.g., the blocking list could contain records similar to:
+
+hash - e.g. 160-bit SHA
+flags - e.g. reserve 32 bits
+
+If the list is sorted by hash, then using binary search to check whether a
+value is in it is very fast (much faster than matching wildcards). But at
+the same time you can retrieve the flags word, which could be used, e.g.,
+to say that an address doesn't wish to block all inciming anonymous
+e-mail, but only e-mail that appears not to contain a reply block, or
+whatever other preferences can be stuffed into 32 bits.
+
+E.g., one could use 2 or 3 bits to specify the maximum size of a message
+to be delivered to addresses matching this pattern: 000 for no limit,
+and nnn for nnn*4K bytes.
+
+> One unfortunate result of only using hashed names and not
+> readable names is that it doesn't help the current remailer operators,
+> since their existing code doesn't work that way.
+
+This seems like a straightforward replacement for a small piece
+of code in Lance Cotrell's mixmaster (which remains to be written, of
+course :-). It's probably not hard to plug the same code into other
+remailers if they're well-written.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

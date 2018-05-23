@@ -1,0 +1,65 @@
+From: "Geoffrey C. Grabow" <gcg@pb.net>
+Date: Thu, 1 Aug 1996 07:37:22 +0800
+To: Duncan Frissell <frissell@panix.com>
+Subject: Re: Secure drive under Win95... a better way.
+Message-ID: <2.2.32.19960731195620.0068a8b4@mail.pb.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+After much fiddling, I've found (IMHO) a "good" way of using secure drive
+1.4a under Win95.  After doing the partitioning and encrypting, put the
+following in your AUTOEXEC.BAT file...
+
+cd\utils\secdr14a
+sectsr
+login D: /S
+@choice /T:N,1
+@if errorlevel 2 goto ContinueLoad
+:EnterPP
+login D:
+@if errorlevel 1 goto Again
+@if errorlevel 0 goto ContinueLoad
+:Again
+@choice Try again?
+@if errorlevel 2 goto ContinueLoad
+@goto EnterPP
+:ContinueLoad
+cd\
+cls
+
+abviously you have to replace the D: with your drive letter, and the
+directory at the top with your SECDR14a dir.  Then, in Win95 you have to
+turn off 32 bit disk access.  To do this without losing all the speed of
+virtual memory, do the following...
+  right-click on My Computer
+  click on Properties, Performance, File System, Troubleshooting
+  and check the box labeled: Disable all 32 bit protect-mode disk drivers.
+  Re-boot.
+
+If you have a CD-ROM drive, you will have to load the DOS drivers in order
+to be able to access it.
+
+Granted, this is just a kludge until Secure Drive is re-designed for Win95,
+but I've tried a dozen different combinations, and this gives you all the
+SecDrv security under Win95 (except being able to lock/unlock after Win95
+starts) and sacrafices the least amount of system performance.
+
+Enjoy!
+ 
+                                                     G.C.G.
+
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ | Geoffrey C. Grabow       |      Great people talk about ideas.       |
+ | Oyster Bay, New York     |     Average people talk about things.     |
+ | gcg@pb.net               |      Small people talk about people.      |
+ |----------------------------------------------------------------------|
+ |          PGP 2.6.2 public key available at www.pb.net/~wizard        | 
+ |----------------------------------------------------------------------|
+ | That which does not kill us, makes us stranger.   - Trevor Goodchild |
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+

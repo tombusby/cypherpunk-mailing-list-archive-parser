@@ -1,0 +1,133 @@
+From: Raph Levien <raph@c2.org>
+Date: Thu, 23 Nov 1995 02:50:14 +0800
+To: Carl Ellison <cme@TIS.COM>
+Subject: Re: Design proposal: crypto-capable generic interface
+In-Reply-To: <9511221641.AA14712@tis.com>
+Message-ID: <Pine.SUN.3.91.951122094209.29001A-100000@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 22 Nov 1995, Carl Ellison wrote:
+
+> >Date: Sat, 18 Nov 1995 00:42:21 -0800 (PST)
+> >From: Raph Levien <raph@c2.org>
+>
+> >   I propose that the new interface lives as a sort of daemon, rather
+> >than a static collection of command line script pieces. 
+> 
+> Danger, Will Robinson!  (see below)
+
+   In restrospect, "daemon" was a poor choice of words to describe my
+proposal. "Slave process" gets the idea across much better, but may be a
+bit less PC. A daemon sits on a publicly accessible port, such as a TCP/IP
+socket. The slave process is only accessible to the user who invoked it
+(enforced by the OS's file permissions). Further, it only gives secrets to
+individual processes that authenticated themselves first (by sending a
+passphrase down the connection to the slave process). 
+
+> >   Once the negotation has been established, the application can send
+> >the daemon MIME objects that the app does not understand but the
+> >daemon does (for example, an image/fractal). The daemon can return a
+> >MIME object that the app does understand (for example, an image/ppm).
+> 
+> This part sounds good...a sort of master translation service.
+
+   I'm glad you like it!
+
+> >   Alternatively, the daemon may request an authentication. This is
+> >useful when resolving external bodies that require authentication,
+> >including non-anonymous FTP, and standard authenticated HTTP. In this
+> >case, the daemon sends a message to the app requesting the
+> >authentication. It specifies whether it needs both username and
+> >password, or just password. In the latter case, it hands a username to
+> >the application.
+> >   The application can then query the user for the authentication
+> >data. It hands this back to the daemon. In reply, the daemon indicates
+> >success or failure. In case of success, it hands the object back to
+> >the app.
+> 
+> Now I get worried.  This communication with the demon is via some IPC --
+> maybe even via a LAN.  Some things can't be distributed safely and
+> authentication is #2 on my list.
+
+   No, the communication is not via a LAN. On a Unix system, the 
+communication is through Domain Sockets. Both processes live on the same 
+machine, and the socket "lives" on the local file system.
+
+   I submit that my proposal is every bit as secure as, say, PGP is now. 
+If you can't trust the operating system not to hand domain sockets from 
+one process to another, then you certainly can't trust it to, for 
+example, substitute different binaries for the crypto program (an attack 
+which Ian et al cleverly mounted a few weeks ago).
+   If it were not the case that my proposal was as secure as PGP, then I 
+would want to withdraw it. However, the proposal has so many advantages 
+that I would want to see a serious description of the attack, rather than 
+just feelings of endangerment to Will Robinson.
+
+> >   Encryption is a bit more tricky, but in essence you just hang a
+> >premail-alike off this kind of protocol. The hard part is specifying
+> >the key, but you just call it a "parameter" and put in hooks for the
+> >daemon to ask for whatever parameters it needs. 
+> 
+> Crypto keys are #1 on my list of things you can't distribute (unless they
+> are wrapped, of course).
+
+   I should have made it cleaer that I am referring to public keys. If 
+public keys are on the list of things that can't be distributed, then I 
+believe we are in trouble.
+
+> >						 This requires that
+> >keys have some nonforgeable names, which is unfortunately not a
+> >feature of PGP 2.6.2. S/MIME will do it just fine, if you buy into the
+> >Certifcation Authority (<wink> at Nick Szabo).
+> 
+> Public keys, if that's what you're talking about, have perfectly good
+> nonforgeable names -- themselves.  They are unique.  They are the proper
+> name which can collect all the attributes of that key which are of interest
+> (e.g., permission to spend $, name of a human who knows the private key,
+> attributes about that human, etc.).
+
+   Ok. But public keys have one serious disadvantage: their size. I can't 
+put a public key on my business card or read it over the phone. I want a 
+unforgeable key name. I want this to be the standard key name in the 
+interface between the application and the crypto engine. I want users to 
+be able to specify them directly, at the very least to bootstrap the 
+public key infrastructure.
+   I propose using the MD5 hash of the whitespace-free MOSS 
+representation of the public key, in hex. It's simple enough to be 
+described in one sentence, but does everything I want.
+
+   Note that PGP 2.6.2 does _not_ allow the use of a public key as the 
+name of a public key, unless you do a horrible hack such as replace the 
+pubring.pgp file with the one public key of interest. This is a 
+significant problem when trying to identify which key signed a signed 
+message. I haven't bashed around with TISMOSS enough, but I'm not sure it 
+will allow this either. I got the impression that it preferred the use of 
+an alias.
+
+> >   One final aside: I've been fairly frustrated with this mailing list
+> >as a forum for talking about real design proposals and implementation
+> >issues. Ignorant posts by the likes of Dr. Fred and Alice d'Clueless
+> >tend to attract far more attention than real crypto work. I want a
+> >forum for, and just for, cypherpunks who write code. If I had just a
+> >smidgen more free time (as if), I'd be trying to start one
+> >myself. Anyone else?
+> 
+> I've seen this happen several times.  As a list gets popular, it
+> diversifies.  You might try sci.crypt.research -- since it's moderated.
+
+   Thanks for the suggestion. However, my concerns are with 
+implementation and deployment, not research.  I am perfectly willing to 
+consider cryptographic algorithms to be black boxes that do what they say 
+they will. I think the charter exists to start a new list. John Gilmore 
+has already offered to start a "coderpunks" list on toad.com. Shall we 
+take him up on it?
+
+Raph
+
+
+
+
+
+

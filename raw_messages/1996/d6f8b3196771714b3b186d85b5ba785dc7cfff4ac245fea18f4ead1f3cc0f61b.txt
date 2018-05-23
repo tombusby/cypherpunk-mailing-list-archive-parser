@@ -1,0 +1,50 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Thu, 25 Apr 1996 17:22:40 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Mixmaster message formats
+Message-ID: <Pine.LNX.3.92.960425200950.1060A-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I was thinking about how Mixmaster needs a separate message format so it
+can make messages a fixed size and add a packet ID.  However, couldn't all
+this be done with PGP?  With PGP, the length of the file being encrypted is
+encrypted itself, so it would be possible to append random data to the end
+of the file to make the message a fixed length like Mixmaster.  Also, the
+packet-ID could be implemented by putting a line such as the following in the
+message:
+
+::
+Packet-ID: foobar
+
+The only other thing that would have to be taken care of is chaining.  The
+way I could see this working is to have a header in the encrypted message that
+tells the remailer whether it should de-armor the message at the next layer,
+append random data, then re-armor, and pass it to the next remailer.  Am I
+missing something?
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xf9b22ba5
+http://www.voicenet.com/~markm/ | bd24d08e3cbb53472054fa56002258d5
+"The concept of normalcy is just a conspiracy of the majority" -me
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMYAXxLZc+sv5siulAQG5CwP/Qbgune3sjNyB7Y8xNxNW6hCahtgBNJDk
+oT+hZHdlmcB6CZXjgDUSczIfAnygS71PBBysB4DJnugluMTMTGfqmgeikXdvL1zt
+vnwx5xlG0HQeTbVE2+c1uW4uamkdb0MZmNLR06S9M+2i0ROaWzGwNO6WEHqoEL3W
+qwXZ7zPtId0=
+=MaO4
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,94 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 9 Dec 94 15:43:52 PST
+To: cypherpunks@toad.com
+Subject: Re: BofA+Netscape
+In-Reply-To: <199412091814.NAA07757@hermes.bwh.harvard.edu>
+Message-ID: <199412092343.PAA10962@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Here is a posting I made to www-security a few days ago when Netscape
+announced SSL.  It did not get any response.  I see though that they at
+least fixed their spelling...
+
+Date: Sun, 27 Nov 1994 12:12:47 -0800
+From: Hal <hfinney@shell.portal.com>
+X-To: www-security@ns1.rutgers.edu
+Subject: Re: info on proposed SSL protocol and Netscape implementation
+Sender: owner-www-security@ns1.Rutgers.EDU
+
+I have a few comments on the proposed SSL and Netscape's HTTP-SSL
+that uses it.
+
+First, CHALLENGE is consistently mis-spelled CHALLANGE throughout the SSL
+document.
+
+Second, 3 cyphers are specified in this version of the document: RC4,
+RC2, and DES.  I would like to see 3DES and/or IDEA.  RC4 and RC2 have
+not to my knowledge received much public scrutiny, and the 56 bit key
+size of DES is of questionable security today.  Of course these would be
+for the non-export versions.
+
+Third, it is not clear how practical the use of X.509 certificates will
+be.  For example, the "name" field in the certificate must somehow be
+checked against the information which the client has about the server.
+Typically this will just be a machine address like home.mcom.com or
+something similar.  Is X.509 a good fit for this purpose?  I am not too
+familiar with X.509 but generally the names that I have seen are not in
+this form.
+
+Fourth, it would be nice if there were some support for non-certificate
+authentication of the server's public key.  For example, the client may
+have obtained that key previously.  I believe SHTTP is more flexible in
+this area.
+
+Fifth, I don't really like the idea that the Netscape client
+embeds "approved" certificate authority keys.  I suspect that the CA
+situation is going to be in flux for quite a long time and one's client
+could easily get out of date.  Note that the reliance on CA's seems to
+have slowed the acceptance of PEM as a widely used standard.  PGP's
+anarchic "web of trust" has perhaps been a better fit to net culture.
+
+Sixth, the use of "https:" as a URL type for secure links provides
+for a very strict separation of secure and non-secure connections.
+Furthermore, this separation is chosen by the server operator.  I would
+like to see a more flexible system, one where the client has more control
+over what information is transferred securely.  The server may want to
+set a minimum, and refuse to exchange certain information non-securely,
+but it should not IMO also set the maximum.  Some clients may be more
+privacy conscious than others.  Some may not want information about which
+URL's they use to be available to local snoopers.  The Netscape approach
+seems to put too much control into the hands of the servers and not
+enough into the hands of the clients.
+
+SHTTP also uses a special URL, but it seemed to be more open to the
+possibility of a negotiation between client and server for secure
+connections even on "http:" URLs.  This would be done by having backwards
+compatibility with HTTP in which a non-secure-aware client or server
+would ignore or reject the security enhancements.  The transaction could
+then proceed in non-secure mode with appropriate information displays to
+the user.  SSL does not appear to allow for this kind of compatibility.
+
+Despite the negative tone here I think that SSL is potentially a good
+step towards enhanced privacy on the net.  I think though that
+eventually encryption will be used far more widely than Netscape seems
+to have in mind.  The net is so insecure that I suspect people will
+want privacy for all but the most casual uses.
+
+Hal Finney
+hfinney@shell.portal.com
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLujrKhnMLJtOy9MBAQFYdwH/VAObt9l6IKb44Z9mbCiz6DiRPjjA/mQp
+ZZq0ns/6xKQZvw3L77mTRECRuU8Gf1j3jUXZnqPxo7t8v+IyUuplCQ==
+=Z+0f
+-----END PGP SIGNATURE-----
+
+
+
+

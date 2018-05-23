@@ -1,0 +1,76 @@
+From: b44729@achilles.ctd.anl.gov (Samuel Pigg)
+Date: Wed, 25 Aug 93 06:35:37 PDT
+To: cypherpunks@toad.com
+Subject: Attacks on remailers
+In-Reply-To: <9308251148.AA25085@tamsun.tamu.edu>
+Message-ID: <9308251334.AA22042@achilles.ctd.anl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+   > Response: Encrypt the messages.  Use "nesting", so that all that is
+   > visible as each message leaves a remailer is the destination of the
+   > next remailer.
+
+   This should be made smoother.  The learning curve needed to
+   get to this stage : install PGP & get it working, learn
+   how to use remailers, install remailer nesting script, debug
+   all of the above, because something in there is bound to
+   break at this stage : quite a lot of work!  Just
+   improving things up to here with clearer documentation,
+   and better scripts and GUIs, would greatly increase the number
+   of remailer users and traffic.
+
+Working on it. (NeXT version at least.)
+
+	[..]
+
+   Here's another item: faster links!  The delay between
+   when I post this and when it arrives on "cypherpunks" can
+   be half a day. 
+
+   What about that idea of using direct sockets instead of
+   SMTP between remailers?  That could kill two birds with one stone:
+   delivery speed and cheap attacks against the intermediate
+   links via logging or spool files.
+
+
+
+Actually what I was proposing was the direct usage of SMTP itself rather
+than going through the host machine's mail system. As anyone can do it,
+it would help with the usage of student accounts as remailers.
+And with direct SMTP (socket connections to port 25 of the receiving machine)
+you have some control over the header information that is generated.
+
+The protocol is outlined in RFC821 if anyone wants to look at it.
+
+So that's 4 birds with one stone:
+
+	(1) Speed.
+
+	(2) No logging on remailer host.
+
+	(3) Control over header information (hell you could even make 
+	    something up for the header fields that looks 'legitimate')
+
+	(4) Tighter control of possible batching by not going though
+	    the host machine's mail system.
+
+Earlier it was noted that traffic analysis worked for the a.s.a.r. remailer
+to find the sender of messages by checking the logs on the machine
+that the messages were originally from. With a simple utility someone could
+submit mail directly to the remailer host using sockets, and so leave little
+trace on their host of having done so.
+
+I'm working on the tiny utility to send mail via socket 25
+(I'm sure it has been done many times before, and is probably already
+available somewhere. Is no big deal.)
+
+School is of course stealing my time.
+-Sam
+(is the remailer source code available on soda?)
+
+
+
+

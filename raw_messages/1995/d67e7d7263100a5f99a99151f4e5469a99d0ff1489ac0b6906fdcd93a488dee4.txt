@@ -1,0 +1,48 @@
+From: Eli Brandt <eli@UX3.SP.CS.CMU.EDU>
+Date: Wed, 25 Oct 95 14:54:26 PDT
+To: Steve <privsoft@ix.netcom.com>
+Subject: Re: Re: Reformated: How secure....
+In-Reply-To: <199510241425.HAA20039@ix3.ix.netcom.com>
+Message-ID: <9510252154.AA01706@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Further, descrambling entails moving tiles and recognition of
+> readable text.
+
+Why do you make this claim?  If PrivaSoft's transposition cipher is
+even superficially ok, a wrong-key decryption will look like a random
+permutation of the input pixels, i.e. an image with the same
+black/white statistics as the original (a slight weakness, IMHO) but
+with none of its spatial coherence.  Look at the distribution of run
+lengths, or of the size of connected components.  
+
+I just went and looked at your "PrivaSoft in action" example, and I'd
+have to say that the cipher is not "superficially ok".  The ciphertext
+is visibly structured: there are visible fragments of letters (an "e",
+an "n", a "k", the top of an "S"); there are evenly-spaced vertical
+lines of dashes and crosses; I can see the bold text of the original
+(what's more, it's only diffused over a small extent, not the whole
+ciphertext); and, um, was the letterhead text supposed to be
+unreadable, or just dirtied up a little?
+
+Since the algorithm doesn't break up small-scale structure very well,
+a more robust way of testing for correct decryption would be to
+count the number of black pixels on each scan line, and examine this
+for periodicity.  Even with some noise and scan skew, there will be
+obvious periodicity for unencrypted text, and little for an incorrect
+decipherment.
+
+I don't mean to be unnecessarily hard on your software.  It's probably
+fine against casually nosy people and for protecting mildly
+embarassing information, and it's conveniently exportable.  But if you
+represent it as suitable for high-value secrets, you're misleading
+your customers.
+
+--
+   Eli Brandt
+   eli+@cs.cmu.edu
+
+
+

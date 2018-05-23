@@ -1,0 +1,41 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 16 Aug 1996 14:27:52 +0800
+To: "Douglas R. Floyd" <dfloyd@io.com>
+Subject: Re: Jurisdictionless Distributed Data Havens
+Message-ID: <199608160415.VAA00103@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:52 AM 8/15/96 -0500, "Douglas R. Floyd" <dfloyd@io.com> wrote:
+>As of now, I am looking for someone who can help me implement a redundant
+>controller system, so when the DH is contacted, even if the first one if
+>smashed, the "RAID" stays operable.
+
+One approach is "Just Don't Do It" - let the user (or user interface program)
+handle the RAID work.  You can get fancy and use Shamir Secret Sharing,
+or non-fancy and use N+1 sparing RAID, or medium fancy and use
+{<even-bits>,<odd-bits>,<evens xor odds>}, depending on how private
+and how reliable you want to be.  Having just the even bits of 
+decently-encrypted cyphertext makes cracking tough....
+
+Some issues to think about -
+- Access patterns - who do you want to be able to retrieve the data?
+--- only the owner?  --- people who the owner shares a secret with?
+--- Everybody?  --- Everybody who knows where the pieces are?
+--- One retrieval?  Many retrievals?  
+- How do you want the data delivered?  Anon remailer?  HTTP?  POP3?
+- Threats - who don't you want to be able to read the data?
+--- who don't you want to be able to delete the data?
+--- who don't you want to find out who retrieved the data?
+- Payment - who pays?  Writers?  Readers?  Cops with warrants?  
+  Account holders or one-shot users?  Digicash only?  How much?
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	Defuse Authority!
+
+
+
+
+

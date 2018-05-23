@@ -1,0 +1,38 @@
+From: Phil Karn <karn@qualcomm.com>
+Date: Fri, 17 Jun 94 12:03:16 PDT
+To: jef@ee.lbl.gov
+Subject: Re: swipe working on infinity.c2.org
+In-Reply-To: <199406171524.IAA00619@hot.ee.lbl.gov>
+Message-ID: <199406171902.MAA26914@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>When I talked to Phil Karn months ago about IP encryption, he was
+>talking about encrypting each packet independently - I guess you have
+>to do that with IP since it's not a reliable protocol.  But it sounded
+>a little risky to me - maybe vulnerable to attack via known bits
+>at the start of each encrypted section.  Encrypting at the TCP
+>level would allow inter-packet mixing, but then you miss all the
+>UDP protocols such as (old) NFS.
+
+My unreleased KA9Q NOS version of SwIPe (I really need to converge to
+ji/mab's version) adds a sequence number in the header just above IP
+that is covered by the encryption (DES CBC). This acts as an IV that
+ensures different ciphertext every time even when identical packets
+are sent. The only part of the packet left in the clear is the IP
+header. An eavesdropper has no knowledge of the application or the
+transport protocol in use, or even if there's another IP datagram
+buried inside the encrypted part (e.g., the swipe boxes are providing
+a secure tunnel for other hosts).
+
+These are all advantages of IP-level encryption over doing it above
+TCP. The main disadvantage is overhead -- Van Jacobsen TCP/IP header
+compression breaks.
+
+Phil
+
+
+
+
+

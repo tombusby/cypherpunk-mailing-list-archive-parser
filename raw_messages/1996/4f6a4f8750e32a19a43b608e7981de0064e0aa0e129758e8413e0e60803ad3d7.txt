@@ -1,0 +1,56 @@
+From: Steven L Baur <steve@miranova.com>
+Date: Mon, 15 Jul 1996 06:30:09 +0800
+To: mcarpent@mailhost.tcs.tulane.edu
+Subject: Re: Execution of signed scripts received by e-mail
+In-Reply-To: <199607141042.FAA01300@Dusk.obscure.net>
+Message-ID: <m2pw5yu10s.fsf@deanna.miranova.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> "Matt" == Matt Carpenter <mcarpent@Dusk.obscure.net> writes:
+>>>>> "Hal" == Hal <hfinney@shell.portal.com> writes:
+
+Hal> That sounds very impressive!  The one problem I've run into with
+Hal> mail filtering software is that each message asynchronously
+Hal> spawns a separate filter process.  This can cause some conflicts
+Hal> with accessing disk files.
+
+Matt> If I am reading the procmail docs correctly, then the following
+Matt> recipe should create a lockfile called 'emscrypt.lock' which
+Matt> will prevent more than one instance of the script from being run
+Matt> at a time
+
+Matt> :0:emscrypt
+Matt> ^ Subject.*SQUEAMISH OSSIFRAGE
+Matt> |/PATH/emscrypt
+
+That is half correct.  It will only create emscrypt.lock if you have
+configured procmail for that kind of locking, otherwise it will use
+lockf or flock to make the lock.
+
+As Hal pointed out, you will still have one process per message, but
+they will be processed one at a time.
+
+Matt> I agree it would be better if emscrypt used its own locks on the
+Matt> timestamp files.  However, it is my understanding (someone
+Matt> please correct me if I am wrong) that there is no simple way to
+Matt> provide file locking in Perl that is portable across the various
+Matt> flavours of Unix (see the descriptions of the fcntl and flock
+Matt> functions on p. 144-145 of the Camel book).
+
+Another possibility is to call lockfile (a program included with
+procmail which performs compatible locking).
+
+You're better off using procmail's locking as it does what you're
+looking for, and many people have beat on the code over the years.
+
+-- 
+steve@miranova.com baur
+Unsolicited commercial e-mail will be proofread for $250/hour.
+Andrea Seastrand: For your vote on the Telecom bill, I will vote for anyone
+except you in November.
+
+
+
+

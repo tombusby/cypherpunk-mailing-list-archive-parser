@@ -1,0 +1,47 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Tue, 31 Oct 1995 02:46:42 +0800
+To: cypherpunks@toad.com
+Subject: Keyed-MD5, ITAR, and HTTP-NG
+Message-ID: <Pine.SOL.3.91.951030101221.319D-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+To summarise: the consensus is that using keyed-MD5 for authentication is 
+ok under ITAR, but using it for confidentiality is out.
+
+The reason I wanted to check is that I'm solidifying some of security 
+paramaters for HTTP-NG so we can add them to the test implementation 
+before the Dallas IETF. In addition to the slight problem of having half 
+the development team on the other side of the Atlantic, I want to make at 
+least a subset of the security schemes mandatory, and that means making 
+the core stuff exportable.
+
+At the moment, I'm thinking of making the mandatory schemes be Keyed MD5
+for authentication, and weakened RC4 with an IV for confidentiality, with
+the added stipulation being that the user must be informed when key
+weakening is being used. I may swap RC4 for DES; they're both public 
+domain, but RC4 is simpler. They're both shared key, but I don't make PK 
+stuff mandatory. 
+
+The other pre-defined schemes I'm planning on getting at least speced are 
+3-DES and IDEA for confidetiality, SHA for hashing, and RSA & DH for 
+key exchange, signatures, and authentication. Certificate format is 
+currently X.509- PGP format will go in ASAP.
+
+
+Simon
+
+---
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+
+
+

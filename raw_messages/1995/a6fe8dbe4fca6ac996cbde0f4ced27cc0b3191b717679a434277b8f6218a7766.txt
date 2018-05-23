@@ -1,0 +1,96 @@
+From: "James A. Donald" <jamesd@netcom.com>
+Date: Wed, 18 Jan 95 11:12:04 PST
+To: "Perry E. Metzger" <perry@imsi.com>
+Subject: Re: (none)
+In-Reply-To: <9501181603.AA01635@snark.imsi.com>
+Message-ID: <Pine.3.89.9501181033.A15911-0100000@netcom10>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eric Hughes says:
+> > I argue that if you hook your machine up to the Internet, you've
+> > implicitly authorized people to send you packets -- as many as they
+> > want and of whatever nature as they want.  No service provision I've
+> > ever seen gives any recourse to the end user against the provider for
+> > "bad" packets.
+ 
+On Wed, 18 Jan 1995, Perry E. Metzger wrote:
+> Be that as it may, people HAVE been kicked off for mischief like
+> forging routing packets -- and if someone started hosing me down with
+> any one of several really nasty packet based attacks I'm familiar with
+> I would expect action to be taken against them.
+
+Unix is broken.  Windows and DOS are fragile and under construction.
+
+Servers should have built in limits, that cause them to spit back
+packets from unknown clients that are unreasonable or strain the
+system.
+
+For example an SMTP server should have a default limit on volume
+per address and per client, with the user being able to vary
+such limits for particular clients or addresses -- trusted or
+hostile clients.
+
+At present most unix utilities have arbitrary fixed length internal
+buffers for processing variable length fields.  If you overflow 
+the buffer by sending pathological data you will crash the system.  
+If you know machine code, and you overflow the buffer with 
+carefully chosen data then instead of a random crash you can
+get the server to do some particular unexpected thing -- for
+example the internet worm caused the server to execute a
+file that the mail server had just received.
+
+This is one of many bugs that make attacks possible.
+
+This is a bug.  It can and regularly does crash your
+system and cause loss of data even if nobody attacks.
+
+Every flaw in the system causes more havoc by accident
+than it does by malice.  The correct solution is not
+to create institutions capable of dealing effectively
+with hostile acts.   The big problem is bugs that urgently
+need fixing.
+
+Now even if all the bugs were fixed some really evil
+packet based attacks are still possible, in which case
+social action -- cutting the connectivity of a host
+that generates bad packets -- is still necessary, but 
+again bad packets are more common by malfunction
+than by malice.
+
+> I doubt it. It really hasn't proved to be an actual problem thus
+> far. If anything, the limiting factor on scalability is the fact that
+> the net has no locality of reference, which is making routing design
+> harder and harder. Routing is currently THE big unsolved problem on
+> the net -- something outsiders to the IETF rarely suspect, because the
+> engineers have been faking it so well for so long. Unfortunately, all
+> the good solutions to the routing problem are mathematically
+> intractable -- and the practical ones are leading to bad potential
+> long term problems..
+
+This is inaccurate.  Optimal solutions to the routing problem are
+mathematically intractable.  Tolerable solutions are mathematically
+tractable.  For realistic routing problems, tractable approximations
+are only worse than an optimal solution by a modest factor.
+
+There are real world problems where tractable approximations
+are not good enough, but routing is not one of them.
+
+Of course I am sure Perry is correct when he says that
+the tractable approximations that we are currently using 
+fail to scale, but this is not a fundamental unsolved 
+problem in mathematics -- it is merely yet another bug.
+
+ ---------------------------------------------------------------------
+We have the right to defend ourselves and our       
+property, because of the kind of animals that we  
+are.  True law derives from this right, not from    James A. Donald
+the arbitrary power of the omnipotent state.        jamesd@netcom.com
+
+               http://www.catalog.com/jamesd/ 
+
+
+
+
+

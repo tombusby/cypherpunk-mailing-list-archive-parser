@@ -1,0 +1,93 @@
+From: Smaug <js4smaug@eden.rutgers.edu>
+Date: Wed, 11 Sep 1996 05:33:21 +0800
+To: cypherpunks@toad.com
+Subject: Allo allo
+Message-ID: <CMM-RU.1.5.842366404.js4smaug@er6.rutgers.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Just figured i'd drop a hello in the box.
+
+Hopefully at least a few of you have encountered me at some point...
+For the rest, I am Si_Druid (si is for Silicon...) and i've been
+around too long :)
+
+I consider myself a cyBerpunk by a definition that myself and a group
+of other CbP's came up w/ that seemed to fit best.  Whether it is best
+or not is a matter of much discrepancy by the hard core "CbP is a
+fictional genre" groupies, but its rather irrelevant to the rest of
+the populace.
+
+So why am i here?  Well, our ideas on CbP include just about all forms
+of survival in this society, and cryptology is probably one of the
+leading forms.  I figured I'd better throw my hat in the ring before
+it got out of hand and i wound up eating it instead.
+
+I'm not terribly experienced w/ crypts, pgp still annoys me, but 'back
+in the day' i used to write some low level crypts that were relatively
+impossible to break...
+they were also impossible to decrypt, which meant that the only way to
+use them was to work forward....
+
+mostly i did password encryption schemes, this one working the best:
+
+string        #a nice set of ascii codes
+currkeyletter #letter from string in use
+password      #a password from 5 to whatever characters
+encrypted     #the password encrypted
+char          #the current character of the password we're playing w/
+stringchar    #the char # in the string
+
+for char=0 to lengthof(password)
+
+#getting our stringchar
+stringchar=char
+while stringchar >= lengthof(string) {
+  stringchar=stringchar-lengthof(string)
+}
+currkeyletter=string[stringchar]
+
+#writing the encrypted password
+if char = 0   #first letter
+encrypted[char]=resolve(password[char],0,password[char+1],string[stringchar]
+
+else if char = lengthof(password) #last letter
+encrypted[char]=resolve(password[char],encrypted[char-1],0,string[stringchar])
+
+else
+encrypted[char]=resolve(password[char],encrypted[char-1],password[char+1],
+       string[stringchar])
+
+
+
+end of for
+
+resolve(pw,en,pw2,st){
+  result=pw+en+pw2+st
+  while result>=250 {
+    result=result-250
+  }
+  return(result)
+}
+
+
+-----
+doesnt really matter what language you write it in, the difficulty is
+essentialy that the only way to solve it is to test all possible
+passwords and strings...  which is...
+(lets say a complexity of pw=7, str=6)
+52^7 * 250^6 ~=10^26
+I think that was somewhere near the number of electrons in the
+universe :)
+
+Anyway, just providing y'all with something to toy with....
+
+Si.
+
+Oh what a tangled web we weave, when we practice to deceive
+Case in point - www.*.*
+
+
+
+

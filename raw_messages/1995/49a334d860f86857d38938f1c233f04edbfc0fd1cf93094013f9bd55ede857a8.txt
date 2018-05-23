@@ -1,0 +1,98 @@
+From: John Gilmore <gnu@toad.com>
+Date: Wed, 20 Sep 95 23:44:38 PDT
+To: jsw@neon.netscape.com (Jeff Weinstein)
+Subject: Re: netscape's response (source code review)
+In-Reply-To: <199509202028.NAA06925@comsec.com>
+Message-ID: <9509210644.AA09480@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > "Netscape has also begun to engage an external group of world-class
+> > security experts who will review our solution to this problem before
+> > it is sent to customers."
+> > 	A group which offered to review the first version, but
+> > Netscape refused.
+>   Do you mean that cypherpunks offered to review the netscape code
+> if only we made all the source available on the net?
+
+I think "the group" was RSADSI, based on a remark of Jim Bidzos.
+However, I do think that, like the S1 cipher, your code would get
+examined for interesting features and flaws by the cypherpunks if you
+released it.
+
+>   We will be having at least some of our code reviewed by a
+> wider audience, but I don't yet know which code, or how wide a review
+> group.  If anyone has specific suggestions for pieces of code that
+> you would like to see widely reviewed (such as RNG and seed generation)
+> let me know.
+
+It is becoming gradually clearer in cryptanalysis that you can't test
+security of pieces in isolation.  Their interaction with the
+surrounding code and protocols is key to their security.  Ross
+Anderson's paper at Crypto last month was all about this (``Robustness
+Principles for Public Key Protocols'').  There were also several
+papers there that showed how you couldn't just treat hash functions
+like MD5 as black boxes, since embedding them naively into signature
+protocols made it possible to do things like turn a signed short
+message into a signed longer (modified!) message.
+
+So far the c'punks haven't done anything clever to your protocols;
+they've exploited basic weaknesses in key length and key generation.
+There's still a lot of potential in active attacks, three-cornered
+attacks, replays, etc, that is unexplored.
+
+>   I realize that some cypherpunks think that we should make all of
+> our code publicly available.  In an ideal world that would be great,
+> but we live in a world with politicians, crooks, lawyers, stockholders,
+> etc...  Don't expect to see us posting our entire security
+> library source code to cypherpunks.
+
+Naah.  I think NCSA should've made Mosaic publicly available, because
+they wrote it with our tax dollars.  And I hold it against them that
+they started the trend of "zero-cost personal-use binaries but no
+commercial use" that many Net users still confuse with Real Free
+Software (free as in freedom).  But Netscape owns its code, it can do
+whatever it wants with it.
+
+I'd still encourage you to err on the side of release.
+
+The strongest tendency in the security industry is for "security by
+obscurity", i.e. if we just keep this quiet, nobody will figure it
+out.  Customers, even less sophisticated than vendors, often let the
+vendors get away with it.  But it doesn't stop the crooks, and
+stopping the crooks is what your customers are paying you to do.  
+
+Code that gets public scrutiny, like published scientific papers, gets
+debunked and honed and made to really work.  Much faster than code and
+ideas that only circulate in small, closed groups.  The reason
+Kerberos V5 is a lot more secure than V4 is because its security
+features and flaws could be publicly discussed.  Steve Bellovin wrote
+a whole paper about what was wrong in V4, and lots of people got to
+chew on that and think about how to fix it.
+
+The question that only Netscape management can estimate is: what
+damage would it risk to your business, if you released *this much*
+crypto code instead of *that much*.  Particularly if you copyright it
+and prevent commercial re-use without licensing, I doubt it will help
+your competitors much.  There is the risk of revealing a flaw that makes
+it easy to crack.  That has to be balanced against the risk of having
+such a flaw and not noticing it for years.
+
+And finally, I thought a marketing goal was to make your security
+scheme (SSL) a standard throughout the industry?  In that case,
+publishing it *and allowing* commercial use would encourage people to
+adopt it -- which is what I think you want.
+
+[We all realize that "publishing" crypto code is unconstitutionally
+regulated by the State Department.  So there are logistics to the
+release process.  But you are presumably solving them for the 128-bit
+domestic version; you can use the same procedures to let people
+download whatever crypto source code you release.]
+
+	John Gilmore
+
+
+
+
+

@@ -1,0 +1,68 @@
+From: snow <snow@smoke.suba.com>
+Date: Thu, 14 Nov 1996 22:37:51 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Mounting Crypted directories on Multiuser Machines.
+Message-ID: <199611150654.AAA01811@smoke.suba.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ 
+ I was wondering about something: 
+ 
+       Say you have a unix (or other multi-user OS) box, how hard would 
+ it be for someone who was good at programming to modify Blaze's CFS to 
+ allow the following:
+ 
+       Every user has a directory:
+ 
+      /home/usr1/
+           /usr2/
+           /usr3/
+ 
+       and inside each directory they have:
+ 
+       /home/usr1/html/
+                 /files/
+                 /.login    
+                 /.usr1crypt
+ 
+      such that /.usr1crypt gets mounted at _login_ time as a crypted file
+ system under /files.
+ 
+      The way I envision this is that one would log in (either from the console,
+ or via ssh ideally) and be presented with the option of mounting said directory
+ and asked for a passphrase, then the directory gets mounted. 
+ 
+      I took a look at Blaze's CFS, but he mentions that it is really only for 
+ a single user system, and well <looks sheepish I can't get it to compile 
+ on my machine, so I can't really play with it on my end. 
+ 
+      I would think that this would be fairly difficult, otherwise it would 
+ have already been done right? 
+ 
+      Or am I missing something more basic? 
+ 
+      It would seem that running something like this would do 2 things.
+   
+      1) It would be much more difficult to prove that a service provider 
+         knew what files a user was keeping lying around because unless
+         the user was logged in, not even the Sysadmin could "peek" at the
+         files.
+      2) Provide the user with greater privacy. Users could keep PGP keys 
+         on the system without much risk, and as long as access was either
+         thru the console, or thru something like ssh, you should be rather
+         safe. 
+  
+       Is anyone working toward something like this? I kinda got the idea that
+ CFS was more designed and intended for single-user-at-a-time systems, but the
+ application I had in mind was more of a (old) C2-type organization. 
+ 
+ 
+ Petro, Christopher C.
+ petro@suba.com <prefered for any non-list stuff
+ snow@smoke.suba.com
+
+
+
+

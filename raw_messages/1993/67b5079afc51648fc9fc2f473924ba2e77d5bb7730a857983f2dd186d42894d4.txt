@@ -1,0 +1,54 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Tue, 23 Feb 93 15:53:46 PST
+To: J. Michael Diehl <mdiehl@triton.unm.edu>
+Subject: Re: Newbie comments.
+In-Reply-To: <9302232326.AA26860@triton.unm.edu>
+Message-ID: <9302232352.AA05451@toxicwaste.MEDIA.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> But I have a (newbie?) question.  Isn't it true that, at the network
+> level, it is still possible to tell where a message came from and
+> where it's going.  That is, given the proper motivation, couldn't "and
+> entity" sniff out all of this information and find out which machine a
+> particular message came from.  And from logs at that machine, which
+> The Entity naturally has access to, It could find out who send the
+> message.  Just wondering.....
+
+That is the point of encrypted, anonymous remailers.  Since the
+message is encrypted, it looks like a random set of bits.  If it gets
+re-encrypted at every stage, then the remailers can add random bits of
+data to change the size.  They already change the headers.
+
+So, the only thing left to worry about is a FIFO problem.  But that
+is easily solved.
+
+So, here is what happens:
+  A message comes into a remailer (actually, a bunch of messages do,
+but that's not important).  It comes in encrypted, so you can't read
+the message.  The headers are stripped off in the remailer and the
+message is re-encrypted, so the data changes.  If it gets stored an
+arbistrary length of time, and the outgoing order is different than
+the incoming order, than there is no way to figure out which message
+came from or went to where.
+
+There is a lot more to this, and a lot of other problems that need to
+be solved, but this is it in a nutshell.
+
+I hope it answers your question.  I'm sure people will correct any
+mistakes I inadvertantly left in.
+
+-derek
+
+PGP 2 key available upon request, on the key-server:
+	pgp-public-keys@toxicwaste.mit.edu
+--
+  Derek Atkins, MIT '93, Electrical Engineering and Computer Science
+      Chairman, MIT Student Information Processing Board (SIPB)
+           MIT Media Laboratory, Speech Research Group
+           warlord@MIT.EDU       PP-ASEL        N1NWH
+
+
+
+

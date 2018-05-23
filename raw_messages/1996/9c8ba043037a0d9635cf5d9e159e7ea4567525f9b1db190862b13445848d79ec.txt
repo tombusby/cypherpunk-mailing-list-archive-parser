@@ -1,0 +1,80 @@
+From: iang@cs.berkeley.edu (Ian Goldberg)
+Date: Wed, 8 May 1996 15:01:40 +0800
+To: cypherpunks@toad.com
+Subject: ecash moneychangers (Was:  Kid Gloves or Megaphones)
+In-Reply-To: <199605051818.LAA13740@dns2.noc.best.net>
+Message-ID: <4mordl$1pe@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <199605051818.LAA13740@dns2.noc.best.net>,
+ <jamesd@echeque.com> wrote:
+>
+>>>It is true that the issuer is unable to discover that double blinding is
+>>>being used. The real problem with the protocol is that it requires
+>>>payor/payee collusion, which may make it difficult to execute.
+>
+>At 07:58 PM 5/4/96 EDT, E. ALLEN SMITH wrote:
+>>=09Can the payee discover that the payor isn't colluding before the bank
+>>can figure out who the payee is?
+>
+>If the payor is not colluding, then the payee will immediately discover
+>he has not been paid, because the checksums are wrong, and his software
+>says "bad payment"
+>
+>If the payor is colluding, then no matter what he reveals to the bank,
+>the bank cannot discover the payee.  Note that with payee anonymity,
+>the payee does not have to promptly check in his money, so the bank
+>has no hope of narrowing the search by coincidence in time.
+>
+>But if the payee is colluding, then the payor can be detected by=20
+>coincidence in time.
+
+Ah, but if we have the capability to do the fully-anon protocol, we can
+suddenly do change-making stations.
+
+The change problem is similar to the problem described above:  what if the
+payor wants to buy something, but doesn't have the right change?  Going
+to the bank to get change will give away who he is.  The solution:
+go to your local moneychanger.
+
+A moneychanger accepts, say, a coin for $0.02 and two blinded half-coins
+for $0.01 each.  He deposits the $0.02, and if it clears, has the bank sign
+the half-coins, which he returns to the payor (he'll probably blind and
+unblind those half-coins, too).  The payor now has the right change, and
+all the bank can see is that the moneychanger deposited a $0.02 coin and
+withdrew 2 $0.01 coins.  Of course, the moneychanger may charge the payor
+an extra bit for the privilege.
+
+In the case of the fully-anon protocol, the payee gives a blinded half-coin
+to the payor.  The payor then, as above, sends it (and a service fee)
+to the moneychanger, who sends it to the bank (or maybe another moneychanger...
+echos of remailers...), yadda yadda.
+
+A moneychanger is a very useful construct for protecting _payor_ privacy
+when exact change isn't handy.
+
+Note also that with a system like this, there's no real reason for the payor
+to even _have_ an account with the bank...
+
+If (when) the ecash library is released, this will all become pretty
+straightforward to implement.
+
+   - Ian "who thinks he understands the ecash protocol, right down to the wire"
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMY/wwkZRiTErSPb1AQEFuAP/WSOBZ1GrK7SVn3s823fgIlQw5TLgvGgX
+MJtpsYiF5bREL/8Rcz96YZxw7ZeWYiTbTB+LFb4gqvCQg4/1xnybINYvmowxgPVr
+w0WrJ1ZkwgYoEzGFBlXhS4+jH3RGHk2tiB9TB9irjrsv7lK2sBR7ZL1k3sF93LSs
+8kLCK/iiF5M=
+=PV1S
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,55 @@
+From: Mike Johnson <exabyte!smtplink!mikej@uunet.UU.NET>
+Date: Mon, 19 Jul 93 17:15:30 PDT
+To: cypherpunks@toad.com
+Subject: steganograpy and cryptography
+Message-ID: <9307191739.A01267@smtplink.exabyte.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Kragen writes:
+> I was thinking of steganography as being in two stages: first, you encrypt,
+> (possibly with the identity transformation) then, you embed your encrypted
+> message in your medium of transmission.  My previous message was describing
+> requirements for a strong encryption algorithm, quite apart from the actual
+> embedding.  I stand by my statements: the purpose of steganography is to make
+> it difficult or impossible for an interloper to determine that enciphered data
+> are being transferred.  Thus, embedding a magic number in the file defeats the
+> purpose completely.
+> (As opposed to "slightly reducing security.")
+
+True.  I was refering to cryptographic security instead of steganographic
+security when I said "slightly reducing security."  Sorry about the
+miscommunication.  For steganographic purposes, there should be no _constant_
+magic numbers or CRCs taken _after_ the encryption (and visible in the
+ciphertext).  All magic numbers and CRCs should be embedded _before_
+encryption and checked _after_ decryption when you want the ciphertext to
+look purely random.  This way you can have _both_ cryptographic convenience
+and random looking ciphertext ready for steganographic hiding.
+
+> I think that designing a program to embed this apparently random bitstream in
+> an innocent-looking file is a different and much harder problem.
+
+Definitely.  Such a program is also very likely to drastically inflate the
+message, depending on the definition of "innocent-looking" and the
+characteristics of the channel or storage medium used.  For example, a
+message could be concealed in the number of blank characters after each line
+of text from an recipe book, but someone might even get suspicious about a
+sudden interest in cooking among cypherpunks.  :)
+
+By the way, I heard a rumor from a telephone company employee who I met (face
+to face) who is in a position to know that a U. S. company was using DES to
+communicate proprietary information between one of its facilities in Japan and
+an office in the USA.  They got a letter from the Japanese parliament asking
+them why they were sending encrypted data.  Perhaps there is more to the
+question of steganography than purely academic interest...
+
+-----------------------------------------------------------------------------
+Mike Johnson       | Opinions expressed herein are mine, and come with no
+mikej@exabyte.com  | warranty, expressed or implied.  PGP key on request.
+-----------------------------------------------------------------------------
+
+
+
+
+

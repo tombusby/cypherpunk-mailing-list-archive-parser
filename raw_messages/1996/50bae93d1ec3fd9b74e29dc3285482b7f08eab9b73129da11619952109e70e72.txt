@@ -1,0 +1,56 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Tue, 31 Dec 1996 06:46:47 -0800 (PST)
+To: markm@voicenet.com (Mark M.)
+Subject: Re: Building PGP on Freebsd?
+In-Reply-To: <Pine.LNX.3.95.961230234115.2038B-100000@eclipse.voicenet.com>
+Message-ID: <199612311443.JAA08589@homeport.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Thanks!  Commenting out USEMPILIB worked fine.
+
+We now return you to your regularly scheduled flammage.
+
+Adam
+
+
+Mark M. wrote:
+-- Start of PGP signed section.
+| On Mon, 30 Dec 1996, Adam Shostack wrote:
+| 
+| > I get this message at the end, for building with the netbsd or the
+| > 386bsd config file.  I know theres a simple tweak, can someone remind
+| > me what it is?
+| >
+| > Thanks,
+| >
+| > Adam
+| >
+| >
+| >
+| > gcc -o pgp pgp.o crypto.o keymgmt.o fileio.o  mdfile.o more.o armor.o
+| > mpilib.o mpiio.o  genprime.o rsagen.o random.o idea.o passwd.o  md5.o
+| > system.o language.o getopt.o keyadd.o  config.o keymaint.o charset.o
+| > randpool.o noise.o zbits.o zdeflate.o zfile_io.o zglobals.o
+| > zinflate.o zip.o zipup.o ztrees.o zunzip.o rsaglue2.o _80386.o
+| > _zmatch.o   ../rsaref/install/unix/rsaref.a
+| > rsaglue2.o: Definition of symbol `_NN_ModExp' (multiply defined)
+| 
+| You can either comment out the function "NN_ModExp" in the file nn.c in rsaref
+| or not define "USEMPILIB".
+| 
+| 
+| Mark
+-- End of PGP signed section.
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+
+

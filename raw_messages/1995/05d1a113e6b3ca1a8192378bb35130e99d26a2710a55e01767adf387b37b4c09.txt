@@ -1,0 +1,57 @@
+From: szabo@netcom.com (Nick Szabo)
+Date: Fri, 15 Sep 95 16:10:40 PDT
+To: cypherpunks@toad.com
+Subject: Re: why ecash is traceable
+Message-ID: <199509152249.PAA18059@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal & Tim have made some interesting comments about payee untraceability.
+I suspect it will clarify things to point out the orthogonality in 
+two of the major design choices:
+
+* Clearing: Offline vs. online
+* Settlement: Deposit to payee's account vs. sending new cash to payee
+
+Because DigiCash wants their product to have payer, but not payee, privacy,
+the current ecash(tm) software from DigiCash uses online clearing
+and deposit to payee's account, but the three other combinations are 
+also quite doable if somebody wanted to implement them.  The design that 
+allows symmetric untraceability combines online clearing with sending new 
+cash.  This way the bank need not ID the payee Bob in order to credit 
+him with the value of the transaction; Bob and the bank can complete 
+the clearing and settlement via anonymous channel.  (The bank will 
+also want to receive an anonymous payment from Bob for the service,
+and Chaum has described a second blinding step the payee must
+perform for the symmetric case, complications which I won't go into 
+here).
+
+Offline clearing requires the potential to ID the payer in 
+order to punish double-spending after the fact.
+Online systems without observers (such as ecash(tm)) don't
+need to worry about trying to find multiple spenders, because this is
+prevented by the online clearing.  In fact, purposeful second-spending
+is used to recover from some error conditions, specifically to determine 
+whether the payee in fact received the "coin" or not when there has been a
+network error in the middle of a transaction.   Distinguishing between
+mistaken  and fraudulent double spending is a very complex, not completely 
+tractable problem, so the current ecash(tm) punts it, which is reasonable
+because it is online.  An offline system would need an elaborate
+blacklisting system as well as active support of law enforcement in
+all jurisdictions using the ecash, would need to come up with 
+reasonable ways to distinguish between fraudulent and 
+mistaken double-spending, and would need more elaborate and 
+specialized error-recovery protocols.  If hardware "observers", based 
+on "tamper-proof" hardware instead of mathematical protocol, and which
+prevent double-spending at the source, can be made harder to crack than
+the maximum a cracked card is allowed to spend, then such small-value 
+transactions might be feasible offline.  (This is the major avenue being 
+pursued commercially, because online transactions are perceived to
+be too expensive, which is false in the case of the Internet IMHO).
+
+Nick Szabo					szabo@netcom.com
+
+
+

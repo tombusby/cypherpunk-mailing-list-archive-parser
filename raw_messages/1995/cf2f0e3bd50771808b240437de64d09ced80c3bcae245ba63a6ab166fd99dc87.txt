@@ -1,0 +1,71 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Fri, 4 Aug 95 11:12:25 PDT
+To: hfinney@shell.portal.com (Hal)
+Subject: Re: Java and Safe-TCL security
+In-Reply-To: <199508041701.KAA10421@jobe.shell.portal.com>
+Message-ID: <199508041812.OAA23036@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> The safe-tcl mailing list has not been active for a few months.  I think
+> a lot of interest has transferred to Java.  One problem is that safe-tcl
+> was oriented around email, so it lacks facilities for accessing web
+> pages.
+> 
+> I agree with Ray that the security of safe-tcl leaves something to be
+> desired.  I implemented a safe-tcl mail filter which would automatically
+> run incoming mail scripts which were in safe-tcl format.  This would be a
+> generalization of a remailer, so that users could write scripts which
+> would determine when the remailing would occur, etc.  However I ran into
+> a number of problems, particularly related to persistent storage (e.g.
+> disk file access).  This is a hard problem for a "safe" system to solve.
+
+Hal,
+  One of the designs I have one the drawing board is to store per-script 
+persistent data in a dbm file, and allow scripts to import/export data
+from/to a shared tuple-space. I would limit the data storage to 1024
+bytes (to make it portable, some DBM libraries have this limit)
+  Scripts could store variables via a new command added to the interpreter
+like 'SafeTcl_putvar varname value', and access valuables with
+'SafeTcl_getvar varname', 'SafeTcl_varlist'. Also, there would be a
+'SafeTcl_read_variables' which could be executed at the beginning of
+the script to reload all stored variables. 
+  Scripts could talk to other scripts by means of a 
+
+	SafeTcl_export -value value scriptname1 scriptname2 ...
+ 
+  The other script(s) could check for any incoming imports and use 
+SafeTcl_import to retrieve the value. (when the last import is done,
+the data is garbage collected. Also, there would be a timestamp so that
+old data would be purged after a time limit anyway)
+
+
+   An example might be, a calendar application in your mailbox which maintains
+your weekly schedule. An incoming message script (agent), could "export"
+some data to this calendar script which would correspond to some command.
+For instance, asking if you would like to have dinner at a certain time.
+If the calendar agent says yes, it could send a reply agent to inform
+your calendar. 
+
+  The calendar could be programmed to wakeup every so often and check for
+imports, or the interpreter could just be made to "wakeup" any script
+that got an import immediately. 
+
+  Telescript's checkpointing of execution state is of course, much cleaner.
+Too bad they don't know how to market a programming language.
+
+  If anyone writes an enabled-mail java runtime, the same things could be
+done a lot easier. 
+
+  The problem with all safe "agent" designs is that the programming language
+itself isn't enough. There needs to be a meta-agent language for 
+querying capabilities of local environments.
+
+-Ray
+  
+
+
+
+

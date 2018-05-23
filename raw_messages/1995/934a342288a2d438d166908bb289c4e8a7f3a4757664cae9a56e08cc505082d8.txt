@@ -1,0 +1,57 @@
+From: Eric Blossom <eb@comsec.com>
+Date: Fri, 11 Aug 95 15:17:44 PDT
+To: rjc@clark.net
+Subject: PRZ encrypted voice software release imminent
+In-Reply-To: <199508111816.OAA05222@clark.net>
+Message-ID: <199508112143.OAA02837@comsec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>   If you are forced to abstract above "modems", your algorithms will
+>   be designed to work over more general transmission schemes. I fear
+>   that coding for modems first will lead to an overall application tuned for
+>   modems, but poorly designed for asynchronous networks. The tunning should
+>   be done in the driver, not the application/algorithm level. 
+>   (for example, modems don't experience much "packet churn and loss",
+>   and they usually have a dependable bandwidth. Even if they retrain
+>   randomly from 28.8 to 14.4, they can still be counted on to atleast have
+>   9600 bps throughput more consistently deliverable than say a slip/ppp line 
+>   would)
+
+asynchronous networks are a completely different beast than your basic
+point-to-point phone call.  Over.
+
+If you expect people to use a secure voice communication device,
+they've got to like it.  Over.
+
+I don't know anybody who prefers more latency.  Over.
+
+I think that it makes great sense to optimize for a point-to-point
+connection.  I also believe that it should be an un-error corrected
+channel (no V.42 or V.42bis) since many speech coders can tolerate
+the errors.
+
+Knowing the channel characteristics also allows you to tailor your
+crypto usage.  If you know you've got a raw synchronous channel, and
+Pr(bit insert or bit delete) << Pr(bit error) than you can avoid a lot
+of overhead.  This does matter where bandwidth is tight.  Say,
+sticking a 13,000 bit/s coder down a 14,400 bit/s pipe.  With GSM's
+260 bit frame every 20ms, it leaves 28 bits per frame for all
+overhead.  This includes any forward error correction, sync
+maintenance, crypto IV's etc.  You can't tune this in the driver.
+
+None of this says that you shouldn't also optimize for the packetized
+case too.  I think that you can negotiate the right behavior at start
+up time based on detected channel characteristics.  I think that the
+biggest impact is in the framing overhead, or lack of it.
+
+You are always trading off bandwidth, speech quality and MIPs.
+
+Eric
+
+
+
+
+

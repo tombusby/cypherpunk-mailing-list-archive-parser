@@ -1,0 +1,36 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 6 Feb 95 21:37:24 PST
+To: cypherpunks@toad.com
+Subject: Re: New directions in anonymity (needed)
+Message-ID: <199502070522.VAA27293@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Noyb, anonymous-remailer@shell.portal.com
+>   So, lets look at the
+> cost of ataining anonymity.  For U people to communicate M bits (total
+> -- 2 people each sending 2 bits is M==4) s/r anonymously takes O(U*M)
+> bits multicast bandwidth for Chaum's DC protocol, but the repool
+> protocol uses only O(h*M) bits narowcast bandwidth plus O(M) bits
+> multicast bandwidth (Where h is the average number of remailer hops,
+> expected to be a constant wrt U and M, smaller than U, and much smaller
+> than M).
+
+The repool could actually be somewhat worse than this.  Wei has
+shown that if you don't send every tick then statistical information
+builds up surprisingly quickly to link senders and probable receivers,
+especially if there is a pair communicating frequently over a long period
+of time, arguably one of the main forms of usage of these nets.  So
+everyone has to send all the time at the rate of the maximum per-user
+rate accepted by the remailers (say, one packet per tick).  If this rate
+is considerably above the actual average communication rate of a given
+user then this will be much higher than O(h*M) (although granted it will
+not scale directly with U, increasing U will increase the desired packet
+rate that would satisfy, say, 90% of users).
+
+Hal
+
+
+
+

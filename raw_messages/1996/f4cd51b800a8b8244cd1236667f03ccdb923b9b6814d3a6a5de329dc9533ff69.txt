@@ -1,0 +1,113 @@
+From: Jeremey Barrett <jeremey@forequest.com>
+Date: Fri, 16 Aug 1996 06:56:25 +0800
+To: Chris Lee <chrislee@sunspot.tiac.net>
+Subject: Re: PGP/Unix scripts, mail proggies?
+In-Reply-To: <Pine.SUN.3.95.960808222342.27876A-100000@sunspot.tiac.net>
+Message-ID: <Pine.BSI.3.93.960815110720.16514A-100000@descartes.forequest.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Thu, 8 Aug 1996, Chris Lee wrote:
+
+> Hello all,
+> 
+> 	I joined this list a while ago and am curious whether a there is a
+> simple way to encrypt/decrypt e-mail with PGP in a Linux(Unix)
+> enviroment...?  Sorry if this has been answered a thousand times, but it
+> would really make PGP a more viable option with my small ISP.
+> 
+> Thank you very much for any answers, please reply to me personally.
+> 
+
+Here's what I use, a simple sh script with pine for signing/encrypting.
+
+#!/bin/sh
+
+# Written by:  Jeremey Barrett <jeremey@forequest.com>
+#
+# Simple as hell sh script for automating PGP. I use pine, and have not
+# tried this with any other mailer, but it should work. The version of this I
+# use asks all kinds of questions about using remailers and nym servers
+# before editing the mail, so it can toss in templates and such. Anyway,
+# hack this at will.
+#
+
+# Pine configgy stuff I use with this:
+# 
+#	A)	enable-alternate-editor-cmd
+#	B)	enable-alternate-editor-implicitly
+#	C) 	signature-at-bottom
+#	D)	editor=<full path to this script>
+
+# I would use emacs cept that firing it up for every mail I send would suck
+PGPEDITOR='pico -z -t'
+
+# Some echos don't like -n, modify if necessary
+ECHOTYPE='echo -n'
+
+# Edit the mail... the mailer shold give us the tmp file as $1
+$PGPEDITOR $1
+
+clear
+
+# Annoy with questions
+$ECHOTYPE "PGP sign this message? [n] "
+read PGP
+
+if [ "$PGP" = "y" -o "$PGP" = "Y" ]
+then 
+
+  $ECHOTYPE "PGP encrypt this message? [n] "
+  read PGPE
+
+  if [ "$PGPE" = "y" -o "$PGPE" = "Y" ] 
+  then
+    pgp -east +clearsig=ON $1
+    mv $1.asc $1
+  else
+    pgp -sat +clearsig=ON $1
+    mv $1.asc $1
+  fi
+
+else
+
+$ECHOTYPE "PGP encrypt this message? [n] "
+read PGPE
+
+if [ "$PGPE" = "y" -o "$PGPE" = "Y" ] 
+then
+  pgp -eat $1
+  mv $1.asc $1
+fi
+
+fi
+
+
+- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Jeremey Barrett
+Senior Software Engineer                        jeremey@forequest.com
+The ForeQuest Company                           http://www.forequest.com/
+
+PGP Public Key: http://www.forequest.com/people/jeremey/pgpkey.html
+                
+		"less is more."  -- Mies van de Rohe.
+- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMhNo0i/fy+vkqMxNAQHwRgP/etGXm06WG7yTVLYYKbwmasezVJX9RScS
+kyY4kWornpBQvTRK7VKNAzVH5Pe7lXFtQAL1kpVtuNxwXsZf2tKVzXC8ZwhCF8eZ
+poAH6m8pE6d9n2Ft22PTOza6URU+Lx+18D3AoNyEvEQE8xMaMIOno121eiq5/Smk
+5BOPFkSuzKM=
+=EUq6
+-----END PGP SIGNATURE-----
+
+
+
+
+

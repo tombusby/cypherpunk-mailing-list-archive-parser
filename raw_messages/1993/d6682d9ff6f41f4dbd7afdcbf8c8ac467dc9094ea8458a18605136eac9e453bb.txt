@@ -1,0 +1,124 @@
+From: Crys Rides <crys@cave.tcp.COM>
+Date: Mon, 22 Feb 93 03:52:21 PST
+To: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Subject: msdos perl
+In-Reply-To: <9302220342.AA07039@toad.com>
+Message-ID: <9302221150.AA00474@ucunix.san.uc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>>>>> On Sun, 21 Feb 93 19:41:06 PST, Eli Brandt <ebrandt@jarthur.Claremont.EDU> said:
+
+> Slight complaint:  The only available port of perl to DOS is 386 or
+> higher only,
+
+Eli> The perl419x.zip in simtel:msdos/perl doesn't even use the 386.
+Eli> However, those without 386 + memory manager may have a bit of
+Eli> a hard time with memory.  I don't know about the perl4019.zip in
+Eli> the same directory; I snarfed it to check, but it has no docs (and
+Eli> I don't care to disassemble for 386 code!)
+
+The executeable in the file you refer to can also be ftp'd from
+tandem.com, it's source site, in the directory /pub/perl. To quote
+the README file for that directory:
+
+Last updated: Saturday, February 1, 1992
+Latest bcdos version of Perl: 1.4
+
+This is a port of Perl 4.019 to MS-DOS using Borland C++ V3.0.  It will
+NOT compile with versions of BC++ prior to 3.0.
+
+The port is complete given the functionality of DOS versus UNIX.  Support
+will be added in the future for ndbm() routines using GNU-ndbm (when I
+get around to it !).
+
+The port makes use of Borland's VROOM technology and pretty much *requires*
+access to extended memory.  There is approx. 300+ Kbytes of memory available
+          ^^^^^^^^
+for Perl scripts.  The amount of memory available can be checked using
+two user subroutines added via Larry Wall's usersub.c hook.
+
+	&heapfree()	- returns size of far heap in bytes
+	&stkfree()	- returns size of free stack
+
+The port also makes use of xspawn() (available from Simtel or Wuarchive
+if you look hard enough) and will swap itself to either extended memory
+or disk when Perl invokes the system() call.  This leaves about 605 Kbytes
+of memory available for DOS apps on my 386 machine running DOS 5.0.
+
+I've run this port of Perl against all the test cases supplied in the
+normal Perl release.  They all work except those that call perl again
+(not enough memory !) or have specific UNIX dependencies (that dont work
+on DOS - too bad !).
+
+This version of Perl has been tested on both 286 and 386 machines with
+and without extended memory.  If you find problems on a specific machine
+I would like to hear about them but don't necessarily commit to fix them.
+As per the Artistic and GNU licenses, you get what you paid for and your 
+on your own !
+
+
+There are three files herein:
+
+	bcv14_perl4-019.zip
+
+		Contains all the source files.
+		There are only one or two files that have changed from
+		the standard 4.019 release (nice job lwall on portable
+		code !).
+
+	bcv14_perl4-019E.zip
+
+		Contains the executeable for perl PERL.EXE and all the
+		library files for perl.  If you don't intend to re-build
+		PERL, then THIS IS THE FILE FOR YOU !
+
+	xspawn34.zip
+
+		This file contains the xspawn routine used by bcdos_Perl
+		to swap out to extended memory or disk when running
+		child processes.  It is identical to the the one that can
+		be found on simtel or wuarchive.
+
+Nota bene re extended memory;
+
+This port attempts to reserve 128K bytes of extended memory for the
+VROOM arena.  A 64K arena ran like a DOG so this is about the optimum 
+size of memory versus speed.
+
+
+Happy hacking !
+Stuart G. Phillips N6TTO/G8HQA/DA4BM/OZ... (you get the idea)
+[stu@tandem.com]
+
+I've not encountered a non 286/386/486 with extended memory, which
+this file says it requires.  Plus there is no testing on machines
+other than those.  I've attempted to run this on an antiquated
+8088.  It simply executes and drops back to the command line
+without action.  Much as I feel perl would be an easy and useful way
+to code this up, I don't feel it's a tool with the broadest reach
+at this time for DOS.  Sorry.
+
+> CrysRides
+
+Eli>    Eli   ebrandt@jarthur.claremont.edu
+
+CrysRides
+again
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK4i64JSqD+bQ7So3AQGA9wP/bcK1XiUJD2fCv6DslWXF9SGJjpg+XmZT
+UbIXgk34EpQV2dvbpIv8Rb8w9kKHEsj+sb+Koxad2m2qDJPa0rPYD4VzUbBHEmIC
+DTctXvcemjlwzLRHp19Udn3nMchtvnEz2hb0ZkTyBkuVJYrkU5r8HgCr2etpPgyX
+IWwBsIINGGo=
+=6W7Q
+-----END PGP SIGNATURE-----
+
+
+
+

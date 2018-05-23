@@ -1,0 +1,51 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Thu, 23 May 1996 06:09:27 +0800
+To: cypherpunks@toad.com
+Subject: Floating Point and Financial Software
+Message-ID: <199605221618.JAA04180@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There seem to be a few mini-flames on the list over whether
+floating point data representations are appropriate for financial
+software.
+
+In a nutshell, the answer is "YES", and the use of floating point
+arithmetic is common in such applications.
+
+One argument heard against the use of floating point is that it
+is inherently "imprecise." In reality, floating point
+representations and the results of floating point operations are
+perfectly well defined, and the points on the real number line
+which are exactly representable by double-precision floating
+point values are usually a superset of those representable by the
+default integer on most machines.
+
+Storing monetary values as double-precision floats having integer
+values in cents is even common in COBOL programs, where the
+"COMP-3" data type allows the use of fast floating point in lieu
+of the default and slow manipulation of packed decimal and
+decimal data.
+
+It is even common in certain CPUs, like CDC Mainframes and
+SPARCS, which are primarily floating point engines, to omit
+integer divide and sometimes even multiply, and to provide a
+subroutine which employs floating point calculations to emulate
+these operations. This is completely transparent to the user of
+the machine, and there is no problem in using floating point to
+do integer operations.
+
+In fact, when running financial applications on large engineering
+mainframes, which generally lack a business instruction set,
+floating point is not only commonly employed, it is the obvious
+way to get the maximum performance out of the machine.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

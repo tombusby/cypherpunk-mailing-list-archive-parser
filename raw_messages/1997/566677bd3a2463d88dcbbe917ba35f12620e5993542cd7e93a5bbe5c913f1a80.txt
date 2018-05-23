@@ -1,0 +1,83 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Sun, 14 Dec 1997 02:38:52 +0800
+To: Antonomasia <cypherpunks@ssz.com
+Subject: Re: hashcash spam prevention & firewalls
+In-Reply-To: <199712131225.MAA02138@notatla.demon.co.uk>
+Message-ID: <3.0.3.32.19971213101329.007794a0@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 12:25 PM 12/13/1997 GMT, Antonomasia wrote:
+>Hashcash in this context suffers from the 'fax effect' - the
+>catch 22 of "We won't install what isn't widely used".
+
+Makes sense to run it in a permissive mode for a while first -
+sendmail++ could add hashcash to outgoing messages, and mark the
+hashcash information in the headers on incoming messages.
+The catch is getting it generated - you've got to include it
+either in ISP's outgoing relays, or ideally in client software.
+(Since hashcash is mainly for spam prevention, relays _could_
+just check that there's some valid hashcash going by without
+removing it - that's a bit tricky in multiple-recipient mail anyway,
+since you'd normally need to include one hashcash per recipient.)
+So if you want it adopted, you'd need to talk to the folks at
+Qualcomm Eudora and at Netscape, and see if you can get Microslush
+to include it in some of their mail clients.  This does have the
+advantage that most of the CPU load is calculated on users' machines,
+where there's plenty of spare horsepower, rather than on relay
+machines which are not only easily tricked, but also tend to have
+about as much horsepower as each of the thousands of clients they serve.
+
+>>                         and b) it reduces bandwidth consumption on
+>> dial up users pay per second lines as the spam is killed before they
+>> see it.
+>
+>I have not (yet) persuaded demon to allow user-defined procmail rules
+>on the ISP end of the phone lines.  Anybody know an ISP who does this ?
+
+Almost any ISP that provides shell accounts can give you a mechanism for this,
+whether it's procmail itself or your own relay program that feeds
+your mail to procmail before delivering it to you.
+
+Alternatively, some of the boring commercial services like AOL
+have Spam-blocking options, and the pobox.com mail relay does also.
+These aren't like having your own procmail, but they'll kill off
+the well-known spammers for you, e.g. blocking c y b e r p r o m o
+and some of the popular harvester programs that advertise themselves
+in mail headers.
+
+
+
+>> Better, is to require valid hashcash on all mail, _until_ the
+>> recipient replies to a mail.  This is good because people rarely reply
+>> to spammers.
+>This means a huge database of who has replied to whom.  Must the
+>reply have headers indicating In-Reply-To a recognisable message ?
+
+That has real trouble with mailing lists.
+It also creates a valuable soft-target traffic analysis database;
+unlike current sendmail logs, it'll probably stick around for
+an extended period of time, and be readily subpoenaed.
+At a minimum, such a database should keep keyed hashes of addresses
+rather than the addresses themselves - that still makes it possible
+to check for individual known addresses, but makes it harder
+to go fishing for everybody.  The reason for keyed hashes is to
+require dictionary attacks to target individual machines,
+but the added work factor for hashing the database of usual suspects
+for aol.com, compuserve.com, hotmail.com, juno.com, worldnet.att.net,
+demon.co.uk, and relay.national.sg isn't that large.
+
+Also, it's easy for spammers to fake replies to themselves to 
+prime the pump for their big spam.  And if you let mailing lists slide,
+they can easily forge mail from the mailing lists.
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

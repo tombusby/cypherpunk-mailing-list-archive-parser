@@ -1,0 +1,63 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Wed, 11 Oct 95 01:07:01 PDT
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: Internet, the cracking machine
+In-Reply-To: <9510101354.AA05988@outland>
+Message-ID: <Pine.SUN.3.91.951010185952.22710A-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 10 Oct 1995, Mike Fletcher wrote:
+
+> 
+> Well, security bugs aside (and I've got the sun4.1.3_u1 and Win32 ns2b
+> distributions :) has anyone given any thought to using Java to do some
+> sort of Chinese Lottery attack.  I was re-reading App. Crypto. last
+> night and it could be feasable.  If you could get your key cruncher
+> thread loaded into a good many browsers to run when idle . . . .  How
+> many estimated copies of NS are there?  Anyone want to do the math? :)
+
+Ok, I'll bite.  Let's figure out how many MIPS years it takes to brute force 
+various keylengths (assuming 100 instructions per key):
+56: 2e3
+64: 6e5
+80: 4e10
+128: 1e25
+
+Andrew M. Odlyzko in his paper "The Future of Integer Factorization" 
+estimates the computing power of the Internet at 3e7, and the number of
+MIPS years to factor a 1024 RSA key to be 3e11.  I think both numbers are
+probably off by a factor of 10 - Internet's computing power is probably
+closer to 3e8 and MIPS years to factor 1024-bit key may be closer to 3e10. 
+
+So assuming that you can get the entire Internet to help you, the amount 
+of time it takes for various attacks is:
+
+brute force keys of bit
+56: 4 minutes
+64: 1 day
+80: 130 years
+128: 3e16 years
+
+factor RSA keys of bit
+512: 20 minutes
+768: 50 days
+1024: 100 years
+2048: 1e11 years
+
+If you are reading this from an archive, divide the brute force numbers by
+4**(your current year-1995), and the factoring numbers by 8**(your current
+year-1995), for a factor of 2 improvement per year in each of the
+following: average CPU power, number of computers on the Internet, and
+factoring algorithm. 
+
+(Note that the above estimates are meant to err on the low side.  I would
+be VERY surprised if anyone actually manages to accomplish any of the
+above attacks in the amount of time given.)
+
+Wei Dai
+
+
+
+

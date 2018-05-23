@@ -1,0 +1,101 @@
+From: Peter Murphy <pkm@maths.uq.oz.au>
+Date: Sat, 11 Jun 94 19:45:12 PDT
+To: mpd@netcom.com (Mike Duvos)
+Subject: Re: Protocol Wanted!!
+In-Reply-To: <199406112316.QAA15142@netcom.com>
+Message-ID: <9406120244.AA15736@axiom.maths.uq.oz.au>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Commenting on Mike Duvos's original article:
+
+> 
+> Here is a simple problem.
+> 
+> Late one night, Bob discovers a clever new method of factoring
+> large products of distinct odd primes.  Bob may now perform such
+> factorizations in only a few hours for numbers up to 1024 bits on
+> his trusty old 486.
+> 
+> Bob spent a lot of time coding and testing his new algorithm, and
+> wishes to recover some of his expenses by factoring a few RSA
+> keys for well-to-do clients. Bob wants to do this without
+> disclosing his identity, so a certain evil three-letter agency
+> will not cover him with rubber hose marks trying to learn how his
+> algorithm works.
+> 
+> Alice is the CEO of a company who suspects PGP-encrypted mail is
+> being used by an employee to transfer trade secrets to a foreign
+> competitor.  Alice would pay any amount of money to read this
+> mail and confirm her suspicions.
+> 
+> Alice is a potential client for Bob.  Now for the hard part...
+> 
+> How does Bob make Alice, and other potential clients, aware of
+> the service he wishes to offer?
+> 
+> How do Bob and Alice conduct business anonymously while making
+> absolutely sure that neither is spoofing the other?  Alice needs
+> to know Bob isn't lying about being able to factor.  Bob needs to
+> know Alice has the means to pay him before he cracks a key.  Bob
+> and Alice need to exchange a factored key for money with no
+> chance that either will back out at the last moment and try to
+> steal from the other.
+> 
+> How much work should Bob expect to come his way if he charges $10
+> a bit for his factoring service?  $100 a bit?  $1000 a bit?
+> 
+> Comments anyone?
+> 
+> -- 
+>      Mike Duvos         $    PGP 2.6 Public Key available     $
+>      mpd@netcom.com     $    via Finger.                      $
+> 
+> 
+
+Of the several problems stated above, I find the pricing protocol
+the easiest to deal with. There are a few things that need to be
+known. For example, what is the complexity of Bob's algorithm? Does
+it do it in polynomial time or (even better) some variant of logarithmic
+time? The cost should bear relation to this fact. The cost should also
+be related to the number of bytes in the message. If Bob was canny
+enough, he probably would set the price P (in $ or DM or Magic Money or
+any other currency I'm grouping under the title "cypherbucks") to be:
+
+			P = F(KB) * L * D
+
+where K (in bits) is the length of the key, L (in bytes) is the length of
+the message, D (in cypherbucks/bytes) is the "decoding" cost, B (in
+cypherbucks/bits) is the "factoring" cost for the key, and F is a function
+from the set of cypherbucks amounts to itself that is proportional to
+the complexity of Bob's algorithm. If the algorithm is logarithmic, F should
+be logarithmic. If the algorithm takes O(n^2) time, F should be O(n^2); and
+so on.
+
+	There are other choices for deriving P; one such is:
+
+			P = F(KB) + (L * D)
+
+and of course others can make their own up. Of course, it is assumed that
+Bob is operating as a monopoly, and can set whatever pricing policy he
+pleases. For example, 20% discount for students and unemployed. He could
+even barter for goods ("I'll decode this 100K message for one of your 
+Cray computers.") If the monopoly disappears, the price would be driven
+down.
+
+	Alas, I can't say anymore at the moment. Study beckons. :-(
+I hope this was of some help.
+
+=======================================================
+| Peter Murphy. <pkm@maths.uq.oz.au>.  Department of  |
+| Mathematics - University of Queensland, Australia.  |
+-------------------------------------------------------
+| "What will you do? What will you do? When a hundred |
+| thousand Morriseys come rushing over the hill?"     |
+|                                       - Mr. Floppy. |
+=======================================================
+
+
+
+

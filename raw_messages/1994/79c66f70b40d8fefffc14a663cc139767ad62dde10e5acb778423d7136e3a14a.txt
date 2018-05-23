@@ -1,0 +1,31 @@
+From: norm@netcom.com (Norman Hardy)
+Date: Sun, 28 Aug 94 09:56:04 PDT
+To: jdd@aiki.demon.co.uk
+Subject: Re: DSPs
+Message-ID: <199408281656.JAA14318@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 13:09 1994/08/26 -0700, Phil Karn wrote:
+....
+>But then I hear people say that it's not the multiplication that slows
+>down modular exponentiation, it's the modular reduction.
+....
+Modular reduction is scarcely worse than the multiplication. If I have a 60 word
+multi precision number N to be reduced by a 30 word number M, I compute a guess
+by dividing the 32 bit most significant bits N by the most significant 32
+bits of M.
+I then multiply this quotient by M and subtract that from N. That reduces N by
+some multiple of M leaving N mod M unchanged. The error in the guess might
+mean that N is less than 32 bits shorter than it was before the operation but
+this method gets nearly 32 bits per pass. The inner loop of the is the same as
+in multiplication.
+
+For all of this using the floating point unit wins on most modern CPUs.
+
+
+
+
+
+

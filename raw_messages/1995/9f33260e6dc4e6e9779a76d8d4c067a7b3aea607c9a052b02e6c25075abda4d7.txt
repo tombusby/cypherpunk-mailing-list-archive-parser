@@ -1,0 +1,66 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Mon, 9 Oct 95 18:13:28 PDT
+To: ses@tipper.oit.unc.edu (Simon Spero)
+Subject: Distributed co-operative theorem proving, anyone? - was Java
+In-Reply-To: <Pine.SOL.3.91.951009171543.13562H-100000@chivalry>
+Message-ID: <9510100110.AA25989@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> > taken on an impossible task. Marcus Ranum has noted that you can't
+> > trust a program thats bigger than a couple of pages long, and I
+
+Marcus agreed with a position founded on the work in the late 70s and
+early 80s by many researchers on proving the security of operating
+systems under the Bell-Lapadula model.  The main result I recall is that
+a Cray-1 took 24 hours to prove the Simple Security Property about a
+100-line limited-Pascal program used as the core of (I think it was)
+UCLA-secure Unix.  Complexity goes up quickly with program size, and this
+property is only one of many you might like to prove.
+
+> For the general case this is true. To be able to trust larger systems, you
+> need to not only be able to trust the individual 2 pagers, but to also be
+> able to show that composing the sub units doesn't lose whatever property
+> you're trying to do.
+...
+> Distributed co-operative theorem proving, anyone?
+
+Let's go - I will provide the distribution mechanisms, and I think I
+know someone who is interested in the theorem proof side.  I know of
+several experts on theorum proving who may well pitch in.  What program
+do you want to prove secure next (we're currently finishing up my secure
+Web server).
+
+...
+> Real point of the message:
+> 
+> In my previous message, I left out some fundamental parts of the run-time 
+> that need to be looked at carefully. The garbage collection needs to be 
+> examined carefully. Normally GC algorithms are formally derived, so it's 
+> the implementation that needs to be checked for. holes in the GC may be 
+> too unpredictable to exploit for anything but core-dumping, especially since 
+> java uses a mark-sweep conservative collector. 
+
+The core dumping shows that Java can ALSO write files into the file
+system, something it was claimed to NEVER be able to do! If you could
+get the right name for the core file, and set up the first few bytes
+right, ... 
+
+> A more promising area of attack might be the Thread system. If the thread
+> system can be confused, it might be possible to have an untrusted app
+> start executing in the context of a trusted thread. This may or may not 
+> be exploitable, depending on how much of the untrusted threads context 
+> gets held over (call stack, etc), but could be fun if it works.
+
+Why not start much simpler.  Write a Java program to disrupt services by
+flooding the local network with garbage packets - or with some sort of
+request it lets you write. How about a Java program that launches SATAN
+probes against all reachable hosts?
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

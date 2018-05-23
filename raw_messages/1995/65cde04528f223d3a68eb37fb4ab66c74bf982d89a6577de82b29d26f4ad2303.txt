@@ -1,0 +1,139 @@
+From: Nathan Zook <nzook@bga.com>
+Date: Sun, 29 Jan 95 13:04:12 PST
+To: cypherpunks@toad.com
+Subject: Why encrypt intra-remailernet.
+Message-ID: <Pine.3.89.9501291512.A11570-0100000@ivy.bga.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+Lance Cottrell <lcottrell@popmail.ucsd.edu>
+
+>I agree completely that messages should be encrypted between remailers.
+>This does raise the issue of keeping a database of all other remailers at
+>each remailer. Lets settle for encrypting to the next remailer most of the
+>time.
+
+Well, actually, I'm suggesting a database that includes all remailers and
+all selected users.  ICT: in order to beat TA, first or last remailers are
+going to _have_ to used standaradized, encrypted packets.  The remailers
+are almost secondary here, except that we aren't sure that TA through the
+net is impossible.  Or we could be facists, and _only_ send out PGP-ed,
+standard sized packets.  (Forcing remailer-users to get into PGP.)
+Something would have to be done about lists & mail-to-news.
+
+Is there some difficulty in maintaining a database?  Remailers would want
+to publicize their exsistance.  This might involve pinging, but so what?
+That's just more noise.
+
+>The best way to do that is to open a socket between the remailers, and use
+>DH key exchange (authenticated with RSA?), to generate the encryption key.
+>This gives forward security to any intercepted messages. It is high on my
+>list of upgrades to Mixmaster.
+
+But doesn't this require a realtime connection to be practical?  ie:
+remailers must be _on_ the net?
+
+As far as this all goes, the sender could stick _all_ packets together, PGP
+the whole thing, and send _that_.  This would only require signing once per
+recipient per tick.  T1, anyone?
+
+***
+
+P.S.  Could you mail me that essay?  I'm long distance to the net right now.
+
+***
+
+Adam Shostack <adam@bwh.harvard.edu>
+
+>Nathan Zook:
+>|  
+>|     Suppose Alice sends Bob a message e(M) through Chaum.  Eve, a stong
+>| opponent, wants to trace the message.  She keeps track of all outgoing mail
+>| from Alice, an MD5 hash of all incoming messages to Bob, and outgoing from
+>| Bob.  Eve then sends Chaum e(M), and waits for a matching MD5 to Bob that
+>| doesn't correlate to an outgoing MD5 from Bob.  (Eve knows that Bob is a
+>| remailer.)
+>|  
+>|     Gentlemen, I believe that I have just stumbled upon a strong proof of
+>| the necessity of remailer auto-encryption of all messages.  Since the
+>| session key is PRG, MD5 will change (a lot;).  Furthermore, remailer auto-
+>| encryption allows the mailers to number their messages to each other.  A
+>| low number means a re-transmit from the remailer, which is not possible,
+>| unless some sort of ACK system is in place, and even then, would still
+>| flag.  Of course, if the remailers _sign_ their messages (on the way out)
+>| as well, you could compare the timestamps of the signatures with the
+>| message itself.
+>
+>	This is strong argument for encrypting your chain of messages,
+>using premail, or chainmail, or something similar.  Why the remailers
+>should do this is not clear at all from your argument.  Remailer
+>operator should be discouraged from cooperation beyond that which is
+>needed.
+>
+>Adam
+
+I think that you are missing the attack.  Eve wants to prove that Alice
+sent a message to Bob.  By resending Alice's message, it will route through
+Chaum just fine, producing identical output (message to Bob) as before.
+Assuming that Eve doesn't intercept the message, stopping Bob from getting
+it, Bob will know that something is up when he gets the message the second
+time, but by then it is too late.  Eve knows that Alice's message, sent at
+time X, corresponds to a message received by Bob at time Y.  This is
+exactly the sort of thing that LEAs love to use in building a case.
+
+My claim is that the only way to prevent this attack is for Chaum not to
+send out identical messages if he receives identical messages.  Identical,
+in this case, would include messages identical except for
+"cryptographically strong random" data tacked on to the end, because if Eve
+had the storage space, she could compare messages _that_ way, stripping off
+the end bits, and getting the real message (encrypted) to Bob in the
+process.
+
+The natural way to do this is to super-encrypt.  Of course, if Chaum just
+sends one rather large file to Bob each tick, Eve is hosed.
+
+BTW, if Chaum does an MD5-compare of all incoming messages, he can limit a
+spam to 1 per tick from his remailer with _no_ recordkeeping.  Or maybe he
+could send a bunch of identical garbage messages to a random remailer, 85%
+of the time....
+
+I really don't see how you can call this "cooperation beyond that which is
+needed".  If the remailers default to strip nested envelopes, and to pad
+messages to standard sizes, the only "cooperation" between the operators is
+to publish PGP keys.  They aren't "helping" each other, they are helping
+the end users.
+
+But this is all so trivial, compared to arguing operating systems.
+
+Nathan
+
+
+Finger or request keyserver for PGP 2.6.2 (tm) key.
+PGP<->Mail/News installation incomplete.
+
+Factors for modulous are not proven primes.  Key may be far weaker than
+expected.  Encode at your own risk.
+
+Key ID: 14712B4D 1994/12/26 Nathan H. Zook <nzook@bga.com>
+Key fingerprint =  44 B3 D8 66 3D 55 1E 2E  F8 92 22 A6 33 8C DE 24 
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBLywNqHmgMs8UcStNAQEgMAf/U+1rc6/5h6dZZAM9PuAJL0co25yE3JM4
+vH3YSmRw31gQdjdRMw36XXZ4OLtTgV3CMBmlu5NoH5m80EAjUji3WCoRwhkin7G9
+BgZnXhghR/ceLeE3MgyWZLTtApZkYO+z3zYxm1mYS4GLkuil/PENmuRrAFlihR4D
+jx/OgCbEU6EnR8Nyh0nGKqToOsE8wPZJfT5ff17vOSHV8hBre354ePB5tnkDoV5H
+MKgDTCkOx4vQJI8LNmQZHUCNyFmxuJTcYmxAM0j+8rAcdJzKo78eG7/vtJ4uxyBV
+AxPN7SJyCyplJGgQQ4+y9m5RkSYM6CQFy5PS+jLY66f3ZLmgDaW5vw==
+=Er9Z
+-----END PGP SIGNATURE-----
+
+
+
+

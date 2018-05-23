@@ -1,0 +1,53 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 10 Nov 1995 10:17:22 +0800
+To: cypherpunks@toad.com
+Subject: Re: ecash speed
+In-Reply-To: <199511090130.UAA13562@jekyll.piermont.com>
+Message-ID: <199511090508.VAA05884@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Perry E. Metzger" <perry@piermont.com> writes:
+
+>Hal writes:
+>> The point is that if the anonymity afforded by ecash is too costly in
+>> terms of time, then we may end up stuck with a non-anonymous system
+>> simply because that is the only one efficient enough to work.  It would
+>> be good to find out if that is a serious problem.
+
+>I suspect that as CPU speed exponentiates this will become less and
+>less of a problem. It doesn't especially worry me.
+
+Consider, though, what happens in the current ecash system if it were
+used to charge a penny per page.  You would click on a link in your web
+browser to go to the new page.  It would set the GET request to the
+remote server as usual.
+
+The server would fire up a CGI script which will run the shop software.
+That software will make a TCP stream connection back to your ecash wallet
+software which is running on the system where your client is.  It sends a
+request to get payed $.01.  Assuming the wallet is configured to
+automatically approve such a payment, it will send a one penny coin to
+the shop software along the opened link.  (This may also involve doing a
+PK encryption on the coin as an anti-theft measure; this aspect of the
+current ecash system is not documented AFAIK.)
+
+The shop software then opens a TCP stream connection to the bank, and
+forwards the coin there.  The bank receives it, and checks the public
+key signature in the coin.  It then compares the coin against every other
+coin which has ever been spent (within the validity period of the coin)
+to make sure it is not being doubly spent.  If this all checks out it
+sends back some authentication message to the original server.  The shop
+software then delivers the new page to the client browser.
+
+This all has to happen whenever you click on a link in your browser.
+Even with fast CPU's I think the extra step of connecting to the bank,
+having it check against all coins, and getting approval will be
+considerable for each link traversal.
+
+Hal
+
+
+
+

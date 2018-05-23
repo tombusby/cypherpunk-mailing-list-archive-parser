@@ -1,0 +1,54 @@
+From: wcs@anchor.ho.att.com (Bill_Stewart(HOY002)1305)
+Date: Mon, 1 Mar 93 22:10:11 PST
+To: cypherpunks@toad.com
+Subject: Re: A novel (?) return address idea
+Message-ID: <9303020609.AA10483@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Joe Thomas's proposal for anonymous return addresses is nice:
+	return_addr = printable_encoding( encrypt( K, (salt, userid) ) )
+	userid = substring( n, decrypt( K, print_to_binary( return_addr ) ) )
+where userid is the remailer's pointer to the real email address / pubkey,
+K is a secret key in the remailer, and salt is different for each message.
+(printable encoding may need to be monocase for some mailers.)
+
+If you used DES encryption, you could do 32 bits of UID and 32 bits of salt,
+you can turn the 64 bits of cyphertext into 13 printable characters using
+an obvious 5bit encoding; a good choice for a mailer is to prepend an x
+	x<13_char_encoding>   ( e.g. xabcdefghijklm )
+and not have any real UIDs starting with x, so your mail delivery program
+can easily tell what to hand to the remailer-reply process and what to
+deliver more normally. 
+
+Aside from being nice round numbers, this lets you support 4 billion users with
+4 billion messages each, but is this really the right balance?
+Many users, like x<13rand>@remailer.foo.com, will only send a few messages,
+while a few others, like mailer-daemon@crypto.bank.com, will send lots.
+Should we perhaps use a Class A - Class B - Class C approach like IP addresses,
+with the bits broken up 16/48 - 32/32 - 48/16 or maybe 24/40 - 32/32 - 56/8?
+Unlike IP, of course, these address spaces are local only, and the user
+probably shouldn't know the userid number - the class is really just advisory.
+	X-Anon-Request-New-UserID: C
+	X-Anon-Request-User-Class: C
+could be used to request a new / reused userid of class C.
+	
+Ideas for the extra-secure implementations:
+- it might be interesting to use a separate internal secret key to store
+  the mapping from (real-email, userid) -> email-publickey.
+  Hiding the mapping from real-email <-> userid is tougher.
+- if you really want longer userid+salts much bigger than this,
+  you've got to handle email names noticably longer than 16 characters,
+  or play games with hashing to reduce the size of the email name.
+  The main motivation would be to use encryption other than DES,
+  such as a public-key system with blocks longer than 64 bits,
+  but hashing increases the amount of information you have to store,
+  and the annoyance of deciding how to age it, avoid overload, etc.
+
+			Bill Stewart
+# Bill Stewart    wcs@anchor.ho.att.com  +1-908-949-0705 Fax-4876
+# AT&T Bell Labs, Room 4M-312, Crawfords Corner Rd, Holmdel, NJ  07733-3030
+
+
+

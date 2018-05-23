@@ -1,0 +1,89 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Wed, 22 Oct 1997 22:57:21 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: shared keys, proxy encryption (was Re: PGP 5.5 CMR/GAK: a possible solution)
+Message-ID: <199710221450.PAA03056@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Forwarded with permission, Mark's response:
+
+------- Start of forwarded message -------
+Date: Wed, 22 Oct 1997 06:41:49 -0700 (PDT)
+From: mark@unicorn.com
+To: aba@dcs.exeter.ac.uk
+Cc: mab@research.att.com
+Subject: Re: shared keys, proxy encryption (was Re: PGP 5.5 CMR/GAK: a possible solution)
+
+aba@dcs.ex.ac.uk wrote:
+
+[Did you intend to send this to the list, or Bcc it? If so, please forward 
+ a copy of this reply as well]
+
+> What you're describing is an alternate use for CMR: to allow
+> sales@acme.com to have attached to it the request that messages to
+> that address be encrypted for all the sales people.
+>
+> Well that seems reasonable in a way.  Still potentially dangerous in
+> that the NSA will soon enough be asking to be on every one's CMR list.
+
+But that's *precisely* what I set out to avoid. The intention is to eliminate
+the multiple-recipient encryption which is the real problem with PGP 5.5's
+CMR. The NSA can easily put themselves at the top of the encryption hierachy,
+but then all mail will *only* be encrypted to the NSA, and the recipient
+will not be able to read it. Rather than encrypting to multiple recipients,
+you would encrypt to a single key which is available to all those recipients.
+
+> The other alternative is as you say: to have group keys which are
+> shared amongst the sales people.  There are problems with this in
+> managing the secure distribution of the shared key: sales manager
+> creates it, and emails securely to all sales team members?
+> Plausible I suppose.
+
+Exactly. Or the individual sales-people create personal 'corporate use
+keys' and escrow them, or the key is retained in a secure 'black box' which
+takes incoming email encrypted to the sales department and outputs plaintext.
+The point is that mail sent to that key can be recovered somehow, but 
+confidential mail sent to their private, personal key cannot.
+
+> Problem for both approaches is re-keying: what happens when Fred
+> leaves the sales team to work for a competitor. 
+
+I agree. But that can be solved in some fashion; the 'black box' approach,
+for example.
+
+> Really it seems to me that actually having half a dozen sales droids
+> sharing a key, or being able to decrypt a message because they are all
+> CMR enforced multiple crypto recipients is a security nightmare either
+> way :-)
+
+Sure, but better than a security nightmare *and* GAK.
+
+> Reckon it would be arguably more secure to have the SMTP policy
+> enforcer decrypt it for them, even.
+
+Yep, that was one of the options I listed; the 'black box' above.
+
+> I think what PGP are arguing for is ability to recover stored messages
+> even if they are intended for one recipient only.  
+
+But this is the one thing they don't seem to have a business case for. In
+my system, if the mail was encrypted to that recipient's personal key rather
+than a group key or an individual escrowed key, then the sender had a good reason to do so. In that case, the only reason a company could want to read 
+the mail is for snooping on their employees. I don't believe that PGP or 
+anyone else should be encouraging that.
+
+The proxy key stuff seemed interesting, but not something that can be
+implemented in the next few months. I'm thinking of this as a short-term
+solution, not long-term.
+
+    Mark
+------- End of forwarded message -------
+
+
+
+
+

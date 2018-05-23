@@ -1,0 +1,62 @@
+From: "Paul S. Penrod" <furballs@netcom.com>
+Date: Fri, 30 Aug 1996 17:27:04 +0800
+To: Scottauge@aol.com
+Subject: Re: Exploring (RSA (001)
+In-Reply-To: <960829223938_397314410@emout12.mail.aol.com>
+Message-ID: <Pine.3.89.9608292351.A23180-0100000@netcom>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Thu, 29 Aug 1996 Scottauge@aol.com wrote:
+
+> Exploring Rivest, Shamir, Adelman algorithm, but hoping someone out there is
+> interested in very large number manipulations.
+> 
+> RSA suggests choosing two prime 100 digit numbers p and q for beginning of
+> key generation.
+> 
+> These numbers are obviously beyond the long type of a C program.
+
+Don't just assume that the long type is too small. For most compilers 
+this is true, but the long data type (at least as I have seen the 
+definition from ANSI 1991) is twice the base word (INT) length, where the 
+word size is generally defined to be the size of the register length of the 
+CPU in question to which the compiler has been developed for. Intel blurs 
+this distinction by still supporting 8,16,32 and now 64 bit registers in 
+the same CPU, and there are various flavors of the same C compiler that 
+accomodate both 16 and 32 bit word sizes (read INT).
+
+Just for the sake of arugment, an unsigned long in a 64 bit compiler 
+represents integers from 0 to 2^128-1. This is fairly large. However, 
+Fred Gruenburg (a RAND fellow) and some of his cohorts back in 1957 came 
+up with a method of bit ticking that allowed them to calculated 
+astronomically large prime numbers very quickly. It had something to do 
+with a known mathematical progression of primes in the set of integer 
+numbers as X -> 00. If I can find the information, I will post how he 
+did it.
+
+One other method involves using character strings to manipulate large 
+numbers "long hand". This method is fairly slow compared to bit ticking, 
+but it works and was used in some of the old style 8 bit systems I worked 
+on many moons ago. You set up at least 3 long strings and use them as 
+registers for all mathematical operations, plus allow for an overflow flag. 
+This simulates some of the old style decimal machine in their operations.
+
+> 
+> Other than using Mathematica or Maple, I would like to use C or perferrably
+> C++.
+> 
+> Just some basics such as multiplication, addition, subtraction, division,
+> mod, etc over the Z set.
+> 
+> 
+
+...Paul
+
+
+
+
+

@@ -1,0 +1,57 @@
+From: "Martin Diehl" <mdiehl@dttus.com>
+Date: Wed, 1 Nov 1995 07:37:22 +0800
+To: cypherpunks@toad.com
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+Message-ID: <9509318151.AA815185987@cc2.dttus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+     Theodore Ts'o writes...
+     >Yes, ultimately what you need is a good hardware number generator.
+     ...
+     >I'm not entirely comfortable with the proposal of using air flow 
+     >turbulance [sic] from a hard drive
+     ...
+     
+     Two important observations about the use of a disk drive to get 
+     randomness:
+     
+     1. In the case of some workstations, the local network provides the 
+     disk drive and there isn't a local hard drive at all.  Hence, any 
+     timing of disk accesses will give you data that is influenced by the 
+     file server more than the disk drive.
+     
+     2. When doing time domain measurements (Hewlett Packard had some good 
+     application notes on this subject), you must consider base clock 
+     jitter.  Ill try to illustrate with a diagram:
+     
+     actual event:            V                    V
+     clock granularity:  /...../...../...../...../...../...../
+     
+     the problem is that no matter how small the basic clock unit is 
+     (symbolized by "/", above), you can't be sure how much of that unit 
+     has passed when the event (symbolized by "V", above) occurs.  For 
+     example, on the original IBM PC, clock interrupts occurred about 18.2 
+     times per second (55ms interval).  In that architecture, you can't 
+     time an event and have an uncertainty of less than 2 times 55ms
+     
+     If you propose using a special hardware random generator, you have a 
+     different set of problems:
+     
+     1. You need to buy and install hardware on many different platforms -- 
+     you don't always have access to do that.
+     
+     2. Many earlier posts on this subject pointed out that removing bias 
+     was important.  In that case, you need to continuously test and 
+     recertify the hardware random generator for randomness.  In order to 
+     do that, you need to have so much knowledge about generating and 
+     testing random numbers in software that you might as well use a 
+     software solution in the first place.
+     
+     Good luck
+
+
+
+
+

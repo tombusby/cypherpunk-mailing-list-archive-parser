@@ -1,0 +1,38 @@
+From: Derek Atkins <warlord@ATHENA.MIT.EDU>
+Date: Thu, 14 Dec 1995 06:22:46 +0800
+To: Ben Holiday <ncognito@gate.net>
+Subject: Re: IDEA encryption
+In-Reply-To: <Pine.A32.3.91.951212174132.26320B-100000@hopi.gate.net>
+Message-ID: <199512130237.VAA21019@charon.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The copy of the source for idea (unix) that I have specify's a user key 
+> length of 8 bytes, but allows this to be increased to something larger. 
+> Will increasing the user keylength improve the overall security? 
+
+Umm, I think you are confused.  First, IDEA has a keysize of 16 bytes,
+not 8.  Second, it cannot be easily changed.  Sure, your code probably
+has a #define for the keysize, but that is just to describe the magic
+number, not to make it easy to change it. Increasing the keylength of
+IDEA, without changing anything else, will probably _NOT_ make it more
+secure.
+
+> Last thing -- how secure is unix "rm"?  If something is rm'd, is it 
+> really really gone? 
+
+Well, it depends on what you mean by "really really gone".  All RM
+does is remove the link from the directory entry to the file inode on
+disk.  If the inode refcount reahes zero, then the disk blocks are
+marked as free.  However the data in those blocks remain on disk until
+another file writes over them.
+
+It is theoretically possible to write a program to "unrm" a file.
+
+-derek
+
+
+
+
+

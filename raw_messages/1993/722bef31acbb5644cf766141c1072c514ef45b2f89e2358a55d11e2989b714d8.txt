@@ -1,0 +1,45 @@
+From: KINNEY WILLIAM H <kinney@spot.Colorado.EDU>
+Date: Mon, 10 May 93 07:34:03 PDT
+To: cypherpunks@toad.com
+Subject: Random Numbers
+Message-ID: <199305101433.AA01828@spot.Colorado.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There's was some traffic on sci.crypt today about generating random 
+numbers by reading noise off a sound port, which ties in to discussion
+here of using a Zener diode device. The question is, if you have a 
+noise source that is likely to create, say, long strings of zeros or
+to have some other statistical bias, how do you fix it up to create
+a good distribution?  
+
+Certainly, if your only problem is that you have an input stream where
+the ones are randomly distributed but _rare_, in the sense that the
+stream is mostly zeros, you can just count ones for a period of time
+and create an output stream like
+
+output[i] = 1 if the parity of N input bits is odd
+            0 if the parity of N input bits is even
+
+Then the ouput stream will be very high-entropy.
+
+Something similar, but more complicated, would probably apply to reading
+thermal noise as well, since you know the input has a Boltzmann 
+distribution or whatever, and can transform it to a distribution of
+your choice. The problem seems to boil down to having random input
+with a distribution f() and transforming it to random output with
+another distribuion g(). Or if you want to make it worse, having
+some not-really-random input f() and transforming it to random output
+g().
+
+But this is probably naive -- what are the pitfalls here? What is the
+best way to do it for cryptographic purposes? 
+
+
+                              -- Will
+
+
+
+

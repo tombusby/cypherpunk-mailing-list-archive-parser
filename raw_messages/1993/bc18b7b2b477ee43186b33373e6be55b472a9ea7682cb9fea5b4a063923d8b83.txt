@@ -1,0 +1,68 @@
+From: nobody@rosebud.ee.uh.edu
+Date: Thu, 24 Jun 93 09:22:37 PDT
+To: cypherpunks@toad.com
+Subject: Re: Weak steganography
+Message-ID: <9306241622.AA11117@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Several people have suggested that PGP or some similar public-key program
+could be used to exchange encrypted email, then a "fake" one-time pad file
+could be created to transform the PGP file into a safe plaintext.  If your
+files were seized and the keys demanded, you could supply the fake OTP file
+as the key which would "decrypt" the PGP file to the safe text.
+
+Unfortunately, this doesn't presently work with PGP.  PGP puts a header at
+the front of encrypted file which identifies it as a PGP file.  This includes
+information about whether the file is RSA or IDEA encrypted, and if it is
+RSA encrypted it includes information about which key(s) it is encrypted with.
+
+If files are saved like this, there will be no question that they are actually
+PGP files, and not the output of a one-time pad.  Any attempt to produce a
+OTP key file which leads to a safe plaintext will be a transparent fabrication.
+
+And, of course, PGP's ASCII encoding, which would usually be used for email,
+boldly displays the "-----BEGIN PGP MESSAGE-----" at the top.  If the files
+were saved in this format it would be a further giveaway.
+
+People have called for PGP to have a "stealth" mode in which it would save
+files without these headers.  This would require the user to know which files
+were truly PGP encrypted, what the encryption algorithm was, and of course the
+key.  If this were implemented it would make PGP files much less recognizable
+and the "fake OTP key" approach would be workable.
+
+Another approach for now would be to super-encrypt the PGP file with some
+other system.  A simple XOR with a repeated random bit pattern (produced by
+hashing a user pass phrase) which is longer than the PGP header would be
+adequate, since the non-header portion of a PGP file should be random.  Or
+you could use one of the widely-available DES encryption utilities, since
+these don't produce any headers, as far as I know.  But this would complicate
+the process of decrypting the file.
+
+PGP's IDEA-encrypted files, which you create with the "-c" switch to PGP,
+put only a five-byte header on: a type byte, and a four-byte file length.
+This information is redundant and it should be very easy for PGP to recon-
+struct it if it were removed.
+
+RSA encryption headers will be harder to remove, particularly because of
+the lack of a key ID to tell which secret key to decrypt with.  We would
+just try the default key, I guess.  But this would require a more extensive
+set of changes to PGP.
+
+Hal Finney
+hfinney@shell.portal.com
+
+-----BEGIN PGP SIGNATURE-----
+iQCVAgUBLCmngKgTA69YIUw3AQGDWgP/U/HwP5gwPXn3GZgH3SH3zjnrKd8dHPqn
+y2OVF7xqiaVPuV5VF/UBGzFcPgfb/DuamIEr/aQmAMX2BlVktQ/fGaluZ8wvIbs/
+QlQcsp+BH9AAb0BcojQ6rmwtf8A5c/3VkuGUSvyRGEX1PecdwoW8Eh/FEIfeU/WE
+njvIwmn92aY=
+-----END PGP SIGNATURE-----
+
+
+
+
+

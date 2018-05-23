@@ -1,0 +1,92 @@
+From: mrm@netcom.com (Marianne Mueller)
+Date: Fri, 17 Nov 1995 05:04:49 +0800
+To: cypherpunks@toad.com
+Subject: Java & Netscape security (reply to misc. postings)
+Message-ID: <199511161933.LAA18504@netcom20.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hi Harry & Perry & Jeff & Dr Cohen & "Alice" -
+
+1.  Netscape security: 
+
+Like Jeff said, Netscape 2.0beta has all the same security features as
+JDK beta.  (JDK = Java Developer's Kit, the name for our current
+product.)  Netscape and Sun have been cooperating closely to
+implement, and test, and document the applet security model.  The
+applet security manager and the applet class loader are implemented at
+the Java layer, for which source code is available from Sun.
+
+Granted, some elements of the the applet security model are
+implemented at the Java<-->runtime level, and that's why we have tests
+that we run on the appletviewer and on Netscape Navigator.
+
+2.  Corporate security class: 
+
+  Harry asks: 
+
+  | My question is, can a corporate user replace the security class in
+  | Netscape. I understand that all the class libs are in an external
+  | file. While a virus might exploit this... my reason for asking is for
+  | corporate developers who are building "intra"net systems.. making some
+  | tweaks to the security class would give them the flexibility they need.
+  | Otherwise we have taken much of the fun out of Java. (for good
+  | reasons).
+
+The best thing to do if you want to implement your own
+intra-corporation security model in the short run is to get a copy of
+the beta source code, and take a look at AppletSecurity.java and
+AppletClassLoader.java.  You can substitute your own versions of those
+for your inhouse use.  This is relatively easy to do with the
+appletviewer, and although it's possible to do some binary hack on
+moz2_0.car and replace certain files with your own, it's probably not
+everyone's cup of tea.  I mean, there's a difference between what you
+can do, and what you want to do ... I understand that!
+
+For the next release, we are working on how to enable people to
+accomplish what you want to accomplish, in a standard way and in a
+usable way, which preserves the applet security model.  The goal is to
+design the APIs so that applets can have access to more system
+functionality in a secure way.  Presumably what you really want to do
+is write applets that have access to file i/o (or what have you), not
+re-implement the security manager.
+
+
+3.  Postscript considered dangerous:   (insert-smiley) 
+
+As for the question of someone invoking a postscript interpreter via a
+browser and thus opening up their system to some rogue postscript
+file: I think it would be great if either of these two things were to
+magically happen:
+
+	1) people would stop putting postscript docs on web pages
+	because it's the wrong technology for WWW - it wastes
+	bandwidth - it's hard to view & hence often ugly - everyone
+	just prints it out anyway and then complains because there
+	is no one "standard" implementation of postscript printing
+	worldwide and there are dozens of minor problems
+
+	2) someone could implement a secure postscript previewer
+	(whatever that means!) 
+
+I doubt either of those two things will happen.  The average Jo on the
+internet needs to understand that when s/he downloads binary files
+over the internet and run them from insecure programs on their local
+computer, well, s/he runs some risk.  This risk might be tiny, but
+it's impossible to quantify loss.  If I lose a poem that I'm writing,
+to me that's priceless, so I do not intend to imply that loss of data
+isn't tragic for the person who loses it.  If you have data you can't
+bear to lose, be sure to practice safe computing.  Perform backups
+regularly, and use judgement about which interpreters and executable
+programs you allow to run on your PC.
+
+Marianne
+
+--
+internet fan, mrm@netcom.com
+Java Products Group, mrm@eng.sun.com  
+
+
+
+

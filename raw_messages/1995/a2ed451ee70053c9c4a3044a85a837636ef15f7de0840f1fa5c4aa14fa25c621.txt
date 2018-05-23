@@ -1,0 +1,49 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 4 Sep 95 21:19:00 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSLRef (SSLtelnet)
+Message-ID: <199509050417.VAA05211@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Adam Shostack <adam@bwh.harvard.edu>
+> 	To get a certificate, you need to talk to Verisign, and give
+> them a business plan, a key, and 270 bucks per year to get your key
+> certified.
+> 
+> 	Verisign is a spin off of RSA.
+
+Yes, this is my understanding.  I have also heard that the process is
+not easy or routine, that the business plan receives considerable
+scrutiny.  What I would be doing with the certificate is
+unconventional.  I would publicize the secret key, and ship out free
+software which would use the certificate to establish SSL
+communications with the Netscape browser within the same PC that runs
+the browser.  The real purpose of the certificate is not to
+authenticate the key of a server running remotely, but simply to bypass
+the security checks within Netscape Navigator.  So I am not confident
+that this business plan will pass Verisign's muster.  Among other things,
+it would be difficult to enforce the one year restriction (unless
+Navigator checks a date in the certificate).
+
+I understand that Netscape's browser will also accept certificates
+created by a Netscape-internal "test" CA.  I hoped that perhaps some junk
+certificates from that CA might be floating around, ones which would be
+useless for conventional purposes because their secret keys are exposed,
+but which would be perfect for my needs.
+
+There is one "fallback" strategy possible which would allow the 128-bit
+SSL security proxy to work.  That is to filter *all* connections, not
+just secure ones, and convert https: URL's to http:.  Then Navigator will
+not attempt to make any SSL connections at all, and the proxy can talk to
+it non-securely, using 128-bit SSL for the external connection to the
+server.  However this would be much harder, and the proxy would have to
+somehow remember which URL's had been massaged like this so it would know
+which ones are eligible to have secure connections made.
+
+Hal
+
+
+
+

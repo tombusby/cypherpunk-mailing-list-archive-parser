@@ -1,0 +1,52 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 5 Mar 94 21:37:13 PST
+To: cypherpunks@toad.com
+Subject: some technical steganography
+In-Reply-To: <9403060133.AA22869@bilbo.suite.com>
+Message-ID: <9403060528.AA07968@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I assert that an "unrecognizable encrypted message" will be a random  
+>sequence of bits.  Is my assertion correct?  
+
+It's neither correct or incorrect because the specific notion of
+randomness hasn't been specified.
+
+Your statement is falsifiable, however, since sometimes a non-random
+string of bits is what you want to get out, if what you would expect
+to get out normally was also non-random.  And you want them to be
+non-random in the same way.
+
+>Should I be using the  
+>phrase "high entropy" instead of "random"?
+
+No.  This was the notion of random I pointed out that didn't work.  If
+you add 16 zeros to the front of a gigabit random message, that's
+pretty recogizable, even though the entropy is may be very close to
+maximum.
+
+>Of course, this assumes there is no other way to detect a hidden  
+>message besides reversing the stego process and testing the result.
+
+Don't count on it.  Statistical tests can find correlations you hadn't
+suspected were there.  In fact, for some message types, _not_ finding
+the correlations may indicate dithering, or maybe a steganographic
+message.
+
+>property 3) the reverse stego process should product frequent "false  
+>hits".  In other words, the reverse stego process should frequently  
+>produce high entropy bit sequences, even if there is no hidden  
+>message.
+
+If the prior probabilities of the message type that you're hiding in
+are not random, the steganographic extraction shouldn't be either,
+because then there's a distinction between an unaltered container and
+an incoded one.
+
+Eric
+
+
+
+

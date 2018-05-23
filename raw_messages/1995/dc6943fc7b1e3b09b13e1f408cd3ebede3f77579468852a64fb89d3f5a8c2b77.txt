@@ -1,0 +1,53 @@
+From: Vincent Cate <vince@offshore.com.ai>
+Date: Thu, 21 Sep 95 15:22:52 PDT
+To: cypherpunks@toad.com
+Subject: real randomness for netscape - user clicking mouse
+Message-ID: <Pine.3.89.9509211743.A459-0100000@offshore.com.ai>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Jeff Weinstein <jsw@neon.netscape.com> 
+>If anyone has specific suggestions I would love to hear them so that we 
+>can do a better job. 
+
+Why not just do something similar to what PGP does?  
+
+For netscape you could have a user make circling motions with the mouse
+and clicking at random times.  For each click of the mouse you could get a
+few bits of randomness from the time, the X position, and the Y position. 
+You could get random bits really fast this way. 
+
+You only need to do this the first time a user uses encryption, or you
+might just go ahead and force all users to do this as part of starting up
+netscape the first time. On subsequent times you use your encryption
+algorithm to make your next seed. 
+
+To be safe you could make up two seeds, encrypt each of them to mix them up 
+a bit, and then XOR the results together.  A random bit XORed with a non-random bit 
+still produces a random bit.  Actually there is probably a better way to just
+encrypt each input whole (padding to block size) and XORing as you go along -
+that way you would get whatever randomness was there to be had.  Anyway, do something 
+so you have as many or more bits of randomness in your seed as there are bits 
+in your key or it will still be a weak link in your security chain.
+
+You could even get the randomness during regular mouse use.  Unless the first thing
+a user did was try to use encryption I am sure you would have enough by the
+time he did use encryption (keep track).
+
+You must get the random bits from something that nobody else could watch. 
+Network packets, process IDs, date, time, etc are not secure.  On the
+other hand, an attacker would have to have broken the machine to get the
+mouse info used above, in which case netscape would have no security no
+matter what. 
+
+   --  Vince
+
+PS  I want a free netscape server site license if you use this idea!  :-)
+
+
+
+
+

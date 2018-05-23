@@ -1,0 +1,40 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 1 Jul 1997 10:38:48 +0800
+To: Lucky Green <shamrock@netcom.com>
+Subject: Re: Anonymous browsing (was Re: Getting Back to our Radical Roots)
+In-Reply-To: <97Jun25.162334edt.32257@brickwall.ceddec.com>
+Message-ID: <3.0.2.32.19970630170619.0075ca98@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 01:57 PM 6/25/97 -0700, Lucky Green <shamrock@netcom.com> wrote:
+>Regarding DC nets:
+>Modern tree structures only double the bandwidth requirement. DC nets are 
+>practical today. I would encourage CP's to work on implementations.
+
+How do you do that?  Arrange the XORs to do x0^x1, x2^x3....,
+then (x0^x1)^(x2^x3)... etc., ending up with user 0 doing the last XOR,
+and broadcasting or tree-casting the results?  It cuts down on bandwidth
+for the average user, but does end up with a few users doing most of the work,
+and perhaps there's some security risk in the unbalanced workload.
+It's an interesting approach, and I suppose you could do a bit more work
+(logn instead of 2) to spread the partial results around so more people
+can calculate them directly (e.g. user 0 sends user 2 x0^x1, and sends 
+user 1 x2^x3, and if you're still paranoid you can have user 0 also send
+user 3 x0^x1, which user 2 and user 3 can compare....)
+
+You've probably got to put more thought into getting the details right,
+like collision detection and backoff, but it's still doable.
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk/pub/crypto/pgp
+#   (If this is a mailing list or news, please Cc: me on replies.  Thanks.)
+
+
+
+
+

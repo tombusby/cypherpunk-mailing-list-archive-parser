@@ -1,0 +1,60 @@
+From: "Mullen Patrick" <Mullen.Patrick@mail.ndhm.gtegsc.com>
+Date: Fri, 20 Sep 1996 02:32:59 +0800
+To: "Cypherpunks" <cypherpunks@toad.com>
+Subject: re: Stego inside encryption
+Message-ID: <n1368993974.6219@mail.ndhm.gtegsc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To take this one step further, has anyone tried to ever use this method as
+an encryption method?  You could hide data in a stream of random bits, using
+position as the encryption method.  Obviously, the data would not be stored
+in packets; rather as single bits strewn throughout the stream.  Even ASCII
+characters could be hidden in such a system very well, as the possibility of
+choosing the correct 8 bits (extended char set) from the data stream when
+any combination has equal potential of being the correct sequence would be
+extremely difficult.  Error checking/correcting code could even be used.
+
+Using this system, the placement algorithm would be the focus of attack.  If
+an algorithm which has a sufficiently random placement was used, extracting
+the correct bits would be difficult.  Another way to increase the security
+would be to hide the correct message inside a bitstream created by using
+the same method on other similar messages.  (Hiding a real message inside
+bogus messages.  Hmm...  Which one's real?)
+
+Patrick
+
+_______________________________________________________________________________
+From: Mullen Patrick on Thu, Sep 19, 1996 9:19
+Subject: Stego inside encryption
+To: Cypherpunks
+
+I know a lot of times the idea behind steganography is to hide the fact that a
+secret message is in a seemingly normal file/mail/whatever.  This is good
+for avoiding unwanted interest in your file.  The benefit of not having people
+attempt to crack you code, added to the strength of the cryptosystem is
+wonderful.  However, I propose this--
+
+Don't hide that anything's encrypted!  Rather than hide this fact, throw it
+in their face!  I propose hiding an encrypted message inside another 
+encrypted message.  Set bits in specific places to data in the real message.
+The benefit is Oscar not only doesn't know what the crypto is, he attacks
+the wrong message.  Hiding statistically random bits from the true message
+in statistically random bits from the masking message shouldn't be too 
+hard.
+
+Granted, this scheme doesn't get you past measures designed to keep out all
+encrypted messages, and it surely wouldn't keep you message from generating
+interest, but it would be very hard to decrypt the message, especially when 
+some algorithm is used which (seemingly) randomly selects which bits to use 
+for the stego.
+
+Just a thought...  My apologies if someone has already proposed this method.
+
+Patrick
+
+
+
+
+

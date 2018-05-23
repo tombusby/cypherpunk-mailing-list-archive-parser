@@ -1,0 +1,73 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Mon, 12 Dec 94 13:19:10 PST
+To: "Kipp E.B. Hickman" <kipp@warp.mcom.com>
+Subject: Re: Clarification of my remarks about Netscape
+In-Reply-To: <9412121231.ZM17395@warp.mcom.com>
+Message-ID: <9412122118.AA11047@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"Kipp E.B. Hickman" says:
+> > (1) Netscape plays very fast and loose with HTML.
+> 
+> This has nothing to do with security...
+
+No, but its a Bad Thing.
+
+> > (2) The Netscape Secure Sockets proposal has an extremely poor security
+> >  model.
+> >     It is not an end-to-end security model, but rather relies on transport
+> >     level security, which is in my view dangerously inadequate for reasons
+> >     which should be obvious to most of the folks on this list.
+> 
+> Clearly I'm an idiot. Explain it to me. And while you are at it, why
+> don't you email me your comments on the spec?
+
+HTTP, like SMTP, is only a transport for underlying documents. The
+underlying documents are the things people wish to secure, not the
+transport layer.  By securing only the transport, you make it possible
+for people to get pages that are forged, although they can be sure of
+what machine delivered them (which isn't significant). Your system is,
+for instance, useless in a proxy HTTP daemon environment.
+
+Actually, securing the communications as well is important for
+privacy, but that should be done via IPSP, not some new, incompatible,
+mechanism.
+
+> >	It is also
+> >     tied directly to the RSA certification hierarchy.
+
+I'll point out that X.509 is widely loathed in the internet community
+-- its X.509 that caused PEM to fall flat on its face and die.
+
+> This is an outright lie. We don't use TIPEM. You could build a
+> conformant SSL implementation using RSAREF and the freeware IDEA
+> cipher code. As for a barrier to competition.
+
+RSAREF versions of the code can't be used commercially. RSA won't
+license people to do stuff on their own -- unless you have significant
+pull, you have to buy TIPEM or BSAFE from them and use THEIR code.
+
+> So what else is new? We
+> all have barriers to overcome before we can compete. Should we get rid of
+> TCP/IP as a barrier to using the web?
+
+Well, TCP/IP is available for free, but thats a horse of a different
+color. I don't particularly like your security model, but I don't
+object that strenuously to your use of TIPEM qua TIPEM. I do strongly
+object to X.509, which is based on technologies entirely alien to the
+internet. How do I look up an X.509 certificate in the DNS? Now, given
+the Eastlake and Kaufman DNS security system, you can put keys in the
+DNS if you use DNS names, but X.509 uses abortive ISO distinguished
+names which are utterly unmappable into the DNS.
+
+As for your "peer review", I'll note that it was done extensively by
+RSADSI folks, who aren't entirely unbiased about technologies...
+
+.pm
+
+
+
+

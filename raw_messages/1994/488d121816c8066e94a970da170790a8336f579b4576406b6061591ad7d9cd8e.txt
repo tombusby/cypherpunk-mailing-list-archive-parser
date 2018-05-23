@@ -1,0 +1,64 @@
+From: plaz@netcom.com (Plaz)
+Date: Mon, 28 Feb 94 16:00:54 PST
+To: cypherpunks@toad.com
+Subject: standard for stegonography?
+Message-ID: <199403010001.QAA18620@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+<Sorry this post was supposed to go to the whole list yesterday. I forgot
+to redirect to cypherpunks, oh well.>
+
+Derek Lynn Upham replies to Jef Poskanzer:
+>> Is there a standard for stego yet?  I just added stego and de-stego
+>> filters to my pbmplus image toolkit, using a simple protocol I made
+>> up on the spot.  Now I'm wondering if I should make them compatible
+>> with existing stego tools.
+>
+>There appear to be two existing steganography packages for images.
+>One is "jsteg", a Unix-based system which stores data in JFIF-
+>compliant JPEG images; it is based on version 4 of the cjpeg/djpeg
+>package.  The other is "Stego", a Mac-based system which stores data
+>in Mac PICT files (I think---I don't have a Mac to examine it).
+>
+>"jsteg" is available in the Cypherpunks FTP archive in the
+>applications subdirectory as the original jpegsrc package, plus the
+>patches, plus a README file.  However, you might be better off
+>tracking down the "Stego" sources since "jsteg" stores its data in a
+>rather odd way (see the docs for more information).
+>
+>Derek
+
+jsteg's stores it's data based on the compression algorithm and is tied
+tothe format (jpeg, which is a lossy compression format).
+
+Stego (which I contributed to and consulted on) actually has a relatively
+format independant way of storing the data in the picture. Stego was
+written by Romana Machado (romana@apple.com) Check out the article in the
+latest WIRED (p. 26?) and the soon to be released (any day now) bOING
+bOING.
+
+Quoted from the stego readme:
+
+>Stego rasterizes the image, then stegs data into the least
+>significant bit (or LSB) of each of the RGB color values. (In the
+>case of indexed color, Stego stegs data into the LSB of the index
+>values.) The file length of the data file to be stegged is hidden
+>in the LSB's of the first 32 steggable bytes. To disguise this
+>value somewhat, I take the second to least significant bits of the
+>second 32 steggable bytes and XOR these with the 32 bit file
+>length, and then steg the XOR'd file length into the LSB's of the
+>first 32 steggable bytes.
+
+Source isn't really necc., but if you feel you MUST have it: contact
+romana@apple.com.
+
+
+
+
+
+
+
+
+

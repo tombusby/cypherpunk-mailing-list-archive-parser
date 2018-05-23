@@ -1,0 +1,35 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Tue, 19 Dec 95 09:38:34 PST
+To: Jim_Miller@bilbo.suite.com
+Subject: Re: Java and timing info - second attempt
+Message-ID: <9512191737.AA00980@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim Miller (jim_miller@bilbo.suite.com) writes:
+>  Would it be possible to create a Java applet that causes the client
+>  machine to sign or encrypt something with their private key, and
+>  then send back timing info?
+
+Since access to a private key should always be strictly mediated by the user  
+any Java implementation would probably pop up a panel asking permission for  
+every single private-key encryption operation requested by the applet.  The  
+timing attacks require many timed encryptions to get enough information about  
+the key.  Even if the user was completely clueless and had no idea what the  
+applet was trying to do I would imagine that they would get tired of clicking  
+"OK" long before sufficient key information was leaked .....
+
+Of course it would be a lot easier for the applet to just try to read the  
+secret key file, encrypt it with an embedded public key, and post it to  
+alt.anonymous.messages.  Depending on how security was setup there might be  
+only one or two panels that the user has to dismiss.  It would probably get  
+past the same number of clueless users that a more complicated timing attack  
+would fool.
+
+
+andrew
+
+
+
+

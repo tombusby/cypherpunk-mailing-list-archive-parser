@@ -1,0 +1,40 @@
+From: smb@research.att.com
+Date: Tue, 19 Oct 93 01:37:23 PDT
+To: an41418@anon.penet.fi
+Subject: Re: Other forms of strong cryptography
+Message-ID: <9310190836.AA26630@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 Why is it that the idea of taking a difficult problem, such
+	 as a knapsack problem, and using it to encode ciphers,
+	 was abandoned? Too many trapdoors? These NP-complete
+	 type problems seem ideal since they can be verified
+	 in polynomial time, but are practically impossible to
+	 solve for any significant input. Verification of a solution
+	 could be decryption, where the solution is the key,
+	 and the problem could be used to encode the text somehow.
+
+	 I understand that Shamir broke the knapsack problem. So,
+	 is that enough reason to completely abandon this approach?
+	 Nobody seems to talk about it anymore.
+
+The approach hasn't been abandoned; it's just a lot harder than it
+looks, for a number of reasons.
+
+First is that complexity theory says nothing about the average difficulty
+of solving a problem, as opposed to the worst case.  A cryptosystem that
+only hides 1% of the messages isn't very useful.  Second, finding
+a suitable problem -- one that has a keyed back door isn't that easy.
+Third -- and this is what sunk the knapsack problem -- you need a
+cryptosystem that exploits the full NP-complete problem, as opposed
+to just a simple case.  (The knapsack problem was solvable by someone
+who knew the key because it wasn't a general knapsack, but a super-
+increasing sequence -- each number in it was greater than the sum
+of all of its predecessors.  (This was the simplest version; there
+were, I believe, some others.))
+
+
+
+

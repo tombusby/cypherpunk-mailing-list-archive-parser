@@ -1,0 +1,36 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Wed, 1 Dec 93 11:38:14 PST
+To: cypherpunks@toad.com
+Subject: Cryptosplit 2.0
+Message-ID: <11678@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <9311291648.AA25233@jobe.shell.portal.com>
+           hfinney@shell.portal.com "Hal Finney" writes:
+ > I once proposed a DOS TSR (a "background" program) which would monitor
+ > your keystrokes all day long and condense the timing data into a file
+ > full of random bits.  Then you'd use up the bits when you needed to do
+ > cryptography.  I haven't learned enough about DOS to write such a
+ > thing, though.
+
+I'm doing this for unix this weekend.  One very important point to
+note:  only take *one* bit of random data per keystroke, and take
+it by ex-oring every single bit in the clock() value - that way you
+make sure the randomly fluctuating one is in there - because on
+some systems the bottom bit might always be 0, if the resolution
+of the clock is low.  Also, think about the problems if you have
+a function that returns milliseconds but the hardware clock is one
+tick, say, every 1/17 sec...
+
+G
+-- 
+Personal mail to gtoal@gtoal.com (I read it in the evenings)
+Business mail to gtoal@an-teallach.com (Be careful with the spelling!)
+Faxes to An Teallach Limited: +44 31 662 4678  Voice: +44 31 668 1550 x212
+
+
+
+
+

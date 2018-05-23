@@ -1,0 +1,82 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Wed, 21 Jan 1998 16:19:37 +0800
+To: cypherpunks@www.video-collage.com
+Subject: Re: Distributed stock trading system
+In-Reply-To: <199801192238.QAA03188@manifold.algebra.com>
+Message-ID: <3.0.5.32.19980120180340.00834c80@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 04:38 PM 1/19/98 -0600, Igor Chudov @ home wrote, but not in this order:
+>I would like to hear your feedback on a project that I have just
+>thought about.
+>It is called a Distributed Asset Trading Network. It consists of
+>Traders and Nodes. They trade Products (asset classes). A Product may
+>be an Intel share, or a bond, or an option on S&P 500, or whatever. Who
+>and how defines what the Product unit is is beyond the scope of this
+
+Interesting gedanken-project.  Some related work is Bob Hettinga's 
+geodesic networks and (Mark Miller?)'s agorics.
+
+>The technical issues that are open, at the moment, are 
+>1) clock synchronization, 
+Long since solved - use NTP.  Assuming the nodes don't need to be
+stealthy, they can just clock off each other; if they need stealth,
+they should clock off some trusted worldwide internet providers.
+If they need to be blazingly invisible, use a GPS receiver clock.
+(Using NTP with each other makes it easy to estimate distances,
+but that's a risk any time you've got uniform clocking and
+reasonably fast-turnaround communication.)
+
+>2) the need for a central authority to clear liability issues and 
+You've described the Node as a "clearing corporation", with bonding
+to cover liability.  The corporation and central authority both work
+against your goal of "a) independent of borders and national laws."
+Also, assuming that each Node posts bonds in about the same amount
+as it accepts bonds posted with it, the bonds still don't provide
+an incentive not to abscond with the money, since it steals about
+as much as it forfeits in bond; expected positive future cash flow 
+is what discourages the Node from absconding.  Posting bonds with
+a central authority avoids this problem, but a central authority
+is both a target for governments and for freelance thieves,
+and a temptation for its operators to abscond.
+
+>3) potential denial of service attacks through acquiring too
+>many locks (again, maybe with the proper liability agreement, 
+>it is not an issue).
+That's a job for careful implementation; you don't want customers
+taking down nodes either.
+
+You didn't address a major problem:
+0) Scalability
+Talking to 10 other nodes in realtime is easy.  10000 is hard.
+Not only do you need the bandwidth, but you've got to worry about
+nodes that are down, or that you temporarily can't communicate with,
+and you've got to be fast enough to respond to all their demand,
+maintain state for your crypto sessions with them, recover from
+your own outages, and deal with the queuing if they've all decided
+that you've got the best price for something this second.
+
+The more nodes you talk to, the harder it is to scale.
+But the fewer nodes you talk to directly, the slower it is to
+propagate information about prices, bids, and offers, and therefore
+the harder it is to get prices to converge - since you discuss
+eliminating arbitrage, bid-ask spreads, and expensive intermediaries,
+this is a problem.  Also, assuming the system has convenient room
+for negotiation, you'll still have time delays as people are deciding
+what to do, so there's still arbitrage to be made, and depending
+on your liability structure, there's probably room for low-balling
+and high-balling on bids.
+
+
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

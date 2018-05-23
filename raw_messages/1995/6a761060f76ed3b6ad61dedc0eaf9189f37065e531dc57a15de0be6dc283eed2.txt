@@ -1,0 +1,51 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Mon, 9 Jan 95 09:24:53 PST
+To: cypherpunks@toad.com
+Subject: Re: Data Haven problems
+In-Reply-To: <199501071710.LAA21334@pentagon.io.com>
+Message-ID: <199501091724.JAA25074@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: dfloyd@io.com
+
+   While programming my data haven code, I am wondering how to guard against
+   spamming the data haven parser.
+
+Here's an example of where the mechanism/policy distinction helps a
+lot.  Mechanism here is how you store data.  Policy is how you decide
+whether to accept a particular request.
+
+The suggestions to date have all suggested particular policies to put
+into your code (with the exception of Bill Stewart).  In addition,
+almost all of these suggestions have been pay-per-use.  As significant
+as policies are, they aren't your most important issue right now.
+
+The single thing you need to get right today is the means of
+separating the mechanism from the policy.  Different operators will
+have different policies.  If it's difficult to change policies, fewer
+services will be offered.
+
+The issue of policy separation is a software architecture one.  I
+don't know the structure of your code, but I'd suggest that whatever
+it looks like, that you make a (1) clean interface and that you (2)
+document it.  If you do these two things, you'll have substantially
+achieved separation.
+
+I think you should spend more time worrying about the interface than
+about the specific policies.  In order to focus on the policy
+interface, I'd suggest an extremely simple policy to work with,
+namely, an access list.  Anyone listed can use the server; everyone
+else is denied.  That will get you started.
+
+I would distribute your first code with a simple policy such as this.
+It will allow prototypes to get worked on.  Since a data haven isn't
+of much use without clients for it, a simple policy is adequate for a
+first release.
+
+Eric
+
+
+
+

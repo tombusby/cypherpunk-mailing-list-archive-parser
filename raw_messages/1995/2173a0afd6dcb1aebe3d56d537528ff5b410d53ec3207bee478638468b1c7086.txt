@@ -1,0 +1,57 @@
+From: "W. Kinney" <kinney@bogart.Colorado.EDU>
+Date: Wed, 16 Aug 95 07:58:18 PDT
+To: cypherpunks@toad.com
+Subject: Re: Use of the IV in DES & stuffing the first block w/ random stuff
+In-Reply-To: <SAA03523.199508152240@garotte.va.pubnix.com>
+Message-ID: <199508161458.IAA12814@bogart.Colorado.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> >You might want to do something fancy like choose a random salt,
+> >use the salt for the IV, and use MD5(salt,human-selected-key) for the key.
+> >This makes pre-computation much less useful (unless you're careless
+> >and use MD5(key,salt) instead if MD5(salt,key)...), and means that
+> >you use a different session key for each batch of stuff you encrypt,
+> >even though you're using the same key.  If you're paranoid about replay
+> >attacks, you could let some of the bits of the salt be random and some 
+> >be a counter, and never accept a key smaller than the one from the
+> >previous successfully-decrypted message.
+> 
+> Hmmmm, so I should put the salt in the clear at the start of the file?
+> This looks like an intresting idea.
+
+What I do in Curve Encrypt for the Mac is use the MD5 of the pass phrase,
+a 128-bit random salt (overkill is cheap here) and a one-byte counter field
+passed repeatedly through MD5, like this:
+
+<bare key> = MD5[<pass phrase>]
+<salt> = 128 bits of randoms
+<counter> = 0
+
+MD5Init()
+for (a tenth of a second)
+	MD5Update[<counter><key><salt><key><salt>]
+	<counter> = <counter> + 1
+
+<key> = MD5Final()
+
+At startup, the program determines how many iterations of MD5Update can be
+accomplished in a tenth of a second on the current CPU, and the loop is run
+that many times. The number of iterations and the salt are stored with the
+encrypted file, in the clear. The point to the <counter><key><salt><key><salt>
+concatenation is that this buffer is 65 bytes long, and MD5 works on 64-bit
+blocks, so that the buffer is shifted by one byte in the MD5 block each
+iteration, making precomputation of the MD5 addition steps more of a pain.
+Also note that the buffer is _not_ repeatedly MD5-hashed, but repeatedly sent
+to MD5Update() instead. This is out of fear that there might be fixed-points
+in the hash algorithm.
+
+
+                                    -- Will
+
+
+
+
+

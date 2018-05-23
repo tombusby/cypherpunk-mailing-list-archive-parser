@@ -1,0 +1,55 @@
+From: Tatu Ylonen <ylo@cs.hut.fi>
+Date: Wed, 12 Jul 95 12:16:58 PDT
+To: sdw@lig.net
+Subject: Re: ANNOUNCEMENT: Ssh (Secure Shell) remote login program
+In-Reply-To: <m0sW5hj-0009ydC@sdwsys>
+Message-ID: <199507121916.WAA06662@shadows.cs.hut.fi>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> ssh, while an obvious name, already collides with a nice shar decoder and
+> a different kind of secure shell from CFS.
+
+Ssh has already been registered with IANA (Internet Assigned Numbers
+Authority) as the name of the service.  I would rather not change it
+without a compelling reason.  It is also easy to obtain from rsh by
+replacing the r by s (which also makes for scp, sshd, and in future
+maybe also sdist).  It is my understanding that CFS is in rather
+limited use (especially outside the US), and the ssh shar extractor is
+not widely used either (neither can be found from the archie database
+at archie.funet.fi).  IETF has a thing called Site Security Handbook
+that they abbreviate SSH, but it is probably sufficiently different
+not to be confused.
+
+> Of course support for S/Key and tokens/hand held authenticators would be
+> useful additions for some situations (although inferior to RSA...).
+
+True.
+
+The agent protocol can currently be used to forward a connection to
+any program (which can mean device) that can perform RSA
+authentication.  New authentication methods can be compatibly added
+later.
+
+S/Key can be used by making skeysh you login shell.  Then you will
+first be asked for a normal password (if any), and then for the
+one-time password.  I did not want to incorporate skey functionality
+directly into the software, because it is not clear to me if the
+arrangements in use (file names, formats, algorithms) have stabilized
+yet.  Also, there is less need for skey as no passwords are
+transmitted in the clear.
+
+> Integration with TCP/NFS and/or client-server CFS would be fantastic.
+> (One local CFS server acting as a secure client over tcp to a remote
+> CFS server.)
+> Remote encrypted mount of an encrypted partition...
+
+Maybe, *maybe*, TCP/IP port forwarding could be used for this?  (I
+don't know what CFS does because I have never seen CFS.)
+
+    Tatu
+
+
+
+

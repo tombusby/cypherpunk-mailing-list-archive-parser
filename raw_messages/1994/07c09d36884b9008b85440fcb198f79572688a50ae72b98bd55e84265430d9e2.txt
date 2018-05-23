@@ -1,0 +1,42 @@
+From: Alan Barrett <barrett@daisy.ee.und.ac.za>
+Date: Wed, 6 Apr 94 02:11:32 PDT
+To: Ray <rjc@gnu.ai.mit.edu>
+Subject: PGP-MIME
+In-Reply-To: <9404060815.AA28162@geech.gnu.ai.mit.edu>
+Message-ID: <Pine.3.89.9404061007.A931-0100000@newdaisy.ee.und.ac.za>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Ray <rjc@gnu.ai.mit.edu> said:
+> Two problems instantly jumped out at me when reading the MIME
+> documents:
+>
+> 1) more than 2-level encodings are not supported (no recursion)
+
+Why is this a problem?  A MIME "Content-Transfer-Encoding" context is
+a reversible transformation that is made to permit binary or other
+non-email-friendly data to be carried in an email-friendly form.  Once
+you have performed the encoding once, the result is email-friendly, so
+there is usually no need to emcode it again.  Note that MIME places no
+restrictions on the nesting of multipart messages; it merely requires
+that the content-transfer-encoding be applied only at the innermost
+levels of the nesting.
+
+> 2) no application/viewpgp or transfer-encoding: pgp type
+
+I have been trying, on and off, for about two years to persuade the PGP
+folk to design a suitable MIME interface for PGP, modelled as closely
+as reasonable on the ongoing PEM-MIME work.  Nobody ever seems to be
+interested in that, but several folk have come up with their own ad-hoc
+methods.  You could come up with your own ad-hoc method, or adopt one
+of the others, or design something that is compatible with the PEM-MIME
+stuff.  If anybody is interested in designing a PGP-MIME encapsulation
+that is compatible (or nearly compatible) with PEM-MIME, I volunteer to
+help.
+
+--apb (Alan Barrett)
+
+
+
+

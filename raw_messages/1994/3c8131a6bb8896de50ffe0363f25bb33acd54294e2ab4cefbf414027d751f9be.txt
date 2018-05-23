@@ -1,0 +1,77 @@
+From: loki@nately.UCSD.EDU (Lance Cottrell)
+Date: Tue, 1 Feb 94 15:05:48 PST
+To: cypherpunks@toad.com
+Subject: SASE Suggestion
+Message-ID: <9402012306.AA09568@nately.UCSD.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I have been meditating on this problem of return
+addresses, and have a proposal. The remailers
+can not be allowed to choose the return path,
+as any corrupted remailer will corrupt the rest
+of the path. I suggest the following SASE packet
+format.
+
+Notation:
+A(foo) = foo encrypted to remailer A
+P = some sort of one use postage token.
+end is a flag indicating the final destination.
+x,y,z,b are large random integers.
+n is a large prime.
+
+Packet:
+This will rout reply from A -> B -> C -> Bob
+
+A(P,x,B,B(P,y,C,C(P,z,Bob,end))),A(b,n,message)
+
+Upon receiving the packet, A does the following:
+
+A decrypts the packet (both parts separately).
+
+A calculates a new b' = b^x mod n and encrypts
+B(b',n,message)
+
+So B receives B(P,y,C,C(P,z,Bob,end)),B(b',n,message)
+
+C receives C(P,z,Bob,end),C(b'',n,message)
+
+Analysis:
+The message, which would normally be encrypted to Bob,
+is never transmitted in the clear. Bob can easily
+compute b'' to confirm that the message was correctly
+routed, but this reveals no information about the path
+the message has taken. The first remailer will refuse
+to deliver the message twice, because of the expired
+postage token, so the same path will not be reused.
+
+So, what do you think? It does require some work from
+the remailers, but not too much more than now.
+
+- ----------------------------------------------------------
+Lance Cottrell	who does not speak for CASS/UCSD
+loki@nately.ucsd.edu
+PGP 2.3 key available by finger or server.
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+			--Nietzsche
+- ----------------------------------------------------------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLU7fRFVkk3dax7hlAQH4MgP9HIQPR3esnHbJuELXtCmTGXvQoLHgoA+L
+OeW1WOM6WczcOEwzFRsto8k2vrTsSMDPAqhTm+Ylgy83x8ez+yquoKmfFqiNQzWY
+Vcoy7ng/Jgu9i9snIGlsVdq6cpKTS8YKiR3EmnQrbpXetL7cFBZRN4yJ+dadS77q
+cT2rY82uzw4=
+=YTIz
+-----END PGP SIGNATURE-----
+
+
+
+

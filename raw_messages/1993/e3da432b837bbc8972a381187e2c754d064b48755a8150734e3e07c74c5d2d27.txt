@@ -1,0 +1,60 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sun, 10 Oct 93 09:29:42 PDT
+To: cypherpunks@toad.com
+Subject: Diffie-Helman example in g++
+In-Reply-To: <9310090216.AA20577@acacia.itd.uts.EDU.AU>
+Message-ID: <9310101629.AA08295@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Earlier, Douglas Barnes wrote:
+
+>> // Demo of mathematics for Diffie-Hellman type key exchange
+>[..]
+>> // Does anyone have a clue what good values of 'a' are in this
+>> // algorithm?
+>> 
+>> a = 127;
+
+Notation: here 'a' is the base of the D-H exponentials.
+
+>Feel free to correct me if I'm wrong, [...]
+
+Certainly.  ;-)
+
+>The only restriction placed on /a/ is that it be a primitive root of
+>/p/. 
+
+D-H works, i.e. a key is agreed upon, even if 'a' is not a primitive
+root mod p, but the security may be adversely affected if it is not.
+
+If 'a' is not a primitive root, then size of the search space which
+the exponentials may take will be less than maximal.  In fact, the
+order of the element 'a' gives the number of such possibilities.  (The
+order is the smallest power of an element that is equal to the
+identity.)
+
+>To do this, you choose /a/ at random until you find the condition
+>(/a/, /p/-1) == 1 is satisfied. 
+
+Nope.  Being relatively prime to p-1 is not even involved.  Here is
+the actual condition for primitivity:
+
+   For every prime q which divides p-1, a^((p-1)/q) != 1 (mod p)
+
+By Fermat's Little Theorem, x^(p-1) == 1 (mod p), for all 'x'.  Now
+'a' is primitive if p-1 is the smallest such number.  Since the order
+of an element much divide the order of the group, if no divisor d of
+p-1 is such that x^d == 1 (mod p), then p-1 must be the smallest.
+
+Burt Kaliski, of RSA Labs, told be he picked a D-H modulus p such that
+p = 2q+1, where both p and q are prime.  It took a long time to find
+such a pair.  The advantage is that almost half the elements of such
+a field are primitive roots.
+
+Eric
+
+
+
+

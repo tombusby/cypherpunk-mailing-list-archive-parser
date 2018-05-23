@@ -1,0 +1,75 @@
+From: Ray Arachelian <sunder@brainlink.com>
+Date: Tue, 17 Dec 1996 09:33:42 -0800 (PST)
+To: John Fricker <jfricker@vertexgroup.com>
+Subject: RE: Securing ActiveX.
+In-Reply-To: <19961217052343287.AAA173@dev.vertexgroup.com>
+Message-ID: <Pine.SUN.3.91.961217122924.5536A-100000@beast.brainlink.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 16 Dec 1996, John Fricker wrote:
+
+> Not exactly. Win32 API's include the ability for a program to impersonate any 
+> known user. Besides ActiveX (OLE really) has nothing to do with services. 
+> 
+> In order to make ActiveX secure there would need to be a virtual machine with 
+> access to a limitted API only. Sound familiar?
+
+Which is what I've been saying; except for the impersonation feechur, you 
+can do all of the above with a secure account.
+ 
+> >If you're using the NTFS file system and give that account access only to 
+> >one directory, it can't access anything but that directory.  (If you're 
+> >using FAT, this isn't true and the program can read/write/delete anything 
+> >it wants.)  Works quite well.
+> >
+> >It can be done under 95 but Microsoft will have to write a Sandbox 
+> >Virtual Machine (a Virtual x86 session whose API's are filtered to 
+> >prevent access to certain things like the file system, and disables 
+> >direct I/O.)  Not that easy under '95, but it already exists for NT.
+> 
+> 
+> There is no such thing on WinNT.
+
+That's funny, I could have sworn that services could log in as users.  
+Gee I must have been dreaming all along about the directory replicator 
+which requires you to create a replicator user, and the scheduler service 
+which though it can run as the LocalSystem account is better executed as 
+another user with limited rights.  No, I must have been imagining them. 
+And the services control pannel which allows you to set such settings, 
+I've imagined that too. 
+
+Gee I also must have imagined hearing that it's a bad idea to allow such 
+services such as the scheduler to log in as administrator or LocalSystem 
+account because then folks could run anything they like by using the AT 
+command with the /INTERACTIVE switch.
+
+Sure there is no sandbox, however you can easily install the RunAsService 
+program from the ResKit and point it at MIE so it too runs as a limited 
+access account which won't have access to the rest of your hard drives, 
+but granted, if someone does use the Impersonate calls in the control, 
+this isn't going to help much.
+ 
+> Why is that a problem? ActiveX components are shipped as discrete objects with 
+> a known DLL like interface. DLL's are unloaded when the load counter is zero so 
+> they don't hang around in memory after the ActiveX job is done. You also cannot 
+> write a "proxy to the file system" in a DLL. That's a special device driver 
+> called a filter. Of course there is this Mark Russinovich fellow that is 
+> showing how this is not exactly true. It is possible to identify all entry 
+> points in a DLL.
+
+Welp, there you go.
+
+=====================================Kaos=Keraunos=Kybernetos==============
+.+.^.+.|  Ray Arachelian    | "If  you're  gonna die,  die  with your|./|\.
+..\|/..|sunder@sundernet.com|boots on;  If you're  gonna  try,  just |/\|/\
+<--*-->| ------------------ |stick around; Gonna cry? Just move along|\/|\/
+../|\..| "A toast to Odin,  |you're gonna die, you're gonna die!"    |.\|/.
+.+.v.+.|God of screwdrivers"|  --Iron Maiden "Die With Your Boots on"|.....
+======================== http://www.sundernet.com =========================
+
+
+
+
+

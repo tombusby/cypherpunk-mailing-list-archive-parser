@@ -1,0 +1,99 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Thu, 30 Sep 93 22:37:30 PDT
+To: cypherpunks@toad.com
+Subject: FIDO, steganography, PGP
+Message-ID: <9310010537.AA05696@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I've had fun writing this!
+
+This is a PERL script that takes as input a PGP encrypted, ascii
+output file.  It skips the headers and stuff, and converts every
+character in the body into a geographic name.  I don't think I'll have
+a chance to write the reverse script tonight, but it will coming along
+soon.
+
+So maybe this can be used to mail other people lists of geographic
+names rather than encrypted messages since I've heard some networks
+frown upon encrypted mail :-)
+
+Generate your PGP file, and invoke the script like this:
+
+pgpsteg < encrypted_file_ascii_output > steg.out
+
+and steg.out will contain a list of places derived from your input
+file.
+
+- ----------8< cut here >8----------
+#!/usr/local/bin/perl
+
+#simple minded steganography for pgp encrypted messages
+#Karl L. Barrus <klbarrus@owlnet.rice.edu>
+
+%conversion = (
+  '0', 'canada', '1', 'united states', '2', 'mexico',
+  '3', 'pacific ocean', '4', 'atlantic ocean', '5', 'arctic ocean',
+  '6', 'gulf of mexico', '7', 'north america', '8', 'allegheny mountains',
+  '9', 'rocky mountains',
+  'a', 'alabama',  'b', 'alaska', 'c', 'arizona', 
+  'd', 'new mexico', 'e', 'arkansas', 'f', 'california',
+  'g', 'colorado', 'h', 'connecticut', 'i', 'rhode island',
+  'j', 'delaware', 'k', 'maryland', 'l', 'florida',
+  'm', 'georgia', 'n', 'hawaii', 'o', 'idaho',
+  'p', 'illinois', 'q', 'indiana', 'r', 'iowa',
+  's', 'kansas', 't', 'kentucky', 'u', 'louisiana',
+  'v', 'maine', 'w', 'massachusetts', 'x', 'michigan',
+  'y', 'minnesota', 'z', 'mississippi', 'A', 'missouri',
+  'B', 'montana', 'C', 'nebraska', 'D', 'nevada',
+  'E', 'utah', 'F', 'new hampshire', 'G', 'vermont',
+  'H', 'new jersey', 'I', 'new york', 'J', 'north carolina',
+  'K', 'north dakota', 'L', 'south dakota', 'M', 'ohio',
+  'N', 'oklahoma', 'O', 'oregon', 'P', 'pennsylvania', 
+  'Q', 'south carolina', 'R', 'tennessee', 'S', 'texas',
+  'T', 'virginia', 'U', 'washington', 'V', 'west virginia',
+  'W', 'wisconsin', 'X', 'wyoming', 'Y', 'washington d.c.',
+  'Z', 'bermuda', '+', 'guam', '/', 'puerto rico',
+  '=', 'virgin islands',
+);
+
+while (<>) {
+  last if /^-----BEGIN PGP/;
+}
+
+while (<>) {
+  last if /^$/;
+}
+
+while (<>) {
+  last if /^-----END PGP/;
+
+  $line = $_;
+  chop $line;
+  @pgpchars = split(//,$line);
+
+  while (@pgpchars) {
+    $convert = shift @pgpchars;
+    print $conversion{$convert}, "\n";
+  }
+  print "\n";
+}
+
+- ----------8< cut here >8----------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLKvBOYOA7OpLWtYzAQGsAwP/Y5xZx5nZdKYM785zQSmPAU60UqqqU7X+
+bAZ6+6f0foC2bo7AfClSTcAcCmZkCyPAL10toB6Qs0Qzkoe6eZKSlRVJgy9WzDdB
+oZhJV/jlvYxxlgpBJXz95sJ7ADxmtIBw6jIbfRYPjX1zva7GenTeBzXcMTabJUZJ
+SPG853ZqWeA=
+=0MEu
+-----END PGP SIGNATURE-----
+
+
+
+

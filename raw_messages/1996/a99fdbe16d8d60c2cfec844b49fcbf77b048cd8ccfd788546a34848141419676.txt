@@ -1,0 +1,164 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 14 Oct 1996 15:56:03 -0700 (PDT)
+To: unicorn@schloss.li
+Subject: crypto wish list (was Re: A "RIGHT" to strong crypto?)
+In-Reply-To: <Pine.SUN.3.94.961014020541.28315F-100000@polaris>
+Message-ID: <199610142041.VAA00167@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Black Unicorn <unicorn@schloss.li> writes:
+> [avoiding government is the only way]
+>
+> 2: Avoid the Government
+> 
+> I am convinced this is the only answer.  It has essentially always been
+> the cypherpunk answer.  "Cypherpunks write code."  Cypherpunks get it
+> done.  etc.  Get the genie out of the bottle and keep it there.  This is
+> PGP, this is ssh, this is SSL, this is mixmaster, this is remailers.  Get
+> it out, get it working, get there first.
+> 
+> Ok.  We got some of it there.  Now what?  The lead time on crypto is about
+> up.  In my estimate regulation will be in place by 1998, if not earlier.
+> Remember that in many countries regulation already exists.
+> 
+> Efforts put on resisting or moderating crypto are fine.  Political action
+> is fine.  Even so I submit that technological action is more important at
+> this stage.  The delaying games are about over.
+> 
+> Where is highly sophisticated stego?
+
+Good stego is difficult.  Very low bandwidth stego is doable, but
+stego of reasonable bandwidth, and good plausible deniablity is
+difficult.
+
+What are our options?
+
+- Stego in english text.
+
+Highly desirable, but very difficult, I think.
+
+- Stego in audio and graphic file formats
+
+Easier.  Not so much plausible deniability.  You've got to scan your
+own pictures, and post lots of them.  (Become an avid
+alt.binaries.pictures.* poster?)
+
+- Stego in Internet Phone protocols.
+
+Bill Stewart discussed some of the problems with this a short while
+ago.  If I recall the basic problem is that the higher quality lossy
+audio compression CODECs, which typically get used for low bandwidth
+(28.8k and below modems) to get reasonable quality, don't have that
+much room left, as they are compressing, and lossy, and by design
+trying to leave as little as possible redundancy left.
+
+I have also seen claims made for digital watermarking, that if enough
+channels and redundancy is used, that digital watermarking survives
+all kinds of abuse, analogue reproduction and redigitizing, etc.
+
+Digital watermarking that I have seen discussed most involves image
+files.  Is there any published work on digital watermarking of audio
+files?
+
+It would be interesting to see if any audio watermarking techniques
+survives internet phone CODECs.  However, the problem still is that
+the two aims are in tension: stego is trying to make the fact that the
+data is there at all undetectable, the main aim with watermarking is
+that you not be able to remove all traces of watermarking, and the way
+that this is achieved is to spread the watermarking through many
+channels.  The fact that there is watermarking in the document is not
+necessarily being concealed, the primary aim is to stop removal, and
+encode the watermark so that the image is not appreciably damaged
+visually.
+
+- Stego in Internet video conference formats
+
+This kind of technology is difficult for similar reasons to that of
+audio.
+
+Also the technology is a bit premature, I don't think you would be
+able to get a very good frame rate of high resolution video over a
+28.8k modem.
+
+> Where are larger keys for symetric ciphers?
+
+The recent discussion on using IDEA with larger keys, or using 3IDEA
+(triple IDEA) might be one way to get larger key spaces.
+
+Peter Gutmann's MDC or the Luby-Rackoff method for constructing a CBC
+mode block cipher from hash functions are another way.  However,
+Schneier, in AC2 voices concerns about basing ciphers on hashes
+because the design goals for hashes are different from those for
+symmetric ciphers.
+
+I would be interested to discuss the options of combining
+cryptosystems so that the resulting cipher is as strong as the
+strongest of the used ciphers.
+
+For instance ways to combine IDEA, 3DES, and MDC say, such that all 3
+have to be thoroughly broken before the combination is broken.
+
+How good is simple multiple encryption:
+
+	C = IDEA( key1, 3DES( key2, MDC( key3, M ) ) )
+
+The same question for public key, how good is:
+
+	C = RSA( pk1, ElGamal( pk2, Rabin( pk3, M ) ) )
+
+mixing in a PK system based on a hard problem other than one based on
+discrete logs / factoring would be nice also, in case there turn out
+to be problems in this area.
+
+Also Schneier has this one:
+
+generate a one-time pad P, XOR it with the data M, then:
+
+	C = IDEA( P ) || 3DES( P XOR M )
+
+generating the pad is left as an exercise to the reader (just
+remember, you need at least 112 + 128 bits of security).
+
+Also this has the problem that it doubles the message size, but it is
+guaranteed to be as hard to break as breaking both IDEA and 3DES (or
+whatever algorithms it is you are using).
+
+Also another problem for all of this, you need really top quality
+random number generators, to get full use from your long key length
+algorithms.
+
+> Where is a fully functional and secure "stealth PGP"?
+
+PGP stealth 2.01 beta is at: http://www.dcs.ex.ac.uk/~aba/stealth/
+
+It is not release quality.
+
+I've been meaning to fix that for a while now, a release version will
+be out RSN.
+
+Do you, or anyone else who is interested see any advantage in having
+stealth functionality integrated into PGP, say as a patch for PGP263i
+/ mit PGP262?  Not that hard to do, if there's any interest for it to
+be integrated.
+
+Zbigniew Fiedorowicz <fiedorow@math.mps.ohio-state.edu> added stealth
+and SHA1 support directly to a MAC version of PGP.  The key words `fat
+mac pgp' in a www search engine would probably find it.  Or `Zbigniew
+pgp'?
+
+> Where are anonymous and encrypted WWW clients and hosts which permit
+> chaining?
+
+Folks working on this?
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

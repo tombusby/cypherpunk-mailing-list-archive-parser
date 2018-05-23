@@ -1,0 +1,34 @@
+From: Anil Das <das@sgi.com>
+Date: Thu, 13 Feb 1997 06:41:04 -0800 (PST)
+To: "Michael Froomkin - U.Miami School of Law" <froomkin@law.miami.edu>
+Subject: Re: Procmail during the transition, anyone?
+Message-ID: <199702131441.GAA01300@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Michael Froomkin - U.Miami School of Law wrote:
+> 
+> At various stages in the transition, we will be getting multiple copies of
+> the same messages as the are re- cross- whatever-posted to lists,
+> newsgroups and anything else handy.
+> 
+> Anyone have a procmail script that will show me just ONE copy of messages,
+> even if the headers are not identical (e.g. one looped, another was
+> forwarded, etc.)?
+> 
+
+# Remove duplicate messages
+:0 Wh: .msgid.lock
+| formail -D 8192 .msgid.cache
+
+
+It detects duplicates by Message-Id.
+
+-- 
+Anil Das
+
+
+
+
+

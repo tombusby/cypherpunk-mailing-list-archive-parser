@@ -1,0 +1,30 @@
+From: Chein-hsinLiu <r3506010@cml11.csie.ntu.edu.tw>
+Date: Thu, 28 Mar 96 05:19:10 PST
+To: cypherpunks@toad.com
+Subject: Question about Blind Signature
+Message-ID: <199603281310.VAA23754@cml11.csie.ntu.edu.tw>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hi!
+I have some stupid question about how to implement blind signature.
+I Know it works as follows:
+If A wants B to sign X but donot know it is X, A can send
+   X*PK(random)  : PK is public key of B
+Then B signs on message:
+  SK(X*PK(random)) ==> SK(X)*random
+Then A can obtain SK(X) by SK(X)*random/random
+
+My question is when I see how RSA encrypts using PKCS
+The PKCS block is like this
+ 00 01 FF FF FF FF ... 00 input
+Then SK(00 01 FF FF FF .. 00 input) .
+If the input = X*PK(random)
+then SK(00 01 FF FF FF .. 00 X*PK(random)) will not produce SK(X)*random
+How to solve this??
+Thanks!!
+
+
+
+

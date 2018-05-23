@@ -1,0 +1,123 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Wed, 13 Nov 1996 14:35:33 -0800 (PST)
+To: gary@systemics.com
+Subject: Re: pgp3
+In-Reply-To: <199611131217.NAA19213@internal-mail.systemics.com>
+Message-ID: <199611131606.QAA00513@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Gary Howland <gary@systemics.com> writes:
+> Raph Levien <raph@cs.berkeley.edu> writes:
+> [...]
+> > Nope. This RFC is merely a rehash of the pgformat.doc file in the PGP
+> > 2.6.? distribution. I'm doing an independent implementation of the PGP
+> > 2.6 message formats, and found this document unclear in a few spots. For
+> > example, can anyone else figure out the weird CFB variant mode from this
+> > document? I used a debugger on the PGP code to help me figure it out.
+> 
+> Exactly - I spent ages on the same thing.  Then there's the problem that
+> packet length headers must be specific lengths for various types (eg.
+> key certificates must have a 2 byte length, even if only one is required).
+> It is also not clear what the exported key certificates should contain,
+> the spec simply mentioning that there should be no trust packets etc. etc.
+> 
+> > The PGP 3.0 "spec" that you're referring to is actually a draft for a
+> > PGP library API. A couple of those got circulated on some PGP mailing
+> > lists, but none have been publicly released, another example of the
+> > secrecy surrounding the whole PGP effort.
+> >
+> > Now that PGP Inc. is happening, it's not exactly clear whether the PGP
+> > 3.0 release is going to include an API closely resembling these drafts.
+> 
+> I agree with your comments.  For example, we are developing PGP compatible
+> libraries in both Perl and Java, and are going to add SHA, Blowfish, T-DES,
+> etc.,
+
+I guess you've seen Zbig Fiedorowicz's unofficial SHA-1 patch.  Yet I
+am not sure that what Zbig has will remain compatible with PGP3.  The
+RFC document says that hashes can be added.  Zbig just chose the next
+integer, which seems likely.  The padding to use in RSA signatures
+seems less likely that it will be compatible.  Zbigs SHA-1 padding is
+described in his docs as being:
+
++ #ifdef SHA1
++ static byte sha1_asn_array[] = {      
++       0x30,0x21,0x30,0x09,0x06,0x05,0x2b,0x0e,0x03,0x02,0x1a,
++       0x05,0x00,0x04,0x14 };
++ /*
++ Taken from Internet Draft draft-ietf-cat-spkmgss-06,
++ "The Simple Public-Key GSS-API Mechanism (SPKM)", by
++ C. Adams, Bell-Northern Research, Jan. 19, 1996.  See
++ also "Working Implementation Agreements for Open Systems
++ Interconnection Protocols: Part 12 - OS Security, Output
++ from  the   December  1994   Open  Systems   Environment
++ Implementors' Workshop (OIW)" 
++ 
++          SHA1 OBJECT IDENTIFIER ::= {
++             iso(1) identified-organization(3) oiw(14) secsig(3) 
++             algorithm(2) 26 
++          }
++ ASN.1 encoding:
++   0x30, / * Universal, Constructed, Sequence * /
++         0x21, / * Length 33 (bytes following) * /
++                 0x30, / * Universal, Constructed, Sequence * /
++                 0x09, / * Length 9 * /
++                         0x06, / * Universal, Primitive, object-identifier * /
++                         0x05, / * Length 5 * /
++                                 43, / * 43 = ISO(1)*40 + 3 * /
++                                 14,
++                                 3,
++                                 2,
++                                 26,
++                         0x05, / * Universal, Primitive, NULL * /
++                         0x00, / * Length 0 * /
++                 0x04, / * Universal, Primitive, Octet string * /
++                 0x14 / * Length 20 * /
++                         / * 20 SHA.1 digest bytes go here * /
+
+> along with a better key ring format, encrypted key rings, and
+> features such as key generation from a passphrase, and we would very
+> much like to remain compatible with the new PGP, but how can we when
+> there is so little information available?  I think we need a forum
+> to discuss PGP development issues - I would be happy to set one up
+> if there was interest.
+
+encrypted key rings are a Good Idea.  I think PGP3 does this, so I
+guess you are interested in doing it in a compatible way.  (premail
+provides a `secrets' file.  I think it would be useful to generalise
+this facility so that other programs could use this facility.) 
+
+Adam
+
+ps I also picked apart the weird IDEA cfb, (using the code, and not the
+docs), for this:
+
+$n=($m=4**8)+1;sub M{$_[0]%=$m}sub N{$_[0]=(($z=($K[$o++]||$m)*($_[0]||$m))-$n*
+int$z/$n)%$m}sub A{N$A;M$B+=$K[$o++];M$C+=$K[$o++];N$D}sub I{use integer;($x=
+pop)<2?$x:0+($v=$n/$x,$y=$n%$x,$u=1,do{$q=$x/$y,$x%=$y,$u+=$q*$v,$q=$y/$x,$y%=
+$x,$v+=$q*$u while$y>1&&$x>1},$x<2?$u:$n-$v)}$x=unpack"B*",pack H32,$k;@K=
+unpack n52,pack"B*"x7,map{substr$x x7,$_*25,128}0..6;sub E{($A,$B,$C,$D,$o)=
+unpack n4,$_[0];map{A;$c=$C;$C^=$A;$b=$B;$B^=$D;M$B+=N$C;M$C+=N$B;$A^=$B;$D^=$C
+;$B^=$c;$C^=$b}1..8;A$B^=$C^=$B^=$C;pack n4,$A,$B,$C,$D}$_=<>;if($d){
+s/..(.{8})//,$i=$1}else{$i=pack H16,$i;$j=substr$i,6,2;print$i^=E,substr$j^=E(
+$i),0,2;$i=~s/../$'$j/}print substr$d?E($i)^($i=$&):($i=E($i)^$&),0,length$&
+while s/.{8}|.+//s
+
+(what is it?  PGP compatible CFB mode IDEA, which I (and another perl
+hacker) were playing with a while ago, the idea being to do a PGP
+compatible minimal script, not very small so far though :-( Combine
+that with the already existing 2 lines of RSA in perl/dc (or perhaps 4
+lines of RSA in pure perl), another 7 lines of MD5, a bit of keyring
+access glue (maybe borrowed from Mark Shoulsen's pgpacket.pl), and
+you'd have the ability to access PGP keyrings, with encrypted keys,
+and do RSA/IDEA encryption.  You wouldn't be far off RSA signatures
+either.  Maybe it would all come out under 2048 characters (a
+precondition for a perl most interesting obfuscation contest).  Not
+got around to finishing it yet though.)
+
+
+
+

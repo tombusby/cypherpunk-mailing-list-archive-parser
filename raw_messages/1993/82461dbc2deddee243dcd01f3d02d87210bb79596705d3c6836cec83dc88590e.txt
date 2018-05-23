@@ -1,0 +1,37 @@
+From: charliemerritt@BIX.com
+Date: Mon, 4 Oct 93 19:59:07 PDT
+To: cypherpunks@toad.com
+Subject: RSA EXAMPLE
+Message-ID: <9310042253.memo.37458@BIX.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+cc:simons@peti.GUN.de (peter simons)
+
+Dear Peter Simons,
+
+In your example P=5 Q=7 you are indeed using small numbers.
+Dont forget that D*E should equal 1 mod ( (p-1)*(q-1)/G).
+G=gcd(p-1,q-1) so in your example D*E=1 mod 12.
+D*E can not have common factors with 12 (2,3,4,6) etc.
+
+If E=5  then D=5, a nonsense situation.
+   E=7       D=7
+   E=11      D=11
+your key will not work
+* * * * * * *
+
+Try this:  P=5  Q=11  N=55   G=2  (gcd(4,10)=2)
+           (p-1)*(q-1)=40  /G  = 20
+
+	E=3  D=7  (D*E=21)        21 mod 20 = 1
+Good key!
+ Message = 31
+    31^3=29791  mod 55=36 so cyphertext=36
+    36^7=78364164096  mod 55 = 31 so recovered message is indeed 31.
+I hope this helps.  Charlie Merritt  [charliemerritt@bix.com]
+
+
+
+

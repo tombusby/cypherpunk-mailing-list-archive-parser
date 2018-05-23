@@ -1,0 +1,57 @@
+From: Matt Blaze <mab@research.att.com>
+Date: Mon, 30 Jan 95 10:07:52 PST
+To: Thomas Grant Edwards <tedwards@src.umd.edu>
+Subject: Re: ESP Unix encrypted session protocol software
+In-Reply-To: <Pine.SUN.3.91.950130124020.24102B-100000@thrash.src.umd.edu>
+Message-ID: <9501301802.AA08512@merckx.info.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>On Mon, 30 Jan 1995, Matt Blaze wrote:
+>
+>> ESP is an encrypted session protocol layer for managing remote
+>> encrypted sessions.  It does 1024 bit DH key exchange (from RSAREF)
+>> and 3-des in 8bit cfb mode for the traffic encryption.
+>
+>I'm curious what Matt and others think about the possibility of the DH key
+>exchange being spoofed by an interloper in this application. 
+>
+>-Thomas
+>
+
+Well, cryptographically speaking, it's trivial for an active attack and
+probably infeasible for a passive attack.  But you knew that...
+
+So there are two questions - first, what's the threat model for TCP/IP,
+and second, what are the alternatives?
+
+I'm not sure about the threat model.  Spoofing attacks on TCP sessions
+are not exactly easy - there's a lot to do to pull it off - but not
+out of the question either (as demonstrated by the recent NYT articles
+and CERT advisories).  Probably the easiest way to receive packets intended
+for another host is to convince the routing tables between you and your
+victim to route to you instead of the real host.  I'm not aware of this
+every being done ON PURPOSE, but it's not out of the question, either.
+
+As for the alternatives, I think the picture is pretty bleak, to tell
+the truth.  The cryptographically sound way to prevent spoofing is
+with authentication of the agreed key.  But for the remote host to
+authenticate itself, it has to have a secret signature key.  Where to
+store it?  A typical machine, especially a multi-user, unattended server
+simply has no safe place to store keys.  And if you had a trusted secure key
+store on the remote host, you wouldn't really need to use Diffie-Hellman
+to establish the session key in the first place, since you could just
+store each user's pre-established session key in advance.
+
+At the extreme, fixing this is a Hard Problem.  In practice for establishing
+a reasonably secure session, it all depends on how much you worry about a
+full-blown (two way) spoofing attack against IP.
+
+-matt
+session ke
+
+
+
+

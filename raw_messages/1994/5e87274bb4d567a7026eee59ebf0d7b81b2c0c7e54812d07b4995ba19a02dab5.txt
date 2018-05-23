@@ -1,0 +1,55 @@
+From: trollins@debbie.telos.com (Tom Rollins)
+Date: Wed, 13 Jul 94 15:29:19 PDT
+Subject: Source Code
+Message-ID: <9407132229.AA26004@debbie.telos.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello,
+I created a stand alone utility for DOS to do a multiple
+cipher IDEA-TRAN-IDEA-TRAN-IDEA and call this 3DEA.
+"usage: 3dea e|d [infile [outfile]]"
+Without files, will use standard in and out.
+Will prompt for (5) Pass Phrases. MD5 on each phrase to get
+128*5 bits of key.
+
+I also made some changes to my copy of the PGP source code
+to use this 3DEA cipher as an optional extension to the
+single IDEA cipher that comes with PGP.
+Will communicate with current versions of PGP (2.3a, 2.6, 2.6ui).
+
+1 - Can process 4096 bit RSA keys.
+
+2 - Optional 3DEA message encryption for more security.
+    3DEA is a multiple cipher IDEA-TRAN-IDEA-TRAN-IDEA.
+
+    Include the command line option '3' when encrypting with 3DEA.
+    Example "pgp -3seat message".
+    Uses a 640 bit session key as specified.
+        128 bit key for first IDEA round.
+	 64 bit IV for first IDEA round.
+	 32 bit key for Transpose of bytes within a 4096 byte
+	    buffer block between first and second IDEA rounds.
+        128 bit key for second IDEA round.
+	 64 bit IV for second IDEA round.
+	 32 bit key for Transpose of bytes within a 4096 byte
+	    buffer block between second and third IDEA rounds.
+        128 bit key for third IDEA round.
+	 64 bit IV for third IDEA round.
+
+3 - Automatic detection of IDEA or 3DEA session keys for
+    decryption of messages.
+
+Would anyone in the USA or Canada like a copy of these programs
+(Source and Object) ?
+I would appreciate any feedback on bugs, ect...
+So, if you want a copy, send me an E-mail.
+
+Thanks,
+Tom Rollins <trollins@debbie.telos.com>
+
+
+
+
+

@@ -1,0 +1,101 @@
+From: chen@intuit.com (Mark Chen)
+Date: Fri, 27 Oct 1995 12:07:55 +0800
+To: corby@pela.intuit.com (Corby Anderson)
+Subject: Re: One Time Pad encryption over the Internet, securely? (fwd)
+In-Reply-To: <9510262248.AA19876@doom>
+Message-ID: <9510270345.AA21918@doom.intuit.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Corby,
+
+> I *had* to forward this to you.  Can you give him the answer, or are you
+> bound by an NDA?  I can't remember.
+> 
+> Corby
+
+Unfortunately, I am bound by an NDA.
+
+However, I am not violating the NDA by saying that Craig is correct.
+There is no way to do a one-time pad except by doing a one-time pad.
+In other words, it is not possible to generate synchronized, truly
+random key streams at remote locations non-algorithmically.
+
+One-time pads have a property that no other encryption scheme has.  If
+I am an attacker and I somehow gain access to all of the key material
+and all of the plaintext that two communicating parties have so far
+used, I am still unable to decipher the next transmission.  *Only*
+one-time pads have this property, and there is no way to achieve it
+without negotiating a key stream out of band.
+
+OTPs also have some other properties that are more mathematical in
+nature.  For instance, the probability of getting any particular bit
+of plaintext from a given ciphertext is equal to the raw probability
+of getting that plaintext by itself.  In other words:
+
+   p_P(x_i | c) = p_P(x_i)
+
+where P is the plaintext space, x_i is the plaintext, and c is the
+ciphertext.
+
+Furthermore,
+
+   p_K(K) = 1/|K|
+
+which means that all keys are used with equal probability,
+irrespective of plaintext and ciphertext.
+
+Hope this helps!
+
+   - Mark -
+
+> Forwarded message:
+> > From firewalls-owner@GreatCircle.COM Thu Oct 26 03:39:33 1995
+> > X-Delivered: at request of corby on doom
+> > X-Authentication-Warning: miles.greatcircle.com: majordom set sender to firewalls-owner using -f
+> > From: Craig Bishop <csb@connect.com.au>
+> > Message-Id: <199510260745.RAA16385@koromiko.off.connect.com.au>
+> > Subject: One Time Pad encryption over the Internet, securely?
+> > To: firewalls@greatcircle.com
+> > Date: Thu, 26 Oct 1995 17:45:13 +1000 (EST)
+> > X-Mailer: ELM [version 2.4 PL21]
+> > Mime-Version: 1.0
+> > Content-Type: text/plain; charset=US-ASCII
+> > Content-Transfer-Encoding: 7bit
+> > Sender: firewalls-owner@GreatCircle.COM
+> > Precedence: bulk
+> > 
+> > I was contacted and asked whether I was interested in software which
+> > which used a one time pad for encrytion.
+> > 
+> > It comes from Elementrix an Isreali company is offering encrypted email,
+> > ftp and what they call "personal firewall" software.
+> > 
+> > This software uses a One Time Pad via a patent pending method. I am no
+> > encryption expert and the information available is limited but it would
+> > seem to me that there is no way to do this over the internet securely.
+> > 
+> > See, http://www.elementrix.co.il/
+> > 
+> > Cheers, Craig
+> > 
+> > -- 
+> > Craig Bishop - Internet Security Analyst
+> > csb@connect.com.au
+> > http://www.connect.com.au/people/csb/
+> > 
+> 
+
+
+
+--
+Mark Chen 
+chen@intuit.com
+415/329-6913
+finger for PGP public key
+D4 99 54 2A 98 B1 48 0C  CF 95 A5 B0 6E E0 1E 1D
+
+
+
+

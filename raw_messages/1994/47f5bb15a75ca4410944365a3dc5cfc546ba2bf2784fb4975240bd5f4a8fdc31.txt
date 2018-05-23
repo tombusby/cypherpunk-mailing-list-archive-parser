@@ -1,0 +1,99 @@
+From: Ben.Goren@asu.edu
+Date: Mon, 18 Jul 94 16:45:17 PDT
+To: bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Subject: Re: PROTOCOLS: Re: Hashed Hash
+Message-ID: <aa50b4fe0702101e8937@[129.219.97.131]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:54 PM 7/17/94, wcs@anchor.ho.att.com
+(bill.stewart@pleasantonca.ncr.com +1-510 wrote:
+>> I'm planning on implementing the "cryptographic protection of databases"
+>> on page 61 of Schneier, to create a directory of a professional
+>> organization that would be useless to telemarketers.
+>> [hash last name to get DES key and location of encrypted data in list.]
+
+Not quite; the last name would at least be the foundation of the
+key--otherwise, just use the first field to decrypt the second. Location is
+either 132 or 160 bytes from the start of the hash; all else is obscurity
+that wouldn't be all that effective. Remeber, anybody can do individual
+lookups, or else I'd just use some secure method to get it into people's
+hands. If you can do individual lookups, you can do a lot (all) of them;
+the best I can hope for is to slow that down, preferably in a
+cryptographically secure way.
+
+>> [ problems of brute-force and popular-last-names attacks ]
+>
+>If you're only concerned about telemarketers, this amount of obscurity
+>may be enough - anybody competent enough to hash a list of, say,
+>10000 last names x 1000 first names into your database is at
+>least an *interesting* telemarketer :-)
+
+All it takes is some ambitious employee with connections to somebody with a
+medium-sized workstation with a fair amount of idle time, like overnight. A
+cheapie Alpha would do very nicely. Let it work--at no cost other than
+initial setup and electricity--for a month or three, and you've got an
+awful lot of names, even if you don't have the whole database.
+
+There's not much obscurity here. Just write a minimal wrapper to the
+existing (supplied) decryption code, unless my "security" relies on
+non-cryptographic stalling, like counting to a million before doing
+anything. I sure don't want to rely on that.
+
+And a company such as Microsoft wouldn't even notice the effort. Think
+about it: a database of musicians (the group I'm doing this for is the Phi
+Mu Alpha Sinfonia, the men's professional fraternity in music) known to be
+technically inclined--after all, their database is cryptographically
+protected. Who better to target for their musical instrument CD?
+
+>If you're concerned about telemarkers from the NSA/FBI/KGB,
+>then the algorithm isn't enough anyway [. . .]
+
+If any TLA wants the unencrypted database, they can have it from me for the
+price of a warrant--and that's just to be sure that they're not imposters.
+Our membership rolls are alerady public.
+
+>An intermediate variant is to use a password as part of the hash;
+>if everybody has their own password, the table size is N**2, or you can
+>give everyone the same password without increasing the table size,
+>and still be able to distribute the list on FTP.
+>[. . .]
+
+Nice idea. If there is demand for a program such as this after I've written
+the basic version for Sinfonia, I'll code that, as well.
+
+>On the question of whether there are functions I(m) = H(H(m)) for popular
+>hashes, by definition there are, since H(H(m)) is one.
+
+Well, by that definition, DES is a group....
+
+>For most of
+>the cryptographically useful functions, though, there aren't any that
+>are faster than running the hash function twice.  Some exceptions are
+>hashes like a**x mod p, x**a mod p, and obviously (a*x+c) mod p.
+>But DES is known not to be a group, and MD5 is ugly enough it probably
+>isn't group-like either.
+
+Any chance you (or anybody else) can point me in the direction of sources
+that would state this definitively? I'd much rather do multiple hashes than
+use some sort of kludge with multiple DES encryptions, but I won't unless I
+can find something in the literature. "A job worth doing...."
+
+>                        Bill
+
+Thanks for your help.
+
+b&
+
+--
+Ben.Goren@asu.edu, Arizona State University School of Music
+ net.proselytizing (write for info): Protect your privacy; oppose Clipper.
+ Voice concern over proposed Internet pricing schemes. Stamp out spamming.
+ Finger ben@tux.music.asu.edu for PGP 2.3a public key.
+
+
+
+
+
+

@@ -1,0 +1,49 @@
+From: CyberPsychotic <fygrave@freenet.bishkek.su>
+Date: Wed, 5 Aug 1998 22:10:51 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: text analysis
+Message-ID: <Pine.LNX.3.96.980806105040.20223u-100000@freenet.bishkek.su>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hello folks,
+ I have abit practical question, since I know this list is partly devoted
+to cryptography matters, I guess this is the right place to ask:
+
+ So I was playing with some crypto-analysis algorythms, and some steps of
+them involve such thing as finding out the frequency of some character or
+set of characters. So I wonder what would be the optimal (speed, resources
+etc)way of coding this. While playing with single character frequency, I
+guess the best way would be having unsigned int 256 elements array (I
+refer to C coding) and each time, I find certain character, i just
+increase the element of the array with this char offset. This seems very
+neat to me (except the thing that some chars could be never found in
+text). Anyways, when things come to 2 characters set, i have to get 1024
+character set, and so on, which looks quite unreasonable to me to allocate
+memory for elements, which probably will be never found in text... I was
+thinking of other solution and came to two way connected lists (correct
+term?)  things, i.e. : i have some structure like: 
+
+struct element {
+char value[ELEMENT_LENGTH];
+unsigned int frequency;
+struct element *previous;
+struct element *next;
+}
+ and could dinamically allocate memory for each new found element, but
+this would slow down whole code by the time list of new elements grow up.
+(b/c i will have to look thro.. whole list in order to find whether such
+element has already been found or not),  so I wonder maybe there another
+neat way to complete tasks like this? I would appreciate any ideas, hints,
+code examples. (would be very helpful having a look on some code
+performing such a task, I surfed the web but didn't find many)...
+
+ Thanks beforehands,
+ Fyodor
+
+
+
+
+
+

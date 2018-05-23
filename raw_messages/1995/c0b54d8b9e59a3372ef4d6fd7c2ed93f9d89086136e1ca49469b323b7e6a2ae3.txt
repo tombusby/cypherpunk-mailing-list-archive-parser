@@ -1,0 +1,50 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 13 Dec 1995 11:13:07 +0800
+To: cypherpunks@toad.com
+Subject: Re: Time-based cryptanalysis: How to defeat it?
+Message-ID: <199512130144.RAA08950@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: futplex@pseudonym.com (Futplex)
+> I don't understand why Kocher's point is correct. For example, why do the
+> times diverge with the following modification of the modexp algorithm on
+> pg.2 of the abstract ?
+> 
+> 	Algorithm to compute R = y^x mod n:
+> 		Let R_0 = 1.
+> 		Let y_0 = y.
+> 		For i = 0 upto (bits_in_x - 1):
+> 			Let M = (R_i * y_i) mod n.
+> 			Let R_(i+1) = (bit i of x) * M  +
+> 					(1 - (bit i of x)) * R_i.
+> 			Let y_(i+1) = (y_i)^2 mod n.
+> 		End.
+
+I posted a similar idea on sci.crypt, but later I realized that Paul Kocher
+is right.
+
+Your algorithm works OK for the first iteration.  The amount of work is
+pretty much constant regardless of whether bit 0 of x is 0 or 1.
+However, at the end of that iteration R_1 will have one of two
+different values depending on that bit 0 value.  And, the attacker can
+know these two values, and if he controls y he can even choose them
+(they will be either y or 1).
+
+Now, on the next iteration, the time it takes will be different
+depending on bit 0 of x.  It won't depend on the bit 1 value, but
+different bit 0 values will cause R_1 to be different.  So the time of
+this iteration will depend on the value of the bit used in the previous
+iteration, and likewise for the following iterations.
+
+If the attacker can choose y, he can arrange that the two different R_1
+values will take different times on average for the rest of the
+calculation.  So he finds out bit 0 as before, and from there he can go
+on and find the other bits.
+
+Hal
+
+
+
+

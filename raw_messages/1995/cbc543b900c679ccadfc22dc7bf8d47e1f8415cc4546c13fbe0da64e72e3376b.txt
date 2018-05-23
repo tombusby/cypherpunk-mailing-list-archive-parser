@@ -1,0 +1,58 @@
+From: daw@boston.CS.Berkeley.EDU (David A Wagner)
+Date: Wed, 6 Dec 95 17:25:52 PST
+To: cypherpunks@toad.com
+Subject: Re: Solution for US/Foreign Software?
+Message-ID: <199512070125.UAA16598@bb.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <199512062229.RAA16714@universe.digex.net>,
+Scott Brickner <sjb@universe.digex.net> wrote:
+> 
+> I agree.  It does bring to mind an idea, though.  Netscape builds an
+> exportable system by choosing a random 128 bit number and then just
+> including 88 bits of it in plaintext.
+> 
+> This means one of two things.  Either there's a field which holds the
+> "key", but the export version stores 88 bits plain + 40 bits cipher,
+> and knows this structure, or there's a field which holds the 128 bit
+> enciphered key, and a second field which holds the 88 bits of plaintext
+> key.
+> 
+
+It's the former (in SSL v2.0).
+
+I looked into this, because the former version can be vulnerable to
+related-key attacks, if not done right.  SSL v2.0 does it right.
+(In particular, SSL v2.0 hashes both the 88 bit salt + 40 bit secret
+to get all the cipher keys.)
+
+> 
+> In the former, the patch would be more significant, but still possible.
+> You'd disable the "write the plain" part and extend the "decode the
+> cipher" part to decode all 128 bits --- probably just a loop test.
+> 
+
+(And you'd have to change the cipher type from RC4-40 to RC4-128.)
+
+Or write a local proxy to convert from RC4-40-salted to RC4-128.
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBFAwUBMMZCbSoZzwIn1bdtAQF9xAGAqkg5VzChucF3FasK2pYVxg1D5F3lsnSP
+CFWsp+MbXKqTe71iznBvtg246xWPLohe
+=XM3W
+-----END PGP SIGNATURE-----
+
+
+
+

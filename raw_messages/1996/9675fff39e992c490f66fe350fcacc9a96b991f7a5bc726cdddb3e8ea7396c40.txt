@@ -1,0 +1,80 @@
+From: Philippe VIJGHEN <phv@bim.be>
+Date: Wed, 10 Jan 96 15:04:45 PST
+Subject: Re: A weakness in PGP signatures, and a suggested solution (long)
+In-Reply-To: <199601030407.UAA12551@comsec.com>
+Message-ID: <30F37F39.480@bim.be>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+You are right but the question is: what do you want to sign/encipher,
+the message body or the whole message exchange?
+
+We thinked about this when we developed a piece of software
+for the European Space Agency which is called EDIDOC server 
+(Electronic Data Interchange of Documents).
+
+In our case, SMTP header signing was anyway not acceptable
+because we needed to support various communication means.
+
+I won't go into too much details but EDIDOC is acting as 
+a central server for information exchange with value added as:
+- a clearing house
+- security gateway
+- communication gateway
+- a gateway at document format level
+- groupware aspects
+
+Roughly,
+- a clearing house:
+	everything exchange is logged in the server db
+
+- security gateway
+	...this requires of course trusting of the server
+	but people with different security packages can send/receive
+	 "secured message" (signature, enciphering) to/from
+	the server without worrying of the recipient/originator
+	configuration. Only the server public key need to be known
+	by the partners.
+
+- communication gateway:
+	Various ways of transmitting the messages to/from the server
+	depending of partner configuration.
+
+	This means that although, as you pointed out, the envelope 
+	must be secured itself it can not be the envelope
+	specific to the communication method used (SMTP, X.400,...)
+	-> usefull information can not be stored at the level
+	   of the communication method header (ex. SMTP) but is 
+	   included in the secured body (originator, destinator, 
+	   timestamp, subject, ....)
+	   Only the strict minimal information is included in the
+	   SMTP, X.400, FTP, floppy, a.s.o. "headers".
+	   Our envelope is structured according to a SGML DTD.
+
+- a gateway at document format level
+	Server is doing conformance checking of	documents and
+	can even down-translate them based on the recipient
+	settings (some will expect SGML, other ones EDIFACT, other
+	ones ASCII, other partners WP, .... depending of the
+	type of document)
+
+- groupware aspects
+	complex scenarios (as chain of approval, document review, ...)
+	may be implemented at the server level
+
+
+For more information, send an e-mail to edidoc-info@bim.be
+
+ESA/ESRIN has some information at http://www.esrin.esa.it
+
+BIM Engineering as a home page (http://www.bim.be) which should
+"soon" include information about the server
+
+
+Philippe VIJGHEN
+BIM Engineering Europe
+
+
+
+

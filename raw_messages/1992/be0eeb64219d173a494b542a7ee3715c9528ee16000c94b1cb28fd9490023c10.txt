@@ -1,0 +1,92 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Tue, 22 Dec 92 21:55:46 PST
+To: CYPHERPUNKS <CYPHERPUNKS@TOAD.COM>
+Subject: Pax and .fi remailers
+Message-ID: <921223054957_74076.1041_DHJ39-2@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Upon more thought, I don't see a really good way to use the PAX
+remailer in conjunction with our remailers based on the scripts of
+Eric Hughes.  The PAX remailer can only be used to send messages to
+those who have "registered" with the remailer to receive an anonymous
+ID there.  So, for PAX to work with our remailers we would have to
+register.  For example, my remailer at hal@alumni.caltech.edu would
+have to register with PAX and receive an anonymous ID, like
+"anon.100@pax.tpa.com.au".
+
+Then, to use a two-hop remailer consisting of first PAX and then mine,
+you would prepare a message as usual for my remailer:
+
+====================
+::
+Request-Remailing-To: dest
+
+This is a message for two-hop anonymous remailing.
+====================
+
+Perhaps you would encrypt this using my remailer's public key, getting:
+
+====================
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.1
+
+hEwCG6rHcT8LtDcBAfwLWYgWXpCoi7TjoeVttBYpk3KPbiYf9L9CCegfYlvj56RA
+OFrijYag+jqNlHQXmO52bXL8PaNUowD7a2pFY80WpgAAAGt/RXNzaWkI/b3CkviB
+eh/piaUDxgfPd4npcURHtUCEeh8bPpzVaI9qm6xZlxSaJif+CtFqyuaRezj+hcXR
+YT9JOl93LAxQJITeYUlPXgkBEvyB4u3HjpCDSS5NETDcqd8rtBspzUvlcmqT1g==
+=d356
+-----END PGP MESSAGE-----
+====================
+
+You would then send this to anon.100@pax.tpa.com.au.  (NOTE: Don't
+try this - I haven't yet gotten an anonymous ID at PAX.)  PAX
+would forward it to my remailer, unchanged, which would then decrypt
+it and send it onward.  Oh, yes, PAX would also strip the .sig,
+which is perhaps why you'd want to do this.
+
+But for this to work, I have to publically announce that my remailer,
+hal@alumni.caltech.edu, can be reached at PAX "anonymous" address
+anon.100@pax.tpa.com.au.  This seems a little strange, as the PAX
+address is then no longer anonymous.  I have to tell everybody what
+the address is in order for it to be useful.
+
+So, the PAX remailer doesn't really add much anonymity, but it does
+excise your .sig.  It's not clear that it's worth it just for that.
+
+On a more positive note, the other remailer, in Finland, is much more
+promising for our purposes.  It has a remailing capability similar
+to ours.  You could send mail to: hal%alumni.caltech.edu@anon.penet.fi,
+and it would forward the mail to hal@alumni.caltech.edu.  This is
+similar functionality to a non-encrypting form of the remailers we
+are operating, and so it can help confuse things.
+
+Also, this remailer could be used in a chain of our remailers by
+using an address of the proper form.  For example, mail sent to
+the Rebma remailer, then to Finland, then to the Rosebud remailer, could be
+done by putting, at the front of your message:
+
+::
+Request-Remailing-To: elee7h5%rosebud.ee.uh.edu@anon.penet.fi
+
+::
+Request-Remailing-To: <dest>
+
+Then a blank line, then your message itself.  Mail it to remailer@rebma.mn.org.
+I haven't tried this but it should work, theoretically.
+
+Hal
+74076.1041@compuserve.com
+
+
+Distribution:
+  CYPHERPUNKS >INTERNET:CYPHERPUNKS@TOAD.COM
+
+
+
+
+

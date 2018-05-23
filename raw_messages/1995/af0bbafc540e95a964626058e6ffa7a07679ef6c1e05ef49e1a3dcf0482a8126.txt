@@ -1,0 +1,93 @@
+From: Carl Ellison <cme@TIS.COM>
+Date: Wed, 22 Nov 95 08:51:06 PST
+To: raph@c2.org
+Subject: Re: Design proposal: crypto-capable generic interface
+In-Reply-To: <199511212323.PAA02457@comsec.com>
+Message-ID: <9511221641.AA14712@tis.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Sat, 18 Nov 1995 00:42:21 -0800 (PST)
+>From: Raph Levien <raph@c2.org>
+
+
+>   First, a few words about what I consider to be good interface that
+>can support plug-in crypto.
+
+[...]
+
+>   I propose that the new interface lives as a sort of daemon, rather
+>than a static collection of command line script pieces. 
+
+Danger, Will Robinson!  (see below)
+
+[...]
+
+
+>   Once the negotation has been established, the application can send
+>the daemon MIME objects that the app does not understand but the
+>daemon does (for example, an image/fractal). The daemon can return a
+>MIME object that the app does understand (for example, an image/ppm).
+
+This part sounds good...a sort of master translation service.
+
+>   Alternatively, the daemon may request an authentication. This is
+>useful when resolving external bodies that require authentication,
+>including non-anonymous FTP, and standard authenticated HTTP. In this
+>case, the daemon sends a message to the app requesting the
+>authentication. It specifies whether it needs both username and
+>password, or just password. In the latter case, it hands a username to
+>the application.
+>   The application can then query the user for the authentication
+>data. It hands this back to the daemon. In reply, the daemon indicates
+>success or failure. In case of success, it hands the object back to
+>the app.
+
+Now I get worried.  This communication with the demon is via some IPC --
+maybe even via a LAN.  Some things can't be distributed safely and
+authentication is #2 on my list.
+
+>   Encryption is a bit more tricky, but in essence you just hang a
+>premail-alike off this kind of protocol. The hard part is specifying
+>the key, but you just call it a "parameter" and put in hooks for the
+>daemon to ask for whatever parameters it needs. 
+
+Crypto keys are #1 on my list of things you can't distribute (unless they
+are wrapped, of course).
+
+>						 This requires that
+>keys have some nonforgeable names, which is unfortunately not a
+>feature of PGP 2.6.2. S/MIME will do it just fine, if you buy into the
+>Certifcation Authority (<wink> at Nick Szabo).
+
+Public keys, if that's what you're talking about, have perfectly good
+nonforgeable names -- themselves.  They are unique.  They are the proper
+name which can collect all the attributes of that key which are of interest
+(e.g., permission to spend $, name of a human who knows the private key,
+attributes about that human, etc.).
+
+>   One final aside: I've been fairly frustrated with this mailing list
+>as a forum for talking about real design proposals and implementation
+>issues. Ignorant posts by the likes of Dr. Fred and Alice d'Clueless
+>tend to attract far more attention than real crypto work. I want a
+>forum for, and just for, cypherpunks who write code. If I had just a
+>smidgen more free time (as if), I'd be trying to start one
+>myself. Anyone else?
+
+I've seen this happen several times.  As a list gets popular, it
+diversifies.  You might try sci.crypt.research -- since it's moderated.
+
+ - Carl
+
+
++--------------------------------------------------------------------------+
+|Carl M. Ellison      cme@tis.com    http://www.clark.net/pub/cme	   |
+|Trusted Information Systems, Inc.   http://www.tis.com/                   |
+|3060 Washington Road          PGP 2.6.2:  61E2DE7FCB9D7984E9C8048BA63221A2|
+|Glenwood MD  21738         Tel:(301)854-6889      FAX:(301)854-5363       |
++--------------------------------------------------------------------------+
+
+
+
+

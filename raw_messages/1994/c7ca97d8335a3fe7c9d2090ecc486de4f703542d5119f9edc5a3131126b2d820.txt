@@ -1,0 +1,57 @@
+From: kipp@warp.mcom.com (Kipp E.B. Hickman)
+Date: Tue, 13 Dec 94 10:47:45 PST
+To: raph@netcom.com
+Subject: Re: More 40-bit RC4 nonsense
+Message-ID: <9412131845.AA18544@warp.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In article <199412131742.JAA27330@netcom5.netcom.com>, you write:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+>    If I recall correctly, the first byte out of the RC4 stream has
+> about a 40% chance of being the first byte of the key. Thus, if the
+> 40-bit "secret" part of the key is the _beginning_ of the full 128-bit
+> key, then the keyspace is effectively reduced by about seven bits,
+> meaning that I would be able to crack a key on my PC in a couple of
+> days or so.
+>    Of course, if the "clear" 88 bits went first, there would be no
+> advantage whatsoever. The SSL document very carefully does not say
+> how they combine the two key parts to form the 128-bit key. Does
+> anyone know?
+> 
+> Raph
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: 2.6
+> 
+> iQCVAwUBLu3cI/4BfQiT0bDNAQEToQQAtcy2v0sBd+g5GBrm+Pa1AykqS4tTctfu
+> EYga7kPry4wvGmI7/HpD+SVVDQRcJe+O9CxH9cpvRgBRIBhyvsFXVBSTW0OTJgXb
+> 1bYh5qerD5J/gXAs0XWIp0+Hj8GqeTIRkFTseU4MDcDfQ7tOSEFvul97iSNYIytX
+> AMkmAEmMXxU=
+> =S80T
+> -----END PGP SIGNATURE-----
+
+OOPS. This is a spec ommission. The clear key data (aka "salt") is
+combined with the secret portion as follows:
+
+	The bytes of the salt are concatenated with the secret
+	portion with the secret portion making up the least significant
+	bytes of the concatenation.
+
+I will spec'ize the english...
+
+By the way, where did this 40% number come from? For some reason RSA
+never told me this... :^(
+
+---------------------------------------------------------------------
+Kipp E.B. Hickman          Netscape Communications Corp.
+kipp@mcom.com              http://www.mcom.com/people/kipp/index.html
+
+
+
+
+
+

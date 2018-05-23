@@ -1,0 +1,88 @@
+From: "Ian Farquhar" <ianf@sydney.sgi.com>
+Date: Tue, 27 Dec 94 18:08:12 PST
+To: cypherpunks@toad.com
+Subject: Re: Why I have a 512 bit PGP key
+In-Reply-To: <9412232039.AA03986@merckx.info.att.com>
+Message-ID: <9412281256.ZM11042@wiley.sydney.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Dec 23,  3:39pm, Matt Blaze wrote:
+> essential services for me like taking backups.  This means that, no
+> matter how hard I try, it's impossible for me to be sure that none of
+> my files have been tampered with.
+
+Some time ago I looked at tripwire, and wondered if a personal version
+could be produced which would allow a similar function to be performed on a
+system which had a hostile sysadmin (a position I was in a few years ago,
+and it's not pleasant).
+
+The problem is that although you can protect the data file of hashes (by using
+a pass phrase to encrypt it), protecting the binary which does the checking
+is rather more difficult.  Sure, you can checksum it and lock that checksum
+in the encoded file, but a hostile attacker could make the self-check a
+special case which always returns good, and then snaffle the pass phrase.
+Once they had the pass phrase, the protection is dead.
+
+Over lunch (ie. warning, not a lot of thought given to this :), I wondered
+if you could do something like this:
+
+Have a simple bootstrap loader, and the encrypted main program.  The
+bootstrap loader asks for the pass phrase, and decrypts the main program
+and runs it.  The main program checks the loader for modification, and
+if there is a problem, refuses to go further with a indication to the
+original account owner (eg. overwrite the main program with one which
+simply prints "Main prog hacked at <date/time>".  If all is well, the main
+program asks for a further pass phrase to the data file, and goes off to
+check all of the files in the listed areas (for the moment, the details of
+how it does that is not particularly relevant - all I am concerned about in
+this post is the protection of the binary).
+
+Obvious Attacks:
+
+1. Attack the main program.  You can't, because it is encrypted (presumably
+   with some sort of hash in there too), and so you can only trash it.
+
+2. Attack the loader.  This is possible, because it is in plaintext form.
+
+   Dangers:
+
+   a. The attacker may get your pass phrase.  However, when the main
+      program then sums the original loader, it will notice that
+      it had changed and won't go further.  Your pass phrase for the
+      main program has been compromised, but the data file remains ok.
+   b. The attacker may get a copy of the main program.  That's fine,
+      because the main program won't run (see above), and the user
+      will be warned.
+   c. (The main danger).  The loader program loads the main program,
+      but before copying itself back it replaces the trojan version
+      with the original image (possibly even resetting the timestamp on
+      the file).  This is a problem.
+
+3. Attack the datafile.  Same a (1), really.
+
+4. Attack the running image.
+
+Both 2(c) and 4 are the main problems.  Using gcore or procfs the malicious
+system admin can grab a running copy of the binary, and do what they like.
+There are many tricks to avoiding the danger of 4 (which applies to all
+crypto code running on hostile systems), but all are just that: tricks.
+They can be overcome given enough time and motivation.
+
+But 2(c) is the hassle, as there is no obvious way around this, and it is
+quite easy to do.
+
+Anyone got any good ideas?  I have a lurking suspicion that there are no
+solutions to this problem, and we're down to the same issue of securing
+the transport system which delivers a binary (which is not possible in
+this case).
+
+Just an interesting diversion over a very boring lunch....
+
+							Ian.
+
+
+
+
+

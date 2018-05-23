@@ -1,0 +1,56 @@
+From: Derek Upham <upham@cs.ubc.ca>
+Date: Thu, 15 Jul 93 15:13:28 PDT
+To: cypherpunks@toad.com
+Subject: Looking for fastest Legendre/Jacobi algorithm
+Message-ID: <199307152212.AA14909@grolsch.cs.ubc.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In 1991, Tygar and Yee published a paper describing an authentication
+and security system for Mach.  At least two of the techniques
+described in the paper can be used elsewhere; one is a zero-knowledge
+proof of identity algorithm, and the other is a public-key algorithm
+for exchanging arbitrary data (i.e., private encryption keys).
+
+The security of the scheme is based on the intractability of
+determining quadratic residuosity.  Variable $a$ is a quadratic
+residue on $n$---it has the Jacobi value of 1---if and only if there
+exists some $x$ such that $(x^2\mod n)=a$; otherwise it is not a
+residue and has Jacobi value -1.  (If $n$ is prime, the Jacobi value
+is also the Legendre value).  Rabin(???) has proven that working
+backwards from $a$ and $n$ to find $x$ is equivalent to factoring
+$n$, so only the person who generated $n$ will be able to check the
+residuosity of $a$ (if factoring $n$ is difficult, of course).
+
+In the private key exchange algorithm, for example, the Sender
+generates a series of quadratic residues and non-residues $a$ over
+$n$ and passes these values on to the Receiver.  The Receiver
+calculates the (non-)residuosity for each and assigns it a bit value,
+thus building up a string of bits that determine the key.  Any Tapper
+will be unable to calculate the residuosities from the data stream,
+and so will not intercept the key.
+
+I've written a bunch of programs to generate keys and run an
+encrypted bit exchange, but the performance is lacking.  Decoding
+time seems to grow at $O(\el^2)$ with the length of $p,q$, which
+makes using any sort of secure public-key $n$ quite infeasible---
+especially if people want to use these algorithms on small home boxes
+for dialup security.  On a 386/40, receiving 56 bits encoded with a
+512 bit public key takes twenty-two minutes...
+
+So: anyone know tricks to bum as much speed as possible out either
+the Jacobi or Legendre algorithms?  For our purposes, they are
+equivalent.  If the Tygar and Yee algorithms ever run efficiently,
+they could be very nice alternatives to RSA.
+
+Derek
+
+Derek Lynn Upham                               University of British Columbia
+upham@cs.ubc.ca                                   Computer Science Department
+=============================================================================
+"Ha!  Your Leaping Tiger Kung Fu is no match for my Frightened Piglet Style!"
+
+
+
+

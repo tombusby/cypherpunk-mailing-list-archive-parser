@@ -1,0 +1,97 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 16 May 1997 02:30:41 +0800
+To: shamrock@netcom.com
+Subject: eternity-lite (was Re: The War is Underway (fwd))
+In-Reply-To: <3.0.32.19970511125644.006e96a8@netcom13.netcom.com>
+Message-ID: <199705151717.SAA01042@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Lucky Green <shamrock@netcom.com> writes:
+> No offense, but Adam's "Eternity" system doesn't come close to Ross
+> Anderson's original design. It is a fun weekend hack, but calling it the
+> Eternity Service is a very unfortunate choice of words. It isn't any more
+> Ross Anderson's Eternity Service than type I remailers are Chaumian mixes.
+
+I wholeheartedly agree that it's current form is no where close to
+Ross A's Eternity Service.  My hope was that by giving something
+concrete to criticize we might see some progress in the direction of
+Ross's ideal.  Perhaps eternity-lite would be a better name (I nearly
+released it with this name).
+
+I was hoping for some specific criticisms, analyses, suggestions etc.
+Having a functioning example would probably help, I hope to get one up
+soonish, time permitting.  Some of the aspects of Ross's system are
+quite hard to acheive, while what I have is pretty easy to acheive (as
+demonstrated by the few hours it took me to get it where it is).
+
+Type I remailers came before mixmaster.  Bass-o-matic came before
+replacement with IDEA, etc.  We still don't have a DC net, nor a
+pipenet.
+
+
+One consideration of the design, is a social aspect, the servers
+design is partly attempting to bootstrap acceptability from something
+which has come to be viewed as a fact of life: the inherently noisy
+and uncontrollable nature of alt USENET newsgroups.  By designing
+something which is in essence a search engine, I speculate that the
+individual server operators would be less liable than if they part of
+the distributed database as is the case with Ross's Eternity Service.
+There are specific exemptions for caches in some legislation (I
+think), and anyway you can turn cacheing off.  Search engines have
+similarly to my knowledge been left out of the censorship argument.
+The interesting aspect is how censors would react when they bumped
+into documents hosted by this system.  By basing it on USENET, the
+hope is to direct censorship attempts at USENET itself, which has
+proven very resilient to attack.  (Cancel messages I'll discuss in my
+response to Paul Bradley, who raised this question).
+
+One aspect of my system which has not been implemented yet is fetching
+articles from news archival and search services such as dejanews and
+altavista.  This would be useful to reduce the bandwidth overhead of
+having to re-post pages just to keep up with
+
+I tried a few experiments to see if this was feasible, and discovered
+a few things which will affect the design.  The design requires lookup
+by SHA1 hash of virtual URL.  
+
+Firstly neither search engine will search for hex numbers over a
+certain length.  The search engines have some indexing mechanism, I
+presume they have a rejection criteria to remove mime strings etc
+clogging up the word index, it specifically rejects long hex strings,
+I'm not sure what the cut-off is.  Both seem to search for decimal
+numbers of somewhat longer length.  Neither will search decimal
+numbers of sufficient length to represent a SHA1 hash directly.  The
+solution to this seems to be to encode as space separated groups of
+sufficiently short numbers and use a search AND to find them.
+
+Secondly (!) one of them explicitly states that they do not archive
+uuencoded data.  However it does archive PGP mime'd data (currently),
+perhaps to allow for PGP signatures, or perhaps uuencode alone was
+targetted as the most common by volume.
+
+The PGP data archiving would likely change if the eternity posts
+volume got significant enough to draw the attention of the news
+archives.
+
+If/when this came about, something like texto (primitive textual stego
+program available on the net somewhere) would probably be sufficient
+to fool the search engine.  (Bill Frantz suggested stego for this
+purpose in a recent purpose).
+
+Paul Bradley provided some critisisms, and someone else in email,
+which I'll respond to next.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

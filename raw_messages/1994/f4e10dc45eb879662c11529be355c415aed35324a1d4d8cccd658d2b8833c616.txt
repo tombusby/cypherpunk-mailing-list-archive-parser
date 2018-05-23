@@ -1,0 +1,41 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Fri, 20 May 94 09:52:07 PDT
+To: cypherpunks@toad.com
+Subject: D-H key exchange - how does it work?
+In-Reply-To: <9405201510.AA06846@snark.imsi.com>
+Message-ID: <9405201655.AA11052@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   I dunno. The paper by LaMacchia and Odlysko on how to break
+   Diffie-Hellman quickly once you've done a lot of precomputation on a
+   static modulus is sufficiently disturbing to me that I would prefer to
+   be able to change modulii fairly frequently if possible.
+
+Quoting K. McCurley about the above mentioned work: "Their experience
+seems to suggest that it is possible to compute discrete logarithms in
+groups GF(p)^* with p \wavyequals 10^100." [in _The Discrete Logarithm
+Problem_, collected in _Cryptology and Computational Number Theory_]
+
+The security of a 1000-bit modulus is just fine, thank you very much.
+Some military applications evidently use twice that, though.  You need
+to change it as often as you change RSA keys.  Since you can factor if
+you can take discrete logs, you've got to worry about the security of
+your RSA keys at the same time.
+
+   > In addition, changing the modulus can have unpleasant effects on
+   > traffic analysis, if not done properly.
+
+   Of what sort?
+
+For D-H, the modulus must be transmitted in the clear.  Unless you use
+a different modulus for each conversation, there is a persistency to
+the moduli that gives rise to a pseudo-identity.
+
+Eric
+
+
+
+
+

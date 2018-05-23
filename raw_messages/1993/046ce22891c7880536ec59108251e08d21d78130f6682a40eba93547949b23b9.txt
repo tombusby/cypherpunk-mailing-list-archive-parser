@@ -1,0 +1,37 @@
+From: hfinney@shell.portal.com (Hal Finney)
+Date: Fri, 8 Oct 93 14:05:47 PDT
+To: honey@citi.umich.edu
+Subject: Re:  second order homophonic substitution
+Message-ID: <9310081626.AA17600@jobe.shell.portal.com.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+This homophonic cypher sounds interesting.  If the authorities demand
+your keys, you could scramble each row of the matrix (scrambling each
+row separately), so that only the dummy message can be recovered.
+
+Real ascii messages have a character set of about 2^6, so the actual
+size of the key matrix will be 2^12, and that means that each entry will
+be about 12 bits.  For full generality in handling binary data the
+character set would be 2^8, meaning a matrix of size 2^16 entries with
+each entry being 16 bits.  This is a 128K byte key, which is pretty
+cumbersome.  Also, the cyphertext is twice as big as the plaintext,
+which will stand out too.
+
+Plus, once the authorities see your decryption algorithm it may be
+pretty obvious that it was designed for this specific purpose, and
+whatever pressures they applied to make you reveal the key may now
+be redoubled until you reveal the "real" key.
+
+A one-time-pad has the advantage that the key is the same size as the
+file, and there is no size expansion in encryption, plus it's a plausible
+approach to use for high-security encryption.  It will take less space
+and still allows for multiple decryption.
+
+Hal
+hfinney@shell.portal.com
+
+
+
+

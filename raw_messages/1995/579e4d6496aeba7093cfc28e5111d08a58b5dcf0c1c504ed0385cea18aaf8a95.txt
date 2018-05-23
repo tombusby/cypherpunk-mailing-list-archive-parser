@@ -1,0 +1,38 @@
+From: Scott Brickner <sjb@austin.ibm.com>
+Date: Wed, 30 Aug 95 15:03:32 PDT
+To: don@cs.byu.edu
+Subject: Re: SSL search attack
+In-Reply-To: <199508302142.PAA00178@wero>
+Message-ID: <9508302203.AA16891@ozymandias.austin.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+don@cs.byu.edu writes
+>From: Scott Brickner <sjb@austin.ibm.com>
+>>>If the segments are shuffled before they are handed out then this attack
+>>>becomes impossible, since the attacker has no way of knowing when
+>>>segment 0x1bad will be handed out.
+>>
+>>An excellent point.  One I'd missed.  I agree that a random shuffle
+>>of segments is appropriate.
+>
+>Problem is, though, if *each* segment is shuffled, or shuffled in groups
+>of 10 or 25 or 50 or what? brutessl is designed for sequential search
+>through a block of segments. I was pulling down blocks of up to 40 segments 
+>each, for each machine I was running. Of course, with brloop running I
+>won't be in such a bind (I have yet to see that it really works though..)
+>but still it also represents a coding problem as to handing out sequential
+>segments within shuffled blocks.
+
+Well, the only real issue is that the requestor *not* be able to
+reliably predict which segments will be assigned.  The server may adopt
+a strategy of picking a random block of segments for each request.
+This introduces a certain amount of fragmentation into the process, but
+there are strategies to minimize this.  It may be enough to break up
+keyspace into, say, 32 "regions", and fill requests sequentially, but
+from a randomly selected region.
+
+
+
+

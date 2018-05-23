@@ -1,0 +1,132 @@
+From: Anonymous <anon@anon.efga.org>
+Date: Mon, 1 Dec 1997 12:20:07 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: Digital Signatures
+Message-ID: <fbbcab88ba06fee2a7cfdfe70620c8e5@anon.efga.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Monty Cantsin writes:
+
+> You can't see it up here, but this is a signed message using a
+> protocol which is modestly titled "Cantsin Protocol No. 1".
+> Suggestions for improvement are most welcome.
+
+A very interesting idea!  Please consider the following suggestions if
+you like, or feel free to ignore them.
+
+One problem with signatures which have no indication at the top is that
+two passes over the data are necessary: the first to scan and find the
+start-of-signature indicator, and another to go back and calculate the
+hash.  Signatures such as S/MIME and PGP have enough information at the
+top of the signed message to allow one pass processing.
+
+> The first line is "16A5942B6EED349ECF4594C784DFD177 [Cantsin Protocol
+> No. 1]".  The hexadecimal number was chosen randomly and is the
+> indicator that this is a Cantsin Protocol No. 1 signature.  The number
+> was chosen randomly and it is somewhat unlikely that anybody else will
+> accidently choose it.
+
+You might want to think about what happens if the document itself contains
+(maliciously, or perhaps because it is talking about your signatures)
+the string in question (as yours does and this one does as well).  This
+could throw off an automated signature checker.
+
+> The second line in the signature is an SHA1 hash of the public key.
+> The hash is computed on the concatenation of the hexadecimal ASCII
+> forms of p, g, and y respectively.  There should be no leading zeros.
+> (Remember to leave off the newline!)
+
+Presumably you could use the key hash to look up the key to use for
+verifying the message.  This has a mild denial of service attack.  Someone
+else could create a key with different boundaries between p, g, and y but
+which would create the same string as this concatenation, and therefore the
+same hash.  If you left the "p: ", "g: ", and "y: " in place it would
+prevent this.  PGP's key fingerprints have had the same problem.
+
+> The fourth line contains an offset and a length to specify the area of
+> the text which is signed.  The offset is relative to the signature
+> itself.  That is, the first character of the Cantsin Protocol No. 1
+> code is at position 0.  As signatures are usually appended, the offset
+> will usually be the additive inverse of the length.
+
+It is intriguing that this can be used to sign a subset of the text.
+Presumably there could be multiple signature blocks each of which signed
+different subsets, possibly with different keys.  One problem is that it is
+not obvious to the human reader what part of the text is signed.  A nice
+effect with PGP and S/MIME signatures is that even readers who don't have
+the tools can have some slight confidence in signatures, because other
+readers will often report it when signatures don't verify.  With a
+signature that only covers a portion of the text, people might assume that
+if there are no reports of failure, more of the text is signed than is the
+case.  This is not a technical problem but is a social phenomenon which may
+not interact well with this signature format.
+
+You need to specify a canonical line ending format.  Based on the count
+values in your document, it appears that you are counting line terminators
+as being one character long.  Your count value of 1CB9 corresponds to
+decimal 7353, there are exactly 7353 characters from the first character
+of your message body to the beginning of your signature magic number, if
+line ends are one character.
+
+The specific characters for line endings need to be specified as well
+for the hash to be calculated consistently.  Your hash appears to be
+calculated with LF as the line ending (although the hash program is
+broken, see below).  Probably CR/LF would be preferable for the line
+endings as that is a widely used internet standard as well as being
+common on windows.
+
+> You also need to be able to compute SHA1 hashes.  I've been using
+> something called "sha1file" which, I believe, originated at Adam
+> Back's web site.
+
+That program has a bug.  The routine SHA1_update in the file sha1.c
+is missing a line:
+
+   while ( ctx->mlen == 64 )
+   {
+      convert_to_bigendian( (word32*)ctx->M, 64 );
+      SHA1_transform( ctx );
+      use = min( 64, data_len );
+      memcpy( ctx->M, data, use );
+      ctx->mlen = use;
+      data_len -= use;
+***   data += use;  ***  MISSING  ***
+   }
+
+Correcting this will make your hashes be correct.
+
+> El Gamal is simple enough that the signature on this message can be
+> checked using standard Unix tools such as dc version 1.1.  Let's say M
+> is the SHA1 hash of the message.  It is checked by verifying the truth
+> of this equation: (y^a * a^b) mod p = g^M mod p.
+
+El Gamal is a rather lengthy signature, although the verification equation
+is relatively simple.  DSS has a shorter signature.  If you report not
+r,s, but rather r,w where w is the inverse of s mod q, then the
+verification is: r = g^(M*w) * y^(r*w) mod p mod q.  It's not really
+much more complicated.
+
+There are some subtleties to choosing El Gamal keys, but with the 2048
+bit values you have chosen you are pretty safe.  You want to make sure
+that the generator g doesn't generate a small subgroup; to do this you
+need to look at the factors of p-1.  Your p-1 has several small prime
+factors: 0x2^3, 0x3, 0x6b, 0x16f, 0x1f79b, 0x3533a1eb3.  Beyond that
+is a 1978 bit composite which I can't factor.  Chances are very high
+that a random g will generate a group of size which is a multiple of a
+large prime factor of this large composite value, so it is strong,
+although not quite 2048 bits strong.
+
+Also, you can't really justify using 2048 bit keys when your hash is
+only 160 bits.  The hash becomes the weak link for keys beyond about
+1024 bits, and unless you use a stronger hash your key strength is
+misleading.  This is why DSS is only specified up to 1024 bits.
+
+-- A hasher to be named later --
+
+
+
+
+

@@ -1,0 +1,79 @@
+From: jdd@aiki.demon.co.uk (Jim Dixon)
+Date: Sat, 6 Aug 94 10:19:38 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer ideas
+Message-ID: <4071@aiki.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <9408051709.AA14763@ah.com> Eric Hughes writes:
+> Jim Dixon analogizes between the Internet and remailer networks.  The
+> analogy has some merit, but yet breaks down badly with the very first
+> point:
+> 
+>       *	all packets should be acknowledged
+> 
+> This is not the way the Internet works.
+
+There are some problems with vocabulary here and some conceptual
+problems.  The objective is a system which is highly reliable and
+resistant to traffic analysis.	If you have three messages in, one 10
+bytes long, one 1000 bytes long, and one 1,000,000 bytes long, and you
+send them out to three different destinations, it does not take
+genius to see which is which, no matter what order they are dispatched
+in.  But if you send them out as packets, each say 4096 bytes long,
+with all packets acknowledged, and the routing of the packets is random,
+and noise has been introduced ... traffic analysis is very difficult.
+
+TCP/IP is designed to work in an environment which is unreliable but
+also unhostile.  The sliding window algorithm and acknowledgement at
+the message level is suitable for that environment.  TCP/IP has been
+optimized for speed.
+
+[stuff omitted]
+
+> Further, in email, there's currently no notion of a connection.
+
+The internal functioning of RemailerNet is not the same as the
+functioning of the email system.  All RemailerNet communications are
+reliable.  Packets are acknowledged and the acknowledgement includes
+a hash of the packet contents, so that the packet cannot be tampered
+with.  Acknowledgements will in general take different routes from
+packets.
+
+>       *	users should communicate with trusted gateways
+> 
+> This point is only half true, because the analogy only subsumes one
+> kind of trust.  For remailers there is both trust in delivery and
+> trust in silence, the destruction of the message and information about
+> it.
+
+'Trust in silence' is a good term.  This can be enhanced in a number
+of ways.  If you are corresponding with someone you know, you encrypt
+your messages.	If you are corresponding with a stranger, you encrypt
+your message with the public key of a far gateway; then post it to
+the far gateway through a near gateway.  The near gateway knows who
+is sending, but cannot read the message and does not know the
+destination.  The far gateway decrypts the message before delivering
+it, so it knows the message and the destination, but not the sender.
+If you are sufficiently paranoid, you put your message inside
+yet another envelope, mailing it through the near gateway to a
+far gateway, which posts it on to another gateway, which finally
+posts it to its destination.
+
+Remailer gateways should be spread very wide geographically if the
+network is to be secure.  If you are very concerned about anonymity,
+bounce a message through gateways in, say, the USA, Finland, Russia,
+and Ireland.  If your concerns are about your employer, say, the
+probability of his getting at four different gateways in four
+different jurisdictions simultaneously is vanishingly small.  If
+your concerns are about governmental authorities, they are not
+that much higher.
+
+--
+Jim Dixon
+
+
+
+

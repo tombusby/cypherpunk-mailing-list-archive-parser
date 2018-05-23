@@ -1,0 +1,52 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Thu, 22 Jan 1998 16:27:09 +0800
+To: Steve Schear <cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: Re: NYT compression proposal
+In-Reply-To: <199801190230.UAA19688@einstein.ssz.com>
+Message-ID: <3.0.5.32.19980121141039.00840100@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>At 8:30 PM -0600 1/18/98, Jim Choate wrote:
+>>It has been proposed to compress the keys from 100 cypherpunks down 
+>>to a 64 character add in the NYT. 
+
+Obviously you can't compress the keys themselves, and if you just take
+a short chunk of each key, you don't have enough entropy to be useful.
+But you can make a file with all the keys, hash the file, and post
+the hash and an URL for the file.  That lets you use 128 or 160 bits
+of hash.  That's plenty of room, and has full-strength security.
+If you want to do a 32-character message, it's tighter;
+using the usual 6-bit characters, 128 bits of hash takes 22 chars,
+and 160 bits takes 27.  If you use the btoa encoding, which puts
+4 bytes of binary into 5 bytes of ascii (if the 85 characters
+it uses can all be printed in the NYT's fonts), that's
+20 for 128 or 25 for 160.  So you have up to 12 characters left.
+
+So how short a URL can you do?  With some cooperation from Vince, 
+you can probably do 2 characters - "ai", which should retrieve 
+http://ai/index.html (currently www.ai does.).  I don't know if
+Netscape will let you retrieve this - I tried it, and got the 
+index page for www.ai.com, using the Netscape "try adding .com" hack.
+(If you use the hack, "a" is shorter, but you'll need to
+give the IANA a good excuse for using the a.com reserved name.
+And keys.com is a company in the Florida Keys, but maybe they'd
+be friendly.)  The shortest URL that really looks like an URL
+is probably www.ai .
+
+If the NYT insists on a phone number, that's 10-11 characters,
+so you'll need a shorter hash :-)  Is 64 bits enough?  It's
+long enough that it's hard to brute-force, and you probably
+don't need to worry about birthday attacks, though it's
+still uncomfortably short. 
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

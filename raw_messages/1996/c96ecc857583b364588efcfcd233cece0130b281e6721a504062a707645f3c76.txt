@@ -1,0 +1,68 @@
+From: stewarts@ix.netcom.com
+Date: Wed, 23 Oct 1996 19:38:33 -0700 (PDT)
+To: project_31@alias.cyberpass.net
+Subject: Re: Call for Discussion - Time-Delay Protocol
+Message-ID: <199610240234.WAA13669@caig1.att.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 01:07 AM 10/23/96 -0700, project_31@alias.cyberpass.net wrote:
+>Very simply put, it is desired to put an encrypted, paragraph-length
+>message into ubiquitous public distribution, contained in an explanatory
+>plaintext.
+>On a predetermined date stated in the plaintext, the passphrase is to be
+>released and the parties holding the message may decrypt the cyphertext
+>and know its contents.
+[Threats: content-leaks, counterfeiting/spoofing, alteration]
+>        1.  A large-modulus PGP public key is prepared prior to the
+>            experiment and placed on (a) the keyservers and (b) at an
+>            "authenticating" website of neutral interest and good
+>            reputation.
+
+This isn't enough - keyservers are NOT a substitute for the
+Web Of Trust.  You probably need to have the authenticating key
+signed by other well-known-in-the-target-community keys.
+I don't know if you plan to use one authenticating public key
+for future jobs, or use a different one each time; in the latter
+case you'll also want to have a key to sign that one with.
+
+>        2.  The critical message is encrypted conventionally (IDEA) in
+>            ASCII format with a large passphrase and included in the
+>            explanatory plaintext, which also includes the
+>            authenticating key ID hexnumber and fingerprint, and
+>            instructions on how to obtain the authenticating key.
+
+Fingerprint is critical - otherwise you're subject to the "0xdeadbeef" attack.
+You could also include the key itself in the signed message, if you don't
+mind a bit of extra volume.
+
+>        3.  The entire plaintext message is clearsigned with the
+>            authenticating public key, and the resulting textfile is
+>            widely distributed.
+
+
+>        1.  How may this protocol be improved?
+>        2.  What are the security flaws in this protocol?
+>        3.  May this protocol be simplified without compromising
+>            security?
+
+The main alternative to PGP keys is Haber&Stornetta's "Surety" notary system -
+they use trees of hashes to establish that a given document was 
+authenticated at a given time, making the trees publicly available,
+and the weekly master hash gets printed in the New York Times classifieds
+weekly.
+At minimum, you may want to notarize your PGP key that way.
+        http://www.surety.com/
+
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# You can get PGP outside the US at ftp.ox.ac.uk
+  Imagine if three million people voted for somebody they _knew_,
+  and the politicians had to count them all.
+
+
+
+
+

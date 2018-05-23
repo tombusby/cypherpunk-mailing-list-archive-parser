@@ -1,0 +1,72 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Fri, 22 Sep 95 00:15:47 PDT
+To: cypherpunks@toad.com
+Subject: Re: Another Netscape Bug (and possible security hole)
+In-Reply-To: <9509220652.AA06103@cs.umass.edu>
+Message-ID: <199509220715.DAA27920@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> Ray Cromwell writes:
+> > I've found a Netscape bug which I suspect is a buffer overflow and
+> > may have the potential for serious damage. If it is an overflow bug,
+> > then it may be possible to infect every computer which accesses a web
+> > page with Netscape. To see the bug, create an html file containing
+> > the following:
+> 
+> Oh brother, this is unbelievable !
+> 
+> I'm using Netscape 1.1N under SunOS 4.1.2.
+> 
+> It turns out that the same (or a similar) flaw resides in the Open Location
+> input routine -- perhaps this merely coincides with the code called when a
+> URL is clicked. Anyway, pasting a URL with an overlong domain name a la Ray's
+> example causes two things:
+> 
+> (1) Part of the Open Location window widget, below the entry box, gets
+> overwritten onscreen with a portion of the entered URL.
+> 
+> (2) Netscape crashes with a segmentation fault (no core dump that I can see).
+
+
+ The bug causes random things to happen because it trashes the stack. I
+just did a test with http://aaaaaaa.(repeat pattern 42 times, followed by
+5 a's), that's 341 characters in the domain. After a coredump, I inspected
+the stack, and it has been trashed to hell, including the PC register
+which was 0x61616161 (or 'aaaa' in ascii)
+
+THIS IS A SERIOUS BUG!
+
+
+Unlike the SSL crack (which took a supercomputer to crack), or
+the RNG (which doesn't affect many people since there is not much
+internet commerce actually going on), this bug has the potential
+to damage millions of computers! This is almost enough to scare me
+away from using netscape. You can guard yourself by always observing
+the URL you are about to click on, but how many people will be
+able to keep that up all the time given that Surfing almost
+puts many people into a trancelike state?
+
+
+[I hear Perry in the background groaning and muttering "I told you so"]
+These buffer overflow bugs should be taught in every programming
+101 course along with fencepost errors.
+
+I'm not even sure if I want to write the obligatory program to exploit
+the hack given that some malicious jerk would probably use it
+on his home page to attack people.
+
+
+-Ray
+
+
+
+
+
+
+ 
+
+
+

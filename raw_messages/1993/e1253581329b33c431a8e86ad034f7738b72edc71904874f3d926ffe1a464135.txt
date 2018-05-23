@@ -1,0 +1,52 @@
+From: Brad Huntting <huntting@misc.glarp.com>
+Date: Sat, 28 Aug 93 15:58:12 PDT
+To: cypherpunks@toad.com
+Subject: PGP-MIME
+In-Reply-To: <m0oW5Bn-000BfRC@snark.uucp>
+Message-ID: <199308292250.AA00175@mini.glarp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> (That brings up another point.  Has anyone worked on getting armored
+> PGP registered as an official MIME encoding type?  Getting pgp support
+> into metamail would be a massive win --- probably better than hooks in
+> Elm itself.  If no one else is working this angle, I'd be willing to
+> get in touch with Nathaniel Borenstein and use whatever zorch I have
+> with him to make it happen.)
+
+I agree.  MIME is taking the Internet by storm and for PGP or PEM
+to reach wide audiences, it will need to be integrated with MIME,
+and be able to draw on MIME's features.
+
+For PGP to really make use of MIME, it could use "multipart" types
+to separate the objects being encrypted and/or signed from the
+signatures and encrypted session keys associated with them.
+
+This could facilitate using MIME's features for external body parts
+where part of the message is stored on an anonymous ftp site or
+retrievable from a mail responder.
+
+One could encrypt a document or other file on an ftp server, then
+send out PGP-MIME messages with the RSA encrypted session key to
+decypt the file.  MIME handles retreving the file and PGP deals
+with how to decrypt it.
+
+MIME of course deals with ascii armor on any body part leaving PGP
+free to use binary data wherever needed.
+
+As I see it, the main problems PGP-MIME would be (1) The lack of
+MIME capable readers available for PC's and MAC's (the preferred
+platforms for anyone concerned about PGP security).  But more
+importantly, (2) it's not obvious how to make a painless transition
+from PGP-2 to PGP-MIME.
+
+Any thoughts?
+
+
+brad
+
+
+
+

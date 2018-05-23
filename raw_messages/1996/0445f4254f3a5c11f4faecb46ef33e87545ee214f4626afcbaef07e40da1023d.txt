@@ -1,0 +1,45 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 3 May 1996 19:34:42 +0800
+To: VaX#n8 <vax@linkdead.paranoia.com>
+Subject: Re: encrypted Unix backup software
+Message-ID: <199605030343.UAA01915@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:02 PM 5/2/96 -0500, VaX#n8 <vax@linkdead.paranoia.com> wrote:
+>Okay, before you flame me and tell me to pipe it through
+>a symmetric cipher filter, hear me out.  Tape handling is
+>hairy, depending on what kind of functionality you want.  A regular
+>filter may write(2) in strangely sized blocks, not working very well
+>with your tape drive.
+>
+>Mostly though, things get difficult when you have to/want to deal with
+>multiple tapes.
+>
+>Although I could probably hack up "catblock" to do the job, and use
+>a line of the form
+>dump -0uBf ... | symmetric_cipher | catblock blockfactor > /dev/tape
+>if there exists something which already does this job, or something like it,
+>I'd like to know.  Now that I think about it, maybe this is the cleanest way.
+
+Yup.  It's a classic Unix tools approach - let each piece do what it
+does best, and use a standard simple interface between tools.
+You don't need to write "catblock", though - there's the "dd" command
+designed for just such applications (well, designed for the way
+those applications looked 20 years ago, when you needed to do things
+like EBCDIC conversion and line-length padding to deal with IBM tapes,
+and the syntax has a certain evil OS360 JCL look to it :-)
+Newer versions may handle multiple tapes a bit better.
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+begin 777 goodtimes
+=96-H;R!H879I;F<@9V]O9"!T:6UE<R!Y970_#0H0
+ 
+end
+
+
+
+
+
+

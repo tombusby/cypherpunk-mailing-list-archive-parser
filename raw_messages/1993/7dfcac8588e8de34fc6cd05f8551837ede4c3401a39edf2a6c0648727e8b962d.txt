@@ -1,0 +1,97 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Thu, 2 Dec 93 01:02:24 PST
+To: analyst@netcom.com (Benjamin McLemore)
+Subject: Re: NSA Insecure Remailers
+In-Reply-To: <199312020759.XAA12950@mail.netcom.com>
+Message-ID: <199312020902.BAA25636@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Benjamin McLemore writes:
+
+>  All I was trying to point out with my post is what I saw as a flaw in
+> my previous understanding of the depth of the security provided by
+> anonymous remailers. There is a difference between relying on the
+> mathematics of strong crypto to protect you from government spooks and
+> prying bureacrats-- and relying on one's belief that- although one's
+> security has been compromised, it will be too expensive or otherwise
+> difficult for the government to use this information against you.
+
+Cypherpunks remailers are far from "ideal digital mixes," as described
+in David Chaum's February 1981 "Communications of the ACM" paper. This
+is well known, and the issues of traffic analysis Benjamin raises are
+also valid and known issues. A while back we had many debates about
+what to do about message size padding (e.g., quantizing all outgoing
+packet sizes to a standard size, or perhaps to one of several (small,
+medium, large. etc.) packet sizes. And we debated adding latency, so
+that a message waits until N total messages have been received before
+remailing. And so on.
+
+In any case, Chaum's ideal digital mix is hard to implement now for
+several reasons, largely economic. Ideal mixes also need physical
+security against tampering, against interception of internal
+operations (perhaps via RF monitoring), etc. Perhaps most critical,
+and least studied to date, remailers are only as good as the human
+policies at the sites are. (My conception of ideal remailers involves
+remailer hardware, perhaps on boards containing enough RAM and/or disk
+drive space to hold the batch of messages, that is "untouched" by
+human hands. Tamper-resistant modules, sealed hardware, etc. Lots of
+issues here. I think "Mom and Pop remailers" could be sold on boards
+similar to SoundBlaster boards.)
+
+Chaum's original hardware-based mix also has some weaknesses, as noted
+in a EuroCrypt '89 paper by Pfitzmann and others. The software-based
+"DC-Net," which comes up so often on this list, is generally better.
+Several Cypherpunks are interested in implementing DC-nets. So far, no
+progress to report.
+
+> It seems to me that anonymous remailers, despite my initial
+> assumptions that they were cryptographically strong, are probably
+> compromised by the ability of the NSA to monitor Internet backbone
+> traffic, a hypothesis I would love to see disproved. Additionally, my
+
+No, they are very far from being even cryptographically strong
+(although parts of the process, involving sending encrypted messages
+to the next node, are of course as secure as, say, PGP is).
+
+> I want unbreakable security, untraceable communication and unforgeable
+> digital cash--ALL of it mathematically guaranteed and none of it
+> compromisable by some underpaid bureacrat who might decide to make a
+> little money off of ME in his spare time.
+
+Well, wanting something is not the same thing as getting it. Read the
+1981 paper, the 1988 DC-Net paper (available at the soda.berkeley.edu
+ftp site), and follow the Cypherpunks activities on DC-Nets. Then look
+at the various Cypherpunks remailers...some _require_ encryption (most
+don't, and most of us don't even use encryption, which means anyone
+reading the packets can see what's going on! A fatal flaw or just
+laziness?), some add hours of latency (though not N latency, as too
+few messages are flowing), and so on. The market will push
+development in possibly more secure directions.
+
+Right now, you can see that Cyperpunks remailers, and also Julf's
+penet site, have significant flaws. You get what you pay for (this is
+a serious point: the lack of real commerce, the volunteer nature of
+all of this, and the generally "hobby-like" nature of these systems
+explains why these weaknesses are not getting fixed.
+
+These are largely "toy" systems to provide some experience. They'll
+get better with time.
+
+
+--Tim May
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^756839 | Public Key: PGP and MailSafe available.
+Note: I put time and money into writing this posting. I hope you enjoy it.
+
+
+
+

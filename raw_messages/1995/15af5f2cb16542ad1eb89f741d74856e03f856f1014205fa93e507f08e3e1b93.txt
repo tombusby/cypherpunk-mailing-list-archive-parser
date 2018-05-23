@@ -1,0 +1,76 @@
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+Date: Thu, 31 Aug 95 02:27:56 PDT
+To: sjb@austin.ibm.com (Scott Brickner)
+Subject: Re: SSL search attacks
+In-Reply-To: <9508300101.AA11637@ozymandias.austin.ibm.com>
+Message-ID: <199508310926.TAA18041@sweeney.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello don@cs.byu.edu
+  and cypherpunks@toad.com
+  and Scott Brickner <sjb@austin.ibm.com>
+
+Scott wrote:
+> don@cs.byu.edu writes
+> >From: Scott Brickner <sjb@austin.ibm.com>
+
+...[only server assigns segments, client may ack only assigned segments]...
+
+> >BEAAAT STATE! Push 'em back.. WAAAAAAY BAAAACK. 
+> >(relevant comments follow)
+> 
+...
+> *coordinated* attack on the key.  We've established that there is a 1/e
+> cost factor in removing the central server.  I just threw out these
+...
+
+Wouldn't it be possible to reduce the cost?
+
+Each client could pick a segment at random, check it and then broadcast
+a NAK. Other clients would then know that the segment in question has
+been done, and avoid picking it in the future. If you are worried about
+collisions, one could also have IGRAB, which would advise others that
+someone is working on a segment (you can still collide, but not so
+often).
+
+One advantage is that it is not necessary to have a central infinitely
+trusted server. (Nothing personal, but bogus server is an attack.)
+
+NAKs and IGRABs would be weighted by the trust accorded to the entity
+that originated them.
+
+Notes:
+  * "broadcast" is probably best done with a fairly sparse graph, otherwise
+one will get too much communications.
+  * since there is no "server", I should replace "client" with another word.
+  * there is no incentive to send NAKs (they diminish your own chance
+of hitting the jackpot). How could this be avoided?
+  * the NAKs could be sent by e-mail, thus allowing badly connected
+and/or anonymous entities to participate.
+
+
+Am I making any sense at all?
+
+Jiri
+- --
+If you want an answer, please mail to <jirib@cs.monash.edu.au>.
+On sweeney, I may delete without reading!
+PGP 463A14D5 (but it's at home so it'll take a day or two)
+PGP EF0607F9 (but it's at uni so don't rely on it TOo much)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMEWAKixV6mvvBgf5AQEnkQQA0/+19hwKS204HjinHiLH5atzrv4CQu4G
+Gtpxoq4R+VQgVmsUdYjPsUXce3Cu8KlFuRuJwjhnRuqQxUs53uVkKxo/peoV8xZr
+FNguipHzgVu7T9t/hNQwiUDIudkv9mCpP4V27CU31GIt3BpzmfiCJLryFjI0kqKe
+PXAB0khlKvY=
+=pbWn
+-----END PGP SIGNATURE-----
+
+
+

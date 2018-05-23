@@ -1,0 +1,60 @@
+From: Tim Dierks <timd@consensus.com>
+Date: Mon, 3 Jun 1996 18:46:50 +0800
+To: "Deranged Mutant" <cypherpunks@toad.com
+Subject: Re: The Elevator Problem
+Message-ID: <v02140b01add8416384e0@[206.170.39.104]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 7:50 PM 6/2/96, Deranged Mutant wrote:
+>Alice and Bob are in a crowded place and want to confirm they share a
+>secret.
+>
+>Each picks a couple of random numbers, b and i.  The secret P is
+>hashed i times, something like:
+>
+>  H_0(P) = H(P,0)               [H can be something like SHA-1...]
+>  H_i(P) = H(H_i-1(P), i)
+>
+>They then tell each other bit b of H_i(P).
+>
+>This is repeated a number of times to make random guessing very
+>unlikely.
+>
+>If all bits match, they agree that they share the secret (we assume
+>neither wants to lie but discover if the other knows the secret).
+
+It doesn't seem to me like it needs to be this complex. Here's a couple of
+protocols I can think of:
+
+For a secret S:
+
+Alice and Bob generate and exchange random nonces. Then they calculate the
+HMAC of S using the other's nonce as the MAC secret. They exchange HMACs
+and each verify that their peer has correctly calculated the HMAC given the
+secret and the nonce.
+
+ - or -
+
+Each of Alice and Bob hash S and use the result as a symmetric encryption
+key; they then attempt to exchange messages. If they can exchange messages,
+they must have arrived at the same key, and thus be using the same S. To
+avoid replay attacks, exchange nonces and use them as a part of the key
+calculation.
+
+Note that neither of these reveals that you know S unless your peer knows
+S; noone who doesn't know S can determine if Alice or Bob actually know S
+or if they're using some other faked value (except for analysis of the
+repercussions of the exchange).
+
+ - Tim
+
+Tim Dierks  --  timd@consensus.com  --  www.consensus.com
+Head of Thing-u-ma-jig Engineering, Consensus Development
+
+
+
+
+
+

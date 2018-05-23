@@ -1,0 +1,135 @@
+From: Arsen Ray Arachelian <rarachel@prism.poly.edu>
+Date: Wed, 20 Jul 94 20:41:06 PDT
+To: "Roy M. Silvernail" <roy@sendai.cybrspc.mn.org>
+Subject: Re: Card Playing Protocol?
+In-Reply-To: <940717.141117.4g3.rusnews.w165w@sendai.cybrspc.mn.org>
+Message-ID: <Pine.3.05.9407202305.A10662-d100000@prism.poly.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Sun, 17 Jul 1994, Roy M. Silvernail wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> >       D1(E2(E1(Card,eK1),eK2),dK1) = E2(Card,eK2)
+> 
+> I think I see a problem with XOR here.  Seems to me that D and E are the
+> same operation (DE == ED == D^2 == E^2 == 0).  So is this true?
+> 
+> E1(E2(Card,eK2),OldCardBeforeEncryption) == eK2
+> 
+> Looks like Alice can cheat pretty easily.  (if I'm wrong here, please
+> let me know)
+
+Nope.  Alice's key is not Bob's key, so they can't cancel each other out.
+ie:  Say Alice's key is 3 and Bob's key is 7 and the plaintext to encrypt
+is 0.
+
+Alice encrypts with her key, you get 3.
+Bob encrypts with his key, you get 7.
+Both encrypt and you get 4.
+Bob decrypts the dualy encrypted message, and he gets 7 again.
+Alice decrypts the dualy encrypted message and she gets 3.
+
+But Bob doesn't know what the card is if its encrypted by Alice.
+alice doesn't know what card it is if it's encrypted by Bob.
+Only when the message is decrypted by one part can the other see it.  But
+since you're sending the whole deck, there's no way one of the could cheat.
+
+Now neither Bob nor Alice use XOR as a cypher.  They use a cypher such as
+DES or IDEA in a rng mode whose output they XOR to the deck of cards to
+encrypt or decrypt.
+
+> Assuming your random number generator is good, this would be faster:
+> 
+> //shuffle the deck:
+> for (i = (4*13+2) - 1; i >= 0; i--)
+>  {
+>   c1=rand() % (i)   <-- change % (i) into % 54 and I'll agree with you *;
+>   swapcards(&cards[c1],&cards[i]);
+>  }
+> 
+> This will randomize the whole deck in one pass.  Remember, though, that
+
+The reason I say this is that you're not really shuffling the cards very
+well.  If a card is at the front of the deck, the odds are that it will
+remain between the front of the deck and its relative position.  While
+larger cards at the back of the deck are likely to swap themselves with
+the ones in front just as likely as the ones in the back, this is a bit
+one sided.  This is off the top of the my head and what's obvious in crypto
+may not be actual, so Kent may want to test this out to see just how random
+the shuffle is.
+
+> seasoned card players will notice that this deck doesn't act like a real
+> deck.  This is because the traditional method of shuffling doesn't
+> randomize the whole pack.  It performs a series of permutations with a
+> small random content.  Although slower and far less random, it might be
+> a plus to implement a realistic hand shuffle.  Here's a (really) rough
+> 10-minute untested hack.  Feel free to optimize it!  :)
+> 
+> //hand-shuffle the deck
+> #define DECK_END 53
+> #define DECK_SIZE 54
+> int     deck_split, tmp_index, left, right, x, y;
+> cardtype    cards[DECK_SIZE], tmp[DECK_SIZE];
+> 
+> 
+> 
+> while(passess--) {
+>     decksplit = (rand() % 10) + 22);  // split the deck within 10 card
+>                                       // of the center.
+>     left = 0;
+>     right = decksplit;
+>     tmp_index = 0;
+>     while(left < decksplit && right <= DECK_END) {
+>         y = rand() % 4;
+>         for(x = 0;x < y;x++) {
+>             if(left >= decksplit) {
+>                 break;
+>             }
+>             tmp[tmp_index++] = cards[left++];
+>         }
+>         y = rand() % 4;
+>         for(x = 0;x < y;x++) {
+>             if(right <= DECK_END) {
+>                 break;
+>             }
+>             tmp[tmp_index++] = cards[right++];
+>         }
+>     }
+>     for(x = 0;x <= DECK_END;x++) {  // copy the deck back
+>         cards[x] = tmp[x];
+>     }
+> }
+> 
+> This always drops the left hand cards first, which you might want to
+> randomize too.  But if you watch people shuffling cards, you'll notice
+> that a given player usually drops one side first.
+
+Yes, but the goal of shuffling is to randomize cards.  If you simulate it,
+you're giving seasoned players a bigger advantage with the "odds" :-)  Then
+again, the desireability of this is left to the implementor, so Kent you
+decide which you want to do.
+
+Seasoned players will prefer the second method, however, this may be less
+random, and may infact weaken the security given by the protocol and
+encrypting the deck because they may "guess" where the cards are likely to be.
+
+Other issues: should the deck be reshuffled after each hand is played, or
+should it continue to be used for the next few hands?  In "real" poker you
+reshuffle occasionaly (anyone know the actual "rule" for this?)
+
+Someone may build a good algorith to play poker.  You have no way of knowing
+that you're playing against a machine or a human.  However, in the least you
+can be sure that the machine can't cheat.  Though you could train it to be
+very smart and keep track of every card that's been played and have it
+calculate the odds for each next hand.  Casual players won't match this
+"skill" but pros will.
+
+
+
+
+
+

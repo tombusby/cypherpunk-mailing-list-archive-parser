@@ -1,0 +1,67 @@
+From: John Deters <jad@dsddhc.com>
+Date: Thu, 23 May 1996 11:04:27 +0800
+To: cypherpunks@toad.com
+Subject: Re: The Crisis with Remailers
+Message-ID: <2.2.32.19960522214836.003432fc@labg30>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:14 PM 5/22/96 -0400, Perry wrote:
+>
+>Matts Kallioniemi writes:
+>> At 17:44 1996-05-21 +0200, bryce@digicash.com wrote:
+>> >Matts, you don't want to do floating point for money, because
+>> >floating point doesn't give you good control of precision.
+>> 
+>> Yes I do. Several major currency traders in Sweden keep all
+>> their money in 64 bit floating point storage.
+>
+>I have trouble believing you. None of the forex accounting I know of
+>in the U.S. is done in floating point. It simply isn't accurate
+>enough.
+>
+>It is true enough that *rates* can be stored as floats if you want,
+>but never actual sums.
+
+I wish there were a hard-and-fast rule that this were true.  I work in
+Point Of Sale (POS or cash registers), and occasionally we will see a vendor
+whose software stores money/currency in floating point data types.  I try
+very hard to make sure we do not purchase their software, because this
+implies the most gross lack of understanding imaginable.
+
+Floating points are simply not accurate when you're performing math on
+other people's money.
+
+And, yes, rates are acceptable to store and use as floats, but even the
+conversion process ultimately yields a long, not a float.  And, we usually go
+out of our way to code rates up as integers and perform the decimal point
+shifting in code.
+
+In the currency class we use, we have an exponent property that defines where
+the decimal point is.  I imagine that by converting the exponent from a short
+to a long we could even handle lira!  :-)  *
+
+* Note to persons who respect the Italian economy**:  That was a joke!
+
+** Note to persons who believe there are people who respect the Italian economy:
+   That was a joke!
+
+-john
+--
+J. Deters
+>From Senator C. Burns' Pro-CODE bill, which I support and you can find at:
+http://www.senate.gov/member/mt/burns/general/billtext.htm
+"  (2) Miniaturization, disturbed computing, and reduced transmission
+ costs make communication via electronic networks a reality."
++---------------------------------------------------------+
+| NET:     jad@dsddhc.com (work)    jad@pclink.com (home) |
+| PSTN:    1 612 375 3116 (work)    1 612 894 8507 (home) |
+| ICBM:  44^58'33"N by 93^16'42"W Elev. ~=290m (work)     |
+| PGP Key ID:  768 / 15FFA875                             |
++---------------------------------------------------------+
+
+
+
+
+

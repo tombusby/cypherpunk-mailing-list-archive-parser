@@ -1,0 +1,53 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 24 Apr 1996 14:37:31 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: RISKS: Compuserve "secure" login
+Message-ID: <199604242010.NAA02828@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Date: Thu, 04 Apr 1996 19:34:12 +0200
+>From: Heinz-Bernd Eggenstein <eggenste@noether.informatik.uni-dortmund.de>
+>Subject: CompuServe's "secure login protocol": two steps forward, one back
+>Summary: a new CompuServe Information Service (CIS) logon protocol was
+>designed to prevent passive and active attacks (where the attacker
+>impersonates a CompuServe node) but a flawed implementation in the
+>WinCIM 2.0(.1) client software still allows active attacks.
+...
+>  ....  HR=UR=MD5(S|Z|RA|RB|S) ....
+>I notified CIS about these weaknesses and I was informed that they are
+>"fixed" now, no details were given about the fix (source: Britta Herbst,
+>German customer support (11111.754@compuserve.com)).
+...
+>I think this a good example how to half-ruin a good protocol by embedding it
+>into carelessly written code.
+
+In addition to the posted weaknesses (which were mainly implementation issues),
+there's another major problem with this - it means that the user's passwords
+have to be stored on the Host machine (or an authentication server) in 
+_plaintext_, rather than storing a hash (e.g. like Unix passwords.)
+This means that if the host's password file is cracked, the entire system loses.
+
+You can do a little better than this by having the password file encrypted
+with a key which the login process / authentication server has, requiring 
+theft/cracking of that key (difficult) as well as theft of the password file;
+the encryption could either be a symmetric-key system or public-key if you're
+willing to spend the decryption time, which CompuServe probably isn't.
+
+A couple years ago I found an obvious application of Diffie-Hellman which
+avoids this problem; unfortunately it turned out to be patented by someone
+from Siemens (first as a German patent and then a US patent, so it's
+definitely too much trouble to try to overturn the patent...)
+The basic approach is to use a commutative hash function, which lets
+both sides calculate HA(B) == HB(A) ; modular exponentiation worked fine.
+
+Of course, if you're allowing active attacks, there's always session
+hijacking...
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

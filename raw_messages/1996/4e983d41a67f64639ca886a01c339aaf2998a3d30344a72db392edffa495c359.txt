@@ -1,0 +1,47 @@
+From: minow@apple.com (Martin Minow)
+Date: Fri, 24 May 1996 09:39:24 +0800
+To: cypherpunks@toad.com
+Subject: Re: Floating Point and Financial Software
+Message-ID: <v02140b01adca741015f0@[17.128.203.188]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+A 64-bit floating point number (i.e., C double) should be suitable for
+financial software under the following conditions:
+
+-- Money must be represented in integral units (cents, not dollars and
+cents).
+
+-- The maximum value to be computed must be less than about 10^17. This
+   includes intermediate values.
+
+-- Addition, subtraction, and multiplication by an integer are the
+   only operators.
+
+Under the above conditions, there should be no loss of precision.
+
+However, when division is required (as in currency conversion
+or interest rate computation), one must be careful to control
+round-off error. For example, a mortage payment schedule might
+be computed using true (non-exact) floating-point arithmetic, with
+the last or first payment adjusted to cover any residual error.
+(You might want to re-read Donn Parker's book on computer crime,
+paying special attention to the "salami" method of embezzelment
+by accumulating round-off errors in a private account.)
+
+Note that not all financial computation needs to be done with "to
+the penny" accuracy: even our own dearly beloved IRS allows
+(indeed, encourages) us to compute our tax declaration using
+a whole-dollar round-off method.
+
+Martin Minow
+minow@apple.com
+
+
+
+
+
+
+
+

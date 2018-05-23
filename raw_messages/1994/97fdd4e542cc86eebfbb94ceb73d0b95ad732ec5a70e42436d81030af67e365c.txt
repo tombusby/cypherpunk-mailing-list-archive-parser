@@ -1,0 +1,94 @@
+From: jdd@aiki.demon.co.uk (Jim Dixon)
+Date: Thu, 4 Aug 94 13:41:28 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer ideas (Was: Re: Latency vs. Reordering)
+Message-ID: <3778@aiki.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The problem of designing a reliable and trusted remailer network is
+a generalization of the problem of constructing a reliable Internet and
+so many of the solutions can be the same.  The structure of the
+Internet has been gone over and over again for twenty years or so
+and is probably optimal.
+
+This suggests that
+   *	all packets should be acknowledged
+   *	messages should be broken down into packets which are routed
+	independently
+   *	users should communicate with trusted gateways
+   *	users should be accessible through a hierarchy of logical names
+	which includes the gateway name
+   *	gateways should be known to users only through their logical
+	names
+   *	the gateways should frequently exchange routing information
+   *	that routing information should have an expiry date
+   *	gateway operators can choose who they announce routing
+	information to and accept routing information from
+   *	users may have accounts with gateways and be charged for
+	gateway usage
+    *	gateway operators can settle accounts between each other
+	periodically
+    *	system software should be obtained [only] from trusted sites;
+	to make things simpler, it should be possible to distribute
+	bootstrap diskettes that allowed the bulk of the software
+	to be downloaded or updated over the net without being
+	compromised
+
+Specifically cryptographic elements are easily added to the system
+    *	all inter-gateway traffic should be encoded
+    *	packets can be delayed for random intervals
+    *	routing of packets can be somewhat stochastic; that is, you
+	don't generally packets by the quickest route, and the
+	choice of forwarding gateway is not 100% predicatable,
+	given the destination gateway
+    *	packets can be fragmented and padded with noise at random
+    *	noise packets can be added at random
+    *	route selection, packet fragmentation, and noise generation
+	can be continuously adjusted to defeat traffic analysis
+
+The following suggestions raised in recent postings are included
+in this scheme:
+    *	cjl's MIRV capability (except that it is supplied by the
+	system and not the user)
+    *	Jidan's noise injection
+    *	Rochkind's stability-from-being-paid and web-of-trust notions
+    *	Markowitz's automated contacts between mailers
+    *	a form of digital postage
+    *	Rochkind's pinging
+
+The following are very easily supported by the scheme:
+    *	a form of digital cash (the gateway operator would run a tab
+	for users, like a credit card company)
+    *	digital signatures
+    *	message transfer via custom Internet protocols as well as
+	via the email system
+    *	users could specify the degree of confidentiality required
+	and the system would use stronger encryption, increase
+	chaff (anti-traffic analysis measures), and restrict use to
+	more trusted gateways as required
+
+Where email is used to transfer messages, the format used should be
+a subset of that specified in the SMTP RFCs.  Restricting the structure
+of the headers would simplify the remailer software at little cost
+to the user.
+
+The use of alt.x groups to exchange gateway information does not seem
+to add anything to this system; in fact it would seem to make it easier
+to spoof the system.
+
+There could be multiple remailer nets, some commercial (paid for)
+and some free.	The commercial networks could choose to exchange
+traffic with the free networks at no charge.
+
+Commercial remailers would probably be very concerned with legal
+issues, both criminal (pornography, etc) and non-criminal (copyright
+violations).
+
+--
+Jim Dixon
+
+
+
+

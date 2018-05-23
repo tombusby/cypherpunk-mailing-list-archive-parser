@@ -1,0 +1,39 @@
+From: Antonomasia <ant@notatla.demon.co.uk>
+Date: Thu, 25 Sep 1997 17:03:01 +0800
+To: reinhold@world.std.com
+Subject: Re: The CipherSaber Manifesto
+Message-ID: <199709250042.BAA08154@notatla.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+reinhold@world.std.com (Arnold Reinhold) wrote:
+
+> CipherSaber-1 (CS1) uses Ron Rivest's RC4 algorithm as published in
+> the second edition of Bruce Schneier's Applied Cryptography. ....
+
+> CipherSaber-1 is a symmetric-key file encryption system. Messaging
+> takes place by attaching binary files to e-mail. Because CipherSaber
+> uses a stream cipher, an initialization vector must be used to prevent
+> the same cipher key from being used twice. In encrypted CipherSaber-1
+> files, a ten byte initialization vector precedes the coded data. For
+> decryption, the initialization vector is read from the file and
+> appended to the user key before the key setup step.  ......
+
+Why not _prepend_ the IV to the key ?  As described here any
+paranoics who use keys > 255 chars won't get the IV in place, and
+will lose out.  I think I'd also force 4 bytes of the IV to be the
+current time, as a defence against the (P?)RNG getting me a repeated IV
+eventually.
+
+--
+##############################################################
+# Antonomasia   ant@notatla.demon.co.uk                      #
+# See http://www.notatla.demon.co.uk/                        #
+##############################################################
+
+
+
+
+

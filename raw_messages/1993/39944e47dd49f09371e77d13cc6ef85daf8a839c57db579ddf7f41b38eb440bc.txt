@@ -1,0 +1,96 @@
+From: Brad Huntting <huntting@glarp.com>
+Date: Wed, 7 Apr 93 15:04:02 PDT
+To: cypherpunks@toad.com
+Subject: Security Dynamics
+Message-ID: <199304072203.AA02670@misc.glarp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+The MIS department where I work has started using "Secure-ID" cards
+made by Security Dynamics Inc for access to their MVS systems.
+After listening to a presentation by marketing droids and technical
+support from Security Dynamics I had these impressions:
+
+	The cards are programmed at the factory with a "random"
+	seed.  They have an internal clock, and a lithium battery.
+	They use a proprietary encryption algorithm to encrypt the
+	time of day using the internal seed and display it on an
+	LCD display using about 6 or 7 digits.  The display updates
+	itself every 60 seconds (this frequency is adjustable when
+	you order the cards)
+
+	An authenticating host will have the cards seed, as well
+	as the cards "clock offset" (the time the card was seeded,
+	and the clock reset).  The user has a 4 digit PIN (personal
+	identification number) known only to the host (and of course
+	written on the back of the card :-).  PIN numbers must be
+	unique since they are used to identify the user.  At login
+	time, the user is asked to type in her PIN, as well as the
+	number currently displayed on the card.  This is checked
+	by the host, and if it's correct the user is authenticated.
+
+	If used on a regular basis, the authenticating host can
+	detect clock drift and will adjust it's database accordingly.
+
+	Cards can be used across multiple "realms", but this
+	nessesitates trusting the cards shared key with each host
+	that wants to authenticate that card.
+
+	The cards are timed to deactivate after some time interval
+	(again, this is an option) the default lifespan is 3 years,
+	they can go as high as 4 or 5, but after that, the battery
+	isn't reliable.
+
+You can probably imagine some of the problems with such a system.
+First and foremost in my opinion, it uses an unknown proprietary
+algorithm which is a closely guarded company secret known only to
+them and anyone which a dissasembler.  Obviously such an algorithm
+has never undergone any serious scrutiny.  Most respectable
+researchers (outside of Ft Meade) do not need to disassemble code
+to find material to write papers on.
+
+Second, the cards are programmed at the factory, and the user has
+no way of reseeding them.  The company actually touts the fact that
+they have all the card info for all customers on file, and will
+gladly send you encrypted tapes or floppys if you loose you database!
+Of course they will only talk with one designated contact at your
+site, and they will only ship materials to that person.  In all
+fairness if your a big client, and you insist, they might be
+compelled to tell you how to seed the cards, and give you a batch
+of "raw" cards.
+
+When I mentioned how ludicrous it was for us to trust their internal
+security, they made some lame noises about employees being "bonded".
+In other words, they have established plausible denyability and
+are "out of the loop" should your security data be compromised.
+I was a little furious.
+
+Lastly, their expensive.  Something on the order of $60/card in
+quantities of 250 to 500 for cards that last 3 years and change
+every 60 seconds.  Programmable DES devices (used by DEC and others)
+which employ a challenge response system are about one third as
+much.
+
+I came away from the talk with a bitter taste in my mouth.  As I
+understand it (and please correct me if I'm wrong) they are, at
+this point, one of the largest companies "crypto card" companies
+in the world.  This is, to say the least, unsettling.
+
+If you want more info, they're Colorado office is at:
+
+	Security Dynamics
+	5299 DTC Boulevard
+	Suite 500
+	Englewood, CO 80111
+	Phone: +1 303 773-6519
+
+
+
+
+brad
+
+
+
+

@@ -1,0 +1,120 @@
+From: bogus@no.return.address (Underdog)
+Date: Sun, 2 Oct 94 16:13:04 PDT
+To: cypherpunks@toad.com
+Subject: Re: Technical Remailer Analysis.
+Message-ID: <199410022312.TAA20726@ducie.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: Louis Cypher
+
+
+Hal Writes:
+>Good point.  There is a related attack which Chaum pointed out in his
+>1981 CACM paper: the attacker intercepts and keeps a copy of an incoming
+>message, then later re-sends it.  This one will go to the same place and
+>by repeating this multiple times we can figure out where the original
+>message went.
+
+This raises a fundamental problem with current remailers. It is clear that
+next generation remailers will have to encrypt all messages sent between
+them, on top of any nested encryption of the message done by the
+originator.
+
+Timothy C. May Writes:
+>157.3.  Some possible fixes:
+>
+>        157.3.1.  remailers can recognize duplicates and agree not to
+>remail them, or to remail them off in different directions (adding their own
+>hop-wrappers)
+>
+>        157.3.2.  digital postage helps a bit, as the attacker at
+>least has to spend money
+>
+>        157.3.3.  (If the inner layers of a message each have some
+>digital money, or a "one-use" coupon, then an attacker who copies and resends
+>the whole message is effectively double-spending and this should be detected.
+>Most simply, the "use once" coupon will only allow one passage through the
+>remailer.)
+
+If the remailers also batched messages to a given destination, or padded
+outgoing messages before encrypting them, they would be far less
+susceptible to this kind of attack. Re-encrypting the message with padding
+(to some standard size) would prevent attackers from recognizing their own
+messages in a flood attack, except by noting destination (which could be a
+giveaway). Batching would do the same, but would also hide the number of
+messages trashed or locally delivered. Neither of these does much against
+the concerted "spam attack". I think in the end, remailers will need to run
+something like encrypted links, sending a constant volume of data between
+them, which would be random garbage when not a real message. This leaves
+open the denial of service attack of sending more data per hour then the
+link supports, therefore causing long queues at the remailers. Sigh, I
+really need to get down to a library and dig up the Chaum articles I hate
+to always reinvent the wheel.
+
+While waiting for good digital postage, a substitute could be used. If one
+added a "Msg-ID:" header similar to the Ghio remailer's "Cutmarks", which
+contained a large random number, this number could be stored at the
+remailer, and messages with the same ID simply send to /dev/null. This
+would be simple to do with remailer chaining scripts like "premail".
+
+Hal writes:
+>If I follow this, the attack is something like, every time Alice sends
+>a message Bob receives one.  Observing this happening over a period of
+>time we conclude they are communicating.  Could this be defeated by
+>sending dummy messages so that Alice sends exactly 10 messages every day?
+>Then the fact that Bob receives messages on some day can't very well
+>be associated with Alice.
+
+Since I assumed that a typical user sends one message per day, Alice may
+draw attention to herself through this mechanism. 10 messages is not
+enough, it would leave some correlation. Alice needs to send at least one
+message per tick (e.g. 48 in my example), in which case she shown 100%
+correlation with all recipients always. There is no way to know that she is
+sending to Bob, but I suspect she will be on a short list at the FBI unless
+everyone else is doing the same (which violates my assumptions). If
+everyone sent a message every tick, traffic analysis would be impossible.
+
+Matthew J Ghio writes:
+>This attack can be defeated if both Alice and Bob are running remailers.
+>Then their correspondence is hidden in the 100 messages a day of
+>remailer traffic.  An observer can not tell wether the messages were for
+>Alice or Bob, or if they were for the remailer (assuming latency was
+>used) or if they were bit bucket messages.  Alice could even forward her
+>personal messages to a bitbucket (after saving a copy for herself) to
+>further increase security.  This is why everyone should be running a
+>remailer if they are concerned about their privacy.
+
+I do not think that the "everyone is a remailer" idea works. At the assumed
+one message per day, and an average message chain of 5 remailers, then only
+5% of users can maintain remailers with a real traffic flow of 100 messages
+per day. Other than that, this idea is functionally similar to Hal's.
+
+Sending messages on to bit buckets is a nice idea. Assuming cutmarks, or
+standard message sizes, and reordering are used, this is indistinguishable
+from a remailer which just delivers the local mail, and also sends out
+periodic junk messages to various bit buckets. As I mentioned in my
+original message, this should be done anyway to ensure  complete mixing of
+all messages within the web during any given tick.
+
+                -Louis Cypher
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLo557qyHUAO76TvRAQFSJwQAmenSoAZAkOtGww9F/giy80AmJJk30I6D
+y5Fp0d8fgNy3MiCnG6onlvvJdBShgonvsbKRF0r94cYtYgtnczK/rqmhIDyc/UB2
+a0V55YRdb84YwGpGPmrFepH8yXdueEgQvUq5Fs1FV9jNtSAK9kK2G1+QmSVdq/Uy
+pkRIf8iPbJA=
+=xZdv
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

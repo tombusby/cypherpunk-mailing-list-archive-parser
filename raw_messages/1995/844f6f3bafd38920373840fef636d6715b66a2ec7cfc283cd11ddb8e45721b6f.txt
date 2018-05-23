@@ -1,0 +1,103 @@
+From: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Date: Thu, 21 Sep 95 11:53:38 PDT
+To: jirib@cs.monash.edu.au
+Subject: Re: Exchange random numbers (was: Re: netscape's response)
+In-Reply-To: <199509210958.TAA10764@sweeney.cs.monash.edu.au>
+Message-ID: <199509211852.LAA22259@Csli.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+| > Of course you have to be very careful, as you say. Did you see my
+| > problem-section in the original letter? I included it above.
+| ... [the referenced section elided by jirib] ...
+| 
+| If I only ever give out a hash of my seed, and only ever *add* any received
+| info to my seed (and stir it in well), how can anyone find out anything?
+| (Apart from hash weaknesses.)
+
+Giving out contribution: 
+     MD5(select_bits(my_seed, start_bit, stop_bit)) -> remote
+Taking in contribution : 
+     my_seed = my_seed XOR 
+     ((select_low_bits(remote_contrib, contrib_width) << contrib_area)
+
+You also need to keep track of who has contributed what, and how much.
+This might become a problem if you don't have a safe authentification
+mechanism, like baseing the tracking on the IP-numbers etc.
+
+But I don't believe this is a real problem, since you always
+contribute 'entropy', not exact values. You need to know the exact
+state of the random generator to be able to predict how your
+contribution will affect the generator.
+
+The boot-strap stage is actually the big problem still. But if the
+initial stages are 'random enough' to withstand a total crack, I guess
+the randomness gathered will increase rapidly, and increase the
+safety a lot.
+
+| The only thing that remains is that I cannot really count on a stranger
+| to actually give me something truly random. In fact, since at least
+| one other person knows it, I shouldn't count any entropy from it at all.
+|
+| However, if I get e bits from each of n servers, and k of them are rogue,
+| then I have e*(n-k) bits, ie e*n*(1-k/n). With a suitably conservative
+| estimate of k/n, this should be acceptable.
+| 
+| In any case, accepting donations of entropy cannot possibly reduce the
+| amount of entropy I have, can it?
+
+This isn't a problem as I see it, he'll only know what bits he
+flipped, not the actual state.
+
+I guess someone could mount an attack on the remote_contrib, finding
+the part of my_seed by bruting the remote_contrib that I submitted.
+But even if that is done, you'll only know a small part of the total
+seed. And the remote end can't choose which segment of my_seed that
+will be revealed.
+
+I also see a problem if an attacker is controlling the whole
+environment, but this is no different from the original problem, and
+a lot more unlikely.
+
+| > and that you should only give out approximately the same amount of 
+| > randomness to the neighbour, as you point out below.
+| ...
+| 
+| I'm not sure I follow this one. Why?
+| 
+| If the neighbour is willing to trust me for more, and cannot possibly
+| deduce my seed from the numbers ('cause it's a strong 1-way hash),
+| the only thing it costs me is CPU time - it'd cost me more to keep
+| track of who asked for how much when.
+
+Well, the reason would be that if someone bruted your contribution,
+they would still have to guess the remaining part. Double safe! :-)
+
+| ...
+| > My approach solves part of the problem of "the observable local
+| > environment" problem. 
+| ...
+| 
+| Then again, you can always ping. With a well-chosen target, you get
+| 10 bits raw from the first packet... Perhaps about 7 or 8 of actual
+| usable entropy (and before you flame me, ping melb.dialix.oz.au).
+
+Yes, but if one assumes that the algorithm to gather the seed is
+known, its quite possible for someone else to do it at the same time
+as you do it, or even observe your ping packet req/reply. And how do
+you determine which 'random host' to ping?
+
+| Part of this is that once the sources of randomness are sufficiently
+| diverse, it's just easier for an attacker to modify your s/w.
+| Especially if you never throw out your seed, so that all your interactions
+| since the beginning are unfathomably stirred into your current key.
+
+Yes, I believe this is important too.
+
+/Christian
+
+
+
+

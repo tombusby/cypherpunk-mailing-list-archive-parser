@@ -1,0 +1,56 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Sun, 13 Aug 95 01:29:18 PDT
+To: eb@comsec.com (Eric Blossom)
+Subject: Re: PRZ encrypted voice software release imminent
+In-Reply-To: <199508112143.OAA02837@comsec.com>
+Message-ID: <199508130829.EAA04681@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+[stuff about tuning algorithm to channel characteristics]
+> 
+> None of this says that you shouldn't also optimize for the packetized
+> case too.  I think that you can negotiate the right behavior at start
+> up time based on detected channel characteristics.  I think that the
+> biggest impact is in the framing overhead, or lack of it.
+> 
+> You are always trading off bandwidth, speech quality and MIPs.
+
+ I agree with this, but it is still possible to do all this through
+an abstract interface layer. One can "query the line characteristics"
+of a transmission layer and then limit the selection of algorithms
+based on those characteristics.
+
+Example: we have a class TransmissionLayer, and two derived
+classes "syncrhonouslayer" and "asynchronouslayer" (subclass as
+appropriate). Note, no underlying link type is being refered
+to.  It could be a network or a modem.
+
+Now we have a bunch of algorithms (codecs), CodecA is optimized for
+a synchronouslayer with atleast 16kpbs. CodecB for asynchronous
+packet networks.
+
+At the application layer, the user chooses a way of connecting.
+The application instantly picks the best codec (supported
+by both ends) for that transmissionlayer. it alo updates the user
+interface automatically, e.g. displaying a "half duplex"
+mode for one type of link, or "conference call' for another.
+Some types might not support all encryption types
+because of cpu limits (also detected)  There's no reason
+this could not be programmed. It would also be highly portable,
+highly maintainable, and more easily adoptable.
+
+Direct-to-hardware hardwired algorithm software is good for
+proof of concept. But I'm thinking ahead, to a time when
+a multimedia protocol will be just another transport layer ontop of
+which cool applications are running. (like http+mime runs over
+TCp)
+
+-Ray
+
+
+
+
+

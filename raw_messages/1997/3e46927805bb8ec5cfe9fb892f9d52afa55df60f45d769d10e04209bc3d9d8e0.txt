@@ -1,0 +1,140 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 30 Mar 1997 08:56:07 -0800 (PST)
+To: dlv@bwalk.dm.com
+Subject: Re: remailer spam throttle
+In-Reply-To: <88Lc5D5w165w@bwalk.dm.com>
+Message-ID: <199703301545.QAA03183@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Dimitri Vulis <dlv@bwalk.dm.com> writes:
+> Adam Back <aba@dcs.ex.ac.uk> writes:
+> > [remailer encrypts data, sends recipient encrypted data, and keeps
+> > the key the recipient requests decryption if he wishes]
+> >
+> > I think this solves remailer resource objections.
+> 
+> yes, this sort of solves the storage problem.
+> 
+> Thinking how this might work...
+> 
+> Alice's remailer gets an e-mail for Bob.
+> 
+> Alice's remailer generates 2 pseudo-random numbers, K and L, and uses
+> K to encrypt the message with a symmetric cryptoscheme.
+> 
+> Alice's remailer sends the encrypted message and L to Bob with the
+> following note: if you want to receive the key to decrypt this
+> message, send back L and acknowledge the disclaimer.
+> 
+> Alice's remailer retains the triple (K,L,Bob). Because it's small,
+> it can be kept for a long time.
+
+I think you don't need to keep Bob .. just lookup K with L.  Less
+email addresses is a good thing.
+
+The counter argument I suppose is that the Feds, or anyone else who
+reads Bobs email can then ask for the key.  But if they can read his
+email, they can already read it once he requests the key.  It would
+allow an eavesdropper to do a DoS attack against Bob, request all his
+emails before he can.
+
+> If Bob sends back L, the remailer sends Bob K so he can read his message.
+> 
+> I see a few problems with this. I'm sure it can be improved.
+> 
+> 1. What if Bob is another remailer, unknown to Alice?
+
+Why is this a problem?  You have accept lists for remailers between
+themselves.  A private remailer (one not advertising itself on these
+lists) just mimics Alice in retreiving the email ... waits a while
+then requests the key.
+
+> 2. What if Bob doesn't have the program to decode his message? (It's
+> fair to assume that everyone can fine PGP. It's not fair to assume that
+> everyone can find e.g. triple DES.)
+
+You can provide a web interface to do it for him.
+
+Or, you can offer the option that if he includes the encrypted message
+in his request you will decrypt it for him, by return of email.
+
+> 3. What if the LEA's decide that the collection of triples on Alice's
+> computer is worth looking at, for instance, for the list of addresses.
+> (OK, they could be encrypted probably.)
+
+Don't keep the addresses as above -- treat the nonce L as the
+identitiy.
+
+> 4. What if the LEA's decide to find out how K, L are generated?
+
+Random pool like PGP, it's one way and the pool has more bits than the
+key material the Feds have anyway.  /dev/urandom is nice.  
+
+> When Alice's remailer gets an e-mail for Bob, it should do
+> something like:
+> 
+> 
+>           try to fetch Bob's public key
+>           from a well-run key server
+>             /                    \
+>          success               failure
+>            |                      |
+>       encrypt the e-mail      discard the
+>       with bob's key and      e-mail!
+>       pass it to Bob              |
+>                               was the form
+>                               letter sent to
+>                               Bob in the last
+>                               7 days?    \
+>                              /            no
+>                            yes              \
+>                           /                exit
+>                     send bob the
+>                     form letter
+> 
+> 
+> Wow, isn't that a perry flow chart. :-)
+
+Yes.  A good solution also.  Perhaps we can write a nice remailer
+which has a web forms interface for configuration, lots of radio
+buttons etc to allow the proud new remailer in a box owner to
+configure his remailer, and pretty stats graphs.
+
+[o] discard / keep
+if keep how long for [...]
+
+etc.
+
+Then let the remailer operator play with settings and see which works
+out best for him.
+
+> It may be hard to prove a negative to a LEO who doesn't know what
+> the hell you're talking about. You have a file in your spool that
+> was encrypted with a key that your program generated, but now you
+> no longer have the key? Well, tell us how the key was generated.
+
+I think you're arguing for your discard all policy :-)
+
+btw if you're interested to fix the keyserver so that it requires an
+ack to a ping with a nonce, someone at MIT has a fast PGP key database
+/ web key server which isn't using PGPs linear lookup.  You can find a
+link to it from Brian LaMachia's keyserver page.
+
+Another snazzy thing to do to the keyserver would be to have it obtain
+a timestamp signature on your key (from a third party time stamping
+service, of which there are several) and include that too.
+
+Adam
+
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

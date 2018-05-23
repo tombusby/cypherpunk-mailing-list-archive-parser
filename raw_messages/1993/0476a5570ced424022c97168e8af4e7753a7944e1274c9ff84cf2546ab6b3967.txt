@@ -1,0 +1,56 @@
+From: miron@extropia.wimsey.com (Miron Cuperman)
+Date: Thu, 27 May 93 14:31:49 PDT
+To: cypherpunks@toad.com
+Subject: Interim patch for ytalk
+Message-ID: <199305272044.AA05646@xtropia>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I also intend to change the name of the program to PGTalk.  If anybody
+has better ideas, please let me know.
+
+This patch is important for the security of the encryption.  The
+idea was to have cipher feedback (pun intended!).  Somehow I reversed
+a couple of lines.
+
+*** ytalk/idea.c	Thu May 27 13:40:36 1993
+--- pgtalk/idea.c	Thu May 27 13:40:52 1993
+***************
+*** 504,510 ****
+  	{
+  		idea_ecb(iv,temp, Z);  /* encrypt iv_idea, making temp. */ 
+  
+! 		if (!decrypt)	/* buf is ciphertext */
+  			/* shift in ciphertext to IV... */
+  			cfbshift((byte *)iv,buf,chunksize,IDEABLOCKSIZE);
+  
+--- 504,510 ----
+  	{
+  		idea_ecb(iv,temp, Z);  /* encrypt iv_idea, making temp. */ 
+  
+! 		if (decrypt)	/* buf is ciphertext */
+  			/* shift in ciphertext to IV... */
+  			cfbshift((byte *)iv,buf,chunksize,IDEABLOCKSIZE);
+  
+***************
+*** 511,517 ****
+  		/* convert buf via xor */
+  		xorbuf(buf,(byte *)temp,chunksize); /* buf now has enciphered output */
+  
+! 		if (decrypt)	/* buf was plaintext, is now ciphertext */
+  			/* shift in ciphertext to IV... */
+  			cfbshift((byte *)iv,buf,chunksize,IDEABLOCKSIZE);
+  
+--- 511,517 ----
+  		/* convert buf via xor */
+  		xorbuf(buf,(byte *)temp,chunksize); /* buf now has enciphered output */
+  
+! 		if (!decrypt)	/* buf was plaintext, is now ciphertext */
+  			/* shift in ciphertext to IV... */
+  			cfbshift((byte *)iv,buf,chunksize,IDEABLOCKSIZE);
+  
+
+
+
+

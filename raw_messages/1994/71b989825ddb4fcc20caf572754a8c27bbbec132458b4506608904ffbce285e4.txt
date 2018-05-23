@@ -1,0 +1,46 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Thu, 7 Jul 94 06:30:33 PDT
+To: cypherpunks@toad.com
+Subject: Re: Counting bits
+Message-ID: <199407071330.OAA05787@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+: Both Sun C and GCC on a Sun SPARC system running 4.1.3 produced this code
+: for each bit-count line (-O4 optimization used):
+
+: L77042:
+:         andcc   %o0,2,%g0: : ; AND the bit
+:         bne,a   L77044: : : ; branch/anull if zero
+:         inc     %o5: : : ; increment bitcount
+: L77044:
+
+: This, I believe, is as optimized as it is possible to get on a uniprocessor
+: machine.
+
+Using branches is seriously bad news on some machines, especially
+risk machines which are using a prefetched instruction pipeline.
+Then of course you get machines with an on-chip cache, in which
+case the looping variant becomes the best choice again.
+
+And you have to figure architectures where every instruction is
+conditional on the CC so you can have branches over (some) short
+instruction sequences for free.
+
+Serious optimization isn't a child's game.  When we did the 1's-counting
+code for the Acorn RISC machine, every programmer in the office worked
+on it for a week.  I think the best version in the end was a variation
+of the trick shown earlier and some sneaky use of ARM conditionals and
+address-loading instructions that could do arbitrary shifts on the fly
+while adding.
+
+I wish I'd kept it.  If anyone bumps into Paul Bond, I think he was
+the guy who wrote the best one.  I'd like to see that one again for
+nostalgia's sake :-)
+
+G
+
+
+
+

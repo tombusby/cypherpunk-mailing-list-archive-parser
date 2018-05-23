@@ -1,0 +1,52 @@
+From: "Timothy L. Nali" <tn0s+@andrew.cmu.edu>
+Date: Mon, 4 Sep 95 21:31:28 PDT
+To: cypherpunks@toad.com
+Subject: Re: Emergency File Wipe Algorithim
+In-Reply-To: <8B074DD.00030003EA.uuout@famend.com>
+Message-ID: <QkGx9vW00iV2Q5kEEr@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Excerpts from internet.cypherpunks: 4-Sep-95 Re: Emergency File Wipe
+Alg.. by MONTY HARDER@famend.com 
+> CW> and relaxation are in the same order of magnitude.  Thus, a few
+microsecon
+> ds of
+> CW> storing the opposite data to the currently stored value will have
+little e
+> ffect
+> CW> on the oxide.  Ideally, the oxide should be exposed to as much
+stress at t
+> he
+>  
+>   Here is a simple way to handle the problem, using our old discredited
+> friend, XOR. Set up your software to periodically XOR the key with FFFF.
+> This way, each bit will be a 0 half the time, and a 1 the other half.
+> You have a flag that tells whether the key is in normal or inverted
+> form, so that you can quickly perform any necessary computations on it,
+> but there should not be any long-term memory effect.
+>  
+>  
+
+    On today's machines, it's a little more complicated than that. 
+After you XOR the key, you have to then flush all the cache lines that
+contain the key, to make sure that the XOR operation makes it to the
+main memory.  Unless I'm mistaken, a write-back cache will not propogate
+the XOR operation to main memory unless another memory operation(s)
+forces bumps the XORed key out of cache memory.  Successive XOR
+operations on the key won't necessarily do this; you need some other
+memory op to flush the cache lines.
+
+    
+
+_____________________________________________________________________________
+ 
+ Tim Nali            \  "We are the music makers, and we are the dreamers of
+ tn0s@andrew.cmu.edu  \   the dreams" -Willy Wonka and the Chocolate Factory
+
+
+
+
+
+

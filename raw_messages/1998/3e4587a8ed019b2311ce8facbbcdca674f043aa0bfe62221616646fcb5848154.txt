@@ -1,0 +1,71 @@
+From: "Uhh...this is Joe [Randall Farmer]" <rfarmer@HiWAAY.net>
+Date: Thu, 29 Jan 1998 06:06:35 +0800
+Subject: Predicting cipher life / NSA rigged DES? / Destroying encrypted data (Tangent to Re: Burning papers)
+In-Reply-To: <199801252007.OAA19838@manifold.algebra.com>
+Message-ID: <Pine.OSF.3.96.980125142747.30243A-100000@fly.HiWAAY.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+[These messages were postponed for trillions of years I finally sent them;
+apologies if something is grossly outdated.]
+
+Been thinking, most applications for ciphers assume solely based on cipher x's
+keysize that data will be secure for a certain length of time. It'd be nice if
+we had some way to estimate how long we can hope the cipher to last. Of course,
+there's no way to predict anything for sure, but you could make an estimate.
+I'm wondering if there's any way to make a more accurate prediction of how much
+more analysis it will survive with fancy statistics or something. My idea --
+which I know wouldn't work very well, which is why I'm asking if there's a way
+to actually make a good guess -- is averaging the remaining lifetimes in
+analysis-hours of broken ciphers which survived as many person-hours of attack
+as the one in question.
+
+===============================================================================
+
+Am I just going crazy, or is it kind of obvious that NSA knew the s-boxes they
+provided for DES weren't secure? I mean, they pretty much had to know about the
+attacks outside cryptographers are just now discovering -- they have more than
+ten years of cryptographers' time every day, and they certainly knew about
+differential cryptanalysis. Let's hope they don't meddle similarly in AES... 
+
+===============================================================================
+
+> > Of course, if your documents are on floppy disks, any shredder that 
+> > won't jam on them does a pretty good job :-)  
+>
+> I burned a couple of floppies, too. Actually I am not sure how good job 
+> would shredding of floppies do. I assume that bits and pieces of data 
+> can still be recovered... But hopefully no one would care enough. 
+
+One fairly simple feature for disk encryptors that came up during one of the
+#ElectronicFrontiers (sp?) chats was that of using random numbers with the key
+so you can demolish an encrypted volume in a split-second. Works like this:
+there's one 192-bit (or whatever your keylength is) value which is a hash of
+your passphrase. There's another value, this one a cryptographically random one
+of the same size, stored on a fixed physical place on the disk. If you wish to
+destroy the data on powerdown, there can be a third value stored in memory,
+which is written to disk at authorized shutdown and read+wiped from disk at
+startup. 
+
+Anyhow, these two (or three) values are XORed together to form the key used to
+encrypt the volume. When your adversaries, armed with their trusty rubber
+hoses, come knocking at and/or down your door, you hit a hotkey to start
+destroying those 24 bytes on disk, which can be done faster and more
+effectively than a wipe of every sector in the volume. The folks with the
+rubber hoses are now, assuming this is their first peek at your disk, screwed; 
+even with your passphrase, they don't know a thing about your data. 
+
+> 
+> 	- Igor.
+
+---------------------------------------------------------------------------
+Randall Farmer
+    rfarmer@hiwaay.net
+    http://hiwaay.net/~rfarmer
+
+
+
+
+

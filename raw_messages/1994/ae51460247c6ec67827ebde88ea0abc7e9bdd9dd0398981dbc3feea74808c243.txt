@@ -1,0 +1,44 @@
+From: 0x7CF5048D@nowhere
+Date: Tue, 23 Aug 94 00:16:09 PDT
+To: mathew@mantis.co.uk
+Subject: pgp -c,no initialization vector, possible bug, pgp 26ui
+Message-ID: <199408230639.AA22663@xtropia>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In pgp 2.6 UI 
+When pgp is called with the -c switch, the routine idea_encryptfile
+in crypto.c is called from main in pgp.c.
+
+> status = idea_encryptfile( workfile, tempf, attempt_compression);
+
+>int idea_encryptfile(char *infile, char *outfile, 
+>	boolean attempt_compression)
+>{
+>	FILE *f;	/* input file */
+>	FILE *g;	/* output file */
+>	byte ideakey[16];
+>	struct hashedpw *hpw;
+
+Note that idea key is a 16 bytes.
+
+Now idea_encryptfile calls squish_and_idea_file in crypto.c
+with this 16 byte key.
+
+>	/* Now compress the plaintext and encrypt it with IDEA... */
+>	squish_and_idea_file( ideakey, f, g, attempt_compression );
+
+Now squish_and_idea_file calls idea_file in the module crypto.c
+with the same 16 byte key.
+
+>static int squish_and_idea_file(byte *ideakey, FILE *f, FILE *g, 
+>	boolean attempt_compression)
+>{
+
+
+
+

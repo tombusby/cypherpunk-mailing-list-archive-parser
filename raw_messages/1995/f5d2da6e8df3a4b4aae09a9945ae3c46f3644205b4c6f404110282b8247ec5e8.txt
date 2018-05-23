@@ -1,0 +1,62 @@
+From: strick@techwood.org
+Date: Wed, 8 Feb 95 00:11:19 PST
+To: Matt Blaze <mab@research.att.com>
+Subject: noiz ... and more SKRONK
+Message-ID: <199502080810.AAA08113@nando.yak.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+MAB:
+> Also, /etc/noiz is an attractive target
+> on multi-user machines....
+
+Right.   But you notice I made it mode 660, owner root, group kmem, to
+parallel the /dev/*mem devices.   You have the same vulnerabilities as
+always on a multi-user system, even if you put /dev/noise in the kernel
+or run a TCP daemon.  Another parallel is the randseed.bin file in
+PGP.
+
+From an information theory point of view, I don't know how to describe
+the kind of shared-entropy that this pool exhibits.  Making the source
+of the entropy hidden to the users by crunching on the way out with MD5
+adds something to the data -- it's not true entropy, but it's some kind
+of effective entropy, from the point of view of the users.  Unless MD5
+has weaknesses that I assume it doesn't, it's not really possible for users
+to know where their spaces of possible random values overlap, so they
+don't know how to exploit it.
+
+A final note -- I should have put /etc/noiz somewhere in the 
+/var filesystem.  Perhaps /var/adm/noiz.
+But one can edit the Makefile to do that, and no other software
+has to actually know where it is, since its access is totally
+encapsulated by noizinit, noizstir, and noizout.  The location of
+these in /usr/local/bin/ is what needs to be standardized, so I
+hope that's good enough for most users.
+
+-------
+
+Oh, I meant to thank everyone for the great discussion and 
+constructive criticism of SKRONK and "encrypt tcp connections" hacks.
+Especially Perry -- your enumeration of projects was good.
+
+Based on that, and what I know of the others, the priority of 
+protocols I'd like to support with skronk are
+	0.  my own hack, to get it going
+	1.  Matt's ESM
+	2.  Kerberized connections (kerb4 or kerb5 or both?)
+	3.  Perhaps the SSL from Netscape
+
+Thus SKRONK becomes what I wanted it to be:  a way for sites to
+advertize the availability of enhanced services (via the skronk map UDP
+daemon) and a way to painlessly integrate crypto with existing code.
+(The last aspect always draws user interface problems -- if it's so
+transparent, how do you know if you're encrypted?  Right now I have the
+client end scribble to stderr when it skronks.)
+
+			strick
+
+
+
+
+

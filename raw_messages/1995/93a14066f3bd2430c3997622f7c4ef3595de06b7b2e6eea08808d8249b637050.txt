@@ -1,0 +1,58 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Tue, 10 Oct 95 22:51:12 PDT
+To: perry@piermont.com
+Subject: Re: java security concerns
+In-Reply-To: <199510101500.LAA02245@jekyll.piermont.com>
+Message-ID: <199510110550.BAA02068@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> 
+> Mike McNally writes:
+> >  > I can
+> >  > physically remove all the "dangerous" calls from a Postscript
+> >  > interpreter and still have it be useful.
+> > 
+> > I don't see the difference.  An interpreter is an interpreter.
+> 
+> I suppose most of this is dead obvious to me because I work in
+> security every day, but it seems that some otherwise smart people don't
+> see the point I'm making, repeatedly.
+> 
+> As an exercise to the reader compare the following two tasks in
+> difficulty.
+> 
+> 1) Find a bug that lets you execute arbitrary programs unintentionally
+>    from a program that contains instances of the 'fork()' system call.
+> 
+> 2) Find a bug that lets you execute arbitrary programs unintentionally
+>    from a  program that contains *no* instances of the 'fork()' system call.
+
+   I agree, however I would point out that not all postscript interpreters
+are emasculated (especially those on unix systems like IRIX, they contain
+all kinds of calls to fork(), read()/open(), etc). Nothing in the
+Java spec tells you that you must call fork() in a Java interpreter
+implementation. In fact, Java has nothing to do with the GUI calls, the
+network calls, etc. You can support as much or as little system
+I/O in a Java implementation as you want. If need be, a Java
+implementation could hard code all data needed from a hard disk into 
+executable and run entirely in ram, and totally remove all file
+system access. (except the implicit one needed to load and run
+the executable in the first place) Even Java apps without network
+or filesystem capability are useful (as graphic widgets), but I think
+atleast the ability to load URLs is a good thing, and can be done
+in a reasonable secure manner.
+
+  Atleast from my reading of the Java Language Spec, and Virtual Machine,
+there is no requirement that an implementation implement the File I/O
+classes. Having a standardized class hierarchy is probably a good idea
+though.
+
+-Ray
+
+
+
+
+

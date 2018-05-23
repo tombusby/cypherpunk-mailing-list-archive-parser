@@ -1,0 +1,84 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Thu, 2 Dec 93 20:03:42 PST
+To: cypherpunks@toad.com
+Subject: Re: Entropy, Randomness, etc.
+In-Reply-To: <9312030219.AA08840@ininx>
+Message-ID: <199312030402.UAA26750@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+John Kreznar writes:
+
+> > Give a particular set of data used to generate a random key, such as,
+> > a unix box's /dev/mem, how can one measure the number of bits of
+> > entropy?
+> 
+> Actually, it can't be done.  The consistent measure of entropy for
+> finite objects like a string or a (finite) series of random numbers is
+> the so-called ``program length complexity''.  This is defined as the
+> length of the shortest program for some given universal Turing machine
+> which computes the string.  It's consistent in the sense that it has the
+> familiar properties of ``ordinary'' (Shannon) entropy.  Unfortunately,
+> it's uncomputable: there's no algorithm which, given an arbitrary finite
+> string S, computes the program-length complexity of S.
+
+The intuitive idea is similar to there being no "maximum compression"
+of a string: though one may strongly suspect a compression is pretty
+good and may in fact be the best there really is, one may find an even
+better compression. Like the "pi" example Scott Collins used.
+
+Still, one can make estimates of the entropy of a string.
+
+> Program-length complexity is well-studied in the literature.  A good
+> introductory paper is ``A Theory of Program Size Formally Identical to
+> Information Theory'' by  G. J. Chaitin, _Journal of the ACM_, 22 (1975)
+> reprinted in Chaitin's book _Information Randomness & Incompleteness_,
+> World Scientific Publishing Co., 1990.
+
+And an especially good place to read all about this is in the new book
+by Ming Li and Paul Vitanyi, "An Introduction to Kolmogorov Complexity
+and Its Applications," Springer-Verlag, 1993. $60.
+
+Lots of good chapters on entropy, program length measures, algorithmic
+information theory, etc. Ironically, no mention of cryptology at all.
+(But Charles Bennett, one of the pioneers--especially in the area of
+"logical depth"--has written about the deep links between the two
+areas. Basically, ciphertext messages are "cryptoregular" in that they
+_appear_ to be of high entropy (random) but actually have low entropy
+when of course the right transformation (key) is applied.
+
+You clever folks will by now have seen the link to the opening
+discussion: how does one know if a given text is "cryptoregular" and
+actually carries a message or is just random junk? The answer in
+general is that no mechanistic/algorithmic method exists!
+
+(Hardly surprising, if you think about it. A one-time pad is
+information-theoretically secure. Every English (or Russian, etc.)
+sentence of length L can be "found" in a cyphertext of length L by
+trying the "right" pad. A thousand monkeys and all that.)
+
+For messages that are not encrypted with one-time pads, this is
+not the case, and various bits of information can sometimes be
+extracted. Cryptanalysis sometimes works. Last I heard, though, it
+doesn't help with breaking RSA (chosen plaintext attacks on RSA don't
+help with the factoring problem at all...consult the textbooks on the
+exact situation, if you're interested in such subtleties).
+
+Kolmogorov-Chaitin measures of complexity are very exciting.
+
+--Tim May
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^756839 | Public Key: PGP and MailSafe available.
+Note: I put time and money into writing this posting. I hope you enjoy it.
+
+
+
+

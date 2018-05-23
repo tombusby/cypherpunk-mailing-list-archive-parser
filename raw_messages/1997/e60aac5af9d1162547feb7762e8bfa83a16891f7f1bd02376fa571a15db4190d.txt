@@ -1,0 +1,99 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 28 Mar 1997 11:22:53 -0800 (PST)
+To: dlv@bwalk.dm.com
+Subject: Re: remailer spam throttle
+In-Reply-To: <TH804D2w165w@bwalk.dm.com>
+Message-ID: <199703281917.TAA03495@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Dimitri Vulis <dlv@bwalk.dm.com> writes:
+> Igor Chudov <ichudov@algebra.com> writes:
+> > [uses list of hashes of email addreses to reduce value of the database
+> > to the attacker]
+> > 
+> > Well, they can compile the list of addresses off of USENET postings and
+> > such and then compute the hashes of the compiled names and identify
+> > those that are on the anon acceptance list. Not that it completely
+> > invalidates the idea, but certainly it is a problem.
+> 
+> Another feature I really don't like about asking the first-time recipients
+> to agree to accept e-mail while it's on the reamailer is:
+> 
+> With the present scheme, if a remailer is "raided", it has precious little
+> interesting stuff on it at any one time. Now consider the scenario:
+> 
+> X sends 1000 copies of child porn/seditious libel to 100 people
+> believed not to be using remailers right now.  The remailer keeps
+> the 100 e-mails onits hard disk and e-mails each receipient a ping,
+> inviting them to agree to the disclaimer terms and to retrieve their
+> anonymous e-mail.  The first recipient to retrieve the e-mail gets
+> upset and contacts the feds.  The feds figure, the remailer still
+> has the 99 other e-mails and the information on who's supposed to
+> receive them in its queue; why not seize it and take a look.
+
+Here's a partial solution to that: in the ping email informing the
+recipient there is mail waiting, you include a key, encrypt the
+message body that you are retaining data with the key and then discard
+the key.  Give a deadline: "your message will be deleted in 5 days".
+They re-supply the key when they request the message.  You immediately
+decrypt and send it back to them, discarding all knowledge of them
+(email, encrypted message, encryption key).
+
+One snag is that you still have addresses for recipients on your
+machine so they can go harass people and ask them for the keys to the
+as yet uncollected messages.
+
+Refinement to solution (I like this one), get rid of the intended
+recipients address immediately after sending the ping, just keep the
+encrypted body of the message.  Include in the ping something which
+reliably selects a message (say first encrypted line, SHA1 hash of
+encrypted message, whatever, to save you having to try to decrypt all
+of your messages).
+
+> [keyserver with I-accept-anon-email bit consulted by remailer, no
+> key in remailer => instant trash of message and ping message
+> explaining how to accept anon email]
+
+This sounds a lot like the distributed block and accept list idea
+which has been discussed a bit.
+
+I like your treatment of the remailed material as a `hot potato',
+instantly pass it on or burn it.
+
+> Right now, there's a very large number of addresses in the key servers.
+> Instantly making them into a list of addresses that accept anon mail
+> will make it hard (hopefully infeasible) for the LEAs to investigate
+> everyone willing to accept anon e-mail as a suspect in sending it.
+
+The per remailer block list system kind of does this at the moment,
+only the list of people initially marked down as willing to accept
+anon email is the world.
+
+Everyone can recieve email, but people get blocked when they complain.
+
+Incidentally, it has occurred to me for a while now that the reverse
+problem also exists: if I suspect you (Dimitri) use remailers, I can
+forge a message from you to all the remailer operators requesting that
+I (ie you) be blocked.  I can include some exceedingly dire legal
+threats to the remailer operator, and dig up some vile messages from
+some dark corner of usenet which I falsely claim came through that
+operators remailer.  As the remailer operator doesn't keep logs he
+won't be able to recognize the falsehood of the accusation.
+
+To solve this problem you need to do a ping message, "please reply
+with this nonce to be blocked".
+
+Adam
+
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

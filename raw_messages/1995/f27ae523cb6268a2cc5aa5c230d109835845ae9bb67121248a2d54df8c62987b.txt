@@ -1,0 +1,235 @@
+From: danisch@ira.uka.de (Hadmut Danisch)
+Date: Thu, 7 Sep 95 08:32:59 PDT
+To: cypherpunks@toad.com
+Subject: Re: fast modular reduction (proof?)
+Message-ID: <9509071531.AA01869@elysion.iaks.ira.uka.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+> In the following pseudocode, B is the radix in which the numbers are 
+> represented (2^32 for a 32-bit machine), n is the length of modulus in 
+> blocks, U is B^(n+1) mod the modulus, X is the number to be reduced, k+1 
+> is the length of X, and Y is the result.
+> 
+> 1. Y = X
+> 2. For i from k down to n+1, repeat steps 3 and 4
+> 3.    Y = Y - Y[i] * B^i + Y[i] * U * B^(i-n-1)
+> 4.    If Y >= B^i, then Y = Y - B^i + U * B^(i-n-1)
+
+
+
+
+To do a proof I rewrite the algorithm:
+
+
+
+n = len(modulus)                   // modulus < B^n
+
+Y = X                              // obviously Y = X mod modulus
+
+
+K =  B ^ (n+1) - U                 // U = B ^ (n+1) mod modulus,
+                                   // therefore K = 0 mod modulus
+                                   // furthermore K > 0
+
+
+for (i=len(Y)-1 ; i>n  ;  i--)
+ {
+
+   F = B ^ (i-n-1) * K             // F > 0
+                                   // F = 0 mod modulus
+
+   Y -=  Y[i] * F                  // Y shrinking, but
+                                   // Y still the same mod modulus
+
+
+   if ( Y >= B^i )
+      Y -= F                       // again shrinking,
+                                   // still the same mod modulus
+
+ }
+
+
+This shows that Y was shrinking, but is still equal to X mod modulus.
+
+
+
+
+
+To see whether Y really shrinks enough:
+
+  Y = sum(i=0..len(Y)-1)  Y[i] * B^i
+
+
+In the step Y = Y - Y[i] * B^i the highest block of Y is deleted (what
+could be done fast by reducing the length of Y). 
+
+  Now  Y < B^i
+
+
+
+
+
+Afterwards the same value mod modulus is added to keep Y constant: 
+
+  Y = Y + Y[i] * U * B^(i-n-1).
+
+
+  Y[i]<B   ->  Y[i]+1  <= B
+  
+  U < modulus < B^n , therefore U < B^n
+
+  ->    (Y[i]+1) * U < B * B^n  = B^(n+1)
+
+  ->    Y[i] * U  < B^(n+1) - U
+
+  ->    Y[i] * U *  B^ (i-n-1 )  < F
+
+
+
+
+  Therefore after doing the addition
+
+    Y < B^i + F
+
+
+  Check of the last step:
+
+  0 <= U < B^n therefore 
+
+  B^n  <  B^(n+1) - U  <= B^(n+1)
+
+  Therefore in every loop
+
+
+  B^(i-1) < F <= B^i
+
+
+  ->   Y-F  < B^i
+
+
+
+Partial Correctness:
+
+
+
+
+
+
+Y = X                              [ Y = X mod 
+                                     Y < B^len(X) ]
+
+
+K =  B ^ (n+1) - U                 [ K = 0 mod
+                                     
+                                     B^n < K <= B^(n+1) ]                
+                                   
+                                   
+
+
+for (i=len(X)-1 ; i>n  ;  i--)
+ {
+        [ Y = X mod  ,  Y < B^(i+1) ]
+
+
+   F = B ^ (i-n-1) * K 
+   
+        [ F = 0 mod  ,   B^(i-1) < F <= B^i  ]
+
+        [ 0 <= Y[i] < B ]
+
+        [ Y[i] * F  = 0 mod ,
+          0 <= Y[i] * F  < B^(i+1) ]
+
+
+        [ Y >= Y[i] * B^i  ->  Y >= Y[i] * F ]
+
+   Y -=  Y[i] * F
+
+        [ Y = X mod ,
+          Y < B^i + F  (reason see above) ,
+          Y >= 0 ]
+          
+
+
+
+   if ( Y >= B^i )
+      Y -= F                       // again shrinking,
+                                   // still the same mod modulus
+
+
+
+      [ Y = X mod ,
+        Y >= 0    ,
+        Y < B^i ]
+
+ }
+
+
+
+Last i was n+1, therefore
+
+  Y = X mod ,  Y >= 0 , Y < B^(n+1)
+
+
+This is not enough,  Y < B^n is requested. The loop can't be done once
+more because i-n-1 would become negative.
+
+k+1 was the length of X, and  n the length of the modulus. You walk
+down from k to n+1 . In every loop you remove one block of the
+number. This means you have to do len(X)-len(modulus) loops. In the
+pseudocode you do only len(X)-len(modulus)-1 loops.
+
+
+
+One loop seems to be missing. This may be a
+result of confusion whether your Y starts with Y[0] or Y[1]. 
+
+
+I do understand the algorithm as:
+
+n = len(modulus)
+U = B^n  mod modulus
+K = B^n - U                         // = 0 mod modulus,  0 < K < B^n
+Y = X
+
+for(i=len(X)-1 ; i>= n ; i--)       // squeeze Block i in Number Y
+ {                                  // Y < B ^ (i+1)
+
+   F = B ^ ( i-n )  * K             // F = 0 mod modulus
+
+   Y -= Y[i] * F                    // subtract  Y[i] * B^i, now Y < B ^ i
+                                    // add the equivalent Y[i] * B^(i-n)*U <= F
+                                    // now Y < B^i + F
+
+   if ( Y >= B[i] )
+     Y -= F                         // now Y < B^i
+
+ }
+
+Last i was n, therefore Y < B^n , Y = X mod modulus , 
+but perhaps still Y >= modulus.
+
+Ok, algorithm understood and agreed (after modifying the loop counter).
+
+Any more agreements or disagreements?
+
+Hadmut
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBME8QImc1jG5vDiNxAQFREgQAiMWfgy3bZtPckCNToAvKP7A+JevlnrqG
+wJT6/111656nAZHDF5Htr2vwPEmiR522IvPKMG2MnOanMIRn2bgBYG3GECA3zlDo
+ZnXNT1OXdtZzv848WPryLVjSJrrVTX/PUN9d6LaTqLBP5pZXwAYkO5kLU6/WP6yL
+tF+fniXDZvk=
+=Ev0S
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,45 @@
+From: Anonymous <nobody@replay.com>
+Date: Tue, 15 Dec 1998 08:41:40 +0800
+To: cypherpunks@Algebra.COM
+Subject: ....
+Message-ID: <199812150016.BAA31878@replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> For fast file-system crypto, you really want to implement the ciphers
+> so that you encrypt several blocks at a time.  
+...
+> I'd like to know how this method compares to using an interleaved cbc
+> mode - for example 8-way interleaved cbc.  The n-way interlaved
+> cbc-mode works by chaining each n'th block together instead of each
+> block. [...] Am I missing something?
+
+In either case, you need to be sure that changed data is always encrypted with
+different parameters -- that is, a changed file should be encrypted with a new
+IV or different offset into S1 and S2. Otherwise, the attacks used to recover
+badly wiped information could be used to look back in time, so to speak, and
+figure out which portions of the file were changed. It's more of a problem if
+you're using ofb o ecb o ofb (i.e., the CFS mode) than an interleaved CBC mode.
+
+The 8-way interleaved CBC mode should have different IVs for each "lane" (that
+is, a monster 512-bit IV) -- otherwise, files data types with repetitions in
+the headers could be identified. The IV should be secret to completely rule out
+leakage. However, there are some important restrictions on how you can use the
+key in making an IV -- I suggest something like this to ensure nothing is
+messed up: hash the passphrase into K0, use nDES-OFB with K0 to make a K1 and
+K2, then nDES-OFB with K1 for making the IVs which nDES-interleaved-CBC uses
+with K2 for the actual encryption.
+
+> 
+> astor
+> 
+> -- 
+>  Alexander Kjeldaas, Guardian Networks AS, Trondheim, Norway
+>  http://www.guardian.no/
+
+
+
+
+

@@ -1,0 +1,48 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Tue, 5 Oct 93 22:05:18 PDT
+To: cypherpunks@toad.com
+Subject: Re: Chaum on the wrong foot?
+In-Reply-To: <9310060253.AA19384@kropotkin.gnu.ai.mit.edu>
+Message-ID: <9310060504.AA20656@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+rjc@gnu.ai.mit.edu wrote:
+>
+>  This could refer to observer based protocols. I don't see anything in the
+>above paragraph to indicate that they have invented a digital coin. I don't
+>see how offline non-observer based cash could possibly work. (e.g.
+
+The other paper at CWI "Single Term Off-Line Coins" (which I have read
+but haven't really studied in depth) isn't an observer based protocol.
+
+Ferguson represents cash as 3 numbers.  When Alice wants to spend, she
+gets two RSA-signatures from the bank (which are derived from the hash
+functions and the 3 numbers).  Alice pays by sending the 3 numbers to
+the store, which replies with a challenge, which she responds to using
+information derived from both signatures.  She can spend several coins
+by using the same challenge and sending the product of her responses
+to the store.  At the end of the day, the bank sends the 3 numbers,
+the challenge and response to the bank, which then verifies the
+credit.
+
+If Alice spends a coin twice, she allows the bank to determine her
+identity.  (The bank must make sure the penalty is severe enough to
+discourage this behavior).  One nice feature is that it is very
+difficult (infeasible) for the bank to frame Alice and claim she
+double spended.
+
+It seems from this paper, and I think one other I read, that offline
+protocols presented cannot prevent double spending but rather reveal
+the identity of such a person.
+
+--
+Karl L. Barrus: klbarrus@owlnet.rice.edu         
+keyID: 5AD633 hash: D1 59 9D 48 72 E9 19 D5  3D F3 93 7E 81 B5 CC 32 
+
+"One man's mnemonic is another man's cryptography" 
+  - my compilers prof discussing file naming in public directories
+
+
+

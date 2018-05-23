@@ -1,0 +1,41 @@
+From: hallam@w3.org
+Date: Wed, 1 Nov 1995 10:28:30 +0800
+To: cypherpunks@toad.com
+Subject: Re: Please send cash
+In-Reply-To: <9510312359.AA21087@all.net>
+Message-ID: <9511010212.AA30561@zorch.w3.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> While HotJava prevents applets from actively opening connections that
+> violate the user-selected security policy, it allows an applet to accept
+> connections from anywhere.  At this point, an applet only has to use any one
+> of a number of channels to communicate where it is, and have the remote end
+> do the active open.
+
+What if I start a Java applet then send it a faked TCP/IP packet from another 
+host? Can I hotwire an outgoing connection that appears to be from the victim 
+host?
+
+TCP/IP connections are not really all that directed. It is only the startup 
+phase that is trully directed - someone has to start a conversation.
+
+Planned sequence of events :
+
+Mallet:
+	Send out Java applet to Alice
+	Send Bob a connection request packet on port 22
+	Alice's Java applet is accepting connections.
+	Send Alice a "request" packet claiming to come from port 22
+	Should now have an outgoing connection.
+
+???? I'm not a TCP/IP hacker (much). I'll ask our guru tommorow after we
+are done with the NSA.
+
+
+		Phill
+
+
+
+

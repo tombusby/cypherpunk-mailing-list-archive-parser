@@ -1,0 +1,45 @@
+From: uri@watson.ibm.com
+Date: Thu, 27 Jan 94 09:12:12 PST
+To: drzaphod@brewmeister.xstablu.com (DrZaphod)
+Subject: Re: clipper pin-compatible chip
+In-Reply-To: <m0pPPCs-0003DXC@brewmeister.xstablu.com>
+Message-ID: <9401271709.AA12076@buoy.watson.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+DrZaphod says:
+> > Operating in a system expecting a clipper chip potentially restricts
+> > 'fish' for the CCW, where it is re-fed.  The host system (to the
+> > clipper chip) is going to try and feed 10 bytes plush 3 bytes of
+> > a constant.  Utilizing IDEA, the key is supposed to be 16 Bytes.
+> > The point being that dropping an IDEA chip in is not 'plug and play'.
+> 	Couldn't one compress the IDEA key to 10 bytes and 3?  The
+> hardware wouldn't notice and since you'd be using an IDEA chip on
+> both sides it could decompress and verify on the other end.
+
+I think, that the original poster forgets the fact, that "Clipper"
+isn't just the Skipjack encryption algorithm implementation. Thus
+to compare Clipper to a chip that implements _only_ IDEA isn't
+very helpful.
+
+If one wants to imitate the Clipper - one will have to provide
+_all_ of the external functions it performs, and it doesn't
+matter at all, what encryption algorithm is implemented
+deeply inside. Of course, if the "internal" key is
+longer, than the "system standard" - you'd have
+to expand those 80 bits, let's say via running
+SHA over it...
+
+There are problems, but this isn't one of them (:-).
+--
+Regards,
+Uri         uri@watson.ibm.com      scifi!angmar!uri 	N2RIU
+-----------
+<Disclamer>
+
+
+From owner-cypherpunks  Thu Jan 27 03:47:32 1994
+
+
+

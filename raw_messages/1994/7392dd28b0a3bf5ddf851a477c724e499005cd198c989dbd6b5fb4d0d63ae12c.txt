@@ -1,0 +1,50 @@
+From: solman@MIT.EDU
+Date: Mon, 18 Jul 94 13:19:22 PDT
+To: John Douceur <johndo@microsoft.com>
+Subject: Re: Why triple encryption instead of split+encrypt?
+In-Reply-To: <9407181803.AA19912@netmail2.microsoft.com>
+Message-ID: <9407182018.AA15727@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The cryptanalytic approach is simple:
+> 
+>      1) Split the known plaintext, P, with the splitting algorithm, into
+>         P0 and P1.
+> 
+>      2) Apply known-plaintext attack to P0 and C0 to determine key K0.
+> 
+>      3) Apply known-plaintext attack to P1 and C1 to determine key K1.
+
+Clearly, if you have access to P0, P1; C0 and C1 this attack crushes the
+algorithm. In most books I've seen, it is assumed that you do not have
+access to this. For example, it is not considered a liability that somebody
+hacking a DES encrypted message after 8 rounds could have a _relatively_
+easy time hacking it.
+
+Nonetheless, your cryptanalytic algorithm makes clear an additional
+constraints that must be placed on the system which I had not realized:
+
+From the algorithm, the plaintext, and the cypher text, in must not be
+possible to reconstruct both the plaintext, and the cyphertext for either
+half of the message.
+
+To that end I would suggest the improvement of making the splitting
+operation dependent on the keys.
+
+One of many possible implementations: Do a simple splitting operation
+like the one johndo suggested. Concatenate the two halves. Then hash
+the concatenation of the two keys. Concatenate the negation of the hash
+to the hash. Then multiplex the bits of the message to message #0 and
+message #1 based on the bits in the resultant string of bits, repeating
+the string until all the message bits are allocated. This prevents them
+from splitting the problem in two thus, I believe, requiring the full
+attack, giving arbitrarilly strong protection based on your favorite
+fully analyzed encryption algorithm while only minimally decreasing speed
+versus the single encryption (20-30%) and maintaining the same size. Am
+I wrong?
+
+
+
+

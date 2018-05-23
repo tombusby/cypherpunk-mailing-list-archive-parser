@@ -1,0 +1,132 @@
+From: Wei Dai <weidai@eskimo.com>
+Date: Thu, 12 Jan 95 06:02:40 PST
+To: Cypherpunks <cypherpunks@toad.com>
+Subject: analysis of RemailerNet
+Message-ID: <Pine.SUN.3.91.950112055457.3862B-100000@eskimo.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I've been reading through T.C. May's FAQ, and came upon this 
+section about analyzing the RemailerNet.
+
+>            + What's needed:
+>              - aggreement on some terminology (this doesn't require
+>                 consensus, just a clearly written paper to de facto
+>                 establish the terminology)
+>              - a formula relating degree of untraceability to the major
+>                 factors that go into remailers: packet size and
+>                 quantization, latency (# of messages), remailer policies,
+>                 timing, etc.
+>              - Also, analysis of how deliberate probes or attacks might
+>                 be mounted to deduce remailer patterns (e.g., Fred always
+>                 remails to Josh and Suzy and rarely to Zeke).
+>            - I think this combinatorial analysis would be a nice little
+>               monograph for someone to write.
+>    8.10.2. A much-needed thing. Hal Finney has posted some calculations
+>             (circa 1994-08-08), but more work is sorely needed.
+
+I think one of the most difficult aspects of analyzing remailers is 
+the large number of variables you have to deal with.  In 
+contrast, when analyzing ciphers things are pretty much 
+static.  The only thing variable you have to worry about is 
+key length.  But think of the factors you have to include in 
+a complete analysis of the RemailerNet:
+
+1.  different methods of attack
+        - passive traffic analysis (i.e., packet sniffing)
+        - active attacks: including physical attacks, subverting 
+          remailer security, flooding, denial-of-service,
+          starting "trap" remailers, etc.
+
+2.  differences at the user level
+        - fixed vs random chains vs something in between
+        - length of chains
+        - numbers of real messages sent
+        - numbers of fake (cover) messages sent
+        - concerns about latency, bandwidth, and monetary costs
+        - acceptibility of risk, and benifits of anonymity
+
+3.  differences at the individual remailer level
+        - the mixing mechanism: does batched mailing occur by time or by the
+          number of messages in the queue, and is there a rollover pool?
+        - security: including vulnerabilities to political, 
+          physical, and electronic attacks
+        - usage level
+        - price
+
+4.  differences at the RemailerNet level
+        - total numbers of remailers
+        - average security (or the number of compromised remailers)
+        - total number of users
+
+... and I'm sure there are more.  The number of variables and the 
+complex way they're all interrelated make the analysis 
+difficult.  Perhaps a good way to go about this is to construct 
+simplified models which focus on different aspects.  For 
+example, someone pointed out that if you didn't have to worry 
+about active attacks, and the attacker can monitor all the 
+remailers, then you can treat the entire RemailerNet as a 
+single large remailer.  I'm not sure how well this approach 
+would work, since I don't know how easy it would be to 
+integrate the different simplified models into a realistic one.
+
+Anyhow, this might at least give us some insights, so I'll 
+make some attempts in this direction, and post my results.
+
+Just to start things off though, let me try an *extremely*
+simple model.
+
+Assume there is just one remailer, it's perfectly secure, and it 
+does 4 batches of remailing at equal intervals each day.  There are 
+one million users, each of whom receives a mail from the remailer 
+once per day.  Alice is sending anonymous mail to Bob through this 
+system, also once per day.  But just to be extra careful, she 
+also sends a cover mail to the remailer at some other time 
+each day, which gets redirected to its /dev/null.
+
+So the situation looks like this on day 1:
+
+            Alice sends     Bob receives     some random user receives
+Batch #1:       0                0                   0
+Batch #2:       1                1                   0
+Batch #3:       0                0                   1
+Batch #4:       1                0                   0
+
+Suppose Eve, the traffic analyst, is trying to figure out who 
+Alice is sending mail to.  After the first day, she can 
+eliminate about half of the remailer users from the list of possible 
+targets, because they, like the the random user above,
+received a mail even though Alice didn't send one out during the 
+collection period of that batch.  Now, since Eve can eliminate 
+on average half of the list every day, Bob will be the only person left on 
+that list after about (log base 2 of one million) = 20 days.
+
+Suppose Alice sent out some different numbers of cover e-mail:
+
+        # of cover mail     # of days to discover Bob
+               0               log base 4 of 1,000,000 = 10
+               1               log base 2 of 1,000,000 = 20
+               2               log base 4/3 of 1,000,000 = 48
+               3               log base 1 of 1,000,000 = infinity!
+
+Hopefully that makes sense...  Comments?
+
+Wei Dai
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLxU0QTl0sXKgdnV5AQFkoAP/SSyqbbDw+zoh+q5aL0+xr5BcLzaEoS4h
+NASocZvKHGLe8/sfefDj4J2zPINKhmQzbKdD4oHirPEVbnWZC+7Us3giCKl80t2V
+bKx6QPB1hJWi6n3cFme6NCuTjmHCsgrQ/bI2j524O43FhW6BIQAAxQ6GGN10t1V8
+3nv3SzUC6jE=
+=Y2qv
+-----END PGP SIGNATURE-----
+
+
+
+

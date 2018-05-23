@@ -1,0 +1,48 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Wed, 25 Oct 95 06:55:27 PDT
+To: fc@all.net (Dr. Frederick B. Cohen)
+Subject: Re: Does your software?
+In-Reply-To: <9510251119.AA23193@all.net>
+Message-ID: <199510251358.JAA24328@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+	This is a failure in the (TCP wrappers?) that should be
+reconfigured.
+
+	Since the service you are providing is available without any
+authentication, there is no reason to match hostnames to IPs with a
+double reverse lookup.
+
+	Since your server is secure, what does it really matter where
+the connections are coming from?  If netscape chooses to hide host
+information, they should be allowed to.
+
+	Cypherpunk relevance?  Its wrong to demand authentication when
+you don't care.  Airports, bars, 'anonymous' FTP servers and the like
+should all take the level of authentication they need.
+
+Adam
+
+
+| If so, your firewall (or other mechanism) is presenting an incomplete
+| falsehood about the mapping between your host name and your IP address.
+| 
+| Oct 24 21:19:15 all in.thttpd[20865]: warning: can't verify hostname: gethostbyname(unknown.netscape.com) failed
+| Oct 24 21:19:15 all in.thttpd[20865]: refused connect from 198.95.250.69
+
+| My server refuses connections from hosts when the IP address doesn't
+| match to the host name.  This is a common method for reducing the level
+| of address forgery on the Internet.  Please ask your firewall manager to
+| repair the firewall so we can authenticate you.
+
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+

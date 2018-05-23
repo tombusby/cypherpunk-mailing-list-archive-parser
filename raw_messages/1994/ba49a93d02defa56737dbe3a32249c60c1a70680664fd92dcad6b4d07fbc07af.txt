@@ -1,0 +1,50 @@
+From: Phil Karn <karn@qualcomm.com>
+Date: Thu, 11 Aug 94 00:45:22 PDT
+To: tcmay@netcom.com
+Subject: Re: IDEA vs DES
+In-Reply-To: <199408110635.XAA11903@netcom15.netcom.com>
+Message-ID: <199408110744.AAA20783@servo.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I'm specifically interested in *fixed point* multiply and divide
+performance, since these operations appear to be crucial to IDEA and
+high quality speech coding, not to mention multiple precision modular
+exponentiation functions.
+
+My 486 reference shows 13-42 clocks for a 32x32 multiply and 40 clocks
+for a 64/32 divide.
+
+I've heard that the PowerPC can do a multiply-accumulate (the basic
+operation of a FIR digital filter) in one clock cycle, which qualifies
+it as a DSP chip in my mind. If true, then it may become possible to
+do high quality speech coding (essential for a secure phone) in
+software on a widely available general purpose computer instead of
+needing a high performance DSP subsystem that may be costly and/or
+less readily available.
+
+Here are some figures on my latest DES code. I'm placing it into the
+public domain; how do I go about putting it on soda.berkeley.edu?
+
+Measured execution speeds in crypts/sec:
+
+11,488 (C version, 486DX-50, DOS, Borland C++ 3.1 -O2, 16-bit real mode)
+39,185 (assembler version, same system)
+62,814 (assembler version, 60 Mhz Pentium)
+24,172 (C version, 486DX2-66, BSDI 1.1, GCC 1.42 -O, 32-bit prot mode)
+64,185 (C version, 50 Mhz Sparc 10, GCC 2.5.8 -O)
+
+The C version is essentially identical to Outerbridge's code in
+Applied Cryptography, with a few extra tricks. The assembler version
+is the same thing rewritten in assembler, with numerous optimizations
+that were possible only in assembler.
+
+Anybody have a tool for translating Intel 486 assembler code to the
+Gnu assembler format?
+
+--Phil
+
+
+
+

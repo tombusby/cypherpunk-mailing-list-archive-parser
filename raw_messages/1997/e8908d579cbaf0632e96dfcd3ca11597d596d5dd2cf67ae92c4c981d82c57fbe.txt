@@ -1,0 +1,159 @@
+From: Kent Crispin <kent@bywater.songbird.com>
+Date: Thu, 16 Oct 1997 11:52:29 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: anti-GAK design principles: worked example #1
+In-Reply-To: <v04001b0eb06a3d206797@[205.180.137.244]>
+Message-ID: <19971015203509.42369@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, Oct 15, 1997 at 11:45:01PM +0100, Adam Back wrote:
+> 
+> 
+> Part of the problem in this debate I think is that I have proposed
+> many alternate designs, with varying degrees of GAK-hostility.
+> 
+> Also I have been accused of using "lots of anti GAK rhetoric, but
+> giving no proposals" by Kent.
+
+Adam, you've tossed out half-baked ideas buried in several thousand
+lines of anti-GAK rant.  None of them were thought through in terms of
+infrastructure impact.  The idea of reencrypting the data strikes me
+as half-baked, as well -- I sit and wonder about the pass-phrase
+handling for the transient encryption keys that are changing on a daily 
+or weekly basis -- or is there no pass-phrase -- is the key just 
+stored on disk with no protection
+
+
+> I reject that claim.  (I did use lots
+> of rhetoric, but this was to try to impress upon those arguing for CMR
+> of it's dangers.  They do not seem to acknowledge them.)
+
+The evidence seems to suggest that the PGP folks agonized pretty 
+heavily over their design.  A stupid attack such as yours is far more 
+likely to cement resistance than it is likely to win cooperation.
+
+> I'll try in
+> this post to steer clear of anti-GAK rhetoric.  We'll instead take it
+> as a given that pgp5.5 and pgp5.0 are GAK compliant because of CMR and
+> that this is a bad thing.
+
+Trying real hard...
+
+> Will is correct on one point: at the begining I had not properly
+> thought one aspect through:
+
+I suspect there are several other flaws you are now quite aware 
+of...too bad, I hoped you had something.
+
+[...]
+
+> Design 1.
+> 
+> Instructions:
+> 
+> - scrap the CMR key extension
+> 
+> - store a copy of the private half of the users PGP encryption key
+>   encrypted to the company data recovery key on the users disk.
+
+I work for a large organization, I have a unix workstation, an
+xterminal booting off a departmental server, and a Mac in my office. 
+As is typical in large organizations, a system admin team takes care
+of all routine administration of my systems.  They all have root, of
+course, and routinely do system upgrades and software installs on my
+Mac.
+
+Your solution doesn't seem to fit this environment very well...
+[...]
+
+> Recovery method:
+> 
+> Custodian of recovery key inserts recovery floppy disk in machine,
+> decrypts copy of users private key, hands control back to user to
+> choose new passphrase.
+
+Must be a very special boot floppy, of course, otherwise I just 
+subvert the floppy driver, feign forgetting my passphrase, and 
+collect the corporate crown jewels.  Or I hack into somebody else's 
+system and corrupt their key...
+
+[...]
+> 
+> - what is stopping you implementing this
+
+It's completely unrealistic.
+
+> - are there any plug ins which can't cope with this
+> - are there user requirements which it can't meet
+> - is there some fundamental flaw you think I have missed
+> - can you see ways that this could be perverted to implement GAK
+>   (yes I can too, btw, but...)
+> - are those ways logisitically harder for GAKkers to acheive than for CMR
+> 
+> Please be specific, no general waffle about understanding the
+> complexities of balancing user ergonomics, user requirements etc.
+
+Unfortunately, for real products you do have to consider these 
+factors. 
+
+[...]
+> 
+> Adam
+> 
+> [1]
+> ==============================8<==============================
+> GAK-hostile design principles
+> 
+> If we take the design goal of designing systems including
+> confidentiality which are not GAK compliant, we can most succinctly
+> state this design goal as the task of ensuring that:
+> 
+> - at no point will any data transferred over communications links be
+>   accessible to anyone other than the sender and recipient without
+>   also obtaining data on the recipient and/or senders disks
+
+This is great. 
+
+
+> We can then derive the design principles required to meet the design
+> goal of a non-GAK compliant system with confidentiality services down
+> to ensuring that:
+> 
+> principle 1:
+>    no keys used to secure communications in any part of the system are
+>    a-priori escrowed with third parties
+> 
+> principle 2:
+>    second crypto recipients on encrypted communications are not
+>    used to allow access to third parties who are not messaging
+>    recipients manually selected by the sender
+> 
+> principle 3:
+>    communications should be encrypted to the minimum number of
+>    recipients (typically one), and those keys should have as short a
+>    life time as is practically possible
+
+Key lifetime is a major issue.  Keys are either protected by 
+pass-phrase, or vulnerable.  Think about how you are going to 
+generate new keys every day, or every week...
+
+Think about off-line composition of email -- I have a laptop, download
+my mail from the pop server, compose email.  Now I can't store my
+friends public keys on my disk, because they expire every day.  So I
+have to go to the public keyserver for every correspondent's public
+key -- if the keyserver is unaccessible I'm out of luck.  This
+radically changes the expected semantics of email. 
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

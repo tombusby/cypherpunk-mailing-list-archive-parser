@@ -1,0 +1,45 @@
+From: Enzo Michelangeli <enzo@ima.com>
+Date: Thu, 3 Aug 95 20:45:17 PDT
+To: Jason Weisberger <jweis@primenet.com>
+Subject: Re: SSLeay - Whats the story...
+In-Reply-To: <199508032140.OAA09085@usr2.primenet.com>
+Message-ID: <Pine.LNX.3.91.950804104356.9665A-100000@ima.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 3 Aug 1995, Jason Weisberger wrote:
+
+> Maybe I miss it, but when did this arrive?  Is anyone testing it?
+
+You may take a look at http://www.psy.uq.oz.au/~ftp/Crypto/
+
+My initial enthusiasm has somewhat vanished when I've realized that a 
+free SSL implementation doesn't automatically allow to build a 
+Netsite-compatible server: without a certificate issued by Verisign on 
+behalf of Netscape Communications, Netscape Navigator won't talk to it.
+As SSL has some intrinsic points of weakness, I don't see the point
+of sticking to it to secure the TCP layer.
+For details, see also http://petrified.cic.net/~altitude/ssl/ssl.saga.html
+
+On the other hand, the CryptoTCP approach (see the file ctcp.0.9.tar.gz
+at ftp://utopia.hacktic.nl/pub/crypto) looks promising. Is anybody 
+working on it? I'm interested in exchanging ideas, as I'm thinking
+of adding CryptoTCP client capabilities to a SOCKS 4.2 daemon. 
+I see three major areas for improvement:
+
+1. A better PRNG for the session key
+2. Authentication of the D-H key exchange with digital signatures, a` la 
+Photuris
+3. Less "hard-wired" structure: at present, for example, the module size 
+for D-H calculations is fixed at 1024 bits.
+
+1. and 2. are relatively easy, but 3. would require a lot of work.
+
+Also, being able to negotiate different encryption algorithm in addition 
+to triple-DES wouldn't be bad.
+
+
+
+
+

@@ -1,0 +1,115 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Mon, 31 Jul 95 17:56:16 PDT
+To: warlord@MIT.EDU (Derek Atkins)
+Subject: Re: a hole in PGP
+In-Reply-To: <199507312340.TAA02533@toxicwaste.media.mit.edu>
+Message-ID: <9508010049.AA05263@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> > 	Your assertion that I could find the backdoor by inspecting the
+> > program is the wrong tactic for secure programs.  If you want people to
+> > believe that a program is secure, you had better come up with good
+> > reasons that it is secure, and not hide behind "if you can't find any
+> > holes, it must be secure".
+> 
+> This is where you are very wrong.  I am not saying that "if you can't
+> find any holes it must be secure".  What I am saying is that the
+> source is available, and thousands of people have looked at the
+> source, and none of them have found any holes in it.
+
+History shows that your approach fails. Here are some examples:
+
+	Tens of thousands of people had source to the http daemon from
+	CERN, and yet none of them noticed a hole that was detected as
+	it was being exploited only a few months ago. 
+
+	Tens of thousands of people have access to sendmail and yet
+	new holes are found by attackers several times per year on
+	average.
+
+	Tens of thousands of people have access to the sources of
+	various versions of hundreds of software packages, yet there
+	are holes found every day.
+
+> >  - to wit: What makes you think PGPs method
+> > of getting seeds does not lead to a limited key space that is within the
+> > realm of modern computers to search?
+> 
+> How do you propose that a user's keystrokes can be analyzed?  If you
+> assume that the PC's internal clock speed >> typing speed (which is a
+> good assumption -- how many keystrokes/second can you type?) then you
+> have a large amount of randomness that can be gained from timing
+> keystrokes.  Even a good typist will not have an even typestroke!
+> Have you read RFC 1750?  If not, I would recommend you read it before
+> you consider continuing this thread!
+
+Request for Comments: 1750 - Randomness Recommendations for Security
+
+"...Choosing random quantities to foil a resourceful and motivated
+adversary is surprisingly difficult.  ...recommends the use of truly
+random hardware techniques and shows that the existing hardware on many
+systems can be used for this purpose."
+
+PGP does not use "truly random hardware techniques"
+
+"...For the present, the lack of generally available facilities for
+generating such unpredictable numbers is an open wound in the design of
+cryptographic software.  ...  the only safe strategy so far has been to
+force the local installation to supply a suitable routine to generate
+random numbers.  To say the least, this is an awkward, error-prone and
+unpalatable solution." - 1994 - after PGP was implemented.
+
+and then: "This informational document suggests techniques for producing
+random quantities that will be resistant to such attack.  It recommends
+that future systems include hardware random number generation or provide
+access to existing hardware that can be used for this purpose."
+
+"...Systems like Kerberos, PEM, PGP, etc.  are maturing and becoming a
+part of the network landscape [PEM].  These systems provide substantial
+protection against snooping and spoofing.  However, there is a potential
+flaw.  At the heart of all cryptographic systems is the generation of
+secret, unguessable (i.e., random) numbers. "
+
+(Internet RFCs are searchable at http://all.net)
+
+So I guess the RFC supports my contention and not yours.
+
+> > 	Why (specifically) do you think the MIT version of PGP has no
+> > backdoors and is not subject to attacks such as the one outlined in my
+> > previous posting?
+> 
+> I think it has no backdoors because Jeff Schiller and I (among others)
+> have looked closely at the random number generator code (he has taken
+> a much closer look than I) and believe it to be secure.  I also know
+> that I did not put any backdoors into the code (but why would you
+> believe me, I must be paid by the government to say this, right?)
+
+You might be, but even if you are not, that doesn't mean there are no
+back doors.  Your inability to detect a backdoor gives me little
+confidence, since this is at least an NP-complete problem and, with all
+due respect, today, nobody can prove that PGP is free of backdoors
+
+> As to why I believe it is not subject to attack, I ask you again to go
+> read RFC 1750.  PGP follows its recommendations fairly closely.  There
+> is only one place where PGP fails to follow, and that is that PGP does
+> expose the bucket of random bits, rather than mixing them before
+> exporting them.  However I do not believe that this would affect the
+> generation of PGP Public Keys.
+
+But the RFC acknowledges that these methods are highly suspect and should
+not be trusted.
+
+> PS: In what field is your Doctorate?
+
+Ph.D. Electrical and Computer Engineering, U. of Southern California, 1986,
+subject "Computer Viruses".  My complete resume is available through the W3
+server (below) under Management Analytics.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

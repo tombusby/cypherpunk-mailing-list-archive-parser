@@ -1,0 +1,61 @@
+From: eric@remailer.net (Eric Hughes)
+Date: Fri, 3 Feb 95 15:14:54 PST
+To: remailer-operators@c2.org
+Subject: Re: MX'ing and jpunix.com
+In-Reply-To: <199502022127.PAA14199@jpunix.com>
+Message-ID: <199502032312.PAA15531@largo.remailer.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: "John A. Perry" <perry@jpunix.com>
+
+	   Additional masking can be provided by having the MX record point
+   to myriad.pc.cc.cmu.edu. What good does this do? I have an agreement with
+   myriad.pc.cc.cmu.edu (Matt Ghio) where myriad will take the MX-pointed
+   record and additionally alias it through the smail daemon on myriad. 
+
+This is the beginning of private name service.  The machines behind
+this MX record are not particularly visible to the outside.  Given the
+existence of such machine, it makes sense to consider giving them
+names which are also not too visible from the outside.
+
+A group of remailer operators who had access to the DNS setups on
+their machines could create their own personal top-level domain.  For
+sake of discussion, let's call it ".cp".  Now random Unix boxes on the
+Internet won't be able to gain access to .cp addresses, but the
+remailer club would.  Outside parties would be able to be shown .cp
+addresses but would not be able to resolve where the machines actually
+were on the Internet, much less find them IRL.  (Access control on who
+can pull .cp records will have to be added the the DNS software in
+order to do this.)
+
+Consider this in the light of Matt Ghio's MX service.  Matt MX's for
+the alias.net addresses.  Inside alias.net, the individual remailers
+could use .cp addresses to talk to each other.  In fact, those who
+want zero contact with the outside world could advertise only .cp
+addresses and mail only to other .cp addresses.
+
+For sake of experimentation, I've set up a primary top-level
+nameserver here on my machine for ".cp".  In order to access it,
+you'll need to act as a secondary name server for the domain.  Hacking
+alternate roots into BIND comes later.  Just add the following line to
+your named.boot file:
+
+    secondary       cp      204.94.187.1    db-secondary.cp
+
+If you do this, you'll be able to ask for a second-level domain.
+If you want a .cp domain, send mail to
+
+    hostmaster@ndip.cp
+
+Tell the kind hostmaster what name you want, what you want it for,
+where you name servers are, etc.  This is an experimental service and
+is not guaranteed to be reliable.  It might also serve as a test bed
+for doing cryptographic name service trials.
+
+Eric
+
+
+
+

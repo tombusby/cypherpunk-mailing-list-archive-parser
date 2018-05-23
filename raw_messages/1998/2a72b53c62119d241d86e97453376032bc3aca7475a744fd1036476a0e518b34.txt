@@ -1,0 +1,76 @@
+From: Steve Dunlop <nospam@bitstream.net>
+Date: Fri, 9 Oct 1998 01:32:52 +0800
+To: landon dyer <landon@best.com>
+Subject: Re: NT 5.0 and EFS -- A victory for widespread use of crypto?
+In-Reply-To: <3.0.3.32.19981007164728.009611c0@shell9.ba.best.com>
+Message-ID: <361CF166.EA956C1@bitstream.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+landon dyer wrote:
+
+> At 06:06 PM 10/7/98 -0500, you wrote:
+> >
+> >Does anyone have any opinions on the encrypting file
+> >system (EFS) that is supposed to ship with NT 5.0?
+>
+>
+>   "...NTFS has built-in recovery support so that the encrypted
+>    data can be accessed.  In fact, NTFS won't allow files to be
+>    encrypted unless the system is configured to have at least
+>    one recovery key.  For a domain environment, the recovery keys
+>    are defined at the domain controller and are enforced on all
+>    machines within the domain...."
+>
+>   i'll definitely have to play with this one -- wh'appens if you add
+> a machine to a domain, encrypt some files, then remove the machine
+> from the domain?  can the admin of the domain recover all files
+> you encrypt from that point on?  and so on...
+
+MSJ conflicts with the MS white paper in that, according to MS,you can
+explicitly turn off key recovery at the domain level.  For
+workstations not a part of a domain, key recovery can be turned
+off at the local administrator level.
+
+The domain setting overrides the local administrator setting
+as long as the workstation is a member of a domain. So the
+answer to your question, apparently, depends on the local
+administrator's settings for the encryption policy.
+
+>   "...For home users, NTFS automatically generates recovery keys
+>    and saves them as machine keys.  You can then use command-line
+>    tools to recover data from an administrator's account."
+>
+>   if i were looking for a point of attack, i'd start with the
+> low-level key management here...
+>
+
+Their summary is somewhat simplified.  The key managementhas several
+alternatives with the usual tradeoffs between
+security and convenience.  The private key for recovery can
+be stored on a floppy, encrypted using a passphrase, or
+for that matter can be destroyed.
+
+>   another interesting thing to try: install NT on a workstation,
+> encrypt a removable disk, then reinstall NT on that workstation
+> again -- have you defeated key recovery for that disk?  (since the
+> machine keys for the first install of NT are presumably gone...)
+>
+> -landon (re-lurking)
+
+Yes, if you are using self-signed certificates they are
+generated randomly during each install.
+
+--
+Steve Dunlop
+letters: "dunlop" at "bitstream" dot "net"
+http://www2.bitstream.net/~dunlop
+
+
+
+
+

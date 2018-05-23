@@ -1,0 +1,223 @@
+From: Kent Crispin <kent@songbird.com>
+Date: Sun, 3 Aug 1997 03:16:06 +0800
+To: coderpunks@toad.com
+Subject: RSA - the song
+In-Reply-To: <199708011035.LAA01061@server.test.net>
+Message-ID: <19970802120226.07980@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="Boundary..3980.1071713720.multipart/mixed"
+
+--Boundary..3980.1071713720.multipart/mixed
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+On Fri, Aug 01, 1997 at 11:35:02AM +0100, Adam Back wrote:
+[...]
+> 
+> print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+> )]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+> 
+> > I dug out a midi interpreter I wrote a number of years ago, 
+> > and it is indeed trivial to modify it to read any text as input.  
+> > Unfortunately, I wrote that long before the midi file spec was 
+> > finalized, and the hardware I wrote it for is also long gone.  But 
+> > it's probably not much work to get file output working again...and 
+> > the thought of a general text-to-midi translator is rather 
+> > entertaining -- I could play this entire mail message through it, for 
+> > example... It would definitely make better music if some rhythmic 
+> > variation was part of the coding, but that would make it a little 
+> > harder to make an automatic decoder...
+> 
+> I'd find it most cool to hear an audio file of the above.
+
+Well, I generated a midi file that encodes music which in turn is a 
+direct algorithmic encoding of your program.  I didn't have a 
+convenient way to go to a direct sound file, but midi players are 
+very widely available -- any recent pc with a sound card will have a 
+"multimedia midi jukebox" or something like that.  And there are 
+probably free ones on the net -- I didn't look.  The midi file will 
+be a mime attachment to this message.  It's also at 
+
+	ftp://songbird.com/pub/rsa.mid 
+
+For aesthetic reasons I modified the encoding from the simple one
+mentioned earlier, and, rather than try to modify one of my earlier
+midi programs, I just hacked this one out from other sources.  The
+program will actually encode any binary data into a piece of music. 
+
+I think that musically the piece is actually somewhat interesting -- I
+kind of like it.  Like the source text, it is rather dense.  But if
+you listen to it a few times patterns and phrasing will appear.  It 
+sounds like reasonable avante garde music, actually -- something a 
+college radio station might broadcast to the world late at night...
+
+The program is really rather trivial, so rather than describing the 
+encoding, I am just appending it to this message.
+
+--------------------------------------------------------------------
+/*
+    dtom -- convert data to midi
+        dtom midifile <datafile
+            or
+        datasource | dtom midifile
+
+        convert standard in to a midi representation of the data, and
+        write it to a standard midi file.  The midi data is designed
+        to so that the sound produced will permit decoding by a pitch
+        to midi device.  Two things are done to increase the musical
+	interest:  First, the notes are selected from a diatonic 
+	scale, instead of a chromatic.  And second, the rhythm is 
+        also varied algorithmically -- any decoding from the sound 
+        should ignore all rhythmic variation.
+
+	Code uses "midifilelib" from Tim Thompson & Michael 
+	Czeiszperger, and is cobbled from one of their examples.
+
+*/
+    
+
+#include <stdio.h>
+#include <ctype.h>
+#include "midifile.h"
+
+#define ROOT 36
+
+FILE *fp;
+
+/* offsets for three octaves of diatonic major scale */
+int scale[] = {0,2,4,5,7,9,11,12,14,16,17,19,23,24,26,28,29,31,33,35,36};
+
+mputc(c) { return(putc(c,fp));}
+
+int writetrack(track)
+int track;
+{
+    int note_duration;
+    int rest_duration;
+    int high_nybble;
+    int low_nybble;
+    char c;
+    char n1[2];
+    char n2[2];
+
+    mf_write_tempo((long)100000);
+
+    while( (c = getchar()) != EOF ) {
+
+        high_nybble = (c>>4) & 0xf;
+        low_nybble  = c & 0xf;
+	
+	/* low note */
+        n1[0] = scale[low_nybble]+ROOT;	/* note number */
+        n1[1] = 64;                     /* velocity */
+
+	/* high note */
+        n2[0] = scale[high_nybble]+ROOT+scale[16];
+        n2[1] = 64;
+
+	/* shouldn't happen */
+	if( n1[0] >= n2[0] ) printf("warning -- voice crossover!\n");
+
+	/* note_duration needs to be long enough for pitch detectors */
+	note_duration = 120*((c&15) + 4);
+	rest_duration = 120*(((c>>5)&3));
+
+        if(!mf_write_midi_event(rest_duration,note_on,1,n1,2)) 	return(-1);
+        if(!mf_write_midi_event(0,note_on,1,n2,2))		return(-1);
+
+        if(!mf_write_midi_event(note_duration,note_off,1,n1,2))	return(-1);
+        if(!mf_write_midi_event(0,note_off,1,n2,2))		return(-1);
+    }
+
+    return(1);
+} /* end of write_track() */
+
+main(argc,argv)
+char **argv;
+{
+    if( !(fp = fopen(argv[1],"w")) ) exit(1);
+
+    Mf_putc = mputc;
+    Mf_writetrack = writetrack;
+    mfwrite(0,1,480,fp);
+}
+
+---------------------------------------------------------------------------
+
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+--Boundary..3980.1071713720.multipart/mixed
+Content-Type: application/octet-stream; name="bin00000.bin"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="bin00000.bin"
+Content-Description: "rsa.mid"
+
+TVRoZAAAAAYAAAABAeBNVHJrAAAKQAD/UQMBhqCCaJEkQACRTUCDYIEkQACB
+TUCCaJEoQACRTUCFUIEoQACBTUCCaJE0QACRTECMGIE0QACBTECCaJE+QACR
+TECQcIE+QACBTECCaJErQACRTUCHQIErQACBTUB4kSRAAJFFQINggSRAAIFF
+QIJokSRAAJFNQINggSRAAIFNQIJokSZAAJFMQIRYgSZAAIFMQIJokSlAAJFM
+QIZIgSlAAIFMQIJokTdAAJFMQI4IgTdAAIFMQHiRKEAAkUVAhVCBKEAAgUVA
+gXCRKUAAkUhAhkiBKUAAgUhAeJE1QACRRUCNEIE1QACBRUB4kShAAJFFQIVQ
+gShAAIFFQHiRO0AAkUVAjwCBO0AAgUVAgmiRKUAAkU1AhkiBKUAAgU1AgmiR
+JEAAkU1Ag2CBJEAAgU1AgmiRO0AAkUxAjwCBO0AAgUxAgmiRNEAAkUxAjBiB
+NEAAgUxAgmiRK0AAkU1Ah0CBK0AAgU1AeJFAQACRRUCRaIFAQACBRUCBcJE7
+QACRSkCPAIE7QACBSkCBcJErQACRSECHQIErQACBSEB4kTdAAJFFQI4IgTdA
+AIFFQHiRQEAAkUVAkWiBQEAAgUVAeJE7QACRRUCPAIE7QACBRUCCaJEkQACR
+TECDYIEkQACBTECCaJEtQACRTECIOIEtQACBTECCaJEpQACRTECGSIEpQACB
+TECCaJEyQACRTECLIIEyQACBTECCaJFAQACRTECRaIFAQACBTEB4kSRAAJFF
+QINggSRAAIFFQHiRKEAAkUVAhVCBKEAAgUVAeJEmQACRRkCEWIEmQACBRkB4
+kS9AAJFGQIkwgS9AAIFGQIJokTRAAJFMQIwYgTRAAIFMQIFwkTRAAJFIQIwY
+gTRAAIFIQIFwkTRAAJFIQIwYgTRAAIFIQHiRNUAAkUVAjRCBNUAAgUVAgmiR
+QEAAkUxAkWiBQEAAgUxAgXCRO0AAkUpAjwCBO0AAgUpAgXCRLUAAkUpAiDiB
+LUAAgUpAgXCRJEAAkUhAg2CBJEAAgUhAgmiRN0AAkU1AjgiBN0AAgU1AeJEr
+QACRRUCHQIErQACBRUB4kUBAAJFFQJFogUBAAIFFQHiRPEAAkUZAj3iBPEAA
+gUZAeJErQACRRUCHQIErQACBRUCCaJE1QACRTUCNEIE1QACBTUB4kTdAAJFG
+QI4IgTdAAIFGQIFwkTdAAJFKQI4IgTdAAIFKQHiRMkAAkUVAiyCBMkAAgUVA
+gmiRJEAAkU1Ag2CBJEAAgU1AgmiRQEAAkUxAkWiBQEAAgUxAgmiRJEAAkU1A
+g2CBJEAAgU1AeJE7QACRRUCPAIE7QACBRUCCaJEkQACRTUCDYIEkQACBTUCC
+aJFAQACRTECRaIFAQACBTECCaJEkQACRTUCDYIEkQACBTUB4kTtAAJFFQI8A
+gTtAAIFFQIJokS1AAJFNQIg4gS1AAIFNQIJokT5AAJFMQJBwgT5AAIFMQIJo
+kSRAAJFNQINggSRAAIFNQIJokSZAAJFMQIRYgSZAAIFMQIJokSlAAJFMQIZI
+gSlAAIFMQIJokTdAAJFMQI4IgTdAAIFMQHiRKEAAkUVAhVCBKEAAgUVAgXCR
+MkAAkUhAiyCBMkAAgUhAeJE1QACRRUCNEIE1QACBRUB4kShAAJFFQIVQgShA
+AIFFQHiRO0AAkUVAjwCBO0AAgUVAeJE7QACRRkCPAIE7QACBRkB4kT5AAJFG
+QJBwgT5AAIFGQHiRNEAAkUVAjBiBNEAAgUVAgXCRPEAAkUpAj3iBPEAAgUpA
+gmiRPEAAkU1Aj3iBPEAAgU1AgXCRO0AAkUpAjwCBO0AAgUpAgXCRLUAAkUhA
+iDiBLUAAgUhAgmiRKUAAkU1AhkiBKUAAgU1AgXCRPEAAkUhAj3iBPEAAgUhA
+gmiRKUAAkU1AhkiBKUAAgU1AgXCRN0AAkUhAjgiBN0AAgUhAgmiRKUAAkU1A
+hkiBKUAAgU1AgXCRPkAAkUhAkHCBPkAAgUhAeJEkQACRRkCDYIEkQACBRkCB
+cJE3QACRSkCOCIE3QACBSkCCaJE7QACRTECPAIE7QACBTECBcJE+QACRSECQ
+cIE+QACBSEB4kTVAAJFFQI0QgTVAAIFFQHiRJkAAkUZAhFiBJkAAgUZAgmiR
+O0AAkUxAjwCBO0AAgUxAgXCRN0AAkUhAjgiBN0AAgUhAgXCRN0AAkUpAjgiB
+N0AAgUpAgmiRK0AAkUxAh0CBK0AAgUxAeJEoQACRRkCFUIEoQACBRkB4kS1A
+AJFFQIg4gS1AAIFFQIFwkSlAAJFKQIZIgSlAAIFKQIJokSZAAJFMQIRYgSZA
+AIFMQHiRKEAAkUZAhVCBKEAAgUZAeJFAQACRRUCRaIFAQACBRUCCaJErQACR
+TECHQIErQACBTEB4kSRAAJFGQINggSRAAIFGQHiRO0AAkUZAjwCBO0AAgUZA
+gXCRMkAAkUpAiyCBMkAAgUpAeJE3QACRRUCOCIE3QACBRUCCaJErQACRTECH
+QIErQACBTEB4kTVAAJFFQI0QgTVAAIFFQIJokTtAAJFMQI8AgTtAAIFMQIFw
+kTxAAJFIQI94gTxAAIFIQIFwkTtAAJFIQI8AgTtAAIFIQIJokSZAAJFMQIRY
+gSZAAIFMQIFwkT5AAJFKQJBwgT5AAIFKQHiRNUAAkUVAjRCBNUAAgUVAgmiR
+O0AAkUxAjwCBO0AAgUxAgXCRPkAAkUhAkHCBPkAAgUhAeJEtQACRRUCIOIEt
+QACBRUB4kSRAAJFGQINggSRAAIFGQIFwkTxAAJFKQI94gTxAAIFKQIJokStA
+AJFMQIdAgStAAIFMQIJokSlAAJFNQIZIgSlAAIFNQIFwkTJAAJFKQIsggTJA
+AIFKQIJokTJAAJFNQIsggTJAAIFNQHiRN0AAkUVAjgiBN0AAgUVAeJE3QACR
+RUCOCIE3QACBRUCCaJE7QACRTECPAIE7QACBTECBcJE8QACRSECPeIE8QACB
+SECCaJE7QACRTECPAIE7QACBTECBcJE+QACRSECQcIE+QACBSEB4kUBAAJFF
+QJFogUBAAIFFQIJokStAAJFMQIdAgStAAIFMQIJokSlAAJFNQIZIgSlAAIFN
+QIFwkTxAAJFIQI94gTxAAIFIQHiRJEAAkUZAg2CBJEAAgUZAeJE7QACRRkCP
+AIE7QACBRkCBcJE1QACRSECNEIE1QACBSECBcJE8QACRSkCPeIE8QACBSkCC
+aJErQACRTECHQIErQACBTECCaJEpQACRTUCGSIEpQACBTUCBcJE1QACRSECN
+EIE1QACBSECCaJEyQACRTUCLIIEyQACBTUCCaJEkQACRTUCDYIEkQACBTUB4
+kShAAJFFQIVQgShAAIFFQIJokTtAAJFNQI8AgTtAAIFNQIJokStAAJFMQIdA
+gStAAIFMQIJokSlAAJFMQIZIgSlAAIFMQIJokSRAAJFMQINggSRAAIFMQHiR
+JEAAkUVAg2CBJEAAgUVAAJE1QACRQUCNEIE1QACBQUAA/y8A
+--Boundary..3980.1071713720.multipart/mixed--
+
+
+

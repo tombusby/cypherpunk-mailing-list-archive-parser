@@ -1,0 +1,69 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Fri, 22 Sep 95 05:25:00 PDT
+To: Ray Cromwell <rjc@clark.net>
+Subject: Re: Another Netscape Bug (and possible security hole)
+In-Reply-To: <199509220612.CAA11441@clark.net>
+Message-ID: <199509221224.IAA03734@frankenstein.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Ray;
+
+This is evidence that, as I said, they have plenty of buffer overflow
+bugs. So much for the protestations to the contrary.
+
+My suspicion is that if you used a customized HTTPd that allowed you
+to shove arbitrary data into your URL, you could get the victim's copy
+of netscape to fandango on the stack and do nicely arbitrary things to
+the victim -- like executing "cd ~/; rm -rf ."
+
+A "Hack Netscape" T-Shirt for the first person (Ray, here is your
+chance!) to find an exploit using this! Though your demo shouldn't do
+anything bad. Does everyone think Ray should get a shirt no matter what?
+
+Perry
+
+Ray Cromwell writes:
+> 
+> I've found a Netscape bug which I suspect is a buffer overflow and
+> may have the potential for serious damage. If it is an overflow bug,
+> then it may be possible to infect every computer which accesses a web
+> page with Netscape. To see the bug, create an html file containing
+> the following:
+> 
+> <a href="http://foo.bar.foo[rest of giant URL elided]
+> 
+> On my BSDI2.0 machine running Netscape 1.1N, this causes a segmentation
+> fault and subsequent coredump. GDB reports nothing useable (stripped
+> executable)
+> 
+> As you can see, I just chose an extremely long domain name. I guessed
+> that the authors of netscape probably thought something like "well,
+> a buffer size of 256 characters is good enough to hold any domain"
+> 
+> It's definately the domain that's causing it, and not the length of
+> the URL or the data after the domain name.
+>  
+> I also tried to overflow some netscape servers using similar techniques
+> (and shell metacharacters in all sorts of URLs), to no avail. I suspect
+> a similar attack may work against the Netscape Server if it is proxying.
+> 
+> 
+> Does anyone have a disassembly of Netscape, or more specifically, 
+> a disassembly of the URL parse and domain lookup routines? I'd be
+> happy to collaborate and "Hack Netscape" ;-)
+> 
+> 
+> Happy Hacking,
+> -Ray
+>  
+> 
+> 
+> 
+> 
+
+
+
+

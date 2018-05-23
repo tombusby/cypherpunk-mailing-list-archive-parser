@@ -1,0 +1,64 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Thu, 19 Aug 93 07:40:47 PDT
+To: cypherpunks@toad.com
+Subject: Re: Cypherpunk Chip
+In-Reply-To: <01H1WQ5739PU8ZGJD4@delphi.com>
+Message-ID: <9308191037.ZM1771@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Aug 18, 11:36pm, MIKEINGLE@delphi.com wrote:
+> Subject: Cypherpunk Chip
+
+[triple-DES | permute larger block | IDEA]
+  
+> Suppose you now change one bit in the ciphertext and decrypt it.
+> When you decrypt IDEA, you get one 8-byte block of garbage (which
+> is indistinguishable from the rest of the still-encrypted data).
+> When you undo the reorganization, you get one bad byte in each DES
+> block. So when you DES decrypt, you get 64 bytes of garbage.
+
+Yes.
+
+For some time, I've been advocating (over in sci.crypt)
+
+	compress|des-cbc|tran|des-cbc|tran|des-cbc
+
+instead of normal triple DES.  tran is not an encryption algorithm so it's
+been posted worldwide several times and is available from me by mail or on
+a few ftp sites.  It does a pseudo-random transposition of a variable
+length block (up to 8KB) -- using the sum of bytes in the first block as
+the key to the PRNG.  [That could be better and I'm planning to do an
+improvement -- using the histogram of the bytes of the first block as a
+much larger key to the PRNG.]  tran is a self-inverse.
+
+This dosen't guarantee bit diffusion -- but does diffuse the probability of
+change (of a single output bit, given a changed single input bit) evenly
+over a big block.
+
+For operation within a single chip, I'd advocate yours rather than this
+tran.
+
+Of course, one could also do (for S/W solutions):
+
+	compress|des-cbc|tran|idea-cbc|tran|des-cbc
+
+> Of course, it would be slower than a single cipher, but there are
+> ways to make it usable. For example, the reorganization would be
+> performed by straight-line assembly language, with no loops. And
+> the encryption program would use a large disk buffer. Or, better
+> yet, use hardware. See below.
+
+There's no reason for pipelined operations like yours or mine to be slower
+than a single cipher.  The pipelines need to be kept full.  That means
+that you feed the chip data with one set of handshaking and take data from
+it with another set.  You don't treat the chip like an RPC.  As long as
+you think UNIX pipes, it will make sense.
+
+ - Carl
+
+
+
+
+

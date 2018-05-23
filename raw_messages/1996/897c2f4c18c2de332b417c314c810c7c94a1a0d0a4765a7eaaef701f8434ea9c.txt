@@ -1,0 +1,77 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 29 Jun 1996 10:22:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: MS-Mail Security
+Message-ID: <199606280631.XAA19392@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Leo WONG Wing-yan <wywong2@cs.cuhk.hk>
+> In> I would like to gather informations of whether the MS-Mail server
+> In> is  secure or not, is anyone heard of somebody, say, disguise 
+> In> as other user or read other user e-mail?
+
+You have to look at the whole environment.  MSMail typically runs
+on MS-DOS / Windows PCs, on a network using Microsoft file server
+protocols over TCP/IP, so it has all the vulnerabilities of that
+environment.  (It can run over Novell Netware instead, which has
+a somewhat more secure file server, but the system is still vulnerable.)
+The easy attack is to use a sniffer or other ethernet eavesdropping
+software to listen for MSMail messages on the LAN - they're not
+sent encrypted.  It also runs over dialup, and the dialup and
+LAN versions rely on a user-typed login name and password for security,
+but don't require that the password meet any minimum standards
+for length (empty passwords work just fine.)
+
+MSMail is typically used for two different kinds of business applications -
+a purely internal mail system that doesn't connect to the outside world,
+or gatewayed to SMTP or UUCP to connect to other locations.
+I don't know how secure the gateways are, but the places I've seen them
+used they certainly haven't been reliable, and generally have been heavily
+hacked on by the users to make them do what the users want, which probably
+doesn't add to either the reliability or the security.  The mail client
+has its own set of problems, such as choking on messages with more than
+30KB of message body.  My purely personal non-official opinion is that 
+it's the third worst mail system I've ever used.  (IBM PROFS is the worst,
+and I watched someone use the original Prodigy 1200-baud 24x40 lines with
+advertising on every page nonsense as well.)
+
+harka@nycmetro.com
+>I'd also like to know how secure the MS-Mail files are (*.mmf). 
+>They are password protected and should be encrypted but 
+>does anybody know how secure?
+
+For those of you who aren't familiar with MSMail, the .mmf file
+is the big hulking file that MSMail keeps all your mail in,
+including new mail and mail filed in folders (you _can_ split it
+so your Inbox resides in one .mmf on a mail server and all
+your other mail folders are in one file on your PC.)  
+The main effects are 
+- if the file gets corrupted (perhaps by a bad disk block, or 
+because the "operating system" crashed while you were using MSMail), 
+you can't read the undamaged pieces,
+- if you received a message that the MSMail client can't handle,
+like a large text message, you can't read it directly from the mail file
+using a text editor like Emacs.
+
+I haven't tried to crack it, but the experience of people who've
+cracked other Microsoft Office encryption (e.g. Word, Excel)
+has been that it's been pretty wimpy.  It does prevent casual
+users of your PC or server from reading your email by looking
+at the file with an editor or by using the MSMail client without
+the password, but I'd be very surprised if it kept out a professional
+who wanted to take the time to attack it carefully.
+
+
+
+
+#				Thanks;  Bill
+# Bill Stewart +1-415-442-2215 stewarts@ix.netcom.com
+# http://www.idiom.com/~wcs
+#				Distract Authority!
+
+
+
+
+

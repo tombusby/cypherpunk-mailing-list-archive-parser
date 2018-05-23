@@ -1,0 +1,65 @@
+From: jthomas@mango.mitre.org (Joe Thomas)
+Date: Tue, 2 Mar 93 08:06:38 PST
+To: wcs@anchor.ho.att.com (Bill_Stewart(HOY002)1305)
+Subject: Re: A novel (?) return address idea
+Message-ID: <9303021603.AA09007@mango>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+wcs@anchor.ho.att.com (Bill_Stewart(HOY002)1305) write:
+> 
+
+> Joe Thomas's proposal for anonymous return addresses is
+> nice:
+
+Thanks :^).  [Nice summary deleted]
+
+> If you used DES encryption, you could do 32 bits of UID and
+> 32 bits of salt, you can turn the 64 bits of cyphertext into
+> 13 printable characters using an obvious 5bit encoding;
+> a good choice for a mailer is to prepend an x
+> 	x<13_char_encoding>   ( e.g. xabcdefghijklm ) and not
+> have any real UIDs starting with x, so your mail delivery
+> program can easily tell what to hand to the
+> remailer-reply process and what to deliver more
+> normally. 
+
+
+Yeah, I was thinking around 5 bits per character, and you have to  
+pattern-match something.  Could be "an-" or "x" or whatever...
+
+> Aside from being nice round numbers, this lets you
+> support 4 billion users with 4 billion messages each, but
+> is this really the right balance?
+
+Seems about right to me.  If there's demand for a different mix, you  
+can always add that later (with a different prefix to clue the  
+software into how to interpret).  Meanwhile this version could be  
+implemented quickly, and would offer a good deal of security.  As to  
+what to use for the salt... If you don't expect users to send more  
+than one message per second (at least, if they do, they won't mind  
+both of them having the same return address) you can just use a  
+straight timestamp -- Unix gives you 32 bits worth for free (as sec.  
+since 1 Jan 1970).  This guarantees you won't have loops from a PRNG.   
+The time won't ever be reset to a past value.
+
+[other stuff deleted]
+
+I don't really think we need to do any encryption of the ID to  
+address database, since only the remailer software should be using  
+it.  And while adding more salt bits might be nice (random bits  
+increase strength against known plaintext attacks -- a danger since  
+you know the approximate time, and that your ID will be the same in  
+each message you send), I don't see how hashing could be useful,  
+since it is one-way by definition.  The remailer needs to both create  
+and resolve return addresses.
+
+Is the source for the anon.penet.fi remailer available?  I might have  
+a crack at implementing this...
+
+Joe
+
+
+
+

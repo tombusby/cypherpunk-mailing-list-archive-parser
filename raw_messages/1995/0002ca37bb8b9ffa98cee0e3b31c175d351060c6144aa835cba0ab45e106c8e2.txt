@@ -1,0 +1,88 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Thu, 7 Sep 95 01:14:50 PDT
+To: rjc@clark.net (Ray Cromwell)
+Subject: Re: fast modular reduction
+In-Reply-To: <199509070157.VAA16973@clark.net>
+Message-ID: <199509070811.EAA07559@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I wrote:
+> modifications. Is there an algorithmic analysis available? I also
+> I think there is a bug in your description. Let k+1 = n+1
+> (e.g. the dividend is 1 more "block" than the modulus). Then
+> i=n starting out, and we have
+
+ Upon a closer look, I see there's no mistake. The algorithm will
+never reach k=n because the loop stops at n+1.
+
+ Anyway, I played around with the algorithm a little, and it's neat
+and easy to implement, but the speed increase is not worth
+the patent hassle (assuming there is a speed increase, I saw none)
+
+  The algorithm is still basically O(n^2) if used in a modexp
+routine. It requires n^2 multiplications and additions. Whereas,
+a typical Karatsuba multiplication using a high precision
+reciprocal will only use 2*n^1.5 multiplications and 5*n^1.5/8
+additions. (for n=64 which is a 2048-bit number being reduced, 
+it's about 1/5 the multiplications, but 5 times the additions)
+
+
+Two other possible algorthms are:
+
+Let P(x) = sum(i=0 to n-1) a_i x^i be a multiprecision integer
+radix x.
+
+If m is a modulus, of length n/2, rewrite P(x) as
+
+sum(i=0 to n/2-1) a_i x^i  + x^(n/2) (a_{n/2 + i} x^i)
+
+break the summation into two parts. Focus on the second term.
+(both terms are not equal, or one digit larger than the modulus)
+Perform modular reduction of the right hand polynomial using
+Horner's method
+
+x*(x*(x*...(x*a_i + a{i-i} mod m)mod m)mod m) 
+
+Those internal mod m's can be done quickly with a 2-digit
+trial quotient estimation.
+
+
+It's still O(n^2), but might be quicker.
+
+Still another technique..
+
+Rewrite P(x) 
+
+(a_0 + a_2 x^2 + a_4 x^4 + ...) + x (a_1 + a_3 x^2 + a_5 x^4 + ...)
+
+[broken into two Polys with odd and even terms)
+Factor out x^2 out of each piece and write
+
+a_0 + ((a_2 + a_4 x^2 + a_6 x^4 + ...)*x^2) + 
+x*(a_1 + x^2*(a_3 + a_5 x^2 + a_7 x^4 + ...)
+
+Now keep applying the recursive rule until the length of the
+poly pieces are the same or smaller than the modulus. Now,
+start evaluating from the inner layers. Multiply each piece by
+x^2 (two shifts), and take the mod. Sum the results, shifting one side by 
+1 (for the x factor). Shifts are free because an array representation
+yields a shift with a pointer movement.
+
+
+It looks kinda like the method for evaluating  FFTs a little bit,
+but it's not. Just something off the top of my head just now.
+(I hereby place it in the public domain assuming it's worth
+anything, no patents please)  I think with a clever implementation, you can 
+trade some mults for more adds, but still use less additions than russian 
+peasant.
+
+
+-Ray
+
+
+
+
+

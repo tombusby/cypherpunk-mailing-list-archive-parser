@@ -1,0 +1,74 @@
+From: "Perry E. Metzger" <pmetzger@lehman.com>
+Date: Tue, 20 Apr 93 13:32:50 PDT
+To: Hal <74076.1041@compuserve.com>
+Subject: Re: Another Clipper weakness
+In-Reply-To: <930420195747_74076.1041_FHD36-1@CompuServe.COM>
+Message-ID: <9304202032.AA23137@snark.shearson.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal says:
+> Here is what Denning's writeup says:
+> 
+>   At the beginning of a session, a trusted agent from each of the two key
+>   escrow agencies enters the vault.  Agent 1 enters an 80-bit value S1
+>   into the laptop and agent 2 enters an 80-bit value S2. These values
+>   serve as seeds to generate keys for a sequence of serial numbers.
+>   
+>   To generate the unit key for a serial number N, the 30-bit value N is
+>   first padded with a fixed 34-bit block to produce a 64-bit block N1.
+>   S1 and S2 are then used as keys to triple-encrypt N1, producing a
+>   64-bit block R1:
+[...]
+
+I've reread the text again. There seems to be no assurance at all that
+S1 and S2 are random or that they are not the same for all chips.
+There also seems to be no rational explanation of why N is only thirty
+bits long -- its a strange number in the modern world of computing.
+
+> I agree that the process seems complex.  Why should the keys
+> U1 and U2 be correlated with the serial number in this way?  Here is
+> one thought:
+> 
+> The most straightforward approach would be to get two random seeds,
+> S1 and S2, and use them to run a PRNG that produces U1 and U2, the
+> two key-halves, and N, the serial number.
+
+The number N is not secret and is not random -- it is therefore not
+necessary that the PRNG generate N, and indeed N is not generated, it
+is given. Its presumably just an ordinary serial number.
+
+> But the problem with this is that you are depending on the security
+> of your PRNG to ensure that there is no correlation between N and
+> U1/U2.  Ordinary PRNG's might allow some correlation to exist.  This
+> would be weak because then just knowing the N of your chip might allow
+> a good organization like NSA to crunch out U1 and U2 without going
+> through the escrow agencies, by exploiting weaknesses in the PRNG.
+> 
+> Instead, they go through a roundabout process which appears to show that
+> the relationship between N and U1/U2 is as strong as the Skipjack
+> algorithm itself, in fact when run in a triple-encryption mode.
+> If NSA had a way, given N, to produce U1/U2, then it would appear
+> that they must be able to break Skipjack, in which case they wouldn't
+> need U1/U2.  So this key generation process can be argued not to
+> introduce any new vulnerability in the system.
+
+Why not just generate U1 and U2 by a more straighforward approach that
+doesn't involve strange padding and odd randomly selected constants?
+Indeed, why not just use true random numbers? Surely a radioactive
+source isn't unavailable to Mykotronix.
+
+Furthermore, Denning says about 300 chips are programmed in a batch
+using baroque methods in a vault. Well, folks, that just won't do if
+twenty or thirty million of these babys are being sold a year -- or
+even if just five million are sold a year. Seems to me that the
+processing is going to have to get more efficient, and likely thus
+much more sloppy.
+
+Perry
+
+
+
+

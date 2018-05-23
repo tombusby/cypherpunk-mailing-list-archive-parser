@@ -1,0 +1,83 @@
+From: jdd@aiki.demon.co.uk (Jim Dixon)
+Date: Mon, 8 Aug 94 03:07:04 PDT
+To: hughes@ah.com
+Subject: Re: Improved remailer reordering
+Message-ID: <4283@aiki.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <9408072325.AA18643@ah.com> Eric Hughes writes:
+>    Imagine a RemailerNet (v0.2) that maintained a fixed level of
+>    traffic between gateways.
+> 
+> This is exactly what I was talking about when I posted earlier about
+> link encryptors, and effective collapse of nodes for traffic analysis
+> purposes.  Traffic analysis of mixes and remailers assumes, as an
+> abstraction, that all the messages going into and coming out of a
+> particular node are visible.  As soon as you remove this condition,
+> the analytical situation changes completely.
+
+There is little difference between RemailNet v0.1 and v0.2 in this
+regard.  Fragmenting messages into packets of fixed length, randomizing
+routing, and noise injection were all present in v0.1.
+
+> The problem with implementation of link encryption is, like everything
+> else, cost.  Link encryption off the Internet requires dedicated
+> lines.
+
+I think that there is some confusion here.  Time is defined in terms
+of steps, each one of which represents the dispatch of one packet.  The
+packets can be received and dispatched in batches.
+
+>    In general, the messages do not exist
+>    as wholes along the lines connecting the gateways, so a discussion of
+>    their reordering is a good way to waste time.
+> 
+> You still have to worry about reordering in the network as a whole.
+> The system you've described has reassembly done at the endpoints, who
+> might not be the final receiver.  I pass over the flaw of lack of
+> message quantization in the final sending of reassembled messages.
+> We may assume for discussion that they're all the same length.
+
+You need not pass over the 'flaw of lack of message quantization in
+the final sending'.  Someone running a private high security gateway,
+an "empowered user", participates in the same way as the other RemailerNet
+gateways, and there is in fact no way to determine even whether he is
+sending or receiving, or in fact whether he is doing anything at all.
+He may be just sending and receiving noise packets.
+
+Users accessing the net using low security versions of the software do
+have less security, but that is a consequence of their use of low
+security software.
+
+> Now, you still need to calculate the likelihood that a particular
+> outgoing message is the same message as a particular incoming message.
+> These probabilities have to do with message reordering.  You still
+> need to do the calculation.
+
+Some of the discussion here is at cross purposes.  My focus has been
+on specifying a system which is itself very difficult to attack using
+cryptoanalytic techniques.  An "empowered" user of RemailerNet v0.2
+who sends messages via a system which acts as a gateway need not worry
+very much about traffic analysis.
+
+A user whose access to RemailerNet is via a low security system will
+be exposed to a higher level of risk.  Which factors are the most
+important element in causing risk depend upon the nature of the
+traffic through the system and the size and geographic distribution
+of the network itself.	A functioning RemailerNet with widely
+distributed gateways and at least a moderate level of traffic from
+at least a moderate number of widely distributed users is not easily
+subjected to what I might call external traffic analysis.
+
+Essentially, you make a model of the system which removes many of the
+features that defeat traffic analysis and then say, hey, this thing
+is easily subject to traffic analysis.	Well, if you go far enough,
+sure.
+--
+Jim Dixon
+
+
+
+

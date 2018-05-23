@@ -1,0 +1,64 @@
+From: paul@poboy.b17c.ingr.com (Paul Robichaux)
+Date: Mon, 9 Jan 95 07:45:17 PST
+To: dfloyd@io.com
+Subject: Re: Data Haven problems
+In-Reply-To: <199501071710.LAA21334@pentagon.io.com>
+Message-ID: <199501091546.AA19741@poboy.b17c.ingr.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> Any ideas on how to guard against mailbombs, and to confirm to the sender
+> that their files are stored successfully?  Perhaps do a mailing with
+> a test command that validates the existance of the file, and sends a
+> reply back wether the file is okay or not, or would this result in a
+> possible security hole?
+
+To solve problem #1, use digital postage of some form. Digicash, FV,
+Tacky Tokens, Mountain Dew futures... just require a per-storage-unit
+charge _to initially check in the file_. You can of course charge for
+storage over time, too.
+
+To solve problem #2, send an MD5 hash of the file back to the sender.
+Ideally, you would also provide (in perl, C source, csh, or whatever)
+a submission script which outputs an MD5 hash before the file is sent.
+As long as the before-sending hash matches the hash returned by the
+haven, you can assume that the file is intact.
+
+> Lastly, instead of postage (like a remailer would get), how hard would it
+> be to implement "rent" where if the "rent" is not paid, and a grace period
+> has elapsed the file would be trashed.  All this while preserving the
+> anonymity of the sender and the data haven site.
+
+Not very. Use a dbm database to map "rent due" dates by file, then
+periodically sweep through the database.
+
+> As to the code, this will have to be my second rewrite as I am going to
+> do it in perl code, rather than C...  last rewrite was from a daemon to
+> a program activated by a .forward file.
+
+Perl has the nice property of being fairly portable, too.
+
+- -Paul
+
+- -- 
+Paul Robichaux, KD4JZG       | Good software engineering doesn't reduce the 
+perobich@ingr.com            | amount of work you put into a product; it just 
+Not speaking for Intergraph. | redistributes it differently.
+		  ### http://www.intergraph.com ###
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLxFaRafb4pLe9tolAQH3EwQAmokOebOJtSbny7rAphWBE7n38XvWYbwy
+SMFXmctU6DNnM+9oGTtlaROTUy2jbbt6zDf1/1wIOG/p0C6K7BAD8lt0mkrf4OqN
+As1yf9JLxtTHgYIKF94aUiGiqCUo5zWe12CB+GwZ9LKma4BxXKqT3iCYrjQL+2Su
+us2wL5AVRd4=
+=McPN
+-----END PGP SIGNATURE-----
+
+
+
+

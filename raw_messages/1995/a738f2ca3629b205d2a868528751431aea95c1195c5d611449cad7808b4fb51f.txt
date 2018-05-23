@@ -1,0 +1,75 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Fri, 6 Oct 95 14:57:34 PDT
+To: cypherpunks@toad.com
+Subject: Picking Random Primes
+Message-ID: <ac9aef322a02100497ac@[205.199.118.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 5:24 PM 10/6/95, Patrick Horgan wrote:
+
+>Given the difficulty of finding primes, how likely do you think it is that
+>given one of the well known methods and finding the first 1024 bit prime
+>that pops out would give you an effective attack?
+
+What is the "difficuly of finding primes"? They are actually very easy to find.
+
+A few comments:
+
+First, the "1024 bit prime" is misleading. The 320+ decimal digit modulus
+used in RSA has two prime factors of roughly 160 digits each.
+
+Second, the process of finding the primes p and q involve avoiding "weak"
+moduli, such as where p and q are very close together. To avoid this, a
+common situation is for p to be roughly 159 digits and q to be 161 digits.
+
+Third, these are _really, really_ big numbers! There are about 10^158
+primes between 10^159 and 10^161. roughly. (The rule of thumb, given by
+Sterling's formula, is that about 1% of all 100-digit numbers are prime,
+about 0.1% of all 1000-digit numbers are prime, etc.) As there are only
+about 10^75 particles in the entire universe, this gives about 10^83 primes
+for every particle in the entire universe!
+
+Fourth, the standard way to find the primes p and q is to pick a random
+number of the approximate starting size and then iterate up, testing for
+primality. As the above approximation shows, one doesn't have to make too
+many tests before a number is confirmed to be very likely to be prime. (I
+say "very likely" because the most popular primality testing routines have
+a very small chance of saying a composite number is prime, when it isn't.
+Cf. math books for details on this, and why it is essentially irrelevant to
+us.)
+
+Fifth, there are clearly some really good ways to pick a 150 or 160 digit
+number to start testing from. For example, a 10-sided die, or a pair of
+traditional dice (ignoring 11 and 12) could be rolled 150 times, with the
+resulting number used to start the process. Not bloody likely that any
+collisions in such a choice process will occur before the heat death of the
+universe.
+
+(There are faster ways, using the random sources we so often talk about,
+including keyboard poundings,  mouse swirlings, audio input, radioactive
+decay, diode noise, etc., but I wanted to make the point with the rolled
+die so nobody will ask "Yeah, but what if people picked the same starting
+point?" They won't.)
+
+By the way, all of the "entropy" or "randomness" in the p and q primes lies
+in the initial seed for the search for the first prime larger than the
+seeds, as the algorithm is completely deterministic once the seed has been
+picked. (And fast, too.)
+
+--Tim May
+
+Views here are not the views of my Internet Service Provider or Government.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+Corralitos, CA              | knowledge, reputations, information markets,
+Higher Power: 2^756839      | black markets, collapse of governments.
+"National borders are just speed bumps on the information superhighway."
+
+
+
+
+
+

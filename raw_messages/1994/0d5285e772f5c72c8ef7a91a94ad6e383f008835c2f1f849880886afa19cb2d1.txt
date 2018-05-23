@@ -1,0 +1,80 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Sat, 26 Mar 94 11:13:35 PST
+To: hfinney@shell.portal.com (Hal)
+Subject: Re: Digital Cash
+In-Reply-To: <199403261837.KAA28005@jobe.shell.portal.com>
+Message-ID: <199403261959.LAA25885@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Hal Finney writes:
+
+> The other issue, which I know less about, is the possibility of cryptograph-
+> ically strong obfuscated code.  Mike Duvos first mentioned this.  You could
+> have an algorithm running on your own computer and have it be impossible to
+> determine what it is doing, or (presumably) to effectively alter the internals
+> of the algorithm.
+.....stuff elided...
+
+> discussing here (self-decrypting code and such tricks), but rather some
+> mathematically strong transformation has been done on the structure of the
+> code to hide it in a cryptographically strong way.
+> 
+> I vaguely recall hearing about such technologies, but I can't remember
+> where now.  Can anyone provide some references, or (better) a summary of
+> how this works and what can actually be accomplished along these lines?
+> 
+
+"Computing with Encrypted Instances," by Joan Feigenbaum, then of
+Stanford, now of AT&T (I believe). Work done in the mid-80s on using
+cryptography to allow this kind of protection.
+
+Canonical example: Acme Sales Company want to optimize the route its
+salesmen take between sales sites. It wants Otto's Optimizing to do
+this, but it doesn't want to provide Otto with its list of sales
+sites.
+
+So it first does a transformation of the list of sales sites into a
+form that does not reveal the actual sales sites (the similarity with
+knapsack encryption is apparent), submits this to Otto, who optimizes
+the routing, and then returns the results to Acme. Acme then reverses
+the transformation and has an optimized sales list.
+
+
+The similarities with zero knowledge work are apparent (in zero
+knowledge interactive proof systems, one proves one knows something
+without actually shwoing what one knows).
+
+This may not be exactly what Hal was thinking of, but it's a starting
+point. 
+
+Brad Cox, of Objective-C notoriety, and now at George Mason
+University, has also been interested in this area of "complexifying"
+code so that reverse engineering is difficult or impossible.
+
+There was also some widely-reported work on new methods of proof which
+involved probabalistic methods. This was reported in Science, Science
+News, and other such places about 2 years ago. (The scheme involves
+transforming/rewriting mathematical proofs into much larger versions
+which can then be "spot-checked" in a Monte Carlo way....if the
+spot-checks are OK, one gains confidence that the overall proof is
+valid.)
+
+Again, this may only be tangentially related ot the issues Mike and
+Hal have been discussing, but I sense that ther'e a connection.
+
+--Tim May
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^859433 | Public Key: PGP and MailSafe available.
+"National borders are just speed bumps on the information superhighway."
+
+
+

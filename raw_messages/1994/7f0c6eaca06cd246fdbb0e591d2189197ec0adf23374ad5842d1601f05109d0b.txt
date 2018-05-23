@@ -1,0 +1,55 @@
+From: jpinson@fcdarwin.org.ec
+Date: Wed, 5 Jan 94 10:29:38 PST
+To: cypherpunks@toad.com
+Subject: Wiping files on compressed disks.
+Message-ID: <9401051201.ac03492@pay.ecua.net.ec>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I did a few tests on wiping compressed (Stacker) files:
+
+Sdir, the Stacker directory command, reported a 900k PKZip file 
+had a compression ratio of 1.0:1  (no compression).
+
+I wiped the file using the same character repeatedly, and sdir 
+reported the resultant file had a compression ratio of 15.9:1
+
+I wiped another copy of the zip file using sets of increasing 
+characters (0-255).   After this wipe the compression ratio was 
+8.0:1
+
+Lastly, I wiped the file using random characters, generated using 
+Turboc's random() function.
+
+This time, the compression ratio was 1.0:1, the same as the 
+original.
+
+Sounds like wiping with random characters may indeed be the way 
+to go to avoid "slack" at the end of the file.
+
+One interesting note:   When I fragmented the original zip file 
+into 50K segments with a "chop" program, sdir reported that each 
+segment had a compression ratio of 1.1:1, even though the 
+original file showed no compression.
+
+When I created 10K segments, I got a compression ratio of 1.6:1
+
+Pkzip however, was unable to compress these file segments at all.
+
+I suspect that Stacker is not really compressing these smaller 
+files in the normal sense, but is storing them more efficiently 
+(better sector or cluster size?).
+
+Jim Pinson
+
+
+
+
+
+
+
+
+
+
+

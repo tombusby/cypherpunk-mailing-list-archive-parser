@@ -1,0 +1,220 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 14 Dec 1997 08:35:03 +0800
+To: pooh@efga.org
+Subject: Re: remailer hashcash spam prevention
+In-Reply-To: <3.0.3.32.19971213110625.032e7afc@mail.atl.bellsouth.net>
+Message-ID: <199712132319.XAA03696@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Robert Costner <pooh@efga.org> writes:
+> At 10:55 AM 12/13/97 GMT, Adam Back wrote:
+> >Remailers require a different strategy.  With remailers you are trying
+> >to discourage spammers from using the remailer, with email you are
+> >also trying to discourage spammers, but you have to do it in ways
+> >which is easy for neophytes to cope with.
+> 
+> I'm unsure that this is what we are trying to do at all.  I'm perfectly
+> willing to assume that a remailer gets it's mail into it.  The problem is
+> now that the remailer has to deliver the mail.  Under this plan, to deliver
+> mail there must be hashcash for the delivery to the point beyond the
+> remailer.
+
+Simplest thing to do for non-replyable remailers is to insist that the
+originator include hashcash for each remailer hop.  Then remailers can
+just refuse to remail anything unless there is a valid hashcash
+postage token included.  For example:
+
+	Hashcash-Postage: 10208remailer@efga.orgb35b746c387ff6bc
+
+Is a 20 bit hash collision on remailer@efga.org.  (Antonomasia sent me
+a patch sometime back for hashcash which changed the hashcash syntax
+to:
+
+	Hashcash-Postage: 10208:remailer@efga.org:b35b746c387ff6bc 
+
+which is easier to parse.  (He also simplified the command line
+interface... mine is a bit scruffy)).
+
+To send through remailer@efga.org and remailer@replay.com, you would
+include a hashcash postage stamp for each remailer.
+
+So you add to the remail instructions for remailer@efga.org a hashcash
+postage stamp:
+
+	::
+	Request-Remailing-To: remailer@replay.com
+	Hashcash-Postage: 10208remailer@efga.orgb35b746c387ff6bc
+
+and to the nested encrypted remailing instructions for replay you add
+a hashcash stamp for it too:
+
+	::
+	Request-Remailing-To: replay.com
+	Hashcash-Postage: 10208replay.com05e4fee159c1cfc9
+
+> HashCash has often been suggested as a method for throttling spam that
+> would be sent to remailers.  This is not what I was responding to.  I was
+> responding to a suggestion that ISPs start requiring hashcash.  I'm
+> honestly unclear as to whether the remailer must generate the hashcash for
+> the future SMTP's or if the suggestion is that the originator is generating
+> all of the hashcash.  
+
+The originator must generate the hashcash for all hops.
+
+> Since remailers mangle the messages and regenerate them, I am unsure
+> if originator generated hashcash is to be made for the destination
+> mail port, or if the remailer must do this.
+
+The hashcash proposal was originally focussed on remailers, and for
+this purpose it is suggested that the originator generate all postage.
+
+> If there is in fact a requirement that the sender generate the hashcash,
+> then I am not sure this will work.  A nym reply block possibly does not
+> lead to an exit address, but rather to another reply block.  In fact, this
+> should always be the case.  
+
+I am not sure I understand the comment above.  Why should a reply
+block always point to another reply block?
+
+It provides pretty good security to have a newnym address which when
+mail is sent to it, the newnym server looksup that nyms reply block,
+and mails the message with that reply block prepended to the
+designated first hop remailer.  The reply block chain can have several
+hops, and can even end up in a newsgroup via a mail2news gateway, or
+typeI remailer.
+
+To point the whole reply block back to another newnym address adds
+additional protection but I would have thought most people use only
+one reply block.
+
+> There is no way for the sender of the email to know this route,
+
+A good point.
+
+You have to restructure the payment to cope with this.  Here are a few
+ideas:
+
+- One way to do it is to require the nym owner to pre-pay hashcash
+postage for mails he receives.  When the postage runs out, the
+delivery ceases.  However this provides a denial of service attack
+against the newnym user -- just have more CPU than him and you can
+prevent him getting any real replies by spamming him.
+
+- Another is to require postage only for the entry remailer.  This
+however begs the question of what is a remailer.  There are problems
+with assuming there is some official list of "remailers".  For example
+if I am a spammer and I want to spam I will call myself a remailer,
+and spam via the other remailers from this vantage point apparently
+within the fold, it will be difficult to detect me.  I might even
+remail the odd message to keep up appearances.
+
+- A distributed hashcash double spend database could allow remailers
+to accept hashcash which wasn't directed to them specifically, but
+rather, which was directed to any remailer.  Remailers would propogate
+hashcash database updates.  This preserves anonymity because hashcash
+says nothing about the person who minted the hashcash stamp.  However,
+interestingly, it would be necessary for the remailers to anonymously
+remail database updates because revealing the remailer which received
+the hashcash token would allow the newnym reply blocks to be traced.
+Disruptive remailers could remove all of the hashcash tokens as the
+sender would be forced to send them all to be readable by the first
+remailer, not knowing the identity of the rest of the remailers.  Not
+a big problem I think because remailers which do this can be weeded
+out statistically, and will suffer in the remailer ping league tables
+for such behaviour.  They can already disrupt pretty well if inclined
+-- just discard messages.
+
+- Or more simply, but more expensively for the sender, include a
+couple of hashcash tokens for all of the remailers (there being only
+20 or so).
+
+> Not only with nyms, but with regular email addresses multiple hops may be
+> required to deliver email.  For instance, the address "rcostner@cpsr.org"
+> will deliver email to me.  This address forwards mail to "pooh@efga.org".
+> The efga domain cannot be POP'ed into, so this is then remailed to wherever
+> I'm POP'ing into this month.  Since the original sender cannot know this,
+> and since ALL email to me requires a minimum of two mail gateways to get to
+> me it seems that this hashcash plan has some problems.
+
+This an interesting problem that I have not seen raised before.  One
+way to get around it would be to allow mail from rcostner@cpsr.org to
+arrive at pooh@efga.org without hashcash, and for mail from
+pooh@efga.org to arrive at your pop this month without hashcash also.
+You would allow via a token which you would not make generally
+available.  That is you would say set up the .forward file not to send
+to pooh@efga.org, but:
+
+	Robert Costner c387ff6bcb35b746 <pooh@efga.org>
+
+Then instruct the ISP side hashcash based filtering agent at efga.org,
+to allow this token through.  Similarly for the second hop from
+efga.org to this months POP. 
+
+> Further, I highly dislike the notion of maintaining system level databases
+> of who is communicated with.  As in a quote from Adam Back's web page
+> 
+>      To solve this problem subscribers should put the mailing list
+>      address in a postage-free recipients list. 
+> 
+> Traditional "wire tapping" would require that a communications port be
+> monitored to find out who communications are being made with.  Under the
+> "postage free list" plan, this information sits in a file waiting to be
+> collected with no difficulty at all.  Implemented on the SMTP level, we
+> have a way of testing for who a person communicates with.  After a HELO, we
+> spoof in a MAIL FROM:, then look to see if we get a "559 HashCash Required"
+> error.
+
+This is a major danger I agree.  Bill Stewart suggested hashing the
+database entries, which complicates things for the attacker, but not
+as much as we would like.
+
+I am 100% with you on the dangers of supeonaed postage free lists.
+
+How about this alternative which achieves the same functionality and
+removes the juicy supeona target:
+
+Turn on hashash database for all mails.  That means hashcash gets put
+in the database to prevent double spending.  (If we don't do this
+spammers will club together and do one mega-spam reusing the same
+hashcash they generated with their spam fest motivated CPU farm and
+hit you with spam from many addresses, or all forged as from the same
+address or whatever).
+
+So now when you reply to a message, on it's way out via the mail hub,
+you remove that hashcash token from the double spending database.
+This means that the sender can cache sent hashcash tokens, and re-use
+them when after he gets a reply.
+
+Neat.
+
+> I've never been impressed with the hashcash method of thwarting
+> spam.  I'm just not really sure that a technical solution to spam
+> will work in any event.
+
+Technical solutions to spam are not easy.
+
+However hashcash is reasonably flexible in what you can do with it,
+and real payee and payer anonymous ecash even more so, and I figure we
+ought to give it a go because the non-technical solutions involve
+low-life politicians trying to solve the spam problems for us, and
+introducing legislation giving jail time for forged From fields,
+trying to introduce internet drivers licenses, and deputising ISPs to
+try to enforce the mess.  It is unclear how remailers would fare in
+such a scenario.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

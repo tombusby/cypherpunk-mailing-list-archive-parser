@@ -1,0 +1,73 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sun, 4 Dec 94 10:00:24 PST
+To: cypherpunks@toad.com
+Subject: Re: Interoperability, one-use remailer tickets
+In-Reply-To: <01HK8FKNB3LE90PJWN@delphi.com>
+Message-ID: <199412041800.KAA02674@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike Ingle <MIKEINGLE@delphi.com> writes:
+[Part about remailers deleted]
+>For something complex like this, we need a language with a little more
+>leverage than C provides. For this and other complex protocols, I've ported
+>RSAREF 2.0 to Perl. The interface does not require you to recompile Perl.
+>It uses a C daemon and pipes. It provides symmetric encryption, public-key
+>encryption, digital signatures, hashing, DH exchange, and ASCII armor.
+>The algorithms used are MD5, MD2, DES, DESX, triple-DES, RSA, and DH.
+>It has a good (eval/die) exception handling mechanism, and a very thorough
+>regression testing script.
+>[...]
+>I want to add other algorithms to the Perl encryption package. The secret
+>sharing, for one. A one-function call to gzip for compression. A blind
+>signature if I could get patent permission (not from Chaum; how's Brands?)
+>or perhaps just do it with a "research purposes only" disclaimer. Someone
+>with Visual Basic experience could do a DOS/Windows VBX module to enable
+>easy writing of PC clients for neat net-based servers written with the Perl
+>encryption package.
+
+This is very exciting!  Could you show some examples of how your code
+would be used with Perl?  Some kind of script that could work with MP
+numbers or RSA decrypt a file?  It would be very good to have a
+prototyping language like Perl with crypto addons.
+
+>Code for secret sharing is available, but most secret-sharing algorithms
+>create shadows each the size of the message. This can be avoided: use an
+>error correcting code to add enough information to the original so the
+>message can be recreated with any m of n pieces. Break into pieces, encrypt
+>each piece, and secret-share the key. Where can I get an error correction
+>algorithm that can do this? You should be able to increase a file's size by
+>50% and then have any two of three pieces recreate it, for example.
+
+Try looking for a package called Shade using Archie.  Here is an excerpt
+from the doc file:
+
+> `shade' is a file splitting and merging utility.  It takes a large
+> file and splits it into uniformly sized blocks.  It can also output
+> extra blocks (called shadows).  These shadows can be used to recover
+> missing sections if they get corrupted or it they are lost.  With a
+> single shadow, `shade' can recover ANY single missing block.  As many
+> shadows are needed as there are blocks missing.  If too few blocks
+> and shadows are available, nothing can be recovered.
+> 
+> For example, foo.bar (259042 bytes) is split into 5 sections
+> of 45000 bytes, 1 section of 34042 bytes and 2 shadows of
+> 45000 bytes.  Each of these 8 parts is sent through email.
+> Even if any two of these eight parts gets lost, the original
+> foo.bar can be reconstructed.
+> 
+> `shade' is a simple application of the chinese remainder theorem
+> for polynomials with coeficients modulo two.  For more information
+> see the comments at the beginning of project.c.
+
+As for the remailer return address idea, I would suggest looking at
+Chaum's 1981 paper from CACM which has a similar concept.  I believe it
+was posted here recently.  Instead of using shared secrets he had the
+secret key at each hop get embedded in the return address itself.
+
+Hal
+
+
+
+

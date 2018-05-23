@@ -1,0 +1,39 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 10 Oct 95 00:21:26 PDT
+To: cypherpunks@toad.com
+Subject: Re: PC disk wipe software
+Message-ID: <199510100721.AAA20944@ix.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>There has been considerable discussion on the MCIP list about how most
+>*Mac* programs that purport to do this, like Burn, for example, leave stuff
+>over in disk blocks. My understanding is that this is not a trivial
+>problem, and it occurs in MUSH-DOS as well....
+
+Doing it _right_ is not a trivial job.  Consider disk controllers that
+map out bad blocks so the OS never needs to see them - if you're trying
+to remove highly classified data, the fact that Diskwipe won't ever see them
+might be a serious problem, even if it is close enough for government work.
+
+For a more realistic scenario, consider Stacker and other disk-compression
+software;
+you don't know what physical blocks the file was written on, or whether
+overwriting
+the logical blocks of the file will actually write to the same physical blocks.
+In some cases you can assume that it probably won't.  You also can't expect to
+write large blocks of 1s or 0s over the disk, because disk compression will
+turn them into small blocks with run-lengths or equivalent.  (Writing PRNG
+random noise will do, or you can generate counter-based patterns that may work,
+or do something cryptographically strong if you want to take the time.)
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

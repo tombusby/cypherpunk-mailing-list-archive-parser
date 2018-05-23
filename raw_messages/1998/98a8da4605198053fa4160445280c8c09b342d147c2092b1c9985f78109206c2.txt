@@ -1,0 +1,141 @@
+From: David Honig <honig@sprynet.com>
+Date: Thu, 6 Aug 1998 07:31:04 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Re: Noise source processing
+In-Reply-To: <Pine.LNX.3.96.980805210406.11770A-100000@albert>
+Message-ID: <3.0.5.32.19980806073033.007cf540@m7.sprynet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:12 PM 8/5/98 -0400, mgraffam@mhv.net wrote:
+>Hello all..
+>
+>After a little bit of work I have put together a white noise source 
+>(hacked FM reciever, heavily shielded to reduce local EMR bias) and
+>have it jacked into a mic port on one of my machines. I would like
+>to develop of bit of code (oh, horror :) to take bits from the sound
+>card, and bits from /dev/random, and mix them together to get a
+>random number stream.
+>
+>The noise coming off of the sound card is more beige than white though..
+>
+>Does anyone know of any papers, articles or whatever on good techniques to
+>remove bias from the audio source? 
+
+Let me save you the trouble.  First, RFC 1750 gives some background
+including the info-theory behind bit 'distillation'.
+
+I have digitized FM radio hiss using a $10 transistor radio feeding
+into the LINE in of my soundcard.  The spectrum looks poisson
+with prominant, periodically spaced noise spikes.  It does not pass Diehard.
+
+But if you take the PARITY of 8 bits to get one bit, then assemble bytes
+out of these bits, the results pass Diehard.  
+
+This works with 44Khz, 16 bit sampling, with full-volume hiss feeding the
+soundcard.
+I have yet to try this with a video adc sampling snow.
+
+1. There are some nice spectrogramming shareware programs out there.
+2. Diehard is invaluable.
+3. Language is so vague.  Don't export this filter:
+
+
+/*
+Alemb.c
+Alembic bit distiller
+Takes 8 bytes, computes the parity of each, composes a byte from the bits.
+
+2 Aug Ported from Alembic.java which I had prototyped earlier
+3 Aug modified to be faster
+*/
+
+#include <stdio.h>
+/* return parity of byte input */
+int parity(int c)
+{
+	int i,p=0;
+	for (i=0; i<8; i++) {
+		p ^= c & 1;
+		c >>= 1;
+		}
+	return p;
+}
+
+
+
+main(int argc, char **argv) {
+	int c=0, p, n, i;
+	int count=0, accum=0;
+	int ones=0, zeroes=0;
+	unsigned char parlut[256];
+	unsigned char buff[8];
+	FILE *fptr, *of;
+	char *infname="test.wav";
+	char *outfname="test.bin";
+	int hist[256], max;
+
+	if (argc>1) infname=argv[1];
+	if (argc>2) outfname=argv[2];
+
+    fprintf(stderr,"Alembic C 4 in=%s out=%s\n", infname, outfname);
+
+
+	fptr = fopen(infname,  "rb");
+       of   = fopen(outfname, "wb");
+
+ 	for (p=0; p<256; p++) { parlut[p]=parity(p); /*  initialize parity table */
+							hist[p]=0;	}
+
+	n=8;
+	while (n==8) {
+
+		n=fread(buff, 1,8, fptr);
+		count += n;
+
+		if (n==8) {
+			for (i=0; i<8; i++) {
+				p =  parlut[ buff[i] ] ;
+				accum <<= 1;
+				accum |= p;
+
+				/* measure */
+				if (p==1) ones++; else zeroes++;
+				}
+			 fwrite(&accum,1,1,of);
+			 hist[accum]++;
+			accum=0;
+
+		}
+
+
+	}
+
+	printf("In: %0d bytes\n", count);
+	printf("Out: %0d bytes\n", count/8);
+	printf("output: 1's=%0d %0f% \n", ones, 100.0*ones/(ones+zeroes));
+	printf("output: 0's=%0d %0f% \n", zeroes, 100.0*zeroes/(ones+zeroes));
+	max=0;
+	for (i=0; i<256; i++) {if (max<hist[i]) max=hist[i];}
+	for (i=0; i<256; i++) {
+		printf("%0d %0d %lf\n", i, hist[i], 100.0*hist[i]/max);
+	}
+
+}
+
+
+
+
+
+honig@alum.mit.edu
+
+  
+
+
+
+
+
+
+
+

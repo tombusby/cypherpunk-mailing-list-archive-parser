@@ -1,0 +1,124 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 20 Dec 95 09:21:19 PST
+To: rah@shipwright.com
+Subject: Re:  King Kong Does e$
+Message-ID: <199512201719.JAA12291@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Thanks to Bob Hettinga for typing that long message about the Microsoft
+"ecash" scheme.  That is some nimble note-taking.  I have a few comments
+on the scheme as Bob presented it, and as it compares to Digicash.  I
+will follow up with some commentary about the politics involved.
+
+>         Customer chooses secret s, serial number n, n=h(s) and amount.
+>         Customer pays bank (by any method) the amount of the desired banknote
+>         bank signs serial number and amount
+>         Transaction may be anonymous (physical cash purchase at bank) pick
+>         serial number, bank uses private signature to sign the serial number.
+>[...] 
+> How is it used for payment
+>         Payer simply gives bank note to payee by handing over the secret
+>         payee immediately exchanges the banknote for new ones anonymously, if
+>         desired
+>         Old banknote is now invalid, since bank has its secret; hence payer
+>         can't respend it
+>         If the bank note is already invalid, bank rejcts exchange and informs
+>         payee.
+>         "In effect, these are disposable banknotes"
+
+The withdrawal protocol has some similarities to online Digicash ecash.
+In that system, you choose a random number s, calculate a one way
+function h(s), and get that signed by the bank.  Unlike in the Microsoft
+scheme, blinding is used for the signature.  I imagine Microsoft avoids
+blinding because of the patent situation, and possibly due to legal
+concerns about anonymity (more on this below).  With Digicash, the coin
+is then the pair s, SIGN(h(s)).  This is then given to the shop as
+payment.  It can check the bank's signature, but that is not enough;
+being an online scheme, it must also turn the coin in at the bank to
+prevent double spending.  The bank checks the signature and that the coin
+is well formed to accept it.
+
+The Microsoft scheme is like an unblinded version of this.  The bank
+simply signs h(s) and gives that to the customer.  This allows a
+simplification in the spending.  Instead of passing s, SIGN(h(s)), it is
+enough just to pass s.  The payee gives this to the bank (since this is
+an online system), which given s can calculate h(s) and check this
+against a list of all valid coins.  It knows the valid coin numbers
+because it saw them when it signed them (unlike with Digicash).  So there
+is a slight space savings in the spending protocol.
+
+It is also not necessary for the messages to and from the bank to be
+encrypted during the withdrawal protocol; neither knowing h(s) nor
+SIGN(h(s)) will allow an attacker to spend the coin, since he doesn't
+know s.  A similar thing is true of DigiCash, though, where the blinded
+pre-signed or signed coins are useless to an attacker since he doesn't
+know the blinding factor.
+
+The big problem then with the Microsoft system is that it is not
+anonymous.  As a result, it is technically not electronic cash, at
+least as the word is used in the literature.  However we are seeing so
+many proposals like this, all of them wanting to capitalize on this
+magic word "cash", that I suppose the definition has to be considered
+to be shifting.  In the new usage, virtually any payment system can be
+called cash if there is some way that users can be anonymous in using
+it.  And since by allowing anonymous accounts virtually any payment
+system can do this, the word is becoming meaningless.
+
+The problem I see in practice with using their cash anonymously is how to
+buy it.  If I have an account with the Bank of Microsoft, and I withdraw
+some "mcash", deducting it from my account balance, that mcash will be
+linkable to my account when I spend it.  In order to be anonymous I have
+to buy the cash anonymously.  I can walk into the local bank with a
+floppy and some dollar bills, but that is not practical in general.  I
+could use mcash to buy some more mcash, but even if the second
+transaction is anonymous, the bank knows that I was the one who withdrew
+the first set of mcash, so it can link me to the second set when it is
+spent.
+
+The only good solution I can see is to use Digicash ecash to anonymously
+buy Microsoft mcash, but I doubt that that is what they had in mind!
+
+Frankly, what I see in this message is another example of something which
+is starting to become common: marketing to cypherpunks.  In a way it is a
+very positive sign, that our views and concerns are becoming so well
+known and widespread that companies like Microsoft and Netscape are doing
+their best to keep on the good side of people like us, who are concerned
+about strong privacy and security.  In some ways our attitudes are
+becoming dominant on the net, thanks to the many excellent writers here,
+as well as magazines like Wired, and groups like the EFF and other
+interest groups.
+
+But this influence is making us a target of companies who know that
+gaining our approval, or at least avoiding our criticism, is important
+for success on the net.  In many cases, such as the recent flap over
+Netscape's attitudes towards key escrow, I detect a whiff of two
+sidedness, in which one attitude is presented for the benefit of
+government and law enforcement interests, while another posture, more
+acceptable to cypherpunks, is adopted on the net.  With Microsoft, they
+use the magic word "cash" a great deal, in my view hoping that we will
+line up in favor of the idea.  But as I have explained it is not really
+anonymous, no more so than any other payment system.  And it is not at
+all clear that the kinds of anonymous accounts that would be necessary
+to really make it anonymous will be allowed.  In that case, Microsoft
+can just shrug and say, "well, we tried."  They get the best of both
+worlds.  They make the government happy by providing a traceable
+payment system, while they look good on the net by pushing "electronic
+cash".
+
+I don't have any proof that this is exactly what is going on.  But it is
+possible, and I think we have to be skeptical and at least open to the
+possibility that this kind of manipulation is occuring, no matter how
+many assurances we get from the companies involved that they are really
+on our side.  Finance is a high stakes business and there is a lot of
+government regulation involved.  Where our interests and the government's
+diverge, we need to watch closely to see whether the companies' actions
+match their words.  This kind of marketing is going to continue to increase,
+I expect.
+
+Hal Finney
+
+
+
+

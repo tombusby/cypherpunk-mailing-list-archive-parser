@@ -1,0 +1,85 @@
+From: attila <attila@primenet.com>
+Date: Thu, 18 Jan 1996 05:30:37 +0800
+To: "Timothy L. Nali" <tn0s+@andrew.cmu.edu>
+Subject: Re: Random Number Generators
+In-Reply-To: <0kzHl6200bky0_dkQ0@andrew.cmu.edu>
+Message-ID: <Pine.BSD.3.91.960117202900.3807G-100000@usr1.primenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Wed, 17 Jan 1996, Timothy L. Nali wrote:
+
+> Hi all
+> 
+> 	For a class project, I will be designing a VLSI cmos chip to generate
+> truly random numbers (The chip will be fabricated).  I'm limited to a
+> 2-micron standard cmos technology (no fancy BiCMOS, MISC, or anthing
+> else).  The most promising design I've seen so far (that I can actually
+> do) is based on clocking a D flip-flop in the following way:
+> 
+> 
+> 			         	-----
+> 	8Khz clock ------	| 	|----- Random output
+> 				|	|
+> 				|	|
+> (sloppy) slow clock	----  |>	|
+> 				|	|
+> 				-----
+> 
+
+	you can enhance the thermal stability with a temperature control
+    scheme.
+
+	and you can virtually eliminate voltage problems with separate
+    regulation.
+
+	use a digital oscillator and clean up the edges.
+
+	would you not be better off for true randomness to use a) a
+    > 8Mz clock, and b) to chain the output of one into the control gate
+    of a second?  I think that gives you better spectral distribution
+    presuming you use a second clock frequency.
+ 
+	unlike most, I am still of the opinion that digital means of
+    generating this should be more uniform. otherwise, use a 
+    high-frequency diode, analog weight the curve, analog high-pass it,
+    sample it, and go for it.  or take several TV stations, phase and mix
+    the horizontal scans, etc.  --but I thought this was a digital project
+    for CMOS  --actually CMOS can generate white noise, but you probably 
+    will end up with a DSP on your chip! 
+
+	biasing should be controllable with edge control.
+
+	However, all of above needs to be bench tested for the practical
+    results --keeping in mind measuring randomness of segments of a bit
+    stream are "impossible"  --thoroughly frustating. 
+
+	another schema is to play the old enigma game of lining up the
+    spinning wheels -that works digitally, the gates on CMOS are not
+    too hairy  -the question is how many wheels and their relative
+    rotation (including direction)?  and, how many levels?
+
+	how much real estate do you have at 2u? I ask because the
+    use of the rotating wheels has been an old project I dumped since
+    fab was far to expensive in the 70s --but it has held my interest.
+
+	there has also been a thorough trashing or thrashing of RNG
+    recently which should be in the archives.
+ 
+> I'd also appreciate any other suggestions or advice you have on RNGs.
+> 
+> Thanks in advance.
+> 
+
+__________________________________________________________________________
+    go not unto usenet for advice, for the inhabitants thereof will say:
+      yes, and no, and maybe, and I don't know, and fuck-off.
+_________________________________________________________________ attila__
+
+    To be a ruler of men, you need at least 12 inches....
+
+
+
+
+

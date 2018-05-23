@@ -1,0 +1,50 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Fri, 13 Oct 95 12:50:45 PDT
+To: cypherpunks@toad.com
+Subject: Same ol' massive MITM exposure in Netscape 2.01b
+Message-ID: <Pine.SOL.3.91.951013122654.26464D-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Just to repeat old news: Netscape 2 has similar  exposure to MITM attacks 
+to 1.1. 
+
+Netscape 2 does make one variant of the MITM attack less useful: The 
+new document  info page allows information to be obtained about inlined 
+images as well as the base page; this breaks the old attack of only 
+intercepting inline image requests (which can be used to steal 
+information in request headers without there being any chance of your 
+certificate showing up). 
+
+
+1) The client does not do any verification that the certificate used for 
+the transaction is one associated with the server, allowing MITM 
+substitutions as long as the server has a properly signed certificate
+
+2) The client does not issue warnings for redirections from one https 
+page to another https page, even if the url to which it is redirected has 
+a different hostname to the url originally dereferenced.
+
+3) In the case of redirection, the document info screen does not provide 
+information about the originaly referenced page, just the final page. 
+This allows the MITM to intercept the first request, steal the request 
+data, then issue a redirect to hide the certificate used in the intercept. 
+
+4) In the beta version, the document info page does not display the 
+security info (I did check with  MITM disabled). 
+
+
+Simon
+
+-----
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

@@ -1,0 +1,48 @@
+From: pcw@access.digex.net (Peter Wayner)
+Date: Mon, 7 Aug 95 16:09:46 PDT
+To: cypherpunks@toad.com
+Subject: Two-faced Security Problem? Dammit Janus?
+Message-ID: <ac4c4b91000210041ba1@[199.125.128.5]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Not exactly crypto, but the same idea:
+
+I've been trying to hook up an HTTP server sitting on a Mac at the end of
+my normal PPP connection. This was just supposed to be a test, but I kept
+getting annoying connection problems whenever someone tried to GET a page
+from me. The connection wouldn't go through about half of the time.
+
+After poking around for a week, I discovered that my home machine,
+newray.digex.net, is listed in the Digex's nameservers TWICE! Once with the
+IP address that my home machine is waiting for (199.125.128.5) and once
+with some other IP address in the digex space (164.109.211.61). If you do
+an nslookup on the name, you get both addresses. I believe that the
+technically correct thing for someone to do is to choose one of the
+addresses at random to distribute the load between two machines pretending
+to be one. This explains the connection failures that happened half of the
+time.
+
+This has led me to wonder, though, whether this is some sort of security
+breech. For instance, could there be someone out there mascarading as me?
+Normally I run Eudora, Netscape, Telnet and other outward bound
+applications. It was almost a fluke that I noticed that there were two
+entries.
+
+Does some software need to find its IP address in a DNS table? For
+instance, does Eudora need to look up  164.109.211.61 to find
+"newray.digex.net"? If someone was using this software on the mascarading
+node, they would need to set up an entry in the tables to make everything
+work. They just assumed I would never get inbound traffic.
+
+Any theories on this?
+
+-Peter "More Paranoid Than Ever" Wayner
+
+
+
+
+
+

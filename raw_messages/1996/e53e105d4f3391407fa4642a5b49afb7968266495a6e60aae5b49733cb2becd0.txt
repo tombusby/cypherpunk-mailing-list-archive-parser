@@ -1,0 +1,54 @@
+From: JonWienke@aol.com
+Date: Thu, 14 Mar 1996 06:55:53 +0800
+To: cypherpunks@toad.com
+Subject: Re: Multiple spinners as sources of entropy?
+Message-ID: <960313131931_245051343@mail06.mail.aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In a message dated 96-03-13 02:04:12 EST, you write:
+
+>Practically there may be less entropy from a couple of bits than from 
+>several bits. I've done tests with keyboard sampling on DOS machines. 
+>Especially when I've tried setting the system clock to a higher rate. 
+>In one case the samples were 3/4 of the time even.
+>
+>It seems better to estimate the entropy based on how-often samples 
+>occur (akin to arithmetic compression, only we're just counting bits) 
+>and output hashed data.
+>
+>Of course, if the raw samples are predictable enough, that *is* a 
+>problem.  Depending on the source, how does one test if a method is 
+>"truly" random?
+>
+>BTW, fast timing measurements from disk access seem to be pretty 
+>good...
+
+Another thing to try is to take the low-order byte of 2 timer readings based
+on keystrokes (check the timer value when the key is pressed), flip one
+around (so bit 0 is exchanged with bit 7, bit 1  is exchanged with bit 6,
+etc.) and then XOR them together.  This will minimize the skew of any
+individual bit.
+
+You could do this with sound card samples as well.  Input noise into your
+sound card (seperate noise sources for the left and right channels) and take
+16-bit samples.  Take the low-order bytes of the left and right samples, flip
+one around, and XOR them together.  Should be extremely random.
+
+For a cheap noise source, use 2 Walkmans, each tuned to a different FM
+station gap.  Connect them to the line inputs of the sound card, and adjust
+the volume so they are almost, but not quite clipping.
+
+Whatever method is used, running the data through a good hash function breaks
+up any patterns even more.  I am working on an RC4 mutation that allows
+random input and output to be processed continuously.  It stores the S-box
+and the counters I and J in static variables that are preserved between
+calls, and uses a status parameter to determine whether to output a byte or
+input one.  Email me if interested in details.
+
+Jonathan Wienke
+
+
+
+

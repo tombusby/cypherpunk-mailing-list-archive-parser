@@ -1,0 +1,68 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Wed, 22 Sep 93 13:50:21 PDT
+To: derek@cs.wisc.edu (Derek Zahn)
+Subject: Re: Why RSA?
+In-Reply-To: <9309221814.AA23907@balder.cs.wisc.edu>
+Message-ID: <9309222048.AA20361@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Regarding the recent proposals for the construction of a toolkit,
+> I'm all in favor and would personally welcome the opportunity to
+> contribute to such an effort as a hands-on supplement to my
+> crypto education.  I have extensive experience with C and C++,
+> and am VERY familiar with TCL (pronounced 'tickle', for those
+> not in the know).  A good start would be a clear statement of
+> purpose.
+
+purpose: to make routines implemented and implemented well within
+the PGP program available to programmers.
+
+future purpose: to make a general purpose library of routines
+helpful in implementing various crypto systems and protocols.
+
+plan:  Take the PGP source and rip it apart into tiny pieces
+and put it back together in an organized way.  Change the
+Makefile structure to build various libraries and isolate
+the main user interface routines into a seperate group of
+files.  Basically a restructuring of PGP that will provide
+various intermediate libraries that may be used by other programers
+for linking within their program.
+
+*IF* this becomes part of the standard PGP distribution all
+non-portable code will be rewritten for various platforms and
+you will be able to find a lib for just about any platform
+you are coding or porting to.
+
+I havent read through the PGP code myself, but I suggest
+at least libraries for the random number routines (including
+the system-specific keyboard routines for getting random
+seeds), a library for the RSA and IDEA routines, and a library
+of the lower-than-RSA math routines.
+
+After this is done then various projects such as a tcl shell
+can be written on top of the libraries.
+
+If the library is successful then various additions can be made
+to it to make it a true crypto library rather than just a
+PGP library.  This could also benefit PGP if it is changed
+to allow various crypto systems.
+
+The benefits of this approach are many:  When implementing
+PGP front ends you usually dont want the normal PGP front
+end at all, and would rather just re-write your own on
+top of the PGP code.  When you are coding simple crypto
+libraries (like 'link' and 'Circ') it is nice to have a
+drop-in cryptosystem library.  The advantages to import-
+export are nice as well, you can write code that has no
+crypto code in it at all and let the users grab the crypto
+library to compile.
+
+> 
+> derek
+> 
+
+
+
+

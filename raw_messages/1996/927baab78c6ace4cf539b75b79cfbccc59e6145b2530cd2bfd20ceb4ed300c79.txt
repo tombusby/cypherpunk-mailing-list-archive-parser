@@ -1,0 +1,52 @@
+From: Alex Strasheim <cp@proust.suba.com>
+Date: Thu, 14 Mar 1996 10:28:50 +0800
+To: cypherpunks@toad.com
+Subject: Re: Remailer passphrases
+In-Reply-To: <199603122030.PAA05252@jekyll.piermont.com>
+Message-ID: <199603131713.LAA00824@proust.suba.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+If we ignore the obvious problem (ie., no one is going to put much effort
+or expense into running a free remailer), wouldn't splitting the remailer
+across two machines help fix the security problem? 
+
+Suppose one unix box accepts the mail and puts it a queue directory.  Then
+a second box periodically grabs files from the first box's queue with ssh
+(the second box initiates the connection), processes them, and then passes
+them out to the smtp server on the first box.  The second box doesn't
+accept incoming connections on any port except for the ssh port so there
+are no sendmails or httpds to hack.
+
+The remailer files could be running on a cfs drive (with nfs/cfs only
+accepting connects from localhost), and you could disable getty so that it
+would be hard to physically grab the machine and read the contents of the
+disk.  If you had enough ram you wouldn't need a swap file, so there'd be
+nothing there for someone who grabbed the machine.  If you set the machine
+up while it's plugged into a small lan that's not connected to the net no
+one could come in and hide something before you had secured everything. 
+
+You'd also have to try to make as sure as is humanly possible that there
+is no way an attacker can construct a trojan remailer packet that would do
+something unpleasant.
+
+Finally, don't tell anyone what you're doing or how you're doing it, and
+don't post about it to cypherpunks.  It may be unwise to depend on
+obscurity for security, but as an extra layer it can't hurt and it might
+cause a physcial attacker to come unprepared to hack the machine without 
+powering it down and rebooting.
+
+I know an attacker could interrupt service, and I'd guess that a skillful
+attacker could probably find a way to grab the cfs and remailer
+passphrases if he could grab the machine and the control the site
+physically (to work on it while it's running) for awhile, but how would an
+attacker come in over the net and hack the remailer box?  
+
+What have I overlooked? 
+
+
+
+
+
+

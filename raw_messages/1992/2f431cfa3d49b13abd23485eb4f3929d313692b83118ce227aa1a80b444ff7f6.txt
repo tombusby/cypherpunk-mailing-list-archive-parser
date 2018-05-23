@@ -1,0 +1,81 @@
+From: Karl L. Barrus <barrus@tree.egr.uh.edu>
+Date: Fri, 4 Dec 92 10:02:46 PST
+To: cypherpunks@toad.com
+Subject: No Subject
+Message-ID: <9212041802.AA13345@tree.egr.uh.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+FutureNerd Steve Witham writes:
+
+>I should be able to verify with my own eyes how cypher technology works.  
+>Otherwise I'm trusting my security to somebody's black box.
+
+This is important, which is why its nice to have source code.
+However, be prepared to invest a little :-) time in the study of PGP's
+code; I recently printed it out and must have sucked a toner cartridge
+nearly dry as it took more than 500 pages!  Check out 'wc -l *.[ch]'
+which results in 22720 lines for me.
+
+>        The signature algorithm (MD5?)
+>                128 bits?
+>                Is that based on RSA?
+
+Get the md5.doc from rsa.com - available via anonymous ftp.  It
+explains the algorithm (which is largely bitwise operations on blocks
+of the input stream) and even includes source code.
+
+>        A cryptostrong pseudorandom # generator?
+>                Is this based on RSA?
+
+Somebody posted a cryptographically strong prng to sci.crypt recently,
+but I haven't had a chance to look it over.  I have my own rng - a ten
+sided die, which I haven't had occasion to use, yet.  
+
+>        A binary<-->ascii translator
+
+Phil Karn's DES package includes source code for uuencode, which
+performs this translation.  I'm sure it is somewhere in the PGP code
+as well.  There is also RFC 1113.
+
+>What's the formula for RSA again?
+>        out = in * something ^ somethingelse mod yetanother??
+>        I know it can't be, because the key is only one number.
+
+Close!  That looks like the formula for solving ax mod n = d for x
+given a, n, d.
+
+RSA: pick two primes p and q.  Then n=pq.  As Hal Finney said, the two
+primes should be "good" in the sense that p-1 and q-1 have no small
+prime factors.  Obviously, you can't avoid having 2 divide p-1 and
+q-1, but that should be about it.  Also, p and q should differ in
+length by a few digits otherwise an enemy may begin to try factoring n
+by starting near sqrt(n).
+
+Pick a decryption exponent d.  d and phi(n) should be relatively
+prime, where phi(x) = Euler totient function = # of numbers less than
+x which are relatively prime to x = x-1 for x prime.  For n, phi(n) =
+(p-1)(q-1).  Calculate the inverse of d mod phi(n) and call it e, your
+encryption exponent (e = d^(-1) mod phi(n)).  Publish n and e as your
+public info, and keep d secret as your decryption key.
+
+Somebody encrypts a message by calculating M^e mod n.  You decrypt the
+ciphertext by calculating C^d mod n.
+
+For example: p=7, q=11 => n=77 and phi(n)=60.
+I pick d=13, gcd(13,60) = 1 so it is acceptable.
+Then e = 13^(-1) mod 60 = 37.  Check: 13 37 mod 60 = 1.
+A message M=20 is encrypted as 20^37 mod 77 = 48.
+I decrypted the ciphertext 48 like this: 48^13 mod 77 = 20, and I got
+back the original message.
+
+/-----------------------------------\
+| Karl L. Barrus                    |
+| barrus@tree.egr.uh.edu (NeXTMail) |
+| elee9sf@menudo.uh.edu             |
+\-----------------------------------/
+
+
+
+

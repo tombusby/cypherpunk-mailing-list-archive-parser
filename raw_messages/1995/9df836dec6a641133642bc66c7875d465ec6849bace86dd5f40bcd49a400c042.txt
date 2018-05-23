@@ -1,0 +1,80 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Fri, 20 Oct 95 21:01:16 PDT
+To: privsoft@ix.netcom.com
+Subject: Re: [reformatted] how secure can privasoft be?
+In-Reply-To: <199510202040.QAA29119@light.lightlink.com>
+Message-ID: <199510210401.AAA16706@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> PrivaSoft has obtained an export license from the governments of Israel and 
+> the USA.  
+[...]
+> PrivaSoft willfully complies with these regulations as it is a commercial 
+> product, and it is not intended for national security applications with its 
+> current key length which is the maximum legally allowable for commercial 
+> users.
+> 
+> The cryptographic engine of PrivaSoft
+> 
+> PrivaSoft uses a pseudo-random generator that is seeded by a 9 digit number 
+> uniformly normalized from the user's secret key.  The engine is proprietary, 
+> designed according to the rules of modern cryptology to make the best use of 
+> the allowable key length.
+
+This seems paradoxical. PrivaSoft uses a key approximately 30 bits long. It
+is claimed that the key length "is the maximum legally allowable for 
+commercial users". How does this square with (to pick a familiar example) the
+40 bit RC4 keys used in the exportable international version of Netscape 
+Navigator ?
+
+Two possible explanations I can imagine are:
+
+(0) PrivaSoft actually uses a key longer than 9 digits, and someone just made
+    a mistake somewhere along the line. Perhaps it's really 9 extended-ASCII
+    characters == 9 bytes == 72 bits, rather than 9 digits == 
+    ceil(9*lg(10)) bits == 30 bits.
+
+(1) NSA believes it is about (2^40)/(2^30) == 1024 times harder to break
+    the PrivaSoft scheme than SSL with 40-bit RC4. That would be remarkable.
+
+[...]
+> The use of default keys
+> 
+> When secret keys or passwords are used by laymen, there is always a conflict 
+> between security and convenience:  The user tends to use fixed, easily 
+> memorized keys again and again, while the cryptoanalyst only waits for an 
+> opportunity to see many messages encrypted by the same key.  
+
+I get the feeling you are confusing two separate issues here. Users do tend 
+to use easily memorized passphrases, which is indeed a problem, because such
+passphrases are in general easy to guess. But cryptosystems are generally
+meant to resist attacks based on the cryptanalyst gaining access to many 
+ciphertexts, even if all were encrypted with a single key.
+
+[...]
+> A simple example:  For a short message, increasing the font 
+> size of the text by a factor of 10 will significantly increase the time 
+> required for breaking the encryption.
+
+Anyone know how to get 120 point text in LaTeX ?
+
+> Customized versions of PrivaSoft
+> 
+> PrivaSoft is unique in being a one-stop product than can serve all types of 
+> modern correspondence, including E-mail, fax and paper printouts.  Special 
+> applications that need and can obtain a license to use non-commercial 
+> cryptographic engines can be accommodated by special versions of PrivaSoft.  
+> The cryptographic engine can be customer-furnished and customer integrated, 
+> however - since in some areas the integration of this product with certain 
+> cryptographic engines may be considered "munitions", each customized version 
+> of the product has to be licensed separately in accordance with the laws of 
+> the territory where it was created and used.
+
+I think this is a smart idea.
+
+-Futplex <futplex@pseudonym.com>
+
+
+

@@ -1,0 +1,50 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Mon, 28 Aug 95 09:24:04 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Re: SSL trouble
+Message-ID: <9508281622.AA00486@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Piete Brooks writes:
+>  Let's not get implementations confused with algorithms ...  We were
+>  using ALPHA code when we started ....
+
+Pardon me here, as I don't mean to belittle your considerable efforts, but I  
+think it was a mistake to make such loud announcements (posted to sci.crypt  
+for instance) when the software was alpha!  The software should have been  
+tested and stable before the general public was invited to participate and  
+"see how fast we can break SSL"  As expected, lots of people tried to  
+participate and the software just couldn't handle it.
+
+How many patched versions of the client software were distributed after the  
+effort had started?  If you want to do it as fast as possible, you can't be  
+constantly updating your client software.
+
+>  With BETA clients, a hierarchy and select/poll loops, I reckon a
+>  server would stand a chance.
+
+I think protocol issues are a Red Herring.  If your server had been able to  
+handle more than one client at a time it would have stood a chance.  Why  
+didn't it fork?  Sure, forking isn't the most efficient way to handle  
+multiple clients, but HTTP servers (as well as SMTP and FTP) manage to handle  
+hundreds of thousands of requests each day that way.  One client at a time  
+with a 30-second timeout was just plain dumb...
+
+
+I would recommend thorough testing of the software on many platforms and with  
+realistic loads before the next public effort (there are plenty of willing  
+testers on the cypherpunks list).  I tried to join in the effort and after  
+discovering that the client software was firing off multiple brutessl  
+processes, I decided to wait until the client stabilized.  I attempted to  
+reject the keyspace I allocated through the WWW interface, but that didn't  
+even work!!
+
+
+
+andrew
+
+
+
+

@@ -1,0 +1,49 @@
+From: Jay Prime Positive <jpp@markv.com>
+Date: Thu, 4 Feb 93 19:45:57 PST
+To: cypherpunks@toad.com
+Subject: `Sunday Times' article on GSM changes
+In-Reply-To: <199302050147.AA14360@misc.glarp.com>
+Message-ID: <9302041944.aa08169@hermix.markv.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Brad Huntting <huntting@glarp.com> asks:
+>[...]this would mean the sender and reciever would need to be synced
+>to well within 500ns of each other.  Isn't this a bit difficult?  How
+>do they do it?
+
+  You are right.  This is perhaps *the* central design issue of this
+kind of spread spectrum system.
+
+  One standard solution is to use "gold codes".  Gold codes are
+special in that they are very self dissilimar.  That is they look very
+unlike any shifted version of themselves.  So you can build a very
+simple corelator which tries all the possible shiftings of a code to
+the signal, until one pops up with "low frequency" data rather than
+"high frequency" noise.
+
+  Another is to begin a transmission with a special sync header (and
+concievably intersperse additional ones bassed on the expected
+frequency of loss of lock).  Currently available PLL's working at
+900MHz have very low phase noise, and I can imagine the construction
+of fixed frequency PLL's with even lower phase noise.
+
+  A third is to transmit BOTH the spreading code, and the data.  You
+can think of this technique as sending two channels of data, one which
+is all 1's (or 0's), the other which is a little more interesting.
+The two channels are then combined at the reciever to yield the data.
+
+  A fourth is to use an externaly generated sync signal -- for example
+a radio transmission that both sender and reciever can hear.  (For
+this aplication, I don't see how this would be used...)
+
+  Aditional solutions are possible.  (What is this S.A.W. thing I read
+about??)
+
+j'
+
+
+
+
+

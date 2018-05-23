@@ -1,0 +1,47 @@
+From: Dan Marner <dmarner@mis.nu.edu>
+Date: Sat, 21 Jan 95 19:40:23 PST
+To: ghio@myriad.pc.cc.cmu.edu (Matthew Ghio)
+Subject: Re: jpunix.com and MX'ing
+In-Reply-To: <m0rVsjT-000vEKC@myriad.pc.cc.cmu.edu>
+Message-ID: <199501220337.DAA26921@mis.nu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Sat, 21 Jan 95 22:12 EST  Matthew Ghio wrote:
+
+>
+>Well, to obscure the origin of your outgoing mail, you could simply
+>forward via another remailer.  However, delivering directly to SMTP
+>port 25 would probably be a good idea.  Sendmail has an option to
+>set the from using -f, but you have to have it configured to allow
+>it.  Normally only root, uucp and daemon are allowed to use this
+>option.
+
+This still won't quite do it. Clever mailers on the other end of
+the connection (sendmail included) will do a name lookup based on
+the IP address.  This will (usually) return the systems canonical
+name, and sendmail will make sure to stick that in the header. In 
+fact, if identd is running on the sending system, it will even stick
+in the userid of the sender. 
+
+The fix involves changing the in-addr.arpa domain tables for that ip
+address to make it report another name.  This will take complicity on
+the part of whoever manages those tables, and will complicate things
+when dealing with hosts on the remailers local network. A good way to
+work around this would be to slap another ethernet card in the machine
+so it has two addresses, one configured normally for that network and
+the other setup to be on remailer.net (or whatever.)
+
+Since this includes the cooperation of a local network administrator
+anyway, it makes most of the MX tricks a little less useful.
+                                                    -- Dan
+--
+Dan Marner                             dmarner@mis.nu.edu
+Network Weasel                         Finger for PGP 2.6 key including the
+National University                    words "GMAAAEEAK", "god" and "JAAUR"
+
+
+
+

@@ -1,0 +1,44 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Fri, 20 Aug 93 11:31:34 PDT
+To: cypherpunks@toad.com
+Subject: Blinded RSA signatures
+In-Reply-To: <9308200544.AA15625@jobe.shell.portal.com>
+Message-ID: <9308201831.AA06912@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The article made no
+> mention of how to do this "blinding".
+
+> This morning I came up with a method which I would like
+> comments upon.  
+
+Apparently the first author (the one being quoted in the forwarded
+message) had never been exposed to the relevant math before.  What is
+therefore significant is that this person has exactly reconstructed
+the basic Chaum blind signature, except for notation.
+
+The basic blind signature does not work well in practice, since the
+product of two such signatures is also a signature.  In practice one
+signs a one-way hash function of the message text and exhibits the
+actual text; this destroys the ability to multiply signatures, assuming
+that finding multiplicative pairs for the hash function is hard.
+
+This scheme of algebraic blinding is quite easy to apply, once you get
+the hang of it.  For example, it is behind the core of the encrypted
+open books protocol, where to blind g^x you create a pair g^(x+r),h^r.
+Basically all of the atomic operations that recent cryptology uses--
+e.g. exponentiation in finite rings, both in the discrete log systems
+and in RSA, integer multiplication in elliptic curves--are amenable to
+blinding.  The El Gamal signature scheme uses a random number to
+create the signature pair.
+
+Applications to existing protocols are left as an exercise by the
+reader.
+
+Eric
+
+
+
+

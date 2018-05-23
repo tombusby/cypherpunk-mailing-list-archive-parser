@@ -1,0 +1,63 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Wed, 27 Sep 95 02:21:27 PDT
+To: Matthew.Sheppard@Comp.VUW.AC.NZ (Matthew James Sheppard)
+Subject: Re: WSJ on Netscape Hole 3
+In-Reply-To: <199509260102.NAA09663@bats.comp.vuw.ac.nz>
+Message-ID: <199509270920.FAA19713@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Matthew Sheppard writes:
+> sameer writes:
+> > 	He's -asking- for an exploit. Tshirts to Ray and the person who
+> > does the exploit, if it gets written. Maybe I should just ring up 8lgm and
+> > have them do one.
+> 
+> It isn't simple, you need to know the absolute address of where the
+> supplied code will be and alter the return address on the stack to
+> that address.
+
+> With Netscape 1.1 the state of the stack is much more dynamic, in
+> particular the user can be viewing documents at an arbitary depth in
+> the "web tree", each recursion will increase the stack pointer (or
+> decrease with some architectures) There is no way of knowing for
+> certain where you code will end up and thus no way to reliably alter
+> the return address on the stack to execute your arbitary code.
+
+   Are you sure that Netscape uses an implicit stack for this,
+rather than an explicit stack? If they use an explicit stack for
+the "web tree", than your argument doesn't apply. In fact, I guess
+that they do use an explicit stack, because it makes implementing
+the "History" menu which shows the last couple of links much easier.
+I guess that they use some sort of "ring" structure which is
+a dequeue or plain array, so that after a certain "depth", states
+are written over and "scrolled off"
+
+  Also, if they used an implicit stack, all it would do is increase
+the uncertainty of where the stack pointer is. However, by
+inserting enough NOPs into the exploit code, you can virtually insure
+the exploit code will be executed. Even if you are off by 64kbytes,
+you can insert 64kbytes of nops which isn't much. My own testing
+doesn't bear out your theory. I rarely changed the position of the 
+overflowed stack frame by more than 200 (after following 3 nested links
+to my exploit link). I included 256-512 nops before my exploit code.
+
+
+> You could always gamble on popular states, like when the first url
+> fetched by the browser.  Also you could direct execution to any
+> routine in the netscape binary (with unknown arguments) .  The most
+> detrimental offhand would be deleting the bookmarks file (whoopee) And
+> with Netscape 2 comming RSN I wouldn't waste too much time.
+
+  How about creating a .rhosts file with your name in it?
+
+  Or, on Windows machines, inserting a virus?
+
+  If an exploit is possible, any exploit is probable, given that a clever
+encoding of assembly instructions can be created for any code required.
+ 
+-Ray
+
+
+

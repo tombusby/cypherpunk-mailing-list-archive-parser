@@ -1,0 +1,44 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Tue, 6 Aug 1996 07:22:42 +0800
+To: ichudov@algebra.com
+Subject: Re: Integrating PGP 3.0 Library with INN
+In-Reply-To: <199608051829.NAA19030@galaxy.galstar.com>
+Message-ID: <199608052017.PAA09340@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Igor Chudov wrote:
+
+| Has anyone thought of integrating PGP 3.0 library with INN? 
+| 
+| I was thinking along the lines of having PGPMoose support built
+| right into INN: if an arriving article is posted to a moderated
+| newsgroup for which a PGP key is available in the INN's keyring,
+| INN verifies existence and correctness of a PGP signature.
+
+
+| If moderators choose short enough keys (512 bits for example), this
+| verification will not take any significant amount of CPU time.
+
+Its my experience that at full feed sites, there isn't enough cpu to
+do this.  A p-90 can get ovewhelmed pretty easily trying to keep up
+with the load.  Trying to look into the body of an article means at
+least a few hundred more ops per article.  You could do this on a leaf
+node.  However, you cut the reliability of the system by adding things
+to go wrong.  Better to have a scanner that checks specific moderated
+groups after INN has deposited the articles.
+
+Adam
+
+
+
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+

@@ -1,0 +1,61 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Mon, 17 Jul 95 13:44:29 PDT
+To: "Robert A. Hayden" <hayden@krypton.mankato.msus.edu>
+Subject: RSA-129 vs. RC4 (was Re: RC4 crack)
+In-Reply-To: <Pine.ULT.3.91.950717151714.25405B-100000@krypton.mankato.msus.edu>
+Message-ID: <199507172043.QAA09575@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I remember when RSA129 was being done, the program you have you manually 
+> get a start location, and then email transparent any results that it 
+> got.  The program that doled out areas to search would base those on what 
+> had already been mailed in.  I don't know the details of how exactly that 
+> worked, however.
+
+Not quite.  The UIDs that were given out for RSA-129 had nothing to do
+with the search space.  The reason is that RSA-129 did not search for
+the prime factors; it searched for quadratic residue relations.
+Moreover, ANY relations within the space is a valid datapoint.  As a
+result, the UIDs ojnly told the factoring clients where to start
+looking for relations.
+
+You can effectively think of it as a seed to a random number
+generator.  So long as everyone has a different seed, they will get
+different random numbers.  Thats what the UIDs did; provided each
+client with a different starting point.
+
+You had to get a new UID for each run of mpqs because starting over
+with the same uid would re-run all the checks you've already done.
+Why double-run when UIDs are cheap?  You see, unlike the RC4 crack,
+there was no relation between the UIDs and the relations returned.
+
+As the person who wrote the UID returning script, I can tell you that
+all it did was keep a file with the last UID given, and when an email
+requests came in, it would create a lock on that file, return the last
+UID+1 through the number of UIDs requested, and then update the file.
+There was no basis of the relations received.  In fact, the UID
+responder could have been run on any machine -- it could care less
+about the data returned.
+
+> But, if the program could be written in such a way that it was all 
+> automatic, mailing in results and automatically (maybe via a telnet 
+> port?) getting the information about what to search, that would be most 
+> nice. 
+
+The point of runfactor was to allow you to obtain a large segment of
+UIDs and dole them out locally.  Since there wasn't a relation between
+UID and data returned, then it didn't matter if some UIDs never
+returned.
+
+For RC4, you _have_ to search everywhere.  Therefore, you would want
+to make runfactor an interactive program that contacted a central
+server whenever it wanted to get some search space.  I dont think this
+would be very hard to write.
+
+-derek
+
+
+
+

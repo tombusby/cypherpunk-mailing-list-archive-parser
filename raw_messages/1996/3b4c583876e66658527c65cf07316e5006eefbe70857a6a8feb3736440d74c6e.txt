@@ -1,0 +1,90 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sat, 9 Nov 1996 07:23:59 -0800 (PST)
+To: ph@netcom.com
+Subject: Re: Why is cryptoanarchy irreversible?
+In-Reply-To: <v02140b04aea905f722f8@[192.0.2.1]>
+Message-ID: <199611091130.LAA00192@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Hendrickson <ph@netcom.com> writes:
+> > I hide the relatively small amount of data within a very large
+> > amount of data which makes it impossible to find.  Data from analog
+> > sources, like the "real world" (images, sounds, etc) is noisy.  This
+> > is a fact of life.  Because this data is noisy I can hide
+> > information in the noise.  As long as the information I am hiding
+> > maintains the same statistical properties of noise it is impossible
+> > to pull the information out of the data file unless you have the
+> > key.  If I am paranoid enough I can make this key impossible to
+> > discover without a breakthrough in factoring.
+>
+> Where will you keep your secret key?  Remember, when they go through
+> your house they bring 20 young graduates from MIT who are just dying
+> to show how clever they are and save the world at the same time.
+
+Keep your secret key in your head.
+
+> > This is the essence of steganography and the nature of signal and
+> > noise are fundemental principles of information theory.
+>
+> The concept of noise is not all that well defined, however.  There
+> is no way to look at a signal and say "this is all noise."
+> Sometimes physical theories may lead you to believe that it is all
+> noise.  That is fine for many applications, but when becomes less
+> convinced of things if the consequences are severe.
+
+Your plausible deniability has to get quite low before it will stand
+up as "proof" in court.
+
+Your real challenge is keeping your stego programs safe.  Boot
+strapping a stegoed encrypted file system while leaving no stego code
+lying around isn't that easy.
+
+> >> If you are not doing it by hand, you own terrorist software and will pay
+> >> the price.
+> 
+> > Ah yes, terrorist programs like cat and perl and operating systems like
+> > Linux which contain a loopback filesystem that I can hook a perl
+> > interpreter into at compile-time (which is enough for me to rewrite the
+> > program from scratch each time if necessary, unless things like math
+> > libraries are also outlawed on computers :)  I think that the crypto
+> > concentration camps are going to be very crowded places.
+> 
+> Can you elaborate on this?  I am curious to know exactly what you are going
+> to keep in your head and what goes on the disk.  Please post the Perl
+> code that you would type in from scratch every time.
+
+My specialty :-)
+
+rc4 in C:
+
+#define S,t=s[i],s[i]=s[j],s[j]=t /* rc4 key <file */
+unsigned char s[256],i,j,t;main(c,v)char**v;{++v;while
+(s[++i]=i);while(j+=s[i]+(*v)[i%strlen(*v)]S,++i);for(
+j=0;c=~getchar();putchar(~c^s[t+=s[i]]))j+=s[++i]S;}
+
+rc4 in perl:
+
+#!/usr/local/bin/perl -0777-- -export-a-crypto-system-sig -RC4-3-lines-PERL
+@k=unpack('C*',pack('H*',shift));for(@t=@s=0..255){$y=($k[$_%@k]+$s[$x=$_
+]+$y)%256;&S}$x=$y=0;for(unpack('C*',<>)){$x++;$y=($s[$x%=256]+$y)%256;
+&S;print pack(C,$_^=$s[($s[$x]+$s[$y])%256])}sub S{@s[$x,$y]=@s[$y,$x]}
+
+The other problem I see is that if you have a stego file system in an
+audio file, your disk writes are going look strange.  The inaccuracy
+of disk head placement, is going to ensure that someone with the know
+how will be able to copy off the last dozen pieces of data you wrote.
+
+If they are all the same data with the exception of the LSB, it's
+goint to look fishy.  Solid state storage devices are better.
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

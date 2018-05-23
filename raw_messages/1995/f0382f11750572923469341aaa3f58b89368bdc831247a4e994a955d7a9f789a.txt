@@ -1,0 +1,45 @@
+From: cman@communities.com (Douglas Barnes)
+Date: Fri, 22 Sep 95 13:49:15 PDT
+To: cypherpunks@toad.com
+Subject: Re: Another Netscape Bug (and possible security hole)
+Message-ID: <v02120d04ac88df3d2a8d@[199.2.22.120]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>
+>>
+>> Spent too much time last night playing with the Netscape bug;
+>> among other things wrote some code to throw various random binary
+>> URLs at Netscape. Netscape seems prepared to swallow the bait
+>> as long as the URL does _not_ contain characters screened as
+>> follows:
+>>
+>>  if ((c != '"') && (c!='>') && (c!=0) && (c!='/') ) {
+>>
+>> This means you can't plant 0x00, 0x22, 0x3e or 0x2f.
+>
+>   Did you check 0x20 and 0xa0?  (space and shift-space) I'm sure
+>that a space will terminate the href in <a>.
+>
+
+This seems not to be the case.
+See: http://www.communities.com/foo/bad.html (which contains these
+bytes fairly early in the sequence, and still does a lovely job
+of crashing.)
+
+Showed the bug to EC's president, he immediately wanted to try
+it. It completely blew his PPC Mac (I've got a Powerbook 540C)
+out of the water. (Error of type 11, dialog with only
+the restart button.) My powerbook hangs on for a bit and then
+locks up.
+
+Onward to the exploit!
+
+
+
+
+
+
+
+

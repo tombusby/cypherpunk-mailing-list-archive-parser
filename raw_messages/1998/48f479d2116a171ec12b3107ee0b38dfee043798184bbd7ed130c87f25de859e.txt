@@ -1,0 +1,45 @@
+From: Dave Emery <die@die.com>
+Date: Tue, 1 Dec 1998 04:14:50 +0800
+To: lcs Mixmaster Remailer <mix@anon.lcs.mit.edu>
+Subject: Re: Securing data in memory (was "Locking physical memory (fwd)
+In-Reply-To: <19981130180002.17576.qmail@nym.alias.net>
+Message-ID: <19981130143320.A2756@die.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Mon, Nov 30, 1998 at 06:00:02PM -0000, lcs Mixmaster Remailer wrote:
+> 
+> But speaking of using passwords to protect data, how about an encrypted
+> swapfile for a PC?  There are fast enough ciphers today that the virtual
+> memory system could encrypt data as it swaps to the disk, and decrypt
+> as it loads back into memory.  You'd type in the passphrase at boot time.
+
+	Why the hell would you need a passphrase or any persistant security
+for something transient like the swap ?   Might just as well choose a
+completely random key (from /dev/urandom perhaps) and make every effort
+to erase and forget it on system shutdown or crash.  In fact an algorithm
+that initialized a crypto engine and then forgot the key used would
+be ideal, provided only that it remains possible to recover blocks of
+swap out of order from the order they were written in (they are quite
+likely to get swapped back in a very different order than they were
+written out, so simple stream ciphers are hard to use).
+
+	There is nothing in a swapfile of value beyond an instantation
+of the OS, except of course for snooping and debugging crashes.
+
+	The only real hastle with doing this in real OS's is that the
+swap may get initialized before a lot of randomness gets collected on
+startup.   One might have to start encrypting swap after it was enabled
+(but probably before much actual swapping).
+
+
+
+-- 
+	Dave Emery N1PRE,  die@die.com  DIE Consulting, Weston, Mass. 
+PGP fingerprint = 2047/4D7B08D1 DE 6E E1 CC 1F 1D 96 E2  5D 27 BD B0 24 88 C3 18
+
+
+
+

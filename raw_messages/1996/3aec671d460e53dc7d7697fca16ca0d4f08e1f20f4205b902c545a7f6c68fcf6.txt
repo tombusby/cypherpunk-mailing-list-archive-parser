@@ -1,0 +1,45 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Sun, 30 Jun 1996 14:56:26 +0800
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: Crack for DOS
+Message-ID: <199606300111.SAA23763@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart wrote:
+> Blowfish is new, so perhaps there are flaws that 10-20 years of analysis
+> will find.  But it's pretty good - it's small, fast in software,
+> and has an annoyingly slow key-schedule which makes it difficult to
+> use brute-force crackers on.  It's got variable key lengths.
+
+This comment about "annoyingly slow" key setup made me think of pipeline
+hardware to set up the keys.  Now with blowfish, key setup requires running
+the Blowfish algorithm 521 times in setting up the key, so the pipeline
+will require 521 stages if you want a new key for every "real" decryption. 
+Ignoring chip size restrictions, this pipeline will increase the chip real
+estate by 521 which will have approximately the same economic effect on the
+cost of cracks as extending the key by 9 bits.
+
+For CBC cypher systems, brute force attacks will require at least two
+decryptions (one for the initialization vector, and one for the first block
+of the message).  however, these decryptions can take place in parallel
+(for the first block of the message) so they do not change the above
+argument.  However if the design calls for more than the first block, then
+the pipeline can run slower and becomes a smaller portion of the cost of
+the system.
+
+Of course if you are using Blowfish with anywhere near its full 448 bit
+key, brute force attacks are simply not practical.
+
+
+-------------------------------------------------------------------------
+Bill Frantz       | The Internet may fairly be | Periwinkle -- Consulting
+(408)356-8506     | regarded as a never-ending | 16345 Englewood Ave.
+frantz@netcom.com | worldwide conversation.    | Los Gatos, CA 95032, USA
+
+
+
+
+
+

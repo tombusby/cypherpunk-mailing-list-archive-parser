@@ -1,0 +1,93 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Thu, 7 Mar 1996 18:19:40 +0800
+To: cypherpunks@toad.com
+Subject: Fractals, Cellular Automata, and Encryption
+Message-ID: <ad63bf5600021004e133@[205.199.118.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Note: I have changed the thread title from the meaningless "Signature"
+(meaningless to this context) to something I think is more appropriate.
+Someone recently wrote to me asking why I so often change thread names, as,
+in his words, "it screws up the threading in my reader." Well, I think
+accurately labelled articles are more important that having a reader place
+an article in its "correct" position when the themes have changed so much.
+
+I urge all of you to think about what your article says and what the most
+accurate name is for it. By all means leave the name the same if you want,
+or if the Hamming distance is not too great. But if the topic has changed
+away from the name given by default, then _change_ the name to reflect the
+topic at hand.
+
+On to the actual article:
+
+
+At 11:54 PM 3/6/96, Mark M. wrote:
+>On Tue, 5 Mar 1996, Charles Choi (SAR) wrote:
+>
+>> 1)    Is it possible to base a privacy key ( e.g. PGP ) on a fractal
+>>               equation, instead of an algorithm based on two primes?
+>>               This would allow for an eternal level of complexity due
+>>               to infinite field of depth one can find as one 'zooms in'
+>>               closer ( correct me because I'm wrong; I'm not a math major,
+>>               although increasingly I wish I was... ), allowing for near
+>>               unbreakable privacy of information.
+>
+>The fact that the private key is based on fractals rather than prime numbers
+>really doesn't make a difference.  Fractals are not random, and do in fact,
+>have a pattern.  The Mandelbrot Set, for instance, can be expressed in a
+>few bytes of information even though it is infinitely complex.  Therefore,
+>the fractal has extremely low entropy making it a bad choice from which to
+>obtain random data.
+
+Besides these points, something missing from cellular automata-based crypto
+schemes is this: invertibility with a different key than was used to
+encrypt. That is, in any fractal or cellular automata-based schemes I have
+seen, a generator iterates a data set, transforming it into something which
+appears to have "no resemblance" to the original data set. The problem is
+that there is no second key, the decryption key (or "private" key) which
+reverses the process and recovers the original data set.
+
+That is, it is certainly possible to get some "messy" output by running a
+cellular automata (think: "the Game of Life" as an example) on an input. An
+attacker would be hard-pressed to determine the starting pattern if given
+the nth generation! So far, so good.
+
+The problem is that the _recipient_ would also have a hard time determining
+the starting pattern! And a more detailed wrinkle is this: at best, the
+system would be a single-key or symmetric system, losing the advantages of
+a public key system. At worst, the scrambled message could _never_ be
+recovered, as no inverse can be found of the CA. (In CA research, finding a
+starting pattern from some nth generation is known as the "Garden of Eden"
+problem, for reasons I won't get into here. Clearly, some CAs have no
+single inverse, as multiple inputs map into the same output--again, think
+of "Life.")
+
+Steven Wolfram had some speculations about using fractal or cellular
+automata-based systems for a new kind of cipher. His paper is in one of his
+books ("Theory and Application of Cellular Automata"), but it doesn't
+really get beyond just speculating. And, I recall that someone proved
+several years ago that Wolfram's CA-based encryption scheme was formally
+equivalent to a linear congruential generator.
+
+I think I included a few paragraphs on this topic in my Cyphernomicon.
+
+--Tim May
+
+Boycott "Big Brother Inside" software!
+We got computers, we're tapping phone lines, we know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Higher Power: 2^756839 - 1  | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

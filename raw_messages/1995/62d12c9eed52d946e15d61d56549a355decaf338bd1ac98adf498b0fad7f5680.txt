@@ -1,0 +1,90 @@
+From: "Craig A. Johnston" <caj@tower.stc.housing.washington.edu>
+Date: Thu, 12 Jan 95 04:02:58 PST
+To: cypherpunks@toad.com
+Subject: mail killfiling
+Message-ID: <199501121202.EAA03835@tower.stc.housing.washington.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+There was some talk on the list earlier about reading the list through
+news so as to be able to use kill files.  Here is an alternate way for
+folks that have 'deliver' installed on their system as the local mail
+agent.  (do a "grep Mlocal /etc/sendmail.cf" to see...if you don't
+see 'deliver' in there somewhere, you don't.  This is provided you are
+using sendmail, of course.)
+
+First, install the following as ".deliver" in your home dir:
+
+--- cut here ---
+
+#!/bin/sh
+# delivers all mail except that from folks in $NOMAIL
+
+NOMAIL=.nomail
+FROM=`header -f From $HEADER`
+
+if grep "$FROM" $NOMAIL >/dev/null 2>/dev/null
+
+then        # we don't want any mail from this person!
+      exit         
+fi
+
+echo "$1"  # otherwise, deliver as usual
+
+--- cut here ---
+
+Now, you also need this little script that I call "killem" installed
+in your home dir.
+
+--- cut here ---
+
+#!/bin/sh
+NOMAIL=.nomail
+header -f From >> $NOMAIL
+
+--- cut here ---
+
+Now, let's say you are in your mailbox and you see such a horrible
+piece of mail from someone that you never want to see any mail from
+them again. ;)  Provided you are using 'elm', (probably is a mechanism for
+this on other readers.)  just pipe the message through 'killem' with
+a "|" from elm and answer "killem" when asked what you want to pipe
+the message through.  The From: line will be stripped and stuck
+in .nomail (or whatever you change it to) and you won't see any more
+mail from this person.  Of course, this is not entirely true: mail
+that does not get delivered will go to a file called Undel.mail in
+your home dir, which you can keep, or have a cron job deal with, or
+whatever you like.  Also, if they change their 'real name' on 
+their system, you'll start to get mail from them again.  (i.e.
+w/'chfn' or the like.)  
+
+This is just a quick hack I whipped up a moment ago, and could of 
+course be improved/changed.  'deliver' will also run perl scripts,
+and it should be relatively easy to write something that way that
+will handle wildcarding and field selection.  An automated mailing
+to folks upon their 'termination' could be added for those that
+want to rub it in, or an automated bounce that sends mail right
+back with a note that their mail is not being received.
+
+If you want to block mail based just upon the account name and not
+have to worry about them changing their "real" name, you can just add
+the account name to .nomail manually.  Judicious use of the unix 'cut'
+command could have 'killem' just toss the account name into .nomail for
+mail coming from unixy systems, but would fail for others, so I decided
+to not assume anything about the From: line.  Ought to work fine
+and transparently for most folks as-is.  Ingenious folks can build
+on it.
+
+I dunno how many systems use 'deliver', but it's sort of a Linux
+(slackware) default, and those using it can avoid learning procmail
+with this script.
+
+Enjoy,
+Craig.
+
+
+
+
+

@@ -1,0 +1,53 @@
+From: 0x7CF5048D@nowhere
+Date: Thu, 15 Sep 94 22:35:31 PDT
+To: alt.security.pgp.usenet@decwrl.dec.com
+Subject: pgp 2.6.1 circumventing legal kludge
+Message-ID: <199409160406.AA12302@xtropia>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I have examined the source to the latest modification to
+pgp2.6 pgp2.6.1. It appears that the +legal_kludge command
+parameter remains as also does the bug that prevents this code
+from working! (Value is used instead of Flag.)
+
+One would have thought that the bug would have been fixed
+or the legal kludge code would have been removed in pgp2.61.
+The existence of this bug was widely publicized. Perhaps
+the authors wish there to continue to be a way to circumvent
+the kludge, but can not be seen taking explicit action to fix
+the bug.
+
+The bottom line is that to encrypt a message to be sent to
+someone with an earlier version of pgp such as pgp 2.3a,
+one should disable the legal kludge by using the following
+command line:
+
+pgp +cert_depth=0 +legal_kludge=off +cert_depth=4 -eat file them
+
+
+My program in noklg.zip is a way to use the above feature to
+cause pgp to be compatible with earlier versions of pgp without
+the extra typing. (It supports MSDOS and OS/2). You can set up
+the program so that pgp shells and other programs work as originally
+designed, but encrypting files compatible with earlier versions
+of pgp. I wish that someone would store this program in at a public
+ftp site.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLninbg2Gnhl89QSNAQEB7QP+L2iA+ha2KCfH31O2OoG6syIWWNc7f76e
+rx5lQ3HpufkVIqhvw+Ff1FWR5aWIPZ2ZKfYAAHjpDiTRMJIMOs2dalx30Hjn/Jyw
+X6cEIGzywRpRx8oX+kX5BhxM93IblP1mHAe1e17jiwgBXfbX1yj4/loxL8aHv/cB
+LYB0F2go2C0=
+=qN3q
+-----END PGP SIGNATURE-----
+
+
+
+

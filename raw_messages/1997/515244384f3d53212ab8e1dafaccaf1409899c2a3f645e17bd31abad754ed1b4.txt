@@ -1,0 +1,45 @@
+From: nospam-seesignature@ceddec.com
+Date: Wed, 13 Aug 1997 23:53:57 +0800
+To: amp@pobox.com
+Subject: Re: Encrypting same data with many keys...
+In-Reply-To: <Chameleon.871421963.amp@ampugh.mcit.com>
+Message-ID: <97Aug13.114455edt.32260@brickwall.ceddec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Tue, 12 Aug 1997 amp@pobox.com wrote:
+
+> > > What if instead of using a private key cypher, we used a public key
+> > > cypher?  Would that make any difference in attack methods?
+> > 
+> > Yes.
+> > 
+> > Having identical plaintexts raised to the same power modulo different
+> > numbers makes the solution much easier.  If you have enough RSA
+> > encryptions of the same number to the same power, you can solve it
+> > outright by the remainder theorem.
+> 
+> So would that then be a possible weakness in encrypting to multiple 
+> recipients with PGP? Probably not, since the actual data is encrypted with 
+> idea.
+
+PGP uses and E of 17 by default, but it would be a problem except that
+there is a specification for random padding, so it *NEVER* encrypts
+identical plaintext.  It always uses a number just a few bits shorter than 
+N, starting with 0x02, then nonzero random bytes, then a zero byte, and
+finally the message bytes you want to encrypt.
+
+There was a man-in-the-middle or replay attack with SSL that they changed
+the spec of the padding slightly (8 bytes before the zero byte must be
+0x03), I think this is because you might be able to quickly find a random
+cyphertext that decrypts to having a zero byte followed by something
+useful as key material, but haven't read the details. 
+
+--- reply to tzeruch - at - ceddec - dot - com ---
+
+
+
+
+

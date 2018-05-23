@@ -1,0 +1,132 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Fri, 2 May 1997 18:22:13 +0800
+To: hal@rain.org
+Subject: Re: A new system for anonymity on the web
+In-Reply-To: <199704261927.MAA02125@crypt.hfinney.com>
+Message-ID: <199705020958.KAA00897@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal Finney <hal@rain.org> writes:
+> Adam Back, <aba@dcs.ex.ac.uk>, writes:
+> > The disadvantage of crowds is that it won't work to well over a 28.8k
+> > modem.  Browsing the web is slow enough as it is, without having
+> > traffic make multiple hops through modem users machines.
+> 
+> Good point.  More generally, a path will only be as fast as its slowest
+> link.  I suggested to the authors that the crowds could be segregated
+> by access speed, so that there could be separate crowd pools for 28.8
+> modem users, for people who share connectivity over a limited-speed line,
+> and for people who have their own direct high-speed link.
+> 
+> Theoretically, at least for long downloads, passing through multiple
+> slow links shouldn't slow down the transmission, 
+
+I'm not sure that this is so.
+
+Ascii pic. consider Alice and Bob, without crowds:
+
+        +----------+
+        | Internet |
+        +----------+
+             | 2Mbits
+          +-----+
+          | ISP |
+          +-----+
+     28.8k/     \28.8k
+         /       \
+      +---+     +---+
+      | A |     | B |
+      +---+     +---+
+
+When Alice and Bob are online, consider that they are actually using
+their bandwidth most of the time.  I know I do; if I'm not using it I
+hang up, with pay per second phone lines, you're likely to.
+
+Now add in crowds where traffic from A is going through B, and traffic
+from B is going through A:
+
+                           +----------+
+                           | Internet |
+                           +----------+
+                                 | 2Mbits
+                              +-----+
+                              | ISP |
+                              +-----+
+               14.4k for Alice/     \14.4k for Bob
+                  14k for Bob/       \+14.4k for Alice
+                          +---+     +---+
+                          | A |     | B |
+                          +---+     +---+
+
+Now Bob and Alice each have 1/2 the bandwidth they had before.  Add
+more users and longer hops and it gets worse.  Of course my claim that
+Alice uses 100% of her bandwidth is probably an exaggeration.  There
+will be idle times while she is reading.  However there will be times
+when both Alice and Bob are downloading, for multiple users with
+multiple hops it is likley that there will be more than one user
+actively downloading at any time.
+
+> just increase the latency.  I don't have a very clear picture about
+> how long it would take to snake in and out of a bunch of people's
+> modem lines en route to the web server.
+
+I'm sure it's going to increase the latency too.  My ping times are
+200ms from the PPP link alone (ie pinging the PPP server machine
+itself).  Add to this that the members of the jondo / crowds pool may
+not be on the same ISP, and you've got the additional overheads of
+whatever latency is added by the cumulative latency between each of
+the hops in the chain.
+
+> If the latency does take an intolerable hit, maybe the idea we discussed
+> for the "keep alive" transmission would work, where all the web page
+> data gets downloaded with a single request.  (I should clarify that I
+> was not suggesting that this be done all the time by default, but rather
+> that it be an extension to the http protocol, a different GET request
+> or a different parameter sent along with the GET.)
+
+
+
+> Another idea, which loses more anonymity but is still as good as the
+> Anonymizer, is to run your jondo on your ISP, if that is allowed.  Then
+> other people's paths don't go through your modem, they just get turned
+> around at the ISP level.  A spy at your ISP may be able to find out
+> where you are browsing, but the average web site won't.
+
+This compromise is probably retains a fair amount of anonymity.  The
+ISP probably isn't loggin IP traffic, or incoming or outgoing web
+proxy (jondo/crowds) traffic, and probably isn't actively attacking
+your jondo process to see which bits are for you and which are being
+forwarded.
+
+I wonder if you could improve the security of this by trading off
+against some additional bandwidth consumption for the ISP.  Say have
+split the jondo in half, with two cooperating half-Jondos acting as a
+single virtual jondo in such a way that someone with root access on
+one machine but not the other, can't extract any useful information by
+spying on that half of the jondo.
+
+> > The other problem is the scalability of the strong systems like DC
+> > nets or PipeNet.  Bandwidth is still scarce.
+> 
+> The Crowds people argued that their system automatically scaled, since
+> you had more jondos ("web remailers") the more people who used it.  If
+> average path length is constant then the anonymous web browsing method
+> has a greater cost than the regular way, but it is a constant factor.
+
+Crowds migh scale in this way, but DC nets and Pipenets don't.  Crowds
+is a weaker cousin of DC nets and Pipenets.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

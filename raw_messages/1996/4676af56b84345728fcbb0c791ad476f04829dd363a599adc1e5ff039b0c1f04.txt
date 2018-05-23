@@ -1,0 +1,158 @@
+From: Matt Blaze <mab@research.att.com>
+Date: Sat, 7 Sep 1996 10:24:49 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: Job for netescrow ? (was Secure anonymouse server protocol...
+In-Reply-To: <199609061322.OAA01150@server.test.net>
+Message-ID: <199609062250.SAA13820@nsa.research.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Adam Back <aba@dcs.ex.ac.uk> writes:
+>
+>Peter Allan <peter.allan@aeat.co.uk> writes on cpunks:
+>> In the talk about replyable nym-mailers I haven't
+>> yet seen netescrow mentioned.
+>> 
+>> You DID all read this ?
+>> 
+>> [Matt Blazes  Oblivious Key Escrow paper]
+>>
+>> This all hinges on a policy to be followed by archive holders defining
+>> the conditions under which they release their shares.  
+>> This could be receipt of a signed request from the owner (remailer).
+>> 
+>> Maybe the table relating nyms to reply addresses could be stored in
+>> netescrow style so that captured remailers reveal nothing.  The problem
+>> of operator coercion is not addressed by this.
+>
+>Just to clarify, if I understand correctly you are proposing a penet
+>style system with the database held in `netescrow'.
+>
+>The remailer in normal operation has access to the database by making
+>requests satisfying the conditions of the secret share holders.
+>
+>When the remailer is compromised the memory resident key is lost when
+>the machine is switched off, and the owner refuses to release the key.
+>
+>Is what you are proposing?
+>
+>It sounds like a cross between Matt's netescrow and Ross Anderson's
+>eternity file system.  Your penet database is being stored in a
+>distributed file system, with shares, and the identity of the share
+>holders is concealed.  However the aim is not to prevent others
+>censoring your publically available writings, but to allow a second
+>avenue of access only in the case of `mob cryptography'.
+>
+>This changes the system over storing the database encrypted on the
+>remailer machines own disk in these ways:
+
+[well-thought-out stuff deleted]
+This is the first I've seen this proposal to use Oblivious Key Escrow
+(OKE) as a store for a remailer database; apologies if all this has
+been discussed already (I don't ready cypherpunks very often these
+days).
+     
+My original idea for OKE was as a way to backup long-term,
+slow-changing sensitive data without also introducing a single point
+of failure for either security or availability.  The remailer model is
+a bit different, and I'm not sure it's a good fit, in particular
+because I haven't thought about the various new failure modes in this
+application.  But let me think ``out loud.''
+
+Suppose we want to build a persistent-reply address anonymous
+messaging service (like the late anon.penet.fi) with the following
+properties:
+
+        a) The database that maps anonymous addresses to real
+           addresses is secure against erasure or other permanent loss
+           of availability
+        b) The database is also secure against accidental or coerced
+           disclosure.
+
+Requirement (a) implies backups and persistent storage.  Requirement
+(b) implies that both access to both operational and backup copies
+must be carefully controlled, preferably by technical means.  So far,
+this looks like a good candidate for distributed security, in the
+style of OKE, Mike Reiter's Rampart service, or Ross Anderson's
+Eternity service.
+
+Actually, I think the best solution would be for the remailer itself
+to be a distributed process, split among enough places to make it
+difficult for anyone to attack enough nodes to compromise or recover
+the address translation database.  It is not at all obvious how to do
+this in practice, however, since any solution would need to combine
+secure distributed computation (to calculate the mapping for each
+message sent without revealing to any party, including the sender,
+what the mapping is) with anonymous networking techniques such as
+mixes to prevent traffic analysis from revealing the mapping.  There
+are a number of unsolved theoretical and practical problems here, and
+I think working out the details of such a system would make for a good
+PhD thesis or two (quite seriously, and I'd be interested in talking
+with anyone who wanted to pursue such a line of research).
+
+So for now let's limit ourselves to existing tools and techniques, or
+at least tools and techniques that are close to existing.  Let's say,
+for the moment, that we wanted to base the system on OKE.
+
+Assume an unconditionally trusted remailer operator whose goal is to
+construct a system that resists attempts to force him or her to
+UNILATERALLY reveal the database.  That is, it should not be possible
+to force the remailer operator to reveal the database contents without
+also enlisting the aid of the (collectively anonymous) oblivious key
+holders.  My (not carefully considered) first thought is that the
+address database would be encrypted and stored locally, using a key
+that is escrowed using OKE.  The key would never be locally stored;
+preferably, the key would exist only in memory.  The operating system
+on which the remailer is run would delete this key ``at the drop of a
+hat,'' e.g., any time the system was rebooted, any time someone logs
+in, any time unusual activity of any sort is detected.  The key
+release policy is controlled by a public key, for which the secret key
+is stored in a more persistent manner (e.g., in the file system).  
+Whenever the database key is deleted, the OKE recovery process is used
+to recover the key automatically, and the database is re-encrypted
+with a new key that is distributed to a new set of shareholders.
+Under normal operation, this might happen once a month or so, and
+might entail (because of policy-based delays and the time required to
+collect shares) a few days of downtime.
+
+Under unusual conditions that might precipitate some kind of coercive
+situation, the remailer operator (or some automatic process on the
+remailer machine) would delete the signing key as well as the
+database.  It might be reasonable, for example, to delete this file
+any time someone logs in to the remailer machine (which shouldn't be
+needed ordinarily).  The OKE share policy would require that the
+shareholder operator examine unsigned key requests manually before
+releasing them.  If the keys were deleted because of a false alarm or
+machine failure, the remailer operator would send a message saying
+something to the effect of ``Hey, I blew it.  Please send me the key
+shares once you're convinced no one has a gun to my head.''  In the
+event of a public safety emergency, the police are free to attempt to
+issue their own appeal for key shares, but the ability to for them to
+do this is not a design goal, but rather a side-effect of the design.
+
+I see a number of problems with using OKE for this.  In particular,
+key recovery is moderately expensive and key distribution with the
+oblivious multicast protocol in my paper can be very expensive.  If
+keys are deleted regularly, the downtime could be unacceptable.  I'm
+not sure OKE is entirely workable for this application, but perhaps a
+more clever design could prove me wrong.
+
+There are a whole bunch of engineering issues here, particularly
+related to automatically detecting ``unusual'' situations.
+
+So can this scheme be improved upon?  Is there a better way to run a
+persistent-reply-address remailer?  These are interesting, and I think
+largely open, questions.
+
+-matt
+
+NB  The oblivious key escrow paper that I presented at the Information Hiding
+workshop at the Isaac Newton Institute in May, is available at:
+        ftp://ftp.research.att.com/dist/mab/netescrow.ps
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+From: fnerd@smds.com (FutureNerd Steve Witham)
+Date: Mon, 13 Jun 94 14:12:21 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer REORDER not DELAY
+Message-ID: <9406132058.AA15661@smds.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+i wrote-
+
+> > Delay--time--isn't what matters.  It's confusion about which message is
+> > which that matters.  So if I get 10 messages in one minute, I can scramble
+> > the order and send them out the next minute, and I've done my job--at
+> > least the order-scrambling part.  (You also need to pad or packetize
+> > messages.)
+> > 
+> > So use serial numbers, not times!  Send a message for every one you get, 
+> > keep a fixed number of messages queued, and add dummies if necessary
+> > to keep things moving.
+
+Jim replies.
+> Wrongo...the random time stamp does randomly re-order then. As to bogus
+> messages, not on my system you won't....
+
+Okay, first I'll go over the case where delay without dummies does NOT
+reorder.  Then I'll go over the case where delay simply adds needless,
+well, delay.  Then I'll talk about the cost of dummy messages.
+
+Assumption: Your remailer assigns each message a number from 0 to 59 and 
+            remails it at that minute of the hour.  Whether it's hours in 
+            the day, minutes in the hour or seconds in the minute only 
+            changes which of the following two cases is more likely:
+
+Case 1: The remailer receives no messages for 61 minutes, then one message,
+        then no messages for 61 minutes.
+Result: In the hour following receipt of that one message, only one 
+        message is sent.  Guess which message it was.
+
+Case 2: 60 messages arrive in one minute.
+Result: The last one(s) go out about an hour later.  They could have
+        all been sent in the next minute with equivalent reordering.
+        P.s., if 60 messages arrive *every* minute, under the assumption
+        above, you have to save an average of 3600 messages.
+
+So, with this method, you can adjust the delay time down to guarantee
+delivery time, or up to make reordering *more likely*, but you can't
+guarantee reordering.  If you want 1/N reordering to be likely, you need 
+to set the response time to N times the inter-arrival time for the 
+*quietest* traffic periods.
+
+To guarantee reordering you have to either wait indefinitely for enough
+messages, or after a while insert some of your own.  To get over the
+problem of needless delay, you either need to invent some kind of 
+tricky variable-delay scheme, or turn your attention away from clock 
+time and focus on ordering.
+
+> I have a system which runs of a SLIP feed and bandwidth is sacrosanct.
+> If you would like to pay for an additional line to handle the added 
+> load then fine but my pocket book won't support it. 
+
+Say the worst turnaround you want is 24 hours, and you want to get 1-out-
+of-10 reordering.  Then on a day where you receive only one message (for 
+this you got a SLIP connection?) you would need to generate 9 dummies.
+Assuming 10Kbyte messages, the bandwidth required is... 10.4 baud.
+
+For a turnaround of 2.4 hours ... 104 baud.
+                   15 minutes ... 1040 baud.
+
+And remember, you generate only enough dummies to keep up the minimum
+*total* traffic, so in reasonable-traffic periods, you generate no
+dummies and the amount of real traffic you can handle isn't affected.
+
+> the consideration of the future where there will be many small systems
+> with minimal bandwidth and monetary resources then I realy doubt they 
+> will be interested in any system which slows down or otherwise wastes
+> a precious and critical resource.
+
+I guess this sentence, which you quote, wasn't clear:
+
+> > Plus, if the remailers only generate
+> > dummies when necessary, the total dummy traffic is self-regulating, since
+> > multi-hop dummies are x-lax for every remailer they pass through.
+
+In other words, in a world of communicating forwarders, a dummy message
+from one just looks like regular traffic to any others it goes through,
+and serves to keep their traffic levels up--the more remailers the
+fewer dummy messages each remailer has to generate.
+
+> I also oppose the implied synchronicity of your methods as well. I am 
+> looking at a resonably secure asynchronouse method of making the 
+> traffic analysis difficult (the real reason for all this mumbo jumbo
+> in the first place).
+
+Traffic analysis is difficult when the order of messages is sufficiently
+scrambled.  If you don't reorder, then delay doesn't help.  If you do
+reorder, then added delay doesn't help.  Whether one message is
+"synchronized" or not with a random other message isn't useful 
+information to an outsider.
+
+> Why should I provide a potential monitor with the
+> information that a certain amount of information going out will be 
+> bogus?
+
+How might this information help analyze traffic?
+
+Also, as I mentioned, if you send your dummies to yourself indirectly,
+then pretty soon the level of input will match the level of output,
+and the ratio of bogus to real messages *won't* be visible.
+
+As far as I can see, dummy messages are simply necessary if you want to
+guarantee both reordering and response time.  Please explain if you
+believe differently.
+
+> You obviously don't pay all the costs for your feed or else you are very 
+> rich...
+
+Are you  charged per byte or just a flat rate?
+
+-fnerd
+- - - - - - - - - - - - - - -
+the snack that eats like a food
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+aKxB8nktcBAeQHabQP/d7yhWgpGZBIoIqII8cY9nG55HYHgvt3niQCVAgUBLMs3K
+ui6XaCZmKH68fOWYYySKAzPkXyfYKnOlzsIjp2tPEot1Q5A3/n54PBKrUDN9tHVz
+3Ch466q9EKUuDulTU6OLsilzmRvQJn0EJhzd4pht6hSnC1R3seYNhUYhoJViCcCG
+sRjLQs4iVVM=
+=9wqs
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,72 @@
+From: Bryan Reece <reece@taz.nceye.net>
+Date: Sat, 30 Nov 1996 11:19:16 -0800 (PST)
+To: wichita@cyberstation.net
+Subject: Re: IPG Algorith Broken!
+In-Reply-To: <Pine.BSI.3.95.961130023512.19278G-100000@citrine.cyberstation.net>
+Message-ID: <19961130191901.17546.qmail@taz.nceye.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: wichita@cyberstation.net
+   Date: Sat, 30 Nov 1996 02:41:28 -0600 (CST)
+   cc: Bill Frantz <frantz@netcom.com>,
+	   John Anonymous MacDonald <nobody@cypherpunks.ca>, cypherpunks@toad.com
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   Shannon proved that you cannot prove what the plaintext
+   is for OTPs,
+
+
+Let P, K, and C represent bit strings of equal length.  Given a
+ciphertext C, for every plaintext P there exists a key K such that
+
+  P XOR K = C.
+
+This is true (K=P XOR C).
+
+
+   or for the system we have developed either.
+
+False.
+
+Let P and C represent byte strings of equal (arbitrary) length and K
+represent the key string of fixed length.
+
+The IPG algorithm can be summarized
+
+  C = P XOR PRNG(K)
+
+where PRNG(K) is the output of the pseudo-random number generator with
+seed K.  The details of the PRNG are unimportant for this argument.
+
+For every ciphertext C longer than K, there exists a plaintext P such that
+no K will satisfy
+
+  C = P XOR PRNG(K).
+
+Proof: There are 256^length(K) possible keys (roughly 10^34322).
+There are therefore at most this many possible decryotions of the
+given plaintext.  Since length(C) > length(K), there are more possible
+plaintexts than possible decryptions.
+
+Shannon's proof of the security of the OTP therefore doesn't
+apply to IPG's cipher.
+
+Assume that the PRNG is resistant to analysis. Given the size of the
+keyspace, it is not feasible to search the whole keyspace hoping
+something like a plaintext pops out.  However, it is easy to take a
+key obtained through some other means and verify that the plaintext
+makes sense.  Since the PRNG is assumed resistant to analysis, this
+constitutes proof that the plaintext is correct (since it's infeasible
+to find a key that decrypts the ciphertext to another plausible
+plaintext).
+
+Of course, all encryption algorithms short of the OTP allow an
+attacker to prove a key correct, but most cryptographers don't claim
+their algorithms to be as secure as OTPs.
+
+
+
+
+

@@ -1,0 +1,44 @@
+From: Matthew Carpenter <mcarpent@mailhost.tcs.tulane.edu>
+Date: Tue, 20 Aug 1996 08:21:58 +0800
+To: campbell@c2.org
+Subject: emscrypt and replay attacks
+In-Reply-To: <9608191513.AA11169@cfdevx1.lehman.com>
+Message-ID: <199608192023.PAA20241@rs6.tcs.tulane.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Rick Campbell writes:
+
+>>     P.S. I have an alpha version of a program which may be of interest to
+>>     technomads: it automatically executes scripts received by email from a
+>>     remote machine and then mails back the results.  The scripts (shell
+      ... 
+> 
+> Does your mechanism do anything to prevent replay attacks?
+> 
+> 			Rick
+
+Alan apparrently forwarded my message from technomads to cypherpunks,
+but since I'm on cypherpunks too, I got this message.  Anyway, yes it
+does have a simple replay attack prevention mechanism.  It keeps track
+of the most recent time and date stamp from the PGP signature info and
+refuses to executed any message that doesn't have a stamp more recent
+than previously executed script.  This simple mechanism can cause
+unwanted rejection if scripts are received out of order, but multiple
+scripts can be batched into a single message to help overcome this.
+
+See the following URL for a discussion of known limitations and security
+concerns with emscrypt:
+
+  http://www.bmen.tulane.edu/~carpente/emscrypt/emscrypt_doc.html#limits
+
+
+--Matt
+
+--
+mcarpent@mailhost.tcs.tulane.edu    PGP mail preferred, finger for public key.
+
+
+
+

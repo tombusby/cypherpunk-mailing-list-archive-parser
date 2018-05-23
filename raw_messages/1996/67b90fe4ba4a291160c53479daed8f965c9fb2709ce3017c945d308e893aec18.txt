@@ -1,0 +1,46 @@
+From: Martin Minow <minow@apple.com>
+Date: Fri, 1 Nov 1996 16:19:23 -0800 (PST)
+To: Bruce Schneier <cypherpunks@toad.com
+Subject: Re: New Bihman-Shamir Fault Analysis Paper
+In-Reply-To: <v03007804ae9e6eb1b360@[204.246.66.47]>
+Message-ID: <v03007800aea040ab78e7@[17.202.40.158]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There is an inherent conflict between two claims that are
+central to the fault-analysis paper(s):
+   "the secret key [is] stored in a tamperproof cryptographic device"
+and
+   "the cryptographic key is stored in an asymmetric type of
+    memory, in which induced faults ..."
+
+If the device is truly tamperproof, the attacker should not
+be able to induce faults.  Even given susceptable "consumer-
+quality" devices, it would be trivial to store the cryptographic keys
+in a redundant memory configuration, such as ECC "error-correcting
+code" memory that can self-correct a range of failures and detect
+a much wider range. It would also seem reasonable to protect the
+cryptographic core (algorithms and data) with a digital signature
+that would "crash" the device, rather than proceed with incorrect
+key information.
+
+My naive reading of the attack suggests that storing the cryptographic
+key together with its one's complement would minimize the chance that
+an attacker can exploit asymmetric fault inducement.
+
+Finally, I'm curious whether this attack would work on masked ROM
+or fusable-link (one-time programmable) PROMs (not EPROMs that have
+no reprogramming window). These are more likely to be used in
+production devices than EEPROMs, if only for cost-savings.
+
+Martin Minow
+minow@apple.com
+
+
+
+
+
+
+
+

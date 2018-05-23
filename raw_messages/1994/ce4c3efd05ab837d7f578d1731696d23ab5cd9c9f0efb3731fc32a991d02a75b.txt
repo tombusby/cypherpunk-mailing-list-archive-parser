@@ -1,0 +1,80 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 5 Feb 94 14:05:45 PST
+To: cypherpunks@toad.com
+Subject: Re:  Some stuff about Diffie-Hellman (and more :-)
+Message-ID: <199402052205.OAA06854@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Quite a few misconceptions here, I'm afraid:
+
+From: rcain@netcom.com (Robert Cain)
+> In the Diffie-Hellman exchange there is a well-known-prime, w, and a
+> well-knwon-modulus, m.
+
+w is supposed to be a "generator" of the group of integers mod m.  It does
+not have to be prime.  It is supposed to be such that the series w**0, w**1,
+w**2,...,w**m-1 does not repeat but goes through all the integers less than m.
+Testing for such w's is pretty easy if you know the factorization of m,
+involving a few arithmetic tests.
+
+> For those interested that don't know I think
+> it then proceeds as follows (don't have notes in front of me so please
+> someone correct me if I'm misremembering it) where ** is the power or
+> exponentiation operator and % is the modulus operator:
+> 
+> 	1) Bob generates a one time random prime, b, then computes
+
+b does not have to be prime; it is a random number less than m.
+
+> 		B = (w ** b) % m
+> 	   and sends B to Carol.
+> 
+> 	2) Carol generates a one time random prime, c, then computes
+
+Likewise, c does not have to be prime; it is a random number less than m.
+
+> 		C = (w ** c) % m
+> 	   and sends C to Bob.
+> 
+> 	3) Bob generates a session key:
+
+Carol does this, not Bob.
+
+> 		K = (B ** c) % m
+> 
+> 	4) Carol generates a session key:
+
+Bob does this, not Carol.
+
+> 		K = (C ** b) % m
+>[...]
+> Now, the tutorial over :-), the question is; is there a "standard"
+> well-known-prime, w, and a "standard" well-known-modulus, m, and if
+             ^^^^^-- generator
+> not, let's define one.
+
+I don't think there is a need for this.  The two sides need to agree on
+a pair but they could just pick it at the beginning.  If everyone uses
+the same m,w it would help attackers of the scheme to focus their efforts
+on these numbers.  I believe there was some discussion of using well-known
+numbers in the Digital Signature Standard (which is based on the same
+problem as DH) but I don't know what the resolution was.
+
+> I suppose that PGP uses a well known pair but
+> they are big and not easy to hand around without going through media (I
+> think.)
+
+PGP does not uses DH and has no well known numbers.
+
+If you do want well known numbers, I really think it will not be that bad
+just to put them into the program.  Coming up with an algorithm to choose
+and test a generator from scratch is probably going to be larger and
+certainly going to be far slower than just hard-wiring the number in.
+
+Hal
+
+
+
+

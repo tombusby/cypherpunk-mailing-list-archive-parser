@@ -1,0 +1,72 @@
+From: roy@sendai.cybrspc.mn.org (Roy M. Silvernail)
+Date: Sun, 19 Jun 94 08:41:39 PDT
+To: pfarrell@netcom.com (Pat Farrell)
+Subject: Re: Hardware Random Numbers
+In-Reply-To: <199406182254.PAA22537@netcom3.netcom.com>
+Message-ID: <940619.094713.8w5.rusnews.w165w@sendai.cybrspc.mn.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In list.cypherpunks, thus spake pfarrell@netcom.com (Pat Farrell):
+
+> A while ago some folks talked about being willing to pay for
+> a hardware random number generator. Not a PRNG, but a real
+> one. There are lots of uses listed in TCMay's document that
+> can't be named, but generating blinding factors for digital cash 
+> is my favorite.
+> 
+> I've got a friend who is a professional electronics engineer that
+> is willing to help, but he has some questions on the design.
+
+[...]
+
+> 3. Maybe it should go on the PC bus as an adapter card.
+
+This is the way to go.  Serial port real estate is way too scarce in the
+average PC.  Besides, this approach makes the design easier and has
+another advantage...
+
+> While I'd like to think that I really control my PC, once you get 
+> networking TSRs, smartdrv, APSI drivers, CDROM and Soundcard drivers, 
+> HIMEM, etc. loaded, do you really _know_ that they are your friends? 
+> Is this a real problem?
+
+Yes, this can be a real problem.  So design the card such that the noise
+source runs continuously at a high speed, and feeds an 8-bit shift
+register.  Place a latch on the output of the register, and set up
+decoding logic to read the latch in a memory-mapped port position.
+Ports are available, if you look and plan around the popular ones (such
+as UARTs, soundblasters, CD-ROM cards, etc.).  You'll want to make it
+configurable to several possible ports.  This design assures that each
+random byte can only be read once.  A TSR couldn't read the card in
+parallel (because reading a port doesn't require hooking an interrupt),
+so the only way to compromise it is to subvert the application reading
+the card.  Conventional anti-virus protection can see to it that the app
+remains trustworthy.
+
+> Cypherpunks write code (or maybe work on hardware :-) !
+
+I hack both.  Hardware is fun!
+- -- 
+Roy M. Silvernail --  roy@sendai.cybrspc.mn.org will do just fine, thanks.
+          "Does that not fit in with your plans?"
+                      -- Mr Wiggen, of Ironside and Malone (Monty Python)
+        PGP 2.3a public key available upon request (send yours)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLgRdWxvikii9febJAQG16wP7BzcIdnQw/TPFO+E/GwnPIt3xBVu0lHq3
+H1ACbdiWMxD55F2GiQ21fZ7K1IRtr8gTsgKGnbBDMMW7hjfVmFinzYJRhH/jBnQC
+0nndL9bK+DtX42GyDYn88MnGYQL1b+7Efp6V1QNP+gGdfYYZrZwqscgajPalPkKD
+qQveABptfBI=
+=+j3A
+-----END PGP SIGNATURE-----
+
+
+
+
+

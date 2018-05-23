@@ -1,0 +1,29 @@
+From: Dan McGuirk <mcguirk@indirect.com>
+Date: Mon, 6 May 1996 17:33:08 +0800
+To: unicorn@schloss.li
+Subject: Re: WWW proxies?
+In-Reply-To: <v02120d03adb27fe340c9@[192.0.2.1]>
+Message-ID: <Pine.BSD/.3.91.960505222735.24544H-100000@bud.indirect.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sun, 5 May 1996, Lucky Green wrote:
+> At 0:30 5/5/96, Lou Poppler wrote:
+> >On Fri, 26 Apr 1996 19:13:06 -0400 (EDT),
+> >Black Unicorn <unicorn@schloss.li> wrote:
+> >}
+> >} Has anyone developed such a beast yet?
+
+Here's a simple one in 3 lines of perl.  It only supports HTTP GET, and 
+it ignores all of the MIME headers on the original request.  It requires the 
+LWP perl module, but the RSA code requires dc, so I guess it's fair :)
+
+#!/usr/bin/perl5 --# HTTP proxy, GET/http only;  usage: 'lwp-proxy <port>'
+use LWP::Simple;sub w{wait;}$SIG{'CHLD'}='w';$SIG{'CLD'}='w';socket(S,2,1,6);
+bind(S,pack(Sna4x8,2,$ARGV[0]));listen(S,5);while(1){accept(N,S);if(!fork){
+open(STDERR,">&N");chop($r=<N>);$r=~s/^GET //i;select(N);getprint($r);exit;}}  
+
+
+
+

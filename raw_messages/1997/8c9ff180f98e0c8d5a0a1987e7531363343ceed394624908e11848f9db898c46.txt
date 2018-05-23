@@ -1,0 +1,56 @@
+From: Mark Grant <mark@unicorn.com>
+Date: Mon, 11 Aug 1997 18:57:31 +0800
+To: cypherpunks@toad.com
+Subject: Comments on PGP5.0 OCR (was Re: fyi, pgp source now available , internationally)
+Message-ID: <Pine.LNX.3.91.970811105552.3203A-100000@cowboy.dev.madge.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Charlie Root (root@cypherpunks.campsite.hip.nl) wrote:
+>http://cypherpunks.campsite.hip97.nl/pgp/
+>and
+>http://www.pgpi.com/
+
+(The former no longer seems to work, presumably because the machine is
+packed up and on its way home.)
+
+I just wanted to make a few comments on the proofreading, in case anyone
+feels like releasing software in a similar manner in future:
+
+The original printed and OCR-ed source gave a single checksum for each
+page, with four bits per line. It also ignored whitespace except in
+strings and comments. This meant that people could rapidly process the
+majority of the code to produce something which wasn't terribly pretty but
+functioned correctly. However, because there were only four bits per line
+an incorrect line could pass the checksum; this would still be detected
+because the checksums were chained, but it could mean that when an error
+was detected you had to check several lines to find the invalid one. 
+
+Presumably because of this the OCR-ed pages at HIP included a per-line
+checksum. This was good... but... it also checksummed the whitespace. 
+This wasn't a problem in theory, because tabs were indicated by a special
+character. However, most lines had both tabs *and* spaces and there was no
+way to see where the spaces were because they were overrriden by the tab
+(e.g. "mov<sp><tab>ax,23<sp><sp><tab><sp><tab>; Stuff"). As a consequence
+the proofreading went very slowly until some valiant folks (who may or may
+not wish to be identified, so I won't) worked overnight to put together a
+program to brute-force the checksum by trying all possible combinations of
+tabs and spaces until it found the right one. 
+
+So for a future effort could we please have the per-line checksums but
+ignore the whitespace unless it's important (e.g. comments and strings
+again)? Or if you want to ensure that the whitespace is identical between
+versions, please either strip out unneccesary spaces or use a special
+character for them so we can see precisely where they are. If all we want
+is functioning code, then it doesn't have to look pretty; we can feed it
+through a code prettifier like indent when it's functionally correct. 
+
+	Mark
+
+
+
+
+

@@ -1,0 +1,96 @@
+From: "Timothy C. May" <tcmay@got.net>
+Date: Sun, 17 Nov 1996 13:19:32 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: Members of Parliament Problem
+In-Reply-To: <v02140b05aeb518d83c92@[192.0.2.1]>
+Message-ID: <v03007801aeb52de9d3b0@[207.167.93.63]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:43 AM -0800 11/17/96, Peter Hendrickson wrote:
+
+>What I would like to see is a method which relies only on published
+>public keys and no other cooperation from the people who are (more
+>or less) being used as shields.  This may be impossible.
+>
+>(A number of people have posted references to other ways of doing
+>this.  I have yet to track down the references they gave so I don't
+>know if any of them fit the bill.)
+
+It sounded to me from your initial statement of the problem that this is
+the canonical Dining Cryptographers Problem: a group of N persons wishes to
+allow communication from one of their number without any possibility that
+the message can be traced to a single one of them.
+
+There are of course numerous issues to be dealt with in a DC-Net, some
+discussed in Chaum's orginal paper (available at one time at the
+Cypherpunks ftp site), some discussed in the followup papers in "Eurocrypt"
+some years back, and some discussed by several of us on this list (with,
+perforce, not as much academic rigor as the academic papers have).
+
+* Collusion. It will _always_ (repeat: always) be possible for N -1 of the
+folks to conspire to identify the member sending the message. No
+cryptographic system can possibly prevent that, for basic ontological
+reasons.
+
+(For example, if the members of Parliament suspect MP Peter H. to be the
+source of anti-British opinions, they may compare notes, agree that none of
+them sent the message, and thus know that Peter H. sent it. Of course, can
+they be trusted? A meta-issue. But such are the ways even DC-Nets can be
+thwarted...by the members themselves. This is beyond cryptography.)
+
+However, the costs and difficulties in collusion to identify a sender can
+be made quite high by having multiple DC-Nets, such that collusion would
+have to span a critical subset of them.
+
+* Denial of service. Some members of the DC-Net(s) may choose not to
+participate, or to "lie" (in terms of doing their XOR operations with their
+neigbor), etc. The various DC-Net papers deal with these problems.
+
+For the specific example Peter cites, of a member of Parliament who doesn't
+like the possibility of anonymity....well, he wouldn't be part of the
+DC-Net would he? Generally, there are no cryptographic solutions that will
+encompass the case where some member wants to speak anonymously, but no one
+else does. If a message originates from "someone in Parliament," but only
+one member of Parliament is set up to speak anonymously, then of course by
+simple elimination he is the speaker. As before, this is beyond any
+cryptographic solution.
+
+And as soon as N are interested, where N > 1, the possibility of a DC-Net
+is present. Obviously, the bigger N is, the better.
+
+There may be easier to implement approaches, such as the ones people have
+proposed involving distribution of "voting tokens" (blinded, for anonymity).
+
+Anonymous voting is, in fact, formally equivalent (with some hand-waving
+about some details) to the problem of untraceable speaking. The example
+Peter cited, of a MP wanting to "speak anonymously" is equivalent to
+wanting his vote--on Northern Ireland, for example--to be anonymous.
+
+(Chaum was studying anonymous electronic voting protocols, of course.)
+
+A simple form of this is "blackballing." Members have white and black
+balls, and place one of the balls in an urn. Properly implemented, this
+gives anonymity.
+
+--Tim May
+
+"The government announcement is disastrous," said Jim Bidzos,.."We warned IBM
+that the National Security Agency would try to twist their technology."
+[NYT, 1996-10-02]
+We got computers, we're tapping phone lines, I know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Higher Power: 2^1,257,787-1 | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+From: Eli Brandt <ebrandt@jarthur.Claremont.EDU>
+Date: Tue, 5 Oct 93 20:00:29 PDT
+To: cypherpunks@toad.com
+Subject: Re: Need Suggestions for Random Numbers
+In-Reply-To: <IggWg0W00Vp=NOUEhj@andrew.cmu.edu>
+Message-ID: <9310060300.AA14566@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+>      if a_n-2 < 195  then  a_n = a_n-4 + a_n-3   mod 256
+>      if a_n-2 > 194  then  a_n = a_n-4 + a_n-3 + a_n-1   mod 256
+> 
+> This is considerably less easy to break.
+
+True.  However, there are some fairly general attacks on
+congruential PRNGs, and I wouldn't be willing to place much of a
+prize on the unbreakability of schemes such as the above.  There
+are simple techniques whose security is better tested.
+
+> What PRNGs would you suggest using?
+
+I'm hardly the person to ask, but here's a simple one:
+  Given a cryptohash function hash(), and a key K,
+  generate your series S as S_i = hash(K+i).
+There are plenty of other games you can play with a secure hash
+function.  They have a practical advantage over PRNGs built on
+top of ciphers: there's no problem exporting them.  There are
+also "pure" cryptographically-strong RNGs, but I don't know
+anything about them.  (The name "Blum-Blum-Shub" springs to
+mind, but how could it not?)
+
+   Eli   ebrandt@jarthur.claremont.edu
+
+
+
+

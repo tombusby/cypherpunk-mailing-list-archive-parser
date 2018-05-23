@@ -1,0 +1,55 @@
+From: Eric Murray <ericm@lne.com>
+Date: Tue, 10 Sep 1996 13:28:23 +0800
+To: nexus@adv.es (I~nigo Gonzalez)
+Subject: Re: BoS: Can you trust your ISP ??
+In-Reply-To: <3234A158.3492@adv.es>
+Message-ID: <199609100149.SAA16682@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I~nigo Gonzalez writes:
+> 
+> Hello, 
+>    I'm thinking about how can I get rid off this kind of attack *before* it 
+> happens. Can you please send me your comments about this? I don't know so 
+> much about the how SSL works, but I think this is something that can 
+> happen...
+
+[classic Man-in-the-Middle attack]
+
+
+What you described is the Man In The Middle attack, often
+abbreviated on these lists as MITM.  The fact that there's
+an abbreviation for it should indicate to you how often
+it is discussed.  However it's also one of the first
+problems (besides the basic encryption) that protocol
+designers think of.
+
+It's been taken care of in SSL3- the server's certificate
+must be signed by a CA that the client trusts.  Unless
+the digital signature can be spoofed, and it probably
+can't be, the client can be certain that the server certificate it got
+is really from the server that it claims to be from.
+
+Assuming that RSA still can't be broken, the client can be sure
+that the pre-master-key material that it sends to the server
+(and which is the basis for the symmetric crypto session keys)
+will not be compromised.
+
+
+If you grab a copy of the SSL3 spec (from netscape's web site)
+and read the appendicies there's more good stuff about possible
+attacks and what's been done to counter them.
+
+
+
+
+-- 
+Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+Principal, LNE Consulting: SSL, crypto applications, Internet security.
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+
+

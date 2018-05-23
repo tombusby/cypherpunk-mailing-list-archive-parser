@@ -1,0 +1,60 @@
+From: Gary Howland <gary@systemics.com>
+Date: Sat, 1 Jun 1996 09:11:37 +0800
+To: cypherpunks@toad.com
+Subject: Re: Backdoor in RSA Discovered
+Message-ID: <199605311811.UAA10519@internal-mail.systemics.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>  In this paper we present a mechanism that can quite easily be
+>  added to PGP that allows the person who modifies PGP to learn
+>  the private keys of those who use it to generate keys. Furthermore
+>  the keys are leaked securely and subliminally, i.e. even if you
+>  analyze the source code you cannot determine previously generated
+>  keys or future keys, only the attacker can. The only way to detect the
+>  presence of the mechanism itself is by looking over the source code, or
+>  the compiled code. The attack has the effect of turning a database of
+>  public keys into a database of public/private key pairs with respect to
+>  the attacker *exclusively*.
+
+Sounds like they are doing something like this:
+
+        Generate a prime P of 500 bits (say)
+        Encrypt with Mallets public key
+        Generate start_q using (E(P) << 524)/P
+        Keep incrementing start_q until prime, and call this Q
+        Generate N by multiplying P and Q to get a 1024 bit key
+        Top 500 bits of N will be E(P)
+
+It could also be done like this:
+
+        Generate a random H of, say, 290 bits
+        Keep incrementing H until (H << 300) + 1 is prime
+        and call this Q
+        Encrypt H for Mallet
+        H <<= 10
+        Keep incrementing H until prime
+        Generate N by multiplying P by Q, to get a 900 bit key
+        Bottom 300 (but 10) bits of N will E(P)
+
+I'm sure there are few mistakes, and there need to be
+a few other trivial tests in there somewhere, but I think this
+should work.
+
+The first method should produce "better" keys than the first
+(as if Mallet cares)
+
+I'll try and knock some code up to demonstrate this over the next
+few days.
+
+
+Gary
+--
+pub  1024/C001D00D 1996/01/22  Gary Howland <gary@systemics.com>
+Key fingerprint =  0C FB 60 61 4D 3B 24 7D  1C 89 1D BE 1F EE 09 06
+
+
+
+

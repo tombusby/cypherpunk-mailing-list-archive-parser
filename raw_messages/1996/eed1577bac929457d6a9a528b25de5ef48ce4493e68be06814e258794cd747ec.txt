@@ -1,0 +1,56 @@
+From: Ian Goldberg <iang@cs.berkeley.edu>
+Date: Sun, 19 May 1996 00:16:23 +0800
+To: iang@abraham.cs.berkeley.edu
+Subject: HUGE denial of service attack against any ecash customer!!!
+Message-ID: <199605152309.QAA23293@abraham.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+(Again Cc:'d to ecash-feedback, hoping for a security prize.  I wonder
+ who's keeping track...  Also Cc:'d to cypherpunks, for fun...)
+
+So I had some more free time... (Dave cringes when I say that.)
+
+Here's a cute one:
+
+Give me an account number, and I can prevent it from being used until
+an arbitrary time in the future (of my choosing).
+
+How?  Simple.
+
+Send a deposit message with 0 coins (well, any message will work, I think, but
+this is one of the simplest messages there is) with a timestamp of some future
+time.
+
+Messages stamped prior to that (such as everything coming from the
+actual user for that account, until the time comes) will be politely
+discarded.  (Actually, I think the last reply to a withdrawal request
+is continually resent, but I'm not exactly sure of this.)  In any case,
+the actual user will be unable to withdraw money from his mint until
+the time sent in the denial-of-service message.  (Unless he forward-dates
+his computer's clock, or something...)
+
+I've tested this against myself and Sameer (with his cooperation, of course).
+Anyone else want to be locked out for an hour?  (Actually, I could pretty
+effectively lock out _everyone_ for an arbitrarily long time, it seems...)
+
+   - Ian "Right.  I want the sources to the client and the server
+          released.  Now."  :-)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMZpj3kZRiTErSPb1AQF0SAQAmOEZJTg0v3utWFodDXZ4iv4xa7I+QbNQ
+Nlsbkug8dtkdf+Jboe+vBtrs5IWSSff8bWntGwfODckct26NwzpVM9bUIXohVoRQ
+jOkRT9a8m/X00jUAoFOTq5O5Rz87a3Uw8MGFugP5Y4DCk+UqnTA70cuozyOCgb8m
+8oke89V9Q0E=
+=ARMe
+-----END PGP SIGNATURE-----
+
+
+
+
+

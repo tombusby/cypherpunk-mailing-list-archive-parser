@@ -1,0 +1,70 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Fri, 18 Oct 1996 13:47:10 -0700 (PDT)
+To: trei@process.com>
+Subject: Re: POTP critques?
+In-Reply-To: <199610181356.GAA10935@toad.com>
+Message-ID: <Pine.LNX.3.95.961018163224.621A-100000@gak.voicenet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Fri, 18 Oct 1996, Peter Trei wrote:
+
+> I'm looking for independent critiques of the system, something
+> better than 'it's not really a one-time pad.' Is the cryptosystem
+> which is actually implemented worth a damn? Does their claim
+> to have solved the key distribution problem hold water? I
+> seem to remember something about them wanting to
+> generate keys for you, and ship them to the customer. Is this
+> correct?
+
+POTP is a stream cipher where the key is derived from a "state" and bits from
+the ciphertext chosen using the current state.  Two machines have to
+synchronize their states before encryption can take place.  The key is derived
+from a one-way function performed on the state.  This really doesn't solve the
+key distribution problem because initial synchronization has to take place on
+a secure channel.  The current state also has to be saved on each machine.
+I think the "escrow" system you are referring to is some other encryption
+program.
+
+Elementrix does acknowledge that they have a stream cipher and don't refer to
+it as a one-time pad.  The only reason OTP is in the name is that the key
+derived from the state is as long as the ciphertext being encrypted.  They
+claim that the state is larger than the key and it is computationally
+infeasible to derive the state given the key.  I would guess that the size of
+the next state is determined by the size of the plaintext to be encrypted.
+
+As for security of the system, I really don't know.  Their algorithm is
+proprietary so I would avoid it for that reason alone.  They have not yet
+gotten any comments regarding security from any cryptographers.  The entire
+security of this system is based upon the algorithm used to generate the state
+from a previous state and the one-way function used to generate the session
+key.  Unless they are using a hash algorithm like SHA-1 to generate the keys
+and states, I would seriously question the security of it.
+
+Mark
+- -- 
+finger -l for PGP key
+PGP encrypted mail prefered.
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQEVAwUBMmfs0CzIPc7jvyFpAQE1QAf9HA/jpe2YZZbKrMjozlNVSqY8pbT4spUf
+vdLOkk6DjaKCFPdLdy23SpmlJSqjNVw5rzGV+GwLTESCwxmP3l7foEQ022Zji3of
+ly3grbq+3kIOL13cqBFZwYz2nrSmJJggNo+FdxjWlSJagoPZjAhO94+h0EFwTKXs
+fahlaQ27om02TWhUHVZxBQ1pKAoB+PFxuzkxAu6zX0fOj9ZG/bZGZ4HbV4UxUl9h
+O0VNuyAjCeGVwOZ+GvTs5G5h4EBRGrgHusRNAlLhSnsfFjaM3pYu1ZI5123VKQLC
+By30qqSjfjKNizLBTZnNIVvmI12TIKvWvEPmihn8atowvVJ4TcbKYw==
+=hgmm
+-----END PGP SIGNATURE-----
+
+
+
+
+

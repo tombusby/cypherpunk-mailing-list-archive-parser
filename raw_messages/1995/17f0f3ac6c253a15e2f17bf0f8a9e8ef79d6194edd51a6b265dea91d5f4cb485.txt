@@ -1,0 +1,93 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Tue, 19 Dec 95 17:30:30 PST
+To: ecash@digicash.com
+Subject: Re:  E-cash coin questions (Mark Twain / Digicash)
+Message-ID: <199512200128.RAA09801@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: "David Klur" <dklur@dttus.com>
+>      
+>      1.  How many different coins (serial numbers) can the current Mark 
+>      Twain/Digicash protocol support?
+
+I don't know this offhand, but I assume it is at least 2^64.
+
+>      2. Does Mark Twain bank maintain 2 lists: 1 of all the ecash serial 
+>      numbers for all coins ever produced, and 1 of all the ecash serial 
+>      numbers for all coins that have been spent before?  Or just 1 list of 
+>      the spent coins (assuming that any coin that is signed w/MT's private 
+>      key and does not appear on the "spent" list is still valid and is not 
+>      counterfeit)?
+
+It is not possible for the bank to have a list of the serial numbers on
+coins produced, since it doesn't know this information.  Each coin is
+created by a user's client software, which chooses the serial number at
+random.  When it is sent to the bank to be signed, the serial number is
+blinded by being multiplied by a random number, which is divided off
+after the client gets it back from the bank.  So the bank never sees a
+coin's serial number until it is deposited.
+
+>      3.  The Digicash scheme allows each coin to be used only once and then 
+>      destroyed.  How many coins will it take before all possible coins are 
+>      minted, used and destroyed thereby requiring banks to issue new coins 
+>      with "recycled" serial numbers?  Remember, each time a "transaction" 
+>      takes place, an existing coin is destroyed and a new coin is minted. 
+>      and a transaction can simply be Alice giving her friend Bob a dollar 
+>      (not necessarily using the ecash for a purchase)
+
+It is easy to make this number so large that it will take longer than the
+age of the universe for this to happen.  It just takes a dozen or so
+bytes per coin.
+
+>      4.  What is the probability of guessing a valid serial number, 
+>      assuming there are 1 million, 1 billion or 1 trillion coins in 
+>      circulation?
+
+Assuming the serial numbers are of the sizes I suggest above, this
+chance is so close to zero that your chances of being named King of the
+Earth next year (along with the assumption that we switch to a World
+Government and it is a monarchy) are much greater.
+
+>      5.  Suppose you have a very large number of ecash coins signed by the 
+>      same bank (say, Mark Twain) and you know the record layout of each 
+>      coin (easy enough since you can decrypt it with the bank's public 
+>      key), and for each coin the "bank name" field is the same (because 
+>      it's the same bank!) -- then, would it be possible to hack the RSA 
+>      encryption and recreate the bank's private key?
+
+I don't fully understand what you are getting at, but there are several
+false assumptions here.  The "coin" has several parts, one of which is an
+RSA signed portion with a number in it, for which I am accepting your
+terminology of it being a "serial number".  This terminology is not quite
+right, as the coins are not numbered serially (that is, sequentially, 1,
+2, 3, etc.), rather the numbers are random.  But it does capture the
+essential idea that each coin's number is unique.
+
+You do know the record layout of each coin, but that is because it is
+documented and because your client creates coins, not because you could
+decrypt it with the bank's public key.  The coin does not have the bank
+name field within the RSA signed part.  There is other information
+which goes along with the coin, including an identifier for the bank,
+outside the RSA signed portion.
+
+For the general question of whether inspection of a lot of RSA-signed
+coins would allow you to deduce the private key, the answer is no, as
+far as is known.  Actually the attack you can mount is stronger than
+this; you can get the bank to RSA sign any number.  You could ask it to
+sign "1", for example, and you will get "1" back (so that's not very
+useful).  I have tried to think of a way of getting some useful
+information from getting it to sign "2", since that is such a simple
+number.  But it is raised to a very large power, and as far as I can
+see what you will get back is just a random looking number, with all
+hints about the exponent gone.
+
+Again, as far as anyone knows, there is no way to break RSA using these
+kinds of attacks, at least not any more cheaply than factoring the modulus.
+
+Hal
+
+
+
+

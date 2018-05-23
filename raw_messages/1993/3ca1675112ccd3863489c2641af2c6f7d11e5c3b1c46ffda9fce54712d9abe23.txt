@@ -1,0 +1,41 @@
+From: mjr@netcom.com (Matthew Rapaport)
+Date: Sat, 9 Jan 93 12:49:59 PST
+To: cypherpunks@toad.com
+Subject: Cascading Aliases
+Message-ID: <9301092049.AA03501@netcom2.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The discussion just above between Karl, Hal, Johan, and myself, has
+made me realize that the standard "bounce back" behavior of all the
+alias servers I've used so far actually defeates the purpose of remailer
+chains no matter how one embeds the forwarding information.
+
+When any person *first* replies to or originates mail across a remailer
+chain, a new alias is generated at each hop (however many). So far, that
+is good, a "most conservative assumption" approach, and it provides
+easily for reply channel maintenance. The problem is that each machine
+also reflects its new alias back along the chain to the message
+originator thereby revealing the entire chain to the message originator,
+something that might not be desirable to the party on the other side.
+
+The solution is very simple, just stop bouncing the new alias
+information back along the chain. This can not HURT anyone using the
+alias/remailer system because you never need to know what your aliases
+are as the conversion and forwarding process is automatic. If someone
+needs, for some reason to KNOW his alias for a given system (or all of
+them) on *his/her* chain, he/she can easily arrange to ping the server
+at the appropriate level.
+
+Besides not hurting any current operations, Stopping the *automatic*
+reply to sender about a new alias helps to secure everything a great
+deal more because it hides the "other guy's" chain, something that both
+parties might reasonably expect.
+
+matthew rapaport     Philosopher/Programmer At Large      KD6KVH
+           mjr@netcom.com     70371.255@compuserve.com
+
+
+
+

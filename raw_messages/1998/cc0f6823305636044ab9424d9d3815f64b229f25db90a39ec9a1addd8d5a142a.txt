@@ -1,0 +1,65 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Mon, 26 Jan 1998 06:06:00 +0800
+To: cypherpunks@toad.com
+Subject: Re: NYTimes web cookies
+In-Reply-To: <199801252000.VAA04977@basement.replay.com>
+Message-ID: <N1sVJe2w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+nobody@REPLAY.COM (Anonymous) writes:
+> ghio@temp0199.myriad.ml.org (Matthew Ghio) wrote:
+>
+> > It doesn't check the PW or ID at all except the first time you log in.
+> > After that it generates a new cookie titled NPLCNYT and that is the only
+> > cookie it checks; the PW and ID are not required to be there at all.
+> > If you delete the NPLCNYT cookie, it will check the PW/ID and generate
+> > a new one.  An example cookie is below:
+> >
+> > NPLCNYT=AAAALw>AAAAAX9IUUWiPhfALqHZuSh2mUM0yzNOwGRReAAAAAsAAAAAY3lwaGVycHVu
+>
+> I put this wafer in my junkbuster-configfile and disabled all other cookies,
+> and NYTimes let me in without asking for a password, but after I read a few
+> articles, the site started behaving strangely, where the server would seem
+> to hang on certain pages, taking forever to send the html.
+
+I played around with nytimes.com some more and I'm certain that it does check
+for the presense the ID= in the cookie (but not the value).
+
+Apparently the following 2 is necessary and sufficient:
+NPLCNYT=(whatever it tried to set it to)
+ID=(anything; I used ID=0 to save bandwidth)
+
+With ID=0, it says "welcome, 0" of the first page and I see no problems.
+
+> Interesting though.  Maybe we should hold a cypherpunks 'potluck' where
+> everyone trades cookies.  :)
+
+A good idea. here are more of mine:
+
+#.reference.com
+wafer userid=cypherpunks@bwalk.dm.com
+wafer passwd=cypherpunks
+
+(I haven't been able to register cypherpunks@algebra.com on reference.com)
+
+# amazon.com cypherpunks@algebra.com cypherpunks
+wafer group_discount_cookie=F
+wafer session-id=1451-4798095-404463
+wafer session-id-time=886320000
+wafer ubid-main=3578-1328899-434066
+wafer cf=c90fe571f7b5f873
+
+By the way, junkbuster does NOT strip cookies in secure http. Be careful.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+
+

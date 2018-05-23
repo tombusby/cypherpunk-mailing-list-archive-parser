@@ -1,0 +1,66 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Wed, 10 Jan 1996 04:14:01 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Can you break my encryption protocol ?
+In-Reply-To: <Pine.3.89.9601091514.A24844-0100000@unicorn.com>
+Message-ID: <199601091954.OAA31373@opine.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Mark writes:
+[description of threat model elided]
+> Client and server both have copies of a passphrase, of any length.
+> 
+> When starting the connection, client sends 128 random bits to the server.
+> 
+> Both ends take this data, append the passphrase, and use MD5 to generate 
+> a session key. If a key of less than 128 bits is required for legal 
+> reasons, then the appropriate number of bits are retained, and the rest 
+> replaced with bits from the random data that was sent in the clear.
+> 
+> That is, if you're only allowed 40 bit security, you take the first 88
+> bits that you were sent, and append the last 40 bits of the generated key 
+> to give you the session key to use.
+
+So this is:
+
+Salt = RNG(128,Seed);
+SessionKey = MD5(Salt | PassPhrase);
+
+Or for export:
+
+Salt = RNG(128,Seed);
+Temp = MD5(Salt | PassPhrase);
+SessionKey = 
+    (Salt[1..(128 - NumExportBits)] | Temp[(128 - NumExportBits + 1)..128]);
+
+Sounds good, assuming the passphrase is nice and long (i.e. 128 bits, or
+NumExportBits) and MD5 holds up.
+
+If you haven't already, you might want to look at some of the work Hugo
+Krawczyk and some others have been doing on keyed MD5. Their application is
+different (primarily, authentication) but I think many of the concerns are
+similar. Look for draft-krawczyk-keyed-md5-01.txt in the usual places. "It
+is not appropriate to use Internet Drafts as reference material, or to cite
+them other than as a ``working draft'' or ``work in progress''."
+
+Futplex <futplex@pseudonym.com>
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMPLHrCnaAKQPVHDZAQEoNQf/UCk2GwCMDqjodyqqduEUrbcOZFyBXsuV
+RPSUqgo7GcJ7HpPqzgQyEREW71g9iSfpzqMDihjjJK1SJGfKS6dy60wYSbYtNrta
+sEeLWDfpABTW7CgbpYaeDrMug1ASmcRThjeTzRqXyhUiWDFloNw7yASnyzbH4o+M
+cVgwSTTBlvvxpvgOnXtLpr85a14FBBOXlsq5dWcaUW2V0+bt6qsbgeLqTUpCrtn5
+dkzjprekBIxxQOwFh9vSKjXaBdhZAgmzI0nRVOmOBAxj2KSoGHqKwpUmQfx7yZeP
+nJuGUPA0E+hgmPqTBv6e9CQSZmpY+x932YH7jWOrgscS/HQJYLq+4g==
+=nyGN
+-----END PGP SIGNATURE-----
+
+
+
+

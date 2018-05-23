@@ -1,0 +1,73 @@
+From: Jim Gillogly <jim@acm.org>
+Date: Tue, 27 Aug 1996 07:09:23 +0800
+To: cypherpunks@toad.com
+Subject: Re: NSA's Venona Intercepts
+In-Reply-To: <v01540b06ae4781a60981@[172.17.1.61]>
+Message-ID: <199608261720.KAA02103@mycroft.rand.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+smith@sctc.com (Rick Smith) writes:
+>One question that I haven't found answered in my perusals of the site is a
+>definitive statement of the cryptographic technology used by the Soviets. I
+>was re-reading Kahn's 1967 chapter on Soviet crypto and he claimed that
+>they relied primarily on one time pads. In fact, he was pretty specific
+>about them using OTPs for exactly the type of traffic appearing in the
+>Venona archive. But when I look at the partial decrypts in the Venona
+>archive I don't understand how you'd get such partial decrypts from OTPs.
+
+>The intercepts seem to indicate the use of ciphers with some codewords
+>weakly layerd on top. Some intercepts show translations based on the
+>phonetic properties of the extracted Russian plaintext. So I don't think
+>the "unrecovered codegroups" are caused by a classic code that substitutes
+>tokens for word meanings. But you're not going to crack only part of a OTP
+>ciphertext -- presumably you'd need a compromised key tape, and that would
+>either decrypt everything or nothing.
+
+>So they were either really using rotor machines or they were using
+>something else. Any other ideas? Other references?
+
+I too am waiting eagerly for them to show more of the real details of
+decryption; but from what we know so far, the partial decrypts seem quite
+compatible with what NSA says they broke: an underlying code system
+superencrypted with a OTP which occasionally becomes a 2TP.  For example,
+suppose you have two chunks of ciphertext, and you've determined using the
+kappa test that they have a partial overlap (the easy part of the
+process).  You superimpose them as follows:
+
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+and then work on the parts where the a's and b's overlap.  If you know the
+underlying code book (through a decade of previous hard work, or, if you're
+really lucky, finding a partially-burned copy of a codebook in a castle in
+Germany), you can with considerable sweat determine the code groups in
+both messages in the overlapped part, recover that part of the OTP, and
+then drag the recovered OTP through the rest of your traffic looking for
+more matches.
+
+If you don't have a complete code book you may not know what all of the
+code words mean; for example, I've seen no evidence that ALES really does
+stand for ALGER HISS.  In addition, if you have no more overlaps with the
+part at the beginning of message "a" or the end of message "b" above, you
+have no way to determine anything about those parts of the OTPs other than
+the length of the bits you can't read.
+
+These two sources of difficulty seem to me to explain the "unrecovered
+codegroups" you noted: for the long stretches, they didn't have
+overlapping messages to give an entry into the OTP; for individual code
+groups, they didn't have enough context to break that part of the code.
+
+The phonetic stuff you mentioned doesn't cause me heartburn -- a code will
+include syllables or letters, so that concepts that don't have their own
+code group can get assembled out of constituent parts.  Still seems
+consistent to me.
+
+	Jim Gillogly
+	4 Halimath S.R. 1996, 17:08
+
+
+
+

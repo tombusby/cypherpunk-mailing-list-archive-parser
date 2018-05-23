@@ -1,0 +1,55 @@
+From: strick -- henry strickland <strick@versant.com>
+Date: Mon, 4 Jul 94 10:10:25 PDT
+To: Stu@nemesis.wimsey.com (Stuart Smith)
+Subject: recognizing what you've read before
+In-Reply-To: <2e16e391.nemesis@nemesis.wimsey.com>
+Message-ID: <9407041716.AA27191@versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+# Perhaps the EFF people would like to include a little header in
+# their releases explaining the groups/lists which already
+# receive the text automatically and explain the concept of
+
+I've thought about automating this from the user end.
+
+Define some characteristic signature for a paragraph, and some
+way to recognize one inside a text file.
+
+Here's my best approach.  Only pay attention to the letters and
+numbers [A-Za-z0-9].   Treat everything else as white space.
+Use some kind of hashing or checksum to digest the body of
+a paragraph.  Ignoring punctuation and newlines lets you recognize 
+a paragraph even if it is quoted or re-fmt'ed.
+
+Define paragraphs to recognize two different formats:
+
+	1.  Lines with letters, delimited by lines without letters.
+	    That will recognize the format I've used until now,
+	    which I find most readable in email.
+
+   2.   Lines that are indented more than the previous line
+begin new paragraphs.  That will recognize the paragraphs from
+here on.
+   3.  It would probably also help to recognize some important
+things that are not paragraphs of readable text, such as uuencodes
+and C source and unreadable PGP blocks.
+   The idea, of course, is to keep a database of paragraph
+signatures that you have seen, and probably whether or not you
+bothered to read it before.  When a new message arrives, it can
+be characterized like "18% new, 23% read before, 51% skipped before,
+8% not text".
+   You still have the problem of finding truncated paragraphs
+like the one I quoted at the top of this message.
+   Those could be recognized if you did lines instead of
+paragraphs.  It would take some experimentation to fine tune.
+   Finally, a mailing list itself could remember what has been
+sent on it, and attempt to reject large messages of mostly 
+redundant paragraphs.
+
+					>strick<
+
+
+
+

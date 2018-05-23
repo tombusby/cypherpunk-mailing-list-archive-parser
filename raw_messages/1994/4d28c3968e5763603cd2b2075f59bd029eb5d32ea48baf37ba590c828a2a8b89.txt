@@ -1,0 +1,47 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Wed, 14 Sep 94 08:44:27 PDT
+To: a.brown@nexor.co.uk (Andrew Brown)
+Subject: Re: Running PGP on Netcom (and Similar)
+In-Reply-To: <Pine.3.89.9409141257.A10742-0100000@victor.nexor.co.uk>
+Message-ID: <199409141543.LAA25195@bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+| > >	Then, when logged in from a line being sniffed, you would
+| > >invoke PGP -1es ..., and when prompted for your pass phrase you would
+| > >enter 800/something-ugly-that-md5-makes.  PGP would then md5 this 200
+| > >times, and you'd have demonstrated your knowledge of your passphrase
+| > >without ever sending it over a line.  Clearly, PGP would need to store
+| > >the fact that you had used #800, and only accept lower numbers.
+
+| I can see how this gets around the problem of sending cleartext 
+| passphrases over a network, but how does it help stop the problem of the 
+| remote system running a keystroke log that is handed over to the 
+| authorities during a bust?  Armed with 800/some-number they can just type 
+| the same thing into PGP (or a modified copy) and decrypt the files that 
+| you were keeping on-line.
+
+	If they are logging everything, then they have the output of
+your PGP-decryptions.  Unavoidable.  
+
+	If all they have is the 800th md5 of your passphrase, then
+they have a $10m route of attack.  PGP will reject the 800th+ md5 of
+your passphrase.  They need the 799th or lower to get your key.  The
+800th will be rejected by PGP as already used.  (It would have to be
+hashed into your keys somehow to avoid the attackers from just
+resetting the number.  They might be able to do that with backup
+tapes, old copies of your keys, etc.)
+
+	This addresses some attacks; those based on network sniffing.
+Attackers with more resources, such as law enforcement, are
+inconvinienced, perhaps greatly, but not thwarted.  J. Random Cracker
+using network sniffing is thwarted, and I think that in itself is
+worthwhile.
+
+Adam
+
+
+
+

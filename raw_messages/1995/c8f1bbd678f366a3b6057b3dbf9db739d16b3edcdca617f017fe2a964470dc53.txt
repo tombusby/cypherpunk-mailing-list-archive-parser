@@ -1,0 +1,80 @@
+From: aba@dcs.exeter.ac.uk
+Date: Fri, 18 Aug 95 09:08:43 PDT
+To: dan@milliways.org (Dan Bailey)
+Subject: Re: Where is the key cracking farming software?
+Message-ID: <14470.9508181605@exe.dcs.exeter.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Dan Bailey <dan@milliways.org> writes on cpunks:
+> There must be several versions of the code at this point.  The
+> Cypherpunks release, Damien's release and whoever else wrote some code
+> to do the chore.  If someone could pass me a pointer to the version
+> that's best-commented and most understandable (one man's C is another
+> man's crypto) I'd like to port it to Windows NT and write a simple
+> installation to install it as a service.
+
+Yep there's lots of versions of the brutessl software, ones I know of
+(in no particular order):
+
+- Damien Doligez wrote one
+- Andrew Roos wrote on (this is the one we're using for the challenge)
+- Eric Young wrote one
+- I wrote one
+
+More related softwares, specifications etc.
+
+- Piete Brookes, Andy Brown, and I wrote a protocol specification for
+  a SMTP style key doler - SKSP (Simple Key Search Protocol) - draft
+  RFC like document on brute (www url below).
+
+- Piete wrote a unix socket based key server and client for generic
+  unix machines (in perl).
+
+- Andy Brown wrote a Windows NT client which talks the same protocol
+
+- David Byers did a MasPar port of the brutessl code
+
+> 	Perhaps a general-purpose OO bruteforcing library (addition to
+> Crypto++?) would be a good idea.  Just pass a pointers to the
+> encrypt() and decrypt() functions to use for this session to the
+> Cracker object, which in turn takes a number of bits and starts
+> cracking.:)
+
+The socket based key distributer allows you to write clients which
+interact with the key server.  Take a look at Andy's code.
+
+> 	The problem with this is the disparity among out-of-the-box encrypt
+> and decrypt functions.  But I suppose it's nothing that couldn't be
+> overcome with wrapper functions.  Just thinking out loud. :)
+
+Not sure how Andy addresses this in the NT code (I don't have NT), but
+for the unix client you'd just get another brute force program,
+compile it and update the client.
+
+Piete has a WWW URL for the software (the protocol spec is there too) at:
+
+	http://www.brute.cl.cam.ac.uk/brute/
+
+(Brute is a subsubdomain he set up for the purpose).
+
+Also this:
+
+	ftp://ftp.brute.cl.cam.ac.uk/pub/brute/
+
+should work.
+
+And the socket server runs on: sksp.brute.cl.cam.ac.uk (port 19957).
+
+I think we're ready to start another challenge, this one a
+collaborative project like the brute rc4 one.  Just need some
+challenges now (asked Hal about this).
+
+Adam
+
+
+
+
+

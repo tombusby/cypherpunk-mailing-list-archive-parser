@@ -1,0 +1,44 @@
+From: Frank Andrew Stevenson <frank@funcom.no>
+Date: Thu, 30 Nov 1995 03:47:42 +0800
+To: Joel McNamara <joelm@eskimo.com>
+Subject: Re: Microsoft weak encryption
+In-Reply-To: <199511291447.GAA19250@mail.eskimo.com>
+Message-ID: <Pine.SGI.3.91.951129200230.29189B-100000@odin>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I have been able to verify the key generation for the
+.pwl file, and sucessfully decrypted one, the contets
+is really suited for a known plaintext attack as the
+first characters appears to be the USERNAME in capitals
+padded with 0x00 to a total field size of 20,
+I have written software to bruteforce this field, but without
+optimizing I have a running time of 130 hours (Pentium 66)
+
+An interesting observation: If the password is shared with a UNIX
+fileserver (8 letters) once the 32 bit RC4 key is found guessing the
+last 4 letters of the password will reveal the remaining letters.
+This will then greatly reduce the keyspace needed to crack the UNIX
+password (you need to guess the case of the password though - (2^8) )  
+
+> Peter Gutmann has an interesting article in sci.crypt, demonstrating how
+> weak Microsoft's encryption is with basic access control in Windows for
+> Workgroups (I'm assuming Win95 uses the same algorithm).  Essentially, he
+> shows how a 32-bit key is created to be passed to RC4 for encrypting .PWL
+> files.  I think a t-shirt is definitely in order for this.
+> 
+> Anyone up for writing some bruting code?
+> 
+> Joel
+> 
+
+#include <std/disclaimer.h> 
+E3D2BCADBEF8C82F A5891D2B6730EA1B PGPencrypted mail preferred, finger for key
+
+
+
+
+
+

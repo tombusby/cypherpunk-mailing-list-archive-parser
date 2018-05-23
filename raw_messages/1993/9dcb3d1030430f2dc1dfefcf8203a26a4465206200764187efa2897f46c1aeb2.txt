@@ -1,0 +1,43 @@
+From: Marc.Ringuette@GS80.SP.CS.CMU.EDU
+Date: Tue, 23 Feb 93 10:56:17 PST
+To: cypherpunks@toad.com
+Subject: anonymous return addresses
+Message-ID: <9302231856.AA13893@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The recent penet troubles are a reminder that secure anonymous return
+addresses are a lot harder than secure anonymous mail with no return
+capability.  Maybe it's time to go over the options available to us
+for anonymous return?
+
+  1. Remailer memorizes a pseudonym.  I don't like this, mainly because
+     it leaves the remailer operator vulnerable to pressure to reveal
+     the correspondence between real and anonymous id's.  It
+     also opens up about a million possible security holes, as
+     we've noticed.
+
+  2. The anonymous message includes a cryptographic "stamped
+     self-addressed envelope" which contains a layered list of
+     remailer addresses encrypted at each layer.  This requires
+     modified behavior of remailers; they must be willing to "unwrap"
+     an address-list separately from the message body, and then
+     "wrap" the entire message with the destination's public key,
+     in order to disguise the correspondence between input and output.
+     I think this has been discussed here before.  Has anyone
+     implemented it?
+        I strongly suggest that this method be implemented in
+     the cypherpunks remailers.  Let's call it the SASE feature.
+     What do you think?
+
+  3. The reply to an anonymous message can be posted in a public place
+     encrypted for a key known only to the sender.
+
+Have I missed any important methods?
+
+-- Marc Ringuette (mnr@cs.cmu.edu)
+
+
+
+

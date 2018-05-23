@@ -1,0 +1,43 @@
+From: Jonathan Corbet <corbet@stout.atd.ucar.EDU>
+Date: Sun, 13 Feb 94 17:41:15 PST
+To: cypherpunks@toad.com
+Subject: Spread encryption with telnet?
+Message-ID: <199402140135.SAA04509@stout.atd.ucar.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The current furor over people with password sniffers on the Internet made
+me think of another possible option for spreading the use of encryption on
+the net.  As everbody knows, the problem is with the passing of plaintext
+passwords over the net.  Get rid of these passwords, and the crackers have
+to go back to the other 99999 ways of breaking into machines.
+
+It couldn't be very hard to grab a version of telnet and telnetd off the
+net and hack in some sort of encryption of the data stream.  Heck, you
+could just use the vendor's DES library on systems that have it -- perhaps
+not the most aesthetic solution, but easy.  Put in a negotiation option so
+that encryption will be used when both ends support it, and you have
+instant plug-in relatively secure telnet.
+
+As a bonus, you get your whole session encrypted, not just the password.
+It seems like it could be much easier to install than, say, kerberos, and
+offer more security.  I would guess that if you made something like this
+available and EASY, that lots of people would install it on their machines.
+Folks are a little nervous right now, and a sniff-proof telnet might make
+them feel better.
+
+If I made a telnet that simply hooked into a vendor's encryption library,
+with no internal encryption code, would I have ITAR problems still?  That
+may be moot, since any vendor encryption library almost certainly will not
+address the problem of coming up with a session key, so probably some sort
+of key exchange protocol would have to be put in.
+
+Overall, this seems easy and useful enough that I'm amazed that nobody has
+done it yet.  Have I missed something?
+
+jon
+
+
+
+

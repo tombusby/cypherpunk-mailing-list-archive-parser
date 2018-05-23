@@ -1,0 +1,63 @@
+From: Matthew James Sheppard <Matthew.Sheppard@Comp.VUW.AC.NZ>
+Date: Tue, 26 Sep 95 06:29:22 PDT
+To: cypherpunks@toad.com
+Subject: Re: WSJ on Netscape Hole 3
+In-Reply-To: <199509252300.QAA29812@infinity.c2.org>
+Message-ID: <199509260102.NAA09663@bats.comp.vuw.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The shadowy figure took form and announced "I am sameer and I say ...
+> > On Mon, 25 Sep 1995, John Young wrote:
+> > 
+> > >    The Wall Street Journal, September 25, 1995, p. B12.
+> > 
+> > >    Marc Andreessen, vice president of technology at Netscape,
+> > >    said the company will issue fixes for the recent glitches
+> > >    later this week. He added that it's unclear whether
+> > >    anything other than temporarily crashing a user's computer
+> > >    could result trom the recent flaw. 
+> > 
+> > Oh Marc, you didn't really want to say that, did you?
+> > 
+> > -Thomas
+> 
+> 	He's -asking- for an exploit. Tshirts to Ray and the person who
+> does the exploit, if it gets written. Maybe I should just ring up 8lgm and
+> have them do one.
+
+It isn't simple, you need to know the absolute address of where the
+supplied code will be and alter the return address on the stack to
+that address.
+
+With NCSA HTTPD 1.3 and with fingerd (re internet worm) the stack was
+always in a known state when the buffer overwrite occurred, thus the
+absolute address of attacking code is static and placed at the correct
+stack location.
+
+With Netscape 1.1 the state of the stack is much more dynamic, in
+particular the user can be viewing documents at an arbitary depth in
+the "web tree", each recursion will increase the stack pointer (or
+decrease with some architectures) There is no way of knowing for
+certain where you code will end up and thus no way to reliably alter
+the return address on the stack to execute your arbitary code.
+
+You could always gamble on popular states, like when the first url
+fetched by the browser.  Also you could direct execution to any
+routine in the netscape binary (with unknown arguments) .  The most
+detrimental offhand would be deleting the bookmarks file (whoopee) And
+with Netscape 2 comming RSN I wouldn't waste too much time.
+
+--
+                                          <URL:http://www.comp.vuw.ac.nz/~matt>
+                 |~    |~
+             |~ o|    o|
+       ('<  o| 
+      ,',)   
+     ''<<    
+     ---""---
+
+
+
+

@@ -1,0 +1,29 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 13 Jul 95 12:46:37 PDT
+To: cypherpunks@toad.com
+Subject: Re:  SSL RC4 challenge
+Message-ID: <199507131945.MAA02875@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Hal <hfinney@shell.portal.com>
+> Here is a challenge to try breaking SSL using the default exportable
+> encryption mode, 40-bit RC4.
+> [...]
+
+It has been pointed out to me that I made a mistake in my analysis of the
+SSL packets.  The MAC at the beginning of the encrypted packets is itself
+RC4 encrypted.  That means that the 17 bytes of known plaintext start 16
+bytes into the stream, not at the beginning as I thought.  This just
+means that after key setup, RC4 has to be cycled 16 times before we start
+comparing its output with the XOR of the known plaintext and ciphertext.
+
+I'll produce a revision of my "challenge".  If no other mistakes are
+found I'll post it to sci.crypt.
+
+Hal
+
+
+
+

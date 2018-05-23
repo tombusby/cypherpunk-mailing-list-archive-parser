@@ -1,0 +1,154 @@
+From: nobody@shell.portal.com
+Date: Fri, 4 Feb 94 15:55:19 PST
+To: cypherpunks@toad.com
+Subject: For Pr0duct Cypher: faster mp_inv
+Message-ID: <199402042353.PAA17274@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Pr0duct Cypher wrote:
+
+> How big should the blinding factor be? I am not sure. Right now, it is set
+> to the modulus minus one byte. This is certainly secure, but it takes a
+> long time to unblind because mp_inv is a slow operation. If you know how
+> long it needs to be, feel free to change it.
+
+PGP's mp_inv is needlessly slow.  It works OK for the little numbers
+they normally use ("e" exponents) but bogs down for big numbers.
+Fortunately I wrote a fast version of mp_inv some time ago just for
+this application (blinding).  You might say it is "blindingly" fast!
+
+Here it is, from my private copy of pgp source.  With this you can
+choose anything for your blinding.  You will probably want to change
+it to use your safemalloc.
+
+
+#ifdef OLD_MPINV
+/* Replaced by a faster routine, below */
+void mp_inv(unitptr x,unitptr a,unitptr n)
+	/* Euclid's algorithm extended to compute multiplicative inverse.
+	   Computes x such that a*x mod n = 1, where 0<a<n */
+{
+	/*	The variable u is unnecessary for the algorithm, but is 
+		included in comments for mathematical clarity. 
+	*/
+	short i;
+	unit y[MAX_UNIT_PRECISION], temp[MAX_UNIT_PRECISION];
+	unit gcopies[3][MAX_UNIT_PRECISION], vcopies[3][MAX_UNIT_PRECISION];
+#define g(i) (  &(gcopies[i][0])  )
+#define v(i) (  &(vcopies[i][0])  )
+/*	unit ucopies[3][MAX_UNIT_PRECISION]; */
+/* #define u(i) (  &(ucopies[i][0])  ) */
+	mp_move(g(0),n); mp_move(g(1),a);
+/*	mp_init(u(0),1); mp_init(u(1),0); */
+	mp_init(v(0),0); mp_init(v(1),1);
+	i=1;
+	while (testne(g(i),0))
+	{	/* we know that at this point,  g(i) = u(i)*n + v(i)*a  */	
+		mp_udiv( g(iplus1), y, g(iminus1), g(i) );
+		mp_mult(temp,y,v(i)); mp_move(v(iplus1),v(iminus1)); mp_sub(v(iplus1),temp);
+	/*	mp_mult(temp,y,u(i)); mp_move(u(iplus1),u(iminus1)); mp_sub(u(iplus1),temp); */
+		i = iplus1;
+	}
+	mp_move(x,v(iminus1));
+	if (mp_tstminus(x))
+		mp_add(x,n);
+	mp_burn(g(iminus1));	/* burn the evidence on the stack...*/
+	mp_burn(g(iplus1));
+	mp_burn(v(0));
+	mp_burn(v(1));
+	mp_burn(v(2));
+	mp_burn(y);
+	mp_burn(temp);
+#undef g
+#undef v
+}	/* mp_inv */
+
+#else /* OLD_MPINV */
+
+/* Faster mp_inv, based on "Fast Multiplicative Inverse in Modular
+ * Arithmetic", J. Gordon, in Cryptography and Coding, edited by
+ * Henry J. Beker and F.C. Piper, 1989.
+ * The mapping from the variables in that paper to our variables is,
+ * roughly, M->n, X->a, HCF->u(iminus1), U->u(i), temp->u(iplus1),
+ * INV->v(iminus1), V->v(i), temp->v(iplus1).  We rotate the assignment to temp
+ * and INV in their 2nd block of code.
+ */
+void mp_inv(unitptr x,unitptr a,unitptr n)
+	/* Euclid's algorithm extended to compute multiplicative inverse.
+	   Computes x such that a*x mod n = 1, where 0<a<n */
+{
+	/*	The variable u is unnecessary for the algorithm, but is 
+		included in comments for mathematical clarity. 
+	*/
+	int shifts;
+	int i = 1;
+	int enterloop;
+	unit vcopies[3][MAX_UNIT_PRECISION], ucopies[3][MAX_UNIT_PRECISION];
+#define u(i) (  &(ucopies[i][0])  )
+#define v(i) (  &(vcopies[i][0])  )
+/* Modify this to do one division at the beginning.  That makes it faster.
+	mp_move(u(0),n); mp_move(u(1),a);
+	mp_init(v(0),0); mp_init(v(1),1); mp_init(v(2),1);
+ */
+	mp_move(u(0),a); mp_init(v(0),1);
+	/* Init U to n%a, V to -n/a. */
+	mp_udiv(u(1), v(1), n, a); mp_neg(v(1)); mp_move(v(2),v(1));
+	do {
+		enterloop = 0;
+		shifts = -1;
+		if (mp_compare(u(i),u(iminus1)) > 0)	/* if U > HCF then */
+			mp_init(u(iplus1),0);
+		else {
+			enterloop = 1;
+			mp_move(u(iplus1),u(i));			/* temp := U */
+			while (mp_compare(u(iplus1),u(iminus1)) <= 0) {	/* temp<=HCF */
+				++shifts;
+				mp_shift_left(u(iplus1));		/* leftshift(temp,1) */
+			}
+			mp_shift_right_bits(u(iplus1),1);	/* rightshift(temp,1) */
+		}
+		mp_sub(u(iminus1),u(iplus1));			/* temp := HCF - temp */
+		mp_move(u(iplus1),u(iminus1));
+
+		i = iplus1;		/* V := tempV, tempV := INV, INV := V, */
+						/* U := tempU, tempU := HCF, HCF := U; */
+						/* (All simultaneous) */
+
+		if (enterloop) {
+			while (shifts--)
+				mp_shift_left(v(i));			/* leftshift(V,shifts) */
+			mp_sub(v(iplus1),v(i));				/* temp = temp - V */
+		}
+		mp_move(v(i),v(iplus1));				/* V := temp */
+	} while (testne(u(i),0) && mp_compare(u(i),u(iminus1))!=0);
+	mp_move(x,v(iminus1));
+	if (mp_tstminus(x))
+		mp_add(x,n);
+	mp_burn(u(0));	/* burn the evidence on the stack...*/
+	mp_burn(u(1));
+	mp_burn(u(2));
+	mp_burn(v(0));
+	mp_burn(v(1));
+	mp_burn(v(2));
+#undef u
+#undef v
+}	/* mp_inv */
+#endif /* OLD_MPINV */
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1e
+
+iQCVAgUBLVLeoArkCJ6S8691AQH9/QP+LRZ4oXiwNTUkpK7/4uJWhvJCLHPsCNsR
+YXruZCgY1448DRpbNV4PCtFg/GhDqvJpsWtWOy3lFZIO9zxrDb/tsIfruIJJZr0w
+lpWhhY+xUJNQYuqgu69EOY2IhJPiyZ+AyMuE4uYscuxEKmAEdLm/BAypX1zNplue
+NdURpM+pPw4=
+=f7BH
+-----END PGP SIGNATURE-----
+
+
+
+

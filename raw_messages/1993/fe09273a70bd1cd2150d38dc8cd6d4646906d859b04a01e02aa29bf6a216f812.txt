@@ -1,0 +1,41 @@
+From: Mike Ingle <MIKEINGLE@delphi.com>
+Date: Sun, 5 Sep 93 22:51:09 PDT
+To: cypherpunks@toad.com
+Subject: Trusted timestamps
+Message-ID: <01H2LZYT94GA935IO5@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There are a lot of additions being talked about for the remailers, and
+timestamping is another which could be put in. With commercial PGP coming
+out, people may soon be doing "real business" using PGP. In this case,
+timestamps can be a problem. A simple example: you sign an electronic
+contract with someone. Before signing, you set your date a month ahead.
+The other person doesn't stop to notice it - many people have trouble
+translating numeric dates to month names anyway - and accepts the contract.
+Two weeks later, you revoke your key. He can't enforce the contract because
+it was made two weeks after your key was revoked. There are plenty of
+problems which can be caused by modified timestamps.
+
+One means of protection would be to have future PGP's detect and warn of
+postdated timestamps when a signed message is checked. Another would be to
+use remailers to create trusted timestamps. The remailer would have a key
+labeled < Remailer xx timestamp >. Timestamped messages would not
+necessarily be anonymized.
+
+There are several ways this could work. You could send a message to a
+remailer and get back a detached signature certificate. Or the remailer
+could sign the message and send it on its way. Ideally the remailer would
+detect a PGP message, de-armor it, sign the .PGP file, re-armor it, and pass
+it on. This way, PGP would automatically check all the signatures on the
+received message. You could bounce a message through several remailers and
+onto its destination, acquiring several timestamps along the way. Or bounce
+it back to yourself to create a poor-man's copyright.
+
+                           -- MikeIngle@delphi.com
+  
+
+
+
+

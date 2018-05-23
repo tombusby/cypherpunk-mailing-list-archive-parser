@@ -1,0 +1,58 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Tue, 27 Dec 94 16:17:16 PST
+To: cypherpunks@toad.com
+Subject: Re: Making sure a program gets to the receiver intact
+Message-ID: <9412280015.AA22592@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Eric writes:
+
+>    From: an169306@anon.penet.fi
+>    How can I insure a program, once put on FTP sites stays untampered with?
+> 
+> The best solution is not digital signatures but rather digital
+> timestamping.  The question is not persistence of authorship but
+> rather persistence through time.  
+> [Discussion of the implications of getting your keys hacked, over time]
+
+Some good points, but on the whole I'll disagree.  Either way, the solution 
+pretty much comes down to "eternal vigilance"....
+
+The interesting technique that digital timestamping provides is that it
+lets you show that the version you claim you posted to the ftp site
+got there before the [different] version that's there now.
+To use that technique, either you need to broadcast the details of the
+digital timestamping in an unhackable public fashion, or else someone
+who wants to validate the archived data needs to check with you
+to be sure that they have a good checksum matching your timestamp.
+
+An ftp server *could* timestamp each incoming document, keeping the
+master timestamp data in an un-hackable location, and post the current 
+timestamps for the current time period [e.g. day] in the (hackable) archive,
+and then register the day's timestamp file with a notary service
+so you can be sure that the file hasn't been compromised later.
+
+On the other hand, without signatures, it's not too hard for a Bad Guy
+to store bogus files on the server and get them timestamped too -
+the user needs a good way to check for previous editions of the 
+document in the timestamp file.  With digital signatures,
+at least a given file has some internal consistency.
+
+>    The holes:
+>    1:  Someone hacking the keyservers, substituting a key for all the people
+>        who signed, and modifing the archive to show that.
+That's why keyservers are inherently non-trustable; the trust comes from
+the Web of Trust connections you have, though a keyserver run by a 
+widely-trusted person carrying only keys signed by him/her/it is stronger.
+
+>    2:  Someone breaking into my apt, sticking a keyboard monitor on, getting
+>        my passphrase and key.
+Yup.  That's a problem with signatures.
+
+		Bill
+
+
+
+

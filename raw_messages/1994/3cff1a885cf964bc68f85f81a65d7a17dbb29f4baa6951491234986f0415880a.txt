@@ -1,0 +1,77 @@
+From: garet.jax@nitelog.com (Garet Jax)
+Date: Sat, 5 Feb 94 11:15:40 PST
+To: cypherpunks@toad.com
+Subject: Remailer Tearline Variant
+In-Reply-To: <9401312103.AA02297@toad.com>
+Message-ID: <cb.61665.10.0CD03BF5@nitelog.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Eli ebrandt@jarthur.claremont.edu said:
+>Bill Stewart said:
+>> Julf's anon.penet.fi remailer  cuts off anything resembling a signature,
+>> using the convention that a -- line (or maybe an all-dash line?)
+>> is a signature, since some of the common mail and news programs use that,
+
+>Picking any fixed sig marker is likely to cause problems -- notice
+>how often anon.penet.fi messages show up truncated due to a line of
+>hyphens.  A more flexible possibility: allow an X-Sig-Marker: header,
+>which specifies a pattern/regexp to strip after.  Actually, the
+>sig marker line itself should be stripped as well, in case it
+>contains identifying information.
+
+>> formal and mimeish, or a simpler '--truncate here--' sort of line
+>> that gets retained across remailing so additional junk doesn't accrete.
+
+>I don't see the problem you're guarding against.  Could you explain?
+>Seems that sig elision needs to be done once, by the first hop, and
+>then you're home free.
+
+Actually a variation on this '--truncate here--' scheme might solve the
+user-selected multiple-remailer scheme that we're trying to get up here.
+Place the 'truncate' or '::'  line at the beginning of your message,
+just after the last local header line.  Then add routing instructions
+for the remailer.  Then maybe another 'truncate' message followed by
+more routing instructions for the next remailer chosen.  Then a blank
+line and your message.
+
+BEGIN example:
+
+From: [me]
+Message-Id: <[number]@[mysite]>
+To: hh@cicada.berkeley.edu
+Subject: Hi there!
+
+::
+
+Request-Remailing-To: hh@pmantis.berkeley.edu
+
+::
+
+Request-Remailing-To: elee7h5@rosebud.ee.uh.edu
+
+::
+
+Request-Remailing-To: cypherpunks@toad.com
+
+Eli ebrandt@jarthur.claremont.edu said:
+>Bill Stewart said:
+>> Julf's anon.penet.fi remailer  cuts off anything resembling a signature,
+>> using the convention that a -- line (or maybe an all-dash line?)
+>> is a signature, since some of the common mail and news programs use that,
+...
+
+END example
+
+Each remailer would only strip off the first 'Request-Remailing-To:'
+instruction in the message.  The remailer would assume that anything
+following that was part of the message, until it reached the signature,
+which it would truncate.  Then it would remail the new 'message' as
+requested.
+
+
+
+
+

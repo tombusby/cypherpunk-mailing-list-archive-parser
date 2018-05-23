@@ -1,0 +1,39 @@
+From: Istvan Oszaraz von Keszi <vkisosza@acs.ucalgary.ca>
+Date: Wed, 6 Apr 94 00:05:11 PDT
+To: cypherpunks@toad.com
+Subject: Rubbish Lister
+Message-ID: <9404060706.AA83559@acs5.acs.ucalgary.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've been following the remailer debate, and have found it's
+easier to understand in code.  Right now, I am trying to find a
+regular expression which unfolds the from line.  All it
+does is parse on the message using ::<cr><lf> for a command
+block.
+
+(That should finish up the first parse.)
+
+It keeps a subject from the header but overwrites it.  And it
+keeps track of who sent the mail in case they want something sent
+back.  It looks for /^command/ in the command block (it reads in
+lines of 2) and acts accordingly.  (To: is understood, but
+unfolding the rest?????)  It also sends an operator message based
+on log and debugging levels.
+
+I'm editting this code myself, both so that I understand it and
+can maintain it.  My problems are twofold, first,  the operator 
+can look at the messages.  Although, why would anyone want to, 
+given the risks? Second, PGPPASS on a multi-user system gives 
+a false sense of security.  Definitely, not a feature.
+
+So, I've got skeleton code, which way to turn, how to flesh it out.
+
+--
+
+"My memory is so bad, that many times I forget my own name!"
+
+
+
+

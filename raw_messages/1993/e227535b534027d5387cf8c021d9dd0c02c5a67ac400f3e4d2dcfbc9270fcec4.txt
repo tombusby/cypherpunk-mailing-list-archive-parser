@@ -1,0 +1,38 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Sat, 11 Dec 93 12:07:07 PST
+To: loki@cass156.ucsd.edu
+Subject: Re:  Improved DH system.
+Message-ID: <9312111911.AA04684@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Unfortunately, you can't really do a brainless black box phone with
+security that's much better than Diffie-Hellman (The "send half the key
+at a time" variant is somewhat better, but still can be tampered with.)
+The problem is that to do better security, you need some way to 
+authenticate the Diffie-Hellman exchange.  One way is to have a display
+on the phone which shows the data received, and read it to the other person
+(which is secure, but not brainless).  Another way is to use digital signatures
+such as RSA on the Diffie-Hellman key parts, which requires some mechanism
+for users to create keys and distribute them securely, also non-brainless.
+One way to do this would be to use a central key-distribution server,
+perhaps based on phone serial number or telephone number or whatever,
+but that requires a lot of complexity, extra phone calls, etc.;
+this compromises a certain amount of security, though if it's implemented
+well enough to be non-spoofable, the major risks are the insecurity
+that comes from registration and the ability of people who compromise
+the keyserver (i.e. the government or keyserver-operator) to send
+incorrect public keys to wiretap victims allowing man-in-the-middle attacks.
+
+Another way that's not quite brainless would be to have public keys
+generated in the phone for signatures, and allow users who want to to exchange
+keys; you could build some relative of an automatic web of trust if you
+put enough memory in the phones, but then you'd have to provide memory management
+etc. which is distinctly not in the brainless category.
+
+		Bill
+
+
+
+

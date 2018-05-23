@@ -1,0 +1,50 @@
+From: yanek@novavax.nova.edu (Yanek Martinson)
+Date: Fri, 27 Nov 92 21:00:47 PST
+To: gnu@toad.com  (John Gilmore)
+Subject: Alternative to physically meeting
+In-Reply-To: <9211280415.AA12997@toad.com>
+Message-ID: <9211280500.AA08808@novavax.nova.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> person identified in the name field".  Don't sign someone's key unless
+> you are sure you can make that statement (like, they're standing in the
+> same room with you and they verify that they key ID matches their real key).
+> Don't sign a key that you received by email or over a modem; it might
+> be from someone impersonating your friend (when they left their keyboard
+
+Here's an alternative method if you know the person (know them well
+enough to recognize the voice on the phone):
+
+You transfer the key over a non-trusted channel such as electronic
+mail..  Then both of you run a secure hash function (for example MD5)
+on the key.  The result (128bits in the case of MD5) is then converted
+to alphanumerics using something like base64.  In the case of 128bit
+hash, you end up with 22 character verification code.
+
+Then you call each other up on the phone, and spell out the 22 letters 
+and verify they match what you independently computed.  If they do,
+that means the key transferred over e-mail is correct.
+
+This is of course susceptible to the kind of attack where someone stands
+with a gun pointed at you and makes you give the wrong key, but that
+attack can also be done if meeting in person.  I.e. someone tells you they
+are going to kill you as soon as you step out of the room if you don't give
+the compromised key.
+
+But at least with this attack one of the persons knows they key is 
+no good, and you will avoid using it for sensitive material.
+
+Can you think of any other attack that this method is susceptible to?
+
+
+--
+Yanek Martinson    mthvax.cs.miami.edu!safe0!yanek     uunet!medexam!yanek
+this address preferred -->> yanek@novavax.nova.edu <<-- this address preferred
+Phone (305) 765-6300 daytime   FAX: (305) 765-6708  1321 N 65 Way/Hollywood
+      (305) 963-1931 evenings       (305) 981-9812  Florida, 33024-5819
+
+
+
+

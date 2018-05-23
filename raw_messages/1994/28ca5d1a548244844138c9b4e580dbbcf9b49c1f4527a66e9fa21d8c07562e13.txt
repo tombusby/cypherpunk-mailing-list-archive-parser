@@ -1,0 +1,47 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Tue, 17 May 94 22:42:51 PDT
+To: klbarrus@owlnet.rice.edu
+Subject: Rabin
+In-Reply-To: <9405170239.AA23367@flammulated.owlnet.rice.edu>
+Message-ID: <9405180544.AA05445@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Karl posted a good answer about square roots modulo a Blum integer.
+I'd like to explain some of the context for this math.
+
+Recall that a multiplicative group modulo n=pq is the product of two
+multiplicative groups modulo p and modulo q.  That is,
+
+	Z^*/nZ =~= Z^*/pZ  x  Z^*/qZ
+
+(The superscript asterisks denote multiplication.)  So an element of
+Z/nZ can be represented by an ordered pair of residues mod p and mod
+q.  This same situation explains why there is another decryption
+exponent in RSA, a previous thread.
+
+Anyway, if p is prime, then every square mod p has two square roots.
+When p = 3 (mod 4), these square roots are easy to find.  See the
+article in the current MAA Monthly for a discussion of the other case.
+If <m,n> is a square in Z/nZ, then each component m and n must also be
+a square.  Thus if <m,n>=<a^2,b^2>, there are four possible square
+roots <a,b>, <a,-b>, <-a,b>, and <-a,-b>.  These are additive inverses
+in one pairing and conjugates in the other.
+
+For completeness, it should be noted that the set of all squares of a
+group is a subgroup.  The commutative case is easy; the
+non-commutative case is much harder.  It is a good exercise to
+calculate some square groups, to see how they generally behave, for
+example, properties about their sizes.
+
+Karl's explanations of using the Chinese remainder theorem to get the
+canonical representations is fine, as is his observation about the
+error in Schneier's text, although n-x = x (mod n), so the "n -" part
+is unnecessary.
+
+Eric
+
+
+
+

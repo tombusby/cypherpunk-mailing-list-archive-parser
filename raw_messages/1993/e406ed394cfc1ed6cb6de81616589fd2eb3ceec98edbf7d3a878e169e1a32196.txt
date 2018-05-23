@@ -1,0 +1,49 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Tue, 13 Apr 93 08:41:42 PDT
+To: cypherpunks@toad.com
+Subject: how secure is secring.pgp?
+In-Reply-To: <9304130236.AA01768@hodge>
+Message-ID: <9304131538.AA14939@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I've-forgotten-who writes:
+>> Since we need a passphrase to access our secret key, it is
+>> reasonable to think that our secring.pgp file is pretty secure, as
+>> long as our passphrase is notrivial.  What am I missing here?
+
+There are two security items here.  The first is that the secret RSA
+key nott be revealed.  The second is that the name attached to that
+key pair not be revealed.
+
+Derek writes:
+>The secret key on the secring.pgp is IDEA-encrypted... So, it is only
+>as strong as IDEA, and your passphrase.
+
+This protection applies to the first criterion--your secret key is not
+revealed.  No one can steal your key and impersonate you.
+
+The second datum, name attached to a key, is protected only by one's
+sole possession of the secring.pgp file.  If you are using a
+pseudonym, and using an RSA signature to enforce it, and doing thing
+with this pseudonym that you don't want identified with you, then
+you'd better make sure that secring.pgp file is not discovered on your
+machine.  The format of the keyring file is such that the name
+attached to a key is in the clear.
+
+This is really a huge hole.  Since secret keys are presumed to be in
+the possession of only those who actually use the keys, possession of
+a secret key on the secring.pgp is tantamount to proof that you are
+that pseudonym.
+
+In short: everything about a secret key ring should be encrypted.
+
+A parallel (not as consequential): everything about a public key ring
+should be encrypted.
+
+Eric
+
+
+
+

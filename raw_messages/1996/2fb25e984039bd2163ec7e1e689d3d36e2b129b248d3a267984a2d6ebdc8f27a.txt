@@ -1,0 +1,41 @@
+From: Mike Fletcher <fletch@ain.bls.com>
+Date: Tue, 23 Apr 1996 01:29:18 +0800
+To: cypherpunks@toad.com
+Subject: Re: java security
+In-Reply-To: <v02120d1dada0c4c8e7c4@[192.0.2.1]>
+Message-ID: <9604221338.AA04168@outland.ain_dev>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> >A couple of glitches I've gotten from Javascripts are poorly
+> >(purposely?) written applets that crash. One kept printing a modal
+> >dialog box continuously, the result being a need to reboot the
+> >computer because there was no way to exit Netscape or Windows.
+>
+> I can confirm this. Under Win95, I have seen applets that keep running
+> after the browswer instance that loaded has been closed. Even run over
+> other applications windows, leaving aninmated artifacts on the screen.
+> Sometimes only the power switch will do. I thought that the applets weren't
+> supposed to be able to wander out of their memory space...
+
+	Applets (let alone javascript) should have no way to exist
+once you kill the Netscape that is running the Java interpreter.  It
+is possible for applets to keep running in their own thread even after
+you've left the page they're loaded from, but once you kill the
+browser the VM should get shut down (the whole browser, not just a
+particular window).  I can't think of any way that an applet could
+keep going once the VM stops.
+
+	As for the original dialog thing, couldn't you C-A-Del it
+to get the task window up and then shutdown the offending NS task?
+
+---
+Fletch                                                     __`'/|
+fletch@ain.bls.com  "Lisa, in this house we obey the       \ o.O'    ______
+404 713-0414(w)      Laws of Thermodynamics!" H. Simpson   =(___)= -| Ack. |
+404 315-7264(h) PGP Print: 8D8736A8FC59B2E6 8E675B341E378E43  U      ------
+
+
+
+

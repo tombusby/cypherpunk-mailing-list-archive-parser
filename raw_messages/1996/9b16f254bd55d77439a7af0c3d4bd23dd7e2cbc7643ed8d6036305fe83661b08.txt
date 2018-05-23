@@ -1,0 +1,41 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Sun, 14 Jan 96 20:39:30 PST
+To: Peter Wayner <pcw@access.digex.net>
+Subject: Re: Bignum support added to XLISP 2.1h
+In-Reply-To: <v02130502ad193fbd1b75@[199.125.128.5]>
+Message-ID: <9601150438.AA22146@cfdevx1.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+    Date: Wed, 10 Jan 1996 11:26:49 -0500
+    From: Peter Wayner <pcw@access.digex.net>
+    
+    Many cypherpunks might enjoy programming in XLISP 2.1h because the freely
+    available implementation of LISP now offers support for BIGNUMS. That means
+    it is quite easy to write cryptographic algorithms that use very large
+    numbers without adding extra support. The downside is that the language is
+    interpretted and thus much slower than something like C.
+
+This is good to hear.  However it's also worth noting that a number of
+other freely available lisps, e.g. CLISP, gcl (previously kcl and
+akcl) and CMU Common Lisp, also support bignums.  CMU Common Lisp has
+the disadvantage of not being as portable as the others, but has the
+advantage of compiling to native code on supported architectures which
+include Sparc, Pmax, and HP.
+    
+    It should also be possible to write RSA in a very short XLISP program. I
+    don't know if you can do 4 lines, but it should be quite short.
+
+Yup.  I've written some code that generates large numbers, tests for
+primality and does RSA.  The basic RSA enclode is just (mod-expt m e
+n) and decrypt is (mod-expt c d n) where mod-expt is just an optimized
+version of (mod (expt x p) n), ala Schneier, page 200 (1st edition).
+Even with CLISP (compiles to a byte code which is then interpreted),
+I've generated RSA keys in the range that PGP deals with.
+
+			Rick
+
+
+
+

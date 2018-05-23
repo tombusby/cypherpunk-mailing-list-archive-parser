@@ -1,0 +1,48 @@
+From: Ian Goldberg <iang@cory.EECS.Berkeley.EDU>
+Date: Tue, 21 Nov 95 13:47:02 PST
+To: cypherpunks@toad.com
+Subject: ecash protocol: Part 1
+Message-ID: <199511212146.NAA11456@cory.EECS.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Well, I dropped off the net for a few days due to a midterm, but I'm
+back now...
+
+Last week, I was taking a look at the ecash protocol (no, I don't have a copy;
+I have a binary, which I can't even run...).  
+
+I've managed to decipher a useful bit of the first message sent from
+the shop to the payer.  It's the Payment Request, and contains the following
+information:
+
+o Header identifying packet as Payment Request
+o The integer 4
+o The payment amount, in cents
+o The time (seconds since 1970)
+o The integer 79
+o The name of the shop (payee)
+o A description of the item being paid for
+o An empty string
+o The integer 0
+o End of Record marker
+
+I don't know what the 4, 79, empty string, and 0 are for.  I assume one
+of them (probably the 4) is some indication of currency (US cents).
+I can provide a byte-level description of the record, if people want.
+
+I guess the important bit is that the payee, the item being bought,
+and the cost are sent _in the clear_.  Some of the people I've talked
+to think this is a huge privacy breach, and some don't.  You all can
+debate this now.  Lucky can, if he wishes, add insight, and/or tell us
+what DC may do about this.
+
+I'll try to figure out the rest of the fields, and some of the other
+messages (like the payment itself).
+
+   - Ian "Why exactly isn't DigiCash releasing the protocol?  What about
+	    the source?"
+
+
+

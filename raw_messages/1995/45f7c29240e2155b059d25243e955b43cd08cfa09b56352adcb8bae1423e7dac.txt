@@ -1,0 +1,72 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Mon, 28 Aug 95 02:40:29 PDT
+To: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Subject: Re: Server congestion
+In-Reply-To: <199508280041.RAA22255@Csli.Stanford.EDU>
+Message-ID: <"swan.cl.cam.:027060:950828094002"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I talked about acks of acks in a previous message, and I guess is was
+> somewhat vague there.
+
+... and maybe based on a false premis ?
+
+> What happened, according to my uninformed view, during the SSL2
+> challenge was that the server got congested, and had problems with
+> both answering to key allocation requests and ack replies.
+
+Correct.
+
+> I guess that the load of the machine was so high that it lost packets in the
+> input queues.
+
+NO.
+
+The load was very *LOW*.
+The problem was that the single threaded server was spending most of its time
+talking to clients which failed to complete their interactions, and timed out.
+The earlier client "ACK" code didn't hang around long enough, and gave up.
+Later code kept trying ....
+
+> Client -----> UDP/Key allocation req ----> 
+
+Nope -- basic fault here !! TCP not UDP !!
+
+> One problem was that the client believed that the ACK had arrived
+> at the server if it had sent it off, not counting with the possibility
+> of the ACK being lost on the way.
+
+Not the case.
+It uses a reliable bytestream, and the client does not consider a keyspace
+ACKed until it get back the "OK" response from the server.
+This makes it "at least once", but that isn't a problem.
+
+> I instead propose that the Server sends a acknowledgement
+> back to the client once it has received an ACK from a client.
+
+It does, in the reliable bytestream ...
+
+> The client has to handle the case that either the Ack or the
+> Server-ack is lost.
+
+As above -- "at least once" -- it just retries.
+
+> I propose it doesn't retransmit immediately,
+> but rather waits until next time it has to ack something, and 
+> piggybacks the old ack onto the new one.
+
+brclient waits a bit and tries again, before asking for the next.
+
+> If the client is unable to retrieve a block from the server, I suggest
+> it just picks a random block and starts working on it. I may very
+> well not be allocated to someone else, and then the client was able
+> to do something good in the meantime even though it didn't get a
+> proper key alloc. 
+
+Nah.
+
+
+
+

@@ -1,0 +1,66 @@
+From: JMKELSEY@delphi.com
+Date: Fri, 26 Jan 1996 14:13:11 +0800
+To: cypherpunks@toad.com
+Subject: Re: Lotus Notes
+Message-ID: <01I0FXJK293C9DCXJ9@delphi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[To: Cypherpunks, Lucky Green ## Date: 01/24/96 12:33 pm ##
+ Subject: Re: Lotus Notes]
+
+>Date: Tue, 23 Jan 1996 23:24:39 -0800
+>From: shamrock@netcom.com (Lucky Green)
+>Subject: Re: Lotus Notes
+
+>You are assuming that they *want* the hole to be unpatchable. I see
+>no reason why they should. "We tried out best, but these darn
+>hackers found a way to enable full 64 bits. Sorry, but we tried."
+>Perhaps the most intelligent thing to do was to keep the GAK subject
+>to a simple patch.
+
+I'm sorry, I don't think I was very clear in this post.  I wasn't
+concerned with whether Lotus left the escrow feature easy to
+disable, I wanted to know whether they'd intelligently padded their
+RSA-encrypted 24-bit key leak.  If they thought this through, they
+did, but if not, then they have essentially left their exportable
+security level at 40 bits, because of the dictionary attack David
+and some other people pointed out.  This ought to be relatively easy
+to check from disassembled code, but it can also be checked by
+simply generating a few thousand messages (maybe six or seven
+thousand, to be safe), and seeing whether or not we ever get a
+duplicate LEAF. We expect to, after about 2^12 encryptions, if
+they're using fixed padding.  Of course, RSA key exchange blobs for
+short keys must always be padded out like this, or be vulnerable to
+dictionary attacks.
+
+P.S. Does anyone know whether or not the RSA key used to partially
+escrow the session key is a reasonable length (i.e., 1024 bits)?  If
+it's another 512-bit RSA key, then it was born with a bullseye on
+its chest.
+
+>-- Lucky Green <mailto:shamrock@netcom.com>
+>   PGP encrypted mail preferred.
+
+Note:  Please respond via e-mail as well as or instead of posting,
+as I get CP-LITE instead of the whole list.
+
+   --John Kelsey, jmkelsey@delphi.com / kelsey@counterpane.com
+ PGP 2.6 fingerprint = 4FE2 F421 100F BB0A 03D1 FE06 A435 7E36
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMQfoEEHx57Ag8goBAQH7mQQAwHZ5ZH++AbVGER88rtRbgiu+syYNI9AI
+bwgeUT3gYpf1kqRksg5dLluAabEo+OSorzb5x/WrF1bemkqr3Y+GtEhh8HfSGaZG
+pmAe1hwSyGLQImqonZ/MxYz17eOK2Win9VBt1o+0jQCceUN8pc/QXRZvEAzjdkS4
+lKijlYa/XYE=
+=Ii7i
+-----END PGP SIGNATURE-----
+
+
+
+

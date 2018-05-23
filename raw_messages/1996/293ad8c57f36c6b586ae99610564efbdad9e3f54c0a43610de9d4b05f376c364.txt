@@ -1,0 +1,50 @@
+From: Carl Ellison <cme@ACM.ORG>
+Date: Wed, 29 May 1996 09:36:28 +0800
+To: frantz@netcom.com (Bill Frantz)
+Subject: Re: Clipper III analysis
+In-Reply-To: <199605280545.WAA04738@comsec.com>
+Message-ID: <v03006602add10d52d5cf@[168.143.8.144]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There were a number of flaws in that paper, but perhaps the most glaring to
+me is that there are actually 3 classes of key:
+
+the two you mentioned:
+	communications key
+	storage key
+and
+	signature key
+
+Of these, you want key recovery *only* for storage keys.  You want to make
+sure no one can get to your signature key.  Even the IWG paper notes that.
+But the only use for a PKI of any form is for a signature key.  Once you
+have your identity established somehow for a signature key, you can
+generate and sign comm or storage keys at will.  Furthermore, if you lose a
+signature key, there's no big loss.  You generate a new one and get a new
+cert for it.  So there's *NEVER* a reason for key recovery for a signature
+key -- the only keys for which there is a need for a PKI.
+
+I find myself wondering.
+
+Did some very clever crypto-theoretician plant this idea in their heads
+(sig key database giving GAK) knowing that the structure had termites?
+
+I first heard this from Micali...and here I always thought he was on their
+side.  I may have misjudged the man. :)
+
+ - Carl
+
+
++------------------------------------------------------------------------+
+|Carl M. Ellison   cme@acm.org     http://www.clark.net/pub/cme          |
+|PGP: E0414C79B5AF36750217BC1A57386478 & 61E2DE7FCB9D7984E9C8048BA63221A2|
+|  "Officer, officer, arrest that man!  He's whistling a dirty song."    |
++-------------------------------------------- Jean Ellison (aka Mother) -+
+
+
+
+
+
+

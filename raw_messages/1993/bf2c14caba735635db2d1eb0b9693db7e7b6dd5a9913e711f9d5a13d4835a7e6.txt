@@ -1,0 +1,89 @@
+From: jpinson@fcdarwin.org.ec
+Date: Tue, 5 Oct 93 11:25:23 PDT
+To: cypherpunks@toad.com
+Subject: Need Suggestions for Random Numbers
+Message-ID: <9310051201.aa27619@pay.pay.ecua.net.ec>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Greetings from the Galapagos islands!
+
+I am working on a PC implementation of a one-time pad cipher, and
+am trying to develop a way to produce an "acceptable" random file
+to be xor'd with the plaintext.
+
+I have seen here and elsewhere descriptions of hardware random
+number generators (Geiger counters measuring random nuclear
+decay, microphones picking up background hiss etc.), but I need
+something that can be implemented entirely in software.
+
+I recognize that there is probably no "perfect" software
+solution, but some techniques are better that others.  (i.e.:
+I want to avoid making a REALLY stupid mistake here!)
+
+Listed below are a few ideas I have come up with, but I need some
+feedback from more knowledgeable sources.    Any suggestions or
+comments would be greatly appreciated.  If you reply to me
+directly, I will summarize for the list.
+
+Please don't suggest book/journal references that are not
+accessible via the internet.  It would take me about 6 months to
+order books from here.  (Everything I know about the
+outside world arrives via my Pegasus/KA9Q mailer :-)
+
+Also, can anyone recommend a statistical test for randomness, or
+for detecting repeating patterns in a "random" file?
+
+(I remember some years back someone demonstrated the Apple II random
+number generator was flawed by converting the random numbers to
+screen coordinates and "painting" the screen.  No matter how long
+you ran the program, certain areas of the screen were never filled
+in. In other words, certain numbers were never generated.)
+
+Thanks in advance for any assistance.
+
+
+Jim Pinson                    Galapagos Islands, Ecuador.
+jpinson@fcdarwin.org.ec       PGP public key available by finger
+
+
+----------Possible methods------------
+(note: using the Borland C++ compiler)
+
+- Generate a random file using Borland's random number
+  generator, then run the output through an encryptor (PGP,
+  DES etc.).   Possible variation: running through several
+  different encryptors or multiple passes through a single
+  encryptor.
+
+- Generate two random files using different random number
+  generators, then xor'ing the two files together to
+  produce the final file.
+
+- Generate a "bunch" of small random number files, reseeding the
+  generator before each run.  The resulting files would then be
+  concatenated to produce the final file.  (my thought here is to
+  keep the random files small enough to avoid the eventual repeat
+  of sequences that I understand occur in random number
+  generators).
+
+- Combinations of the above?
+
+- Other:  Suggestions welcome.
+
+-------------end-------------
+
+On the subject of using audio input for generating random
+numbers:  has any one tried using an audio file created by the
+Windows sound recorder program?
+
+What would be a good source of random meaningless sound? (an
+quiet room, ocean surf, repeats of Gilligan's Island, old
+presidential speeches (pick your favorite president). :-)
+
+
+
+
+
+

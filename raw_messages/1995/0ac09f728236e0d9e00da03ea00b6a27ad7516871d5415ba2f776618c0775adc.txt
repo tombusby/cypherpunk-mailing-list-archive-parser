@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 8 Dec 95 14:34:17 PST
+To: Mark Twain Ecash Support <support@marktwain.com>
+Subject: Re: Still more on the Digicash protocol
+Message-ID: <199512082234.OAA02297@ix9.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:26 PM 12/8/95 -0600, Mark Twain Bank Ecash Support wrote:
+>>There's no need to send that payment info in the clear -- why not encrypt?
+>
+>DigiCash agrees that it is desirable to encrypt the payment request. The
+>problem is how? You can't use the payor's public key, since the payor is
+>anonymous to the payee. There are other, high overhead, protocols that might
+>be used, but after taking MIM into account, securing the payment request
+>from within Ecash while retaining acceptable latency is much harder to
+>acomplish than one might think. 
+
+Obviously if the payer is the one transmitting the message, she doesn't
+use her public key to encrypt; hers would be used for signature if appropriate.
+She should use the payee's public key, or some negotiated key like DH.
+It doesn't lose any privacy, because she already knows an address to send
+the money to, and the payee can create a public key for that address,
+or some other public key he makes available to payers.
+
+>The best solution at this time seems to be to use the already existing https
+>connection to transmit the payment request. The next version of Ecash will
+>offer this feature as an option to the user.
+
+I had assumed that the payment information wasn't encrypted because that's a
+separate problem from the basic digicash, and because if the payer wants
+to keep the transaction private, she probably also needs to encrypt the
+other side
+of the transaction - e.g. the request for n widget at $d/widget.
+https or other ssl connection, or an encrypted telnet, or encrypted email,
+or some other protected mechanism all would seem to be appropriate.
+#--
+#				Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0663 Pager/Voicemail 1-408-787-1281
+
+# Anybody notice that Microsoft's Wide Open Road ad has barbed-wire fences
+# on both sides of the road?
+
+
+
+
+

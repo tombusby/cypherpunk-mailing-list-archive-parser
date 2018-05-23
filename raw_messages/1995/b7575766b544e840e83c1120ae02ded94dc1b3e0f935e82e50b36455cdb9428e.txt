@@ -1,0 +1,34 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 23 Sep 95 17:30:41 PDT
+To: wb8foz@nrk.com
+Subject: Re: "random" number seeds vs. Netscape
+Message-ID: <199509240029.RAA22318@ix8.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:29 PM 9/23/95 -0400, you wrote:
+>Can you take the time between two effectively async events, and use the
+>low order bits of same?
+>For example, time between a netverk pack arriving and the next tick of
+>the TOD clock? And/or the system's disk IO or such? 
+
+You might get some entropy there, but you can get more (though perhaps not
+measurably more) by using the values of both instead.  For instance
+        rand = MD5(rand, lowbits(T(clock) - T(packet)))
+vs      rand = MD5(rand, T(clock), T(packet))
+
+As long as you're not overoptimistic about how many real bits you've gotten,
+might as well actually use the version that keeps more low-quality bits
+than try to improve them.  Also, do watch out for things that aren't
+really asynchronous, e.g. the next clock tick will probably happen at
+some even multiple of 1000000/Hz microseconds.
+#---
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

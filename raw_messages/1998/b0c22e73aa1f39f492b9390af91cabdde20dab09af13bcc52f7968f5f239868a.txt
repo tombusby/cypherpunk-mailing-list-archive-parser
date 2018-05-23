@@ -1,0 +1,40 @@
+From: Bill Stewart <bill.stewart@pobox.com>
+Date: Tue, 12 May 1998 19:08:50 -0700 (PDT)
+To: "Mordechai Ovits" <jcea@argo.es>
+Subject: Re: Chaffing & winnowing without overhead
+In-Reply-To: <35571323.D109A0D2@argo.es>
+Message-ID: <3.0.5.32.19980512180231.008ae790@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+By the way, instead of transmitting the first bit for which
+MAC(sequence,0) differs from MAC(sequence,1), as Jesús suggests,
+you can get the same effect by transmitting a 0 or 1 depending on
+    MAC(sequence,0) < MAC(sequence,1)
+(This assumes a big-endian system and unsigned comparisons;
+little-endians will have to calculate it the hard way.)  
+If you're willing to be wrong 1 time out of 2**33, 
+you can just use the top 32 bits.
+
+Earlier in this discussion:
+>> In the Rivest's paper you transmit, indeed, all the 2^n plaintexts for a
+>> n bit length };-).
+>Not so. In his paper (before the package tranform stuff), he had the following expansion.
+>Assuming a 32 bit serial number and a 160 bit MAC, n bits would expand to 388n.
+>>To make this clearer with an example, note that the adversary 
+>>will see triples of the form:
+>>        (1,0,351216)
+>>        (1,1,895634)
+>>        (2,0,452412)
+>>        (2,1,534981)
+
+But that _does send the 2^n plaintexts, which are 0 and 1, and n=1.
+				Thanks! 
+					Bill
+Bill Stewart, bill.stewart@pobox.com
+PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+

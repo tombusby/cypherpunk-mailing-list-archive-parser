@@ -1,0 +1,55 @@
+From: edgar@spectrx.Saigon.COM (Edgar W. Swank)
+Date: Sat, 9 Jan 93 14:58:45 PST
+To: Cypherpunks          <cypherpunks@toad.com>
+Subject: Trailing blanks in signed plaintext
+Message-ID: <sZT4wB6w165w@spectrx.saigon.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Distribution:
+   Cypherpunks          <cypherpunks@toad.com>
+   Branko Lankester     <lankeste@fwi.uva.nl>
+
+I noticed something about PGP signed plaintext the last time
+used that feature to send a message to Cypherpunks.
+
+Apparently PGP takes any line beginning with 5 dashes ("-----")
+and adds "- " (dash blank) to it. I guess the purpose for this
+is to avoid confusion if the plaintext message should contain
+a PGP delimiter like
+
+   -----BEGIN PGP SIGNATURE-----
+
+But in my particular case, what I specified in my input plaintext was
+
+   -----END OF MESSAGE BODY-----
+
+(but with no indentation), but what came out was
+
+   - -----END OF MESSAGE BODY-----
+
+Given that PGP is going to make changes like this to signed plaintext,
+I suggest there is no longer any reason to object if PGP also removes
+trailing blanks from signed plaintext.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.1
+
+iQCVAgUBK02ta94nNf3ah8DHAQFX8wP/dyusrml+2XH7XQtFcsQveGW3Zz3ib6K9
+xGGV2hnvhwIHbFs4HIKTIVT0BFR6Y4SuqFMeF0BS16FIu47GmW8Q55iIhweDP7x5
++CUMXSynwQsz4XOMU/CpqNAwJifNoM9BwNu+RqfhIxwi6KxO1i3FwJjxPzE+uHkh
+Y7Mjl7Ytkd0=
+=0l/6
+-----END PGP SIGNATURE-----
+
+--
+edgar@spectrx.saigon.com (Edgar W. Swank)
+SPECTROX SYSTEMS +1.408.252.1005  Silicon Valley, Ca
+
+
+
+
+

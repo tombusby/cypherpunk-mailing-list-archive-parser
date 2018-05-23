@@ -1,0 +1,100 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 18 Jul 1996 17:39:18 +0800
+To: jpb@miamisci.org
+Subject: Re: Opiated file systems
+In-Reply-To: <v03007604ae1225be8464@[192.168.1.69]>
+Message-ID: <199607171103.MAA00222@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Joseph Block <jpb@miamisci.org> writes:
+> At 10:44 AM -0400 7/16/96, Mark O. Aldrich wrote:
+> >One problem, however, would be how to keep the "decoy" data, accessible
+> >with only the ambush key, "fresh" in that it must undergo a certain amount
+> >of turbulence to appear real.
+
+A problem yes.  My thoughts were that you would effectively have two
+filesystems and use them both yourself for real work.  That is to say
+that you would say have some consulting work doing some programming or
+something, and use the 1st encrypted filesystem for this work.  If
+this work was covered by an NDA, so much the better, as it would
+provide an understandable reason for encrypting.
+
+> >The two file systems would essentially have to
+> >mirror each other, one with the juicy bits and one with the decoy bits.
+> >It would seem to be practically impossible to just build two file systems
+> >as one would 'disappear' when only the ambush key was used.  Wouldn't it
+> >be sort of obvious that something was wrong if half the disk vanished?
+
+I don't think nuking the data is the way to go, from what I understand
+of the way these things work, is that they kick down the door in the
+dead of night and make sure you don't get to touch the equipment.
+Also they'd be sure to take a sector level backup of the drive as a
+first step.
+
+If you have your duress encrypted file system, with the "real" file
+system in the unused space of that filesystem, and the hidden file
+system is encrypted with an unknown (to them) 3DES key, I don't see
+how they are going to be able to prove that it is not just noise.
+(This is presuming it is a feature of this encrypting file system that
+it ensures unused space is always filled with noise anyway, even
+inside the first layer of encryption)
+
+The question of freshness Mark raised, if I understand correctly is
+interesting.  I presume here he is talking about the fact that under
+analysis it is possible to retrieve information from hard drives which
+has been deleted and overwritten even multiple times with other data,
+due to the relative inaccuracy of disk head placement, and other
+factors.  Perhaps it is even possible to tell how recent a magnetic
+pattern is even?
+
+In an encrypted file system with no hidden file system, if the unused
+space were filled with random garbage, you might expect that garbage
+to have been modified fewer times, or less recently than the real
+data.  If there were a second hidden file system in those unused
+blocks, it might show up due to being written to more recently, or
+more often than expected.
+
+If the threat model includes this kind of analysis, I think it would
+be necessary to ensure that all the data is churned evenly, or
+sufficiently that there is little chance of extracting this kind of
+information.
+
+What I would suggest is that during periods of disk inactivity the
+data (even the unused space whether it is a 2nd partition or not) is
+re-encrytped with a new random IV at some frequency.  The frequency
+chosen should be to ensure that all the data on the disk is recent,
+and that in the course of disk usage over a period of a week there are
+many re-writes with data re-encrypted with random IVs to all areas of
+the disk.
+
+> As far as churning goes, why not just mount both the decoy and the
+> encrypted filesystems simultaneously?  
+
+I think you would have to mount them both during normal usage to avoid
+damaging the real filesystem hidden in the unused space.  Only in the
+event of a duress situation would you mount only the duress file
+system.
+
+This next bit must be talking about the stegoed file system:
+
+> Have a perl script (stored on the hidden volume of course) that
+> automatically decodes random images from alt.binaries.pictures.*
+> into the decoy system and nukes the oldest decoy files.
+
+Careful.  For stego you can't use publically available images -- they
+have to be images you scanned yourself, other-wise comparison will
+show that the images have been altered.  (Law enforcement agents read
+a.b.p.* too).
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

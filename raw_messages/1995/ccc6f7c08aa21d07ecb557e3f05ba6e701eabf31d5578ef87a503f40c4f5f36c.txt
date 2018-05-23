@@ -1,0 +1,46 @@
+From: Mark <mark@lochard.com.au>
+Date: Mon, 28 Aug 95 17:25:13 PDT
+To: ab411@detroit.freenet.org
+Subject: Re: SSL trouble
+In-Reply-To: <199508281852.OAA22478@detroit.freenet.org>
+Message-ID: <199508282326.AA32757@junkers.lochard.com.au>
+MIME-Version: 1.0
+Content-Type: text
+
+
+>Patrick Horgan <patrick@Verity.COM> writes:
+>>I did a distributed scheme for something else that had two levels, a master
+>>and a group of slaves.  Only the slaves talked to the master.  For this 
+>>effort I think a variation of the idea would be better.  Have all of the
+>>brutes contact the master, who will, in the first transaction assign them
+>>to the next slave in a round-robin fashion.
+>
+>Why not just have the brutes pick a slave at random?  Of course, you need
+>to give them a complete list of slaves to choose from.  But then the only
+>difference between the master and the slaves will be that the master
+>doesn't get any keyspace (it's got it all to begin with) and doesn't
+>report any results upward.
+
+Better to include in the clients a list of all slaves and have the initial
+contact to a slave random, maybe weighted by network proximity, and either
+have the clients cycle to each slave with each ACK, or have the slave TELL
+the clients what server to ACK to next, based on slave to slave balancing.
+Slaves could tune their pointers to faster slaves and transparently handle
+crashed slaves
+
+The idea is to have all the slaves working evenly, assuming they are on equal
+nets and equal machines. If not then you can have the slaves tell clients to
+only point to a weaker slave once in a while.
+
+I dont think advertising the master is a good idea, better to have the slaves
+talking to it only. A backup mirror master would be worthwhile too.
+
+Web people would most likely have to communicate with the one central http
+server as you have to Keep It Simple for them.
+
+Comments?
+
+Mark
+
+
+

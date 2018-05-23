@@ -1,0 +1,57 @@
+From: tcmay@got.net (Timothy C. May)
+Date: Mon, 23 Sep 1996 07:48:07 +0800
+To: jack <coderpunks@toad.com
+Subject: Re: Evolving algorithm for faster brute force key searches?
+Message-ID: <ae6af5030202100433cd@[207.167.93.63]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 8:01 PM 7/5/96, jack wrote:
+>I got an idea last night, maybe this has already been thought of and
+>tried, but I thought I would give a quick outline of the program I was
+>thinking of:
+>
+>-Specify a maximum key size (assume 1024bits or something)
+>-Start with an arbitrary key "aaaaaaaaaaaaaa"
+>
+>Start a loop
+>
+>-create five mutations of the key
+>-use each key to try and decrypt a few bytes of the message
+>-run a (or some) statistical analysis tests and come up with a value
+>for how 'random' the decrypted bits are
+>-Pick the key that produced the least random ouput
+
+Schneier actually used my explanation of why this won't work in the Second
+Edition of his book.
+
+Basically, with any strong. modern cipher, there is no concept of "getting
+closer" to a solution. Thus, the "fitness landscape" for a
+brute-force-needed cipher looks like a flat plain (if portrayed in two
+dimensions), with the solution/key being a single-point spike rising from
+the plain. No hill-climber can find this spike except by landing right on
+it, which means evolutionary programming, genetic algorithms, simulated
+annealing, and neural net sorts of approaches are worthless.
+
+With some weak ciphers, this might work. I think Schneier makes some
+comments about who's looked at this. But weak ciphers are not too
+interesting.
+
+--Tim May
+
+We got computers, we're tapping phone lines, I know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Higher Power: 2^1,257,787-1 | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

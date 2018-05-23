@@ -1,0 +1,82 @@
+From: "Frank O'Dwyer" <fod@brd.ie>
+Date: Sun, 7 Jan 1996 08:55:08 +0800
+To: "tcmay@got.net>
+Subject: RE: Revoking Old Lost Keys
+Message-ID: <01BADC96.AA0A0B20@dialup-169.dublin.iol.ie>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Saturday, January 06, 1996 07:19, Timothy C. May[SMTP:tcmay@got.net] wrote:
+>At 9:47 AM 1/6/96, Frank O'Dwyer wrote:
+>>On Saturday, January 06, 1996 09:18, Timothy C. May[SMTP:tcmay@got.net] wrote:
+>
+>>>Basically, you are screwed. Any revocation you attempt will not be trusted,
+>>>as we will suspect the new "you" to be an attacker, perhaps an agent of the
+>>>NSA or the Illuminati. In the view that "you are your key," the old you no
+>>>longer exists.
+>>
+>>This is true, but the "old you" can be resurrected if you can get enough
+>>people to believe your new key using any out-of-band means available
+>>to you.  You can also put a comment in your new key's uid explaining the
+>
+>Could you explain how "enough people" can get around a basic
+>feature/limitation of the current PGP web of trust? Who, besides the
+>originator, can revoke an old key? How many does it take?
+
+I wasn't referring to revoking the old key, but to introducing a new one
+and letting the old one fall into disuse. I think this can sometimes be 
+done even if you've lost access to the old key, albeit in a painful out-of-band 
+fashion.  It does depend on the application, though, and if the (relevant 
+portion of the) web of trust was very large, you might find that the old key 
+kept popping up and you kept getting mail (or whatever-it-is-you're-encrypting) 
+that you couldn't read. (and/or some people wouldn't believe your signatures).
+
+Basically, PGP's revocation model is broken unless you create a revocation
+cert. at the time you make your key, and keep it safely somewhere in case
+you need it.  Even then, as time goes by the keyring keeps accumulating all 
+these extra packets and growing without bound.  It's not just PGP--all long-lived 
+certificates are hard to revoke (for example X.509's revocation is also clunky).  
+It's just that PGP's certificates are particularly long-lived, and PGP's revocation is 
+particularly broken. Luckily the data formats do allow for a validity time, and a 
+revocation of a key's countersignature, so this can perhaps be fixed sometime.
+
+>If a bunch of the "alleged" friends of Bruce could do this, could they not
+>revoke the key of someone they simply wish to hassle?
+
+Well, see above. The key is not revoked.  But a bunch of people _could_
+attempt to introduce a key under the name of someone they just wanted to 
+hassle.  The conspiracy doesn't have to be especially large. For example, it 
+would be easy for me to invent a key for you and have _my_ friends believe it
+even in spite of your real key being on their keyrings.  It wouldn't be so easy 
+for me to get _your_ friends believe it.  In Bruce's case, he'd be trying to do
+a similar thing, except that the key'd really be his, and more people'd be
+likely to believe him (especially his friends, and their friends, and so on).
+
+>I agree that a new key can be generated, and a new "Please use this key,
+>not the other one" message sent, and this may work, but I don't believe
+>this revokes the old key and removes it from the keyservers. I could be
+>wrong, as I am certainly no expert on the keyservers.
+
+I think you're right.  The key will still be out there.
+
+>The question is: is there a "majority vote" mode on the keyservers that
+>causes them to remove a key if enough people claim it is no longer valid?
+
+I don't think so.  At best, you might be able to convince the admins to
+manually delete the old key from the server's rings (assuming the software is able
+to do this).  Even then, the key might keep popping back up, for example
+if you had countersigned other people's keys with your old key and they kept
+uploading their key with additional signatures.  A practical solution
+might be for the key servers to automatically remove keys older than X 
+years (or some time limit related to the key size).  Ultimately though, what 
+is needed is a new revocation model (maybe implementing the unused fields 
+in the PGP certs is good enough to begin with).
+
+Cheers,Frank O'Dwyer
+fod@brd.ie                          http://www.iol.ie/~fod
+
+
+
+
+

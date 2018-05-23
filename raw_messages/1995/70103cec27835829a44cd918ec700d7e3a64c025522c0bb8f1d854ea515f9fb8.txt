@@ -1,0 +1,75 @@
+From: Christian Wettergren <cwe@Csli.Stanford.EDU>
+Date: Sun, 27 Aug 95 11:48:30 PDT
+To: Damien.Doligez@inria.fr (Damien Doligez)
+Subject: Re: SSL trouble
+In-Reply-To: <9508261034.AA15406@couchey.inria.fr>
+Message-ID: <199508271848.LAA18104@Csli.Stanford.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+| Let us call "sequential search" an algorithm that remembers which keys were
+| tried and avoids trying them again, and "random search" an algorithm that
+| just tries keys at random without bothering to check.
+|  
+| The sequential search has the following problems:
+|  
+| 1. The server is badly overloaded.
+| It is vulnerable to a variety of active attacks:
+| 2. "result hoarding" attacks: finding the result and reporting it "not foun
+d".
+| 3. "dilution" attack: allocating some search space and not sweeping it.
+| 4. plain old "denial of service" attack: deliberately overloading the serve
+r
+|    with bogus communications.
+| 5. And of course all of the above in their "buggy software or hardware"
+|    versions.
+
+And there is the third alternative, hierarchical search, which
+distributes the task of giving out keys. This is admittedly a
+little bit more involved, of course. The SKSP had provisions for
+doing it hierarchically, as far as I understood it, although
+I might be wrong.
+
+What I wonder is wheter the server congestion really showed that
+the protocol is flawed. Handing out bigger blocks relieved the 
+situation. I think this can be further improved if you do a couple 
+more things.
+
+1. The server knows approximately how many requests per second it 
+can take, and tells the clients this information.
+
+2. The client initially does a testrun, and determines how fast it 
+runs.
+
+3. Each client is handed a block that, given the approximate number
+of currently pending and active blocks out there, together with the
+calculation time of the client, will give an acceptable number of 
+requests/time unit to the server.
+
+4. The server acks (S-ACK) the block-ack to the client. If the client 
+doesn't get an ack (S-ACK) from the server for its ack (B-ACK), it 
+keeps the ack around til the next block is calculated, and sends this 
+ack together with the new acks.
+
+5. The server can hand out allocated blocks to others, for those
+blocks that has not been acked in three times the estimated
+calculation time. 
+
+6. If a client is unable to get a key allocation after a number of 
+tries, it can chose a random block and search that. It can then be
+acked to the server. This may result in overlapping blocks, but this
+should not pose such a big problem, since most of the key space is
+searched in an orderly manner anyway.
+
+It would be very interesting if detailed statistics or the logfile
+of the server could be published somewhere. How many machines were
+involved? etc...
+
+/Christian
+
+
+
+
+

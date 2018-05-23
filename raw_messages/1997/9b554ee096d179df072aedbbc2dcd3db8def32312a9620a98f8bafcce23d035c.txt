@@ -1,0 +1,78 @@
+From: David Honig <honig@otc.net>
+Date: Tue, 23 Dec 1997 02:18:23 +0800
+To: Anonymous <cypherpunks@Algebra.COM
+Subject: Re: ECB, CBC, CFB, OFB
+In-Reply-To: <199712202235.XAA24669@basement.replay.com>
+Message-ID: <3.0.5.32.19971222090219.007ce1b0@otc.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 11:35 PM 12/20/97 +0100, Anonymous wrote:
+>Can somebody more experienced than I am explain the strengths and weaknesses
+>of these encryption modes as applied to CAST, IDEA, DES, and Blowfish?
+>
+>>       -m mode
+>>              Set the transfer mode.
+>>
+>>              Valid ENCRYPTION modes are:
+>>
+>>              ecb    Electronic codebook mode
+>>                     c[i] = f1(K, p[i])
+>>                     p[i] = f2(K, c[i])
+>>
+>>              cbc    Ciphertext block chaining mode
+>>                     c[i] = f1(K, p[i] ^ c[i-1])
+>>                     p[i] = f2(K, c[i]) ^ c[i-1]
+>>
+>>              cfb    Ciphertext feeback mode
+>>                     c[i] = f1(K, c[i-1]) ^ p[i]
+>>                     p[i] = f2(K, c[i-1]) ^ c[i]
+>>
+>>              ofb    Output feeback mode
+>>                     h[i] = f1(K, h[i-1])
+>>                     c[i] = p[i] ^ h[i]
+>>                     p[i] = c[i] ^ h[i]
+>
+>
+
+A partial answer on why feedback is better than codebook mode: 
+consider a video signal, with large amounts of uniform background.  Encrypted
+with a codebook mode cipher, silhouettes will be visible since the uniform
+background
+will map to the same cipher value.  NB: the "uniformity" must span a block,
+e.g., 64 bits for BF.
+
+The tradeoff is 1. slightly increased latency & complexity 2. an error in
+your output stream mangles
+more data than in ECB mode.
+
+Feeding a stream of zeros into a feedback-mode cipher produces a
+pseudo-random output stream...in a good cipher.
+
+
+
+------------------------------------------------------------
+      David Honig                   Orbit Technology
+     honig@otc.net                  Intaanetto Jigyoubu
+
+"Windows 95 is a technologically complex product that is best left alone by
+the government..."
+ ---MSFT Atty B. Smith
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

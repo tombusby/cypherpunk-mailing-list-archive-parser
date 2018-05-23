@@ -1,0 +1,48 @@
+From: Ryan Lackey <rdl@mit.edu>
+Date: Thu, 15 Jan 1998 14:44:16 +0800
+To: Jim Choate <ravage@ssz.com>
+Subject: Re: how to release code if the programmer is a target for coercion (fwd)
+Message-ID: <tw71zyap7cy.fsf@the-great-machine.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> man in the middle attack on people signing code
+
+How would you do this?  There is code.  You sign that code with your personal
+pgp key, which you are assumed to keep secure.  Cases:
+
+A) The code is authentic, but backdoored: you will look at it when verifying
+it and refuse to sign it, optionally posting how it is flawed to the world.
+
+B) The code is not the actual code used in the product, but unbackdoored:
+In this case, you sign it, but when someone tries to compile, the real
+code is not signed, and thus the attacker is no better off.
+
+C) The code is not the actual code used in the product, and is backdoored:
+The NSA is really stupid, then.
+
+D) The code is the authentic code, and is unbackdoored: you win.
+
+The only attacks would be if you could sneak a bug by the verifiers.  With
+modern execution environments, it is *possible* there could be unintended
+consequences to almost anything.  That's why I think one of the first
+pieces of code verified should be the JVM.
+
+Another attack would be having 5 NSA agents sign a piece of code, but 
+you could prevent that by having the list made up of distinct well known
+individuals who are unlikely to all be bought -- if the NSA wants to
+give $100m each to the most frequent 100 posters on cypherpunks, I want
+to get in line :)
+
+
+-- 
+Ryan Lackey
+rdl@mit.edu
+http://mit.edu/rdl/		
+
+
+
+
+

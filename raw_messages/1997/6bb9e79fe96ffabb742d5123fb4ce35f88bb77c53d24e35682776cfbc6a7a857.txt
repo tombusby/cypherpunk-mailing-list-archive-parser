@@ -1,0 +1,222 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 13 Oct 1997 09:27:53 +0800
+To: jseybold@pgp.com
+Subject: Re: PGP CAKware & IETF controlled Open-PGP standard
+In-Reply-To: <v03102811b066e38f4fd0@[205.180.136.41]>
+Message-ID: <199710122318.AAA00826@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Jonathan Seybold <jseybold@pgp.com> writes:
+> 
+> Adam, one aspect of your suggestion puzzles me:
+> 	One thing which concerns me most is KNOWING when a message I send
+> (or receive) could be read by someone else. The PGP CMR scheme makes this
+> very clear: if there is an extra CMR key, the message may be read by
+> whomever controls that key, if not, only the recipient may decrypt the
+> message.
+> 	If, however, the message is secretly re-encrypted to a corporate
+> storage key AFTER it is received, I will never know that.
+
+You will if you mark the key with this information.
+
+This is the same approach PGP is already using to provide the GAK
+compliant implementation of corporate access to stored emails.
+
+> The reality is that:
+> 	1) Organizations have a legitimate need to recover information. You
+> can argue about this as much as you want. 
+
+I'm not arguing.  Of course they do.
+
+What I _am_ arguing is that in designing systems to provide companies
+with data recovery mechanisms that you should a) not weaken security
+more than necessary, and b) that it would be nice if you used a method
+which doesn't introduce GAK compliancy for communications keys.
+
+I presented I think in plenty of detail an alternate mechanism which
+is both non-GAK compliant, and more secure.  So what is the problem?
+Is there a technical flaw in my solution?
+
+> A great many organizations will simply NOT INSTALL systems which do
+> not accommodate this. If businesses, law firms and many other
+> organizations will not use PGP, we will not have a viable standard.
+
+Agreed 100%.  This is why I went to great pains to demonstrate
+precisely how you could achieve recovery of stored messages in a more
+secure and non-GAK compliant way.
+
+> which are easy to use and administer, which balance the rights of
+> the individual against those of the organization, and which do not
+> mislead people inside OR OUTSIDE of the organization.
+
+my proposed mechanism for stored email recovery copes with all that.
+
+> 	This means, I believe, that they should NEVER INVOLVE HIDDEN BACK
+> DOORS THAT USERS ARE NOT AWARE OF.
+
+Agreed.  You can flag backdoors with either solution.
+
+> PGP Inc. has tried to work through these issues in a new way. I think that
+> we have agonized through a lot of trade-offs and come up with something
+> that will really work -- and work well.
+
+It works well enough, but it could be made much more secure, by
+separating storage key functionality from transient message key
+functionality.  This would also give you the chance to resolve the
+articificially created need for GAK compliancy, which arises because
+you are being forced by this lack of distinction between key
+functionalities to use one key for both long term storage and what
+should be transient communications key usage.
+
+> 	There is always the danger that someone is going to use your tools
+> in ways that you do not approve of. We are trying to make it as easy as
+> possible for people to do the "right" thing, and to discourage them from
+> doing the "wrong" thing (like secret snooping).
+> 	 With regard to GAK, the objective should be to accommodate
+> legitimate corporate needs without setting in place the foundation for GAK.
+
+If that is PGP's aim, they failed most miserably.
+
+> We have tried very hard to do this by creating the foundation for a highly
+> flexible and decentralized approach which allows different organizations to
+> do things in very different ways. We have also tried to keep everything
+> very visible so that every party to a conversation knows exactly how
+> "private" that conversation is.
+
+Decentralised control is good, of course, but the pgp5.5 and SMTP
+policy enforcer is a ready to roll GAK system.  
+
+The visibility principle is good but is an entirely separable issue.
+
+> 	I think that the sort of thing that PGP Inc is doing is the best
+> defense against GAK. It knocks the pins out from under the argument being
+> used in this country that corporate message recovery requires a key escrow
+> infrastructure, 
+
+Yes, it is better than a government arranged "key recovery" key
+infrastructure.
+
+> and will almost certainly lead to a wide variety of
+> organization-specific implementations that will be jealously guarded
+> and very difficult to corral. I cannot imagine your 80% scenario
+> working in the U.S. where there are so many small and medium-sized
+> organizations and so much concern about government intrusion. 
+
+If the OpenPGP standard is to include the GAK compliancy features, and
+these competing systems use this standard, as long as the sum of the
+OpenPGP compliant systems gets to 80% (or whatever) it doesn't matter
+whether this is mostly provided by PGP, or mostly by GAK sellout
+companies like IBM, or TIS.  It is a dangerous development to have a
+largely fielded compatible set of GAK compliant products, whoever the
+providers are.
+
+Email encryption needs to be standardised, otherwise people can't talk
+to each other.  This suggests to me that one standard _will_ evolve as
+the winner, or if there are other standards, they will be backwards
+compatible to this main standard.  A very related example of this kind
+of principle in action is the fact that most secured web traffic is
+secured by Netscape's SSL.
+
+> I do worry a little more about countries like France, but I have yet
+> to see any guaranteed "safe" alternative (including yours) that the
+> French Government is likely to accept.
+
+The French Government used require licenses for crypto, which were
+hard to come by, and crypto without licenses was illegal.  In that
+framework you couldn't see them liking PGP period.
+
+More recently they have been swaying towards allowing crypto without
+licenses, but only if it is GAK compliant.  PGP 5.5 & SMTP policy
+enforcer should be a sell out.  Maybe y'all should pitch it to the
+French government and SCSII (their NSA).
+
+> 	I am very interested in seeing criticism and suggestions for
+> improvement and would like to see this discussed and debated as openly as
+> possible. In particular, I would be interested in how one could reconcile
+> your scheme of separate transmission and storage keys with my concern that
+> everyone party to an exchange always be informed about who might be able to
+> read that exchange.
+
+That's simple: you already have the mechanism, just put one of those
+attributes Jon described on the key stating this fact.
+
+> However, I think that some of this discussion should be separated from the
+> Open PGP discussion. NO ONE wants to build any sort of mandatory message
+> recovery scheme into the base Open PGP specification. PGP Inc itself is
+> committed to always providing a base client software product which does not
+> implement message recovery keys.
+
+Glad to hear it.  Can we take it from that that PGP won't be arguing
+for the GAK compliancy flag Jon Callas described to be part of the
+standard then?  This is needed for said non "message recovery" base
+client product to also be OpenPGP compliant.
+
+> 	The key structure needs to be flexible enough to accommodate all
+> kinds of uses we cannot now envisage. Yes, I believe that CMR keys should
+> be supported -- as should a lot of other things we need to talk about.
+
+CMR keys and the way that PGP has designed their associated flags and
+the SMTP policy enforcer app are what make PGP GAK compliant.  
+
+Also there are clear security advantages to _never_ send
+communications encrypted to two keys.  There are clear security
+advantages to separating the functionality of storage and
+communications keys.  Communications keys are the most sensitive of
+all, and should have the shortest life times.  In some applications
+this could be minutes.
+
+> Finally, let's dispense with the non-productive PGP Inc- bashing. We
+> founded this company to take something which was going to die because it
+> had no company behind it, and push it forward. PGP Inc was the first step
+> in that process. Open PGP is the next step.
+
+The PGP bashing PGP observes is an attempt by the pro-privacy crypto
+community to influence PGP to re-think the GAK compliancy, and to
+point out the more secure way to implement corporate recovery of
+stored email messages without GAK compliancy.
+
+I reserve the right to bash any company which attempts to field GAK
+compliant software.
+
+> 	Most companies are very ambivalent about "open" standards. Most of
+> the time, "open" to them means something which they control and everyone
+> else adheres to. PGP Inc, on the other hand, is very committed to the
+> spirit of open standards. We understand very well that we will only be
+> successful if there is an open and completely interoperable international
+> standard.
+>
+> 	I also want to assure you that all of the things we do get
+> extensively debated within PGP. Thus far, we have always been able to work
+> out consensus decisions which, I believe, are more sophisticated and better
+> thought-out for that debate. In all of this I have never heard ANYONE at
+> PGP Inc. suggest that the company add any feature or capability to the
+> software in order to appease any government agency. GAK is just as scary to
+> us as it is to you.
+
+If PGP wants to make an additional stance against GAK here are my
+recommendations:
+
+1. remove GAK compliancy fields
+2. scrap SMTP GAK compliancy policy enforcer app
+3. separate storage and communications keys 
+4. use shorter lived communications keys giving forward secrecy
+5. implement corporate recovery of stored mail folders with escrowed
+   storage keys
+
+Forward secrecy is _the_ strongest statement you could possibly make
+against GAK.
+
+>	Jonathan Seybold
+>	Chairman, PGP Inc.
+
+Adam Back
+Protocol designer, Cypherpunks list member
+
+
+
+
+

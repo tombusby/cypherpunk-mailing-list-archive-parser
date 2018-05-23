@@ -1,0 +1,55 @@
+From: Steven L Baur <steve@miranova.com>
+Date: Thu, 4 Jul 1996 14:12:36 +0800
+To: Rich Graves <llurch@networking.stanford.edu>
+Subject: Re: Lack of PGP signatures
+In-Reply-To: <Pine.GUL.3.94.960703171630.5088N-100000@Networking.Stanford.EDU>
+Message-ID: <m2pw6cn22m.fsf@deanna.miranova.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>>> "Rich" == Rich Graves <llurch@networking.stanford.edu> writes:
+
+Rich> On Wed, 3 Jul 1996, Charles Watt wrote:
+>> -----BEGIN PRIVACY-ENHANCED MESSAGE-----
+
+Rich> And then there's the part about it being ugly as sin ...
+
+(defun gnus-article-hide-pem (&optional arg)
+  "Toggle hiding of any PEM headers and signatures in the current article.
+If given a negative prefix, always show; if given a positive prefix,
+always hide.  Adapted from gnus-article-hide-pgp."
+  (interactive (gnus-hidden-arg))
+  (unless (gnus-article-check-hidden-text 'pem arg)
+    (save-excursion
+      (set-buffer gnus-article-buffer)
+      (let ((props (nconc (list 'gnus-type 'pem) gnus-hidden-properties))
+	    buffer-read-only end)
+	(widen)
+	(goto-char (point-min))
+	;; hide the horrendously ugly "header".
+	(and (search-forward "\n-----BEGIN PRIVACY-ENHANCED MESSAGE-----\n"
+			     nil
+			     t)
+	     (setq end (1+ (match-beginning 0)))
+	     (gnus-hide-text
+	      end
+	      (if (search-forward "\n\n" nil t)
+		  (match-end 0)
+		(point-max))
+	      props))
+	;; hide the trailer as well
+	(and (search-forward "\n-----END PRIVACY-ENHANCED MESSAGE-----\n"
+			     nil
+			     t)
+	     (gnus-hide-text (match-beginning 0) (match-end 0) props))))))
+
+-- 
+steve@miranova.com baur
+Unsolicited commercial e-mail will be proofread for $250/hour.
+Andrea Seastrand: For your vote on the Telecom bill, I will vote for anyone
+except you in November.
+
+
+
+

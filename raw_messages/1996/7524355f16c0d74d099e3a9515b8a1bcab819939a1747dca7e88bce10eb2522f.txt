@@ -1,0 +1,219 @@
+From: Black Unicorn <unicorn@schloss.li>
+Date: Wed, 8 May 1996 13:56:46 +0800
+To: hfinney@shell.portal.com
+Subject: MLM and Web of Trust
+Message-ID: <Pine.SUN.3.93.960507184604.339D-100000@polaris.mindport.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+
+On Tue, 7 May 1996, Hal wrote:
+
+> I have a few thoughts relating to the "web of trust" versus
+> hierarchical key certificate systems.  This description is pretty
+> elementary and is intended more for people who have not been familiar
+> with the issues before.  First some background.
+
+[Excellent background deleted]
+
+[Trust is not transitive.]
+
+> The [trust is not transitive] situation reminds me of a maxim of
+> multi-level marketing (MLM) companies like Amway.  These businesses
+> typically sell a product, but they use a pyramid scheme for distribution 
+> where people not only sell the product, but try to recruit others to
+> sell for them. 
+[...]
+> To achieve success, though, the saying goes like this: You not only
+> have to sell; you not only have to teach your people to sell; but you
+> have to teach your people to teach people to sell.
+[...]
+> The analogy to transitivity of trust is this.  If you want to have
+> transitive trust, you have to be sure the other person knows how to
+> securely sign keys.  But you also have to make sure he knows how to
+> make sure that the next person knows how to securely sign keys.  And
+> further you have to make sure he knows how to make sure the next guy
+> knows how to make sure, and so on.
+
+[PGP avoids transitive trust because of this problem and others]
+
+Ok, so if the problem is with transitive trust and not the technical issue
+of security of signatures, why not a hybrid of the vertical and web
+models?
+
+PGP's primary problem in my view is that signatures are not flexible
+enough, or they are too flexible.  A signauture can mean anything.  When I
+sign a document signed by Bob, does that mean that I am vouching for Bob
+as the author of this document, or that I agree with the document, or that
+I certify that the document (regardless of my belief in its points) merely
+passed by my desk on this date?
+
+Similarly, when I sign a key.  Am I of the opinion that the "real name"
+associated with this person is the only person in possession of the key,
+of the opinion that this person is indeed (insert real name here) or am I
+siging off on the e-mail address?
+
+It seems to me that two things need to happen to improve the web of trust.
+
+First, signatures have to be application specific.  Sure you can put the
+words "This signature means that I believe XYZPDQ etc." at the bottom of
+that which you are signing, but this method both lacks any kind of
+standardization and further requires some sophisticated logical thinking
+and a lot of planing by the average user.
+
+I'd much rather see signature applications integrated in the software in a
+simple way.
+
+PGP currently asks:
+
+READ CAREFULLY:  Based on your own direct first-hand knowledge, are
+you absolutely certain that you are prepared to solemnly certify that
+the above public key actually belongs to the user specified by the
+above user ID (y/N)?
+
+Why should PGP not also ask:
+
+READ CAREFULLY:  Based on your own direct first-hand knowledge, are
+you absolutely certain that you are prepared to solemnly certify that
+the above document is accurate in all respects (y/N)?
+
+or
+
+READ CAREFULLY:  Based on your own direct first-hand knowledge, are
+you absolutely certain that you are prepared to solemnly certify that
+the above user is a careful and competent individual with the skill and
+means to secure his secret key (y/N)?
+
+or
+
+READ CAREFULLY:  Based on your own direct first-hand knowledge, are
+you absolutely certain that you are prepared to solemnly certify documents
+signed by the above key are from the internet address associated with it
+(y/N)?
+
+or
+
+READ CAREFULLY:  Based on your own direct first-hand knowledge, are
+you absolutely certain that you are prepared to solemnly certify that
+the above financial transaction corresponds to your exact wishes (y/N)?
+
+or
+
+READ CAREFULLY:  Based on your own direct first-hand knowledge, are
+you absolutely certain that you are prepared to solemnly certify that
+the above user is not only a trusted introducer, but is fit in your
+estimation to gague the security and signing skills of other users and
+vouch for their fitness as trusted introducers  (y/N)?
+
+
+It seems to me that integrating these issues, having a developer think
+them out ahead of time for the user would be a valuable thing.  This
+solves, to some degree, Mr Finney's "AOL" problem. (Wherein he expresses
+concern over the differing skills of internet users and the ways these
+difference complicate the web of trust).
+
+Part of having an effective web of trust is defining exactly what a
+certification means.  I don't think the web of trust fails because it is
+non-vertical, but because it fails to define what certificates mean.  It
+_imposes_ (or at least suggests) horizontal decision or treatment of a
+certificate when it may be prudent for novice or moderately skilled users
+to treat them vertically.  Yet to simply switch to a vertical scheme will
+frustrate expert users who wish to maintain the flexibility of a
+horizontal one for whatever reason.  (They don't trust institutions,
+prefer to have more stringent or otherwise non-standard certification
+policies, etc.)
+
+Using certification that allows either (but perhaps defaults to vertical)
+can easily be envisaged.
+
+Software could be configued to trust only a institutional certifier to
+designate trusted introducers as a default, (Perhaps an online security
+mutiple test would be a good way for such an institution to make the
+determination?) and yet users who wanted other schemes could select the
+more expert options and designate their own introducers and introducer
+introducers.
+
+READ CAREFULLY:  Do you trust the above user to (enter all that apply):
+
+A) Introduce other keys for the purposes of secure communications and
+document certification with those keys?
+B) Vouch for the security consciousness of other users?
+C) Vouch for the fitness of other users to certify introducers for your
+web of trust?
+D) Vouch for the financial fitness of other users?
+
+(etc.)
+
+Really it's no more than an extension of the "trust bit" that is already
+in PGP signatures to other areas.
+
+In addition I think it's important to extend this kind of flexibility to
+all manner of signing activites.
+
+I revoked a key some time ago because it was getting old and because 2048
+bit keys were made available.  That revocation certificate could mean
+anything.  It could mean I KNOW it was compromised, it could mean I
+suspected it was, it could mean I found my secring.pgp file on a multiuser
+system where I did not myself put it, it could mean I left a disk with my
+secring.pgp on it in a library, or it could mean the key expired.
+
+How are you to know unless I write up a complicated statement and sign it
+and take pains to publish it all over creation?
+
+Why doesn't PGP simply ask:
+
+Are you:
+A) Certain this key is compromised?
+B) Of the view that it is probably compromised?
+C) Worried it might be compromised?
+D) Revoking this key because it is expired?
+E) Issuing a general/non-specific revocation?
+
+Again, standardized, easy for the user to understand, easy to distribute,
+and very clarifying.
+
+Someone could easily write a module which defined and updated these
+differing trust issues for PGP and users could pick the codes they
+prefered.  (A trust model flash rom?)
+
+fincer - Certification with respect to financial integrity
+ident1 - Certification with respect to true name identity
+ident2 - Certification with respect to accuracy of e-mail account
+secrt2 - Certification with respect to the users ability to keep a secret.
+
+etc.
+
+
+Don't force clever and sophisticated users to bow to a vertical system
+when they don't have/want to.
+
+> Hal Finney
+
+- ---
+My preferred and soon to be permanent e-mail address:unicorn@schloss.li
+"In fact, had Bancroft not existed,       potestas scientiae in usu est
+Franklin might have had to invent him."    in nihilum nil posse reverti
+00B9289C28DC0E55  E16D5378B81E1C96 - Finger for Current Key Information
+Opp. Counsel: For all your expert testimony needs: jimbell@pacifier.com
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMY/SZmqgui0rHO4JAQFkfwP/XqGH79Z0HX0fF8FvtrxAZB5JbnaMi3K4
+gwt1zlQD8ni3n8+6fD887u6vyqxwty8AuQ4BwdxfPfFNecfgcZ8BHv8F1aMopV1x
+4clVrHknaKo1BR83MEiEpN74yFebj0fsTlLxijLDbUA5z33Spmcn5Eek21nv4yXR
+W1ZWUd5uSIk=
+=vpLU
+-----END PGP SIGNATURE-----
+
+
+
+
+

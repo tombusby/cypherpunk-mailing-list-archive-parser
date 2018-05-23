@@ -1,0 +1,87 @@
+From: Genocide <gen2600@aracnet.com>
+Date: Wed, 18 Dec 1996 11:35:21 -0800 (PST)
+To: Eric Murray <ericm@lne.com>
+Subject: Re: Ping of Death?
+In-Reply-To: <199612172317.PAA22019@slack.lne.com>
+Message-ID: <Pine.LNX.3.95.961218112912.24125A-100000@shelob.aracnet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 17 Dec 1996, Eric Murray wrote:
+
+> > Anyone heard of the Ping of Death, aka the Ping Bomb. It's a large chunk of
+> > hostile code, disguised as a mere ping, that can lead to server rebooting.
+> 
+> It would be quite a trick to get an OS to run code from inside
+> a ping packet.  Are you sure this isn't the well-known giant ping packet bug?
+> Receiving one or more of those can cause some hosts to reboot.
+> 
+	I believe you are referring to the oversized ping packet...
+
+     I've gotten a helluva lot of mail on this since I started up my web
+     page on the topic. The summaries are presented there, but if you are
+     really curious or want details I can forward on specific messages to
+     you. It's at http://www.sophist.demon.co.uk/ping, but it *is* only
+     covering the results of a ping, not the internals. (I'm thinking more
+     from a "how-can-I-stop-it" point of view than a
+     "why-does-it-happen"...)
+
+I just wanted to note that some of the diagnoses people are using to track
+this problem might be a bit shaky.  For example, if you're not doing your
+diagnosis on the console or on a serial terminal, the machine might appear
+to be "hung" during the test when in fact you've simply blocked it from
+receiving network traffic.  (Not that this isn't a problem, mind you.)
+I would also like to start a discussion on just what the vulnerability is
+vs. what systems are vulnerable.
+This may be quite well known (and some of it is inferred from previous
+messages), but I'd like to double check with people that may have
+definitive answers.  Using snoop on Solaris 2.5, I watched a ``ping -l
+65510'' from an NT 4.0 box.  At first I thought maybe Microsoft was
+sending IP or ICMP packets with bad options, or field values.  But, it
+appears there is nothing malformed with the packets other than they are
+too long (per RFC 791 - INTERNET PROTOCOL SPECIFICATION).  ``ping -l                                                                
+65510'' ==> ICMP datagram of 8 (ICMP hdr) + 65510 (data) = 65518 octets.
+Add to this the minium IP hdr of 20 octets and get we 65538 octets.  This
+is 2 octets > maximum allowed IP datagram of 65536.
+
+The real problem appears to be that when a [vulnerable] host gets this
+huge ping datagram, it has to create a simular ping datagram to return to
+the sender.  The return datagram must return the incoming ping datagram's
+data section as its own.
+
+So when the [vulnerable] host is assembling this huge datagram it does
+something like
+
+     ``memcpy( assemble_buffer+20+8, ping_pkt->data, ping_pkt->data_len)''
+
+over running the assemble_buffer which is a fixed value of 65536.  On the
+systems that instantaneously reboot, we are just "fortunate" enough to
+have stomped on some important kernel data structure.
+
+Genocide
+Head of the Genocide2600 Group
+
+
+============================================================================
+		   **Coming soon! www.Genocide2600.com!
+         ____________________
+  *---===|                  |===---*
+  *---===|     Genocide     |===---*     "You can be a king or a street
+  *---===|       2600       |===---*   sweeper, but everyone dances with the
+  *---===|__________________|===---*              Grim Reaper."
+                                       
+Email:  gen2600@aracnet.com	Web:  http://www.aracnet.com/~gen2600
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	It is by caffeine alone that I set my mind in motion.
+	It is by the Mountain Dew that the thoughts acquire speed,
+	the lips acquire stains, the stains become a warning.
+	It is by caffeine alone that I set my mind in motion.
+================================================================================
+
+
+
+
+
+

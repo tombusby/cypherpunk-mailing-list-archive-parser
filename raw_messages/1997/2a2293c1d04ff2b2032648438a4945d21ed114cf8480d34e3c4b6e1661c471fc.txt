@@ -1,0 +1,111 @@
+From: Black Unicorn <unicorn@schloss.li>
+Date: Mon, 12 May 1997 01:43:48 +0800
+To: "Mark M." <markm@voicenet.com>
+Subject: Re: The War is Underway (fwd)
+In-Reply-To: <Pine.LNX.3.95.970510192350.2999A-100000@purple.voicenet.com>
+Message-ID: <Pine.SUN.3.96.970511125117.9012O-100000@polaris.mindport.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 10 May 1997, Mark M. wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> On Sat, 10 May 1997, Black Unicorn wrote:
+> 
+> > The amount of confusion over what represents a good algorithm is also
+> > interesting.  Take CAST, which seems a promising cipher and which we
+> > considered using over IDEA.
+> > 
+> > On asking 4 "experts" about CAST, I got 4 answers.
+> > 
+> > 1>  A 64 bit cipher with 40 bits secret.
+> > 2>  A 64 bit cipher - not expected to be very complete.
+> > 3>  A 128 bit cipher.
+> > 4>  "Not worth discussing."
+> > 
+> > In fact, as I understand it, CAST is of variable key length (Up to 128
+> > bits), and quite resistant to many attacks which plague DES and even IDEA.
+> > 
+> > But digging out that information was painfully difficult.  (It may not
+> > even be correct).
+> 
+> According to _Applied Cryptography_, CAST is a Feistel cipher with a 64-bit
+> block length and 64-bit key length.  So far, brute force is the only known
+> attack.
+> 
+> As far as "obscenely large" key lengths are concerned, 3-key triple DES
+> uses a 168-bit key.
+
+As I recall, 3des ( DESk1 -> DESk2^-1 -> DESk3 ) has an effective
+keylength of 112 bits.  Less than IDEA.  Schneier discusses this.
+
+> Using large key sizes for passphrase-based systems is difficult, because
+> it's just too difficult to remember a passphrase with enough entropy to
+> make a difference.  Assuming a random passphrase with 6 bits of entropy
+> per character, over 21 characters would have to be used for there to be
+> 128 bits of entropy.
+
+I dislike this line of argument for several reasons.  It reduces security
+to the lowest common denominator.  Because, the argument goes, few people 
+will use more than a 21 character passphrase, then we need not design
+anything with more security.
+
+In reality, I think that the percentage of people who use more than an 8
+character passphrase, especially outside these circles, is small.
+Following your logic, our high end of security should be about 48 bits.
+
+> Systems that use randomly generated keys are
+> limited only by the amount of available entropy, but then the passphrase
+> security to encrypt the secret key or physical security become important.
+> Using excessively long keys does not do much for security, as there are
+> always going to be weaker links that an attacker can take advantage of.
+> It doesn't hurt to use a 256-bit key, or larger, but it doesn't do much
+> good, either.
+
+Again, you have taken an important concept, total security, and reversed
+it.  Instead of aiming to make each link as strong as possible, you have
+aimed to design around the weakest link.
+
+This is a serious mistake in my view.
+
+It costs little today to develop a cipher with larger keyspace.  (DES with
+independent subkeys already exists and has a basic keyspace of 768 bits.
+A meet in the middle attack reduces keyspace to 2^384.  Schneier discusses
+the cipher briefly).  If users are willing to deal with large keys (I
+certainly am) then software designers are restraining a more secure
+implementation.
+
+I think most will agree that anything over 150 bits makes brute force
+a losing effort.  Unfortunately it has to be deployed first.
+
+ 
+> 
+> 
+> Mark
+> -----BEGIN PGP SIGNATURE-----
+> Version: 2.6.3
+> Charset: noconv
+> 
+> iQEVAwUBM3UK/yzIPc7jvyFpAQEhIwf+NYr0gHWWd2r056+MCZp/v5Y5KmpdxSz8
+> mXOM+GOm4bxk5OufCcw7FWKoJYNxklII3yDl1s9+xd5iegwX7T+rRWo1qc1/MAOJ
+> JJdMxy87T6qHgO28GUa6eNe/3g9d76z4U3E95u4mNMVs4mEQcD16lgXpfZPDZO0z
+> c7SxEfAK2rCxZeakZ0c/QEgraWIYLjpyl0EsHNVw+PszlGtrQKEFSJNSGI9dhKkc
+> WT6oHiisE1F+GNLn7PyBzby8HxEW9zwWSU3coa75yqwHfNNVCkb/s2Yh3cyw5LhP
+> mrMlQcVBH6A4J5iJQJcEfoKN9p+rZA/Rl5FjApWFG3cVMxq0ZXGjZg==
+> =eI9X
+> -----END PGP SIGNATURE-----
+> 
+> 
+
+--
+Forward complaints to : European Association of Envelope Manufactures
+Finger for Public Key   Gutenbergstrasse 21;Postfach;CH-3001;Bern
+Vote Monarchist         Switzerland
+Rebel Directive #7:Avoid soccer games when a government assault threatens.
+
+
+
+
+

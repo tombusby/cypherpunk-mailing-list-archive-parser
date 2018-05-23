@@ -1,0 +1,77 @@
+From: Antonomasia <ant@notatla.demon.co.uk>
+Date: Sat, 13 Dec 1997 22:30:09 +0800
+To: cypherpunks@ssz.com
+Subject: Re: hashcash spam prevention & firewalls
+Message-ID: <199712131225.MAA02138@notatla.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Adam Back <aba@dcs.ex.ac.uk>:
+
+> I am looking at writing some hashcash
+> (http://www.dcs.ex.ac.uk/~aba/hashcash/) based spam prevention
+> software.
+
+> So what we want is a filter to bounce messages without the required
+> hashcash postage, we ideally want this to happen at the ISP or
+> organisational SMTP server end, rather than at the recipients end,
+> because a) it is simpler for 1 service provider to install software
+> than 100,000 neophytes,
+
+Hashcash in this context suffers from the 'fax effect' - the
+catch 22 of "We won't install what isn't widely used".
+
+
+>                         and b) it reduces bandwidth consumption on
+> dial up users pay per second lines as the spam is killed before they
+> see it.
+
+I have not (yet) persuaded demon to allow user-defined procmail rules
+on the ISP end of the phone lines.  Anybody know an ISP who does this ?
+I'll be with them in days if they match the other services I want.
+I can't imagine ISPs installing something at all exotic if they refuse
+to use procmail.
+
+> Secondly the proxy approach prevents some of the SMTP server functions
+> from operating properly because the process on the other end of the
+> socket is our hashcash proxy on localhost rather than the remote mail
+> hub
+
+No loss.
+
+> If the postage is valid, replay the headers to the real SMTP server
+> (with IP masquerading so that the IP address appears to be coming from
+> the originator, so that the SMTP server will not get upset about
+> reverse DNS look up mismatches etc).  Then act as a dumb proxy for the
+> rest of the connection passing data through to the normal hashcash
+> server.
+
+The above paragraph looks like a strange (and IMHO wrong) way to
+mix firewall technologies.  If you are passing mail through a proxy
+you won't want to either IP masq or lookup DNS records internally.
+
+> There are a few techniques to reduce the overhead of preventing spam
+> with hashcash.  One is to require valid hashcash only on the first
+> message to a given address.  (Spammers being hit and run types, and
+> even having to generate hashcash for each spamee once would be
+> expensive for a spam list of 10 million unwilling spam recipients).
+> Better, is to require valid hashcash on all mail, _until_ the
+> recipient replies to a mail.  This is good because people rarely reply
+> to spammers.
+
+This means a huge database of who has replied to whom.  Must the
+reply have headers indicating In-Reply-To a recognisable message ?
+
+
+--
+##############################################################
+# Antonomasia   ant@notatla.demon.co.uk                      #
+# See http://www.notatla.demon.co.uk/                        #
+##############################################################
+
+
+
+
+

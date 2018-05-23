@@ -1,0 +1,105 @@
+From: lcottrell@popmail.ucsd.edu (Lance Cottrell)
+Date: Wed, 8 Feb 95 22:35:18 PST
+To: Hal <cypherpunks@toad.com
+Subject: Re: MIME based remailing commands
+Message-ID: <ab5f62d802021004dd65@[137.110.24.250]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Nathaniel Borenstein <nsb@nsb.fv.com> writes:
+>
+>>Excerpts from junk.interesting: 7-Feb-95 Re: MIME based remailing co..
+>>"Perry E. Metzger"@imsi. (2553)
+>
+>>> > > It is being remailed via a MIME-based structure where two new
+>>>content types
+>>> > > are defined: multipart/remail and application/remail-commands.  The
+>>> > > multipart/remail type is supposed to be composed of two parts, the
+>>> > > application/remail-commands part which has remailer commands, and the
+>>> > > other part which is the "payload" to be remailed.
+>
+>>Perhaps you might consider writing up an informational RFC to define
+>>these types?  I think that would be very useful. -- Nathaniel
+>
+>Well, that was just an example; I was making those names up off the top
+>of my head in order to concretize what I understood Perry was suggesting.
+>
+>I can see that putting remailer commands into a specific part of a MIME
+>multipart message has some advantages.  Right now we are basically
+>having the remailing commands be mail header fields.  But really people
+>aren't supposed to just make up new fields like that.  I think the
+>"name space" of these fields is protected somewhat more than many other
+>aspects of communication protocols on the net.  Is there precedent for
+>adding service-by-mail functionality in this way?  I am not completely
+>comfortable with it.  And as we think of new functionality and new
+>commands they all have to get added at this top level, the same
+>visibility and name space as "Subject", "From", and "To".
+>
+>OTOH it does have the advantage that it is easy to do, at least with the
+>"::" pasting token idea (which perhaps would need to be documented in its
+>own right).
+>
+>If we did use a separate message part we'd have our own little name space
+>to use, with no fears of conflicting with someone else.  (Maybe "Latency"
+>might be used in a future extension of RFC822 for some other meaning than
+>what we are using it for.)  I am not sure what has to be done to get an
+>RFC approved but I suspect that adding mail header fields would be much
+>more likely to hit opposition than adding yet another MIME type.
+>
+>What does Mixmaster use for its commands?  Does it use "::" followed by
+>Anon-Send-To: and such?  Or some other format?  Maybe it should be made
+>MIME compliant from the beginning.  This way we are moving with the
+>current, the flow of the net, rather than across it.
+>
+>Hal
+
+With Mixmaster, everything is hidden inside the encrypted and ascii armored
+message structure.
+
+I use the :: token to let the remailer know that this is a remailer message
+of some sort. The Remailer-Type will eventually be used to indicate the
+version that created the message. It would be easy to add support for MIME.
+It would just replace the token and version number.
+
+All remailing instructions are inside the ascii armor.
+Note that the block of ascii armor is allways exactly the same length.
+
+::
+Remailer-Type: 2.0
+
+-----BEGIN REMAILER MESSAGE-----
+hQCMAgbmF1BLzawNAQP/RFw2/UagugMFPlnJ94KLmhaxDoplzAhNBCxuFRL2fosL
+V1YnFd2XVckJJ6vTe6DB+POO+V7HEdXkp3sWtjb56Am+/B+tM1TdeC6NPNV4g5PC
+15oYl7eD0ZxyjB34GdN5z/C2mOMbvP3k9eK3pn3ffkaXHBt1Y0I9ZieHkE6erxem
+AAAAusuiqVunPh15+7gttD5pNuIAOFDKfH8NJ39ReSEFAeeiOun6KSneJT+2DJ9Q
+LbK14WqsBVu1kDaUOHKchE9hPSFfTijTJp7I+GuiuOkDChUzZNZ21xpBS+8xMg58
+0i61z9EEf11G0G5JShTaeaGWNd14QxoyrxjTh9PrItOz49M9lSY71KoTP2+fVc0h
+xDGHw7iVeeToOtFqmDBI14FOVJz2rYuMu7vTD+MTwP3INkraCXqTeBoJ7g31Nhqj
+<SNIP>
+LbK14WqsBVu1kDaUOHKchE9hPSFfTijTJp7I+GuiuOkDChUzZNZ21xpBS+8xMg58
+0i61z9EEf11G0G5JShTaeaGWNd14QxoyrxjTh9PrItOz49M9lSY71KoTP2+fVc0h
+xDGHw7iVeeToOtFqmDBI14FOVJz2rYuMu7vTD+MTwP3INkraCXqTeBoJ7g31Nhqj
+VYbH5jxvKPjF4HEaS++MaBwTvzBkEKxbS+6oh7G/ndkHBxA7d7C0sx+qX9sjJyAs
+OIpGERZYA9RVspXUWys5fihnwrhk90dDAVZb8hTsPQfTXLp4
+=ouPq
+-----END REMAILER MESSAGE-----
+
+--------------------------------------------------
+Lance Cottrell  who does not speak for CASS/UCSD
+loki@nately.ucsd.edu
+PGP 2.6 key available by finger or server. Encrypted mail welcome.
+Home page http://nately.ucsd.edu/~loki/
+Check out my essay on the next generation remailer Mixmaster on the WWW page.
+For anon remailer info, mail remailer@nately.ucsd.edu Subject: remailer-help
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+
+
+
+
+
+

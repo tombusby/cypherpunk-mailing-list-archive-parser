@@ -1,0 +1,118 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Sat, 16 Dec 1995 07:46:44 +0800
+To: cypherpunks@toad.com
+Subject: Re: Pornographic stories
+In-Reply-To: <199512130602.WAA02645@netcom9.netcom.com>
+Message-ID: <Dgo5FD5w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jadestar@netcom.com (JaDe) writes:
+> >
+> > Daniel Miskell <DMiskell@envirolink.org> writes:
+> >>>I'm sure.
+>
+> > I too fail to see the cryptorelevance of this thread... Unless
+> > alt.sex.stories is used for steganography... Alice wants to send a
+> > secret message to Bob, so she posts a porn story to alt.sex.stories,
+> > where the key phrase is "That was the best sex I've ever had", which
+> > sounds like a mild hyperbole to most people;
+>
+> 	I like the stegonography angle.  However I'd encode the
+> 	actual message contents into the typos.  Filter out the
+> 	typos to retrieve your crypto-text.
+
+Wouldn't text with a lot of typoes look suspicious? For ultimate silliness,
+I've put together the following program to encode 8 bits at a time in an
+R-rated sentence:
+
+#include <stdio.h>
+
+#define BIT(c,n) ((c>>n)&1)
+
+const char*bits[]={
+"Senator Exon",                         "L.Ron Hubbard",
+"made passionate love to",              "had great sex with",
+"Hillary Klinton",                      "J.D.Falk",
+"experienced",                          "gave her",
+"six",                                  "twelve",
+"in",                                   "during",
+"one",                                  "a single",
+"night",                                "weekend"};
+
+void stegaporn(int c)
+{
+
+printf("%s %s %s and %s %s orgasms %s %s %s.  ",
+bits[BIT(c,7)], bits[2+BIT(c,6)], bits[4+BIT(c,5)], bits[6+BIT(c,4)],
+bits[8+BIT(c,3)], bits[10+BIT(c,2)], bits[12+BIT(c,1)], bits[14+BIT(c,0)]);
+}
+
+int main(void)
+{
+int c;
+
+while (EOF!=(c=getchar()))
+ stegaporn(c);
+
+return(0);
+}
+
+> 	Ultimately I think that the whole issue of legal cryptography
+> 	actually boils down to this:
+>
+> 		If you illegalize strong crypto than criminals will
+> 		simply resort to steganography and "hidden" channels
+> 		of communication (in which they can also embed/tunnel
+> 		the crypto-text of their strongly encrypted data).
+>
+> 		Therefore all you've done is create a lesser crime
+> 		for the real criminals and make people with valid
+> 		(non-criminal) uses of the technology into criminals.
+>
+> 	Unfortunately this reasoning doesn't help at all with our
+> 	(U.S.) legislature.  There is some hidden aggenda as to
+> 	why "they" really want strong cryptography to be difficult
+> 	for the average user to obtain.  I have a uniquely hard time
+> 	believing that "they" are merely concerned that "we" might
+> 	be pursuing simple privacy (even if cryptography were already
+> 	illegal I could use it for years and never get "caught."
+> 	so long as I was using non-broadcast channels and communicating
+> 	with "trusted" associates (fellow "crypto-criminals")
+>
+> 	In fact I've suggested to several people that we start
+> 	a dial-up uucp revival for this and related reasons.  (If
+> 	the number of users/webpages and the bandwidth usage continues
+> 	to increase at the recent rates -- without a corresponding
+> 	improvement in the infrastructure we'll probably all want to
+> 	go back to uucp for mail and news anyway.  Old fashioned dial-up
+> 	may be faster than T1 access in a few years and direct point-to-
+> 	point uucp over ISDN is probably faster already.
+>
+> 	So:
+>
+> 		What is the "real" reason for opposition to 	
+> 		 strong crypto?  Who "really" benefits?  (and please
+> 		 don't mention the LE types 'cause I don't believe it).
+>
+> 	and:
+> 		Anyone else want to participate in the great '90's
+> 		uucp revival?  I'm in Santa Clara and could use
+> 		some feeds and some help with the setup.
+
+I'm all for it. My site is connected to the rest of the world via dial-up
+UUCP, I haven't touched the setup in 5 years, and am not planning to.
+
+It might be interesting to have a variation of dial-up UUCP where site 1
+passes encrypted stuff to site 2 and doesn't quite know what site 3 they're
+supposed to go on to. Sort of like the remailers with encryption.
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

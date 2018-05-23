@@ -1,0 +1,58 @@
+From: collins@newton.apple.com (Scott Collins)
+Date: Wed, 15 Dec 93 14:50:43 PST
+To: Peter Wayner <pcw@access.digex.net>
+Subject: Re: Error-Qualifying Signatures
+Message-ID: <9312152248.AA20887@newton.apple.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Peter,
+
+Since this description is of a more general interest, I am cc'ing this
+thread back to the list.
+
+  >Yes, but inverting a hash function isn't necessarily a problem. 
+  >Inverting an encryption function is. With hash functions, we
+  >really want to know it is hard to take message A and append something
+  >B so that f(AB)=f(C). Now, ideally people have always thought
+  >that it was bad if given C, one could come up with a D such that
+  >f(C)=f(D). But I haven't figured out how that can affect practical
+  >problems. Did I miss something?
+
+Let {x} be a hash on x.  Let S_A{x} be encryption of the hash of x with
+Alice's secret key, i.e., Alice's signature over x.  Thus, a signed 'thing'
+is (x, S_A{x}).
+
+If {x} yields the function f(y) which tells how different y is from x
+(ostensibly to measure what damage x sustained in transit, to become y),
+then f(y) can be exploited to find y such that {y} = {x} (this is, after
+all, the design criteria behind f(y)).  If {x} = {y} then S_A{y} = S_A{x},
+and therefore I can publish a document signed by Alice (y, S_A{y}), without
+her knowledge (both meanings) or cooperation.
+
+Someone on the list showed a few months back that provably few errors (or
+abitrary attacker introduced changes) are needed to get to a matching hash,
+but finding the changes to introduce is expensive.  Building a hash
+function such that a distance measure is easy to calculate and exploit,
+makes finding the right errors easier, and thus allows falsified
+signatures.  I take x, introduce my required changes yielding y, and then
+exploit f(y) with say a genetic search, or simulated annealing, to find y'
+such that {y'} = {x}, then I republish (y', S_A{x}): my altered
+document/image/whatever, + some errors to make the hashes match, + Alice's
+original signature.  The signature is verifiable.
+
+
+Scott Collins         | "Few people realize what tremendous power there
+                      |  is in one of these things."     -- Willy Wonka
+......................|................................................
+BUSINESS.   voice:408.862.0540  fax:974.6094   collins@newton.apple.com
+Apple Computer, Inc.   5 Infinite Loop, MS 305-2B   Cupertino, CA 95014
+.......................................................................
+PERSONAL.   voice/fax:408.257.1746    1024:669687   catalyst@netcom.com
+
+
+
+
+
+

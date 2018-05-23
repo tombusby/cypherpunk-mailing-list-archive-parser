@@ -1,0 +1,32 @@
+From: norm@netcom.com (Norman Hardy)
+Date: Thu, 21 Sep 95 18:25:21 PDT
+To: cypherpunks@toad.com
+Subject: Pitfall in producing random numbers
+Message-ID: <ac87c86d0102100466b3@DialupEudora>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think that it was on the cypherpunks list that I learned of how PGP for
+the IBM PC, running under emulation on the Mac failed to produce good
+random numbers. The virtual PC clock proceeded forward by very predictable
+manner. Perhaps the details were different but the nature of the pitfall is
+clear. I did not notice that pitfall mentioned in RFC 1750. (Its the only
+hazard that I know of that they missed.)
+
+The only thing I can think of protecting against this is to do some simple
+checks against more obvious ways that virtual clocks might produce times.
+Low order bits should not always be zero. The differences between
+successive readings should not be constant. Two clock readings separated by
+a computation of known length should be within a factor of a few of the
+expected value. If not try again once or twice.
+
+Such tests are imperfect but I think that they would have noticed the
+virtual clock on the virtual PC. If they fail the program can require the
+user to enter the seed, with all that that entails.
+
+
+
+
+
+

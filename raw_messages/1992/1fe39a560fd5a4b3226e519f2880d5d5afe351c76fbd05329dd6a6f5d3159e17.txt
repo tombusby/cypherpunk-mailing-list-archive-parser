@@ -1,0 +1,46 @@
+From: Peter Shipley <shipley@tfs.COM>
+Date: Mon, 21 Dec 92 17:07:02 PST
+To: Phiber Optik <phiber@eff.org>
+Subject: Re: Destroying Data (Re: Remailer Policies)
+In-Reply-To: <199212220042.AA27413@eff.org>
+Message-ID: <9212220106.AA06240@edev0.TFS>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> 
+>> not quite.  you need something like
+>> 
+>>   dd if=/dev/null of=/dev/xxx bs=verybig conv=sync
+>> 
+>
+>Unix weenies of old will recall "clri" to clear an inode.  If paranoia is in
+>effect, try something like the following:
+>
+>ls -li remailer-log or whatever to get the i-node number,
+>then 
+>clri /dev/sdxx #_of_i-node
+
+this will zero out the inode it also does NOT clear the data blocks
+just the inode pointers to the data blocks. infact if you do this.
+
+(this you *will* need to umnount and fsck your
+system [or reboot if you did this to you root partition]).
+in fact if you do this with out deleteing the file first you run a good
+chance of crashing the system.
+
+
+normaly I would say "do not try this at home" but then I would rather
+you shot yourself in the foot at home (as opposed to shooting yourself
+and who ever is on a public system)
+
+I will post some C/Perl code that will work as a /bin/rm replacement in a
+few days.
+
+
+			-Pete
+
+
+
+

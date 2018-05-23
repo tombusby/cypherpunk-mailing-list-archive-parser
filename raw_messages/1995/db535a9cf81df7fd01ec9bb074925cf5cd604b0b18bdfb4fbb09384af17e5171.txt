@@ -1,0 +1,44 @@
+From: jbass@dmsd.com (John L. Bass)
+Date: Sat, 30 Sep 95 15:14:10 PDT
+To: cypherpunks@toad.com
+Subject: Re: NetScape's dependence upon RSA down for the count!
+Message-ID: <9509302213.AA11359@dmsd.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Ok, several people have asked:
+
+> Please explain to me how you can break SSL using the above method. I
+> don't follow your line of thought. How could my fake www server
+> intercept and redirect packets to netscape.com short of hacking a DNS
+> server?
+
+client ->       filter                          Client sends packet with K(c)
+                filter ->       Server          filter forwards packet with K(f)                filter       <- Server          Server sends encrypts with K(f)
+client       <- filter                          filter re-encrypts with K(c)
+
+As the protocol progresses the filter also uses the master key,
+and follows the renegotiation as the master key expires.
+
+
+The existance of a working filter is enough to invalidate the security in
+NetScape's claims.
+
+
+hacking a DMS server is one way, spoofing a DNS reply to named is easier,
+simply packaging the filter into a router/bridge close to the server
+is more effective ... even if hacking the incoming phoneline/T1 line
+to the server and inserting a very transparent bridge AKA a phone tap.
+
+There is enough dollars to make the risks ... :)
+
+John
+
+BTW ... how do I join for these two list? Where are they archived to
+catchup with past traffic?
+
+
+
+
+

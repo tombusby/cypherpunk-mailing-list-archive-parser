@@ -1,0 +1,49 @@
+From: Eli Brandt <ebrandt@jarthur.cs.hmc.edu>
+Date: Sun, 3 Jul 94 01:15:21 PDT
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Re: Dr. Dobbs Dev. Update 1/5 July 94 & Schneier
+In-Reply-To: <199407030500.BAA16926@sparcserver.mc.ab.com>
+Message-ID: <9407030815.AA20743@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: tim werner <werner@mc.ab.com>
+> The loop was really a waste when you consider that it could
+> have been done in 1 instruction.
+
+You can do better than a bit-serial loop -- though not down to
+one instruction!  There are a lot of very cool approaches, only
+one of which I remember.
+
+Look at the problem as that of finding the sum of n 1-bit blocks.
+Well, we can easily find the sum of a single n-bit block.  The
+intermediate conversions are the magic part.
+
+Let's look at an 8-bit word.  How shall we get, for example, from a
+sum of 4 2-bit blocks to a sum of 2 4-bit blocks?  What we do is add
+adjacent blocks.  The block-pair sums will actually fit in three
+bits, so they'll certainly fit in four without overflowing.  And all
+of this can be done bit-parallel using logic ops.
+
+In C, this looks like:
+
+int byte_ones(int a)
+// hope this is correct...
+{
+	a = (a & 0x55) + (a & 0xAA)/2;		// 0x55 == 01010101b
+	a = (a & 0x33) + (a & 0xCC)/4;		// 0x33 == 00110011b
+	a = (a & 0x0F) + (a & 0xF0)/16;		// 0x0F == 00001111b
+	return  a;
+}
+
+Oh, and one AND in the third line is superfluous.  This is not the
+fastest algorithm for this, but it's the only one I understand and
+remember.
+
+   Eli   ebrandt@hmc.edu
+(I won't ask why you needed a one-hot encoding in the first place...)
+
+
+
+

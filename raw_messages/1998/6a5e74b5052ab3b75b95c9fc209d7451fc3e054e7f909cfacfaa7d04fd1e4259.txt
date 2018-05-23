@@ -1,0 +1,58 @@
+From: "Brian W. Buchanan" <brian@smarter.than.nu>
+Date: Tue, 17 Mar 1998 19:47:41 -0800 (PST)
+To: John Young <jya@pipeline.com>
+Subject: Re: Will New Sendmail Block Remailers?
+In-Reply-To: <1.5.4.32.19980317141322.006c25cc@pop.pipeline.com>
+Message-ID: <Pine.BSF.3.96.980317191646.264A-100000@thought.calbbs.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Tue, 17 Mar 1998, John Young wrote:
+
+> 
+> Markoff in the NYT reports today on the release of a new 
+> Sendmail upgrade by author Eric Allman that will block 
+> spam by checking the legitimacy of the originating address 
+> before delivery.
+> 
+> The report claims that spam is up to 10% of e-mail worldwide,
+> And that Sendmail is used on 75% of the computers that route 
+> e-mail, all of which are being fitted with the new program.
+> 
+> What are the chances that this will affect remailers or other 
+> means of eternal anonymity?
+
+   I doubt it.  NYT is probably referring to the integration into the
+sendmail package of rules that nix incoming mail with forged From headers,
+e.g. "you.want.to@buy.this" and prevent unauthorized relaying.  Remailers
+generally use a From header that includes their own legitimate domain, so
+they likely won't be blocked.  However, while the anti-relay-hijacking
+rules are useful (and LONG overdue), I see the the From-domain-validity
+change as a Bad Thing, as it will encourage spammers to deliberately
+choose existing domains to spoof in their From lines, leading to an
+increase in the incidences of sites being subjected to fragmented
+denial-of-service attacks, i.e. being mailbombed by the collective
+complaints of all those shit-stupid AOLers who don't bother to read the
+Received headers.  I've been lucky enough never to have been subjected to
+one of those attacks, but from the sheer volume of complaints I once got
+when a luser sent a MMF spam to USENET, I can sympathize with the victim
+of a spoof.
+   Yet another instance of "protection for the masses" actually providing
+no real benefit and simultaneously negating the protection afforded to
+those few who had previously used the defense.  A similar thing has
+happened/is happening with the previously-useful "Comments: Authenticated
+sender is" check for spam, which used to be nearly 95% effective at nixing
+spam because most known spamming packages included the header, and only
+one legitimate mailer did likewise, but was easy to make exceptions for
+because it included an identifying X-Mailer header.
+
+-- 
+Brian Buchanan                                      brian@smarter.than.nu
+
+Never believe that you know the whole story.
+
+
+
+
+

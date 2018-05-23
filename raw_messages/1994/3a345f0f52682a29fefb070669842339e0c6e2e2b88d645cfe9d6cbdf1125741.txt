@@ -1,0 +1,84 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Mon, 14 Feb 94 15:21:32 PST
+To: boone@psc.edu
+Subject: Re: SCHEME for FULL-SPEC RETURN PATH
+In-Reply-To: <9402141601.AA25873@igi.psc.edu>
+Message-ID: <4hM0MZK00awUI1OFJF@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: "Jon 'Iain' Boone" <boone@psc.edu>
+> 
+> 
+>  How secure do you think this is?
+>
+>  Three remailers:
+>
+>  anon1+@a.edu
+>  anon2+@b.com
+>  anon3+@c.org
+>
+>  Originator: boone@psc.edu (really igi.psc.edu, as Message-ID: shows)
+>  Receiver: wcs@anchor.ho.att.com
+>
+>  ()Ka == contents inside () are encrypted with Public Key of A
+>
+>  mail addressed to random+*@foo.edu == mail to user random@foo.edu,
+>					random's mail processor will
+>					deal with the +*
+...
+
+>  To: anon3+"(anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com)Kc"@c.org
+>  From: wcs@anchor.ho.att.com
+>  Message-Id: <99234.AA23492383@anchor.ho.att.com>
+>
+>  C.ORG:
+>
+>  To: anon2+"(anon1+"(boone@psc.edu)Ka"@a.edu)Kb"@b.com
+>  From: wcs@anchor.ho.att.com
+>  Message-Id: <2342349324.AA2343242@c.org>
+...
+
+Well, I guess great minds think alike.  I'm already working on this. 
+I've been hacking on in my spare time for about a month now.  My program
+is about 75-80% done.  Here's how it will work:
+
+You send mail to remail+getid@x.edu.  The remailer takes your address
+and encrypts it with its private key, adds some random padding (to
+disguise the legnth), a checksum, and then puts it in "ascii-armor"
+format.  Then it mails it back to you.  You get an address of the format:
+
+remail+to+8k3dsa5gzctoy6ahz433mwqqe1v4oo1fr@x.edu
+
+Then when you post anonymously, you can use that address as a reply-to
+address (a few of the cypherpunk remailers allow you to insert your own
+reply-to fields, i think the BSU ones do.)
+
+All of the encryption/decryption routines are completely finished.  The
+only things left to do are to add the actual mail handler that will take
+an incoming message, decrypt the address and forward the mail.  The
+auto-reply program to send the encrypted addresses is finished also; it
+works basically like my automatic faq-sender which you can email at
+mg5n+remailers@andrew.cmu.edu .
+The above is acutal output from my cipher and will decrypt to
+mg5n+@andrew.cmu.edu (if you have the secret key!)  I chose to use a
+private key cipher instead of p-k because of the enourmous overhead that
+you get with PGP, and I was afraid that it would be too big for the mail
+headers.
+The cipher used employs transpositions, substitution tables and cipher
+feedback, in multiple layers of encryption.
+
+Perhaps in the future, PGP encryption of the message could be added, and
+better methods for chaining remailers, and compression of the mail
+address before encryption (I have experimented with this).
+
+I've been a bit busy with other things this past week so I haven't
+worked on the program lately.  If you're serious about this, and you or
+someone you know is willing to finish the program and actually run a
+remailer using it, I'll let you have my source code so far.  Program is
+written in C.
+
+
+
+

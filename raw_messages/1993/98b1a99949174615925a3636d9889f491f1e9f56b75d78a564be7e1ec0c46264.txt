@@ -1,0 +1,37 @@
+From: b44729@achilles.ctd.anl.gov (Samuel Pigg)
+Date: Tue, 27 Jul 93 01:26:07 PDT
+To: skyhawk@cpac.washington.edu
+Subject: Alpha testers wanted: GNU Emacs, RMAIL, and PGP
+In-Reply-To: <9307270752.AA27586@bailey.cpac.washington.edu>
+Message-ID: <9307270822.AA08896@achilles.ctd.anl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   From: skyhawk@cpac.washington.edu
+   Date: Tue, 27 Jul 93 0:52:36 PDT
+   X-Mailer: ELM [version 2.3 PL0]
+
+   > From: jpp@markv.com <jpp/daemon>
+   > Subject: Alpha testers wanted: GNU Emacs, RMAIL, and PGP
+   > 
+   > [...]  Pgpmail also helps fix a known security hole -- it doesn't send you
+   > passphrase on the command line, but uses the environment instead.
+
+   The security-conscious way to send something to a subprocess is to use a pipe.
+   Looking at environment variables requires just a single extra flag to ps(1).
+   If PGP can't be set up to use a pipe to get the passphrase, it would be best to
+   modify PGP to clear its arguments when it's done getting a copy of them.
+
+It already does clear the passphrase argument when using -z, but it's
+trivial to use a file descriptor to send the passphrase to pgp, either
+using the PGPPASSFD environment variable to give it the descriptor, or
+if PGPPASSFD is 0, then pgp will look on the first line of piped input
+for the passphrase.  (check out pgp.c)
+
+-Sam
+
+
+
+
+

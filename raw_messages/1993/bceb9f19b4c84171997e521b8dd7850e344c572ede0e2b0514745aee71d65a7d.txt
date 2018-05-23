@@ -1,0 +1,61 @@
+From: nobody@alumni.cco.caltech.edu
+Date: Tue, 26 Jan 93 22:57:43 PST
+To: cypherpunks@toad.com
+Subject: Re: Computerized OTP (was 5th AMENDMENT & DECRYPTION)
+Message-ID: <9301270659.AA10471@alumni.cco.caltech.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Murdering Thug wrote:
+
+> Yes I do think the idea of making a "more random than random" stream
+> by filtering out long runs of 0's or 1's weakens the the key stream
+> in theory, but in practical use it strengthens it, because if the stream
+> is left alone, runs of 500 bits of 0's or 1's can come through, and any
+> fool can then extract plain text using XOR in this area of the cyphertext.
+
+Thug is wrong about this, but it's a common mistake.  It does seem like
+those runs of 0's (and, to a lesser extent, 1's) are dangerous - there's
+your plaintext, totally exposed to the prying eyes of strangers!
+
+But, what is forgotten is this: for every run of 0's which would reveal
+your plaintext, there is an equally likely pattern of 1's and 0's which
+transforms your plaintext into one of Shakespeare's plays.  Or into the
+Declaration of Independence.  Or into anything else you like.
+
+You see, xor'ing your message with a random stream means that the
+resulting output is equally likely to be _any_ original message.
+There is no way in theory or in practice to determine what the message
+originally was; that is, all bit patterns are equally likely to be
+the original message.
+
+To see an example of this, suppose you had one of the simplest possible
+original messages: all 1's.  Now you xor this with a random pattern.
+To your dismay, your random stream happens to come up with a large block
+of 0's.  This is what would happen:
+
+Original message:   1111111111111111111111111111111111
+Random stream:      0011010010000000110111010111001010
+Resulting output:   1100101101111111001000101000110101
+
+Look at that big block of 1's in there.  Won't that give it away?  No.
+Such a block of 1's is expected to occur occasionally no matter what
+the original message.  It's just as likely that the original message
+and random stream looked like:
+
+Original message:   1010101010101010101010101010101010
+Random stream:      0110000111010101100010000010011111
+Resulting output:   1100101101111111001000101000110101
+
+There is no way to tell what the original message was, even when you see
+a block of output which seems to match some pattern.  It doesn't tell
+you anything.
+
+Hal
+74076.1041@compuserve.com
+
+
+
+
+

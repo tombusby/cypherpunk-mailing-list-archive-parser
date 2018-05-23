@@ -1,0 +1,45 @@
+From: wlkngowl@unix.asb.com (Mutatis Mutantdis)
+Date: Mon, 8 Jan 1996 10:02:58 +0800
+Subject: A /dev/random standard is need.
+Message-ID: <DKt3sx.IoA@news2.new-york.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I'm revising the DOS NOISE.SYS driver currently.  In writing the
+documentation I am discussing the advantages of such a driver (part of
+the logic behind writing it).
+
+Mainly, a hardware (and to some extent) operating system independent
+means is needed for generating random numbers.  It seems to me that a
+device driver (at least for DOS, Unix and maybe Amiga or Atari) is the
+best way to do this.  If one has special chips or diodes for
+generating randomness, a device driver which reads from them can be
+used. If one lacks such equipment, something like NOISE.SYS or
+random.c for Linux, or Noiz (which I have not yet look at) can be
+used.
+
+Even then, random.c defines two devices, random (which only returns as
+many bits as there are fresh bits in the entropy pool) and urandom
+(which keeps hashing the bits and will return as many as requested.)
+
+NOISE.SYS defines only random, which behaves more like urandom above.
+
+If there is a standard, it will make it easier to use special hardware
+since software which reads from a random device can access it.
+
+Perhaps a kind of standard should be discussed and created so that
+cross-platform development is made much easier, and so that features
+and capabilities can be worked out.
+
+Does anybody else see a need for this?
+
+
+--Rob
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+From: norm@netcom.com (Norman Hardy)
+Date: Sun, 18 Jul 93 09:59:58 PDT
+To: diffie@eng.sun.com
+Subject: Diffie-Hellman Weakness Weakness
+Message-ID: <9307181700.AA08369@netcom4.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It has been mentioned several places that the Diffie-Hellman key exchange
+algorithm is subject to the man-in-the-meddle attack. There is
+a weakness in the attack that I understand. I suppose that
+the attack goes as follows where I am the man in the middle:
+ 
+I am able to install an active wire tap that allows me to substitute the
+data traveling in either direction. I have a fast computer to help me.
+I want to conceal my activity but learn what transpires.
+ 
+Upon receiving signals to begin DH protocol I respond to each side separatly
+"lets go". I establish a secret session key with each side. I am unable to
+cause the two keys to be equal except by passing the b^x going one way and b^y
+going the other. In this case I know neither x or y and can't read the traffic.
+I must choose my own random numbers zx and zy and replace b^x with b^zx and
+b^y with b^zy. X and Y now enter secure mode with the secret keys b^(x*zy)
+between me and X and b^(zx*y) between me and Y. I can read the traffic.
+If the connection is digitized voice and if X should happen to mention the
+low ten bits of b^zy to Y then Y would notice the discrepency since Y knows
+that he sent b^y. The jig is up. I don't know how to do voice recognition
+so as to intercept the vocal quotation of b^zy and change it to a quotation
+of b^y in a way that Y would not notice. I would have to simulate X's
+voice.
+ 
+Curiously there seems to be no analog of this precaution for digital DH
+communicators. If there is a secret protocol for comparing b^y over the
+nominally secured channel then there may as well have been a secret key
+in the first place. If there is a public protocol for comparing b^y then
+I can follow that protocol my self.
+
+
+
+

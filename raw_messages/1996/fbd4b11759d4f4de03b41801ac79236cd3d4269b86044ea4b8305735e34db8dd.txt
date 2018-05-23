@@ -1,0 +1,63 @@
+From: daw@cs.berkeley.edu (David Wagner)
+Date: Fri, 19 Apr 1996 08:40:12 +0800
+To: cypherpunks@toad.com
+Subject: Re: why compression doesn't perfectly even out entropy
+In-Reply-To: <960418025428_377757492@emout17.mail.aol.com>
+Message-ID: <4l660q$167@joseph.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199604181352.JAA08215@jekyll.piermont.com>,
+Perry E. Metzger <perry@piermont.com> wrote:
+> > If you eliminate all repeating byte sequences, such as 00 00 or 7F 7F, you
+> > will reduce your possible entropy by .07058% (7.99435 bits per byte), and
+> > eliminate the (astronomically remote) possibility of Hamlet or some other
+> > English text popping out of your RNG/PRNG. [...]
+> 
+> Before making pronouncements like "You are still OK" you ought to
+> learn a bit more about cryptanalysis. [...]
+
+Then I propose the following scheme.  (I've proposed it before.)
+
+My entropy cruncher takes in random noise from a number of diverse
+sources (some possibly of dubious quality).  I take *all* the noise
+and run it through a hash function to distill entropy.
+
+Now I need to have some method to estimate when I have enough entropy
+in the random noise I'm crunching.  First rule: be conservative.
+One can never have too much entropy in the input to the hash function.
+
+Therefore, I suggest making a *copy* of the input noise stream,
+running it through Jon Wienke's "this shouldn't happen" filter, and
+feeding the result to some entropy estimator.  When the entropy
+estimator says "I've got 1000 bits of entropy", I stop crunching.
+
+This is conservative design, folks.  Using Wienke's filter in this manner
+can't be any weaker than not using it at all. (agreed?)
+
+Now, you can go argue whether the extra design complexity is worth it,
+if you like. <shrug>
+
+
+P.S.  To forestall confusion, let me be explicit about what I'm *not*
+proposing: I *don't* want you to apply Wienke's filter to the input or
+output of the hash function.
+
+Applying Wienke's filter to the random noise stream, to the input to
+the hash function, or to the output to the hash function, is clearly
+a bad idea.
+(The mathematician says "clearly", knowing full well that, unfortunately,
+some small part of the audience probably doesn't get it... <sigh>)
+
+This is what the "POTP" snake oil folks were proposing-- they had
+some "quality control" process they applied to the one-time pads
+they generated.  I think they said they regularly eliminated 70%
+of the pads as "defective".  This was supposed to be encouraging :-)
+
+If you don't understand why the POTP "quality control" process was
+laughable, let someone else design the entropy cruncher!!!
+
+
+
+

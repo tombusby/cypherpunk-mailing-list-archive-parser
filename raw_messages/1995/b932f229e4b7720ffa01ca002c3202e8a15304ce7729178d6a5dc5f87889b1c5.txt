@@ -1,0 +1,42 @@
+From: Raph Levien <raph@CS.Berkeley.EDU>
+Date: Fri, 10 Nov 1995 02:20:49 +0800
+To: perry@piermont.com
+Subject: Small keysizes do make sense (was PGP Comment weakens...)
+In-Reply-To: <199511091413.JAA15288@jekyll.piermont.com>
+Message-ID: <199511091725.JAA17620@kiwi.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> > I agree entirely. That's why my PGP key at school is 382 bits. It's a
+> > lot easier to compromise my machine than factor a 382 bit number.
+> 
+> On the other hand, it costs nothing by most people's standards to use
+> a 1024 bit key, so why not use one? I find that there is only a point
+> in using low security for anything in particular when there is a
+> perceivable cost to it -- if the cost is typing a different number
+> while doing key generation, I don't see why one should suffer the
+> tradeoff.
+
+Perhaps it costs you "nothing," Perry, but not all of us have the
+massively parrallel 64-way interleaved banked memory nanosecond-latency
+box you have on your desk.
+
+Since RSA decryption is cubic in key size, it takes about twenty times
+as long to sign or decrypt a message. Since latency-hiding (for example,
+caching the decrypted session keys) is not widely implemented, the user
+actually sees the difference.
+
+For applications such as remailers, a 20-fold factor can make the
+difference between smooth operation and totally hosing the machine.
+
+Another reason to use small keys is to communicate the relative insecurity
+of the machine to senders. A 382-bit key says, loud and clear, "don't send
+sensitive or incriminating information using this key."
+
+Raph
+
+
+
+
+

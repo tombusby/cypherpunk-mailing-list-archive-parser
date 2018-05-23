@@ -1,0 +1,61 @@
+From: hallam@ai.mit.edu
+Date: Sat, 14 Sep 1996 04:50:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: [Long] A history of Netscape/MSIE problems
+In-Reply-To: <32390335.6231@netscape.com>
+Message-ID: <9609131559.AA30300@etna.ai.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tom wrote,
+
+>Hallam-Baker wrote:
+>> 
+>> There was a long list of security holes in SSL, PCT plugged a good
+>> number of them and SSL v3 plugged a few.
+
+>This statement surprises me.  It appears to mean that you think PCT has
+>fewer holes than SSL 3.0.  If you know of any holes in SSL 3.0, I'd be
+>very interested in hearing about them.
+
+Sorry Tom, should have made a bit clearer the difference between the 
+pre-Weinstein/El-Gamal and post era a little better. Also what I 
+meant to say was that SSLv3 plugged a few that PCT had done differently.
+
+The remaining probnlems as I see it are of approach. The security in
+SSL is not in the right layer to support collaboration. Thats not to say
+its a bad thing to have SSL and SSL makes a lot more sense to me than
+IP-SEC does, but then I always prefer security thats higher in the
+protocol stack. SSL strikes me as a credible prospect for pervasive
+low level security across all IP protocols while IP-sec would be nice
+but will probably take a decade to become ubiquitous.
+
+The problem with SSL is that using a public key based protocol to 
+protect a password is something of a technology mismatch. I want
+the flexibility that public key auth gives me available at the 
+application level.
+
+There is no real model for how SSL provides security in a distributed
+authoring environment. If I want to distribute encrypted documents
+from one server and keys from another, have an authoring tool sign
+a document in a non repudiable manner and integrate that through to
+the authorisation system there is not really a means to do it.
+
+I don't think that S-HTTP helps either, its too baroque. If all one
+wants to do is sign a document being transmitted in http then whats
+wrong with a Content-Signature: tag? If you want to encrypt on a 
+symmetric key which is known to the firewall and want the firewall
+to know what is going on then whats wrong with using chunked encoding?
+Similarly whats wrong with a simple MAC function signing each message
+body? If one incorporates a wrapping mechanism then one can control 
+the level of security in an arbitary manner, exposing or concealing
+as much as one wants. I've never understood why S-HTTP needed so much
+mechanism to achieve all that.
+
+
+		Phill
+
+
+
+

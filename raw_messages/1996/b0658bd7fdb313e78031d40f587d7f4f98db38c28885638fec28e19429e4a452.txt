@@ -1,0 +1,50 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Fri, 30 Aug 1996 02:23:57 +0800
+To: lists@lina.inka.de (Bernd Eckenfels)
+Subject: Re: Code Review Guidelines (draft)
+In-Reply-To: <m0uvZT1-0004kIC@lina>
+Message-ID: <199608291601.LAA07092@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Bernd Eckenfels wrote:
+
+| >     Much better, look at rfc822.  (I wouldn't consider *anything* that
+| > has the word "sendmail" in it a good reference).
+| 
+| its much better if you dont rely on the content of the string at all. Dont
+| use sh -c or system and you will be save. Simply asume that all characters
+| are valid in user suplied strings and treat them exactly that way... If they
+| need to be exporeted then unfortunately they need to be 'untainted' and this
+| should be done by positive not negative lists as mentioned in the
+| guidelines.
+
+	Not passing untainted data to system is clearly a very good
+idea.
+
+	Less clear is how much other parsing should be done.  I like
+extreme parsing (when its cheap; as Marcus Watts pointed out,
+verifying remote hostnames & usernames can be expensive).  If you
+don't strongly verify data on the way in, it can get to other places
+not so careful about its contents.  This is why I chose to recommend
+against accepting a wide variety of legit email address formats;
+because they will be passed back to a database that assumes that the
+addresses have been sanitized, and are in user@foo.net format, and not
+treat them with the care they deserve.
+
+	In an ideal world, programmers would be careful with the data
+they get, but we don't live in an ideal world.  I choose to suggest
+paranoia over inclusiveness, but am adding an appendix discussing
+issues of mail addressing.
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

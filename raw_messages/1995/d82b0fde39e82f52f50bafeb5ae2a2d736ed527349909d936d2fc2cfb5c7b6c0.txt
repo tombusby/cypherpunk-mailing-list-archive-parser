@@ -1,0 +1,46 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Wed, 20 Sep 95 07:37:07 PDT
+To: "Jeff Weinstein" <jsw@netscape.com>
+Subject: Re: netscape's response
+In-Reply-To: <9509200254.ZM206@tofuhut>
+Message-ID: <199509201436.KAA05021@frankenstein.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"Jeff Weinstein" writes:
+>   It turns out that Taher Elgamal and I started working here within
+> a week of each other, about 6 months ago.  Neither of us thought to
+> take a serious look at the RNG seed code.  I don't think that anyone
+> would accuse Taher of being an amateur in this area.
+
+Well, he is more of a math guy than a practical guy.
+
+For a long time, I've posted articles and have seen other people post
+articles arguing that the right place to attack systems like this is
+in spots like the random number generators.
+
+Were I Netscape, I'd be conducting code reviews for lots of other
+things, too.
+
+Your coding standards should out and out ban the use, anywhere in your
+code, of sprintf, gets, strcat, or any other thing that manipulates
+strings without explicitly taking length limits. system and any
+similar calls should also be banned entirely. It doesn't matter if you
+"think" they are safe -- calls you don't use can't be somehow trickily
+abused.
+
+I suspect, however, that the seductiveness of "oh, this looks safe
+enough" will probably continue to win out with your colleagues over
+systematic approaches to these problems. After all, they never seemed
+to learn the lesson in revision after revision of NCSA's stuff.
+
+This is not to say that I think *you* are bad at this, Mr. Weinstein,
+but you certainly have colleagues with the worst possible track record.
+
+Perry
+
+
+
+

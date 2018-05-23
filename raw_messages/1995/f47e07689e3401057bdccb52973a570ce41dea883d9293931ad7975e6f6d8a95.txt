@@ -1,0 +1,155 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 4 Sep 95 17:23:23 PDT
+To: pfarrell@netcom.com
+Subject: Re: Acceptable NIS&T restrictions
+Message-ID: <199509050019.RAA27055@ix9.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:54 PM 9/4/95 -0400, Pat Farrell commented on the NIST's
+latest proposals for their September meeting on export controls
+and software with built-in government access to keys (GAK).
+I'll generally use the terms GAK or master keying rather than escrow,
+since escrow is a legal term that implies both the willingness of
+both parties to use it, and also that the escrowed material
+be delivered only when certain criteria are satisfied, which is 
+out of the scope of almost any proposals I've seen labelling themselves
+"key escrow", particularly the Clipper system.
+Material with > and indentation are from the NIST paper;
+material with just > and 0-1 spaces is Pat's.
+
+64 bits of keyspace is of course hopelessly inadequate for financial
+transactions - crackerboxes have been designed that allow very rapid breaking
+of single-DES or short-key RC4, and a useful platform needs to accommodate
+high-value transactions such as customers access to stockbrokers as well as
+more limited-value transactions such as credit cards where a $1000 cracking
+cost makes crime not pay well.  The Administration argues that the limitation
+makes up for the possibility that users may find ways to evade GAK; but users
+can already do that now.
+
+>    "Avoiding multiple encryption -- How can the product be
+>     designed so as to prevent doubling (or tripling, etc.) the
+>     key space of the algorithm?"
+>CME has been suggesting DES | TRAN | DES | TRAN | DES
+>for years. Can they really _avoid_ (i.e. prevent) this?
+(CME is Carl Ellison at TIS; tran is a simple transposition system.)
+
+Sure - if the software always tacks in master keys any time it
+does a symmetric-key encryption, and won't/can't decrypt without it,
+then DES+GAK | DES+GAK | DES+GAK is just as vulnerable to someone
+with the master key as single DES+GAK - it just takes three separate
+phases of key forfeiture to decode.  (yes, I left out the tran phase;
+anybody going to that much work is using something other than the
+built-in encryption, at which point they might as well use
+non-government-approved encryption themselves.)  Does it triple the
+key space?  For people without the master key, yes, though maybe they
+get some known plaintext.  For people with the master key, it depends
+on your definitions, and maybe _they_ put in some known plaintext that
+they don't give outsiders, but it probably doesn't lose them much.
+
+>    "Disabling the key escrow mechanism -- How can products be
+>     made resistant to alteration that would disable or
+>     circumvent the key escrow mechanism?  How can the "static
+>     patch" problem be avoided?  How can this be tested?"
+>
+>This is easy in hardware. Is it even possible in software?
+
+Probably.  Consider the sort of master-key system where part of the
+session key isn't transmitted - maybe you do something like
+hash the user portion of the session key with the hash of the
+program and feed it to the KeyMaster's public key to get
+the session key.  By the time you put all of that into
+Pretty Good PatchAround, you might as well just use PGP.
+
+>    "Practical Key Access -- How can mechanisms be designed so
+>     that repeated involvement of escrow agents is not required
+>     for decryption for multiple files/messages during the
+>     specified access period?"
+>At least this has a chance of being real. We need to have a suggestion
+>for expiration times for the escrowed keys. This was a huge problem with the
+>initial Clipper.  
+
+Information can't be destroyed, only forgotten, so time-limitation is tough.
+What you can do is limit the scope of messages that can be decrypted by
+one trip to the keymaster - the Feds are looking for some mechanism so that
+any limits like this won't require multiple trips for one bunch of wiretapping.
+
+>Is there a reasonable middle ground between long term keys such
+>as PGP uses, and the ephemeral keys of a D-H exchange?
+
+What's reasonable?  Some potential models for a PGPng would be 
+- Use separate keys for signatures/keysigning and messages, so you could
+change your message key frequently while leaving your signature (or at least
+key-signature) key stable.  (This tends to need an extra layer in the web
+of trust, since you now have two tiers for yourself, but no biggie.)
+- Diffie-Hellman kind of mechanism to encrypt the keys, with published
+g, p, g**x mod p, x changing frequently, RSA or DSS or whatever to sign
+the keyparts - this works better with a more interactive key negotiation
+so you can use a new x every time (e.g. request directly from the user,
+though that's difficult for email, or a keyserver that maintains a set of
+keys to be doled out.)
+
+>    "Certified escrow agents -- Can products be designed so that
+>     only escrow agents certified by the U.S. government (domestic, 
+>     or under suitable arrangements, foreign) are utilized?  
+>     What should be the criteria for an acceptable U.S. escrow agent?"
+
+The technical and political questions are quite different.  
+Technically, you could have the software require a hierarchical-style
+certificate for the key-master keys with a US Government CA wired in.
+It's not totally foolproof - patching the CA is easy unless you've got
+some sort of checksum on the software.  But it's a start, and it's simple
+enough that either the US could authorize separate versions for France
+or certify the French government's key-master agency.
+
+Also, there's a need for escrow/keymaster agents to be negotiable per-message -
+since escrow inherently requires the trust of all parties, and probably
+contractual agreements as well, and government-enforced keymastering
+may require satisfying multiple governments, parties will persumably
+have different lists of acceptable keymasters.
+
+>We all know that Tim's Flakey Key Escrow Service is most likely not
+>"an acceptable US escrow agent."  But since CKE is a good thing, what
+>are the characteristics of an acceptable service to us?
+
+As far as the political criteria go, I believe the traditional formulation
+is along the lines of "I am not now, nor have I ever been, a member of...." :-)
+Establishing criteria is difficult, and depends on whether the whole system
+will be defined by laws passed by Congress or only by organizational policy;
+there are also issues of control between the Commerce Department, NIST, NSA,
+and the State Department.  
+
+For Commercial Key Escrow, or commercial key-backup services, the criteria are 
+"whoever can be trusted to provide the services the customers want".
+In this case, of course, the service most customers want is to be left alone,
+or, failing that, to have the government's Master Key system provide minimal
+risk
+to the security of the actual transactions - 64 bit keys are not enough security
+for any high-valued financial transactions, though they may suffice for
+credit cards.
+One required characteristic would appear to be either sufficiently deep pockets
+to collect judgements for violations of trust or a sufficiently high
+reputation that
+violations of trust are not expected.  
+
+Most of the commercial market for key escrow or backup services fits into three
+categories - backups for the owner/sender of a file (which they can provide
+themselves, using techniques like PGP's Encrypt-to-Self option, or file backups
+with secret-sharing), acknowledgements of transmission (signed hashes would do),
+and dispute-resolution issues (verifying the contents of a message which may
+require
+information from both parties or ephermeral session key information.)
+Most can be provided by the kind of services currently provided by companies
+like
+bonding agencies, emergency backup and offsite storage companies, etc.
+#---
+#                                Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

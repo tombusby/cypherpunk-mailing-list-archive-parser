@@ -1,0 +1,50 @@
+From: Steve Schear <schear@lvdi.net>
+Date: Mon, 19 Jan 1998 11:23:27 +0800
+To: Jim Choate <cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: Re: NTY compression proposal
+In-Reply-To: <199801190230.UAA19688@einstein.ssz.com>
+Message-ID: <v03102803b0e873bd7965@[208.129.55.202]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 8:30 PM -0600 1/18/98, Jim Choate wrote:
+>Hi,
+>
+>It has been proposed to compress the keys from 100 cypherpunks down to a 64
+>character add in the NYT. Let's consider the math a moment to determine if
+>this is realizable.
+>
+>Each key will require some sort of identifier, to make it simple lets assume
+>8 characters to identify the cypherpunks and 8 bytes to represent their key
+>(64-bits). This mean that each line will contain 16 bytes. With a hundred
+>entries that is 1600 bytes or 12800 bits.
+>
+>Now 64 characters of text in a newspaper represents approx. 64 6-bit
+>characters (we can't use a full 8-bit because the paper doesn't normaly
+>support that many characters in normal text). This provides us with
+>384 bits.
+>
+>The proposal leads to a requirement for an algorithm with an average
+>compression factor of:
+>
+>12800/384 or 33.33:1 with no data loss.
+>
+>That's a pretty hefty compression factor for average responce.
+>
+>Is there a loss-less algorithm which provides this level?
+
+Compression efficiency depends upon 1) the entropy of the input data, 2) the allowable losses and 3) finding an efficient algorithm to code for that entropy.  
+
+For example, text rarely compress w/o loss beyond 4-5 to 1 (and 2-3 is more typical) using LZW (the defacto standard algorithm).  Images have much more correlation in their data (and therfore can be compressed more readily), but even so lossless compression beyond 3-5 to 1 is uncommon (e.g., TIFF).  JPG and other lossy algorithms need no apply.
+
+I think I'm on fairly firm ground assuming that key data entropy is very high and therefore little or no compressible is feasible.
+
+--Steve
+
+
+
+
+
+

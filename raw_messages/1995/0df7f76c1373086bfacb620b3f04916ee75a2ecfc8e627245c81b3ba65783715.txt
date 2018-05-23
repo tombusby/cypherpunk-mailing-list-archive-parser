@@ -1,0 +1,69 @@
+From: Raph Levien <raph@CS.Berkeley.EDU>
+Date: Fri, 10 Nov 1995 02:10:07 +0800
+To: Laurent Demailly <dl@hplyot.obspm.fr>
+Subject: Re: Mime/multipart (was Re: PGP Comment feature weakens remailer security)
+In-Reply-To: <9511091356.AA09725@hplyot.obspm.fr>
+Message-ID: <199511091715.JAA12871@kiwi.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Raph Levien writes:
+>  >    On an unrelated topic... cypherpunks like to count bits, right?
+>  > What is the correct number of pseudorandom bits to use in a MIME
+>  > multipart separator? If the data has a line which matches the
+>  > separator, the message is corrupted. Of course, if you can take
+>  > multiple passes through the data, you can simply verify that it does
+>    ***************
+> No need !
+>  > not contain a line which matches the separator. But if you're
+>  > restricted to a single pass, then the only way to do it is to use a
+>  > randomly generated separator.
+> I've waited a bit, but as nobody seem to have pointed out, you can
+> definitly find a unique stream in a *single* pass (but maybe what you
+> really want is no pass at all ?)
+> {you add a new random byte each time you find your sequence in the
+> stream, and goes forward (as the previous separator was not in the
+> "past" of the stream, you don't need to go back)}
+
+Yes, that's a good strategy _if_ you're able to take multiple passes.
+However, the separator must (of course) appear at the top of the multipart
+message being assembled. Perhaps we don't agree on what "single pass"
+means; I meant you could do the processing in a Unix pipe without
+requiring storage proportional the size of the data.
+
+> What am I missing ? (anyway, see below)
+> (I hope my answer is not as clueless as the "A-dice anonymous" one)
+
+Not quite. As they say, "A-dice" is not merely clueless, but actually
+clue-resistant.
+
+>  >    I figure that 128 bits should _definitely_ be enough (that's what
+>  > is in the new premail code now). Even 64 bits should ensure that it is
+>  > unlikely that anyone will ever experience message corruption over the
+>  > expected lifetime of premail. However, it makes me nervous. What do
+>  > people think?
+> 
+> Isn't PGP encoded stream containing only base64 chars ? Why not use
+> "====PGP part #===="  (as you can't have more than 2 = in a base 64,
+> and only at the end anyway)
+> or "@PGP part #" or whatever starting with a non base64 char ?
+
+For PGP encrypted messages, I just use "+" as the boundary, as it is
+guaranteed that a valid PGP/MIME multipart/encrypted message body will
+never include the line "--+" or "--+--". For the longer separators, my
+concern is multipart/signed messages.
+
+> so "@" = 8 bits is my anwser, do I win ;-) ?
+
+I chose "+" instead of, say, "@" because it will survive EBCDIC gateways.
+You might argue that this is worrying too much, but doing the right thing
+here costs nothing, and may actually save somebody some trouble.
+
+Raph
+
+
+
+
+
+

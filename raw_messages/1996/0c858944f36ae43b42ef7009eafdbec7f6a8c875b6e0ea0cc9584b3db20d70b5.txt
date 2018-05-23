@@ -1,0 +1,97 @@
+From: cme@cybercash.com (Carl Ellison)
+Date: Fri, 1 Mar 1996 06:09:58 +0800
+To: Laurence Lundblade <lgl@qualcomm.com>
+Subject: Re: A brief comparison of email encryption protocols
+Message-ID: <v02140b15ad5b14e9fad1@[204.254.34.231]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+We're working on some of these issues, as we speak, over in the SPKI mailing
+list.  Some of my contributions are available on
+
+        http://www.clark.net/pub/cme/html/cert.html
+
+At 20:02 2/16/96, Laurence Lundblade wrote:
+
+>The Trust Model
+>---------------
+>Any fully implemented system will have to choose some form of a trust
+>model.  Some possibilities are:
+>  * web of trust
+>  * strict hierarchy
+>  * web of hierarchies or some other hybrid
+
+The one some of us advocate is a web of certificates, each one of which
+assigns a specific attribute or permission to a public key.
+These certificates are not tied to human identities, but a human identity
+can be attached as yet another attribute of a public key via a certificate
+for that purpose.
+
+For many attributes to be attached to a public key [e.g., permission to
+spend money, permission to speak for an organization, ...] there is no
+need for a human identity beyond the implicit one of "the person who
+knows how to exercise the indicated private key" which comes with any
+public key.
+
+
+
+>The Certificate format
+>----------------------
+>It seems possible to pick a certificate format independent of the other
+>issues.  Doing so would allow us to leverage components like we do with
+>other data objects like MIME.  There probably only two major contenders:
+>  * X.509 v3
+>     + broadly supported by standard bodies
+>     + supported by several industries (e.g., banking)
+>     + very rich and flexible
+>     + ASN.1
+>     - ASN.1 (tough for a student to get an ASN.1 compiler)
+>     - complicated
+>  * PGP keys
+>     + widely deployed
+>     + simple to write code for
+>     - difficult to lookup (linear search on key id required)
+>     - too simple to support many trust models and distribution systems
+
+We're proposing a third certificate format.  X.509 is an identity
+certificate, unless one bends it severely.  Signed PGP keys are also
+a kind of identity certificate.  Our proposal is an attribute certificate,
+not an identity certificate.  It is simple to lookup these certs.
+Like X.509, my certs have an Issuing-name and a Subject-name -- but
+they're both cryptographic hashes of public keys.  You can take a portion
+of those hashes [e.g., low order 12 bits] and use it to index a hash table
+of certificates or keys.  The cert is more general than X.509 -- that is,
+it includes all of X.509 and then some [because we don't require some
+binding to a human identity, don't require a Certificate Authority, ...].
+Our first format is RFC822-like -- so it's easy to parse and generate and
+read and use.  It's very rich and flexible.  We're working to make it
+an IETF standard.  It does not use ASN.1 and has none of the baroqueness
+of X.509.
+
+In fact, these certs can be formed as PGP clear-signed messages.
+
+>
+>Note that both use the RSA algorithms, so they are interchangeable at some
+>very basic level.
+
+We're using RSA or whatever else you want [e.g., DSA].  In fact, in our
+cert format, you can use DSA to sign an RSA key, a PGP key to sign a
+Fortezza key, etc.
+
+
+
+ - Carl
+
++--------------------------------------------------------------------------+
+|Carl M. Ellison          cme@cybercash.com   http://www.clark.net/pub/cme |
+|CyberCash, Inc., Suite 430                   http://www.cybercash.com/    |
+|2100 Reston Parkway           PGP 2.6.2: 61E2DE7FCB9D7984E9C8048BA63221A2 |
+|Reston, VA 22091      Tel: (703) 620-4200                                 |
++--------------------------------------------------------------------------+
+
+
+
+
+
+

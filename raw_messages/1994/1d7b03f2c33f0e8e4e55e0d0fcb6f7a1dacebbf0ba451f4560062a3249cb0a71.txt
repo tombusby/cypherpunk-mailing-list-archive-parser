@@ -1,0 +1,76 @@
+From: lcottrell@popmail.ucsd.edu (Lance Cottrell)
+Date: Mon, 5 Dec 94 13:11:05 PST
+To: cypherpunks@toad.com
+Subject: Re: PGP Tools under Linux (Pr0duct Cypher)
+Message-ID: <199412052110.NAA24226@ucsd.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+To: Pr0duct Cypher
+
+Pr0duct Cypher writes:
+>I wrote:
+>>I am using PGPTools to handle all the crypto functions in the second
+>>generation remailer that I have written. All the copies of PGPTools that I
+>>have found seem to be set up to compile on SUN workstations only.
+>
+>That's interesting, because I developed it under Linux and MS/DOS, and there
+>was a lot of trouble at the beginning with it not running on big-endian
+>machines. It sounds like whoever "fixed" it for sparcs broke it for
+>little-endian machines. The original should still be on ftp.csn.net; get it
+>there and it should work.
+>
+>>Mixmaster is both a remailer and a front end, and therefor must run on many
+>>different platforms. I have been able to compile PGPTools on Linux and
+>>FreeBSD, but PGPTools produces invalid RSA blocks. If you (or anyone else
+>>reading this) have ported PGPTools to other platforms could you send me the
+>>source and makefile, or point me to them. If not, could you help me do it,
+>>the source code is a tangle, and it will take me a long time to do on my own
+>>(I am a brute force programer, not a C wizard).
+>
+>Get the original, test it, and post the results.
+>
+<SNIP>
+>                                                  - Pr0duct Cypher
+
+Ok, I grabbed second oldest version (this included a bugfix).
+I compiles and seems to work fine when I use it with PTD.
+It fails when run under Mixmaster. The failure is deep inside pgptools.
+When I call pgpk_findkey to get a key from a public key ring (by name not
+number), it chugs along checking each key id in the ring. Each time it
+checks a key, it uses a pair of fifo's which it then destroys. After checking
+the second id, when it is destroying kc (k is destroyed without problems both
+times), I get a segmentation violation in the line
+   nfb=fb->next;
+Since kc was simply a copy of k
+  kc=fifo_copy(k);
+I suspect the problem lies in fifo_copy. These are all mem fifo's.
+If you want to look at the source code I am playing with (with tons of debugging
+printfs in it) let me know and I will stick it on my ftp.
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLuOBVFVkk3dax7hlAQGYNAP9GvDMvdSKA1vUsmJB/xitPVsiazNeZjXJ
+NrjwouMg85VR1ri1rm1y2NuKbHEljGfwNB7z8euy7e1clptRsN4WWrP+ASSfrire
+9Clan80Ep4lEA+83caArQv3Hcdb8+8FnLpXd/zrPI2V/3TVM2OrfU7/RtUo+3Pr3
+JE2d0s6Jn+E=
+=jlbs
+-----END PGP SIGNATURE-----
+
+-- 
+Lance Cottrell     <lcottrell@popmail.ucsd.edu>
+http://nately.ucsd.edu/~loki/
+Home of the remailer chaining script "chain".
+PGP 2.6 key available by finger or server.
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+
+
+
+

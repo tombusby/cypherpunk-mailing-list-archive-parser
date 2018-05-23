@@ -1,0 +1,53 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 23 Oct 1997 03:01:36 +0800
+To: nobody@REPLAY.COM
+Subject: Re: PGP 5.5 CMR/GAK: a possible solution
+In-Reply-To: <199710221555.RAA01080@basement.replay.com>
+Message-ID: <199710221847.TAA04530@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Anonymous writes:
+> mark@unicorn.com writes:
+> >
+> > [super encrypt instead of CMR] 
+> 
+> Neat, automatic superencryption.
+> 
+> Could the same idea work with the Pgp method with the CMR key?  You
+> would encrypt to the user first, then reencrypt to the combination
+> of user and CMR key.
+
+I think that is redundant -- if only the user can decrypt to get the
+actual plaintext -- you'd just as well send encrypted to the user
+alone.
+
+Super encrypting with a non-CMRed company key is perhaps what you are
+thinking, and then encrypting internally to user and CMR key.
+
+This would be a definate improvement over straight forward CMR because
+it is effectively a poor-mans Transport Level Security (TLS), and
+therefore denies access to the ciphertext (and attached CMR recovery
+info) to governments and other intruders.
+
+Still I think better yet not to send recovery information over the
+wire at all, unless there is a user requirement for message screening.
+
+The stated corporate user requirement for CMR by PGP Inc is recovery
+of stored files.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

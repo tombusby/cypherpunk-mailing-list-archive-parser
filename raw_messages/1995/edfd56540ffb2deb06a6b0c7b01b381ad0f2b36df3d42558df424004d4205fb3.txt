@@ -1,0 +1,70 @@
+From: Alex Strasheim <cp@proust.suba.com>
+Date: Sat, 30 Dec 1995 07:12:24 +0800
+To: hfinney@shell.portal.com (Hal)
+Subject: Re: blind validation
+In-Reply-To: <199512290144.RAA28654@jobe.shell.portal.com>
+Message-ID: <199512291816.MAA09405@proust.suba.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> Chaum's way around it was basically to have some mechanism to give
+> each person a unique number of some special form.  There doesn't have
+> to be any agency who knows what number each person has (in fact, there
+> isn't, in his scheme), but there is a mechanism to assure that one
+> person does not get two numbers.  This is sometimes loosely referred to
+> as an "is-a-person" credential (although in this specific context it is
+> not actually a credential, just an identifier).
+
+If I understand you correctly, this protcol allows Alice to create one and
+only one nym that can't be connected to her real identity.  All of 
+Alice's transactions can be linked together and to that nym, but there's 
+no way to tag Alice with them.
+
+The main difficulty I see with this protocol is that if things go wrong,
+they go very wrong.  If Alice slips up once, or if she's compelled to give
+herself up, then she loses everything and gets tagged with all of her
+transactions.
+
+Does anyone have a pointer to Chaum's paper?
+
+[...]
+
+> So the result in effect is to make it difficult to give away just a
+> validation, without also giving away the ability to act as you.  Here
+> is an idea about another way to achieve the same thing, closer to
+> Alex's example:  Alice gets a blind validation as Alex describes based
+> on a simple blind signature.  (Alice hands a blinded number to Bob, he
+> signs it, Alice unblinds it, and uses the resulting signed number as
+> the validation to, say, access Bob's files.)  We add that Alice puts,
+> say, $100 into "escrow", encrypting it with the secret number and
+> putting it on some public server.  She proves to Bob that she has done
+> this using cut and choose.
+> 
+> Now if Alice gives away her secret number, anyone using it will be able
+> to access Bob's files, but they can also get the $100.  So now it costs
+> something for Alice to give away her secret.
+> 
+> (There are some major problems with this idea, the worst being that Alice
+> can extract and spend the $100 right after proving to Bob that she is
+> doing what she said, and before publishing her number.  Maybe someone
+> could think of some fixes.)
+
+This is a good idea because it addresses one of the big problems with my
+protocol, the impossibility of introducing latency. 
+
+But apart from the problem you mentioned above, isn't there a problem with
+setting the escrow amount?  Ordinarily, we'd want to set the amount just 
+high enough so that Alice doesn't have any interest in cheating.  
+Whatever benefit Alice gains will be offset by the penalty.
+
+How do we put a numeric value on the benefits Alice gets from cheating? 
+Don't we create a situation in which a rich guy might be perfectly
+comfortable with the risk of losing the money, while someone else might
+not?
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+From: daw@cs.berkeley.edu (David Wagner)
+Date: Thu, 1 Aug 1996 21:51:02 +0800
+To: cypherpunks@toad.com
+Subject: Re: Cracking RC4/40 for massive wiretapps
+In-Reply-To: <199608010603.XAA19276@toad.com>
+Message-ID: <4tq268$nsk@joseph.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199608010603.XAA19276@toad.com>,
+Bill Stewart  <stewarts@ix.netcom.com> wrote:
+> When we discussed using FPGA machines to crack RC4/40 last year,
+> someone calculated the cost of cracking a message at 8 cents
+
+That was the keylength paper.  I think their estimate is way off.
+
+But that's ok-- I do so like the ring of ``8-cent encryption'', even
+if I think the derivation is technically dubious :-)
+
+> is whether you can speed up performance substantially by cracking
+> multiple messages at once.  For instance, if you've got known plaintext,
+> such as a standard header format saying "FooVoice" or "BEGIN DSA-SIGNED..",
+> you can try many keys and compare them with _many_ cyphertexts,
+
+Not with SSL.
+
+SSL uses a random 88-bit salt which is different for every session.
+This attack doesn't work.  Fun to think about, though, eh? :-)
+
+[ Unsalted 40-bit RC4 is super-dangerous, and there are all sorts of
+nasty games one can play with it.  That's why you should avoid it. ]
+
+>                                              Also, even for
+> unknown-plaintext, since key scheduling is a relatively slow part of RC4/40,
+> you can split the key-schedule and the block-encryption phases, feeding
+> one keyschedule output to multiple decrypt-and-compare sessions in parallel.
+> So the cost per victim of cracking many sessions may be much lower.
+
+Same deal.
+
+
+Keep those ideas flowing-- one of 'em is bound to work.
+-- Dave Wagner
+
+
+
+

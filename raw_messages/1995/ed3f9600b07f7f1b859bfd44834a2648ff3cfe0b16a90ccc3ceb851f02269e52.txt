@@ -1,0 +1,56 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Thu, 30 Nov 1995 05:53:39 +0800
+To: attila <attila@primenet.com>
+Subject: Re: The future will be easy to use
+In-Reply-To: <Pine.BSD.3.91.951129205059.29011B-100000@usr2.primenet.com>
+Message-ID: <199511292128.QAA03706@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+attila writes:
+>     figures. I'll give ipsec and ipsec-dev a look.  However, SUN does have
+> the power to make something happen on the high-power workstations, and the
+> fact they are making a portable package available in source code is
+> farther than anyone else has gone. 
+
+Unfortunately, an internetworking protocol used by only one vendor
+gets nowhere.
+
+>     my experience over the last 15 years with Sun is that they do listen 
+> to outside "noise" and will move forward.
+
+I doubt it. Ashar Aziz and company at Sun are pretty much
+ego-committed to SKIP. Their group might not have nearly as much
+justification for its existance without it. That probably makes them
+reluctant to go in the right direction.
+
+>    other than the inferior method v. DH, is there anything else missing; 
+> I will probably pull the code package of the developers' access machine 
+> before the week is out just to take a look.
+
+SKIP is really very alien from the direction most of IPSEC is
+taking. It sacrifices a lot of functionality for the perceived benefit
+of being able to send an encrypted packet to a host "without prior
+negotiation". Unfortunately, that benefit turns out to be a mirage
+because in any real network you would need to do a certificate lookup
+in order to actually decrypt the packet, at which point you've lost
+any advantage. SKIP requires all sorts of hooks into the ESP/AH packet
+formats which makes it essentially incompatbile with ESP/AH
+implementations. SKIP uses long term keys which could really hurt if
+they were compromised. SKIP doesn't do perfect forward secrecy. I
+could go on and on.
+
+Ashar keeps answering every criticism with "well, you COULD do X in
+SKIP if you just hung this kludge onto it, but of course we hope most
+people would never do that".
+
+I started with a lot for respect for the guys and lost most of it
+through time. Ah, well.
+
+Perry
+
+
+
+

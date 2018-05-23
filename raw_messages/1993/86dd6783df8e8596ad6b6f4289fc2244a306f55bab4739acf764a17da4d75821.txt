@@ -1,0 +1,50 @@
+From: Phil Karn <karn@qualcomm.com> (Phil Karn)
+Date: Sun, 7 Feb 93 22:07:22 PST
+To: jim@tadpole.com (Jim Thompson)
+Subject: Re:  Compressed/Encrypted Voice using Modems
+Message-ID: <9302080605.AA27589@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At  7 Feb 04:56 CST, Jim Thompson wrote:
+
+>I don't see how a 28.8kbps (raw) data rate is possible, as the Shannon
+>limit for a POTS line is 22kbps.  Certainly parts of the phone system
+>no longer impose the narrow bandwidth that are part of the 'spec', but
+>one can not always depend on getting a line that exceedes the published
+>parameters of the phone system.
+
+Where do you get this figure of 22 kbps? I would tend to dispute it since
+I use a Codex FAST modem on my SLIP link and it really does run at 24.0 kb/s
+on the wire (not counting compression). The throughput display often reads
+30 kb/s even when I'm shipping a pre-compressed or encrypted binary file,
+although that's a phony figure because it includes the asynch
+start/stop bits that aren't actually sent over the wire.
+
+The usual Shannon limit of a phone line is more like 30 kb/s, although
+it can vary enormously. Generalizations are dangerous. At the very least,
+you can certainly say that it's no greater than 64kb/s, since it's almost
+certain that your call passes through a mu-law codec somewhere.
+
+Back to vocoders, their quality does tend to be a strong function of data
+rate. 8kb/s CELP is really not that bad - a little warbly when there's
+background noise, but not objectionably so in my opinion. In a mobile
+telephone
+environment (where I'm familiar with it), it's *much* less objectionable
+than the usual impairments you get from ordinary FM analog transmission.
+
+4kb/s is noticeably worse. Things get rapidly better as you go above 10-12
+kb/s with present algorithms. Also, vocoders need not be constant rate.
+Ours selects
+one of four rates on the fly depending on voice activity, which doubles
+capacity in a CDMA radio environment. It'd also be useful in a packet
+network, although
+the small frame sizes (2/5/10/22 bytes) can make header overhead rather
+significant.
+
+
+
+
+
+

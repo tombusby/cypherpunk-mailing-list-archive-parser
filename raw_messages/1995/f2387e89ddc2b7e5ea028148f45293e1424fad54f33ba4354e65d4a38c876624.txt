@@ -1,0 +1,68 @@
+From: MIGUELDIAZ@megaweb.com ()
+Date: Mon, 2 Oct 95 18:49:44 PDT
+To: cypherpunks@toad.com
+Subject: Re: One-Time-Pad generation from audio device
+Message-ID: <199510030146.VAA09247@mail-e1a.megaweb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Date:	Mon, 2 Oct 1995 16:42:04 +0100 (BST)
+>From:	"Rev. Mark Grant" <mark@unicorn.com>
+>Sender:	owner-cypherpunks@toad.com
+>To:	cypherpunks@toad.com
+>Subject:	One-Time-Pad generation from audio device
+>
+>
+>Over the weekend I hacked up a one-time-pad generator from
+> the random 
+>number code I've been writing for Privtool, which uses noise
+> from the 
+>audio device to generate random numbers.
+>
+>The code basically reads in a 512-byte block from
+> /dev/audio, then takes
+>the MD5 of that block to generate 16 bytes of the OTP. The
+> raw audio data
+>I'm getting is not particularly random and will compress by
+> 3:1 using gzip
+>or compress, so I'm assuming that using a 32:1 ratio here
+> via MD5 will
+>give a truly random output (it's certainly uncompressible).
+>
+>Before I release the source code to the Net, can anyone give
+> me any good
+>reasons to believe that this won't produce physically random
+> output, or
+>make suggestions on how to test, or improve, the generated
+> output ? There's
+>a #define which can be used to easily increase the amount of
+> data fed into
+>the MD5, but at the moment it will only generate about 1 MB
+> per hour on a
+>Sparcstation (limited by the audio input rate), so I don't
+> want to
+>increase that if I don't have to. 
+>
+>	Mark
+
+There are many ways to test for randomness. you might want to 
+start by accumulating instance of "1" and "0" and over a long 
+time you should have roughly an equal number of both.  If you 
+have access to a spectrum analyzer with an auto-correlation 
+function (or cross-correlation will do) feed in similar 
+lengths of output at different time intervals and check to 
+ensure a low (close to zero) correlation exists.  Also while 
+you are at it you might want to checks the ouput's frequency 
+spectrum, it should be fairly uniform accross the generating 
+range.  Noise (or randomness) which is not normally 
+distributed can lead to nasty hacks.
+
+Be Well!!
+>
+
+
+
+
+

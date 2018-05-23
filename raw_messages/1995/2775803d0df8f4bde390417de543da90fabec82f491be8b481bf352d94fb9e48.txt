@@ -1,0 +1,90 @@
+From: loki@obscura.com (Lance Cottrell)
+Date: Fri, 27 Oct 1995 09:09:34 +0800
+To: Adam Shostack <adam@lighthouse.homeport.org>
+Subject: Re: Anonymity: A Modest Proposal
+Message-ID: <acb57c2b010210043b15@[137.110.24.250]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I think the idea of a token has come up before. I think it is a good idea.
+The token should have some expiration information in it so the remailer
+need not keep it around forever (or it could just "forget" all token older
+than 3 months). Right now there is not much spare room in the Mixmaster
+headers.
+
+There are several ideas for improvements in Mixmaster that will require the
+adoption of an incompatible message format. I plan to collect them and
+implement them all at once. One of the ideas is an expiration date in the
+message to keep it from ever being replayed (even after the remailer
+expires its record of the message ID).
+
+        -Lance
+
+At 7:43 AM 10/26/95, Adam Shostack wrote:
+>Lance Cottrell wrote:
+>
+>| How open is the protocol? Is there and API for it? Does anyone know how big
+>| the coins are? There will have to be room for one per header in Mixmaster.
+>| Do they vary in size, or are all coins identical? There is so much stuff to
+>| try to keep track of all at once! :/
+>
+>        If the coin is bigger than a Mix header has room for, does it
+>have room for an arbitrary token?
+>
+>        I send a message to the mixmaster I'd like to use, containing
+>a coin and a large arbitrary number.  I then put that number in a list
+>I maintain of the tokens I can spend with that mixmaster.
+>
+>        The mixmaster cashes the coin at once[1], and puts my number
+>into a list of 'paid' tokens it will accept.
+>
+>        When I want to spend the token, I put that in the message
+>header block.   Since its smaller than the coin, its easier to put in
+>the header than the coin.
+>
+>        This scheme also reduces mapability between the coin and the
+>message, since they are not strongly correlated in time as they would
+>be if they were included in the message.  This seems to be a stronger
+>win than the size benefit that caused me to suggest this.
+>
+>        [1] Other than the time mapping win, I could also see spending
+>a few bucks at the start of each month to be able to use any
+>mixmaster.  The mixmasters would, by cashing my coins early, win on
+>the float between the time they get my money and the time they provide
+>service.  Icing on the cake.
+>
+>Adam
+>
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMI/NvfPzr81BVjMVAQGcbgf/b9wzPqGoijggurIm3uGiddSyaz2uAEXj
+65INp6g/Va/Yf1q3+vQfyfixs3jviihmPMgepjs/deQqV5qxgEh05kbyvgKDf8wX
+vh8cVLTYMKpqGOU34K/9jLOXD9gZqvKBdDy9Z5YsLimDRV3ju9uRpBSLnUaiI1rU
+whpP+py/hqgFl0DL4Ybx5PBZDbcSkRhSqmlnx46/hbyY/bnaiTplPtMAU8oHZTK6
+VOSB3hsPtfpGuKwCqe60WeZZDQygPbD6aDW+BZl4kMSv5+1kf4/aHECCOUqfzmvc
+O1Jmr6K8wLLtp/S12qRKh4SIEea9TUqN4PoV6YGQTBV1gM6MxC/GrQ==
+=qSuu
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------
+Lance Cottrell   loki@obscura.com
+PGP 2.6 key available by finger or server.
+Mixmaster, the next generation remailer, is now available!
+http://obscura.com/~loki/Welcome.html or FTP to obscura.com
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+----------------------------------------------------------
+
+
+
+
+
+

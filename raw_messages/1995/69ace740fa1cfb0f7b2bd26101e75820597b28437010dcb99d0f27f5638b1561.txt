@@ -1,0 +1,83 @@
+From: David_A Wagner <daw@CS.Berkeley.EDU>
+Date: Wed, 27 Sep 95 10:48:23 PDT
+To: cwe@it.kth.se (Christian Wettergren)
+Subject: Re: Exchange random numbers (was: Re: netscape's response)
+In-Reply-To: <199509270913.KAA17943@piraya.electrum.kth.se>
+Message-ID: <199509271747.KAA01043@lagos.CS.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> | > Giving out contribution: 
+> | >      MD5(select_bits(my_seed, start_bit, stop_bit)) -> remote
+> | > Taking in contribution : 
+> | >      my_seed = my_seed XOR 
+> | >      ((select_low_bits(remote_contrib, contrib_width) << contrib_area)
+
+So here's another attack on this scheme which I noticed today.
+I'll assume you're using the Netscape/RSAREF PRNG:
+
+	prng() {
+		increment(my_seed);
+		return(MD5(my_seed));
+	}
+
+Then an attacker can send you ``1'' as contribution.  This will
+xor ``1 << contrib_area'' into your seed.  With probability 1/2,
+this will be the same as subtracting ``1 << contrib_area'' from
+your seed -- and in this case, your PRNG will repeat after
+``1 << contrib_area'' more outputs.  This is much worse than the
+expected 1 << 128 cycle length.
+
+
+So this is an example of why it's dangerous to xor in values
+*chosen by your adversary* to your seed.
+
+
+> Could you quantify how powerful a related-key attack is, compared to
+> some other kind of attack? I don't know anything about this kind of 
+> attack, do you have any references?
+
+I don't know about any work on related-key attacks on stream ciphers.
+For block ciphers, related-key attacks are much stronger than other
+attacks. (e.g. DES can be broken with ~ 2^28 related key queries and
+about ~ 2^28 off-line computation steps)
+
+
+Here's some references on related key attacks on block ciphers.  If
+anyone can find any other work in this area, let me know!
+
+
+@inproceedings{subkeys-important,
+        author = {Edna K. Grossman and Bryant Tuckerman},
+        title = {Analysis of a Weakened {Feistel}-like Cipher},
+        booktitle = {1978 International Conference on Communications},
+        pages = {46.3.1--46.3.5},
+        publisher = {Alger Press Limited},
+        year = {1978},
+        annote = {Feistel ciphers with identical subkeys in each round
+                        are very weak}
+}
+
+@article{related-keys-1,
+        author = {Robert Winternitz and Martin Hellman},
+        title = {Chosen-key Attacks on a Block Cipher},
+        journal = {Cryptologia},
+        year = {1987},
+        volume = {{XI}},
+        number = {1},
+        month = {January},
+        pages = {16--20}
+}
+
+@inproceedings{related-keys-2,
+        author = {Eli Biham},
+        title = {New Types of Cryptanalytic Attacks Using Related Keys},
+        booktitle = {Advances in Cryptology: {EUROCRYPT} '93},
+        pages = {398--409},
+        publisher = {Springer-Verlag},
+        year = {1994}
+}
+
+
+

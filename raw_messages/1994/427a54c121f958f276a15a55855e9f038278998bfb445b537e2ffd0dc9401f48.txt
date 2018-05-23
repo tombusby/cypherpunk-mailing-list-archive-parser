@@ -1,0 +1,47 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Thu, 10 Mar 94 22:02:24 PST
+To: boldt@math.ucsb.edu (Axel Boldt)
+Subject: Re: Improvement of remailer security
+In-Reply-To: <9403110511.AA13627@emile>
+Message-ID: <0hU0Y5y00awMF4PmwP@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+boldt@math.ucsb.edu (Axel Boldt):
+
+> Even the current pgp encryption scheme offered by some remailers
+> doesn't help much, once the incoming and outgoing messages are
+> known: just take the outgoing message from the remailer, encrypt
+> it with the remailer's public key, compare this to the incoming
+> messages and you know who sent this message (repeat if a chain
+> of remailers was used).
+
+Nope...  PGP encrypts the message with a random IDEA key, and then
+encrypts the IDEA key with RSA.  You'd have to guess which IDEA key was
+used, and encrypt that with RSA.  The SS couldn't guess 2^128 possible
+IDEA keys in a hundred years, even with 10 cray supercomputers...  (of
+course, they might be able to do it a hundred years from now... but by
+then nobody would care about some stupid 20th century email message.)
+
+Karl Barrus's latent-num and truncate-line features on his former
+tree-remailer handled all of the traffic-analysis problems rather
+nicely, however...
+
+> Here's a proposal which could close this hole: remailers should
+> allow for a new header 'Encrypt-with:' which takes as argument
+> a public pgp key. This is used just like the 'Request-Remailing-To:'
+> header, i.e. using the '::' construct in the body of the pgp encrypted
+> mail. ('Encrypt-with:' offers no additional security if no pgp
+> encryption is used in the first place.) The semantics is that the
+> remailer, just before passing the message along (and after having
+> decrypted it, of course) encrypts the message using this public key
+> and adds an 'Encrypted: pgp' header to it.
+
+JPP's remailer does this, except it only posts to alt.test.  Maybe you
+could convince him to allow it to also forward to remailers when a
+remailer public key is specified... :)
+
+
+
+

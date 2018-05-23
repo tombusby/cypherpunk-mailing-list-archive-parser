@@ -1,0 +1,89 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Fri, 11 Aug 95 11:17:28 PDT
+To: tcmay@got.net (Timothy C. May)
+Subject: Re: PRZ encrypted voice software release imminent
+In-Reply-To: <ac50c91b000210048e9d@[205.199.118.202]>
+Message-ID: <199508111816.OAA05222@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> At 1:36 PM 8/11/95, Ray Cromwell wrote:
+> 
+> >  My question is, how portable is it, and does it work over TCP/IP rather
+> >than just modem connections (I suggested this about a year ago)? My ideal
+> >implementation would function on the following architectures:
+> >
+> >Unix: can be used through either /dev/tty?? or Socket (probably want
+> >to use UDP). Works on Solaris, IRIX, AIX, NetBSD/FreeBSD/BSDI and Linux.
+> >(audio devices are all proprietary)
+> >
+> >
+> >Windows: uses Window's sound card device drivers, works via either
+> >comport or WinSock
+> >
+> >Mac: uses Mac sound drivers, uses Mac modem port or MacTCP
+> 
+> From the "MacWeek" article, it initially runs on the Macintosh, using the
+> sound capabilities built into (nearly) all Macs. Direct modem connections,
+> with Internet versions to follow. (Windows to follow, too.)
+
+  I just hope they isolated the operating system dependent code into
+seperate modules so that "PlaySoundChunk(Chunk)" is used rather than 
+"MacDeviceDriverCall(MacSpecificDeviceStruct, MacSpecificFormat)"
+The application layer should be abstracted above the transmission
+layer above the link-layer. At the application layer, communications
+should be sent through the transmisson layer, e.g. 
+"GetNextPGPFonePacket(Protocol, Packet)". The Protocol here would 
+be TCPIPDriver or ModemDriver.  
+
+  Therefore, all one would need to do to port it to different platforms
+is code up a TCPIPDriver (for Unix == Berkeley Sockets, for 
+Windows = Winsock, for Mac = MacTCP), code up a modem driver
+(Unix = tty's + ioctl, Mac = Communications Manager, Windows = TAPI),
+and finally port the SoundPlay and SoundRecord functions to the platform
+dependent way of playing sounds and recording them.
+
+  If you are forced to abstract above "modems", your algorithms will
+be designed to work over more general transmission schemes. I fear
+that coding for modems first will lead to an overall application tuned for
+modems, but poorly designed for asynchronous networks. The tunning should
+be done in the driver, not the application/algorithm level. 
+(for example, modems don't experience much "packet churn and loss",
+and they usually have a dependable bandwidth. Even if they retrain
+randomly from 28.8 to 14.4, they can still be counted on to atleast have
+9600 bps throughput more consistently deliverable than say a slip/ppp line 
+would)
+
+
+  Far too often on Macs and PC's I see code "welded" to specific hardware
+dependencies. I only hope that PGPFone is more like PGP2.0 and less like
+PGP1.0 (and less like HotJava, which is also a bitch to port), because
+for general acceptable, I don't think it will succeed until it
+atleast runs and interoperates on Mac, Windows, and Linux.
+
+
+> The Mac may be a strange platform to develop on, to many of you, but it has
+> some advantages. The sound tools are relatively standardized and are even
+> built into the OS. Developers can thus count on what users will have.
+
+   I don't think there is a problem with developing on the Mac. Atleast
+the Mac has a real O/S. If it had been done for DOS first, it might have
+been poking SoundBlaster registers with arcade magic constants in the
+program. However, the application should be isolated away from its
+I/O mechanisms so that all I/O is done through a module which
+"maps" I/O requests to the local operating system mechanism, rather
+than depending on them directly.
+
+Sorry about the rant. (I haven't seen PGP phone's code, but I am
+just remembering RealAudio/InternetPhone/VidPhone and a whole host
+of other internet utilities that are either available only for windows,
+only for Mac, or only for unix. Netscape seems to have done things
+right.)
+
+-Ray
+ 
+
+
+

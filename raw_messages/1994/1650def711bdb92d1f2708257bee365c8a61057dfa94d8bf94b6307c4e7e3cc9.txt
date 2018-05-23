@@ -1,0 +1,54 @@
+From: uri@watson.ibm.com
+Date: Tue, 1 Mar 94 06:57:40 PST
+To: cypherpunks
+Subject: Re: DES Question
+In-Reply-To: <199402282149.NAA00940@servo.qualcomm.com>
+Message-ID: <9403011457.AA21940@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Phil Karn says:
+> >Second question: The DES code that I have (not written by me) has a
+> >comment section which describes filling all 16 subkeys seperately,
+> >thereby allowing a 128 byte key.  Is there any significant advantage to
+> >doing this?  Is there any reason that I should not do it?
+> That sounds like my code. That feature seemed like a good thing to do
+> at the time. Then I learned about differential cryptanalysis. No, you
+> cannot strengthen DES in this way, and in fact you could actually
+> weaken it unless you are sure to use 128 completely random bytes for
+> your key.
+
+Phil is wrong and ys you can strengthen DES by choosing completely
+independent subkeys, rather than generating the subkeys with known
+algorithm from 56-bit "seed".
+
+However, the additional strength will mostly go towards foiling
+brute-force attacks.
+
+Note, that it will take about 2^60 chosen plaintexts instead
+of 2^47 to mount differential cryptanalysis attack, and also
+linear cryptanalysis is somewhat hampered by using subkeys
+independently generated.
+
+> >What is the purpose of the initial and final permutations?
+> Mainly to sabotage the performance of DES software implementations.
+> Even back then the government knew it was much easier to control
+> the dissemination of hardware than software.
+
+Wrong. Pure hardware requirements - nothing so subtle as to
+"complicate" software implementation, simply peculiarity of
+that day hardware... Trust me! (:-)
+--
+Regards,
+Uri         uri@watson.ibm.com      scifi!angmar!uri 	N2RIU
+-----------
+<Disclamer>
+
+
+
+From owner-cypherpunks  Tue Mar  1 06:58:15 1994
+
+
+

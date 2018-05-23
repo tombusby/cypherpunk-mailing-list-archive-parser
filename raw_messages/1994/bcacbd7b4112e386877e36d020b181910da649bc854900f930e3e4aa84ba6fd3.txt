@@ -1,0 +1,78 @@
+From: cactus@bb.com (L. Todd Masco)
+Date: Sat, 17 Sep 94 12:15:35 PDT
+To: cypherpunks@toad.com
+Subject: Re: (fwd) "Will You Be a Terrorist?"
+In-Reply-To: <199409171745.KAA03257@netcom8.netcom.com>
+Message-ID: <35ffhf$jot@bb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199409171745.KAA03257@netcom8.netcom.com>,
+Timothy C. May <tcmay@netcom.com> wrote:
+>I think the recently-passed Crime Act has implications for what some
+>are calling "terrorist speech" and that Cypherpunks remailers may be
+>construed as "PROVIDING MATERIAL SUPPORT TO TERRORISTS" in the
+>context of being "communications equipment."
+
+I don't see why anonymous remailers are singled out: as written,
+it seems that *any* electronic service could be singled out for
+this (for example, netcom doesn't require proof-of-identity
+credentials).
+
+(Shudder)
+
+"Envision burning police cars."
+
+In any case, perhaps a way around this can be found: what we may
+need is "stealth remailers," software that will behave as a remailer
+through non-obvious "security holes" with correct cooperation from
+software the original user runs.  
+
+For example, hack sendmail so that it never wants to reverse-lookup DNS
+and given a particular set of commands (saying "EHDR" for 'enhanced
+headers') will operate as an anonymous remailer.  Such sendmail-hackage
+could be distributed with other changes that give enhanced security
+(for example, that turn off EXPN and VRFY) so that people could claim
+that they had no idea that they were operating an anonymous remailer.
+
+To add encryption to this model, perhaps changes to sendmail could be
+fashioned that incorporate encryption in such a way that it appears to be
+purely intended for protection of mail going to the machine, but a
+side affect could be that every so hacked sendmail becomes a remailer.
+
+This has one problem, though: so far, you can't chain with this model.
+You could fashion a way to cross information from message content
+to envelope: but that's not a change to sendmail that can be lightly
+made -- you'll get random lossage from people whose messages unwittingly
+almost fit your protocol.
+
+So, what's further needed is a comment field in the message envelope
+that can be chained.  This would be fairly trivial to add to the
+RFC822 protocol, and "extra stealth code" could take care of 
+
+Advantage?  A lot of people, I think, would like to add encryption to
+the MTA layer of mail if it could be done seamlessly.  If these
+changes allowed the hacked sendmail to negotiate with the destination
+sendmail to determine whether or not it is also hacked, falling back
+to standard operation if the other one is not, then it's seamless.
+This is a good feature to have generally available: a fair number of
+people would install it just on these merits.
+
+Of course, the existence of these "stealth features" would be an open
+secret: however this would lend, to take a phrase from the crytofascists,
+"plausible deniability."  'Sorry, I just heard about a more secure
+sendmail and ftp'd it.  Didn't say anything anywhere about this in
+the README files....'
+
+Everybody still with me?  Anybody?  Sound like work people are willing
+to do/think is worth doing?  I'd certainly be willing to do some work
+on this -- might even be able to justify it as part of my real job,
+which does involve designing and implementing encrypted protocols.
+-- 
+L. Todd Masco  | "A man would simply have to be as mad as a hatter, to try and
+cactus@bb.com  |  change the world with a plastic platter." - Todd Rundgren
+
+
+
+

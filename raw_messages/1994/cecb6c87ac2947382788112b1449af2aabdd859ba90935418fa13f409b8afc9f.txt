@@ -1,0 +1,36 @@
+From: ghio@cmu.edu (Matthew Ghio)
+Date: Mon, 20 Jun 94 13:54:51 PDT
+To: cypherpunks@toad.com
+Subject: REMAIL: Remailer that only remails to other remailers
+Message-ID: <9406202054.AA24879@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+One of the problems in convincing people to run remailers is that they don't
+want to have to deal with complaints.  Someone posted awhile ago that they
+would be willing to run a remailer that would only remail to other remailers.
+This would enhance the security of remailer chains while not creating too
+many political problems for sensitive sysadmins.  If anyone's still
+interested, here's how to do it:
+
+ftp cs.cmu.edu
+cd /afs/andrew.cmu.edu/usr12/mg5n/public
+get ghio.cp.remailer.tar.gz
+
+This is a copy of the remailer that I run on kaiwan.  gunzip and untar it.
+Modify remailer and sendlatents with the proper directory names for your
+system.  Now, you need to modify a line at the end of block.c.  Change
+  if (match==0) printf("%s",argv[1]);
+to
+  if (match!=0) printf("%s",argv[1]);
+
+Now it is a pass-address filter instead of a block-address filter.
+Now put the addresses that you want the remailer to be able to send to in
+blocked.addresses (you can rename the file in the remailer csh script.)
+Now create a PGP key for your remailer, set up a .forward file to 'remailer'
+and you're all set...
+
+
+
+

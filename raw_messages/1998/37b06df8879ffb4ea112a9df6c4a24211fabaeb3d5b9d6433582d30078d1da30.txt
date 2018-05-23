@@ -1,0 +1,80 @@
+From: David Honig <honig@otc.net>
+Date: Fri, 23 Jan 1998 01:34:12 +0800
+To: cypherpunks@toad.com
+Subject: Cybersitter censors code
+Message-ID: <3.0.5.32.19980122092119.007e9310@206.40.207.40>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>--------------- Forwarded Message --------------
+>From: rpj@ise.canberra.edu.au (Ross Johnson)
+>
+>Well, I just spent several hours tracking something down that I think
+>is SO braindead that it must be called evil. I hope this will save
+>someone else some hassle.
+>
+>There's an NT box on my desk that someone else uses every now and then.
+>This machine is otherwise used as my programming box and backup server.
+>
+>All of a sudden, my programming files were being corrupted in odd
+>places. I thought "hmm, my copy must be corrupt". So I refreshed the
+>files. No change. "hmm, the code depot copy must be corrupt".. Checked
+>from other machines. No problem there. Viewed the file from a web based
+>change browser in Internet Explorer. Same corruption in the file.
+>Telnet'd to the server machine and just cat'd the file to the terminal.
+>Same problem.
+>
+>What's going on?
+>
+>The lines that were corrupted were of the form
+>#define one 1 /* foo menu */
+>#define two 2 /* bar baz */
+>
+>What I always saw ON THIS MACHINE ONLY was:
+>#define one 1 /* foo     */
+>#  fine two 2 /* bar baz */
+>
+>Can you guess what was happening?
+>
+>Turns out, someone had inadvertly installed this piece of garbage
+>called CyberSitter, which purports to protect you from nasty internet
+>content. Turns out that it does this by patching the TCP drivers and
+>watching the data flow over EVERY TCP STREAM. Can you spot the offense
+>word in my example? It's "NUDE". Seems that cybersitter doesn't care if
+>there are other characters in between. So it blanks out "nu */ #de"
+>without blanking out the punctuation and line breaks. Very strange and
+>stupid.
+>
+>It also didn't like the method name "RefreshItems" in another file,
+>since there is obviously a swear word embedded in there. Sheesh.
+>
+>It's so bad it's almost funny. Hope this brightens your day as much as
+>it brighted mine :-).
+
+------------------------------------------------------------
+      David Honig                   Orbit Technology
+     honig@otc.net                  Intaanetto Jigyoubu
+
+""The tragedy of Galois is that he could have contributed so much
+more to mathematics if he'd only spent more time on his marksmanship."
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

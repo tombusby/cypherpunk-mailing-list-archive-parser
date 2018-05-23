@@ -1,0 +1,76 @@
+From: edgar@spectrx.sbay.org (Edgar W. Swank)
+Date: Tue, 3 May 94 02:16:56 PDT
+To: cypherpunks@toad.com
+Subject: Secure Drive is now obsolete NOT
+Message-ID: <N0RqLc7w165w@spectrx.sbay.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+My commendations to the authors of the new Secure Device program.
+
+However, with due respect to Mike, Secure Device does -not- make
+SecureDrive obsolete, at least not yet.
+
+Certainly there is -no- reason for anyone who has already installed
+SecureDrive to switch to SecureDevice. You've already partitioned your
+hard disk, so you won't get the main benefit of SDev.
+
+Although SDev has some bells & whistles of it's own, it doesn't have
+(yet?) the ability to use/set PGPPASS that I added to SecureDrive, or
+the ability to automatically try the hard disk key on diskettes (but
+these would be easy to add).
+
+There are some other tradeoffs between SecureDrive and Sdev.
+
+SDev's device driver architecture makes it more compatible with odd
+hardware configureations, multiple hard drives, etc., since all
+encrypted "volumes" are mapped to DOS files.
+
+OTOH, this same architecture can waste disk space, especially in cases
+where SDev encrypted "volumes" occupy most or all of a DOS diskette or
+HD partition.  The "outer" FAT and directory in this case are almost
+completely wasted.
+
+SDev's device driver also takes about 50% more memory than SECTSR.
+
+OTOH, Sdev's encrypted volumes are safer from accidental writing
+if the device driver is not loaded, since they're mapped to read-only
+DOS files.
+
+SDev may be a little more secure then SDrv. SDev's checkword to verify
+the password is encrypted, while SDrv's is in plaintext. SDev gets
+this benefit because encrypted "volumes" have their own encrypted boot
+record.  Someone has pointed out that the plaintext checkword could be
+used to assist a pre-computed dictionary attack on marginally weak
+passphrases.
+
+Another advantage of SDev is that it was developed outside the USA and
+so is available world-wide without violating ITAR.  SDrv has "leaked"
+overseas to some individuals, but is not, AFIK, being openly
+distributed there.
+
+SDev "volumes" always start out encrypted and empty. You can't take an
+existing partition or diskette and encrypt it (or decrypt it).  This
+may be less convenient especially if disk space is scarce.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLcWpNN4nNf3ah8DHAQH/QwP9H5hTdPFtDBd1hfRDHbz9YpO5CTz/aKo3
+/pgbPN3EFKVKGUFPHxnDa1J0J5PWvAezmUiArNdo18Lly0Hu6M3iEGasv06tnbwg
+vcyzuFPCO5jd02GwTPVldIRol2lTlGcNAVfz209YYP6xSfTKcksWxI6JMSSCCeqK
+fJ2QS7qcKO4=
+=7Idd
+-----END PGP SIGNATURE-----
+
+--
+edgar@spectrx.sbay.org (Edgar W. Swank)
+SPECTROX SYSTEMS +1.408.252.1005  Cupertino, Ca
+
+
+
+
+

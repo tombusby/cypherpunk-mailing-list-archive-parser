@@ -1,0 +1,54 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Wed, 1 Nov 1995 09:43:29 +0800
+To: "baldwin" (Robert W. Baldwin) <baldwin@rsa.com>
+Subject: Re: Keyed-MD5, and HTTP-NG
+In-Reply-To: <9509308151.AA815103202@snail.rsa.com>
+Message-ID: <199511010004.TAA14640@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+"baldwin" writes:
+> Simon,
+>         There are a few different ways to add key material to MD5 to
+> make it suitable as a shared-secret authenticator function.  Some of these
+> are less resistant to attacks than others.  For example, the keyed MD5
+> mechanism that is part of the current IPsec specifications can be
+> attacked using 2**60 chosen messages.  Fortunately, the IPsec specs
+> also require that the shared MD5 key be changed every 2**32 messages,
+> so this attack is unlikely to succeed.  Specifically, IPsec uses
+> MD5 as follows:  X = MD5(key | keypad | Message), where "|" means
+> concatenation and the "keypad" pads out the key to 512 bits.
+> Basically, this function is the same as standard MD5 with a
+> different initialization vector for the compression operation
+> on the first block of the message.
+>         RSA Labs recommends that a people use an authenticator like
+> X = MD5(key1, MD5(key2, Message)).  This resists the chosen plaintext
+> attacks that were published at the crypto conference in Spring 1995.
+
+Pardon me. The amount of vitriol I am going to spew is probably
+difficult for people to understand because most folks around here
+weren't following the keyed MD5 discussions during the IPSEC work and
+have no idea of the sort of crap the professional cryptographic
+community put us through.
+
+We spent months, and months, and months, and months, getting advice
+from every cryptographer on the planet. Every conceivable combination
+of pads, multiple keys, keys before the text, after, before and after,
+etc., was discussed over and over and over again.
+
+Finally, the folks at RSA and IBM both agreed that Hugo's scheme, the
+one we were putting in to place, was the best possible one. (Thats the
+one with the padded key.)
+
+What the flying hell are you doing telling us now, and indeed not even
+telling the IPSEC community but instead mumbling on cypherpunks, that
+you guys were in possession of information BEFORE the entire
+discussion in midsummer that indicated that your own advice was wrong?
+
+Perry
+
+
+
+

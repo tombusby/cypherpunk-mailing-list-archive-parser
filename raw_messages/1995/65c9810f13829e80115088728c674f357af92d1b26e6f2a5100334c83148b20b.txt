@@ -1,0 +1,54 @@
+From: "Theodore Ts'o" <tytso@MIT.EDU>
+Date: Tue, 31 Oct 1995 05:26:43 +0800
+To: Mark Murray <mark@grondar.za>
+Subject: Re: /dev/random for FreeBSD [was: Re: /dev/random for Linux]
+In-Reply-To: <199510301816.UAA14080@grumble.grondar.za>
+Message-ID: <9510301856.AA22851@dcl.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Date: Mon, 30 Oct 1995 20:16:24 +0200
+   From: Mark Murray <mark@grondar.za>
+
+   A colleague drew my attention to this, and I was so pleased with it that
+   I ported it to FreeBSD.
+
+Which version did you grab?  More recent versions of the driver use a
+more efficient mixing algorithm suggested by Colin Plum.  There's also
+the beginnings of support for user-mode deamons to add randomness into
+the random pool by writing to /dev/random.  I also added support for
+reading the instruction timing register for x86 platforms that support
+it. 
+
+   2) We felt that hooking all interrupts might be dangerous. IDE drives can
+   interrupt at a heck of a rate, and so can some serial ports, and we felt
+   that in these cases _not_ using the interrupt was a good idea. So I
+   added an ioctl to allow the superuser to select his own set, appropriate
+   to the hardware in use. It is nearly impossible to do this automatically.
+
+Indeed; I can't emphasize this enough.  The clock interrupt, for
+example, is a very bad irq to try to use.  In the Linux driver, only
+device drivers who register their interrupt driver with the
+SA_SAMPLE_RANDOM flag actually have the interrupt timings sampled for
+the random number generator.
+
+People have suggested using making it possible to select at run-time
+which interrupts to sample, instead of at compiling it into the device
+drivers.  I've generally not been convinced this is a good idea, because
+most system administrator won't likely know which irq's are good and
+which are bad for random number generation.  For example, although it
+may not be obvious, the network interrupt may not be a good choice,
+since an adversary who is monitoring the ethernet cable can make a
+pretty good guess about the timing of your network interrupts, and hence
+what the likely inputs are to the random number pool might be.
+
+   Gimme a yell if you want copies :-)
+
+Sure, why not.   I'd be interested to see what you did.
+
+						- Ted
+
+
+
+

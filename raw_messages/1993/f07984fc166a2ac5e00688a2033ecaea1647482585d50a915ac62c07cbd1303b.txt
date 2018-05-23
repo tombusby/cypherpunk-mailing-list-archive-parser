@@ -1,0 +1,78 @@
+From: eichin@cygnus.com (Mark Eichin)
+Date: Fri, 9 Jul 93 11:05:19 PDT
+To: shipley@merde.dis.org
+Subject: emacs stuff
+In-Reply-To: <9307082128.AA02549@merde.dis.org>
+Message-ID: <9307091804.AA03813@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> ;;; * They do "ps auxww" (SunOS) on your machine while you're
+>> ;;;     decrypting/signing.
+	It should be possible, with pgp 2.2, to eliminate this
+vulnerability.
+
+>> ;;; * They type C-h v *pgp-passphrase* in your emacs after you've
+	That's easy to clear optionally. What's hard to clear is "m-x
+view-lossage" which has the raw characters. (I think emacs should have
+support for safe reading and clearing, but I don't know if rms would
+go for it. You'd need an excuse *other* than passwords.)
+
+>> ;;; * They watch over your shoulder as you type it. (It's not invisible.)
+	Didn't read-password or read-no-echo ever make it into an
+emacs release?  Here are some ancient bits that I use. 
+				_Mark_ <eichin@athena.mit.edu>
+				MIT Student Information Processing Board
+				Cygnus Support <eichin@cygnus.com>
+
+
+;; ucbvax!brahms!weemba	Matthew P Wiener/UCB Math Dept/Berkeley CA 94720
+;;; GNU Emacs library to read in passwords from the minibuffer
+;;; Standard GNU copying privileges apply
+
+(setq minibuffer-local-no-echo-map (make-keymap))
+
+(mapcar '(lambda (x) (aset minibuffer-local-no-echo-map (car x) (cdr x)))
+	(cdr minibuffer-local-map))
+
+(let ((i ?\040))
+  (while (< i ?\177)
+    (aset minibuffer-local-no-echo-map i 'read-char-no-echo)
+    (setq i (1+ i))))
+
+(aset minibuffer-local-no-echo-map ?\177 'delete-char-no-echo)
+
+;; This function squirrels each typed-in character away.
+(defun read-char-no-echo () (interactive)
+  (setq no-echo-list (append no-echo-list (list (this-command-keys)))))
+
+;; This function erases the last character from the input list.
+(defun delete-char-no-echo () (interactive)
+  (setq no-echo-list (nreverse (cdr (nreverse no-echo-list)))))
+
+;; This is the function the user actually uses.
+(defun read-string-no-echo (prompt)
+  "Get a password from the minibuffer, prompting with PROMPT."
+  (let (no-echo-list)
+    (read-from-minibuffer prompt nil minibuffer-local-no-echo-map)
+    (mapconcat 'identity no-echo-list nil)))
+
+
+;;;;;;;;;;;;;;;;;;;;;This crudity is just for demo!;;;;;;;;;;;;;;;;;;;;
+(defun read-password ()
+  "Prompts for a password, and doesn't echo it, stores it in 'secret'"
+  (interactive)
+  (setq secret (read-string-no-echo "Password: ")))
+
+
+(defun shell-password ()
+  "Prompts for password, no echo, and sends it to the shell"
+  (interactive)
+  (process-send-string (get-buffer-process (current-buffer)) 
+		       (concat
+			(read-string-no-echo "Password: ")
+			"\n")))
+
+
+

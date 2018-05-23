@@ -1,0 +1,97 @@
+From: fc@all.net (Dr. Frederick B. Cohen)
+Date: Tue, 24 Oct 95 15:54:11 PDT
+To: rjc@clark.net (Ray Cromwell)
+Subject: Re: Does your software?
+In-Reply-To: <199510242238.SAA19929@clark.net>
+Message-ID: <9510242251.AA05075@all.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+>   Umm, your get only server sounds like it is secure, but what is the
+> point advertising it to this list?
+
+I wasn't advertising.  I was simply answering questions brought up about
+my secure W3 server by another person who posted to the list.  For some
+reason they thought that they should bring it into the discussion, so I
+responded. 
+
+> I could program a GET only
+> server in far fewer than 80 lines in just a few hours.
+
+As I have said many times to many others, please go ahead and do it.  I
+only wrote the secure server to demonstrate that it was no big deal to
+have a secure server and to ease my own fears about protecting all.net
+from outside attacks like the ones with buffer overflows.  The source is
+on-line and available to anyone, and I only ask a fee if you decide to
+use it for commercial purposes.  Nobody has paid me yet, and I assume
+they never will.
+
+> You could
+> do it in even fewer lines of perl, or /bin/sh.
+
+But how would you demonstrate the security properties?
+
+> A real HTTP server
+> must support all of HTTP/1.0 however for it to be considered a server.
+
+It's a secure get-only server.  It only handles 99+% of the real uses of
+web servers.
+
+> Since yours doesn't, it isn't, it's just a toy. a better project would be
+> to make HTTP requests under CERN more secure.
+
+I agree, but rather than redesign their server, I wrote my own in a few
+hours and made it available as an example.  I think that CERN should
+make their server secure.
+
+>  In fact, if you don't
+> handle CGI, you can't handle forms, which means you can't handle
+> commerce securely.
+
+I now do handle forms (another separate 100 line server not yet released).
+Please see the experimental version on-line at all.net.
+
+> secure perl "get only" server server
+> copy perl to a secure filesystem
+> have a chroot c-wrapper there
+> the wrapper chroot's to this directory and runs the perl script
+> perl is effectively boxed in
+
+My secure server includes the chroot  and setUID code in it.  Your C-wrapper
+would be part of your code - that adds several lines.  And I don't need Perl
+which I think makes it much more secure.  (There I go casting doubts on Perl
+security!)
+
+> #!/securedir/perl
+> 
+> $line = <STDIN>;
+> ($method, $url, $protocol)=split(/\s+/, $line);
+> $url =~ s/[^a-zA-Z0-9_]/g;
+> if($method =~ /^GET/i)
+> {
+>    open(FILE, "$url");
+>    print "HTTP/1.0 200 OK\nContent-Type: text/html\n\n";
+>    print <FILE>;
+>    close(FILE);
+> }
+> 
+> exit 0;
+
+Pretty close, but you don't provide any protection against denial of
+services (e.g.  by openning up 1024 simultaneous sessions and leaving
+them open indefinately) against accessing files that aren't there (you
+need an error message of some sort - mine does a redirect to the home
+page), you don't enforce access controls on the host machine, there may
+be buffer overflows associated with long requests, you don't handle some
+possible URLs, you don't seem to handle the default URL, you don't
+identify the kind of error that caused the failed access, and you don't
+provide an audit trail.  Add those and I'll look again to see if there
+are other possible problems.
+
+-- 
+-> See: Info-Sec Heaven at URL http://all.net
+Management Analytics - 216-686-0090 - PO Box 1480, Hudson, OH 44236
+
+
+

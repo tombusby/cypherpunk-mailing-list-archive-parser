@@ -1,0 +1,51 @@
+From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+Date: Sun, 7 Nov 93 15:18:13 PST
+To: pierre@shell.portal.com (Pierre Uszynski)
+Subject: Re: some newbie DC-net questions
+In-Reply-To: <9311070412.AA14773@jobe.shell.portal.com>
+Message-ID: <199311072317.AA05272@flubber.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+pierre@shell.portal.com (Pierre Uszynski) writes:
+> > From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+> > [regarding collisions on a dc-net and detection of them]
+> 
+> Actually, it seems to me undetected collisions are not as likely as this
+> makes it appear: Every person trying to transmit is monitoring
+> at the same time to make sure the message they transmit does appear in
+> the "sum of differences".
+
+Yes and no.  In theory undetected collisions are unlikely.  In practice you
+need to design against them in certain areas because unless you are talking
+to someone on a true broadcast medium (ethernet, etc but not any internet
+protocols above the datalink layer...) you are going to have to fake the
+broadcast and depending on how you do this you could waste a significant
+chunk of time and bandwidth passing a "token" around until the collision is
+detected.  There will always be a delay in the time between broadcast and
+reception so certain operations (like defining your channel in a
+multiplexed broadcast network or getting any token or other identifier
+necesary to let others know that someone is talking and they should not try
+to transmit, etc) need to include steps to make sure that collisions are
+detected early before significant effort and bandwidth is involved, where a
+collision could make an entire round of messages need to be repeated...
+
+> When you detected that your message collided, typically, you stop
+> transmitting. You then decide on a random time delay, wait for that
+> duration and try again if the way is clear (all zeroes carrier).
+
+And make sure that your backdown includes a bit of random wait added on or
+else two colliding speakers will constantly run into each other.  A good
+example of how to deisgn and layout such a system can be found in CSMA/CD
+networks like enet (IEEE 802.3 i think...) or the satellite broadcasting
+networks, etc.  The methods necessary to make such a system work most
+efficiently have already been designed by others for networks that share
+many common characteristics with a dc network, makes sense to use them, no?
+:)
+
+
+jim
+
+
+

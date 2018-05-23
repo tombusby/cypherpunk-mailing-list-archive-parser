@@ -1,0 +1,92 @@
+From: David Miller <dm0@avana.net>
+Date: Sun, 3 Aug 1997 06:28:41 +0800
+To: PGPlinuxbeta@pgp.com
+Subject: PGP 5.0b11 feedback / PGP Linux memlock patch
+Message-ID: <33E3B246.2C983092@avana.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+Guys,
+
+Here's a patch for PGP 2.6.2 (and 2.6.3i) source which locks all
+process pages in memory (will not swap to disk) under Linux if
+the user is running with effective root privilege.  You might
+consider putting something like this in PGP 5.0.  Also, this
+patch should be generalizable to POSIX systems withthe mlockall(2)
+function.  If you have any success in generalizing it to POSIX,
+please let me know, as I only have access to Linux.
+
+See 'man memlockall' for more info.
+
+--David Miller
+
+-- 
+I'll take a smart dog over a dumb person any day.
+
+
+Begin3
+Title:		pgp-memlock.pat
+Version:	25JUL97
+Entered-date:	25JUL97
+Description:	Patch for Linux PGP 2.6.2 and PGP 2.6.3i source to lock all
+		pages in physical memory if running with root privilege.
+
+		This keeps sensitive data from being swapped to disk, where
+		it could be later recovered by undesirables.
+
+		There is no effect if not run with effective root privilege.
+		Root privs are immediately dismissed, allowing pgp to be
+		safely installed SUID root (assuming its chmod'ed 4111).
+		pgp.c is modified, increasing executable size by ~391 bytes.
+
+Keywords:	PGP, encryption, security, Linux
+Author: 	dm0@avana.net (David Miller)
+Maintained-by:	dm0@avana.net (David Miller)
+Primary-site:	sunsite.unc.edu  /pub/Linux/apps/crypto/pgp-memlock.pat
+Alternate-site: Galactus
+Original-site:	Coderpunks list
+Platforms:	Linux
+Copying-policy:	GPL
+End
+
+
+*** src/pgp.c	Sat Jul 26 01:25:57 1997
+--- src/pgp.c.new	Sat Jul 26 01:25:50 1997
+***************
+*** 111,116 ****
+--- 111,120 ----
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
++ #ifdef linux
++ #include <unistd.h>	/* for David Miller's memory lock patch */
++ #include <sys/mman.h>	/* for David Miller's memory lock patch */
++ #endif
+  
+  #ifdef __QNX__
+  #include <sys/stat.h>
+***************
+*** 435,440 ****
+--- 439,457 ----
+  #ifdef	DEBUG1
+      verbose = TRUE;
+  #endif
++ 
++ /* David Miller's memory lock patch */
++ #ifdef linux					/* Linux only, for now */
++     if (geteuid() == 0) {			/* if we have root privs */
++         /* lock all current & future pages in physical memory */
++ 	if (mlockall(MCL_CURRENT|MCL_FUTURE) < 0)
++ 		fprintf(pgpout, LANG("\007Could not lock all pages in memory.\n"));
++ 	if (setuid(getuid()) < 0)		/* drop root privs */
++ 		fprintf(pgpout, LANG("\007Could not drop root priviliges.\n"));
++     }
++ #endif
++ /* end David Miller's memory lock patch */
++ 
+      /* The various places one can get passwords from.
+       * We accumulate them all into two lists.  One is
+       * to try on keys only, and is stored in no particular
+
+
+

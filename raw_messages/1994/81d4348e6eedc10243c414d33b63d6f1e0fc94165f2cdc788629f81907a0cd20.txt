@@ -1,0 +1,42 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Thu, 7 Jul 94 06:24:29 PDT
+To: cypherpunks@toad.com
+Subject: Re: Counting bits
+Message-ID: <199407071323.OAA05688@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	Why bother when you can simply do an eight line function?
+
+	int bitcount(char b)
+	{
+	register int retval=0;
+
+	 if (a & 1) retval++;
+	 if (a & 2) retval++;
+	 if (a & 4) retval++;
+	 if (a & 8) retval++;
+	 if (a & 16) retval++;
+	 if (a & 32) retval++;
+	 if (a & 64) retval++;
+	 if (a & 128) retval++; 
+
+	return retval;
+	}
+
+There's a man who has never had to code a critical inner-loop.
+
+When you're exhaustively testing keyspaces, or getting hard crypto
+to run at lan speeds, sometimes every cycle is critical.  If the function
+above is in the main inner loop (say 80% of the CPU time as gleaned
+from a profile utility), the optimisations people suggested will
+speed your program up by a factor of 10.  This is the one time
+that bit-twiddling optimisations are worthwhile.  (Mostly they're
+irrelevant and just posturing by smart-ass kiddies...)
+
+G
+
+
+
+

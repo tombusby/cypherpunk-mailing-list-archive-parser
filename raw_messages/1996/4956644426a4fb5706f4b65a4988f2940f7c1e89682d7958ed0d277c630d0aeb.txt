@@ -1,0 +1,50 @@
+From: Raph Levien <raph@cs.berkeley.edu>
+Date: Thu, 2 May 1996 18:02:24 +0800
+To: Mike Duvos <mpd@netcom.com>
+Subject: Re: [Fwd: Cylink can export 128-bit DH?]
+In-Reply-To: <199605011919.MAA27020@netcom8.netcom.com>
+Message-ID: <3188382C.9778B7@cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike Duvos wrote:
+> 
+> frantz@netcom.com (Bill Frantz) writes:
+> 
+>  > Most cryptographic experts recommend Triple DES, encrypting
+>  > the data 3 times with 3 different keys.
+> 
+> It's actually encrypted three times with two keys comprising
+> 112 bits of keyspace, using a decrypt on one key sandwiched
+> between two encrypts using the other.  This prevents a "man
+> in the middle" attack, which would be possible if only two
+> DES encryptions were used, one for each key.
+
+   Not quite.
+
+   Double DES is subject to a "meet in the middle" attack (not a "man in
+the middle"). Here's how it works:
+
+   Let's say you've got unlimited storage, and you're doing a known
+plaintext attack, so you've got both the ciphertext and the plaintext in
+your hand. Then, just do all 2^56 decryptions of the ciphertext, and all
+2^56 encryptions of the plaintext. Then, compare the two lists to see if
+you've got a match. Since it's DES, you can save a factor of two in both
+time and space, because it's got the complementation property.
+   Assuming unlimited storage, three keys (168 bits) are equivalent to
+two. However, since 2^55 is a lot of disk space, in practice a real
+attacker will trade off space for time (it can be done). Thus, using
+three keys is more work for the attacker than using two. So, modern
+cryptographic usage is exactly as Bill said - three keys, three
+encryptions. For example, S/MIME recommends the use of DES-EDE3-CBC (the
+middle encryption is technically a decryption, although it doesn't
+really make any difference).
+
+   Glad I could be of service.
+
+Raph
+
+
+
+

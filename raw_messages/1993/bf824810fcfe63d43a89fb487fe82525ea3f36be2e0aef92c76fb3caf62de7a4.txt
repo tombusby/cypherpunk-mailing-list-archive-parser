@@ -1,0 +1,60 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 31 Dec 93 18:00:52 PST
+To: Jim_Miller@bilbo.suite.com
+Subject: Re: Anonymous Video on Demand
+Message-ID: <199401010159.RAA25897@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim - That is a nice protocol.  Seems to work OK.  I had thought of
+a variant:
+
+Vendor creates a set of pairs of numbers and random DES keys:
+(1,KEY1), (2,KEY2), (3,KEY3),...
+
+These are sent via oblivious transfer to buyer such that he only gets
+one but the vendor doesn't know which.  Suppose buyer gets (10,KEY10).
+
+Buyer sends back a mapping of the numbers 1-N and a set of N movies.
+He maps the number he got in step 1 (10 in my example) with the movie
+he wants.
+
+Vendor encrypts these movies with the corresponding numbered DES keys,
+and sends them to buyer.  He will only be able to decrypt one of them.
+
+These protocols have the obvious disadvantage of increasing the needed
+bandwidth by a factor of N.  I guess we assume bandwidth is cheap.
+
+Once I get the movie, what stops me from recording it and giving copies
+to all my friends for free?  Nothing, as far as I can see.  Therefore,
+it would be good to think of a system where N movies are broadcast all
+the time (on N channels), all N encrypted, but with each person who has
+paid only able to decrypt one of them.  You argued that people would just
+share keys, but I don't think that is an issue since they might as well
+just share movies.  This system is much more acceptable in terms of
+bandwidth.  It would be interesting to think of a solution which worked
+with this situation, where the encrypting keys are fixed.
+
+The requirement is, given a set of keys, 1-N, which A knows, B ends up
+knowing only key I, where I is chosen by B ahead of time, but A doesn't
+know which key B got.  Off hand I don't see how to do this.
+
+Hal Finney
+
+P.S. with a little thought, a variant on my protocol can solve this,
+and perhaps your protocol works too.  In step 1, A sends random keys
+to B via oblivious transfer; in step 2, B sends a mapping of key numbers
+and movies, pairing up the key he got and the movie he wants; in step 3,
+which is different, A sends not the movies, but the movie keys which will
+be used during the broadcast phase, encrypted with the random keys chosen
+in step 1.  B is left with one key which will decrypt just the movie he
+wants during the broadcast.
+
+Maybe if this were done in tamper-proof chips like the encryption chips used
+in current cable boxes it would be secure enough for most purposes, at least
+as secure as current pay cable.
+
+
+
+

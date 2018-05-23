@@ -1,0 +1,56 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Sun, 7 Jan 1996 00:34:31 +0800
+To: tcmay@got.net (Timothy C. May)
+Subject: Re: Revoking Old Lost Keys
+In-Reply-To: <ad1366a50002100426f2@[205.199.118.202]>
+Message-ID: <199601061626.LAA06345@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Timothy May wrote:
+> At 7:07 AM 1/6/96, Bruce Baugh wrote:
+> 
+> >I'd like to bring up a problem I haven't seen addressed much yet, and which
+> >I think is going to come up with increasing frequency as PGP use spreads.
+> >
+> >The problem is this: how can one spread the word that an old key is no
+> >longer to be used when one no longer has the pass phrase, and cannot
+> >therefore create a revocation certificate?
+> 
+> Basically, you are screwed. Any revocation you attempt will not be trusted,
+> as we will suspect the new "you" to be an attacker, perhaps an agent of the
+> NSA or the Illuminati. In the view that "you are your key," the old you no
+> longer exists.
+> 
+...
+> 
+> Seriously, this is an example where "escrow" works. Seal an envelope with
+> your passphrase and any other stuff you want to remember, and leave it with
+> your lawyer or escrow agency with instructions to only turn it over to you.
+> Same as a safe deposit box, unless you forget the key. (You could forget
+> you have a lawyer, so better write that down somewhere, too.)
+
+Escrow is orthogonal to the underlying problem here, which is that the
+PGP revocation model is completely wrong.  Since the trust properties
+and other semantics of a key originate with the certificates attached to
+the key, and not from the key owner per se, it makes little sense to make
+the key owner responsible for revoking that trust.  Far more sensible would
+be a scheme in which the certificate issuers themselves could revoke their
+certificates when they believe a key is no longer trustworthy.  (A practical
+decentralized system like PGP could provide a facility for certifiers to
+"pre-revoke" their certificates at the time they are issued so that the key
+owner could distribute the revocation certificates himself if he discovers
+his own key to have been compromised or lost.)
+
+Note that the problem here is in the basic trust model, not just the
+certificate distribution model (which is a separate problem).  The lack of
+ability for a certifier to revoke his own certification, plus the lack of a
+facility to put limits on the duration and meaning of the certification,
+make PGP certificates of very limited practical value.
+
+-matt
+
+
+
+

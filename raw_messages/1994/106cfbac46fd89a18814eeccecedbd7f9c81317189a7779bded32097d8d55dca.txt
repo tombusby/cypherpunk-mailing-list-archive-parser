@@ -1,0 +1,107 @@
+From: tcmay@netcom.com (Timothy C. May)
+Date: Mon, 29 Aug 94 18:31:43 PDT
+To: hart@chaos.bsu.edu (Jim Hart)
+Subject: Re: Transport Mixes
+In-Reply-To: <199408300037.TAA07496@chaos.bsu.edu>
+Message-ID: <199408300131.SAA26705@netcom11.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jim Hart wrote:
+
+> It might be possible to transport goods in a difficult to trace fashion,
+> by applying the concept of a digital mix to physical transport.
+> We can't make them cryptographically hard to trace, but perhaps we 
+> can minimize the clue trail by substituting crypto for normal 
+> shipment records.
+
+We last had a major thread on this at least a year and a half ago, so
+it's worth looking at again certainly.
+
+Before I get to Jim's scheme, bear in mind a couple of extremely
+important aspects of physical package shipping vs. crypto:
+
+1. The physical packages are extremely easy to inspect by sniffing
+(for certain chemicals), by examination of the package exteriors
+(unless "repackaged" each time), by x-raying of the interiors, and by
+weighing and similar mass/moments of inertia characterizations.
+
+2. Physical packages are _often_ inspected, if suspicions arise. The
+level of security is vastly lower than for shipping encrypted bits
+around. Many people who thought they could carefully wrap some hash up
+and ship it home found out otherwise.
+
+3. Since people cannot practically do the "envelope within envelopes"
+nesting, for packages [they can, but it's trivially detectable], a
+major element of mixes is lost. [Practically, any of the remailers
+can mark packages, attach bugs, etc. A killer.]
+
+Onward to Jim's scheme:
+
+> Here's a courier system for shipping small packages untraceably:
+> 
+> + put your packages in a suitcase for a flight to a major hub airport,
+> which is also a courier mix site.  Each bag contains an innocuous
+> looking Newton with a small wireless radio.  These identify themselves
+> as mix shipments only if the proper one time key is transmitted over
+> a spread spectrum wireless channel.  You also put a message in the
+> Newton indicating the shipment route and enclosing digital cash
+> as postage; these are successively encrypted with each mix's public 
+> key, just as with remailers
+> 
+> + couriers spend all day locating mix bags and taking them to
+> a nearby hotel room, and taking bags from the hotel room when 
+> they have been delayed, mixed, and queued for the flight they are
+> and only take a few bags each at a time
+> 
+> + the particular hotel and room changes every day
+
+If the mix process it itself trusted, then the airport steps can (and
+hence should) be skipped. Unlike the case with software remailers,
+where additional steps increase the chance that at least one of them
+is reliable (and hence mixes the traffic properly), physical remailers
+have the property that each additional mix node increase the chance of
+compromisinging things, of attaching bugs, of marking the packages,
+and so forth.
+
+> + we need protocols for destroying shipments or shipping them
+                                               ^^^^^^^^^^^^^^^^
+> back to the customer, due to suspicous nature of the package
+  ^^^^^^^^^^^^^^^^^^^^
+> (customs would catch guns, bombs, sniffable drugs, etc.)
+> unclearable postage, or other exceptions that might occur,
+> and informing customers and arbitrators of these actions
+
+Huh? Not much of an anonymous remailer if this is possible. (Our
+Cypherpunks remailers can do this trace-back only when people don't
+encrypt, and most easily only at the first stage. Properly executed
+mixes don't allow such trace-backs at all.)
+
+> Can one travel personally, untraceably?  Here is a method
+> analogous to a mix:
+
+Jim's schemes elided. This is familiar stuff to any spy thriller fan,
+as I am, and it was "losing a tail" that motivated me to think about
+my "Labyrinth" scheme in 1987, which I then described to David Chaum
+at Crypto '88, only to find he'd already formalized it several years
+earlier. 
+
+Both packages and people are easy enough to tag-and-follow that they
+are not even in the same league as the cryptograhic security of
+digital mixes.
+
+--Tim May
+
+
+-- 
+..........................................................................
+Timothy C. May         | Crypto Anarchy: encryption, digital money,  
+tcmay@netcom.com       | anonymous networks, digital pseudonyms, zero
+408-688-5409           | knowledge, reputations, information markets, 
+W.A.S.T.E.: Aptos, CA  | black markets, collapse of governments.
+Higher Power: 2^859433 | Public Key: PGP and MailSafe available.
+"National borders are just speed bumps on the information superhighway."
+
+
+

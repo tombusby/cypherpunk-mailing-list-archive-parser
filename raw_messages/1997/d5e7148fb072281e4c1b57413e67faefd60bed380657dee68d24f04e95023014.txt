@@ -1,0 +1,48 @@
+From: Bryce <bryce@digicash.com>
+Date: Sat, 15 Nov 1997 05:31:07 +0800
+To: Jeff Barber <jeffb@issl.atl.hp.com>
+Subject: Re: smaller f00f.c
+In-Reply-To: <199711141815.NAA28804@jafar.issl.atl.hp.com>
+Message-ID: <199711142121.WAA02716@digicash.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+> > > main(i){int(*f)()=&i;i=0xc8c70ff0;f();}
+> > > main(i){i=0xc8c70ff0;((int(*)())&i)();}
+> > > (*f)();main(i){f=&i;i=0xc8c70ff0;f();}
+> > > (*f)()="\360\017\307\310";main(){f();}       /* 38 chars */
+> 
+> > How about:
+> > 
+> > long main[]={0xc8c70ff0};
+> > 
+> > or even
+> > 
+> > main[]={0xc8c70ff0}; /* 21 chars */
+> > 
+> > Compiles with gcc, but I haven't tested it.
+> 
+> No need for an array, so my entry is:
+> 
+> int main=0xc8c70ff0; /* 20 chars */
+
+
+On a DOS box, no need to compile.  Cut-n-paste the magic words
+into a file.  Name the file "foof.com".  Run it.
+
+
+4 bytes.  I win.  :-)
+
+
+Bryce
+
+P.S.  Not original with me.  Attribution lost in the mists of 
+comp.sys.intel.
+
+
+
+
+

@@ -1,0 +1,51 @@
+From: Derek Atkins <warlord@Athena.MIT.EDU>
+Date: Mon, 12 Apr 93 19:36:55 PDT
+To: J. Michael Diehl <mdiehl@triton.unm.edu>
+Subject: Re: how secure is secring.pgp?
+In-Reply-To: <9304120127.AA06741@triton.unm.edu>
+Message-ID: <9304130236.AA01768@hodge>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> Since we need a passphrase to access our secret key, it is
+> reasonable to think that our secring.pgp file is pretty secure, as
+> long as our passphrase is notrivial.  What am I missing here?
+
+The secret key on the secring.pgp is IDEA-encrypted... So, it is only
+as strong as IDEA, and your passphrase.
+
+To break the security, someone needs to be able to:
+	1) Obtain your secret keyring.. This is either watching it
+go over the net, reading the file system, borrowing your floppy, or
+whatever, and
+	2) Obtain your secret passphrase...
+
+Only when both are accomplished can they get to your secret key,
+although once they have accomplished #1, they can try to break the
+IDEA algorithm...
+
+- -derek
+
+PGP 2 key available upon request on the key-server:
+	pgp-public-keys@toxicwaste.mit.edu
+- --
+  Derek Atkins, MIT '93, Electrical Engineering and Computer Science
+     Secretary, MIT Student Information Processing Board (SIPB)
+           MIT Media Laboratory, Speech Research Group
+           warlord@MIT.EDU       PP-ASEL        N1NWH
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.2
+
+iQBuAgUBK8onIzh0K1zBsGrxAQHn0QLECpGbaKS3PpXdJTE0956AkeaYGuZGATJ3
+Jgq7I/cEB5l2e3PPr31xdctywTi/+RBIKOJEVokPO9UMsu5KQvwngHta7NeYF8UB
+qS3wPDH85ro60H4fFsg/s6E=
+=4s7l
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,67 @@
+From: Eric Murray <ericm@lne.com>
+Date: Sun, 1 Oct 95 10:42:01 PDT
+To: ses@tipper.oit.unc.edu (Simon Spero)
+Subject: Re: NetScape's dependence upon RSA down for the count!
+In-Reply-To: <Pine.SOL.3.91.951001101443.5437A-100000@chivalry>
+Message-ID: <199510011756.KAA01707@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ 
+> On Sat, 30 Sep 1995, Don Stephenson wrote:
+> 
+> > I don't think binding hostnames to certificates helps much because 
+> > both hostnames and IP addresses can be spoofed and DNS servers can be 
+> > subverted.  The important thing is the binding to the "service" name or 
+> 
+> In this particular case, hostnames do help, because they are information 
+> imbedded in the url used to access the server. By verifying the hostname 
+> in the certificate with the hostname in the url, you can state with a 
+> high degree of confidence that the object retrieved is precisely the 
+> desired object covered by this url. 
+
+Assume that the attacker Mallet is in the middle and has control of the http
+stream.  Alice clicks on 'open Widget order form' to order a Widget
+and Mallet sends her browser a redirect pointing to his evil web server.
+Alice doesn't notice that the hostname in the url has changed, or
+if she does, she figures that the catalog people have arranged to
+have Mallet's server host their 'secure' transactions (not an unreasonable
+assumption).  Mallet takes the order and pockets the money.
+The hostname in the certificate (Mallet's) matches the hostname
+in the URL (also Mallet's).
+
+Of course this isn't really an attack on SSL per se.  It's an attack on
+the certificate-granting policy- the CA gave a certificate to
+an unscrupulous person (Mallet).
+
+> 
+> > Well of course, if the secret key of the server (or worse yet, certificate 
+> > authority) is compromised, all bets are off.  That's true of just about any 
+> > protocol you can dream up.
+> 
+> I'm not referring to the secret key of _the_ server; I'm referring to the 
+> secret key of _ANY_ server. In the limiting case, such a key can be 
+> obtained by buying one from the CA. 
+
+Right. That's what I pointed out in an earlier message, although I
+didn't elaborate on it.   The security of Netscape browsers depends
+on Verisign's policy in handing out server certificates.
+
+
+Backing up for a minute, the same problem holds for those neeto
+credit-card readers that Visa and MasterCharge give out to merchants.
+The merchant can be a crook setting up a 'store-front' operation to charge
+to bogus/stolen card numbers, or the employees can steal using the numbers
+they get in the corse of doing business, etc.  There are already
+procedures in place for dealing with this sort of crime.  I'm not
+sure that tricking Verisign into giving out a certificate to a group
+of crackers is really any different than tricking Visa into giving
+a card reader to a group of theives.
+
+-- 
+Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+

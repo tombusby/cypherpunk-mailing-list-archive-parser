@@ -1,0 +1,34 @@
+From: nobody@shell.portal.com
+Date: Thu, 24 Mar 94 09:04:35 PST
+To: cypherpunks@toad.com
+Subject: PGP: change ".z" to ".gz" for gzip?
+Message-ID: <199403241705.JAA00560@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+While browsing pgp.c, I noticed it checks for several kinds of compression:
+
+static char *compressSig[] =  { "PK\03\04", "ZOO ", "GIF8", "\352\140",
+	"HPAK", "\037\213", "\037\235", "\032\013", "\032HP%"
+	/* lharc is special, must be last */ };
+static char *compressName[] = { "PKZIP",   "Zoo",  "GIF",  "Arj",
+	"Hpack", "gzip", "compressed", "PAK", "Hyper",
+	"LHarc" };
+static char *compressExt[] =  { ".zip",  ".zoo",  ".gif",  ".arj",
+	".hpk", ".z", ".Z", ".pak", ".hyp",
+	".lzh" };
+
+Since gzip now uses ".gz" consistently, perhaps the ".z" should change for
+PGP 2.5 (or whatever the next public version will be called).
+
+I think the code would have to change more to do the right thing with
+both, since it uses the compressSig to decide which compressExt to try --
+is this right?  I guess it'd be cleaner to accept both, but probably
+not worth extra code that would eventually become obsolete.
+
+	Diogenes   (Fingerprint 6FC5C2A5D1A0ED006B576AF7107D51FB)
+
+
+
+

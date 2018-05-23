@@ -1,0 +1,53 @@
+From: Bill Sommerfeld <sommerfeld@orchard.medford.ma.us>
+Date: Thu, 21 Sep 95 19:19:20 PDT
+To: tomw@cthulhu.engr.sgi.com
+Subject: Re: netscape bug
+In-Reply-To: <199509212242.PAA04533@orac.engr.sgi.com>
+Message-ID: <199509220208.CAA00564@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I question the accuracy of this.  The fingerd bug was that a string in
+> the static data area was read in with gets which could be overflowed.
+> At some point in memory after this input buffer was the string constant
+> that stored the name of the finger command.  What the Morris work did
+> was to overflow the input buffer and replace the string constant
+> "finger" with "csh".  When fingerd then exec'ed the command, that gave
+> you a shell running on the machine.
+
+Nope, that wasn't it, either.
+
+See the Eichin/Rochlis "tour of the worm" paper.  
+
+I was visiting friends at MIT the night the worm hit.  After receiving
+some confused and unspecific reports that the worm was getting in
+through fingerd, I had a flash of insight as to how that might happen;
+as it turned out, this insight was correct, and shortly thereafter, I
+had reproduced a benign form of the fingerd attack.  As implemented by
+the worm, it only worked on vaxes, but it could have worked on other
+systems.
+
+The buffer in question was on the stack, not in static storage.
+
+The attacker wrote a long sequence of NOP's, followed by machine
+instructions which implemented the equivalent of exec("/bin/sh"),
+followed by the approximate stack address of the stack buffer; the
+last address was at the right place to overwrite the saved PC field in
+the stack frame.  When the routine "returned", it actually branched
+into the runway of NOP's, and then exec'ed "/bin/sh".
+
+Note that the actual stack address varied, as environment variables
+(which tend to vary from installation to installation) are located at
+the top of the stack.
+
+As it turned out, the attack did not work on most Athena systems,
+because the athena /etc/rc complex wound up using a large number of
+environment variables which pushed the location of the stack frame in
+question out of the range where the attack would have worked.
+
+					- Bill
+
+
+
+

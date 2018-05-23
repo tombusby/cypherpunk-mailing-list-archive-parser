@@ -1,0 +1,56 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Wed, 28 Sep 94 20:37:29 PDT
+To: cypherpunks@toad.com
+Subject: groups
+In-Reply-To: <9409282128.AA00184@focis.sda.cbis.COM>
+Message-ID: <9409290302.AA28900@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+   Frequently when discussing a cypher the
+   question of whether it is a group arises.  In the absence of further
+   definition, is it safe to assume that the set of elements for this
+   group is the cyphers with each possible key and that the operation for
+   this group is composition?
+
+Yes, this is exactly how what this "is X a group" mean when applied to
+ciphers.  It's an attempt to get a handle on just how much extra
+scrambling happens under composition, i.e. double, triple, multiple
+encryptions.
+
+The useful question is, however, not whether it's actually a group,
+but just how close to a group is it?  If it were only lacking one
+element, it wouldn't be a group, but double encryption would be
+statistically speaking a waste of effort for such a hypothetical
+cipher.  The work on DES showed that DES is very far away from being a
+group.  There are interesting questions about the semigroup that DES
+encryptions generates.  Does it contain the identity, i.e. does it
+even generate a group?  Put yet another way, does some combination of
+encryption (not decryption) operations eventually generate the
+identity function?  If so, how long is the shortest such combination?
+
+The goal is to estimate the size of the keyspace for a theoretical
+exhaustive search attack.  The result is a greatest lower bound on the
+keyspace entropy.
+
+These techniques are not really well developed.  I expect that these
+issues will lead to some extremely interesting developments in
+mathematics.  In analogy I point out the stochastic stability theorem
+for vector fields.  It turns out that strictly topological
+classification of vector fields doesn't work for a variety of reasons.
+But add a small amount of "diffusion" to the flows and you get a
+really nice classification theorem in terms of Morse functions and
+elementary catastrophes.  (See Chapter Two of Casti's _Reality Rules_.)
+
+For groups the situations seems similar.  You've got a situation where
+a small deletion removes huge amounts of structure, which,
+nevertheless, the stochastic version has.  In fact these two areas may
+be connected, by considering discrete and finite subgroups of these
+flow and turning the diffusion into a discrete Markov process.
+
+Eric
+
+
+
+

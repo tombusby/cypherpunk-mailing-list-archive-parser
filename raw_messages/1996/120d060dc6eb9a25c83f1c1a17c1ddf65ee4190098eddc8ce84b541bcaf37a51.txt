@@ -1,0 +1,49 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Thu, 18 Jan 1996 09:11:36 +0800
+To: cypherpunks@toad.com
+Subject: Re: A weakness in PGP signatures, and a suggested solution
+In-Reply-To: <199601171613.IAA11904@mail.eskimo.com>
+Message-ID: <DFiVHD23w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Brian C. Lane" <blane@eskimo.com> writes:
+> > > In article <Pine.ULT.3.91.960110182255.18692H-100000@xdm011>, Jeffrey Gol
+> >
+> > But then the recipient has a PGP-signed message from you which
+> > isn't encrypted (using pgp -d). That person could then impersonate
+> > you. Eg Alice the jilted lover could resend the goodbye message
+> > with forged headers to Bob's new girlfriend to get back at him.
+>
+>   Ah ha! Now I understand what this argument has been all about. This
+> is not a flaw with PGP, but with the software doing the signing. It
+> should/could add a line with a time and date stamp inside the
+> signature envelope, or Bob could add more information, making the
+> message more specific.
+>
+>   I don't think PGP needs to be 'fixed', but the signing software
+> does.
+
+I think a two-fold fix would be welcome;
+
+1. The signing software needs to copy these headers within the body in
+a standard way. I think I've seen a couple of such hacks already.
+That's a welcome idea.
+
+2. When PGP verified the signature, it should have an option to look outside
+the signed portion for RFC 822 headers and compare them to the signed copy
+of he headers inside. If this is not in PGP, then then function would have to
+be done by some non-portable wrapper.
+(Of course, if your headers aren't RFC 822, you're out of luck.)
+
+(As someone pointed out, PGP already time-stamps the signature.)
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

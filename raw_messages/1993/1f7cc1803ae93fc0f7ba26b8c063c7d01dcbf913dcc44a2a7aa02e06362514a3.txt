@@ -1,0 +1,31 @@
+From: dmandl@lehman.com (David Mandl)
+Date: Fri, 5 Nov 93 08:12:30 PST
+To: na26436@anon.penet.fi
+Subject: Re: PGP BUG/FEATURE: multi-platform keys
+Message-ID: <9311051606.AA04336@disvnm2.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> As long as I'm at it, here are some more macPGP2.3 bugs, for those who care. Trying to decrypt a message signed by a key I don't have causes a serious crash requiring reboot. Trying to select cancel in a signature dialogue just raises the same dialogue box instead of cancelling. I'm running on a powerbook 145 under system 7.0.1.
+> 
+> Eternal!Optimist@anon.penet.fi   (copyright 1993, Eternal Optimist [Ha Ha Ha])
+>  0) 0) =:()]-<                                    <na26436@anon.penet.fi>
+
+It's been a while since I beta-tested MacPGP 2.3, but I think that...
+
+The problem with quitting out of the pass phrase prompt was a "feature."
+When you pressed CANCEL, the interface told the pgp engine that you had
+typed in a bad pass phrase.  I guess this was an easy quick and dirty way
+to handle it.  The problem was, when you typed in a bad pass phrase, you
+were given two more chances to get it right.  Therefore, when you pressed
+CANCEL, you were also prompted two more times.  So, you had to press CANCEL
+three times to quit from that prompt.  This was fixed in 2.3a, a beta version
+of which I've got.  I guess the official 2.3a has been released by now, but
+I haven't checked.
+
+   --Dave.
+
+
+
+

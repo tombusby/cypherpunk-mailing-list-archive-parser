@@ -1,0 +1,162 @@
+From: "Jon 'Iain' Boone" <boone@psc.edu>
+Date: Wed, 2 Feb 94 10:55:58 PST
+To: cypherpunks@toad.com
+Subject: Re: New Remailer Up.
+In-Reply-To: <199402021713.JAA08629@mail.netcom.com>
+Message-ID: <9402021852.AA15745@igi.psc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+nobody@qwerty.org  writes:
+>
+> Jon Boone wrote,
+> "  Is the sendmail (I assume you are using sendmail for SMTP services) daemon
+>   set up so that it *doesn't* log to /usr/spool/mqueue/syslog [or any other
+>   syslog facility]?  Otherwise, it may well be possible to track the usage
+>   of the remailer through browsing the syslog logs.
+> 
+> No, fortunately for other users, I do not have root access on Netcom ;-).
+> So who is going to be doing this browsing? Other Netcom users can't read
+> the mqueue:
+> 
+> qwerty: cd /usr/spool
+> qwerty: ls
+> cron        lpd.lock    news        news4       uucp
+> locks       mail        news2       rwho        uucppublic
+> lpd         mqueue      news3       secretmail  uumaps
+> qwerty: cd mqueue
+> mqueue: Permission denied
+> qwerty: ls -la
+> total 480
+> drwxr-sr-x 15 bin           512 Feb  2 01:38 .
+> drwxr-xr-x 13 root          512 Feb  2 01:38 ..
+> drwxr-sr-x  4 root          512 Feb  2 01:38 cron
+> drwxr-sr-x  2 uucp          512 Feb  2 08:30 locks
+> drwxrwsr-x  2 daemon        512 Feb  2 03:47 lpd
+> -rw-r--r--  1 root            4 Feb  2 01:38 lpd.lock
+> drwxrwsrwt  4 root       430080 Feb  2 08:37 mail
+> drwxr-s---  2 root        18944 Feb  2 08:37 mqueue
+> drwxr-xr-x284 netnews     12288 Feb  2 05:29 news
+> drwxr-sr-x  2 netnews       512 Aug 28 17:03 news2
+> drwxr-sr-x  2 netnews       512 Aug 28 17:03 news3
+> drwxr-sr-x  2 netnews       512 Jan 16 19:56 news4
+> drwxr-sr-x  2 root          512 Jan 31 14:40 rwho
+> drwxrwsrwx  2 bin           512 Nov  3 08:49 secretmail
+> drwxr-sr-x 11 uucp          512 Feb  2 01:38 uucp
+> lrwxrwxrwx  1 root           20 Nov 26 15:48 uucppublic -> /usr/hack/uucppubl
+ic
+> drwxrwxr-x  5 netnews     12288 Feb  2 05:48 uumaps
+
+  Well, anyone who is the group which owns mqueue (you need to do an ls -ldg
+  to show this info) can read the directory and (likely) the logs.  It would
+  not be unusual for the daemon or bin id's to be allowed read access to these
+  files/directories, so anyone who could exploit the latest sendmail bug
+  could end up reading those files...
+
+  And that doesn't even go into the potential access by legitimate sysadmins
+  who may not care too much about other users' privacy...
+
+> I'm using Hal's remailer, so ask him the details of what I have running.
+> How many of those private sites with remailers having root, keep NO personal
+> logs? Any? I would like to compile a more detailed listing of the details
+> about each remailer's capabilities, situation, and policy statements.
+
+  As would I.
+
+> If someone sends anonymous mail through my mailer victimizing someone in
+> a criminal manner, and law enforcement convinces Netcom to check the logs,
+> then more power to them. If someone sends mail discussing large doses of
+> vitamin C, when vitamin supplementys are banned a year from now, and the
+> FDA wants to arrest them, and Netcom allows them to see the mqueue then
+> that would be unfortunate indeed. I am running a remailer. Here is the
+> situation. What more can I offer? I would ask people to look at the
+> various remailers and ask in a street smart practical manner what the
+> pros and cons of each one is.
+
+  Good advice.  Caveat Emptor!
+
+> What, exactly, does the mqueue record? How long does it get saved? 
+
+  Here is an example of what sendmail might log to syslog:
+
+Feb  2 12:31:18 localhost: 15068 sendmail: AA15068: message-id= \
+		<199402021713.JAA08629@mail.netcom.com>
+Feb  2 12:31:18 localhost: 15068 sendmail: AA15068: from= \
+		<owner-cypherpunks@toad.com>, size=4402, class=0, \
+		received from mailer.psc.edu (128.182.62.100)
+Feb  2 12:31:19 localhost: 15070 sendmail: AA15068: to=<boone@igi.psc.edu>, \
+		delay=00:00:13, stat=Sent
+
+I have re-formatted the lines to make them easier to read...  This is the log
+of you sending this mail to me...
+
+Here's my previous response, which I sent to the list, logged again...
+
+Feb  2 10:00:27 localhost: 11889 sendmail: AA11889: message-id= \
+			   <9402021500.AA11889@igi.psc.edu>
+Feb  2 10:00:27 localhost: 11889 sendmail: AA11889: from=<boone@igi.psc.edu>,
+			   size=1391, class=0, received from local
+Feb  2 10:00:31 localhost: 11891 sendmail: AA11889: to=<cypherpunks@toad.com>,
+			   delay=00:00:04, stat=Sent
+
+And here's the list sending it back to me...
+
+Feb  2 10:19:09 localhost: 13086 sendmail: AA13086: message-id= \
+			   <9402021500.AA11889@igi.psc.edu>
+Feb  2 10:19:09 localhost: 13086 sendmail: AA13086: from= \
+			   <owner-cypherpunks@toad.com>, size=2028, class=0, \
+			   received from mailer.psc.edu (128.182.62.100)
+Feb  2 10:19:11 localhost: 13089 sendmail: AA13086: to=<boone@igi.psc.edu>, \
+			   delay=00:00:02, stat=Sent
+
+If the mailer recieves a lot of messages, then it would not be easy (if at all
+possible to correlate the messages received with the id's that they were sent
+out to...).  If the traffic load is small, then correlation is fairly easy.
+
+Similarly, if the load is very high, it might become easier -- if I set up a 
+script which sent mail to a particular anonid every 2 seconds or so, I would
+probably be able to correlate, given access to the syslog logs.  Of course,
+I could forgo the logs and just look at the packets passed on your network,
+but we were discussing the use of the syslog logs.
+
+
+> I needed remailers to maintain some simple privacy by distancing myself
+> from the character Xenon. 
+
+  Aside from traffic obscuring random messages, a forced, random delay and
+  a medium sized load of traffic seem to be the best ways to defeat the use
+  of the syslog logs.  Disabling syslog calls in sendmail (or whatever you
+  use for SMTP) would be an even better tack to take.  Remember folks, even
+  if I can't get root when the machine is up, I may be able to force it into
+  single-user mode and access the logs then -- physical security of the 
+  machines [as well as software security] is an important consideration of
+  *any* remailer you use.
+
+> No 5AM fone calls and letters from people asking me to send them PGP.... 
+> I figured if I was going to become the largest volume user of the remailers, 
+> I should become a remailer myself. The other option was to use the Netcom 
+> account to directly mail out what I am sending to people, but that wasn't 
+> as fun of an idea.
+
+  I'm not advising you to not be a remailer, but you should be aware of the
+  potential holes -- even if you can't do anything about them...
+
+  If you're concerned with your own personal privacy, I can't think of a
+  good way to ensure that you will not be "outed" from your anon-id.
+  Even if you use a personal machine which connects to the network via a
+  dialup slip IP pool, the provider is likely to keep logs of what machines
+  have access to that pool and who their owners are...  And, of course, a
+  permanent connection (T1 or the like) is a dead give-away...
+
+  We really need the IP security -- the proposal put forward by Mssr. Blaze
+  and Mssr. Ioannidis for encrypted-IP would help.. but you still rely on
+  having the other side *not* log...
+
+ Jon Boone | PSC Networking | boone@psc.edu | (412) 268-6959
+ PGP Public Key fingerprint =  23 59 EC 91 47 A6 E3 92  9E A8 96 6A D9 27 C9 6C
+
+
+
+

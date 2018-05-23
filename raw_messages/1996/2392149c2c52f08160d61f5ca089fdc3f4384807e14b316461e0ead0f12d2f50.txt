@@ -1,0 +1,34 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Sat, 20 Jul 1996 18:00:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: Making encoding out of an authentication cipher
+Message-ID: <199607200530.RAA17573@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Green alien space slime made ogren@cris.com ("David F. Ogren") write:
+ 
+>1. It is slow.  This method would appear to be approximately the speed of 
+>MDC.  And MDC (using SHA, what appears to be the most secure hash) is (very 
+>roughly) 5 times slower than Blowfish and 3 times slower than IDEA.  And 
+>although MDC is faster than 3DES in software, 3DES could easily outpace MDC 
+>in hardware.
+ 
+It depends.  On a PC (the most common type of computer hardware) you're 
+limited by the bus speed.  Most encryption cards are still ISA (so far I've 
+managed to find a single PCI DES card, everyone is still shipping ISA cards 
+because they're the lowest common denominator).  This means that even with a 
+15 MB/sec DES chip you can't get more than 1 MB/sec throughput.  I think the 
+breakeven point for MDC/SHA vs the ISA bus is either a P5/90 or a P5/100 (I 
+don't have access to either of them to check this right now).  This isn't just 
+for MDC, virtually anything on any recent PC is faster than the ISA bus (in 
+fact from Eric Youngs libdes figures there are CPU's which will do software 
+3DES faster than hardware 3DES on an ISA bus).
+ 
+Peter.
+ 
+
+
+
+

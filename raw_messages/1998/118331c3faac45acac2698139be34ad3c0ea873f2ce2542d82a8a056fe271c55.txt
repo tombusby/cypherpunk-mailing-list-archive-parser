@@ -1,0 +1,135 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 8 Jan 1998 08:38:27 +0800
+To: billp@nmol.com
+Subject: brute forcing combination locks (Re: Bruce Schneier, Sandia, FBI and the REAL WORLD)
+In-Reply-To: <34B3DFB4.6396@nmol.com>
+Message-ID: <199801072324.XAA00540@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Payne <billp@nmol.com> writes:
+> Bruce Schneier wrote 
+>
+>    and a burglar willing to try all 10,000 is guaranteed to break 
+>    into your house.
+> 
+> Sandia employees Jack Hudson and Jack Menako, both in my division
+> when Sandia transferred me to break electronic locks for the FBI/ERF
+> [Engineering Research Facility, Quantico, VA], were TRYING to 
+> defeat combination locks on file cabinets.
+> 
+> Menako built a frame to connect a stepper-motor to the combination
+> dial.
+> 
+> The stepper motor was wried to a PC.
+> 
+> Hudson wrote the software to try all possible combinations.
+> 
+> What happened, IN FACT, was that the combination lock wore-out
+> before the combination which opened the lock was reached.
+> 
+> Combinations locks are NOT ENGINEERED for such heavy use.
+
+Interesting.
+
+When I was at [x] they had (and still do I think, hence obscuring
+name!) 0-9 digit key pad combination locks.  I noticed by just
+casually using various permutations each time I used the locks that
+there was something anomalous about the way the key pads worked.  If
+the code was 6789 you could get in by typing 56789, or by typing
+456789 etc.
+
+Clearly this gives you almost a 4 x reduction in the search space.
+
+So I hacked up some code to compute the minimal universal door entry
+sequence number.  Joy of joys the "universal code" as it was dubbed
+fitted easily on 1/2 a sheet of A4 paper at 66 lines by 80 characters
+per line, and we figured (myself and entertained colleagues) with
+semi-covert experimentation that with a bit of practice you could
+break a lock in around 10 mins manually or something like that.  It
+looked quite esthetically pleasing also.
+
+The sequence looked something like this:
+
+01234567890124568902346780...
+
+which would try combinations in this sequence:
+
+0123
+1234
+2345
+3456
+4567
+5678
+6789
+7890
+8901
+9012
+0124
+1245
+2456
+4568
+5689
+6890
+8902
+9023
+0234
+2346
+3467
+4678
+6780
+...
+
+I was not able to do it quite the theoretical minimal number of
+permutations of 2503, but it was only 3 or 4 extra digits I think.  I
+am not sure if you could do better than this, but it was a
+computational trade off, my algorithm was recursive, and back tracked
+as it was; I just chopped it off and demanded best solution after 1
+hours CPU or whatever.
+
+I might have the universal code and source code around somewhere,
+can't lay my hands on it right now.
+
+We dubbed this sheet of paper the "universal door code", and
+considered pinning it beside the lock :-)
+
+These locks looked pretty cheap, and didn't suffer the mechanical
+failure problem you describe, we probably gave them enough stress
+testing in our semi-covert experiments.
+
+Also it occurs to me that a duty cycle of 10k operations isn't that
+high.  I am left wondering if perhaps you were pushing the units too
+hard -- would you have been able to break the lock before mechanical
+failure if you had slowed the rotation rate of your mechanical dial
+turner?  Also, perhaps your mechanical setup was too rough, putting
+abnormal strain through clunky motion or something?
+
+
+Also, in fact these 0-9 digit 4 digit locks at [x] I think had other
+problems also, under certain circumstances you were able to type a
+spurious digit between the digits of the 4 digit code (eg code is
+1234, typing 15234 would let you in!)  If we had been able to find a
+rule governing this behaviour, an even shorter universal code would
+have been obtainable.  However it seemed erratic, and interest waned
+around this point somewhere.
+
+They also had a few hex versions with 0-9A-F and 4 digits, which I
+also calculated a universal code for.  They seemed not vulnerable to
+the spurious digit flaw described in the above paragraph of the 0-9
+units.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

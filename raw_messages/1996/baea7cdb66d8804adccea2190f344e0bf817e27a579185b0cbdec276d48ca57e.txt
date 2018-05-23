@@ -1,0 +1,82 @@
+From: "strick (henry strickland)" <strick@versant.com>
+Date: Tue, 24 Sep 1996 11:32:50 +0800
+To: johnbr@atl.mindspring.com (John Brothers)
+Subject: Blocks Colon [Re: Internet File System]
+In-Reply-To: <1.5.4.32.19960922191022.00736898@pop.mindspring.com>
+Message-ID: <9609232130.AA03957@vp.versant.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+# The other day, it occurred to me that Java could really take off if there
+# was some sort of file system.  And, since you can't write to local files
+# with Java, the obvious solution is to set up the 'fopen, fclose(), etc)
+# set of functions that are 'rpcs' to some server application on the same
+# computer as the web server the applet comes from.
+
+
+Here's my crypto-friendly design for this. 
+
+
+Define a new TCP protocol called "Blocks Colon".
+It forms URLs like
+
+	blocks://blocks.aol.com/strick
+
+This protocol is similar to a "block device" in unix,
+with basic operations to read and write 512-octet blocks,
+named by an integer index.  Other operations are to ask the size 
+of the block file, to change its size, to commit/abort changes,
+and session authentication (like a POP server).
+
+
+
+
+Then in the JAVA box you need
+
+	-- a class implementing a 'filesystem' (files & directories)
+	   on a "block device"
+
+	-- a "block encryption" filter
+
+	-- a "block device" client using the "blocks colon" protocol
+
+
+So your program uses the filesystem object, which uses
+the block encryption filter, which uses the block client,
+which goes to your ISP's block service.   The internet and
+your ISP sees nothing but encrypted blocks.   The encryption key
+never leaves your personal java box.
+
+Your ISP charges you by the block/hour for storage, and by the number
+of blocks read/written for network.  You could keep a backup
+blocks account at another ISP, and keep the two blocks mirrored
+(another filter?) or run occasional backups. 
+
+
+
+What annoys me is that java.io.* defines specific classes for
+filesystem access, rather than a "factory class" and thereafter 
+nothing but interfaces.  That makes it difficult to override
+the "builtin" notion of a filesystem with network-based or
+crypto-based filesystems, without changing your programs,
+or tampering with the builtin classes.  :(
+
+
+strick
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQBaAwUBMkcA0xLAL4qMWktlAQEWPwInbnDWq9o1eosKVCqwjuj+7pDlJ8CRaNCt
+XflpcmyK8di9rQKS5CMGnSdfvOVJA4epJsGAAKuLfPcSAn4yuKLfsJBcm/Is
+=DLWN
+-----END PGP SIGNATURE-----
+
+
+
+

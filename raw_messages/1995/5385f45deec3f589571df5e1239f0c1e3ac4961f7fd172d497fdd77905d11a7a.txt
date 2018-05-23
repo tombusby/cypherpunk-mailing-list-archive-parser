@@ -1,0 +1,69 @@
+From: Ted_Anderson@transarc.com
+Date: Tue, 29 Aug 95 10:20:46 PDT
+To: dawagner@tucson.princeton.edu
+Subject: Re: Cryptanalysis of S-1
+In-Reply-To: <41l6u3$852@cnn.Princeton.EDU>
+Message-ID: <skEmR=X0BwwMM0o3Im@transarc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I find this very interesting.  You have made two related points here
+which highlight some important principles of cipher design: (1) more
+rounds do not always help and (2) the key schedule can be a limiting
+factor in a cipher's strength.  In some sense these are "obvious", but
+it helps a lot to have a specific example of these points to think
+about. 
+
+After the early looks at S-1 and after reading Blaze & Schneier's paper
+on MacGuffin (ftp://research.att.com/dist/mab/mcg.ps) I was thinking
+that any half-assed Feistel network could be made secure by adding more
+rounds.  So I was thinking about quantifying the systemic cost of adding
+more rounds and thereby reducing performance.  It seems that there has
+been insufficient analysis of the performance vs. security trade-off. 
+In some sense this is understandable given the lack of quantification of
+security, but when it comes to engineering a system for real world use,
+you have to make a choice and it would be nice to have something to go
+on.  Consider for example the use of Blowfish instead of IDEA in
+PGPfone; according to Paul Rubin [in "Re: IDEA with PGPFone?",
+28-Aug-1995, sci.crypt] this was at least partly due to the performance
+difference. 
+
+But here we have a clear limit.  In S-1 the key schedule effectively
+limits the number of rounds that contribute to security at about five. 
+Further we have a concrete design principle: the per-round sub-keys
+should not repeat.  Probably a stronger statement could be made. 
+
+Excerpts from netnews.sci.crypt: 16-Aug-95 Re: S1 cipher P.
+Hallam-Baker@w3.org (3569*) 
+
+> I would like to suggest some hypotheses :- 
+Maybe this type of cryptanalysis is old hat but it seemed new to me.  It
+made me think of another hypothesis for the S-1 release: 
+  - It is a training exercise. 
+Consider that the primary reason given for keeping Skipjack secret is
+that the algorithm would reveal valuable hints about cryptanalysis and
+cipher design.  It also seems obvious that the NSA would have a College
+of Cyptanalysis to educate new generations of crypto experts.  I could
+easily imagine it including a series of exercises, of progressively
+increasing difficulty, where attacking each cipher illustrates one or
+more cryptographic principles.  Possibly an crypto-anarchist NSA mole
+decided it would be safer to leak page from NSA's workbook than Skipjack
+itself; an infraction less likely to be persued if nothing else. 
+
+If this seems unlikely, consider that the NSA has been getting beaucoup
+bucks for many years now.  With the fall of the "Evil Empire" and all,
+perhaps things are getting a bit soft at the core.  Maybe some NSA
+strategist figured that a little cross-fertilization between the
+academic and national-security crypto communities would enliven both
+groups. 
+
+So the question is: Will another exercise appear?  Or perhaps there is
+more to learn from this one. 
+
+Ted Anderson 
+ 
+
+
+
+

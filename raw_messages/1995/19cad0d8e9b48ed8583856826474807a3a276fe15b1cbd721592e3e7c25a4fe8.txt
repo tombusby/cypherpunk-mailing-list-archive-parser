@@ -1,0 +1,80 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 21 Oct 95 18:03:58 PDT
+To: cypherpunks@toad.com
+Subject: Re: Encrypted TCP Tunneler
+In-Reply-To: <Pine.SUN.3.91.951021145844.29391F-100000@eskimo.com>
+Message-ID: <199510220102.SAA12922@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Wei Dai <weidai@eskimo.com> writes:
+
+>I am writting a program called Encrypted TCP Tunneler, which I hope to
+>finish in a month or so.  It will allow a secure link to be set up between
+>an ETT client and an ETT server, using Diffie-Hellman and DSA for
+>authenticated key exchange, and Blowfish for encryption.  A user will be
+>able to open a TCP connection to the client and have that connection
+>transparently tunnel across the secure link to a TCP address on the other
+>side. 
+
+This has a lot of potential uses.  It would be good if chaining were
+possible, although that requires the client to double-encrypt.  That way
+it can let people connect out without local snoopers seeing where they
+are connecting.  However for this to work it is necessary that the DNS
+lookup be done by the server rather than the client, and for the
+destination (to which the server is supposed to connect) to be passed
+encrypted.
+
+I should mention by the way that I don't share the general pessimism
+towards anonymous TCP/IP connections.  While truly strong anonymity
+against a hugely powerful opponent is difficult, I think a system like
+what Wei is describing would still provide important privacy protections
+as more people get hooked into the net.
+
+It should be noted that SOCKS V5 has basically the functionality that Wei
+is describing, but I am not sure whether any implementations exist.  It
+also has some other features which might not be appropriate for
+this use.  The purpose of SOCKS is to tunnel through firewalls.
+
+>I see several uses for this program, such as secure telnet, secure web 
+>access, and access to a secure network across an insecure network.  I 
+>realize the program will no be as useful when IPv6 becomes widely 
+>available, but that may not happen for a while.  Also, this program can 
+>be used on top of IP security to give users (as opposed to system admins) 
+>more control over their own security.
+
+Unfortunately there is a also huge misuse of this program, as a
+connection laundry for breakin attempts.  Hackers already go through
+layer after layer of broken accounts, etc. to make tracebacks
+difficult.  Read Stoll's "Cuckoo's Egg" for one account.  I think the
+Mitnick story is similar.  These packet laundries would be extremely
+inviting for this purpose.  The first time the ETT server is the base
+of a lot of breakin attempts to military installations there is going
+to be trouble.  SOCKS provides a config file for servers to limit what
+kinds of connections will be allowed, but it is hard to see how to
+filter out the bad guys while letting people go through who are
+using services for which they are authorized.
+
+Even if you don't try to provide anonymity with this service I think it
+is still going to be a problem if breakins come from the server.  By
+the time the traceback is initiated it is going to be a pain to figure
+out where the connection was coming from.  The service would be similar
+in this context to providing free guest accounts to which you could
+telnet in and then telnet out.  I think any site which did this (some
+used to in the relaxed old days) would take a lot of heat today.
+
+I was toying with a limited form of this idea earlier, where outgoing
+connections would be limited to http servers.  These are usually on a
+small number of ports, although there are exceptions.  At least it
+would be possible to filter out telnet and rlogin and such for that
+application.  I don't think there are too many bad things you can do
+just by connecting to httpd ports (probably I would be surprised,
+though...).  But doing that would not make as much sense for the ETT
+application.
+
+Hal
+
+
+
+

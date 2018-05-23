@@ -1,0 +1,67 @@
+From: gtoal@an-teallach.com (Graham Toal)
+Date: Wed, 27 Jul 94 11:50:44 PDT
+To: cypherpunks@toad.com
+Subject: Re: XSPLIT now own ftp.wimsey.bc.ca
+Message-ID: <199407271849.TAA05734@an-teallach.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+: > How about doing this with n of m?  Anyone have code?
+
+: What do you mean?  The sources are included with XSPLIT.  The algorithm is
+: very very simple.
+
+: What exactly did you mean by n of m?  Since at each byte the numbers are picked 
+
+He means an n-of-m error correcting code applied to secret sharing.
+
+Take a Hamming code for example.  I used to use a 4-bit one when I
+worked in teletext.  4 bit nibbles were encoded as 8 bit words.  You
+could corrupt 2 bits and recover the 4 bits correctly, thus it was 
+a 2-in-4 error-correcting code.  I think it was also a 3-in-4
+error *detecting* code, because if three of the eight bits were
+in error, you could know there was an error but not reliably
+correct it.
+
+Thus you can take a stream of data, split it up into 4 bits, and
+hamming encode each nibble.  Then you give 1 bit from each output
+byte to a different person.  The original file can be rebuilt if
+6 of the 8 people get together - effectively you're decoding each
+8-bit byte by assuming that the bits from the two missing people
+were corrupted in transit (ie any value you supply will do)
+
+Error-correcting codes are well understood (though not necessarily
+by me ;-) ) and can be tailored to any n of m, eg you could have a
+code that took 24-bit units, made a 100-bit output word, and could
+rebuild the original 24-bit word by having access to only say 70 of
+the 100 bits.
+
+The application of this to secret sharing is obvious.
+
+What isn't so obvious is that since these codes are designed for
+data transmission rather than data hiding, you're liable to
+find that for some bit positions in the output word, you have
+a direct copy of one of the input bits!  So in my first example
+above where 4 bits mapped to 8 bits, 4 of the 8 bits of output
+were actually just the four input bits even though the other
+4 bits were in some way random 'check bits'.
+
+So just by finding the right 4 people and analysing the data
+you'd get if you took their bits as actual data, you could
+tell whether you'd found the cleartext bits or not.
+
+Thus a straight Hamming code can't be used to split secrets; I'm
+not sure of the modifications necessary - I *think* it might be
+enough to whiten the input data with random noise, but I'm far
+far less than 100% convinced of this.  I'll have to think about
+it some other time when I don't have as much on my mind.
+
+I expect some textbook has already covered the application of
+these things to cryptography.  Wish I had one :-(
+
+G
+
+
+
+

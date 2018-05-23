@@ -1,0 +1,111 @@
+From: Johnathan Corgan <jcorgan@aeinet.com>
+Date: Tue, 7 Feb 95 22:53:33 PST
+To: eric@remailer.net>
+Subject: RE: a new way to do anonymity
+Message-ID: <Chameleon.4.01.950207225342.jcorgan@comet.aeinet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>   There are many, many analogies you can draw about a network of this
+>   type to an ATM (asynchronous transfer mode) network.  
+>
+>Thank you for the analogy.  It's always good not to reinvent the wheel
+>when you don't need to.
+
+Exactly.  Anywhere we can "stand on the shoulders" of others reduces wasted
+time and effort.
+
+>When you set up a mapping on a packet forwarder, this is exactly the
+>kind of initialization that would be required.  It is also at this
+>point that keying would be negotiated, etc.
+
+Encrypt-Telnet to a switch process.  Use text based command line sequence
+to check outbound paths, bandwidth available, negotiate quality of service,
+execute digital payment arrangements, etc.  Conclude the transaction and
+get bumped to your next hop, where it happens all over again.
+
+Done right, it could probably be automated.  It seems like a lot of effort,
+but if you remember that once an initial session is established with your
+Pipe-net Service Provider (tm), a given circuit can be relatively long-lived.
+
+>Now here's an important detail that needs to get done right.  Is the
+>forwarding for fixed length packets, variable length packets, or
+>streams?  Is this decision global or local?  What are the latency and
+>aggregatation effects?  How important are these for different classes
+>of data?  (telnet v. voice, e.g.)
+
+One of the lessons learned in the years-long debate between the telco folks
+pushing synchronous time-division multiplexing point to point circuit switches 
+and the data folks pushing variable length packet-switched broadcast medium
+networks is that fixed length packets can give you both TDM and statistical
+multiplexing.  So, at the bottom most session layer, moving bits around in
+fixed chunks allows you to do things easier like bandwidth pre-allocation,
+aggregation, circuit based congestion control, and negotiated quality of
+service agreements to end points in the network.
+
+To learn from the efforts that have come from the thousands of people working
+on ATM, we could take a look at what has emerged as the "ATM Adaptation Layer."
+
+AAL specifies methods to encapsulate various data formats and quality of service
+requirements onto this fixed length, continuous stream of data packets.  There
+is one for voice traffic, which requires fixed bandwitdth and very little relative
+latency, another for LAN type data packets, which have bursty bandwidth requirements 
+and variable packet sizes.  Your comment above is accurate in that the
+requirements involved in a Telnet session are vastly different from say, PGP
+Phone over TCP.
+
+The good part about all this is that a lot of the thinking, testing, prototyping,
+and standardization has already been done.  The standards exist today for adapting
+variable bandwidth, variable packet length, variable latency data packets onto
+a continous stream of fixed length packets moving through a switched network.
+
+This reminds me of the old days of Packet Radio which used intelligent repeaters
+that you would access (via command line), determine your next repeater, then
+log into it, etc.  I once established virtual circuit from Connecticut to Florida
+over 2 meter packet that took 25 or so hops, and had a transit delay of a half
+an hour.  Primitive, kludgy, unreliable, and essentially useless, but totally cool.
+
+An opportunity presents itself here to establish this Pipe-net style service
+network, that would greatly expand the ability for network users to essentially
+bypass all the crap which appears to be coming down on us from our friendly 
+representatives in Washington, who are trying so hard to "protect" us from 
+ourselves. 
+
+>I'd suggest just getting something running first, to get some
+>prototyping experience.
+
+Of course.  What I've outline is a pretty ambitious goal.  I'd be happy to see
+primitive switch implementations that do nothing more than forward TCP streams.
+Its a start and we would learn a lot along the way.  Alas, I don't do Unix; my
+programming expertise is in (gasp) the Windows environment.  So it looks like
+I could start looking at the requirements implementation of a Winsock interface
+that made all this stuff transparent to an end user.  Important consideration.
+
+I suppose the IRC folks could add their experience to the mix.  In a very real
+way, IRC _is_ a packet switched unicast/multicast stream service on top of the
+'net.  Do we have any IRC op types onboard here?
+
+==
+Johnathan Corgan       "Violence is the last refuge of the incompetent."
+jcorgan@aeinet.com                    -Isaac Asimov
+WWW:                     ftp://ftp.netcom.com/pub/jc/jcorgan/home.html
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLzhqMU1Diok8GKihAQGRxAP/dWIvYMuqX5c1y/Mlmc73WQlQ/1263vqb
+YzGMvgTFEP0p/jZZstb8tMOyHY2KKp7WWLXV94jd8/KhdQgYFtGHphVm93WP3Bu8
+hRK8kV5UEtANQ/JycVHG6HU3MMxLhE+Yh+M/CFLBwBZZYYglnV3DLqBHv4kq+5Tg
+/7ZiTjnHRDk=
+=ee6L
+-----END PGP SIGNATURE-----
+
+
+
+
+
+

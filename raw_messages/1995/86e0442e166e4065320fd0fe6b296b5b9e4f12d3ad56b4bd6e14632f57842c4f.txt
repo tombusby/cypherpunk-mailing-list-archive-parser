@@ -1,0 +1,51 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 12 Dec 1995 13:44:35 +0800
+To: "Rev. Ben" <samman-ben@CS.YALE.EDU>
+Subject: Re: Timing Attacks
+Message-ID: <199512120026.QAA19309@ix12.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 02:15 PM 12/11/95 -0500, "Rev. Ben" <samman-ben@CS.YALE.EDU> wrote:
+>I'm not so sure I see the great usefulness of this attack.
+>
+>I've taken a cursory glance at Mr. Kocher's paper on-line and what it 
+>comes down to essentially, if I undestand it correctly, is that you need 
+>to be as sure of the timing as you can be.
+>
+>Now, on a distributed system, you can't measure those timings, because 
+>any latency  could come from the originating computer, the links in the 
+>middle or any combination of them.
+...
+>Am I missing something, or does this attack only work in a lab?
+
+It works much better in relatively controlled environments -
+smart cards, for example, are usually both slow and not busy doing 
+other things, plus you can get a bunch of them and analyze the 
+variance in performance across cards.  The Usual Suspects say this
+does appear to affect Fortezza, plus things like digital wallets
+are obvious targets.  If you're clever, you can design smart-card readers
+that do the measurements for you, and convince people to use them.
+
+The attack also works better if you can try it multiple times with the same 
+numbers to work around random latency; the lowest number is closest to real.
+Running on time-shared machines increases randomness a lot (though if the
+Bad Guys have an account there, they can watch the machine's performance
+more closely.)  On the other hand, running on shared machines has
+its own set of security risks, though they're better places for Diffie-Hellman
+systems than secret keys - but Diffie-Hellman needs authentication to be
+safe against MITM, and therefore there's still a secret key for that.
+
+Interesting times....  We've all been discussing whether there'd be some
+major theoretical-mathematics breakthrough, and along comes an engineering
+attack.
+#--
+#				Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0663 Pager/Voicemail 1-408-787-1281
+
+
+
+
+

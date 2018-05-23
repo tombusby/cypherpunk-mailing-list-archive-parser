@@ -1,0 +1,57 @@
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+Date: Sat, 20 Jan 1996 20:13:25 +0800
+To: trei@process.com
+Subject: Re: Hack Lotus?
+In-Reply-To: <9601200326.AA09366@toad.com>
+Message-ID: <199601201202.XAA20449@sweeney.cs.monash.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Hello "Peter Trei" <trei@process.com>
+  and <perry@piermont.com>, cypherpunks@toad.com, trei@process.com
+ 
+P.T. writes:
+> > "Peter Trei" writes:
+...
+> > > If they're nasty, they'll check on the receiving side as well, to
+...
+> > Nearly impossible. Why? Because they can only include the public key,
+...
+> 1 Alice generates session key K
+> 2 encrypts with Bob's public key, producing Epb(K)
+> 3 extracts 24 bits of K to make K'
+> 4 encrypts with Eve's (spy) public key, producing Epe(K')
+...
+
+Eeek! that gives 2^24 possible plaintext/ciphertext pairs. Trivial to brute.
+
+3 should be:
+  extracts 24 bits of K and concatenates it with H(K) to make K'
+  where H is a strong one-way hash. 
+
+
+Hope that makes sense...
+
+Jiri
+- --
+If you want an answer, please mail to <jirib@cs.monash.edu.au>.
+On sweeney, I may delete without reading!
+PGP 463A14D5 (but it's at home so it'll take a day or two)
+PGP EF0607F9 (but it's at uni so don't rely on it too much)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQCVAwUBMQDZqCxV6mvvBgf5AQFrMgP/fE6wLHoJYZP6bI5Q29nuqvJNk5pR2WW9
+L5URPg2Mc2HsGtjlyZYLEEpnCUAbWWgJ0cM/vHz/1VSApCLkeekZ73IhmEngijGc
+HoHbl2krgVcKv3D6Rhlhoq4t5JgPbhU3hVpb2MiozxFmOBkZgzUYFC82Sk2leE5O
+/P8lgTahzNE=
+=mgkS
+-----END PGP SIGNATURE-----
+
+
+
+

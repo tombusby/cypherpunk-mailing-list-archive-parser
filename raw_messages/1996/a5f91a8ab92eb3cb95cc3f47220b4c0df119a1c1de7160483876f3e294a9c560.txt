@@ -1,0 +1,67 @@
+From: "Jean-Francois Avon" <jf_avon@citenet.net>
+Date: Fri, 19 Jul 1996 02:21:03 +0800
+To: Edgar Swank <edgar@Garg.Campbell.CA.US>
+Subject: Re: SecureDrive(IDEA), Realdeal and plaintext attack
+Message-ID: <9607181432.AB05188@cti02.citenet.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Cc:  cypherpunks@toad.com
+	galactus@stack.urc.tue.nl
+	Iolo Davidson<iolo@mist.demon.co.uk>
+
+On 18 Jul 96 at 4:19, Edgar Swank wrote:
+
+> JFA wrote:
+> > Question:
+> >
+> > Since realdeal overwrite everything with 0s, and that theses
+> > zeroed sectors are encrypted later with IDEA, will that give an
+> > attacker an edge?  The attacker will likely know that there are
+> > large disk areas that contains 0s.
+> >
+> > Any comments?
+
+
+> Yes.  Each sector encrypted by SecureDrive also incorporates a "salt"
+> value derived from the sector address and (usually random) volume
+> serial.  So encrypted zeroed sectors will be different from each other
+> and (without the IDEA key) cannot be distinguished from sectors
+> containing data.
+
+IDEA is reputed to be resistant against known plaintext attacks.
+But I did not read about wether or not it is resistant to 
+several-plaintexts (?choosen plaintext) attack.
+
+If the sectors were not salted, each zeroed sectors would translate in 
+an identical way on the encrypted disk.  So, there would be only one 
+cyphertext-plaintext pair repeated over many empty sectors.
+
+If you salt the encryptor, there are many different cyphertexts 
+corresponding to one single plaintext.
+
+Can the salt be figured out by an attacker?
+
+If yes, would the many-cyphertext to single-ultimate-plaintext could give an 
+edge to an attacker?
+
+In that case, it would be effectively better to not wipe a drive with 
+zeroes.
+
+The problem is, realdeal cannot be turned selectively for only one 
+drive while not wiping the other one.
+
+Thanks for your reply.
+
+JFA
+ DePompadour, Societe d'Importation Ltee; Limoges porcelain, silverware and crystal
+ JFA Technologies, R&D consultants: physicists, technologists and engineers.
+
+ PGP keys at: http://w3.citenet.net/users/jf_avon
+ ID# C58ADD0D : 529645E8205A8A5E F87CC86FAEFEF891 
+ 
+
+
+
+

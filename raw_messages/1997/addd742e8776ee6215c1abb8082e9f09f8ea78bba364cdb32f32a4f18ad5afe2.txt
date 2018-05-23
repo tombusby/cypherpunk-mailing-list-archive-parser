@@ -1,0 +1,49 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 13 Feb 1997 08:50:11 -0800 (PST)
+To: ichudov@algebra.com
+Subject: distributed mailing list architecture
+In-Reply-To: <199702130606.AAA17590@manifold.algebra.com>
+Message-ID: <199702072011.UAA00463@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Igor Chudov <ichudov@algebra.com> writes:
+> I'd suggest a simplier solution: to connect each server with a couple,
+> or maybe three, other servers. This scheme is rather robust, does not
+> consume too much CPU time and bandwidth, and is easy to implement.
+
+I'm not sure what the architecture you are suggesting is, but this is
+what I suggest as the simplest to set up.
+
+Have one main majordomo.
+
+Have many mail-exploders.
+
+You subscribe to the main majordomo request address, and it forwards
+your subscription request to a random mail-exploder.
+
+You unsubscribe to the main majordomo request address, and it forwards
+your subscription to all the mail-exploders request addresses
+(unsubscribe traffic is low anyway, keeping track of who is subscribed
+where at the main major domo doesn't seem worth it).
+
+Each person who wishes to run an exploder is subscribed (manually) to
+the main majordomo.
+
+You submit articles to the main majordomo, and it sends copies of the
+articles to it's subscribers (the mail-exploders).
+
+The mail-exploders send mail to the address on their subscriber lists.
+
+(John Gilmore suggested this architecture, as a simpler alternative).
+
+Adam
+--
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+

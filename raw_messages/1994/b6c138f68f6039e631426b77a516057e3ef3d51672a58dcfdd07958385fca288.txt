@@ -1,0 +1,52 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Tue, 19 Apr 94 21:42:03 PDT
+To: pgf@srl01.cacs.usl.edu
+Subject: Re: cryptophone ideas
+Message-ID: <9404200440.AA02524@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Phil Fraering writes: 
+> Lady Ada writes:
+> >The ideal phone might be based on CPU's, RAM, and DSP's, with no
+> >DES chips or anything like that.
+...
+> Anyway, why do you need a DSP? I have read in several places that
+> DSP's are going to be "replaced" by the CPU as time goes on and the
+> CPUs just get more and more powerful.
+
+For full-scale general-purpose computers with post-Pentium CPUs,
+it's probably more cost-effective to do any number-crunching in the CPU,
+though you can get a lot of crunchons for $25-50 of DSP these days
+(if you're willing to add the cost of the I/O interfaces for it.)
+Any extra price-performance you gain by skipping it makes the whole 
+system faster, and if you need real-time audio-hacking you can
+handle the extra OS overhead if your OS is well-designed.
+
+However, for a cheaper single-purpose device like a fancy-processing phone 
+(whether crypto or high-quality speakerphone or whatever),
+the main activities are modeming, A/D conversion, bit-crunching 
+(mostly signal-processing flavors), and some call-setup signalling.
+A/D converters live on chips, DSPs are real good at digital signal processing,
+modems chips are cheap and software on DSPs is another approach,
+and the call-setup logic can fit on almost anything as long as 
+you've got some spare ROM space; your design sophistication and
+cost analysis will tell you whether you want to do it on an 8086
+(or similar flavor of cheap microcontroller), which has enough horsepower
+to do 10 kb/s of crypto in its spare time, or whether to add some 
+program complexity to the DSP instead (popular if you're building ASICs).
+
+Several of AT&T's DSPs have a miminal operating system built in which lets
+you switch between different programs easily during processing
+(I think it's non-preemptive, so you have to plan a bit in your code,
+but it only burns about 5% of CPU for typical applications.)
+
+# Bill Stewart  AT&T Global Information Solutions, aka NCR Corp
+# 6870 Koll Center Parkway, Pleasanton CA, 94566 Phone 1-510-484-6204 fax-6399
+# email bill.stewart@pleasantonca.ncr.com billstewart@attmail.com
+# ViaCrypt PGP Key IDs 384/C2AFCD 1024/9D6465
+
+
+
+

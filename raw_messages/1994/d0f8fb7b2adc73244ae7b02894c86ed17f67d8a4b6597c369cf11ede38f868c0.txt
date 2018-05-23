@@ -1,0 +1,28 @@
+From: Bill Sommerfeld <sommerfeld@orchard.medford.ma.us>
+Date: Wed, 14 Sep 94 08:36:57 PDT
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: alleged-RC4
+In-Reply-To: <199409140402.VAA26572@jobe.shell.portal.com>
+Message-ID: <199409141522.LAA00525@orchard.medford.ma.us>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I agree; this cypher should definitely be handed a unique key each
+time it is used.
+
+However, you can do this pretty easily for file encryption, too..
+Generate and store an "initialization vector" with each file of
+cyphertext.  Instead of passing the user key directly to RC4, you
+instead pass a hash (MD5 or SHA) of the user key concatenated with the
+IV.
+
+If you don't have room to store the IV's, you could use some
+position-dependant information (e.g., per disk ID plus disk block
+number or file inode number) instead.
+
+						- Bill
+
+
+
+

@@ -1,0 +1,88 @@
+From: sameer <sameer@c2.org>
+Date: Sun, 4 Sep 94 22:20:20 PDT
+To: cypherpunks@toad.com
+Subject: elm and pine patched for a preprocessor
+Message-ID: <199409050518.WAA21325@infinity.c2.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	I have hacked on elm and pine so that they will work with Raph
+Levien's "premail" package easily. It allows the use of a preprocessor
+to sendmail through the use of the PRESENDMAIL environment variable.
+
+--
+I made the following changes to src/mailmsg2.c to allow use of setenv
+PRESENDMAIL "program" to allow an alternate sendmail.
+
+This is in elm 2.4 pl20.
+
+95,97d94
+< #define PRESENDMAIL  /* Uncomment this if you don't want to allow users */
+<                      /* to run a 'replacement sendmail' with the PRESENDMAIL */
+<                      /* environment variable */
+209,211d205
+< #ifdef  PRESENDMAIL /* Hack to allow 'replacement sendmails' */
+< 	char     *pre_sendmail;
+< #endif
+571,585d564
+< 
+< #ifdef PRESENDMAIL /* Hack to allow replacement sendmails */
+< 	  if(pre_sendmail = getenv("PRESENDMAIL"))
+< 	    {
+< 	      sprintf(very_long_buffer,"( (%s %s %s ; %s %s) & ) < %s", 
+< 		      pre_sendmail, mailerflags, expanded_to,
+< 		      remove_cmd, whole_msg_file, whole_msg_file);
+< 	    }
+< 	  else
+< 	    {
+< 	      sprintf(very_long_buffer,"( (%s %s %s ; %s %s) & ) < %s", 
+< 		      mailer, mailerflags, expanded_to,
+< 		      remove_cmd, whole_msg_file, whole_msg_file);
+< 	    }
+< #else
+589,591c568
+< #endif
+< 
+< 	}	
+---
+> 	}
+--
+I made the following changes to pine/send.c to allow use of setenv
+PRESENDMAIL "program" to allow an alternate sendmail
+
+This is in pine 3.89.
+
+63,64d62
+< #define PRESENDMAIL /* Allow users to specify an alternate sendmail */
+< 
+1512,1514d1509
+< #ifdef PRESENDMAIL /* If we want an alternate sendmail to be specified */
+<     char       *pre_sendmail;
+< #endif
+1527,1539d1521
+< 
+< #ifdef PRESENDMAIL
+<     if(pre_sendmail = getenv("PRESENDMAIL"))
+<       {
+< 	sprintf(mail_cmd, "( ( %s %s ; /bin/rm -f %s ) < %s & )",
+< 		pre_sendmail, SENDMAILFLAGS, tmpfile, tmpfile);
+<       }
+<     else
+<       {
+< 	sprintf(mail_cmd, "( ( %s %s ; /bin/rm -f %s ) < %s & )",
+< 		SENDMAIL, SENDMAILFLAGS, tmpfile, tmpfile);
+<       }
+< #else
+1542d1523
+< #endif
+
+
+-- 
+sameer						Voice:   510-841-2014
+Network Administrator				Pager:	 510-321-1014
+Community ConneXion: The NEXUS-Berkeley		Dialin:  510-549-1383
+http://www.c2.org (or login as "guest")			sameer@c2.org
+
+
+

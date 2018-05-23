@@ -1,0 +1,45 @@
+From: "Kipp E.B. Hickman" <kipp@warp.mcom.com>
+Date: Thu, 22 Dec 94 13:54:17 PST
+To: Hal <cypherpunks@toad.com
+Subject: Re: Time to exhaustively break 40-bit RC4?
+In-Reply-To: <199412122330.PAA29185@netcom20.netcom.com>
+Message-ID: <9412221345.ZM12940@warp.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Dec 17,  1:49pm, Hal wrote:
+> Subject: Re: Time to exhaustively break 40-bit RC4?
+> I notice in the Netscape SSL spec the 40-bit export-approved RC4
+> key generation is a little more complicated than I would have thought.
+> First a 128 bit "master key" is chosen and 88 bits are revealed, leaving
+> 40 bits secret.  Then the RC4 session key is generated as the MD5 hash of
+> this master key plus about 32 bytes of publically known but random
+> information.  I'm not clear whether the 128-bit output of the MD5 hash is
+> then used as the RC4 key, or whether only 40 bits are used (and if so,
+> whether there are any public bits in the key besides these 40).
+
+128 bits are used. I have cleaned up the spec language to make this more
+obvious.
+
+> If the former, then this extra hash step should really slow down
+> exhaustive search of the key space.  If the latter, then it is not clear
+> why the master key is key-size restricted at all since it is not likely
+> to be used in searching the key space.  Maybe someone from Netscape could
+> clear up how this is done.
+
+Hopefully it will slow down exhaustive key search.
+
+Hope this helps, and thanks again for the comments.
+
+
+-- 
+---------------------------------------------------------------------
+Kipp E.B. Hickman          Netscape Communications Corp.
+kipp@mcom.com              http://www.mcom.com/people/kipp/index.html
+
+
+
+
+
+

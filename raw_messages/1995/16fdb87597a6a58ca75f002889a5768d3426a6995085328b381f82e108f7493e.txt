@@ -1,0 +1,104 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Sat, 23 Dec 1995 21:52:56 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: (fwd) Java implementation of secure login protocol
+Message-ID: <199512230408.XAA27975@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Look, Ma!  Java code!
+
+Real cyph3rpunks, of course, flame each other anonymously.
+
+(Incidentally, I got tired of Alice making it to my noise box, and the
+following seems to work well.  Deleting the leading ^ characters would
+cause all responses to go into the junk box; perhaps a good idea.
+This is, for those of you who don't recognize it, procmail code.  My
+mail filter of choice for hacking in.)
+
+   :0B:
+   * ^Alice de 'nonymous
+   * ^P.S.  This post is in the public domain.
+   | formail -a "Status: O" >> cjunk
+
+
+
+> From: greg@qualcomm.com (Greg Noel)
+> Newsgroups: comp.lang.java,sci.crypt
+> Subject: Java implementation of secure login protocol
+> Date: 19 Dec 1995 23:12:52 -0800
+> Organization: QUALCOMM, Incorporated; San Diego, CA, USA
+> Lines: 64
+> Message-ID: <4b8d1k$6o9@qualcomm.com>
+> NNTP-Posting-Host: guru.qualcomm.com
+> 
+> Please note that this article is cross-posted both to comp.lang.java and
+> sci.crypt.  If you follow up, please trim the newsgroups appropriately.
+> 
+> Since a number of people expressed interest, I'm releasing an initial
+> implementation of a secure login protocol in Java.  This is still very
+> much a work in progress (it's not really even of alpha quality), but
+> the protocol itself is functional.
+> 
+> It's intended that the classes in crypto.* and qualcomm.qbs.login.*
+> live on the client; any other classes needed would be downloaded over
+> the encrypted link.  Hopefully, the client-resident classes will be
+> few in number and change rarely; they are just intended to bootstrap
+> up the connection.  In the long run, the classes in crypto.* could be
+> provided by the vendor of the Java VM.
+> 
+> The distribution consists of two files:
+> 	ftp://ftp.qualcomm.com/pub/gnoel/java.login.tar.gz
+> 	ftp://ftp.qualcomm.com/pub/gnoel/java.no-export.tar.gz
+> The first file contains the logic to execute the protocol and launch
+> the splash screen (see below); it also contains the base classes from
+> crypto.* but no cryptographic functions.  The second file contains the
+> base classes and the actual implementations of a few cryptographic
+> functions to demonstrate how the base classes can be used.
+> 
+> For sci.crypt, I've tried to capture the essence of what cryptographic
+> functions can do in the base classes, without being specific to any
+> particular protocol.  I'm not completely happy with it, and would welcome
+> any comments people might have on what might be missing.  It's as minimal
+> as I could make it and still provide a basis for whatever protocols need
+> to be implemented.
+> 
+> My motivation here is that Sun and Netscape are talking about defining
+> a standard way of incorporating cryptographic functions in Java; it would
+> be nice if the specification were usable for a lot more than the security
+> protocols that come with Netscape.  (I wouldn't object to having access
+> to SSL from Java---in fact, I'd really like it---but I'd also like access
+> to MD5 and the like.)
+> 
+> This implementation of the secure login protocol uses short text strings
+> to identify the packets being exchanged; that's for convenience while
+> debugging---in a production implementation, it would be done differently.
+> Other than that, I'd appreciate any suggestions as to how to improve the
+> implementation.  (A MAC digest prefixed to the packets is something I'm
+> considering, for example.)
+> 
+> For comp.lang.java, the splash screen is loaded over the secure connection
+> but attempts to instantiate a member of the class cause a NoSuchMethodError
+> to be thrown.  The class itself seems to be defined correctly, and it should
+> be no different from how an applet would be loaded and instantiated, but it
+> still fails.  If anyone can tell me what is going wrong and what I can to
+> to fix it, the pizza and beer will be on me.  (This has been a showstopper
+> for four days now and I'm getting very frustrated by it.)
+> 
+> The class design tries to minimize the number of classes that must be
+> present in the bootstrap set; this led to a somewhat, ah, baroque set of
+> functionality.  If anyone has suggestions on how this could be done better,
+> I'd be pleased to hear about it.
+> 
+> If anyone has any questions about this, don't hesitate to drop me a line
+> or post something in one of the newsgroups.  I'm going home for some sleep
+> now, but I'll be banging my head against it again in the morning.
+> 
+> -- 
+> -- Greg Noel, UNIX Guru         greg@qualcomm.com  or  greg@noel.cts.com
+
+
+
+
+

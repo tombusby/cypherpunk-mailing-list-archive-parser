@@ -1,0 +1,46 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Fri, 17 Nov 1995 08:29:40 +0800
+To: jimbell@pacifier.com (jim bell)
+Subject: Re: NSA, ITAR, NCSA and plug-in hooks.
+In-Reply-To: <m0tFpbT-0008yaC@pacifier.com>
+Message-ID: <199511162113.QAA08492@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jim bell writes:
+>>jim bell writes:
+>>>>I think it's 121.1, Category XIII paragraph (b) item (5):
+>>>>"Ancillary equipment specifically designed or modified for paragraphs (b)
+>>>>(1), (2), (3), (4) and (5) of this category;"
+>>>
+>>>Question:  What makes computers in general NOT describable by such a
+>>>paragraph?!?
+>>
+>>The referenced paragraphsdescribe cryptographic hardware, software and
+>>technical data.  Computers in general are not "specifically designed"
+>>as cryptographic equipment.
+>
+>Great!  Then you must merely ensure that there is at least one
+>(non-encryption) program around that can use the same hooks.
+
+The problem is that the non-encryption program must use the same
+interface as the encryption program.  Text compression is often cited
+as an example of a non-encryption program that can use the same hooks
+as a compression program, but there's a key difference:  the text
+compressor *doesn't* need a key.
+
+The encryption tool would have an interface like
+    Boolean (*)( DataSource, DataSink, void*);
+
+A compressor written to the same interface would never need to touch
+that third argument.  Therefore, the second argument is "specifically
+designed" to permit an encryption tool to be used.
+
+You'd need a program which not only *accepted* the additional parameter,
+but also *needed* the second parameter.  I confess I have some difficulty
+thinking of one.
+
+
+
+

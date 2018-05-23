@@ -1,0 +1,65 @@
+From: roy@sendai.scytale.com (Roy M. Silvernail)
+Date: Tue, 24 Dec 1996 12:12:09 -0800 (PST)
+To: blake@bcdev.com (Blake Coverett)
+Subject: Re: [NOT NOISE] Microsoft Crypto Service Provider API
+In-Reply-To: <01BBF127.ACD7C120@bcdev.com>
+Message-ID: <961224.113652.8U1.rnr.w165w@sendai.scytale.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In list.cypherpunks, blake@bcdev.com writes of the MS CSPAPI and
+signatures:
+
+> More interesting would be the OS patch that allows an unsigned 
+> (or signed by someone other than MS) CSP to be loaded...
+
+Agreed.
+
+> Hmm, logically the patch must be built in and only need to be 
+> switched on as it would be too annoying to debug a CSP if you
+> needed to get it signed every time you built a new version.
+
+Not quite.  The API comes with a program SIGN.EXE that will create a
+"debugging signature" for your CSP, and a new ADVAPI32.DLL, described as
+a "Modified advapi32.dll to load providers that are signed with
+sign.exe."  So the patch point is a bit more accessable than inside the
+kernel.  Maybe the "Modified advapi32.dll" should find its way offshore?
+
+> Microsoft's Authenticode system had such a patch at one time
+> for just that purpose, and all it required was a registry setting.
+
+Interestingly enough, CSP signatures are held in the registry instead of
+the binary, necessitating some install procedure for a given CSP.  Not
+to start rumors, but NT 4.0 does use threads to watch some registry
+entries that control the version (workstation/server).  Not much of a
+stretch to imagine a thread that tracks (reports?) changes to
+HKEY_LOCAL_MACHINE
+    SOFTWARE
+        Microsoft
+            Cryptography
+                Defaults
+                    Provider
+                        ...
+- -- 
+           Roy M. Silvernail     [ ]      roy@scytale.com
+DNRC Minister Plenipotentiary of All Things Confusing, Software Division
+PGP Public Key fingerprint =  31 86 EC B9 DB 76 A7 54  13 0B 6A 6B CC 09 18 B6
+                Key available from pubkey@scytale.com
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBMsAbhhvikii9febJAQEQwAQAuasIE2nEXiLlukBTRWoOFgdJa4jZh/MF
+Ql0OxvKXbpKzFodE+O56An7ulH/tkfmXUd9E6xVtO6Z/AcrqN284ZPJmcbsR5cYB
+KBhcHAc4JbFlUxpSu8iTM5B4seMwQrl9PmxN43q7GDq07NSbKZYkQ7ljwcTnULoQ
+9I5gjyirmTc=
+=J0eC
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,89 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Tue, 1 Feb 94 17:40:48 PST
+To: cypherpunks@toad.com
+Subject: REMAIL: ping, script
+Message-ID: <9402020140.AA07524@screech.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+I've been catching up on past messages; I see there was some interest
+in scripts for pinging remailers, and some questions about how many
+there are, etc.
+
+Here is the data file and script I use to ping non-special remailers.
+Note: remailer #12 will only remail if you attach "digital cash",
+remailer #20 batches until midnight, remailer #21 requires encryption.
+
+Save this as "remailer.data"
+
+- ----------8< cut here >8----------
+01:n:remailer@chaos.bsu.edu
+02:n:nowhere@bsu-cs.bsu.edu
+03:n:hh@cicada.berkeley.edu
+04:n:hh@pmantis.berkeley.edu
+05:n:hh@soda.berkeley.edu
+06:n:00x@uclink.berkeley.edu
+07:y:hal@alumni.caltech.edu
+08:y:ebrandt@jarthur.claremont.edu
+09:y:catalyst@netcom.com
+10:y:sameer@netcom.com
+11:y:remailer@rebma.mn.org
+12:y:elee6ue@rosebud.ee.uh.edu
+13:y:elee7h5@rosebud.ee.uh.edu
+14:y:hfinney@shell.portal.com
+15:y:sameer@soda.berkeley.edu
+16:y:remail@tamsun.tamu.edu
+17:y:remail@tamaix.tamu.edu
+18:y:remailer@utter.dis.org
+19:y:remailer@entropy.linet.org
+20:y:elee9sf@menudo.uh.edu
+21:s:remail@extropia.wimsey.com
+- ----------8< cut here >8----------
+
+and then the script
+
+- ----------8< cut here >8----------
+#!/usr/local/bin/perl
+#ping the anonymous remailers
+#Karl L. Barrus <klbarrus@owlnet.rice.edu>
+
+open (IN,  "remailer.data") || die "Can't open remailer.data\n";
+
+while (<IN>) {
+  ($num, $rest) = split(/:/, $_, 2);
+  $remailers{$num} = $rest;
+}
+close (IN);
+
+#ping all remailers except special ones
+foreach $i (sort keys(%remailers)) {
+  ($mode, $name) = split(/:/, $remailers{$i});
+  print "remail via $name" if $mode ne "s";
+
+  open (MAIL, "| /usr/lib/sendmail " . $name);
+  print MAIL "To: " . $name;
+  print MAIL "From: nobody\n";
+  print MAIL "Subject: test " . $i . "\n";
+  print MAIL "Request-Remailing-To: klbarrus@owlnet.rice.edu\n";
+  print MAIL "\ntesting :-)\n";
+  close (MAIL);
+  sleep 5;
+}
+- ----------8< cut here >8----------
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLU8EUIOA7OpLWtYzAQFbjAQAhMj765Rd7r4BgRkXnRKmSRuJRphyNz/6
+3Q7N4v+rQME44ZtiufDkxEyxj/M7s+bMXRqP+2n+gXVSaAgXq/g2CFrVisyvL70P
+6RS//XHaoThJHRPp9x0/p9fO2MMeqOct0YXtYWi2C9LlU8B9/smjm7/Qg6q65tgk
+D3FgR6YAlZI=
+=bl8B
+-----END PGP SIGNATURE-----
+
+
+
+

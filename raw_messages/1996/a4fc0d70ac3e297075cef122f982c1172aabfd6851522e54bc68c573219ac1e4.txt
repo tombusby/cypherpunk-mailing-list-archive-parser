@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Wed, 6 Mar 1996 13:15:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: Truelly Random Numbers
+Message-ID: <199603040052.QAA20279@ix3.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>At 10:11 AM 3/3/96 -0500, Gary Howland wrote:
+>>Surely the process of counting up until you get a prime means
+>>that the chances of getting certain primes are greater than
+>>others (eg. 17 is more likely than 19) ?
+
+At 11:07 AM 3/3/96 -0800, jamesd@echeque.com wrote:
+>In order to use this information, one would need to determine 
+>the number of primes in the vicinity of a potential prime factor.  
+>This costs more than actually checking for the factor, hence is 
+>not useful.
+
+The discussion has been about probability of collisions,
+rather than usable exploits - they're still rare enough that
+it's a birthday-problem issue.
+
+While you're more likely to pick a specific prime with a
+large gap before it than one with a small gap before it,
+there are a lot more small gaps than large ones,
+assuming that primes are roughly uniformly distributed
+within any given range (which is roughly true) and
+that therefore the gaps are geometrically distributed.
+
+I worked an example for random 384-bit primes, which you'd
+use to generate 768-bit RSA keys.  The density of primes
+is approximately 1/ln384 = 1/266 = 1/meanlength. 
+The unweighted quartile gap lengths are 77, 186, and 372.
+The weighted quartiles for the gaps are 255, 447, and 720 ;
+these correspond to unweighted cdfs of 61%, 81%, and 93%.
+
+So, yes, it's a bit skewed (and enough that I'd rather not
+work the birthday problem math, which is far easier with uniforms :-)
+But it's probably not skewed enough to affect the number of 
+primes required for a collision to occur by more than a factor
+of 100 or so, and collisions in RSA keys require collisions in
+both primes.
+
+
+
+
+

@@ -1,0 +1,35 @@
+From: Matts Kallioniemi <matts@pi.se>
+Date: Tue, 5 Mar 1996 23:09:51 +0800
+To: cypherpunks@toad.com
+Subject: Re: Looking for code to run an encrypted mailing list
+Message-ID: <2.2.32.19960305144735.0036ffc4@mail.pi.se>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 23:17 1996-03-04 -0800, John Pettitt wrote:
+>The overal intent was to have a message go from one list member to all
+>others with a) a signature to provide strong attribution and a measure of
+>non repudiation b) low probability of interception c) only the gateway has
+>to have all the public keys.  
+
+You could avoid alot of encryption by setting up a key for the list and
+giving both keys (secret and public) to all the list members. To write to
+the list, you encrypt with the lists public key. Everybody reading the list
+can decrypt with the secret key.
+
+Pros: No hacking of majordomo. You can use any mailing list software. The
+key and clear text message is never available to a robot, making it harder
+to compromise security.
+
+Cons: When somebody is removed from the list you have to change the key,
+encrypt the new secret key with everybodys public keys and distribute it.
+For a big dynamic list where people unsubscribe daily this could be a major
+headache. But for small or static lists it shouldn't be much of a problem.
+
+<matts@pi.se>
+
+
+
+
+

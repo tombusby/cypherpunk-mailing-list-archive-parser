@@ -1,0 +1,76 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Sun, 6 Jun 93 11:58:21 PDT
+To: cypherpunks@toad.com
+Subject: random access into an encrypted file?
+In-Reply-To: <9306061150.AA07264@alumni.cco.caltech.edu>
+Message-ID: <9306061854.AA08835@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>can the methods recently proposed here work
+>for fast "random" access of bytes from the middle of a possibly-large
+>file?
+
+The model that has been most discussed recently has been that of
+encrypting sectors on the hard disk.  In order to have random access
+to files, you have to have random access to sectors.  Therefore, the
+encryption mechanism chosen must support random sector access.
+
+This is not difficult, but many of the techniques used for
+telecommunication encryption do not work.  In particular, encryption
+modes that depend upon some previous state of the encryption machine
+do not work well.
+
+Cipher block chaining is a mode of operation for block ciphers that
+where the plaintext is xor'd with the previous block of ciphertext
+before encryption.  The first block of plaintext, where there is no
+previous block, is xor'd with an initial vector, which may be
+considered part of the keying material.  Now consider what would
+happen if you encrypted your whole disk in CBC mode.  You'd have to
+start at the beginning of the disk and decrypt up to the point that
+you want to read.  For a bit stream, this is fine, since one is
+decrypting the whole thing.
+
+CBC, however, is useful for doing sector encryption.  A DES block is 8
+bytes, a sector is typically 512.  I assume here that one has to read
+the whole sector out of memory, although with some very clever and not
+obviously worthwhile optimizations one could decrypt on demand.  Now
+CBC is a reasonable choice ifor in-sector encryption, because you have
+to read the whole thing anyway.
+
+Yet CBC requiress an initial vector.  This is where counter mode come
+in.  A good block cipher has what is called the avalanche property,
+which says that altering any bit of the input alters on average half
+of the bits of the output.  (Note: if it altered more than half, the
+1's-complement would change by less than half.)  Thus the initial
+vectors do not need to change particularly much from one initial
+vector to the next.  Hence an integer-valued counter works fine.  For
+hard disks the sector number, already present, makes just such a
+unique initial vector.
+
+Summary: CBC within sectors, initial vectors provided by the sector
+number.
+
+This characterization of keying material works for block ciphers
+generally and yields a clean abstraction for the rest of the system.
+
+	algorithm identifier (index or function pointer or link spec)
+	plaintext/ciphertext block length
+	key length
+
+The rest of the encryption code need only know these values.  Here are
+some examples.  Lengths are byte lengths.
+
+	single DES, 8, 8 (64 bits, of which only 56 are used)
+	double DES, 8, 16
+	triple DES, 8, 24
+	IDEA, 8, 16
+
+Nice and clean.
+
+Eric
+
+
+
+

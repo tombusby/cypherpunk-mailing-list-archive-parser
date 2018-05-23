@@ -1,0 +1,47 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 28 May 1996 16:50:54 +0800
+To: "E. ALLEN SMITH" <markm@voicenet.com
+Subject: Re: Mixmaster version usable with POP?
+Message-ID: <199605280529.WAA04756@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 12:44 AM 5/27/96 EDT, E. ALLEN SMITH wrote:
+>From:	IN%"markm@voicenet.com"  "Mark M." 26-MAY-1996 18:46:13.23
+>
+>>On Linux this works:
+>>popclient -3 -c POPHOSTNAME | formail -s mixmaster -R >> $MAIL
+>
+>>It will work on any system that has formail and popclient on it.
+>
+>	Is this only for getting mail, or also for sending it? Sorry, I'm
+>not very familiar with UNIX, especially the pipe commands.
+
+A pipe takes the standard output of the program on the left-hand side
+and feeds it to the standard input of the program on the right.
+On Real Operating Systems, like Unix, both programs are running at once,
+so the pipe doesn't need to buffer very much information; MS-DOS fakes
+it out by running the first command while dumping its output in a temp file,
+then running the second command with its input from the temp file.
+
+A program named "popclient" is almost certainly designed for fetching
+mail from a Post Office Protocol server, which keeps a mailbox for you.
+I'm don't know what "formail" does, but it's presumably going to crunch
+your newly fetched mail through mixmaster to send it out.  (A not unreasonable
+guess for what it does is to take a bunch of mail from standard input
+(e.g. the output of popclient) and crunch each mail message according to
+the options on the command line, for instance filing it, prettyprinting it,
+or whatever.)
+
+
+So this is a remailer.  To just send mail, you'd use mixmaster.
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+# goodtimes signature virus innoculation
+
+
+
+
+
+

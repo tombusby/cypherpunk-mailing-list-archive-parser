@@ -1,0 +1,49 @@
+From: sommerfeld@localhost.medford.ma.us (Bill Sommerfeld)
+Date: Fri, 3 Jun 94 07:12:47 PDT
+To: cypherpunks@toad.com
+Subject: more info from talk at MIT yesterday.
+Message-ID: <199406031357.JAA00376@localhost>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The folks from the NSA said the following about key generation:
+	
+	- each escrow agency provides a "seed key", seed1 and seed2
+	- the box which programs the chip generates two random keys,
+	random1 and random2
+	- for each chip programmed during that batch (which is "12 to
+14 hours of production"), the box computes a
+	classified deterministic function
+		(U1, U2) = F(serial, random1, random2, seed1, seed2)
+	to generate the unit keys
+
+
+They did *not* explicitly say that the random seeds were destroyed at
+the end of the production run.
+
+Also, someone asked
+	"How do we know that the unit key isn't a hash function of
+	the chip serial number?"
+
+The answer was:
+
+	"You don't".
+
+They also confirmed Tom Knight's suspicions about what they're going
+to do when someone reverse engineers the chip and publishes the
+Skipjack algorithm & the family key: they've got a patent application
+filed, under a secrecy order; if the algorithm is published, they'll
+lift the secrecy order and have the patent issued, and use that to go
+after anyone making a compatible version.
+
+They also had a comment that they considered Blaze's findings to be
+mostly irrelevant, as the only people who would use it would be
+persons who *didn't* trust the escrow system, but *did* trust the
+algorithm...
+
+					- Bill
+
+
+
+

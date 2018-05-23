@@ -1,0 +1,48 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sat, 16 Dec 1995 02:01:58 +0800
+To: cypherpunks@toad.com
+Subject: Re: Kocher's RSA attack
+Message-ID: <199512151506.HAA27760@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: Derek Atkins <warlord@MIT.EDU>
+> I must disagree, software implementations of RSA can and probably do
+> allow the timing attacks.  It all depends on the modexp implementation.
+> Most implementations that I know of, when performing an x^y mod n will
+> require a squarings and b multiplies, where a is the number of bits in
+> y and b is the number of 1-bits in y.
+
+This is not enough - Paul Kocher's attack depends on the individual
+modular multiplies taking different times.  (Actually, that is for his
+attack on Diffie Hellman.  The RSA CRT decryption attack uses a
+completely different principle, but I guess we are ignoring that for
+now.)  The fact that timing a modular exponentiation would give
+information about the density of 1 bits in the exponent is not
+particularly new or surprising, as has been mentioned here.  What is
+new is that you can actually figure out the specific exponent value.
+But that requires variable-timing modmult, not just variable-timing
+modexp.
+
+PGP is somewhat unique in having a multiplicity of modmult algorithms
+which can be selected at compile time.  I am not sure which of these
+might be variable time and which might be fixed.  The most likely place
+for time variation IMO is in the modular reduction rather than the
+multiply; the multiply is generally deterministic with no variation due
+to data values (although as was pointed out here, on some processors a
+hardware multiply instruction may take variable time depending on its
+inputs).  Some modular reductions involve trial division to some extent
+or other, with different numbers of iterations possible depending on
+certain (maybe unusual) values.  However I believe at least one of the
+PGP modular reductions consists of multiplying by the reciprocal of the
+modulus, followed by a fixed shift, and this one should be constant time
+on a machine which has constant-time multiplies and shifts.  (This is
+just going from memory, I haven't looked at the algorithm in several
+years.)
+
+Hal
+
+
+
+

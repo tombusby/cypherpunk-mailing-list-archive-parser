@@ -1,0 +1,39 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Sun, 5 Feb 95 16:48:44 PST
+To: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Subject: Re: The SKRONK protocols (version 0.6)
+In-Reply-To: <sjBKpHm00bkP0bX0Yx@andrew.cmu.edu>
+Message-ID: <9502060048.AA03181@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Matthew J Ghio says:
+> "Perry E. Metzger" <perry@imsi.com> writes:
+> 
+> > Pardon but... why? Whats the reason for wanting to do this?
+> > 
+> > If a firewall has been set up to stop UDP, then it should stop UDP. If
+> > the firewall has not been set up to stop UDP, or has a mechanism like
+> > the experimental versions of "socks" currently being played with that
+> > relay UDP, then there is no reason to want to do the above. I don't
+> > really understand what the idea is here.
+> 
+> Presumably you would only let trusted people tunnel through your firewall.
+
+Fine -- then packet filter on your firewall. Of course, you can't
+really trust the IP addresses anyway -- you need something IPSP-like
+if you actually want to trust outside hosts (swIPe does nicely as a
+stopgap). And even if one wanted to move packets through a firewall
+over TCP, why use SLIP encapsulation? It was designed for unreliable
+links -- on a reliable link, you can save lots of grief by just
+sending the packet -- total length of an IP datagram is included
+inside the datagram, thus rendering further encapsulation unnecessary.
+
+
+Perry
+
+
+
+

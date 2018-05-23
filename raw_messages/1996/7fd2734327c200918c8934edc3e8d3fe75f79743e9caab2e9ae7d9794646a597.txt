@@ -1,0 +1,79 @@
+From: Rick Smith <smith@sctc.com>
+Date: Wed, 1 May 1996 14:30:39 +0800
+To: mpd@netcom.com
+Subject: Re: The Joy of Java
+Message-ID: <199604302303.SAA27753@shade.sctc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Scott Brickner <sjb@universe.digex.net> quoted the Princeton
+paper's concerns about Java's lack of a formal semantic basis,
+and mpd@netcom.com (Mike Duvos) replied:
+
+>This is overly pessimistic.  Java primitive data types are fully
+>specified and Java operators are well-defined in the sense that
+>their results are unambiguous with specified input.  ...
+
+Having some familiarity with application of formal methods to computer
+security, I'd like to point out a few things.
+
+>Saying that the current specification does not support formal
+>proofs of correctness is far different than saying that the
+>language itself is broken.
+
+The experience in the multilevel security world was that a weak or
+nonexistent specification pretty much guaranteed that there would be
+holes in the design -- limitations that kept you from being able to
+block covert channels or other flaws in the kernel.
+
+Language design is as tough a problem, if not more so. Brinch Hansen
+told a story over a decade ago about how he tried to specify a
+language with good semantics, and had Tony Hoare review his attempts.
+There always seemed to be a flaw somewhere and they weren't trying to
+capture object semantics back then, just types. So, in the absense of
+rigor there's probably not much sense in assuming correctness.
+
+>... he is not saying that the type verifier isn't correct,
+>merely that the materials with which to construct a proof have
+>not yet been dumped on top of his desk.
+
+When doing formal specification of a high assurance MLS system, a
+large proportion of flaws were found simply through the process of
+producing the formal specifications, both of the device design and of
+the security requirements. A large proportion of the design flaws are
+found while doing the formal proofs.
+
+Note that Java operating in the Internet environment acquires two sets
+of security requirements: the original ones for the language plus
+another set that applies to the platform (workstation) it runs on. The
+former set of requirements were pretty thoroughly worked out, though
+it doesn't appear that they were ever formalized. This seems to be
+the primary topic of discussion here, but not the only one.
+
+As of last winter, when I last checked into it, the latter set of
+requirements hadn't been specified in any reasonable detail. Such a
+spec would reflect the security requirements for running on a
+workstation that requires some measure of confidentiality. For
+example, consider the CEO's workstation: the SEC has rules about
+keeping certain things secret, and that stuff tends to live in files
+on a CEO's workstation. Of course, the problem also applies to anyone
+who has unwrapped PGP keys lying about when some applet turns
+malicious.
+
+>In any case, the anarchy of the free market rarely takes notice
+>of the theoretical musings of academicians.  Until Java
+>experiences a catastrophic and public train wreck, people will
+>continue to use it and its reputation will continue to grow.
+
+The only reason MLS systems were formally specified and analyzed was
+because the DOD wanted to avoid a computer based train wreck involving
+intelligence data or other stuff of comparable sensitivity. They had
+money and market clout, at least when they started.
+
+Rick.
+smith@sctc.com          secure computing corporation
+
+
+
+

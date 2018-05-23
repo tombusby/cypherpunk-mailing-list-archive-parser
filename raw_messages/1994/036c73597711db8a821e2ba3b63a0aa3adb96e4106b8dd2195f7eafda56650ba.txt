@@ -1,0 +1,104 @@
+From: jdd@aiki.demon.co.uk (Jim Dixon)
+Date: Sun, 7 Aug 94 11:50:46 PDT
+To: hughes@ah.com
+Subject: Re: Improved remailer reordering
+Message-ID: <4210@aiki.demon.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <9408062320.AA17234@ah.com> Eric Hughes writes:
+> About message mixing:
+> 
+>    A measure that is used for situations like this is entropy.  
+> 
+> Indeed.  This is exactly the mathematical measure for what I've called
+> "privacy diffusion" in a remailer network.  It is, namely a measure of
+> of the uncertainty to a watcher of what ingoing message corresponds to
+> what outgoing message.
+> 
+> As soon as you begin to write down some of the equations for this
+> value, several things become distinct possibilities:
+> 
+> -- duplicate messages may decrease security
+> -- retries may reduce security
+> -- interactive protocols may reduce security
+> -- there is such a thing as a needlessly lengthy remailer path
+> -- noise messages might not be worth the bother
+> -- multiple different routes may reduce security
+> 
+> One thing becomes blaringly obvious:
+> 
+> -- it's reordering that's mathematically significant; that's what goes
+> directly into the equations.
+
+On thing is glaringly obvious: if you use the wrong assumptions, you
+will get the wrong answers.
+
+Imagine a RemailerNet (v0.2) that maintained a fixed level of
+traffic between gateways.  Messages are injected into the system at
+various gateways and emerge at various gateways.  All traffic between
+gateways is encrypted.  All traffic takes the form of packets of the
+same length, perhaps 1024 bytes.  [It is possible that a much smaller
+packet size might be desirable, specifically the ATM packet size,
+with 48 bytes of data payload.]
+
+Messages are fragmented according to policies at the entry gateway.
+Intervening gateways may or may not further fragment incoming packets
+according to gateway policy.  The exit gateway is responsible for
+reassembling packets into messages.  The routing of packets is
+randomized to some extent.  Message transmission is guaranteed to be
+reliable in the sense that either the message will get there or the
+sender will be told that it didn't.
+
+Users desiring a high level of security are required to participate
+in the game.  They must accept and send a fixed number of packets
+at each connection.  These users should be responsible for packetizing
+their own messages when sending and assembling their own messages
+when receiving.  They must encrypt all communications with gateways.
+
+These 'empowered' users are in fact operating RemailerNet gateways.
+It is likely that different levels of gateway would have to be
+defined, depending upon the degree of physical control that the
+operator had over the gateway and the level of resources that he
+or she was willing to devote to RemailerNet operations.  Entry
+level users would communicate using ordinary email.  Major gateway
+operators would communicate using RemailerNet protocols over TCP/IP.
+
+Time is measured in this system in steps.  Each step corresponds to
+the dispatch of one set of packets.  The relationship between 'step
+time' and chronological time will vary from link to link.
+
+This system will tolerate an arbitrary level of traffic.  Over time
+the level of traffic (in bytes/sec) would be some multiple of the
+average volume (bytes/sec) of messages carried.  The gateways would
+automatically adjust the traffic level.  [Probably it should rise
+quickly and fall gradually.]
+
+The functioning of the system as a whole makes it very difficult to
+do any kind of realistic traffic analysis.  Any reordering of messages
+is performed at the packet level.  In general, the messages do not exist
+as wholes along the lines connecting the gateways, so a discussion of
+their reordering is a good way to waste time.
+
+A detailed mathematical analysis of what makes the system difficult to
+attack would itself be quite difficult.  But I would suggest that the
+key factors are the fragmenting of messages, the use of fixed length
+packets, the systematic introduction of noise, and random delays in
+dispatching packets.  [The random delays reorder the packets and they
+also introduce noise -- an unused timeslot is filled with a noise
+packet.]
+
+If, of course, your equations include only measures of the reordering
+of messages, your results will depend only upon measures of reordering
+of messages.
+
+--
+Jim Dixon
+
+    [this is not a complete or final description of RemailerNet]
+    [v0.2 but should be sufficient to encourage a few attacks  ]
+
+
+
+

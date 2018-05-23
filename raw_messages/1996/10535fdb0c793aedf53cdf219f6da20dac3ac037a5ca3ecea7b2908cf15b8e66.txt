@@ -1,0 +1,51 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Thu, 11 Apr 1996 02:07:11 +0800
+To: Jack Mott <thecrow@iconn.net>
+Subject: Re: questions about bits and bytes
+Message-ID: <199604100704.AAA21788@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 09:33 PM 4/8/96 -0400, Jack Mott wrote:
+>This may be a bit of a no brainer, but everything I have read sorta 
+>skips over this point.  a bit is 1 or 0.  8 bits make up a byte (0-255).
+
+Be careful writing code - sometimes a byte is -128 to 127 instead of 0 to 255.
+Also, there are machines (mostly old kinky ones) that use bytes of sizes
+other than
+8 bits.
+
+>If I have a 5 byte key, does that make it a 40 bit key? 
+ 
+Not always; bytes may have extra baggage with them such as start&stop bits
+(when you're transmitting async), or parity bits.  DES uses 56 bit keys,
+but they're really 8 bytes with the high bit of each byte ignored.
+But, yeah, 5 bytes is normally 40 bits.
+
+>The only reason this doesn't make sense to me is it seems useless to use 5 byte
+>keys, yet that is what companies export since the government limits keys
+>to 40 bits.
+
+What's bothering you about it?  The fact that it's not a multiple of 4?
+(No problem, think of it as a character string.)  The fact that it's way too
+short
+to protect any real information, and you've always been taught to use passwords
+longer than that, even for computer accounts without real money in them? 
+Well, yeah, it is - so what?  A 40-bit key would take few days to crack with
+general-purpose 486 or Pentium PCs, though a gate-array would make it easy
+to use the right kinds of logic operations to crack it much faster.  
+
+Are you puzzled that the government doesn't care about your ability to
+protect your money or your information?  Think if it from their perspective -
+if special equipment makes it cost 8 cents to crack a key, they'd probably
+have to only crack semi-interesting-looking messages, as opposed to 
+hoovering down anything they could find, and wouldn't that be a shame for
+National Security....
+#					Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com, +1-415-442-2215
+
+
+
+
+

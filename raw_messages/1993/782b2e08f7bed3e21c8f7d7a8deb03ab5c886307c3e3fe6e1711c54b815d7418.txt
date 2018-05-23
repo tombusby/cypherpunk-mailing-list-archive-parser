@@ -1,0 +1,70 @@
+From: Not MY universe!  17-May-1993 0927 <yerazunis@aidev.enet.dec.com>
+Date: Mon, 17 May 93 06:51:23 PDT
+To: cypherpunks@toad.com
+Subject: re: Double encryption
+Message-ID: <9305171347.AA19553@enet-gw.pa.dec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Skye asks (upon brute-force attacks):
+
+>If so, how about double-encrypting a file with two completely different and
+>very complex programs? Then, even if it did get the first, it couldn't tell
+>because the resulting data would still be largely gobbledegook.
+
+Maybe.  The question is the same as the mathematical question "does
+the encryption algorithm form a group?". 
+
+"Groupness" refers to whether two applications of an encryption can
+be collapsed (by some arbitrary key) into a single application of
+the same encryption.  [or, for two differing encryptions, a single 
+application of some algorithm either less complex than the sum of the
+two original encryptions, or using a key shorter than the two original
+keys...]
+
+For example, consider Caesar rotations.  Here, the key is just a number
+from 0 to 26 and rot13 (rotation by 13, a->n, being the USENET standard
+for encrypting dirty jokes).  We can "collapse" any pair of Caesar
+rotations into a new single rotation; it's just rotate for the sum of the  
+two keys.  So, Caesar rotations form a group, and it does no good to
+encrypt twice, because brute force needs to solve only one problem,
+not two, as combinatorics would suggest.
+
+But what about something more... interesting?  Say, a Caesar rotation
+followed by a N-skipped version of the alphabet (for N=1, this is 
+the identity alphabet, for N=2, the alphabet is "a,c,e,g,i,k,m,o,q,s,u,w,
+y,b,d,f,h,j,l,n,p,r,t,v,x,z", for N=3, it's "a,d,g,...".)  Now, there's
+no possibility of collapsing the two encryptions into one operation; 
+no Caesar rotation can give any of the N-skip alphabets (except the 
+trivial case of N=0), and most pairings of Caesar rotations followed
+by skipping alphabets cannot be faked by either a Caesar rotation 
+or a skip-alphabet alone.  
+
+Thus, we can say that Caesar followed by N-skip "does not form a group"
+and so is as hard to crack by brute force as combinatorics suggest.
+
+Back in the early days of DES, it was not known if DES encryption 
+followed by another DES encryption formed a group.  That's why triple
+DES encryption was designed to use an intermediate DEcryption (not encryption)
+stage, so that even if double-DES-encryption formed a group, 
+encryption/decryption/encryption would not (since it's possible to
+DES-encrypt any possible message stream, therefore some set of 
+cyphertext bits corresponds to some possible plaintext, and that
+plaintext can be reencoded) and so it would not be possible to
+collapse the first two operations into a single DES encode, collapse
+the <first+second> and the third into yet another single encode and
+thereby save much time for the brute force attack.
+
+However, it's now been proven that DES encode followed by DES encode
+does NOT form a group, and so it doesn't really matter any more.
+
+>Probably a stupid question, but I was curious.
+
+No, it's an *excellent* question. 
+
+	-Bill
+
+
+
+

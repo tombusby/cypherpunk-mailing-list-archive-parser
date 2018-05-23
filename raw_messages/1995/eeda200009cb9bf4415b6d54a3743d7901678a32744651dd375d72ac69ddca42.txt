@@ -1,0 +1,66 @@
+From: Jeff Barber <jeffb@sware.com>
+Date: Tue, 24 Oct 95 10:10:53 PDT
+To: fc@all.net (Dr. Frederick B. Cohen)
+Subject: Re: Does your software?
+In-Reply-To: <9510241549.AA19649@all.net>
+Message-ID: <199510241710.NAA18747@jafar.sware.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Fred Cohen writes:
+
+> The differences between my secure http server and Netscape's browser
+> are quite dramatic, [snip]
+
+No doubt about that.  One's a real product, one's (primarily) a piece
+of puffery.
+
+
+> My get-only server cannot run outside applications, and hence does not
+> have the vulnerability of Netscape's browser.  Note also the distinction
+> between a server and a browser.
+
+Note in particular the distinction between Fred's server and a real HTTP
+server:
+It does not run CGI scripts (i.e. no forms support).  It does not have
+per-user access control.  It does not have URL mapping.  It cannot
+redirect.  All configuration is hard-coded into the binary.  It doesn't
+support user directories (e.g. http://site/~yourname).  It doesn't do
+server-side includes.  It can't process the HEAD method.  It cannot create
+a directory index (if no index.html is present).  It does not support
+conditional retrieval (i.e. "If-modified-since").  It is slow (requires
+a separate process for each request).  It is initiated by inetd for each
+HTTP connection and hence relies on that program's security as well (the
+"line-by-line analysis" of inetd is conspicuously missing from Fred's
+self-congratulatory whitepaper -- not to mention the OS on which it is
+intended to run).  It does not even have the capability to identify the
+content type of the retrieved file (apparently you must embed
+"Content-type: text/html\n\n" [or whatever] at the beginning of each HTML
+source file).
+
+I'm not saying it's completely useless, only that it does not constitute
+an HTTP server in the usual sense of the word.  Hence, Fred's continued
+boasting of this prodigious feat of programming prowess is complete
+bullshit.  And, incidentally, the programming style, with its reliance
+on global fixed-length buffers, shared variables, lack of prototypes,
+forgotten function arguments, absence of error checking on system call
+returns, etc. is more suggestive of a first year CS student than an
+alleged PhD, *and* demonstrates a style more typical of a BASIC
+programmer than a C programmer.  Don't try this at home, kids; this is
+NOT the way to write "secure" software unless your whole program fits
+in 80 lines too.
+
+
+> My get-only server is available in source form, is 80 lines long and
+> thus easily understood, has been shown to meet security properties,
+
+[blah blah]
+
+Big deal.  It is the web equivalent of "Hello World".
+
+
+-- Jeff
+
+
+

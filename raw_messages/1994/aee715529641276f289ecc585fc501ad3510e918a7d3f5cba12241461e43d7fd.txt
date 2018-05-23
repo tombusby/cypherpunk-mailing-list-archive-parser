@@ -1,0 +1,86 @@
+From: pcw@access.digex.net (Peter Wayner)
+Date: Fri, 10 Jun 94 14:00:06 PDT
+To: dfloyd@runner.jpl.utsa.edu (Douglas R. Floyd)
+Subject: Time Locks-- Re: Delayed self-encrypting messages
+Message-ID: <199406102059.AA08073@access3.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>----- Begin Included Message -----
+>
+>>From owner-cypherpunks@toad.com Fri Jun 10 15:13 CDT 1994
+>Date: Fri, 10 Jun 1994 13:04:07 -0700
+>From: Paul Schauble <pls@crl.com>
+>To: Cypherpunks@toad.com
+>Subject: Delayed self-encrypting messages
+>Precedence: bulk
+>
+>I have a need to distribute some information fairly widely, but it's 
+>critical that it not be openly revealed before a certain date. Consider the 
+>model of an embargoed press release.
+>
+>Can I do this with crypto technology? Can I send someone a message, and 
+>possible a program, such that the message can only be decrypted after a 
+>predetermined date?
+>
+>
+>
+>    ++PLS
+>
+>
+>
+>----- End Included Message -----
+>
+>You could do the simple way, distribute the message, then a key at the
+>later date.  To make sure the encrypted message is genuine, sign the message
+>encrypt it, then sign it again, to ensure that people know that the
+>encrypted text is okay.
+
+
+This is a good method, but let's say that you die in between? What happens?
+I wrote a paper on Crypto Time Locks that is a fair to okay solution. It was
+a loose extension on a scheme from Crypto 92 for reducing Junk Mail. 
+
+Here's a summary:
+
+What you want is an encryption function f and its inverse f' such that 
+computing f' takes some factor of n times longer than f. 
+So if you want to lock things up for 128 days and you're willing to 
+put in 1 day of computation time, then you look for a pair of f and f' 
+such that n=128. 
+
+One example of such a pair is DES with 48 bits of the key fixed. The locker
+chooses the extra 8 bits at random. The unlocker tries all 256 combinations
+until the correct answer is found. 
+
+Actually, you want to don't want to use DES, you want to use a variant
+that I'll call k-DES for lack of a better name at this time. k-DES is
+DES with more than 16 rounds. It is DES with enough rounds to make it
+run for k units of time on the fastest, commonly available RISC chip. 
+Note that this is an inherently serial computation. 
+
+A better approach would probably be to use some sort of triple DES variation
+with more fixed bits to prevent birthday attacks. 
+
+This simple version is succeptable to attacks by parallel machines. There
+are better versions that I don't have time to describe at this moment.
+
+You can also construct pairs of f and f' using public key functions. When
+you need to choose one of the two keys, set one to be 3 or 5 or some small
+number. That means that exponentiation for locking (encryption) will only
+take log(3) steps. But decryption could take log(X) steps where X is the 
+other key. Note that the "strength" of RSA is not being used in this case.
+Everyone knows both keys. But decrypting with one is still a factor of
+n times longer. 
+
+Copies of the extended paper are available to anyone curious.
+
+-Peter Wayner
+  
+
+
+
+
+
+

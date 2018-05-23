@@ -1,0 +1,36 @@
+From: Rich Salz <rsalz@osf.org>
+Date: Sun, 28 Jan 1996 02:12:02 +0800
+To: cypherpunks@toad.com
+Subject: Re: Open NNTP servers and logging
+Message-ID: <9601271753.AA11563@sulphur.osf.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>I think Stephen Albert was asking about the possibility of using logs to find
+>out what he's reading, not posting. That's quite possible. Recall the recent
+>incident when an unethical researcher looked through his colleagues' .newsrc
+>files to see what newsgroups they were subscribed to.
+
+Most NNTP sites run INN, the software I wrote.  (You can find out by
+doing "telnet {the_news_host} 119" and then looking to see if it says
+InterNetNews in the greeting line.)  By default, INN logs every group
+command -- every time you switch to a newsgroup.  It logs the full IP
+address of the client.  If it can forward-and-backward map the IP address
+to a hostname (i.e., ipaddr->host and then gethsotbyname() includes ipaddr
+as one of the host's address) then it logs by client hostname.
+
+It is trivial to turn on full logging at compile time, boot time, or
+per-connection via a management program.  This will then log ALL interactions.
+I could imagine that without too much work, someone would turn on logging
+for a given set of addresses (say, anyone in the "default" category).
+
+Every day INN generates a report that includes the host/ipaddr of every
+host that connected, what the most popular newsgroup categories are, etc.
+
+Hope this helps.  Relevance?  You're being watched.
+	/r$
+
+
+
+

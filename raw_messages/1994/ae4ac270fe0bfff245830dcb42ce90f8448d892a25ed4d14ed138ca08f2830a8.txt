@@ -1,0 +1,55 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 5 Aug 94 22:11:28 PDT
+To: cypherpunks@toad.com
+Subject: Re: Remailer ideas
+In-Reply-To: <9408051709.AA14763@ah.com>
+Message-ID: <199408060511.WAA24892@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+hughes@ah.com (Eric Hughes) writes:
+
+>Further, in email, there's currently no notion of a connection.  Email
+>message are much more like datagrams than bit streams.  In order to do
+>reliable delivery, there would have to be persistent state information
+>on each side of the communication.  If I send a message for the first
+>time to a party and there's no reply, I cannot conclude whether the
+>message was not delivered or whether the message was delivered and not
+>answered.
+
+>Connection-oriented email would be much more complicated than the
+>current systems.  It is, perhaps, time for email to become more
+>complex.  
+
+I would really like to see some kind of system for reliable email.  I'm
+surprised that it doesn't exist yet.  How many times have we said,
+"You didn't get my email?  I'll resend it."  What are computers for, after
+all?  Automating repetitive tasks, classically.  This is a perfect appli-
+cation.  A copy of outgoing email could be kept, acknowledgements received
+on receipt, and the email deleted or re-transmitted as needed.  Serial
+numbers would distinguish retransmissions so that redundant resendings
+(where the packets "crossed in the mail", so to speak) would be dropped.
+All this was designed in an afternoon in Xmodem.  It's conceptually easy.
+The hard part is getting a standard and getting people to build it into
+their Mail User Agents.
+
+Then, once we had this, we could do another layer for crypto protocols.
+Lots of protocols go in stages.  A sends X to B, receives f(X), sends
+g(Y,f(X)), etc.  To do this in email would be impossibly cumbersome now,
+but the kind of mechanism used for reliable email could be extended to
+support these kinds of "stateful" protocols.
+
+As one obvious need for reliable email, consider the transmission of
+Chaum-style digital cash.  You don't want to erase your copy until you
+are sure the other guy has received it, otherwise your money is permanently
+gone (just like when you send cash in postal mail and it is stolen).  But
+keeping track of which cash you have sent to which people, who has gotten
+theirs, which needs to be re-sent, etc., is painful.  A simple reliable
+email method would solve a big part of this problem.
+
+Hal
+
+
+
+

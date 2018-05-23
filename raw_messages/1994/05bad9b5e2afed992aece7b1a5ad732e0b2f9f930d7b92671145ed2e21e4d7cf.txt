@@ -1,0 +1,51 @@
+From: SINCLAIR  DOUGLAS N <sinclai@ecf.toronto.edu>
+Date: Thu, 12 May 94 07:24:33 PDT
+To: klbarrus@owlnet.rice.edu (Karl Lui Barrus)
+Subject: Re: Message Havens
+In-Reply-To: <9405120451.AA27627@flammulated.owlnet.rice.edu>
+Message-ID: <94May12.102413edt.13411@cannon.ecf.toronto.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Downloading the whole message base to scan for one's messages
+will place a massive load on net.resources, and probably
+a prohibitive load on most people's terminals.  This scheme
+should avoid this nescessity:
+
+Alice wishes to write a message anonymously to Bob.  They have
+agreed in previous communications that their tag is the string "foo".
+Alice writes her messages, and encrypts it with Bob's public key.
+She then prepends the tag.  It looks like this:
+
+Tag: foo
+--- Begin Pgp Message ---
+zxcvm,/asdfjk;qup
+....
+iuerpw,d,fy
+--- End Pgp Message ---
+
+
+Next, she encrypts this with the gopherhole's public key.  The
+resulting message is posted to the gopherhole, where it is decrypted
+and made available for all to download.
+
+Now, Bob enters the gopherhole and instructs it to download all
+messages with the tag of "foo".  To thwart trafic volume analysis,
+he also downloads messages with tags "bar", "baz" and "quux", which
+he then discards.
+
+Problems:
+The gopherhole must be trusted not to divulge which posts
+came from who, and it's key must not be compromized.
+
+A tap on Bob's line shows that he /may/ have a connection with
+the "foo" tag.  However, the only person that knows anything
+about that tag is Alice.  Thus, the other party in the conversation
+must colaborate in an attack, probably ruining her anonymity.
+
+Comments?
+
+
+
+

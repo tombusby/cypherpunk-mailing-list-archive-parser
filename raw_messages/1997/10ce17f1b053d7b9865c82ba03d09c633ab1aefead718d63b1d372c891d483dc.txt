@@ -1,0 +1,70 @@
+From: Hallam-Baker <hallam@ai.mit.edu>
+Date: Fri, 28 Mar 1997 15:15:59 -0800 (PST)
+To: Kent Crispin <kent@songbird.com>
+Subject: Re: Analysis of proposed UK ban on use of non-escrowed crypto.
+In-Reply-To: <5heds8$mdv@life.ai.mit.edu>
+Message-ID: <333C513B.446B@ai.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Kent Crispin wrote:
+
+> Thus, in PGPs case at least, if you want escrowed encryption, then
+> you must escrow the signature key.
+
+Hence the DSA which is a signature algorithm that does not do
+encryption. I think the use of the same key for both is a bad idea BUT
+note that if you have a secure signature scheme you don't need an
+encryption key at all.
+
+Simply generate yourself a fresh set of public key parameters for each
+communication in the manner of IPSEC. The hard problem of setting up
+security is knowing the identity of the other party. All else pales into
+insignificance in comparison.
+
+Consider the following scenario. SMTP is adjusted so that it has a DH
+key exchange crypto option. A typical conversation becomes:-
+
+EHELO You-got-crypto-mate?
+269 Yeah I have crypto
+XCHAL RSA 248af23876acdef
+270 [key-id] [DHparameters e, n, e^x mod n] [sig-of-challenge+DH-params] 
+XENCRYPT [IV] [e^y mod n] 
+
+[Conversation continues encrypted under key e^y^x mod n AND keybits 
+padding out messages as appropriate.]
+
+
+Now this type of scheme could be implemented without a certificate
+infrastructure and severly increase the difficulty of snooping. In that
+case the message would be sent even though [sig-of-challenge+DH-params]
+was absent. But with a CA infrastructure you could make sure that you
+hads contacted the correct machine, one authorised to accept mail for
+fred@ibm.com] all you need is a means of hacking the following assertion
+into X509v3:
+
+"Is authorized user of DNS namespace identifier matching"
+
+Add in a date and the protocol could be made very reilient and entirely
+transparent. Now that mail is moving away from godamn awfull crap like
+sendmail towards engineered systems like notes or exchange adding in
+protocol extensions becomes easier.
+
+If the mail sending agent knows that mail to a particular host should be
+sent encrypted the system can be made much more transparent than PGP or
+S/MIME. Like the punters might be able to use it without getting screwed
+too often.
+
+
+I think email security has often been the perfect being the enemy of the
+good. One huge problem has been braindamaged ideas about routing email
+through store and forward mailers rather than connecting to the real
+destination to start with. 
+
+
+	Phill
+
+
+
+

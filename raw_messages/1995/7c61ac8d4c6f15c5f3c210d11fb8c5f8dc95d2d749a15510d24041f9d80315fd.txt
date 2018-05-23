@@ -1,0 +1,73 @@
+From: anonymous-remailer@shell.portal.com
+Date: Mon, 23 Oct 95 12:36:39 PDT
+To: cypherpunks@toad.com
+Subject: Rising Sun Postscript Code
+Message-ID: <199510231935.MAA09475@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I thought that with all of the talk about Postscript, I might demonstrate
+what the language can do.  Here is a Postscript program which will run 
+automatically on any machine.  I call it "Rising Sun".
+
+Just attach your headers.
+
+
+Domo Arigato,
+
+                             Hara De Kangaeru
+
+
+%--------------Prologue-------------
+/inch
+     { 72 mul }
+     def
+
+/rays
+     {     0 5 180
+           {    gsave
+                     rotate
+                     0 0 moveto
+                     5 inch 0 rlineto
+                     stroke
+                grestore }
+           for }
+     def
+
+/sunRays
+    %called as: x y sunRays
+    {     newpath
+          translate
+          .5 setlinewidth
+          rays
+          0 0 25 0 180 arc
+          gsave
+                1 setgray
+                fill
+          grestore
+          2 setlinewidth
+          stroke     }
+     def
+
+%-----------Script-----------
+%first set font and show letters
+/Helvetica-BoldOblique findfont
+3 inch scalefont setfont
+1 inch 5 inch translate
+0 0 moveto
+(SUN) false charpath
+gsave
+     stroke
+grestore
+%now set clipping path from restored text path
+clip
+gsave
+     (SUN) stringwidth pop 2 div
+     -10 sunRays
+grestore
+showpage
+
+
+
+

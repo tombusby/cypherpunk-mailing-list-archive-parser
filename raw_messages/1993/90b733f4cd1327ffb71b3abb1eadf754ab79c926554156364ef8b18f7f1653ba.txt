@@ -1,0 +1,30 @@
+From: mjr@TIS.COM
+Date: Thu, 16 Sep 93 09:49:20 PDT
+To: cypherpunks@toad.com
+Subject: Re:  Random Numbers
+Message-ID: <18957.9309161647@otter.TIS.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+	I admit I'm guilty of being somewhat ignorant of how PGP
+implements randseed.bin.  My experience with PGP indicates that
+it's pretty well-thought-out in general, so perhaps I'm repeating
+the obvious.
+
+	One possibility is to treat part of the random seed as
+if it was your secret RSA key. Systems like PEM store the RSA
+key encrypted on disk someplace - you could also store an
+encrypted random seed which you decrypt when you retrieve the
+secret key, use to bootstrap your PRNG, and then replace with
+some output from the PRNG when you're done. That way, the seed
+is (by definition) hidden, and an attacker is going to have
+much more trouble attacking your PRNG by searching your random
+seed space.
+
+mjr.
+
+
+
+

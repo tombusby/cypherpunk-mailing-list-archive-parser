@@ -1,0 +1,50 @@
+From: "James A. Donald" <jamesd@echeque.com>
+Date: Sun, 28 Jan 1996 22:47:56 +0800
+To: cypherpunks@toad.com
+Subject: Re: Microsoft's CryptoAPI - thoughts?
+Message-ID: <199601281436.GAA22473@mailx.best.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>James A. Donald writes:
+
+> > A notable misfeature of the API is that it assumes that in general 
+> > you will have two key pairs.  One for signing and one for encrypting.
+> > 
+> > Since in the most common case you are encrypting something related to a
+> > signed message by the person you are encrypting to, this is a
+> > bad idea, 
+
+At 07:59 AM 1/27/96 -0500, Futplex wrote:
+
+> Could you elaborate ?  I haven't heard of any known interaction
+> effects between a strong encryption algorithm and a distinct strong digital
+> signature algorithm (with or without distinct keys),
+
+I was concerned about a different issue:
+
+Suppose you have some signed information:  You wish to send some encrypted
+information to the person who wrote that signed information.
+
+If the signing key and the encrypting key are the same, your software can
+locally ensure that you encrypt with the right key, (The correct key is the
+same public key that you used to check the signature on the message.)
+
+If the signing key and the encrypting key are different, then in order to
+ensure that you are not spoofed into using the wrong public key, the
+whole protocol must work correctly, exposing many more points of attack, 
+since key management is the most complex and most vulnerable area.
+
+ ---------------------------------------------------------------------
+              				|  
+We have the right to defend ourselves	|   http://www.jim.com/jamesd/
+and our property, because of the kind	|  
+of animals that we are. True law	|   James A. Donald
+derives from this right, not from the	|  
+arbitrary power of the state.		|   jamesd@echeque.com
+
+
+
+
+

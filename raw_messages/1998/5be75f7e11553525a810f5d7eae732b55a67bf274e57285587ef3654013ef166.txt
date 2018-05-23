@@ -1,0 +1,61 @@
+From: David Honig <honig@sprynet.com>
+Date: Thu, 6 Aug 1998 17:31:16 -0700 (PDT)
+To: die@die.com
+Subject: Re: Noise source processing
+In-Reply-To: <3.0.5.32.19980806103120.007cfb00@m7.sprynet.com>
+Message-ID: <3.0.5.32.19980806161909.007ca100@m7.sprynet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 02:24 PM 8/6/98 -0400, Dave Emery wrote:
+>
+>	This is expected of hard limiters below threshold  (such as in a
+>reasonable FM IF system fed Johnson noise).  The spikes occur on phase
+>discontinuities in the limiter output - what you are seeing is the input
+>Johnson noise intermittantly inducing phase jumps in the output of the
+>ringing IF filters shock excited by the broadband input noise.  The IF
+>filters tend to ring somewhat coherently until hit by another burst of
+>noise which sets them off on another phase.  Each phase jump shows up as
+>a spike on the discriminator output.  The narrower the bandwidth of the
+>filters, the longer the spike and interspike intervals. Thus one needs
+>an IF bandwidth considerably wider than the sample rate.
+
+Given that the cheapo radio was 10 cm from a 21" monitor, I don't think
+you need to invoke noise-driven resonances in the humble radio.
+
+I was/am interested in robust methods that don't depend on 
+exquisite analog equalization, etc.  
+
+Zero crossings are analogs (pun intended) of 
+RFC1750's #2 method (via Shannon):
+
+map 01 -> 1 
+map 10 -> 0
+00, 11 are no-ops.  
+
+Note that for a digital signal you are detecting level-changes.  (Vdd/2
+changes?)
+
+
+Waiting for zero crossing will give you perfect 0:1 ratio,
+but you may have to wait arbitrarily long (but will almost
+certainly not, in the formal sense ---there's a decaying exponential
+in there).
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+

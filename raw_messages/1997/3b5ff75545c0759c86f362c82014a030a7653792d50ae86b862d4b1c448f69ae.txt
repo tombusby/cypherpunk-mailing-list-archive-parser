@@ -1,0 +1,85 @@
+From: Andy Dustman <andy@CCMSD.chem.uga.edu>
+Date: Fri, 8 Aug 1997 15:38:18 +0800
+To: Adam Back <aba@dcs.ex.ac.uk>
+Subject: Re: disposable remailers (was Re: Eternity Uncensorable?)
+In-Reply-To: <199708072250.XAA05978@server.test.net>
+Message-ID: <Pine.LNX.3.94.970807200648.2843J-100000@neptune.chem.uga.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Thu, 7 Aug 1997, Adam Back wrote:
+
+> Wasn't there for a time a hidden middleman.  That is a middleman
+> remailer who's published address was a nym account on a nymserver?
+> That'd be a "hidden middleman".
+
+There's some now. medusa@squirrel.owl.de is one.  middleman@cyberpass.net
+(reno) might be another (not sure the account is anonymous, but could be).
+
+> Dimitri suggested on cypherpunks in the last round of discussion of
+> this sort of thing another variation on that -- that you could deliver
+> the mail if the person had a PGP public key on the keyservers --
+> whether the email was encrypted or not.  On the assumption that people
+> who use PGP would be unlikley to complain of anonymous mail.
+
+The only problem with that is the denial-of-service attack you describe
+below. I figure if it's already encrypted, delivery is likely to be
+welcomed rather than irritating.
+
+> He also suggested beefing up keyserver submission checks (there are
+> none right now) so that you need a replyable address to submit a key,
+> otherwise the remailer-baiter just posts a key generated with their
+> "victim's" email address on it prior to sending to them.
+
+Yeah, I had in mind some kind of magic cookie exchange using the submitted
+key. Once the cookie gets returned, the keyserver signs the key with a
+special signing key which certifies that the key has at least passed the
+"cookie exchange" test. The remailer I was working on (I say "was" because
+I just have been too darn busy to finish it) would have implemented that
+very thing. It's essentially the same thing the nymservers do when
+configured to confirm reply blocks, which they always are. 
+
+Back to the subject: Disposable remailers. It seems the juno remailer
+software would be good for this. I'm not sure what the sign-up requirement
+are, but it's free. I was also thinking about web-based free mail
+services, such as Hotmail and Rocketmail. Receiving mail means having to
+parse some HTML, which from the looks of things is do-able but not
+trivial. Sending mail might be easier to implement.
+
+Which brings up an interesting idea for an exitman/middleman remailer: Use
+a nym or commercial ISP to receive the mail, use throwaway free mail
+accounts for delivery (maybe even just plaintext delivery). Hotmail, at
+least, inserts an X-Originating-IP:  header, though.  I expect others do
+the same. So put your remailer output on a ZIP disk or floppy and run your
+delivery on whatever public or semi-public access machine you happen to
+get your hands on, once or twice a day.
+
+Andy Dustman / Computational Center for Molecular Structure and Design / UGA
+    To get my PGP public key, send me mail with subject "send file key".
+For the ultimate anti-spam procmail recipe, send me mail with subject "spam"
+"Encryption is too important to leave to the government."  -- Bruce Schneier
+http://www.ilinks.net/~dustman    mailto:andy@CCMSD.chem.uga.edu      <}+++<
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3ia
+Charset: noconv
+
+iQEPAwUBM+pqRBOPBZTHLz8dAQHyvAfPddrITrYKYCB7gmWuMyJxwWkCi+8oaZPZ
+Q3EMlQ2+Jfhw0gSHKYwfVHok6ttU5pGy3epwVBXSYAfs5Tge++3q2ZmoUAPuLRgx
+1jv3akJnNrgnxTXVRNdrJDRs3rK1/5Xz7+GunK/zbdyicjxBJzVNaJL17i1R/Xr+
+/r36YiBcueQBaEdJI3uqF08rj/63CFVuX5n6lun0cBvPxNK2wJ0WBknQeZsPHAjQ
+jbzu0hAkWZ1WYXLtLanzbn7TQrgMkMnVoRvu6JSdtxYEywd2aYhS/F1N6SKk6FiE
+DVEnoPRE42U/utHrEX30heLrSbD/fbwTruR1f1H4lTWMOg==
+=en6+
+-----END PGP SIGNATURE-----
+
+
+
+
+

@@ -1,0 +1,59 @@
+From: Peter Monta <pmonta@qualcomm.com>
+Date: Thu, 18 Jan 1996 03:31:54 +0800
+To: cypherpunks@toad.com
+Subject: Re: Random Number Generators
+In-Reply-To: <0kzHl6200bky0_dkQ0@andrew.cmu.edu>
+Message-ID: <199601171909.LAA05247@mage.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Timothy Nali writes:
+
+> [ CMOS RNG chip ]
+> ...  The most promising design I've seen so far (that I can actually
+> do) is based on clocking a D flip-flop in the following way:
+> ...
+> The slow clock has enough random variation in it's period  for the Dff
+> to generate random numbers.
+
+While a scheme like this will work, one of the needs in a design like
+this is convincing yourself of how much entropy is available from the
+noisy clock and where it comes from.  It's nontrivial to evaluate
+the phase noise of a CMOS relaxation oscillator, for example.
+Also, at what rate do you want random bits?
+
+> Can anyone give me pointers or references to other types of true random
+> number generators and to ways of correcting the biases and other
+> problems in the resulting random bitstream?
+
+The references in Applied Cryptography are pretty useful; the only other
+ones I know of are a tech report by Gifford at MIT/LCS and a thesis
+by Sridhar Vembu (who also works here at Qualcomm) on optimal extraction
+of entropy from biased sources.
+
+> One thing I'm concerned about is making sure the random bitstream is
+> uniformly random.  What effects, if any, will things like thermal noise,
+> power comsumption (what if there is a sudden rise in power comsumption
+> in another part of the circuit), etc. have on the randomness of the
+> bitstream?  
+
+I'd say thermal noise is your friend; the other systematics, as you
+say, are a slight issue, but their effect on the entropy is very small
+and they'll be taken out by the postprocessing (hash function, etc.).
+
+> I'd also appreciate any other suggestions or advice you have on RNGs.
+
+I plan to make a simple board-level RNG design available to the net Real
+Soon Now.  I'd be interested to see your CMOS design when it's finished.
+(By the way, try searching the cypherpunks and sci.crypt archives on the
+subject. There's lots of good discussion.)
+
+Cheers,
+Peter Monta   pmonta@qualcomm.com
+Qualcomm, Inc./Globalstar
+
+
+
+
+

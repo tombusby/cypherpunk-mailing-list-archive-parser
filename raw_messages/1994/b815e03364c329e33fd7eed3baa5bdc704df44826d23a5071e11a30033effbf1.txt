@@ -1,0 +1,40 @@
+From: Phil Karn <karn@unix.ka9q.ampr.org>
+Date: Sun, 7 Aug 94 18:06:27 PDT
+To: cypherpunks@toad.com
+Subject: IDEA vs DES
+Message-ID: <199408080106.SAA01619@unix.ka9q.ampr.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Now that I've got DES running about as fast as it can go on the 486, I
+did a little analysis on IDEA. The algorithm is definitely more
+straightforward to implement than DES, but not necessarily that much
+faster. It uses three primitive operations, all on 16-bit quantities:
+XOR, ADD and multiplication modulo 65537.  Each encryption involves 48
+XORs, 34 adds and 34 multiplies, plus a few exchanges.
+
+The multiplies are a problem. On the 486, a 16x16 integer multiply
+takes from 13-26 clocks, depending on how many significant bits there
+are in the multiplicand. Random data usually has 15-16 significant
+bits, so this distribution is probably weighted more toward the 26
+clock figure. So I count an optimistic total of 990 clocks per 64-bit
+encryption, assuming plenty of registers (which I don't have), not
+counting the modular reduction steps for each multiply, and ignoring
+the memory references for the subkeys.
+
+I figure my DES code is currently taking about 1300 clocks per
+encryption. So IDEA won't be much faster, though it may be more
+secure.
+
+Anybody know the speed of the integer multiply instruction on the
+various PowerPC chips? Along with modular exponentiation and vocoders,
+which also do a lot of multiplies, it looks like fast multiplication
+is becoming rather important in secure communications.
+
+Phil
+
+
+
+
+

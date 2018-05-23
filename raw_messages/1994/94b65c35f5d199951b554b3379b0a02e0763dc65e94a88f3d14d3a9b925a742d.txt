@@ -1,0 +1,176 @@
+From: khijol!erc@cygnus.com (Ed Carp [Sysadmin])
+Date: Tue, 29 Nov 94 03:51:54 PST
+To: alex@omaha.com (Alex Strasheim)
+Subject: Re: Transparent Email
+In-Reply-To: <199411290803.CAA00300@omaha.omaha.com>
+Message-ID: <m0rCQOJ-0004G3C@khijol.uucp>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> I think it's a bad idea to require signatures on the list, or even to 
+> penalize people who don't use them.  People aren't signing their posts 
+> because it's too much of a hassle to do it from a dial up, netcom style, 
+> account, not because they're insufficiently committed to the cause.
+
+Is it just me, or does this come up every few months?
+
+> The real solution is to try to build tools which will make it so easy to 
+> use crypto that there's simply no reason not to do it.
+
+They are already there - in elm and pine, as well as many others.
+
+> This leaves the problem of passphrases for outgoing signatures and
+> automatically decrypting incoming mail, but I think that cfs will let me
+> kludge something together which will get around this.  
+
+No need to kludge anything.  Take a good look at the PGP docs - they will
+let you do exactly what you want.
+
+> (My situation is a little unusual, because I'm running linux on a pc which
+> is connected to the net via a static slip account.  I don't think this
+> would work well in other situations.)
+
+I'm running Linux here, and have run it both as static/dynamic SLIP, and hung
+(well!) off a T1 line.
+
+> o	talked to the rest of the email universe without difficulty, and
+> 	which uses standard unix software
+> 
+> o	would automatically use crypto when sending mail to a list
+> 	of email addresses, and which could automatically handle
+> 	incoming crypto
+> 
+> o	would be reasonably secure when it was powered off
+
+This last one is really the only advantage to running cfs, IMO.
+
+Here's the set of scripts I use here.  Others use more sophisticated ones, but
+I'm not into shell programming ;}
+
+pgpview will decrypt to the screen, vie will edit then encrypt, vis will edit
+then sign.  They are intended to be used from within elm.
+
+#! /bin/sh
+#
+# Created by shar, version 0.5 - 04/10/91
+#
+# This is a shell archive, meaning:
+# 1. Remove everything about the #! /bin/sh line.
+# 2. Save the resulting text in a file.
+# 3. Execute the file with /bin/sh to create:
+#
+#        length  name
+#        ------  -------------------------------------
+#            28  pgpview
+#           379  vie
+#           199  vis
+#
+
+#
+# Archive number 1
+# This archive created Tue Nov 29 05:04:46 1994
+#
+
+echo "shar: extracting pgpview - (28 characters)"
+if test -f 'pgpview' ; then
+   echo shar: will not over-write existing file pgpview
+else
+sed 's/^X//' << \SHAR_EOF > 'pgpview'
+Xpgp +batchmode -m | less -c
+SHAR_EOF
+if test 28 -ne "`wc -c < 'pgpview'`" ; then
+   echo "shar: ***** error transmitting file pgpview (should have been 28 characters, but was "`wc -c < 'pgpview'`" characters) *****"
+fi
+fi
+
+touch 0823232194 pgpview
+chmod 0755 pgpview
+
+echo "shar: extracting vie - (379 characters)"
+if test -f 'vie' ; then
+   echo shar: will not over-write existing file vie
+else
+sed 's/^X//' << \SHAR_EOF > 'vie'
+X#
+X# vie - like vi, but sign & encrypt with pgp
+X#
+Xsed -e 's/^> //g' $1 > $1.clr
+X# why doesn't pgp $1 $1.clr work?  It should produce $1.clr... <sigh>
+Xpgp +force $1.clr $1
+Xsed -e 's/^/> /g' $1.clr > $1
+X/bin/rm -f $1.clr
+Xif [ "$EDITOR" == "" ] ; then
+X	pico $1
+Xelse
+X	$EDITOR $1
+Xfi
+Xclear
+XL=`logname`
+Xif [ "$L" = "erc" ] ; then
+X	L=ecarp
+Xfi
+Xpgp -seta +clearsig=on -u $L $1
+Xmv $1.asc $1
+SHAR_EOF
+if test 379 -ne "`wc -c < 'vie'`" ; then
+   echo "shar: ***** error transmitting file vie (should have been 379 characters, but was "`wc -c < 'vie'`" characters) *****"
+fi
+fi
+
+touch 0904203294 vie
+chmod 0755 vie
+
+echo "shar: extracting vis - (199 characters)"
+if test -f 'vis' ; then
+   echo shar: will not over-write existing file vis
+else
+sed 's/^X//' << \SHAR_EOF > 'vis'
+X#
+X# vie - like vi, but sign with pgp
+X#
+Xif [ "$EDITOR" == "" ] ; then
+X	pico $1
+Xelse
+X	$EDITOR $1
+Xfi
+Xclear
+XL=`logname`
+Xif [ "$L" = "erc" ] ; then
+X	L=ecarp
+Xfi
+Xpgp -sta +clearsig=on -u $L $1
+Xmv $1.asc $1
+SHAR_EOF
+if test 199 -ne "`wc -c < 'vis'`" ; then
+   echo "shar: ***** error transmitting file vis (should have been 199 characters, but was "`wc -c < 'vis'`" characters) *****"
+fi
+fi
+
+touch 0801202294 vis
+chmod 0755 vis
+echo End of all shell archives
+exit 0
+- -- 
+Ed Carp, N7EKG    			Ed.Carp@linux.org, ecarp@netcom.com
+
+Finger ecarp@netcom.com for PGP 2.5 public key		an88744@anon.penet.fi
+                       ** PGP encrypted email preferred! **
+
+"What's the use of distant travel if only to discover - you're homeless in
+your heart."  --Basia, "Yearning"
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLtsLMiS9AwzY9LDxAQHTWgP/VAxadrlIIhH/QwqDUX1KtfnPd6UBh5kL
+rouCpajJj4BfFGk486gHOekVZcwTe19NDzUHXE78UDSIWytf1zuAZvf5b9bFgVkV
+lXxyaRJK4xIcYHUFTptumpCDRvAQi9ixMwI07K3rs4gzQNd4fgOqMZj7g08wOot9
+64BnvLL/J10=
+=7WFV
+-----END PGP SIGNATURE-----
+
+
+

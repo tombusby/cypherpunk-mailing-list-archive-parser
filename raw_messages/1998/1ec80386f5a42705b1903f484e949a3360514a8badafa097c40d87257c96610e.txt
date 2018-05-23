@@ -1,0 +1,76 @@
+From: Lucky Green <shamrock@cypherpunks.to>
+Date: Sat, 21 Nov 1998 14:47:53 +0800
+To: Bill Stewart <bill.stewart@pobox.com>
+Subject: Re: Free Email as Anonymous Remailer Re: NPR is at it again...
+In-Reply-To: <3.0.5.32.19981114002632.007caa30@idiom.com>
+Message-ID: <Pine.BSF.3.96.981121065532.2364A-100000@pakastelohi.cypherpunks.to>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Sorry for the slow reply. Any http anonymizer not using link padding is
+subject to trivial traffic analysis. See the "Pipe-net" thread in the
+archive. Also see the graphs at http://www.onion-router.net/Vis.html
+
+What makes the graphs all the more impressive is that the OR people used
+to argue against my claim that you need link padding. They don't argue any
+more. ;-)
+
+--Lucky
+
+On Sat, 14 Nov 1998, Bill Stewart wrote:
+
+> At 11:47 PM 11/11/98 +0100, Lucky Green wrote:
+> >On Wed, 11 Nov 1998, Bill Stewart wrote:
+> >> An interesting project would be a free low-volume anonymizer cgi for Apache,
+> >> given the large number of current users and the much larger number
+> >> of people who will run web servers once they have cable modems.
+> >How do you do chaining with a cgi?
+> 
+> Looks easy enough to do, if a bit ugly, where "ugly" is somewhat equivalent to
+> "build yet another local proxy widget to hide the gory details",
+> though it's not really much uglier than doing a good anonymizer,
+> and getting details like cookies and Java/script right are harder.
+> 
+> Define "encrypted" as "PGP or something like it".  It may be possible
+> to gain some efficiencies by using SSL, but not critical.
+> Take a cgi script and use POST to hand it an encrypted block containing:
+> 	Response-Key:  
+> 	HTTP Request, either vanilla URL or cgi URL with GET or POST data.
+> 	Maybe some digicash
+> 	Maybe some additional data
+> The script fetches the URL, handing along any data,
+> packages the response in HTTP reply format, and encrypts it with the 
+> response key for the client proxy to unpack.
+> 
+> To chain these, have the client nest the requests, doing a
+> URL that points to another anonymizer script and POSTs an encrypted block.
+> Eventually you'll get to a non-anonymizing URL;
+> it may be interesting to include any expected cookies in the block,
+> so the client can hand them to the destination web server,
+> or to gain some efficiencies by having the cgi script fetch
+> any IMG requests, and sending a bundle of HTTP reply packets
+> instead of just a single one.
+> 
+> The problems - 
+> - How can easily can you break the system?  
+> --- Does it leave too many open connections that can be followed?
+> --- Does the decreasing size of the requests and
+> 	increasing size of responses make it too easy to trace?
+> --- What other obvious security holes are there?
+> - Timeouts or other problems?
+> - Denial of service attacks?
+> 
+> 				Thanks! 
+> 					Bill
+> Bill Stewart, bill.stewart@pobox.com
+> PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+> 
+
+
+-- Lucky Green <shamrock@cypherpunks.to> PGP v5 encrypted email preferred.
+
+
+
+

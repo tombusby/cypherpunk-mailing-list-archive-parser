@@ -1,0 +1,72 @@
+From: "Johnson, Michael P (Mike)" <JohnsMP@LOUISVILLE.STORTEK.COM>
+Date: Sun, 21 Dec 1997 09:51:32 +0800
+To: "'cypherpunks@Algebra.COM>
+Subject: RE: ECB, CBC, CFB, OFB
+Message-ID: <c=US%a=_%p=Stortek%l=LSV-MSG06-971221014643Z-85371@lsv-bridge.stortek.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+>Somebody asked:
+>>Can somebody more experienced than I am explain the strengths and weaknesses
+>>of these encryption modes as applied to CAST, IDEA, DES, and Blowfish?
+>
+>>              ecb    Electronic codebook mode
+>>                     c[i] = f1(K, p[i])
+>>                     p[i] = f2(K, c[i])
+
+This is the weakest mode. Patterns in the plain text tend to cause
+repeated blocks in the output, causing some information leakage. This
+mode is really only suitable if you have exactly one block or less to
+encrypt or if random access at the block level is critical. An error in
+the ciphertext or plaintext only affects one block, as long as bit count
+integrity is maintained.
+
+>>              cbc    Ciphertext block chaining mode
+>>                     c[i] = f1(K, p[i]) ^ c[i-1]
+>>                     p[i] = f2(K, c[i]) ^ c[i-1]
+
+This is good at preventing information leakage. A one bit error in the
+ciphertext causes a one block error in the plain text => reasonable
+balance between tamper detection and error resistance. This mode is
+commonly used.
+
+>>              cfb    Ciphertext feeback mode
+>>                     c[i] = f1(K, c[i-1]) ^ p[i]
+>>                     p[i] = f1(K, c[i-1]) ^ c[i]
+
+This is good at preventing information leakage. A one bit error in the
+ciphertext causes a one bit error in the plain text => good for use in
+high noise environments where error detection and correction is
+(inexplicably) not used and tamper detection is not as critical. Doesn't
+require a decryption mode, so a hash function like SHA1 could be used in
+this mode instead of a general block cipher.
+
+>>              ofb    Output feeback mode
+>>                     h[i] = f1(K, h[i-1])
+>>                     c[i] = p[i] ^ h[i]
+>>                     p[i] = c[i] ^ h[i]
+
+This mode essentially turns a block cipher into a stream cipher without
+feedback. It must be used with the same caution as such a cipher. In
+other words, the same stream should not be reused, but a new starting
+point (initialization vector = h[-1]) and/or key should be chosen for
+each message. No padding or data size expansion is necessary.
+
+Several other modes are possible...
+
+For really slow performance, you can try some kind of key feedback. :-)
+   K[i] = K[i-1] ^ p[i-1]   or maybe   K[i] = e(K[i-1], K[i-2])
+   c[i] = e(K[i], p[i])
+   p[i] = d(K[i], c[i])
+Caution: bizarre modes may not be well analyzed... although I think some
+key feedback modes have merit when you are trying to slow an attacker
+down. They might really mess up specialized cracking hardware. :-)
+
+
+
+
+
+

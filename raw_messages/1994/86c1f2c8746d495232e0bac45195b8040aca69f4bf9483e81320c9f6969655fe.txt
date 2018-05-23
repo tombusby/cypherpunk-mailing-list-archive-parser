@@ -1,0 +1,80 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 12 Sep 94 23:05:45 PDT
+To: cypherpunks@toad.com
+Subject: Re: RC4
+In-Reply-To: <m0qkPCi-0002DQC@chinet>
+Message-ID: <199409130605.XAA24133@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+schneier@chinet.chinet.com (Bruce Schneier) writes:
+
+>Does anyone know if this is really RC4?  Has anyone compiled it to see
+>if it will run?  Has anyone tried to use it to decrypt messages encrypted
+>with some commercial RC4 program?
+
+I thought this posting was very interesting.  RC4, as I understand it,
+is a secret-key algorithm from RSADSI which has been kept secret.  I have
+no information about RC4 so I can't judge whether this is really it.
+
+A couple of comments, though.  First, there was one obvious typo:
+
+          xorIndex = state[x] + (state[y]) % 256;
+
+should clearly be
+
+          xorIndex = (state[x] + state[y]) % 256;
+
+The second thing I notice is, this is a surprisingly simple algorithm.
+I say "surprising" for a couple of reasons.  First, it seems like this
+algorithm would not have been difficult to deduce from disassembled
+object code.  Of course, maybe that is where it came from.  But it has
+been around for a number of years without this being published before.
+
+Also, this algorithm is not too different from some "naive" algorithms
+that get posted on sci.crypt from time to time.  It basically makes a
+random (key-based) permutation of 0..255, then indexes into that table
+a couple of times, adds the results, and uses that as the final index,
+xor'ing the result with the plaintext.  It gets complicated by a simple
+swap of the two index values, and the choice of the initial indexes is
+a matter of stepping; one steps by one and the other steps by the table
+value of the first index.
+
+Despite the simplicity, there are no obvious (to me) attacks.  The one
+thing that I notice is that with known plaintext you can recover the
+table lookup values which are being xor'd.  If you can find two identical
+xor values which are pretty close together, chances are the underlying
+final index (the sum of the two lookup values) is the same.  But since
+it is a sum there are still a wide range of possible values which made
+up the sum.  It's just really hard to pin things down.  Without the swap
+you could probably do it with enough text, but that swap is constantly
+stirring the table at a low level, so by the time you had enough data to
+try to get a handle on the table structure, the table has changed.  It's
+pretty clever.
+
+This raises the question about why it is secret.  It is (hopefully!) not
+because the algorithm is weak when exposed.  Presumably it is a matter
+of trade secrecy.  Now that the algorithm is exposed (assuming this is the
+real thing) then this is an apparently unpatented secret-key cypher.  Would
+it be possible for them to have a "backup" patent application that they
+could push through now?  I recall some claims of a similar strategy with
+respect to Clipper.
+
+>I see that it has been posted anonymously.  Was it posted to Cypherpunks
+>only, or did it also get on sci.crypt?  If not, did someone from
+>Cypherpunks, anonymously or not, crosspost it to sci.crypt?
+
+I haven't seen it anywhere but here.  We could probably get a lot more
+informed comment on sci.crypt.  Maybe it will show up there eventually.
+
+>This seems to be a REALLY GOOD THING, but I would like some verification
+>that it is not a hoax.
+
+Yes, it will be interesting to see what comes of it.
+
+Hal Finney
+
+
+
+

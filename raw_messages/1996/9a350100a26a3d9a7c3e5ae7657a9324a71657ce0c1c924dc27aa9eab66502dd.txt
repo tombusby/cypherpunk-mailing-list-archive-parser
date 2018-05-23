@@ -1,0 +1,66 @@
+From: Steve Reid <steve@edmweb.com>
+Date: Thu, 19 Sep 1996 17:50:33 +0800
+To: Jim Miller <jim@suite.suite.com>
+Subject: Re:really undetectable crypto made somewhat practical
+In-Reply-To: <199609190126.VAA01522@beast.brainlink.com>
+Message-ID: <Pine.BSF.3.91.960918231937.568B-100000@bitbucket.edmweb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I'm on FCPUNX instead of regular Cypherpunks, so please excuse me if I'm a
+little behind the thread. 
+
+> New Scheme:  First, calculate the MD5 hash of all the words in the various  
+> dictionary files used by the password cracker program and create a  
+> database containing every word and the first 4 bits of its MD5 hash.   
+> Given such a database, it would be possible to write a program that  
+> accepts as input a block of cyphertext (the stego message, encrypted),  
+> chunks it up in to groups of 4 bits and then, for each chunk, displays the  
+> words that have hashes that start with those same four bits.  The person  
+> running the program would select words that form meaningful sentences but  
+> also produce hashes that combine into the encrypted stego message.  This  
+> scheme would send 4 stego bits per word.
+
+As a slight improvement, you could turn this into a complete stealth
+encryption scheme, using only the one-way hash function operating as a
+MAC. 
+
+Instead of hashing just the word in an effort to get stego bits, you could
+hash a key along with the word. In order to get the intended hash you
+would need to know the key. Since you're probably hashing a whole block of
+512 bits (or whatever's specified in the algorithm) appending a key should
+not affect the speed of the system. I'm certain that this would increase
+the security, possibly enough that you wouldn't need to use a regular
+encryption algorithm (but I wouldn't bet on it). 
+
+Crude example:
+Assume that Alice can use the words "Greetings" and "Salutations"
+interchangably without drawing suspicion. Also assume that "PASSWD" is a
+secret known only to Alice and Bob, and that the stego software looks at
+the low bit of an MD5 hash. 
+
+MD5 ("GreetingsPASSWD")   = c7bf6e051731a0dcf52baa330c9d2e7d  <- low bit=1
+MD5 ("SalutationsPASSWD") = 2dd2ba080b5feb060ffbc6d196fd1b34  <- low bit=0
+
+If you say "Greetings" you're sending a 1, if you say "Salutations" 
+you're sending a 0. Eve doesn't know about "PASSWD" so she can't do the
+hash and figure the bit. Of course, if you're using this to send more
+bits, you'll need something harder to guess than "PASSWD". 
+
+The trick is in figuring out which words have stego bits and which don't. 
+It might be better to stego bits into a whole line instead of a word, as
+that would probably offer more flexibility. 
+
+
+=====================================================================
+| Steve Reid - SysAdmin & Pres, EDM Web (http://www.edmweb.com/)    |
+| Email: steve@edmweb.com   Home Page: http://www.edmweb.com/steve/ |
+| PGP (2048/9F317269) Fingerprint: 11C89D1CD67287E68C09EC52443F8830 |
+|          -- Disclaimer: JMHO, YMMV, TANSTAAFL, IANAL. --          |
+===================================================================:)
+
+
+
+
+

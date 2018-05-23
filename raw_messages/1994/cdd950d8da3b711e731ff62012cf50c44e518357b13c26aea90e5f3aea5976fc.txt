@@ -1,0 +1,30 @@
+From: wcs@anchor.ho.att.com (bill.stewart@pleasantonca.ncr.com +1-510-484-6204)
+Date: Tue, 1 Mar 94 15:36:14 PST
+To: cypherpunks
+Subject: Re:  DES Question
+Message-ID: <9403012336.AA02022@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Matthew Ghio writes:
+> When using DES to encrypt email addresses, the total amount of data to
+> be encrypted would be only 3 or 4 eight-byte DES blocks.  My question
+> is: Would CBC or CFB really be effective for such a small amount of data
+
+Assuming you're using a random initialization vector rather than zeros,
+yes, CBC or CFB should be quite effective - the first real block is 
+essentially XORed with random junk, though of course if they guess the right
+key they can check that the block comes out reasonably.  But it does
+prevent a brute-force attack where they decrypt and see if they get ASCII,
+since they first block is random junk - they're forced to decrypt at
+least two blocks of data, which is somewhat annoying for brute-force-search
+machines.
+
+		Bill
+
+
+
+
+

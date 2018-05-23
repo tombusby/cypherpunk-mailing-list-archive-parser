@@ -1,0 +1,73 @@
+From: Rolf Michelsen <Rolf.Michelsen@delab.sintef.no>
+Date: Mon, 7 Feb 94 00:41:11 PST
+To: cypherpunks@toad.com
+Subject: RE: Magic Money questions
+In-Reply-To: <199402051111.DAA11286@mail.netcom.com>
+Message-ID: <Pine.3.88.9402070917.C18201-0100000@pluto.er.sintef.no>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sat, 5 Feb 1994 catalyst-remailer@netcom.com wrote:
+
+[ Stuff deleted ]
+
+> >Similarly, how can the consumer trust the bank's representation that
+> >money has already been spent?  Surely the bank should be required to
+> >publish a list of cancelled coins and timestamps with a running MD5
+> >hash periodically for inspection by the unwashed masses.
+> 
+> There is no punishment for double-spending. The transaction is simply thrown
+> out. The bank, in fact, has no way to identify the customer. What could the
+> bank hope to accomplish by claiming that a coin was already spent? It can
+> print more coins at any time, so it has no reason to cheat. A server will
+> have to protect its reputation by not printing too much money or otherwise
+> making its users angry. If you want to put in an MD5, it wouldn't be hard.
+> 
+
+[ more stuff deleted ]
+
+False!  If digital coins represent some kind of value the bank will 
+"earn" something by not accepting a coin presented for deposit.  The bank 
+will not have to provide the value or the service the depositor is 
+entitled to.  This was also pointed out by someone else posting to this list.
+
+I haven't studied the maths and protocols of the original post to 
+closely, but just to show that it is possible to *prove* double spending 
+I present a deposit protocol.  I don't know if this protocol fits in the 
+implementation discussed here.
+
+If I remember correctly, some of Chaum's (?) digital coin systems proved 
+double spending by using a protocol resembling the one below:
+   1)  Depositor presents a part of the coin to the bank and asks "Is 
+       this coin already deposited?"
+   2)  The bank answers "yes" and proves this by revealing some 
+       information about the coin which it should now know unless the 
+       coin has already been deposited.  The "no" answer together with 
+       the information presented by the depositor is signed by the bank 
+       and is a *commitment* by the bank to accept the coin when the 
+       "real" deposit takes place.
+   3)  The depositor sends the rest of the coin to the bank if the answer 
+       was a "no".
+This is taken from memory -- I could probably produce some references if 
+someone is interested.
+
+By the way -- I don't think you should use the "digicash" word to 
+describe this implementation.  David Chaum's company carries that name!
+   
+
+
+-- Rolf
+
+
+----------------------------------------------------------------------
+Rolf Michelsen         Phone:  +47 73 59 87 33
+SINTEF DELAB           Email:  rolf.michelsen@delab.sintef.no
+7034 Trondheim         Office: C339
+Norway
+----------------------------------------------------------------------
+
+
+
+
+

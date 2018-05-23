@@ -1,0 +1,71 @@
+From: Ian Goldberg <iang@CS.Berkeley.EDU>
+Date: Mon, 15 Jan 96 16:14:41 PST
+To: cypherpunks@toad.com
+Subject: How to make someone else lose ecash
+Message-ID: <199601160014.QAA20158@lagos.CS.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I don't recall seeing this on cypherpunks or on ecash@digicash.com;
+it's being sent to both places, so set your replies appropriately.
+
+Dave and I were discussing the ecash protocols when we discovered
+what seems to be a way for Eve (a passive eavesdropper) to cause
+anyone to lose money.  Note that she doesn't gain anything from it.
+
+Eve watches for any message that contains pcoins (a list of onl_coin).
+These messages are the Payment (from user to shop) and Deposit (from
+shop to mint).  Neither of these are required to be encrypted.
+
+An onl_coin is the following:
+
+onl_coin =
+      [
+        int     keyversion              ; low 5 bits are denomination
+        MPI     n                       ; coin number
+        MPI     sig                     ; encrypted coin signature
+      ]
+
+sig is (f(n)^(1/h) XOR f(payment_hdr)), encrypted in the mint's public key.
+
+The reason sig is encrypted is so that the payment header can't be
+changed and so that Eve can't learn f(n)^(1/h).  However, n is sitting
+there all nice and cleartext.
+
+Therefore: when Eve sees such a message, she uses the same value of n
+to withdraw a coin from her bank account, and then spends it (she could
+just pay it to herself).  Eve does not gain or lose anything, but if
+she can deposit the coin before the original coin that she saw gets to
+the mint, the original coin will not clear.  If Eve has the ability
+to drop or delay packets, she can accomplish this easily.  The result
+is that whoever withdrew the coin originally has lost the use of that
+coin.
+
+Note that this is the same problem as if two users just happen to use
+the same value of n when they withdraw coins.  We don't really care
+about that, since the probability is trivial.  However, this attack
+lets Eve produce the same effect _on purpose_.
+
+How can we prevent this?  Well, since a shop has no way of using the
+value n except for just sending it on to the mint, we lose nothing by
+encrypting it.  Thus, an onl_coin should be:
+
+onl_coin =
+      [
+	    int     keyversion              ; low 5 bits are denomination
+	Encrypt_with_mint_public_key(
+	    MPI     n                       ; coin number
+	    MPI     sig                     ; (f(n)^(1/h) XOR f(payment_hdr))
+	)
+      ]
+
+Note that it's not really necessary to have sig already encrypted if
+we're going to encrypt it again.  Actually, I think an onl_coin
+should have an additional field (bankID) to the fields listed
+above, but that's another argument for another time.
+
+   - Ian "Back from the North and ready to party!"
+
+
+

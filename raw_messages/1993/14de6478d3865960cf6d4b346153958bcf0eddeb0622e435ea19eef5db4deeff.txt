@@ -1,0 +1,43 @@
+From: Jim McCoy <mccoy@ccwf.cc.utexas.edu>
+Date: Tue, 1 Jun 93 12:18:22 PDT
+To: hughes@soda.berkeley.edu (Eric Hughes)
+Subject: Re: Crypto anarchy in a VW? (not the bug)
+In-Reply-To: <9306011820.AA21028@soda.berkeley.edu>
+Message-ID: <199306011955.AA29541@flubber.cc.utexas.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Eric Hughes <hughes@soda.berkeley.edu> writes:
+[...]
+> 
+> >Such a system would not be completely secure but would provide some
+> >protection for files, which is more than they get now...
+> 
+> The keying material for the disk should not be one key for the whole
+> disk.  The keying material could easily be one key per track without
+> the keys growing too large.
+
+Actually I was sort of thinking of the keying being done on a per-user
+basis.  The user would supply a key (with the pub key kept online and the
+private part stored in kernel memory during the user session) that would be
+used for thier files and the system key would only be used to provide a
+secure channel between the user and the system (user encrypts thier key
+pair with the system key and transmits it).  I have several ideas on how to
+close up some of the holes on the OS side, but at the moment I am trying to
+concentrate on finishing up the details of just the filesystem side so I
+can get coding.
+
+Right now I am working on making the system provide security such that the
+only way to get at a file is to either have the legitimate user's private
+key or to have the system private key and run the system as a sort of
+trojan horse collecting keys as users login.  Having the system private key
+will not give you any sort of "replay" data (you will not be able to use
+the system key to get any past user keys or much of anything else...) and
+having the physical hardware without the system private key will give you
+nothing at all.
+
+jim
+
+
+

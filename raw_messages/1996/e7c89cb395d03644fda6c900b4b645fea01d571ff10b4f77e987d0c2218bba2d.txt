@@ -1,0 +1,65 @@
+From: stevenw@best.com (Steven Weller)
+Date: Tue, 9 Jul 1996 17:31:29 +0800
+To: cypherpunks@toad.com
+Subject: Re: Word lists for passphrases
+Message-ID: <v01540b00ae07acca4daf@[206.86.1.35]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>AwakenToMe@aol.com, in a profound display of stubbornness, continues
+>to insist that his program to enumerate all possible words of length N
+>(that is, aaaaa, aaaab, aaaac, etc.) is somehow interesting. I am
+>therefore forced to drive in the nail with a sledgehammer. Forgive me.
+
+>------Cut Here------
+>/*
+>   This could be more elegant, but the point is obviousness.
+>*/
+>#include <stdio.h>
+>
+>int main()
+>{
+>        char i[6];
+>
+>        for (i[0] = 'a'; i[0] < 'z'; i[0]++)
+>          for (i[1] = 'a'; i[1] < 'z'; i[1]++)
+>            for (i[2] = 'a'; i[2] < 'z'; i[2]++)
+>              for (i[3] = 'a'; i[3] < 'z'; i[3]++)
+>                for (i[4] = 'a'; i[4] < 'z'; i[4]++)
+>                  printf("%s\n", i);
+>}
+>------Cut Here------
+>
+>Perry
+
+I agree with you, but it could also be correct.
+
+Since the char array is allocated on the stack as an auto, its contents are
+not guaranteed. So i[5]='\0'; is needed as the first statement.
+
+And of course it will never include a 'z' because the '<' will not permit
+it. Replace all the '<' with '<='.
+
+Plus there is the small matter of non-ASCII character representations
+breaking the increments and comparisons.
+
+Oh, and don't forget that main() returns an integer. This will generate at
+least a warning from the compiler, since the code does not return anything.
+It may well return a random number or something that will be interpreted as
+an error code.
+
+(also less than a minute's work)
+
+
+-------------------------------------------------------------------------
+Steven Weller                      |  Technology (n):
+                                   |
+                                   |     A substitute for adulthood.
+stevenw@best.com                   |     Popular with middle-aged men.
+
+
+
+
+
+

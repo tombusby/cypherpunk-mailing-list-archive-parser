@@ -1,0 +1,41 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Tue, 13 Apr 93 00:21:26 PDT
+To: pmetzger@lehman.com
+Subject: Re: Modem encryption proposal
+Message-ID: <9304130721.AA29941@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Crypto synchronization seems to be a problem mainly in real-time
+appliations like digital voice, where you don't have a reliable
+protocol underneath you.
+
+I advocate two approaches that don't seem to have been pursued much
+yet, at least in the Internet: per-packet encryption (and possibly)
+authentication) just above the IP layer, and stream encryption just
+above TCP.
+
+The former technique has the advantage of denying your adversary the
+maximum amount of information, because only the IP header is in the
+clear.  The transport header and all user data is protected, so an
+eavesdropper can't tell which applications are communicating. And with
+IP-in-IP encapsulation, you can even deny him knowledge about which
+machines are actually communicating - a network-level service
+analogous to anonymous remailers. With authentication, network level
+security also provides good protection against replay attacks.
+
+The latter technique (encrypting above TCP) has the advantage of being
+more efficient (it doesn't break Van Jacobson TCP/IP header
+compression), which may make it desirable for some interactive
+sessions. This is essentially how encrypted Kerberos Telnet works now,
+although I would like to generalize the service to work with any TCP
+client.
+
+Phil
+
+
+
+
+
+

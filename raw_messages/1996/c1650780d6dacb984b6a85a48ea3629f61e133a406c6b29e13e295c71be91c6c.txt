@@ -1,0 +1,59 @@
+From: David A Wagner <daw@CS.Berkeley.EDU>
+Date: Fri, 26 Jan 1996 09:34:21 +0800
+To: jamesd@echeque.com (James A. Donald)
+Subject: Re: Why is blowfish so slow?  Other fast algorithms?
+In-Reply-To: <199601250629.WAA16623@mailx.best.com>
+Message-ID: <199601252213.OAA02708@lagos.CS.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> At 07:32 PM 1/23/96 -0500, David A Wagner wrote:
+> >If you want authentication, you must use a crypto-strength MAC.
+> >Encryption (be it RC4, DES, etc.) is not enough.
+> 
+> Not so:  If the message is encrypted and checksummed with a simple
+> not non cryptographic checksum, this gives you everything a MAC 
+> gives you, plus the message is secret.
+> 
+
+Not true.
+
+For instance, suppose you append a standard simple CRC-32 of the
+plaintext, and then encrypt with CBC mode.  Because CRC-32 is linear,
+it's trivial to construct a collision by flipping some of the first
+33 bits of the plaintext; but this, in turn, is easy to do by just
+flipping the corresponding bits in the IV.  (The attack is even
+easier if you're using a stream cipher.)
+
+I'm sure you can come up with a non-cryptographic checksum which looks
+(at first glance) like it'll work ok.  Maybe you'll be completely safe.
+Still, the security of any such scheme will inherently depend on very
+subtle issues of whether the encryption and the checksum can interact--
+and there are probably only a handful of people in the free world who
+are really qualified to do a full analysis of these effects, I'd guess.
+
+You can use a non-crypto checksum to attempt to provide integrity if
+you want, I suppose.  Is that prudent system engineering?  Personally,
+I don't think so.
+
+
+At the risk of sounding like a broken record, I suggest
+  Design principle: if you want message integrity/authentication
+  guarantees, use a crypto-strength MAC, damnit!
+
+> MACs are only useful in the strange and unsual case where you want
+> authentification using a symmetric key, but you want to transmit in
+> the clear.
+
+False.  MACs are useful & necessary in a encrypted packet network,
+to prevent message tampering by active attackers.  (Unless you prefer
+to sign *every* packet with RSA, which is insanely slowwww...)
+
+MACs are useful in conjunction with encryption, I should add.  They're
+not mutually exclusive. :-)
+
+
+
+

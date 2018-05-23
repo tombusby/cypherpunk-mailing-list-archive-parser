@@ -1,0 +1,48 @@
+From: "baldwin" <baldwin@RSA.COM (Robert W. Baldwin)>
+Date: Mon, 2 Oct 95 12:51:40 PDT
+To: cme@TIS.COM>
+Subject: Re: Certificate proposal & X509 clarifications
+Message-ID: <9509028126.AA812663445@snail.rsa.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+        The Distinguished Name of X509 is NOT intended to be the
+unique identifier of a person or a public key.  In the X509 world
+two different DNs can have the same public key, and a single
+DN can have multiple certificates with possibly different
+public keys.  The same public key naturally appears in multiple
+certificates when each certificate is only valid for a certain
+period of time (e.g., weekly certificates have been proposed for
+applications that do not want to implement revocation lists).
+        The unique identifier in an X509 certificate is the
+DN of the issuer and the serial number that the issuer attached
+to the certificate.  Both of these fields appear in the version 1 X509
+certificate.  Of course, this assumes that issuers are
+following the rule of not issuing two certificates with the same
+serial number.
+        The designers of version 1 of the X509 certificate format
+have realized that they need to allow issuers to attach all kinds
+of different attributes to a public key.  This lead to version 3
+of the X509 format, which provides for general extensions.  Of course,
+this means that there is more rope to hang yourself with when it
+comes to designing an overall system, but with careful design,
+lots of good things can be done.
+        For example, for the S/MIME secure mail effort, the certificates
+include the email address of the owner, as certified by the company
+that is providing the email post office (e.g., the employer or
+service provider).  Note that Netscape Navigator 2.x will support
+Version 3 X509 certificates and S/MIME.
+
+        Question: what's a good way to have the existing PGP public
+key infrastructure interoperate with the X509 infrastructure?
+
+                --Bob
+
+
+                       
+
+
+
+
+

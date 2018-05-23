@@ -1,0 +1,69 @@
+From: Andy Brown <asb@nexor.co.uk>
+Date: Mon, 31 Jul 95 05:38:45 PDT
+To: "Dr. Frederick B. Cohen" <fc@all.net>
+Subject: Re: your mail
+In-Reply-To: <9507311116.AA13350@all.net>
+Message-ID: <Pine.SOL.3.91.950731132625.27376C-100000@eagle.nexor.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Mon, 31 Jul 1995, Dr. Frederick B. Cohen wrote:
+> I wrote:
+>> On Fri, 28 Jul 1995, Dr. Frederick B. Cohen wrote:
+>> 
+>>> How (specifically) do you know that this is true?  Key generation is
+>>> very tricky stuf, and very subtle changes can have very profound impacts.
+>>> I doubt that Zimmerman's original was truly perfect at this either, but
+>>> how do we really know?
+>> 
+>> Because I've succesfully run the primes that PGP generates through the
+>> primality tests in other mathematical packages, most notably Arjen
+>> Lenstra's FreeLIP package.  The remaining steps to generating an RSA
+>> keypair are very easy to follow, and the result simple to check by
+>> verifying that the components PGP comes up with satisfy
+>> ed=1 mod(p-1)(q-1).  rsagen.c is pretty easy to follow if anyone wants to 
+>> check for themselves.
+> 
+> But that doesn't guarantee there aren't weak keys at all.  For example,
+> primes of the sort 2^N+1 would pass the primality tests and be very
+> weak keys.
+
+As I'm sure you know, PGP picks its primes by choosing a random starting 
+point and testing each odd number upwards until it gets a probable 
+prime.  The random number generator used to seed this search is mixed 
+using MD5 which gives a uniform 1/0 distribution.  I'd hazard a guess 
+that the chances of a start point having so many contiguous 1's as to be 
+close to 2^N is so vanishingly small that it's more likely a 
+non-prime would pass the probabalistic tests!
+
+I suppose if I were really paranoid I'd feed in fixed starting points
+for the search to MIT PGP and PGP 2.6.2 to make sure that they come out 
+with the same keys.
+
+
+- - Andy
+
++-------------------------------------------------------------------------+
+| Andrew Brown  Internet <asb@nexor.co.uk>  Telephone +44 115 952 0585    |
+| PGP (2048/9611055D): 69 AA EF 72 80 7A 63 3A  C0 1F 9F 66 64 02 4C 88   |
++-------------------------------------------------------------------------+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2i
+
+iQEVAwUBMBzOMCXfPV+WEQVdAQEs3Af/Qr1RSfgKw0lHSdo+3A59ZY/7cmw1voA3
+6zrl1uAOxUfXVO36UPrSh5/lGHjGNW25FU4mckZ5qwhD9x8BEI3NemIddAtSrnbH
+tNxTD5+dUpYyiab4j9CKE9FTBsuY+TriyafFOMRBvjELYVgh0zhnS6GBb2ZVN3R5
+J1B+qItB/kK2rvrPN+9tqXaH6/lleOquZxA4quoVGOKOmdOg/uWA9xme90NqjjzS
+ZbTKVSWEuqWvbaIvm3KexgH1/t9jIU7EcRbfoRWiFDQrW/ecvInW61J6kEGfVqPK
+RmjsoyDsYZJ11AqPaZLgVDLY8lmAN9qzaiUH785tVRQY/A5qQzLrkA==
+=sDbg
+-----END PGP SIGNATURE-----
+
+
+
+

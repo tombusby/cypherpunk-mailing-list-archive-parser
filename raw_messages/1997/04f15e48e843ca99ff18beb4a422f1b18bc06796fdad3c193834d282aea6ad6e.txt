@@ -1,0 +1,53 @@
+From: Eric Murray <ericm@lne.com>
+Date: Thu, 13 Nov 1997 03:14:12 +0800
+To: whgiii@invweb.net (William H. Geiger III)
+Subject: Re: SET
+In-Reply-To: <199711121845.NAA31064@users.invweb.net>
+Message-ID: <199711121902.LAA02041@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+William H. Geiger III writes:
+> In <199711121751.JAA01757@slack.lne.com>, on 11/12/97
+>    at 09:51 AM, Eric Murray <ericm@lne.com> said:
+> 
+> >[details: according to the spec the cardholder sends to the merchant
+> >thumbs (SHA1 hashes) of all the certs in the cardholder's cert cache.
+> >Since this will contain certs from merchants the cardholder has made
+> >purchases from in the past, a merchant could simply match up those
+> >merchant cert thumbs with cert thumbs he obtains from other merchants,
+> >allowing him to build a list of merchants the cardholder has attempted to
+> >make purchases from].
+> 
+> 
+> Sorry I haven't been keeping track of the SET but why would a merchant
+> need this info in the first place??? If anything one would think that this
+> would be client driven not server driven (ie the client queries the
+> merchant for the hash of his cert to see if the client already has a copy
+> or not). I am not quite sure what they are trying to accomplish by this
+> unless what you consider a "flaw" is realy a "feature by design"?
+
+
+Sending them all from the client is bit more efficient-
+this way the client sends one message with all its thumbs and
+the merchant side sends back any certs that are required.
+
+The other way, the merchant would send the thumbs for all
+the required certs, then the client would send a list of thumbs
+for certs it doesn't have, then the server would send those certs.
+
+So this way there's one less round trip required.
+
+Both methods are equally open to attack unless the list of thumbs is MAC'd.
+
+
+-- 
+Eric Murray  Chief Security Scientist  N*Able Technologies  www.nabletech.com
+(email:  ericm  at  lne.com   or   nabletech.com)          PGP keyid:E03F65E5
+
+
+
+
+

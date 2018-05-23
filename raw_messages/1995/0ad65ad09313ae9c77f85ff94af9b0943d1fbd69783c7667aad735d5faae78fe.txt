@@ -1,0 +1,60 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 3 Nov 1995 00:34:44 +0800
+To: cypherpunks@toad.com
+Subject: Re: ecash remailer
+In-Reply-To: <199511020239.SAA27491@ix.ix.netcom.com>
+Message-ID: <199511021523.HAA19598@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+It's very frustrating to have to speculate so much due to the lack of
+information.  Imagine how we would react if Cybercash or Netscape had
+gone forward with what they claimed were secure protocols but had
+refused to publish them, referring simply to old papers on RSA and
+DES.  Yet Digicash gets away with this.
+
+Bill Stewart <stewarts@ix.netcom.com> writes:
+
+>At 01:20 PM 11/1/95 -0500, Michael Froomkin <froomkin@law.miami.edu> wrote:
+>>I thought a property of Chaumian DigiCash was that a coin *had* to go back
+>>to the bank before it could be spent again.  
+
+>No.  The basic Chaum Digicash method looks like this:
+>1) Alice creates a number of a recognizable form (Chaum's 1985 CACM paper
+>uses n1n2n3...n64n1n2n3....n64, i.e. a 64-bit number concatenated with itself).
+>2) Alice blinds the number and sends it to the bank (along with some request
+>for withdrawing money from her account or payment in other coin or whatever.)
+>3) The bank signs the number and sends it back.
+>4) Alice unblinds the coin; now it's good, recognizably signed, and untraceable.
+
+We presume it works basically like this, but there could be elaborations.
+In particular, I have heard (from people who claim to know) that the
+payee is normally embedded into the coin at spending time.
+
+>>Logically, I can see at least four possibilities:
+>>1) payee data is encoded onto the coin at time of payment, making it 
+>>impossible for Carol to bank the coin.  I see no evidence of this in the 
+>>docs at the Digicash site, but I just rechecked quickly and may have 
+>>missed it.
+
+>The basic protocol doesn't say anything about what a valid coin looks like;
+>you could use the example in Chaum's paper or a long string followed by
+>a checksum or whatever.  You _could_ put the payee's name account number
+>in the string as the 64-bit "random" number, or even put both payer and payee.
+>The bank could insist on that sort of thing if they wanted.
+>If I remember right, the version in the Digicash trial left you the choice
+>of filling in a specific payee or using "@" for bearer-payable coins.
+
+Doing this would require the payee to be known at withdrawal time, which
+is not apparently how it works.  I would speculate that actually what
+happens is that the "basic coin" as above is encrypted, along with the
+payee identity, all under the public key of the bank.  This was the
+identity could not be stripped out by the payee or by a thief who snooped
+the transmission.
+
+Hal
+
+
+
+

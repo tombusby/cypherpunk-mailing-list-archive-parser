@@ -1,0 +1,36 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Wed, 23 Jun 93 18:39:57 PDT
+To: cypherpunks@toad.com
+Subject: Re: OTP dual decryption
+Message-ID: <9306240139.AA00693@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At , nobody@eli-remailer.toad.com wrote:
+>-----BEGIN PGP SIGNED MESSAGE-----
+>
+>Using a one-time pad for dual decryption might work like this.
+>
+>I have a file, D (for Dangerous), which I want to conceal.  I construct
+>a random file of the same length, K (for Key), which will be my "encryption
+>key".  I xor K and D to produce E (for Encrypted), the encrypted file.  I
+>delete D and hide K somewhere.
+
+I have a better idea. You generate your D (dangerous) file and encrypt
+it with IDEA or DES and a secret key K that you commit to memory. You then
+destroy D. If (encrypt(D,K)) is seized and you are ordered to decrypt it,
+then you produce a file F such that (F XOR encrypt(D,K)) produces whatever
+bogus plaintext you desire and hand F over to the cops claiming that it's
+your one-time pad.
+
+Much simpler, and no chance of them discovering your plaintext, although
+there's no guarantee that they won't suspect that you're still hiding
+something (especially if they read cypherpunks).
+
+Phil
+
+
+
+
+

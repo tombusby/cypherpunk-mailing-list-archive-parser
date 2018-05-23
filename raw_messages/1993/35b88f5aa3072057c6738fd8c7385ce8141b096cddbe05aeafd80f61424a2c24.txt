@@ -1,0 +1,64 @@
+From: baldwin@LAT.COM (Bob Baldwin)
+Date: Thu, 18 Nov 93 13:32:18 PST
+To: cypherpunks@toad.com
+Subject: Duress Passwords/PINs/Combinations
+Message-ID: <9311182123.AA14221@LAT.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	Having a separate authentication mechanism that is used
+under duress is a very good idea that some existing systems already
+employ.  I'll pass along the ones I have had contact with.  From a
+systems point of view, it is hard to figure out exactly how the system
+should respond when it recognizes a duress authentication.  There are
+competing interests as I'll explain after some examples.
+	The safe inside the ATM machines used by BayBanks (Boston Mass)
+can be opened with two combinations.  One combination sends an alarm
+to the bank via a separate phone line (not the one used to perform the
+ATM transaction).  The alarm phone line is also connected to a conventional
+panic switch.
+	A fellow I know has a central-office alarm in his home.  When the
+alarm goes off, the office calls his house to ask if it was a false
+alarm.  They ask for a password to verify, and no matter what password
+you give they say "OK, I'll log it as a false alarm."  If you gave the
+wrong password, they call the police and notify them of a crime in
+progress with hostages.  If no one answers the phone, they send one of
+their patrol cars.
+	The challenge-response token that Attalla sells (which is a
+repackaging of someone else's token) supports a fixed or variable duress
+pin.  In the fixed duress pin mode, a special PIN, usually "1111", causes
+the device to use a fixed different key to compute the response to
+the challenge.  The code that authenticates the response checks for a
+use of the duress key if the response does not correspond to the value
+expected for the user's key.  The variable duress PIN approach is a feature 
+of the card where the user can set which PIN value causes the card
+to use the alternate key.  From a software point of view, the authentication
+procedure returns Yes/No/Duress.  Note it is possible to have a collision
+between a duress response and a regular response.
+	The competing interest problem is illustrated by the following
+possibility:  A criminal makes an ATM money-filler open the safe at gun point
+(the ATM repair people do not know the safe combination).  The
+criminal says that she knows about the duress combination and threatens to
+shoot the kneecaps off the person if they use the duress combination.  The
+criminal will take the money-filler hostage for a few minutes to guarantee
+a clean get-away.  So what does the money-filler do?  To use the duress
+combination requires faith that the bank will handle the situation in
+a subtle way and thus avoid major knee surgery.  For the bank, why risk
+loosing any money or loosing the criminal.  In fact, why not just refuse
+to open the safe in the first place?  What is the right balance between
+these interests?  How does each party trust that the other will behave
+as expected?  What is the benefit of this approach when the criminals
+already know about it?  It works well against criminals that don't know
+about it, but is that enough to justify the overhead?
+	These questions are not show stoppers.  Individual organizations
+can and do answer them in order to make rational choices about duress
+authentication.
+	In the cases of communicating cells, the key benefit is giving
+the adjacent nodes time to cleanup their surroundings of evidence or
+to totally "leave town".
+		--Bob
+
+
+
+

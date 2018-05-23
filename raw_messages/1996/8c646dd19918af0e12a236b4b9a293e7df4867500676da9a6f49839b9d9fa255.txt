@@ -1,0 +1,147 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Tue, 16 Jul 1996 16:20:38 +0800
+To: WlkngOwl@unix.asb.com
+Subject: Re: Opiated file systems
+In-Reply-To: <199607151158.HAA28540@unix.asb.com>
+Message-ID: <199607152049.VAA00313@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Rob <WlkngOwl@unix.asb.com> writes:
+> > Some more thoughts on encrypted file system design criteria.
+> > A wish list:
+> > 
+> > - Choice of secret key encryption algorithms (IDEA, 3DES, MDC, Blowfish)
+> 
+> Nice in theory. Awful in practice.  Requires code for managing keys, 
+> encrypting and decrypting for ea. algorithm be resident in memory.  
+
+No need to have all the code in memory, I think you ought to be able
+to keep the code in an overlay, or something of that nature.
+
+> For some systems (MSDOS), free memory is at a premium... (one of the 
+> reasons SecureDrive is popular is because it takes only 2.5k).  It's 
+> not worth wasting memory for handling several algorithms when only 
+> one is going to be used in most cases.
+
+I take your point about memory consumption under DOS, though
+presumably it would be possible these days to load data high.  I think
+SFS supports this for instance.
+
+> [...]
+>  
+> > - High performance (hand optimised assembler for each architecture)
+> 
+> So much for maintaining code across platforms.
+
+Only the secret key algorithms, 80x86 code would be the highest
+priority coz they're the slowest (well the old ones are).  You're
+going to need very OS specific code for the low level parts of the
+file system anyway.
+
+> > - Compression
+> 
+> Not worthwhile.  Use a Stacker or JAM driver over the encrypted 
+> partition on a PC, for instance.  Keep compression and crypto 
+> separate utilities... keeps bugs from one interfering with another 
+> and reduces complexity of both drivers; also, if one wants crypto 
+> w/out compression or compression w/out crypto, no wasted memory (see 
+> above about RAM being at a premium).
+
+One of the requirements some earlier posters gave was that they would
+like to be able to accesss the same data with different OSes (the
+example was to access the same partition with linux,win95, and winNT).
+Double space isn't available for unix.  (There was a read-only version
+for linux, but this seems to be currently unmaintained.)
+
+So one reason to include a compression module would be for portability
+of data.
+
+I agree with your points about separating concerns and keeping crypto
+and compression reasonably separate to keep bugs in compression code
+having the potential to affect crypto code.  It would probably be
+prudent to use OS segment protection, and page locking to protect
+crypto code and data from being accidentally overwritten, and written
+to swap respectively.
+
+> > - Ability to chain algorithms (IDEA and then 3DES for example)
+> 
+> Why?  Doesn't necessarily increase security, esp. considering the 
+> performance hit (memory... see above, time, key management).
+
+Hmm, say that you were using MDC with md5 as the hash (before
+Dobertin's recent pronouncements, naturally no one would do this now),
+if Dobertin comes through with the general case you might wish you had
+combined it with 3DES...
+
+For the paranoid only, but a nice option I think,
+
+> [uncontenious stuff]
+
+> > - Facility for duress key, with the real data hidden in the unused
+> >   space of the first encrypted drive.  To increase the plausible
+> 
+> Huh?!?
+
+Encrypted filesystems are for hiding data from other parties.  If your
+threat model includes law enforcement such a feature would be most
+useful.  You would have data which you would not mind agents
+obtaining, and have the "real" data hidden in a second file system.
+
+When you are supeonaed for your key, you reveal the 1st file systems
+key.  That key does not reveal anything about the 2nd partition, not
+even it's existance.
+
+The second file system would be hidden in the blocks not used with the
+1st file system.  To access the 2nd file system you would need to tell
+the file system driver the keys for both file systems -- the 1st key
+so that it could find which were the unused blocks in the 1st file
+system, the 2nd key for access to the hidden file system.
+
+> >   deniability all unused blocks within a file system should be filled
+> >   with garbage, so that it is not possible to tell if there is more
+> >   data there.
+> 
+> If the algorithm is good, this shouldn't matter.  The only way a 
+> person could tell if a sector is unused is if that person was able to 
+> mount the partition already.
+
+Yes, that's the idea -- your 1st key has been supeoned is the threat
+model.
+
+> > - File system steganographically hidden in files on another file
+> >   system (encrypted or not).  Support for a wide selection of file
+> >   formats (Aiff, Wave, Midi, JPEG, GIF, RGB, MPEG).
+> 
+> Now this is getting nutty!!!  Never mind the size, 
+
+4 gig disks are cheap these days
+
+> compleixty and amazing slowness of such a driver...  you'd have to
+> have audio or video files of gigabytes in size to be able to store
+> anything of use.
+
+Indeed you would.  So?
+
+> > - Ability to use stegoed file system in files on an unencrypted
+> >   file system, and boot from a floppy to access stegoed file system,
+> >   with no other traces left on hard disk.
+> 
+> Why?  The authorities would wonder why you have an 8 Gig JPG on your 
+> disk and figure you're using it for stego, or you're crazy, or both, 
+> and have you committed.
+
+Nah, you'd buy some video editing equipment, perhaps a photo-CD
+recorder, start a business doing photo-retouching (I know someone who
+does this btw, they use DAT tapes just to shift the Gbs they get
+through), video editing, whatever.  All quite plausible.
+
+Adam
+--
+only quiche eaters need ritalin...
+
+
+
+

@@ -1,0 +1,71 @@
+From: stewarts@ix.netcom.com
+Date: Wed, 4 Sep 1996 11:02:13 +0800
+To: paul@fatmans.demon.co.uk
+Subject: Re: Secure anonymouse server protocol: comments please
+Message-ID: <9609032156.AA05838@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 07:24 PM 9/2/96 +0000, paul@fatmans.demon.co.uk wrote:
+>The following is a very sketchy plan for a secure protocol for an 
+>anonymous server which allows replies without storing a recipient 
+>database in the clear.
+
+Several people have talked about this sort of thing recently,
+inluding William Geiger, Doug Floyd, and myself.
+Lutz Donnerhacke's Jenaer Anonymous Service <anon@as-node.jena.thur.de>
+actually implements it (send it mail saying "help".)
+Rather than using a human-selected userid, it uses the
+PGP keyid to make IDs like anon-1a2b3c4d@as-node.jena.thur.de.
+
+>This system has 1 huge fault, we can encrypt a uses ID with the 
+>servers public key to see what his ID in the encrypted database is 
+>and therefore identify him, maybe we need two seperate server public 
+>keys, and when IDs come in encrypted with key1 (the one it releases) 
+>it decrypts with secretkey1 then encrypts with publickey2 (the one it 
+>keeps secret)
+
+If you encrypt the id using raw RSA and constant padding, this is a risk.  
+If you encrypt it using PGP, which uses a random session key, it's not.
+If you encrypt it using raw RSA and pad the id with a random nonce, it's
+also no risk.  In the latter two cases, the encrypted material is different
+every time, so you can't compare with previous messages.
+
+The Jenaer nymserver avoids this by using a remailer approach -
+you send an encrypted message with a Reply-To: header telling where
+to send the accumulated mail (which may, of course, be another nymserver),
+and it delivers it using mixmaster.  This frees you to send your pickup 
+requests by anonymous remailer as well.  It's still not risk-free,
+since if Bad Guys crack the remailer or force the operator to operate it
+while they monitor it, they can see pickup requests, but it's far
+more difficult to do that than to just steal the box, and there's
+no database on the box that's useful to steal.  Lutz does recommend
+chaining your Reply-To: to another nymserver, but it's already very secure.
+
+I don't remember if he gets fancy and requires the pickup requests
+to be signed by the key of the owner or not; the only difficulty with this
+is the syntax of PGP, which is "fixed in 3.0".
+
+Hal Finney has also suggested a system that, instead of delivering
+anonymous email to the recipient, sends a message saying
+"You have anonymous mail, receipt #123456.  Send back this ticket
+to pick it up."  and you can extend the syntax to handle
+automatic blocking requests and automatic deliver-everything requests.
+This is fairly easy to extend for anonymous mailboxes
+and datahaven code.  I've wavered between the delete-on-retrieval model,
+which is fine for email and not very useful for samizdat,
+or the delete-after-some-time-period-or-request model, which is useful 
+for both but makes it easy for users to turn you into the local
+pirate-warez-and-child-pornography server.  If you extend the model
+and charge digicash for storage, it becomes a much cleaner solution.
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	
+# You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+
+
+
+
+

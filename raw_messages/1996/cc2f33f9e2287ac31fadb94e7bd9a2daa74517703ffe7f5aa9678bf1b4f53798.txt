@@ -1,0 +1,56 @@
+From: mch@squirrel.com (Mark C. Henderson)
+Date: Mon, 18 Mar 1996 06:43:09 +0800
+To: cypherpunks@toad.com
+Subject: Re: Backup of Encrypted Partition
+Message-ID: <199603172221.OAA14725@squirrel.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mar 17, 18:38, Sanwar Ali wrote:
+} Subject: Backup of Encrypted Partition
+} Hi
+} 
+} Apologies if this is too much of a beginner's Q.
+} 
+} Does anyone know how to backup a "SecureDrive" partition onto tape 
+} quickly and easily.
+} 
+} HPACK is really slow.
+} 
+} PKZIP and then PGP is slow.
+} 
+} RAWDISK, seems to be quite complex (perhaps I am just stupid!), and I 
+} am terrified of making some sort of terrible mistake.
+} 
+} I have about 100MB in the partition.  I have a pretty out of date 
+} computer which is a 386 33MHz running Windows.
+
+
+Ease of backup is one of the strengths of CFS which is a cryptographic
+filesystem for various flavours of UNIX and Linux.
+
+With CFS the encrypted files live in the ordinary UNIX filesystem 
+(their names are also encrypted), so one can backup encrypted data 
+without decrypting to make things intelligible and then encrypting to 
+secure the tape. Backups take no more time than backups of ordinary 
+unencrypted files and don't require any special tools (ufsdump, GNU 
+tar, GNU cpio work fine). You backup files individually, which means 
+you can also restore them individually, i.e. without restoring a 
+whole partition. 
+
+Of course, this doesn't solve your problem, because you are running 
+Windows. But CFS might be incentive to also run a more feature-rich
+operating system on your PC. You don't need to give up DOS/Windows
+to also run Linux, FreeBSD, Solaris, Unixware, etc. 
+
+
+-- 
+Mark Henderson -- markh@wimsey.bc.ca, mch@squirrel.com, henderso@netcom.com
+ViaCrypt PGP Key Fingerprint: 21 F6 AF 2B 6A 8A 0B E1  A1 2A 2A 06 4A D5 92 46
+unstrip for Solaris, Wimsey crypto archive, TECO, computer security links,
+change-sun-hostid, Sun NVRAM/hostid FAQ - http://www.squirrel.com/squirrel
+
+
+
+

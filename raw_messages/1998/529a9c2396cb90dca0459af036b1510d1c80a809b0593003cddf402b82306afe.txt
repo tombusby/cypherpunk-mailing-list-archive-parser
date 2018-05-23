@@ -1,0 +1,64 @@
+From: Jim Choate <ravage@ssz.com>
+Date: Wed, 11 Feb 1998 03:37:16 +0800
+To: cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: Fourier & Signal Analysis...
+Message-ID: <199802101939.NAA05111@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Hi,
+
+There is one final point I would like to make regarding at least one comment
+on Fourier Analysis of signals in a noisy environment.
+
+Fourier signal analysis is not good for this sort of stuff, what you want is
+a function called a Laplace Transform.
+
+Fourier is a method to take a complex signal and break it down into
+component trigonometric functions (eg sin) such that we can apply filtering
+and other frequency dependant operations to the signal to improve the
+signals characteristic signature or operate on a particular component (ie a
+component that is resonating with something and decreasing the s/n ratio -
+ringing on a pulse edge for example).
+
+If you want to find a signal in the noise you want to apply a Laplace. What
+it does is convert the amplitude-time variant signal (ie f(t)) into a
+power-frequency variant signal (ie f(s)). What this does is take, for example,
+a sample of a signal and describe how that signals power is divided between
+the various frequencies in that signal (eg McLauren Series). In most
+applications the grass of the signal will be evenly distributed across the
+s-mapping while the signal (at least its carrier component) itself will show
+up as a spike of noticeable amplitude. The reason you do this in signal
+analysis is because that transormation function will often be a simpler
+equation to solve numericaly that actualy trying to deal with f(t).
+
+So, if you want to find a signal in a complex environment use a Laplace
+Transform, once you've found the signal and want to know about its
+components use a Fourier Transform.
+
+Good hunting!
+
+
+    ____________________________________________________________________
+   |                                                                    |
+   |                   The obvious is sometimes false;                  |
+   |                   The unexpected sometimes true.                   |
+   |                                                                    |
+   |                                       Anonymous                    |
+   |                                                                    |
+   |                                                                    | 
+   |            _____                             The Armadillo Group   |
+   |         ,::////;::-.                           Austin, Tx. USA     |
+   |        /:'///// ``::>/|/                     http://www.ssz.com/   |
+   |      .',  ||||    `/( e\                                           |
+   |  -====~~mm-'`-```-mm --'-                         Jim Choate       |
+   |                                                 ravage@ssz.com     |
+   |                                                  512-451-7087      |
+   |____________________________________________________________________|
+
+
+
+
+

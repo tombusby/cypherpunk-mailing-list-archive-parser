@@ -1,0 +1,56 @@
+From: "Deranged Mutant" <WlkngOwl@UNiX.asb.com>
+Date: Wed, 3 Apr 1996 17:46:29 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Video retraces as a source of entropy...
+Message-ID: <199604040205.VAA15030@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Quickie blurb on using video card retraces as a source of entropy...
+
+I've done some brief testing in the last couple of days on using the 
+timing drift between video retrace events as a source of randomness.
+It seems comparable to truerand() spinners that check the system's 
+timer ticks [which makes me leary of relying on it since it
+has similar strange attractors when plotted in a noise sphere, but
+that's another post...].
+
+Assuming one trusts truerand spinners, this method could have some 
+advantages over a 'pure software' method, since the video controller
+(and other hardware controllers which could be adapted to this) runs 
+in 'parallel' [although it's liable to the samefluctuations in current or 
+memory-access and other interfaces with the main system, or possibly 
+tempest attacks for the paranoid...].
+
+In pseudo-C:
+
+int retrace(void) { // test for video retrace
+#ifdef __MSDOS__
+  return (port[0x3da] & 8); // Some VGA, maybe EGA cards
+#else
+  // your OS here
+#endif
+}
+
+  [..]
+   x = 0;
+  while (!retrace()) x++;
+
+I've tested it as  standalone routines (in Pascal and assembler)  as well as
+a hook to the DOS idle in the background [See note about strange
+atteactors above].  It also seems to work while in Windows (but not
+OS/2?!), which is an advantage over using the system's microsecond
+timer alarm (which Win3 takes over).
+
+Comments? (other than "truerand is an oxymoron"....)
+
+Rob. 
+
+---
+Send a blank message with the subject "send pgp-key"
+to <WlkngOwl@unix.asb.com> for a copy of my PGP key.
+
+
+
+

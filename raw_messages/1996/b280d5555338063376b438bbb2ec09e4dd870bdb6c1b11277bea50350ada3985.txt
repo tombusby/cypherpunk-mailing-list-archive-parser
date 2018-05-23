@@ -1,0 +1,65 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Fri, 2 Feb 1996 16:40:38 +0800
+To: bryce@colorado.edu
+Subject: Re: noise levels
+In-Reply-To: <199601190051.RAA28314@nagina.cs.colorado.edu>
+Message-ID: <199601312323.SAA05263@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bryce writes:
+>Perry, I quite agree with you.  I am having a very difficult
+>time wading through cpunks, and I am currently reduced to
+>grepping for my name, and then picking out a topic or two by
+>subject line before junking 95% of the posts.  Since you have
+>such enthusiasm for solving the noise problem I suggest that we
+>do the following:
+<auto-kill sublist scheme elided>
+
+I have an expansion on this.  Why not generalize the problem to create
+a group rating system?  Anyone who wants to can send ratings messages
+(rating each message on a scale of one to five, one meaning "what total
+crap" and five meaning "what a useful piece of information") to the
+ratings server.  The server maintains the ratings for each message by
+sender.  Client software can retrieve the ratings added since a
+given time and use this information with the ratings assigned by the
+user to generate compatibility profiles indicating with which raters
+the user tends to agree, and provide ratings on all messages based on
+it.  The user can then have anything lower than his tolerance threshold
+automatically deleted.
+
+This is patterned after a newsgroup collaborative filtering tool I
+read a paper on not too long ago.  I can't find that reference, but
+<URL:http://www-sloan.mit.edu/ccs/CCSWP165.html> has an open
+architecture design for a ratings server.
+
+Ideally, one would modify MUAs to recognize an "X-Ratings-To:" header
+to tell where ratings messages should be sent, and the list server
+would add that to all outgoing messages.  The MUA would present
+the ratings buttons when displaying messages containing "X-Ratings-To:"
+headers and automatically generate and send the rating when the user
+pushed a button.
+
+The beauty of this is that it works for *any* mailing list that has
+an associated ratings server.  It allows anyone with the appropriate
+MUA to ignore those conspiracypunks boneheads almost transparently.
+
+Necessary coding:
+    modifications to majordomo:
+	- add optional ratings server address and update frequency in
+	    list configuration data
+	- add "X-Ratings-To:" headers to outgoing messages in lists with
+	    ratings servers
+	- periodically send ratings updates to ratings server subscribers
+    modifications to MUAs:
+	- recognize "X-Ratings-To:" headers in incoming messages and
+	    present ratings interface when displaying them
+	- generate ratings messages to ratings server
+	- interpret incoming ratings messages to compute user's predicted
+	    rating
+	- maintain user preferences vector
+
+
+
+

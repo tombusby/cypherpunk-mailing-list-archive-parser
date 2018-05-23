@@ -1,0 +1,104 @@
+From: dlv@bwalk.dm.com (Dr. Dimitri Vulis)
+Date: Sun, 31 Dec 1995 00:49:17 +0800
+To: cypherpunks@toad.com
+Subject: Re: easy avoidance of PGP signature forgeries and reuse
+In-Reply-To: <Pine.BSD.3.91.951229172352.26978C-100000@usr5.primenet.com>
+Message-ID: <y9HXgD18w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+attila <attila@primenet.com> writes:
+> 	I never paid much attention to the problem other than to avoid
+>     it by forcing it --i.e. list the destination and the send inside the
+>     signature block, thus:
+>
+>     ----------------- BEGIN PGP SIGNED TEXT
+>
+>     To: john doe <john@box.com>
+>     Newsgroups: sci.crypt
+>     From: jane roe <jane@topsey.turvey.com>
+>     Subject: that's all folks!
+...
+
+
+Good - that's just what I've proposed :). However right now the overwhelming
+majority of people who PGP-sign their writings, don't include a copy of the
+headers within the signed portion.
+
+Those few who do, all seem to use different formats, so the signed headers
+cannot be easily compared to the headers in the actual envelope by a program.
+
+I propose a format below.
+
+> 	with e-mail, e-letters, direct faxes, etc. it is to easy to
+>     ignore the courtesy header. From a standpoint of security, you have
+>     blown away each of the attacks outline in your article in so much as
+>     the signature will not compute if the courtesy block is omitted.
+
+I totally agree; that's why I propose copying that info in the signed portion
+"by default".
+
+> 	personally, I do not think PGP 3 should attempt to solve the
+>     problem. Most of the headers involved are applied _after_ the message
+>     leaves the mail program; and, PGP interfaces are virtually the same
+>     as invoking an alternate editor, which gets you nothing.
+
+I don't think that a protocol for signing headers that requires mime/multipart
+is going to be widely used, especially for Usenet postings. I've thought about
+it and came up with the following idea for the syntax:
+
+----BEGIN PGP SIGNED MESSAGE----
+
+some text
+
+----BEGIN PGP SIGNED HEADERS----
+
+From: address                          [all these are optional]
+To: address[,address]...
+Newsgroups: group[,group]...
+Date: rfc 822 date
+Subject: subject
+
+----BEGIN PGP SIGNATURE----
+Version 2.6.2
+
+12341234...
+
+----END PGP SIGNATURE----
+
+The "signed headers" portion may contain the following optional fields:
+
+From: address -- the address associated with the key used to sign this message
+
+To: address[,address]... -- addresses (user@host, no names) of the recipients
+in RFC 822 To: and Cc: headers (not the Bcc: recipients). Addresses mangled
+by various gateways shouldn't verify.
+
+Newsgroups: group[,group]... -- the newsgroups from the RFC 1036 header
+
+Date: and Subject: -- should match the header
+
+The sequence of events would be:
+* pick the addressees and the newsgroups + compose the text
+* sign the signed portion
+* post/e-mail the result to the specified addressees/newsgroups.
+
+(Of course, the poster could lie and claim in the signed portion that the
+article is being posted to alt.sex.pedo when he himself posts it to misc.kids:)
+
+If a standard like this catches on, and is integrated into PGP-aware
+news/e-mail programs, then it's a simple exercise to write a little script to
+look for BEGIN PGP SIGNED HEADERS and compare the information inside it with
+the RFC 822/1036 headers outside the signed portion of the message. It could
+be done within PGP too.
+
+
+---
+
+Dr. Dimitri Vulis
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

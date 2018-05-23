@@ -1,0 +1,58 @@
+From: "Kurt Buff (Volt Comp)" <a-kurtb@microsoft.com>
+Date: Thu, 18 Jan 1996 10:08:57 +0800
+To: "Timothy L. Nali" <perry@piermont.com>
+Subject: RE: Random Number Generators
+Message-ID: <c=US%a=_%p=msft%l=RED-06-MSG960117144111CF009D00@red-02-imc.itg.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If you're going to work with hardware to get really random numbers, why not 
+go to the back of any of several PC-type magazines, and order the radiation 
+detector board that someone is hawking? Can't really do any better than 
+that, can you? Counting cosmic ray hits and noting their time differentials 
+should be just what the doctor ordered, right?
+
+Kurt
+
+----------
+From: 	Perry E. Metzger[SMTP:perry@piermont.com]
+Sent: 	Wednesday, January 17, 1996 11:00
+To: 	Timothy L. Nali
+Cc: 	cypherpunks@toad.com
+Subject: 	Re: Random Number Generators 
+
+
+"Timothy L. Nali" writes:
+> 	For a class project, I will be designing a VLSI cmos chip to generate
+> truly random numbers (The chip will be fabricated).  I'm limited to a
+> 2-micron standard cmos technology
+
+> The most promising design I've seen so far (that I can actually
+> do) is based on clocking a D flip-flop in the following way:
+
+I'd say that the design you have picked has a couple of problems with
+it. The first is that you are, from what I can tell, building a
+synchronizer, which means that you may have metastability
+problems. (Your diagram wasn't completely clear so I can't
+tell).
+
+Also, you are depending on a sloppy clock and a not sloppy clock
+actually having the stated properties, which means you aren't really
+generating randomness so much as hoping you can detect and exploit
+it. As it is very hard to determine if a stream is really random, this
+makes your life difficult.  Far better to try to use some analog
+tricks in the circuit itself to generate the random numbers for
+you. Of course, some of these end up producing metastability problems
+of their own...
+
+Can anyone point this guy at good texts on all of this? I've never
+found one...
+
+Perry
+
+
+
+
+
+

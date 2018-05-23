@@ -1,0 +1,56 @@
+From: Adam Back <aba@atlas.ex.ac.uk>
+Date: Fri, 19 Jul 1996 08:52:00 +0800
+To: jim@ACM.ORG
+Subject: Re: Opiated file systems
+In-Reply-To: <199607162030.NAA10344@mycroft.rand.org>
+Message-ID: <199607181001.LAA00078@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Jim Gillogly <jim@acm.org> writes:
+> "Deranged Mutant" <WlkngOwl@unix.asb.com> writes:
+> >A problem with a c'punk-style encrypted fs with source code and wide 
+> >distribution is, of course, that attackers will KNOW that there is a 
+> >duress key.
+>
+> Good point.  This suggests a design desideratum for any such system should
+> be that the user may choose not to have a duress key, maintaining
+> semi-plausible deniability for those who choose to have one.
+
+For plausibility it would probably be best if very few people used the
+duress key feature.
+
+If PGP had an infrequently used duress key feature, it would provide
+quite a bit of plausible deniability: lots of people have PGP.
+
+This was the basis for comments earlier in this thread about it being
+desirable to have a very popular file system with these features
+included.  The more users (mostly for it's normal features) the less
+suspicious having the software on your system becomes.
+
+One problem is that some of the additional requirements to do a good
+job of obscuring whether or not there is data in the unused part of an
+encrypted file system add overheads.
+
+For example re-encrypting the unused data with random IVs so that it
+doesn't appear stale even if the duress key feature was not requested.
+If that overhead is too great it will be annoying for people who do
+not wish to use the duress key feature.  It might possibly be a good
+idea to do re-encrypting of the blocks anyway as it would obscure
+usage patterns.  (eg I am thinking when the disk starts up it will be
+cold, as it warms up the heads will be positioned fractionally
+differently, and from this kind of analysis it might be possible to
+make inferences about the amount of data used in the file system,
+etc.)
+
+Adam
+--
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+
+
+
+

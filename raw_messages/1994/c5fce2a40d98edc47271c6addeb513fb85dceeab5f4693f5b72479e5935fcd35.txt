@@ -1,0 +1,50 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Mon, 12 Dec 94 14:30:12 PST
+To: cypherpunks@toad.com
+Subject: Re: Clarification of my remarks about Netscape
+In-Reply-To: <9412122118.AA11047@snark.imsi.com>
+Message-ID: <199412122229.OAA05451@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+"Perry E. Metzger" <perry@imsi.com> writes:
+
+>HTTP, like SMTP, is only a transport for underlying documents. The
+>underlying documents are the things people wish to secure, not the
+>transport layer.  By securing only the transport, you make it possible
+>for people to get pages that are forged, although they can be sure of
+>what machine delivered them (which isn't significant). Your system is,
+>for instance, useless in a proxy HTTP daemon environment.
+
+I was going to say that an SSL-aware proxy daemon could play "man in
+the middle" and pass through the SSL handshaking messages which occur
+at connection time, so that the user client could authenticate the
+remote server, then communicate using a key shared with that server but
+which the proxy would not know.
+
+But that won't work with SSL, I guess.  The SSL handshaking goes on
+before any message data has been exchanged; in particular, before the
+URL is sent to the proxy to tell it what server to connect to.  (Hiding
+URL's is one of the features of SSL.) So in fact with SSL the only
+authentication possible is between proxy and user, and then between
+proxy and remote server.  There doesn't seem to be a place in the
+protocol where the user could authenticate the remote server and create
+a key which would not be known to the proxy.  This does seem to be a
+deficiency.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLuzO1hnMLJtOy9MBAQG+IgIAyZvvTpXB6dmCbEyrvLA65QeK4c5T8UNi
+NAelFrZMEsb/NdS2l8ApczkljEnviCpOiV9W5ALYTKXr9nzJbSaZbg==
+=eBkX
+-----END PGP SIGNATURE-----
+
+
+
+

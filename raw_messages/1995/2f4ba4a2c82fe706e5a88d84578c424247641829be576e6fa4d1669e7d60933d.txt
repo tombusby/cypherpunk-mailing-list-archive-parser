@@ -1,0 +1,50 @@
+From: wcs@anchor.ho.att.com
+Date: Mon, 30 Jan 95 18:28:17 PST
+To: cypherpunks@toad.com
+Subject: Re: ESP Unix encrypted session protocol software
+Message-ID: <9501310159.AA00485@anchor.ho.att.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> How to do authentication of DH sessions  - it's hard to store
+> a private-key safely on a multi-user server.
+
+For now, let's look at this as client-server, rather than peer-peer.
+One direction of authentication isn't too hard - the remote
+client can authenticate his half with a PGP (or equivalent) public key,
+and the server can keep a cache of known clients' public keys,
+plus maybe have a good connection to a key server, and use web-of-trust
+to help fill in the gaps.  (Getting all the details right is annoying...)
+(And it increases the protocol a lot, involves post-1997 patent control,
+and invokes PGP-vs.-RIPEM Public-Key-Implemention political wars.
+But it's all an exercise for the reader :-)
+
+One way to resolve the server direction is to hand-wave it away -
+the authentication problem you need to solve is the man-in-the-middle;
+man-at-the-end is a different problem.  After all, if the Bad Guys can 
+break into the server well enough to steal root's private key,
+the server is hosed anyway, and untrustable.  (The variant where the
+server process is user-owned rather than root is really no different.)
+
+If there _is_ another way to solve the server direction, it's to
+do something like input the server's private key or the secret key
+for root's private-key keyring into the process form a terminal
+rather than a file, so it isn't stored on disk anywhere;
+not a big win, but it's something.
+
+An alternative to server authentication is to use a well-known published
+half-key for the server end.  (Obviously the server still needs to keep
+x private while publishing g**x mod m, but that's hard anyway.)
+The client doesn't have to authenticate it, since it's well-known,
+though it could be signed with a key not stored on the server,
+and the server can authenticate the client's signed half-key,
+so the man-in-the-middle is still unable to fake the session.
+People have discussed how much this reduces security; I don't remember
+the conclusions.
+
+		Bill
+
+
+
+

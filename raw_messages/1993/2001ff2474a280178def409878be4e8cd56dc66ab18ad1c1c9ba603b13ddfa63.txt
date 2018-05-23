@@ -1,0 +1,53 @@
+From: Read me doctor memory!  26-Aug-1993 1434 <yerazunis@aidev.enet.dec.com>
+Date: Thu, 26 Aug 93 11:47:31 PDT
+To: cypherpunks@toad.com
+Subject: ViaCrypt's PGP
+Message-ID: <9308261844.AA08587@enet-gw.pa.dec.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Thug@phantom.com says:
+
+>I'm assuming the NSA will pressure ViaCrypt to put in a backdoor.  One
+>possible backdoor that can be placed inside the commercial PGP and still
+>allow it to pass the above test is if commericial PGP secretly writes all
+>keys and pass phrases to a block on your hard disk, and marks that
+>block as used to the file system.  In order to prevent you from scanning
+>your hard disk and finding that block, the information stored there could
+>be encrypted by a key which the NSA has in it's possession.
+ 
+There's actually a much easier way for a backdoor to be inserted that
+will allow monitoring even without the spooks knocking on your door to
+get your disk...
+
+PGP uses RSA only to encode and transmit a "random" DES/IDEA-type session key,
+and the rest of the message is encoded only with the session key.  The
+recipient PGP uses RSA to recover the session key, and then decodes the
+rest of the message with the recovered session key.
+
+Say that the "backdoored" PGP is redesigned to only choose session keys from
+a large-but-reasonably-brute-forceable set.... [example: only from consecutive 
+8-byte sequences in the executable image; I'm sure some other more obscure
+method can be easily devised].  
+
+The result is that there might only be a few hundred thousand possible 
+session keys- few enough that a brute-force attack with a small array 
+of workstations might succeed in recovering the session key in a few
+minutes to hours.  
+
+-----
+
+The only way ViaCrypt can prove that this isn't the case is to distribute
+the source code of _their_ product.  [Note: they do NOT have to include the
+RSA module source- if it's possible to examine the non-RSA code, and 
+instrument it (to prove that the session key is honestly generated 
+_AND_ transmitted/recovered correctly) then Thug's tests will be adequate
+to verify a lack of backdoors (as far as I can see- but I'm perhaps not
+as devious as a professional).
+
+	-Bill
+
+
+
+

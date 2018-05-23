@@ -1,0 +1,56 @@
+From: lcs Mixmaster Remailer <mix@anon.lcs.mit.edu>mix-admin@anon.lcs.mit.edu
+Date: Thu, 6 Jun 1996 10:21:23 +0800
+To: cypherpunks@toad.com
+Subject: Re: How can you protect a remailer's keys?
+In-Reply-To: <addac392000210049493@[206.170.115.3]>
+Message-ID: <199606051600.MAA02582@anon.lcs.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+> From: loki@infonex.com (Lance Cottrell)
+> Date: Tue, 4 Jun 1996 22:02:11 -0700
+> 
+> The best solution I could come up with (and was willing to write and use)
+> is to specify the passphrase on the command line argument to the compiler
+> 
+> make solaris -DPASS="foozooblue"
+> 
+>                 -Lance
+
+A far better solution would be to have a long-running daemon hold the
+secret key.  The mixmaster client could talk to the key daemon through
+a unix-domain socket with the permission bits set such that only the
+mixmaster user can connect.  Each time the machine is rebooted, the
+operator must start the daemon and give it a passphrase.
+
+This has two advantages.  First, it's a lot harder to back up the key
+by accident.  If the key ever starts making it only your daily
+backups, you are completely hosed because erasing a bunch of mag tapes
+would take a lot of time--and maybe you also want to keep your
+backups.
+
+Second, if your machine is seized or someone gains unauthorized
+physical access to it, the easiest way to get a root shell is by
+rebooting single-user.  However, if the only cleartext copy of a key
+is in memory rather than in the filesystem, once the machine is
+rebooted the secret key is lost.
+
+- - mix-admin@anon.lcs.mit.edu
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Processed by Mailcrypt 3.4, an Emacs/PGP interface
+
+iQCVAwUBMbWrj0TBtHVi58fRAQEkdQP/e7mouEmphgDmn0NKbaCM4lYnT2WbCFsk
+irM2GjttiBdpQxr2QDJKBgmHnuGc09xdiexnGnn4bDFie70YDH2Zma3xF/0OvZeQ
+DcgAz/0XwkAGPeLCSg8gfeykWwC0HUJlvGtmOwTQKFn5XtlqFM7pKIYF7lnFtoGY
+AX/GoGauum4=
+=rhyW
+-----END PGP SIGNATURE-----
+
+
+
+

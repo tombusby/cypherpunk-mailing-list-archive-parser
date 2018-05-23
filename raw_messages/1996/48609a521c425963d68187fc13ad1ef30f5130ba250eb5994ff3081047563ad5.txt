@@ -1,0 +1,48 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Fri, 1 Mar 1996 05:50:42 +0800
+To: daw@cs.berkeley.edu
+Subject: Re: fun with the web and security
+Message-ID: <199602290845.AAA03957@ix4.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:38 PM 2/27/96 -0800, you wrote:
+>Here's a fun way to exploit security holes via the web:
+>	http://www.cs.berkeley.edu/~daw/js1.html
+>A rough representation of its contents follow.
+
+Well, that was amusing.  (It gophered to localhost:25 and sent
+some mail and attempted to exploit a traditional sendmail bug.)
+I was wondering what would happen, since I'm behind a firewall
+and don't _have_ an SMTP listener on port 25, nor does my PC really
+do localhost in any useful manner.  What happened, of course,
+was that Netscape used my proxy settings for gopher,
+sent the request to the firewall, and tried to connect to localhost:25 there;
+it answered, accepted some mail for delivery, then
+503 Need MAIL before RCPT
+503 Need MAIL command
+500 Command unrecognized
+                ... many of these
+500 Command unrecognized
+501 Syntax error in parameters scanning "root@localhost"
+500 Command unrecognized
+500 Command unrecognized
+500 Command unrecognized
+221 [MY PROXY MACHINE'S NAME]. closing connection
+
+
+Good stuff.  (And I assume the proxy server had the debug hole blocked...)
+
+
+
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, stewarts@ix.netcom.com / billstewart@attmail.com +1-415-442-2215
+# http://www.idiom.com/~wcs     Pager +1-408-787-1281
+
+
+
+
+

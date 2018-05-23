@@ -1,0 +1,133 @@
+From: Eric Murray <ericm@lne.com>
+Date: Tue, 3 Dec 1996 21:25:25 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: more IPG and random numbers
+Message-ID: <199612040524.VAA18488@slack.lne.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+I did some more experiments with the IPG stream-cipher
+algorithim and random number tests.  Since IPG claim that their
+algorithim passes chi-square tests of randomness, I found
+a chi-square test program.  It's written by Peter Boucher
+and was posted to sci.crypt in '93 (<2bum8sINN98j@roche.csl.sri.com>).
+I found it on the web site crypto.com, sorry I don't remember the
+exact URL but I can send it on request. From the comments:
+
+
+> New, and improved anal.c, uses chi-square.
+> 
+> Does the 'runs up' (or 'runs down') test with run-length equal to two
+> get me anything over the standard chi-square test?  I left it in.
+> 
+> BTW, the  buf[i] = (((seed = (1103515245*seed +12345)) >> 16) & 0xff);
+> test fails this one at high numbers.  It's too evenly distributed.
+> 
+> -Peter
+> 
+> /* ***************************************************************
+>  * anal.c --
+>  *
+>  * Copyright 1993 Peter K. Boucher
+>  * Permission to use, copy, modify, and distribute this
+>  * software and its documentation for any purpose and without
+>  * fee is hereby granted, provided that the above copyright
+>  * notice appear in all copies.
+>  *
+>  * Usage:  anal [input_file [output_file]]
+>  *
+>  * This program counts the occurances of each character in a file
+>  * and notifies the user when a the distribution is too ragged or
+>  * too even.
+>  *
+>  * Because the chance of getting byte B after byte A should be 1:256
+>  * (for all A's and B's), the program also checks that the successors
+>  * to each byte are randomly distributed.  This means that for each byte
+>  * value (0 - 255) that occurs in the text, a count is kept of the
+>  * byte value that followed in the text, and the frequency distribution
+>  * of these succeeding bytes is also checked.
+>  *
+>  */
+ 
+ [..]
+ 
+> #define Vmin    (205.33) /*  1% chance it's less */
+> #define Vlo (239.39) /* 25% chance it's less */
+> #define Vhi (269.88) /* 75% chance it's less */
+> #define Vmax    (310.57) /* 99% chance it's less */
+> 
+> 
+
+
+
+First I ran the output from my version of the IPG algorithim that I
+posted a couple days ago :
+
+% ./boucher < ipg.out
+Occurances:  n =  12000000, V=-8375833.71
+Character occurances non-random
+Successions: n =     46875, V=62287.82
+Character successions non-random
+
+
+Then I ran output from a test RNG that's basically a loop around random():
+
+% ./boucher < myrandom/out
+Occurances:  n =   3414720, V=213050.62
+Character occurances non-random
+Successions: n =     13338, V=1143.41
+Character successions non-random
+
+As you'd expect, it doesn't look like the output from random() is all
+that great.
+
+Finally I generated some output from a random seed generator
+I wrote a while back.  It gets randomness from high-resolution timers
+and hashing system files.  It's not as fast as repeated calls to
+rand() but is faster than reading from /dev/random:
+
+% ./boucher < out
+Occurances:  n =    594352, V=269.75
+================ Frequency distribution excellent! ====================
+Successions: n =      2321, V=256.12
+================= Successor randomness excellent! =====================
+
+
+So, from these tests it looks like IPGs PRNG, which their stream
+cipher is based on, is not a very good source of random values.  Hence
+anything encrypted with it is succeptable to cryptoanalysis.
+How succeptable, I do not know.  I am sort of curious, since IPG claimed
+that their PRNG produces "perfect" random data as measured by chi-square
+analysis, yet my analysis shows otherwise.  Perhaps I have coded the
+algorithim incorrectly (I don't think so, it's pretty simple).
+Or perhaps IPG chose their keys for the ABC tables carefully to
+produce good results.  Unfortunately that would mean that keys
+would have to be carefully chosen, something that's not very practical.
+
+
+Based on the work I've done, and the work Igor Chudov posted, it
+looks like the IPG algorithim is probably not very strong.  If two
+relative crypto neophytes can find serious problems with it, imagine
+what might happen if experienced cryptoanalists look at it.  If you were
+one of the people who said "it's snake oil unless it's been been
+tested for a zillion years" etc. you can pat yourself on the back now
+'cause you were right.
+
+However I think that some of us owe Mr Wood, if not an apology for the
+excessive abuse he got on this list, at least some respect for
+putting his money where his mouth is and posting his algorithims.
+Maybe he'll do some research, tone down the hype, and come back
+with something better.
+
+
+-- 
+Eric Murray  ericm@lne.com  ericm@motorcycle.com  http://www.lne.com/ericm
+PGP keyid:E03F65E5 fingerprint:50 B0 A2 4C 7D 86 FC 03  92 E8 AC E6 7E 27 29 AF
+
+
+
+

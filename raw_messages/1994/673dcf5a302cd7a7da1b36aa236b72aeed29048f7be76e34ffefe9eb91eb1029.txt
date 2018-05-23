@@ -1,0 +1,125 @@
+From: solman@MIT.EDU
+Date: Tue, 19 Jul 94 11:32:40 PDT
+To: John Douceur <johndo@microsoft.com>
+Subject: Re: Why triple encryption instead of split+encrypt?
+In-Reply-To: <9407191650.AA02589@netmail2.microsoft.com>
+Message-ID: <9407191831.AA24540@ua.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I am claiming that your technique:
+> 
+> 	P0, P1, P2, ... Pn = S_KS(P)
+> 
+> 	C0 = E_K0(P0)
+> 	C1 = E_K1(P1)
+> 	C2 = E_K2(P2)
+> 	.   .   .
+> 	Cn = E_Kn(Pn)
+> 
+> Can be decomposed into parallel double encryptions, and is therefore just
+> as vulnerable to a meet-in-the-middle attack as double DES (or more so,
+> if your splitting algorithm is less secure than DES).
+
+We thus far agree. Vulnerability is dependent on splitting it into
+parallel problems.
+
+> NB:  When I use
+> the term "double encryption" here, I am not referring to your use of DES
+> multiple times after the split; I am referring to the splitting itself as
+> the first encryption, and the DES as the second encryption.
+
+AH! I hadn't been looking at it that way. I wish I had thought of it like
+that. You are then quite correct that meet-in-the-middle attacks can be
+done, but the key to the first encryption (the hashing multiplex) is 112
+bits (for the split into two parts version) which would require 2^112
+stored messages, substantially more than could possibly be stored by
+anybody ever (well, I guess ever is a bad word to use in this context). 
+
+> Let us define the function Sx_KS(P) as the portion of the splitting
+> algorithm which produces Px:
+> 
+> 	P0 = S0_KS(P)
+> 	P1 = S1_KS(P)
+> 	.   .   .
+> 
+> We now have a parallel set of double encryptions as follows:
+> 
+> 	P0 = S0_KS(P)
+> 	C0 = E_K0(P0)
+> 
+> 	P1 = S1_KS(P)
+> 	C1 = E_K1(P1)
+> 
+> 	.   .   .
+> 
+> Each of these double encryptions is vulnerable to a known-plaintext
+> meet-in-the-middle attack from P to Cx.
+
+When I am multiplexing based just on the hash of the keys and not
+hash followed by negated hash, the cryptanalyst does not know how
+to derive Ci (i=1...n) from C. This is even more true if I interleave
+the cipher texts instead of sending them one after the other (which makes
+more sense if I am doing them in parallel anyway). Of course this only
+increases security by a few powers of two (about n-2 where the length of
+the hash is 2^n and we constrain the keys slightly to avoid lopsided
+splits) if the opponent has the memory available to do a meet in the middle 
+attack for n=2. For n=4 this increased security becomes substantial
+however. (Combinations of numbers that add up to the size of the hash as
+constrained by the binomial distribution and splits that the program
+determines to be acceptable.) It is still far less security than is
+provided by the rest of the algorithm, however. So I suppose I should
+consider this to negligible (even if it is around 2^10) and concede the
+point.
+
+> >I think that multiplexing based on the hash of the concatenated keys
+> >is as secure as the one way hash function is, no?
+
+> In my above argument, I assumed a splitting key which is completely
+> independent of the DES keys.  This will be more secure than a splitting
+> key which is *any* function of the DES keys, since it increases the size
+> of the keyspace.
+
+Certainly, but I figure that if using the hash of the keys stands up, then
+the stronger totally seperate version certainly will.
+
+> >> the security of this scheme is significantly less
+> >> than that of triple DES.
+> 
+> >Well I don't believe that this is the case,
+> 
+> Perhaps you do now?
+
+Your point is unquestionably valid, but I still believe that the security
+of the scheme, even when just splitting into two parts and using the hash
+of the keys to multiplex the split, is much worse (by more than a couple
+of factors of two) than DES.
+
+I suppose I have merely created a new hash based symetric cipher. I will
+have to look up the other hash based symetric ciphers and see how they
+compare.
+ 
+> >but there is one way to find out
+> >:). I believe that for messages longer than a couple of K, my algorithm
+> >provides substantially more security than its DES analog and is quicker.
+> >I'll write up a version of this that splits into 4 parts and post it here
+> >some time over the next week. I think that splitting into four parts should
+> >be about as quick as double DES while providing substantially more security
+> >than triple DES (which I will time it against).
+> 
+> If you still maintain this position, then either you have not understood my
+> argument above, or I seriously misunderstand your algorithm.  If you have
+> not yet been convinced that you have not eliminated the meet-in-the-middle
+> attack as triple encryption does, then I welcome your algorithm in code, so
+> that I may see if I am missing something fundamental in your approach.
+
+I don't think that meet in the middle attacks are relevant because nobody
+has 2^112 memory. Its just alot. Schneier claims that at 128 bits there
+probably isn't enough matter in the universe to meet an algorithm using
+IDEA in the middle. I would say that 112 bits is nearly as solid a line of
+defense.
+
+
+
+

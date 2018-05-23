@@ -1,0 +1,40 @@
+From: Jeff Barber <jeffb@sware.com>
+Date: Tue, 24 Oct 95 13:06:01 PDT
+To: baldwin@RSA.COM (RobertW.Baldwin) (baldwin)
+Subject: Re: 80 bit security from 40 bit exportable products
+In-Reply-To: <9509248145.AA814557096@snail.rsa.com>
+Message-ID: <199510242006.QAA19382@jafar.sware.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+baldwin writes:
+> 
+>         Long ago vendors should have put encryption into network layer
+> products, but for a variety of reasons that effort was delayed or
+> discouraged.  One effect of this lack is that almost every layer of
+> the network stack is adding its own encryption.  For example, the
+> HTTP session layer added S-HTTP and the TCP transport layer added
+> SSL.  Soon we will have network layer encryption with IPsec.
+>         The vendors for each layer can export a product that uses
+> ciphers with 40 bit keys.  A user can then combine multiple
+> products to get more than 40 bits worth of security.  For example,
+> a web client might fetch an S-HTTP page over an SSL protected link
+> via a firewall that supports IPsec tunnels.  That's three 40 bit
+> keys protecting the data over the internet link (of course, this
+> may not be equivalent to a 120 bit cipher, that depends on the
+> details of the cipher systems and independence of the key setups).
+> Interesting possibilities.
+>                 --Bob Baldwin
+
+Even if you assume complete independence of key setup, if a successful
+decryption at each layer can be independently detected and verified
+(which seems likely in your example), there're only about 3 * (2 ^ 40)
+total operations in the worst case, NOT 2 ^ (3 * 40) operations needed
+to expose the plaintext.  This is an effective 41.5 bits, not 120.
+
+
+-- Jeff
+
+
+

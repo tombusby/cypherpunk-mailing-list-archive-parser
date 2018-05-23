@@ -1,0 +1,77 @@
+From: Adam Shostack <adam@lighthouse.homeport.org>
+Date: Tue, 5 Mar 1996 13:21:50 +0800
+To: ericm@lne.com (Eric Murray)
+Subject: Re: A brief comparison of email encryption protocols
+In-Reply-To: <203602070728.XAA19559@slack.lne.com>
+Message-ID: <199603050218.VAA05146@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Eric Murray wrote:
+| Adam Shostack writes:
+| > 
+| > Leaving it out may be ok because we can define a standard location by
+| > key type: 
+| > 
+| > key://slack.lne.com/~ericm/key.asc
+| > key://slack.lne.com/~ericm/key.x509
+| > 
+| > key://slack.lne.com/~ericm/x509/key.cert
+| > key://slack.lne.com/~ericm/pgp/key.asc
+| > 
+| > I have no objection to defining a shorter URL, but would want some
+| > indicator that we're in user space, not host/domain/realm space.  A
+| > ~username serves that purpose as well as /u/ and is a more common
+| > usage.
+| 
+| Ok.  Sounds good, for user-maintained keys like PGP anyhow.
+| More hierarchical keys, like X.509, could be maintained
+| by a CA that also maintains the server... some people who
+| could use encryption don't know, and don't want to know, enough
+| about it to even be willing to hold their own certificates.  They
+| want it to "just work".  I think that this scheme should be flexable
+| enough to be able to support a CA maintaining user's certificates
+| for them.  Note that this doesn't mean that the CA/key server
+| would know the keys, i.e. this should not support GAK*.
+
+	Having keys placed in a namespace defiend by a user does not
+mean the user needs to make the key available, only that the key can
+be found there.
+
+	Nothing says we can't have key://keys.verisign.com/~ericm if
+they issue keys in some space that maps into user names.
+
+| > My last comment is that if we define a URN scheme for keys, we should
+| > force a dependable structure on it, so that its predictable where to
+| > find a users PGP key from an email address, without having to check 6
+| > locations.  Nothing is there now, we should require order to make
+| > everyones life easier.
+| 
+| Along those lines, I was envisioning adding a KEY RR type to
+| DNS, and using it to maintain pointers to keyservers.
+
+[...]
+| This sounds so obvious that I'm sure that I'm not the first
+| or even the tenth person to think of it, and in fact I
+| see a KEY RR type defined in the BIND 4.9.3BETA17 source.  But
+| there's just a type there, nothing else to support it.
+| Anyone know what it's for?
+
+	Donald Eastlake is writing the spec for storing keys in
+nameservers.  Its in the process of moving to draft standard; there
+will probably be something about it after LA.  I think its:
+
+ftp://ds.internic.net/draft-ietf-dnssec-secext-09.txt
+
+
+Adam
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

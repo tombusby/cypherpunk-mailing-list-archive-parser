@@ -1,0 +1,59 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Tue, 5 Jul 94 16:25:22 PDT
+To: cypherpunks@toad.com
+Subject: MD5: hashing, > 1->1
+Message-ID: <9407052324.AA16560@flammulated.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>> is based upon the fact that *finding* two messages that hash to the
+>> same value is as difficult as a brute-force attack, which requires
+>> 2^128 trials (maybe it's 2^127, but I don't think that really
+
+> This is incorrect, with a large memory, this is the birthday paradox in 
+> action, and it takes about 2^64 tries, which puts SHS right up there at 
+> 2^80 same as skipjack.
+
+Geez, I did it again (deleted the original message - the one Derek
+sent).
+
+So from memory, I beleive that in the context in which Derek was
+describing the "finding two messages" above, his statement about the
+difficulty (2^128) is correct.
+
+The birthday paradox is the situation when you are looking for *any*
+two messages that hash to the same value.  In this case, 2^64 is the
+expected work.
+
+However, if you are given a particular hash and you are looking for
+another message which has the same hash, then the difficulty is 2^128.
+
+This is the situation which is (more) important since it corresponds
+to forging MD5 hashes for a signed message.  Say you are given a
+message and you want to find another which has the same hash.  2^128
+applies.
+
+The birthday paradox situation corresponds to just finding two
+messages with the same hash.  In this case the expected work is 2^64,
+but then the two messages that you discover with the same hash may be
+random (and thus worthless).
+
+Karl Barrus
+klbarrus@owlnet.rice.edu
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAgUBLhnrj8SF/V8IjI8hAQGlmQP6AshYEwjoJGbN8cZZRiPAEdhZO9AAWG2Y
+P08YcQ/wUWNEAOAvi4WISPobIWxO6oRk+fBRvUMWv7wyU4eRA/7yj95nlDaui5oW
+rDaFrh+IBnC8Epce2hing6TqWdBxL5uKBCuq1CrKnUkDO2uESoZkN/aDpbnvueC9
+05aqKfQ9P+U=
+=Lscb
+-----END PGP SIGNATURE-----
+
+
+
+

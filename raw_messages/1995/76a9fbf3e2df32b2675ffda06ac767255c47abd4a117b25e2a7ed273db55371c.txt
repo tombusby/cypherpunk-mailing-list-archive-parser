@@ -1,0 +1,41 @@
+From: "James A. Donald" <jamesd@echeque.com>
+Date: Sat, 23 Sep 95 14:08:32 PDT
+To: stewarts@ix.netcom.com
+Subject: Re: Project: a standard cell random number generator
+Message-ID: <199509232108.OAA17020@blob.best.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 11:52 AM 9/22/95 -0700, David G. Koontz wrote:
+> If NSA requires real stochastic results for military crypto, what would
+> we as casual cryptographers feel comfortable with?  The Netscape episode
+> shows the comfort level needs improving.
+>
+> How good is good enough?
+
+
+128 bits of true entropy, in your RNG seed, and never leaked 
+is good enough.  (You one way hash the RNG numbers generated, 
+to avoid leaking any information about your internal RNG state.)
+
+Your RNG number must of course be based on the full seed, not on
+some 16 bit subset of the seed.
+
+To be on the safe side, you might use 128 bytes of seed, or 4K 
+bytes of seed, just because gross overkill is cheap, and it is kind 
+of nice to have a seed larger than any random numbers you might 
+really need.
+
+ ---------------------------------------------------------------------
+              				|  
+We have the right to defend ourselves	|   http://www.jim.com/jamesd/
+and our property, because of the kind	|  
+of animals that we are. True law	|   James A. Donald
+derives from this right, not from the	|  
+arbitrary power of the state.		|   jamesd@echeque.com
+
+
+
+
+

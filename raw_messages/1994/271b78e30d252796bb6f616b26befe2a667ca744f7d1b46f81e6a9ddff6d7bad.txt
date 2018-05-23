@@ -1,0 +1,56 @@
+From: "JEFF LICQUIA (CEI)" <JLICQUIA@mhc.uiuc.edu>
+Date: Wed, 30 Nov 94 13:59:01 PST
+To: cypherpunks@toad.com
+Subject: Auto-Verifying of Sigs
+Message-ID: <MAILQUEUE-101.941130155708.416@mhc.uiuc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+Thinking about this requiring/checking sigs thing, I thought of 
+something...
+
+Really, the only "unknown" with signed messages is whether they are valid 
+or not; it's pretty easy to distinguish the unsigned posts.  Furthermore, 
+it seems to be my observation with verifying digsigs (as I do in 
+non-crypto groups I subscribe to) that the vast majority of sigs will 
+turn up OK.  It seems, therefore, that expending a lot of effort to 
+change the current list to allow this would be wasteful considering the 
+relatively few times that it would produce any useful information.
+
+May I propose a "better" way (you be the judge here): Proxy the job.
+
+Have a 'bot subscribe to the list (through whatever way), armed with a 
+complete keyserver keyring.  Its only function is to check all signed 
+messages from the list.  Unsigned messages, messages with sigs that 
+checked OK, and messages signed with unknown keys would generate no 
+response from the 'bot.  A failed sig, however, would cause the 'bot to 
+send a (digitally signed, optionally) message to the list to the effect 
+of "This message here didn't check OK" (complete with disclaimers and 
+warnings about trusting authorities blindly).
+
+This would be a totally automated way of checking sigs, and wouldn't 
+involve any new code on the list's part.  Those who didn't want the 
+intruding messages could killfile the 'bot, and the rest of us wouldn't 
+be bothered with redundant information on every post.
+
+What say ye all?  I can tentatively volunteer my business account to do 
+the work (have to talk to my boss about it first, as that account has to 
+pay for volume and phone time).  I'll play with some code in the meantime 
+and see what I can come up with.
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQCVAwUBLtz1EjER5KvPRd0NAQEx7gP+IlVoJG1YVXKmQViVCtabX1owrH2MHDBg
+MpKBq7T6NbPMTDUWLE7HNWTfw5BvZbSCC1uRRM2rKV6xHZPxU0buUsoDc5QLT10b
+xYbs9/j81dlTve7/fMToJjNJuls61289XaOIlfPN+sBIGX1TwrtDKek6To8GsdAN
+YmkUYUUFzL8=
+=3fF9
+-----END PGP SIGNATURE-----
+
+
+
+

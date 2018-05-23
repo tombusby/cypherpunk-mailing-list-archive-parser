@@ -1,0 +1,134 @@
+From: Matt Thomlinson <mattt@microsoft.com>
+Date: Wed, 24 Jul 1996 04:24:35 +0800
+To: "'trei@process.com>
+Subject: RE: Brute Force DES
+Message-ID: <c=US%a=_%p=msft%l=RED-77-MSG-960723153957Z-593@tide19.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+why not put together (a LOT of) disk space and we can build a table
+(read: "a cryptanalytic time-memory tradeoff") for cracking DES? Using
+the table, we could brute-search the DES keyspace in less time than it
+would take to do an exhaustive search of a 38 bit keyspace, according to
+the paper. 4 gigs is what, a couple of hundred nowadays?
+
+Making DES equivalent to a 40-bit crack would take approx. 500Gig, but
+publishing the table would push DES out usefulness. Certainly we could
+scale back (make DES equivalent to a 45-bit crack?) if we don't have
+enough disk...
+
+mattt
+
+>----------
+>From: 	Peter Trei[SMTP:trei@process.com]
+>Sent: 	Monday, July 22, 1996 9:55 AM
+>To: 	frissell@panix.com; cypherpunks@toad.com; trei@process.com
+>Subject: 	Re: Brute Force DES
+>
+>> Peter wrote:
+>> >Any one up for a distributed brute force attack on single DES? My 
+>> >back-of-the-envelope calculations and guesstimates put this on the
+>> >hairy edge of doability (the critical factor is how many machines can
+>> >be recruited - a non-trivial cash prize would help). 
+>
+>Duncan wrote: 
+>> I volunteer my 120 MHZ Pentium.  A lot more Pentiums are out there now than
+>> a year ago.  That makes it more feasible.  A lot more people with full net
+>> connections.  Like most Americans, I have a flat rate net connection and a
+>> flat rate local phone connection so could run a cracking session
+>>permanently
+>> (as long as no one tells my ISP).  We need a full test of the Winsock
+>> cracking client in any case.  It wasn't working very well last time.
+>> 
+>> DCF
+>
+><back-of-envelope>
+>
+>In my terminology, 'hairy edge of doability" means we have a shot
+>at success, but I wouldn't bet the farm on it.
+>
+>I thought that I might bet a couple hundred bucks, though.
+>
+>Sadly, after further calculation, I'm not so sure if it's doable just yet.
+>
+>What I'm looking at is a known plaintext attack on single ECB DES, 
+>using a brute-force test to cycle through the key space. People 
+>would get chunks of keyspace to test from a central server or 
+>servers, and would be motivated to take part by a cash prize for
+>the lucky person who finds the key.
+>
+>Lets do  the numbers:
+>
+>Single DES has the security of 56 bits of key - there are 64 bits in the
+>keys, but 8 of them are parity bits which add nothing to security.
+>
+>2^56  = 7.205e16 keys (which is a whopping big number)
+>
+>Let's guess that we can recruit the equivalent of full-time on 1000
+>machines.
+>
+>7.205e13 keys/machine.
+>
+>Let's guess that we have about a month before people start to lose 
+>interest - so we want to be more than 1/2 done by then. Lets say
+>we want to sweep the whole space in 40 days.
+>
+>1.8e12 keys/machine/day 
+>
+>~21,000,000 keys/machine/second
+>
+>The fastest general purpose, freely available des implementation I'm
+>aware of is libdes. by Eric Young. With this, I can do a set_key in 
+>15.8 us, and an ecb_encrypt in 95 us/block. That adds up to 
+>about 9,000 keytests/sec (this is on a 90 MHz P5, running NT).
+>
+>I'm looking at ideas to speed up DES - if I'm willing to use
+>honking great lookup tables, the permutation steps  can be done 
+>more quickly than libdes. I'm also looking at implementing the
+>algolrithm in hand-optimized P5 assembler.  (It's been years since
+>I've done a major assembler project - the P5 has some truely weird
+>features to be considered, but also has (some) internal 64 bit
+>registers to play with).
+>
+>Let's guess that I can speed up a key-test up by a factor of 10. (This is
+>not a slur on Eric's code - it's extremely clever, but not optimized
+>for any particular processor, or for key-testing.  Note that the keytest 
+>described above takes about 10,000 cycles/test.)
+>
+>That gets my workstation up to about 90,000 keys a second, which is
+>still almost a factor of 250 too slow. 
+>
+>I'm going ahead with my work on a faster DES keytester, but unless
+>optimizing gives an astounding win, I now think a distributed bruting 
+>effort is a bit pre-mature.
+>
+>What will make this brute doable, if not now, then in the near future?
+>
+>1. Faster Processors - Moore's Law is still holding. A year ago, my
+>90 MHz Pentium was one of the faster machines taking part in the
+>40-bit RC4 crack. Now, it's passe.
+>
+>2. More processors. The number of people on the internet continues
+>to grow rapidly.
+>
+>3. More interest - Crypto awareness has greatly increased in the
+>last year, and a real cash prize (say, over $500) will generate both
+>publicity and interest.
+>
+>These factors all multiply together. The number of cycles that could
+>probably be recruited is increasing at a fast rate. A major part of the
+>work will be a keyspace distribution mechanism which can handle
+>the load (this was a major stumbling block last year). 
+>
+></back-of-envelope>
+>
+>Peter Trei
+>trei@process.com
+>
+>Disclaimer: This has nothing to do with my employer.
+>
+
+
+
+

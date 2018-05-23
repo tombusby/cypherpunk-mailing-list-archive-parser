@@ -1,0 +1,43 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Thu, 28 Jul 94 11:36:56 PDT
+To: gkremen@netcom.com (Gary Kremen)
+Subject: Re: Signature Stripping and anon servers
+In-Reply-To: <199407281608.JAA16814@netcom.netcom.com>
+Message-ID: <9407281832.AA04214@fnord.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+    Date: Thu, 28 Jul 1994 09:08:02 -0700
+    From: gkremen@netcom.com (Gary Kremen)
+
+    . . .
+
+    Read last 100 lines of message
+      if a line begins with --
+      then if no MIME v1.0 header present
+           then delete last 100 lines
+           else if -- is part of part-boundary
+                then ignore
+                else delete last 100 lines
+    
+    Does anyone have any gross problems with this methodology?
+
+Yes.  I believe that your pseudocode is buggy.
+
+First, I believe that you should match the regular expression
+"^--[ \t]*$" rather than just ``line begins with --''.
+
+Secondly, you should have ``delete everything from the matching line
+to the end'' in place of ``delete last 100 lines''.  For this message,
+your algorithm would delete the entire message.
+
+--
+Rick Busdiecker <rfb@lehman.com>      Please do not send electronic junk mail!
+  Lehman Brothers          
+  388 Greenwich Street      "The advancement and diffusion of knowledge is the
+  New York, NY 10013         only guardian of true liberty."   - James Madison
+
+
+
+

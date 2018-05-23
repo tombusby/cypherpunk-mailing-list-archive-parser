@@ -1,0 +1,48 @@
+From: Gary Howland <gary@kampai.euronet.nl>
+Date: Tue, 12 Mar 1996 04:19:21 +0800
+To: rickt@psisa.com
+Subject: Re: (Fwd) Gov't run anon servers
+Message-ID: <199603111015.LAA10327@kampai.euronet.nl>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Right. Couldn't you insert some kind of var into the kernel, rebuild and
+> upon each reboot have the remailer process (which would have to be root
+> owned) check for the value of this? I am of course assuming that the owner
+> of the remailer has admin control over the box, which is kind of unscalable.
+> If someone does gain entry to the machine, he'd need root to skim through
+> the kernel memory, and since he wouldn't have access to the remailer src
+> (you don't have it online, right?) he'd have a hard time looking for what he
+> needed...
+
+I was thinking of something much simpler,
+eg.:
+
+	% remailer
+	Enter passphrase: xxx
+	Remailer started ...
+	%
+
+This of course assumes that the remailer runs as a process - if it doesn't
+then there is no reason a 'remailer helper' cannot.
+
+The only disadvantage of this is that the remailer cannot be rebooted
+without a passphrase being entered, but then there are ways around this
+(entering the passphrase remotely over a secure link etc., or more
+sophisticated 'remote authorisation' systems).
+
+The advantage of this is that the password is never on the disk,
+only in memory (which will take serious (read "expensive") to extract).
+
+I am amazed at all of the talk of smart cards etc., when all that is
+really needed is a password entered at boot time.
+
+Gary
+--
+pub  1024/C001D00D 1996/01/22  Gary Howland <gary@kampai.euronet.nl>
+Key fingerprint =  0C FB 60 61 4D 3B 24 7D  1C 89 1D BE 1F EE 09 06 
+
+
+
+

@@ -1,0 +1,52 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Fri, 4 Aug 95 01:50:54 PDT
+To: Enzo Michelangeli <enzo@ima.com>
+Subject: Re: SSLeay - Whats the story...
+In-Reply-To: <Pine.LNX.3.91.950804145626.10023E@ima.net>
+Message-ID: <Pine.SOL.3.91.950804184517.4116A-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Fri, 4 Aug 1995, Enzo Michelangeli wrote:
+> On Fri, 4 Aug 1995, Alex Tang wrote:
+> Perry Metzger and Mark Chen have recently expressed some criticism, and
+> Adam Shostack, around the end of May, posted a review that hilighted a 
+> number of potential problem areas.
+
+Do you have a copy of this?
+
+> Personally, I especially dislike the use of RC4-40 (yes, other algorithms 
+> are supported, but not using the export version of Netscape Navigator); 
+Totaly agree, hell, I going to give the option for users and server to 
+specify at run time which ciphers never to use :-).
+
+> the excessively large portion of the handshaking data exchanged as 
+> cleartext; and the limitations in certificate management (no provisions 
+> for verifying the revocation status with a CA).
+
+The clear text I don't like, I agree.  But then when used for http, 
+everything begins with a GET anyway.  The CRL verification is again to me 
+a matter of implementation.  Currently my library does not support CRL 
+(but I can load and manipulate them).  It is simply a function of the 
+infrastructure to go with the library.  SSL v3 of the spec does alow for 
+CRL to be passed along with the certificate heigherachy (a PKCS-7 object).
+
+I'm mostly concered with any objections raised with the protocol, not the 
+particular implementation around right now.  With my library I fully 
+intend to make it possible to refuse to authenticate the server unless a 
+current CRL is present.
+
+Anyway, I'm intersted in hearing people complains so I can attempt to 
+make sure none of the fixable problems are in my library :-)
+
+eric
+
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups that the message contents :-)
+
+
+
+
+

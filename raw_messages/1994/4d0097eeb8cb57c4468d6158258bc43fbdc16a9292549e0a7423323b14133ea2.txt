@@ -1,0 +1,71 @@
+From: Sameer <sameer@soda.berkeley.edu>
+Date: Mon, 21 Feb 94 23:40:32 PST
+To: cypherpunks@toad.com
+Subject: Just wrote a simple perl script to autosign messages
+Message-ID: <m0pYrgs-00010tC@infinity.hip.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+	I just a simple perl script which autoencrypts a message based
+on the To: line.. it's not very robust, but:
+
+The To: line must be of the form:
+
+To: Name <address>
+To: address (Name)
+To: address
+
+	It uses a userid of "address" to encrypt.
+	It doesn' allow multiple names on the To: line.
+
+#!/usr/bin/perl
+$pgp = "PGPPATH=/home/sameer/safe/pgp /usr/local/bin/pgp" ;
+$header = "/tmp/header.$$" ;
+$body = "/tmp/body.$$" ;
+
+open (HEADER, "> $header" ) ;
+
+while(<>)
+{
+    print HEADER $_ ;
+    $to = $1 if /^To: (.*)$/ ;
+    $to = $1 if /^To: .* \<(.*)\>$/ ;
+    $to = $1 if /^To: (.*) \(.*\)$/ ;
+
+    last if /^[ \t]*$/ ;
+}
+close ( HEADER ) ;
+
+open (PGP, "| $pgp -eaf \"$to\"\ > $body" ) ;
+
+select (PGP) ;
+print <> ;
+
+close (PGP) ;
+
+select (STDOUT) ;
+
+open ( HEADER, $header ) ;
+print <HEADER> ;
+close HEADER ;
+
+open ( BODY, $body ) ;
+print <BODY> ;
+close BODY ;
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLWm2Rni7eNFdXppdAQHB1gQAjOVUdh+45+u1t9hiYS6IeK5A0LoRWpS/
+3ekx8ohTudmXND1OKr3r9j9mjWtZr8TD8Upc7rVy6Ez3P7vdHa75uiuqzy4mwaUM
+ORDrBL19gjqR9w8leoSylFpNRAHVOCTx4NzoFpDTEXWpGcq6fF7jL4OPpRIMH7lj
+hkIuR7BnAjY=
+=AxMi
+-----END PGP SIGNATURE-----
+
+
+

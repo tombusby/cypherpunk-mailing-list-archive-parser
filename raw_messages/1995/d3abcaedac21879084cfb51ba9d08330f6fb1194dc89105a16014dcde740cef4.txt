@@ -1,0 +1,67 @@
+From: Rich Salz <rsalz@osf.org>
+Date: Mon, 30 Jan 95 06:24:29 PST
+To: cypherpunks@toad.com
+Subject: Re: Anonymity by mechanism ?
+Message-ID: <9501301420.AA06355@sulphur.osf.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The IETF "common authentication technology" working group (the folks
+behind GSSAPI and, now, basically, all application-level security
+protocols on the Internet) are looking at providing first-class support
+for anonymity.  Here's a reent message.
+
+cat-ietf-request@mit.edu to join.
+	/r$
+---------- Begin Forwarded Message ----------
+Message 173:
+>From owner-cat-ietf@cam.ov.com Mon Jan 30 07:15:20 1995
+Date: Mon, 30 Jan 1995 12:35:24 --100
+From: danisch@ira.uka.de (Hadmut Danisch)
+Message-Id: <9501301135.AA29078@elysion.iaks.ira.uka.de>
+To: cat-ietf@mit.edu
+Subject: Anonymity by mechanism ?
+Content-Length: 1142
+Status: R
+
+Currently there is a discussion about providing anonymity. 
+
+To avoid the problems of recognizing the name string syntax
+for anonymous names and the necessity to implement the 
+anonymous way into every gssapi mechanism I want to
+propose the following:
+
+- No anonymity within any gssapi mechanism except one
+  special anonymous-only mechanism.
+
+- Allow to use distinct authentication methods for
+  both sides.
+
+If an application accepts anonymous connections, it
+uses the anonymous mechanism. If it accepts non-anonymous
+connections also, it chooses both the anonymous and the
+non-anonymous mechanism and asks for negotiation.
+
+If only one peer wants to be anonymous, it can use the
+anonymous mechanism and the other side a non-anonymous
+mechanism (e.g. an ftp-server where the client wants to
+be sure to be connected to the requested server).
+
+This make programmers life easier and improves security:
+A context is anonymous if and only if it was generated
+by the anonymous mechanism. And the other mechanism don't have
+to be extended for anonymity.
+
+Anonymous mechanism doesn't mean no security. Just no
+authentication of the peer.
+
+Hadmut
+
+
+----------- End Forwarded Message -----------
+
+
+
+
+

@@ -1,0 +1,56 @@
+From: cman@communities.com (Douglas Barnes)
+Date: Tue, 5 Sep 95 10:33:28 PDT
+To: hfinney@shell.portal.com
+Subject: Re: Slightly faster checking for encrypted messages to me
+Message-ID: <v02120d01ac72297cb133@[199.2.22.120]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal --
+
+I've actually given this some thought in the past, and
+the most practical solution IMHO is much lower tech, although it
+only works on non-initial messages in a correspondence.
+
+If two entities want to communicate via a message pool,
+without worrying about traffic analysis, but don't want
+the overhead of trying to decrypt every headerless
+message to the pool, then they can do the following:
+
+1) In a "headered" message, one of the entities (A) sends
+   a collection of large random numbers to be used as return
+   markers, encrypted with the public key of the desired
+   correspondent (B).
+
+2) B can then respond to A with an essentially headerless
+   message prefixed with one of the numbers send by A.
+   This initial message should contain a list of similar
+   numbers for B, that A can use to send messages to B.
+
+3) Numbers are only used once; entities can now quickly
+   scan the message pool by hashing the initial N bits
+   of each message into a lookup table seeded with all
+   the remaining random return markers they've distributed.
+
+4) As an extension, you can divide your message pools
+   into "initial contact" pools, which would begin with
+   headerless public key encrypted blocks, and "conversation"
+   pools that would begin with return markers. (Of course
+   this is trivially open to denial of service attacks.)
+
+This is the basic principal behind the TA-resistant streams
+over UDP stuff I wrote up for cypherpunks last spring, except
+in that case a given server does the lookup first, and only
+then tries to treat the header as a public key encrypted
+block instead of a MAC.
+
+The Rabin stuff is a step in the right direction for the long
+term, however.
+
+
+
+
+
+

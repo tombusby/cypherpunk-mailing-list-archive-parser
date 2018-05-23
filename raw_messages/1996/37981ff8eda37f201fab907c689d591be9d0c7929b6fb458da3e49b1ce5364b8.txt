@@ -1,0 +1,122 @@
+From: "Dave Emery" <die@pig.die.com>
+Date: Wed, 10 Apr 1996 20:23:11 +0800
+To: frantz@netcom.com (Bill Frantz)
+Subject: Re: Bank transactions on Internet
+In-Reply-To: <199604091732.KAA29261@netcom9.netcom.com>
+Message-ID: <9604100239.AA12152@pig.die.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> 
+> At 12:13 AM 4/9/96 -0700, Steve Reid wrote:
+> >> Is it really that easy to break 40-bit? Don't you need access to a "fair
+> >> amount of cpu power" to brute force crack 40bit? 
+> >
+> >I remember reading a recent paper at this URL:
+> >  http://theory.lcs.mit.edu/~rivest/bsa-final-report.ascii
+> >They mentioned a Field Programmable Gate Array (FPGA), specifically a
+> >board-mounted AT&T Orca chip available for around $400. They said it could
+> >crack a 40-bit key in 5 hours (average). Sounds like anyone with root
+> >access on a major internet node could make a significant profit stealing
+> >credit card numbers.
+> >
+> >The FPGA sounds like a very interesting device, with quite a few
+> >legitimate uses... Has anyone out there seen one of these? 
+> 
+> I was hoping a hardware type would answer this question, and give
+> references to manufacture's spec sheets, but not having seen such an
+> answer, here is a software person's answer.
+
+> 
+> 
+	As a hardware(and sometimes software) type who has used these sorts
+of parts in real designs several things need be said.  
+
+	First, the $400 cost is about what the physical chip and test
+board would cost, it does not include the cost of the software packages
+required to generate the programming information for the chip and
+simulate and verify the design.   While this software can sometimes be
+pirated or "borrowed" from an employer or school or even the chip
+distributors, charges for a legitimate copy of the software for
+programming many kinds of FPGA's can run in the low to mid thousands and
+it it is usually dongle protected.
+
+	And the more advanced software packages that take high level
+descriptions of the logic in languages such as VHDL and compile them
+into the special optimized forms required to get speed out of FPGAs with
+highly assymetric routing delays through their interconnect networks are
+considerably more expensive and may require RISC workstation hardware
+(most of them ran only on Suns or HP in the past) and unix rather than
+just a high end PC running Win 95.  Costs of this sort of software
+package and workstation run as high as $50K per seat. 
+
+	And it is rather unlikely that one could make a high clock speed
+high performance hardware based key cracker work without traditional
+high speed logic debugging tools such as a fast logic analyzer (if we
+are talking 5-10 ns clock especially) and a 1 ghz or so digital scope.
+These kinds of gear, though sometimes available after hours to engineers
+working for more liberal companies or schools, cost many thousands
+of dollars and are not garden variety items available to any hacker.
+
+	And finally, depending on the technology of the part being
+used, there may be a significant cost in the order of at least hundreds
+if not thousands of dollars for a specialized programmer capable of
+programming ("burning") the FPGA with the interconnect patterns generated
+by the software.  These tend to either be specialized to one kind of
+part and maybe modestly cheap (hundreds of dollars) or universal and
+several thousands of dollars (such as DataIO gear).
+
+	And at least in my experiance (I may be unusually stupid and
+careless and clumsy or may not be) even if the parts are a few times
+reprogrammable (as CMOS FPGAs often are these days) one can assume
+that one will fry, or break the pins off, or reprogram one time too
+many the FPGA or FPGA's before one gets the design working.  This
+means that it would be realistic to assume several parts would be
+consumed by the prototyping effort, they may not be cheap and this
+adds up too.
+
+	So whilst someone working with these parts as part of their job
+or schooling might well have access to all the required resources on an
+informal basis and be able to build a key cracker in evenings or
+weekends for little more than the cost of the chip and a PC board to
+hold it, it should be realistically noted that the actual cost of
+equiping a lab from scratch with the required resources is more on the
+order of tens to hundreds of thousands of dollars rather than $400.
+
+	I must hasten to add that high density FPGAs have many many
+legitimate uses in prototyping logic and producing products in small
+volumes too small to justify the tooling costs of doing mask programmed 
+gate arrays (which tend to be significantly faster and easier to design,
+but cost $5-100K NRE to set up custom masks for fabrication). The
+current generation of them make it possible to build logic systems in
+one small chip that a few years ago would have been large  PC boards
+full of PALs and other logic.
+
+	Actually designing a workable key cracker for say RC-4 would be
+a significant design challenge even with current parts, but probably not
+something that someone skilled in the art (and of course reasonably
+bright) couldn't handle.  (At first blush I think in the case of RC-4
+the pipelined  key scheduling logic required would be the very hard
+thing to make efficient).  And the availablity of simulation and timing
+analysis tools would make the process of creating such a deamon largely
+a software or logic programming exercise that could be mostly carried
+out over weeks or months of effort on a workstation or high performance
+PC, rather than something that  requires the intensive resources of an
+extensive hardware lab for a long period.
+
+	Unfortunately, like so many hacker projects these days, the cost
+of reproducing multiple copies of a cracker and the skill level required
+is very minimal compared to the real logic programming talent and
+architectural insight it would take to fit one into a FPGA or two.
+So once one is built, there can be hundreds or thousands of copies
+made and put to work in the underground by all sorts of evil people who
+wouldn't have a prayer of designing one from scratch,
+
+						Dave Emery
+						die@die.com
+
+
+
+

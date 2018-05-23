@@ -1,0 +1,44 @@
+From: Phiber Optik <phiber@eff.org>
+Date: Mon, 21 Dec 92 16:43:07 PST
+To: honey@citi.umich.edu (peter honeyman)
+Subject: Re: Destroying Data (Re: Remailer Policies)
+In-Reply-To: <9212201556.AA22792@toad.com>
+Message-ID: <199212220042.AA27413@eff.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> > Make sure you don't think 'rm -rf /remailer-logs' actually destroys data.
+> > It merely de-allocates the i-nodes.  You need to know which physical
+> > device the filesystem is on, (let's call id /hdxxx) and then do
+> > 'cat /dev/null > /dev/hdxxx' which overwrites with zeroes all data
+> > on that partition.  
+> 
+> not quite.  you need something like
+> 
+>   dd if=/dev/null of=/dev/xxx bs=verybig conv=sync
+> 
+
+Unix weenies of old will recall "clri" to clear an inode.  If paranoia is in
+effect, try something like the following:
+
+ls -li remailer-log or whatever to get the i-node number,
+then 
+clri /dev/sdxx #_of_i-node
+
+Of course, care should be taken to then unlink the file immediately, as if the
+i-node number is reused on that filesystem, the old entry would still point
+to that i-node, and removing the old file would remove the new one (an
+inadvertent hard link).  Clri is in /usr/etc, and it's use is obviously
+subjected to your permission of the device file (and the file itself), though
+that's understood if you were going to use 'dd'.
+Not everyone running a remailer will have permission (usually root) to write
+directly to filesystem /dev files, so why not just write a little C program
+to open the logfile and overwrite it to the end with NULL's?
+Simple.
+ 
+
+
+
+

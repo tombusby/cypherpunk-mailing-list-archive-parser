@@ -1,0 +1,59 @@
+From: Dave Emery <die@pig.die.com>
+Date: Thu, 6 Aug 1998 11:27:44 -0700 (PDT)
+To: David Honig <honig@sprynet.com>
+Subject: Re: Noise source processing
+In-Reply-To: <3.0.5.32.19980806073033.007cf540@m7.sprynet.com>
+Message-ID: <19980806142436.A4371@die.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, Aug 06, 1998 at 10:31:20AM -0700, David Honig wrote:
+> At 10:31 AM 8/6/98 -0400, mgraffam@mhv.net wrote:
+> >On Thu, 6 Aug 1998, David Honig wrote:
+> >
+> >> I have digitized FM radio hiss using a $10 transistor radio feeding
+> >> into the LINE in of my soundcard.  The spectrum looks poisson
+> >> with prominant, periodically spaced noise spikes.  It does not pass
+
+
+	This is expected of hard limiters below threshold  (such as in a
+reasonable FM IF system fed Johnson noise).  The spikes occur on phase
+discontinuities in the limiter output - what you are seeing is the input
+Johnson noise intermittantly inducing phase jumps in the output of the
+ringing IF filters shock excited by the broadband input noise.  The IF
+filters tend to ring somewhat coherently until hit by another burst of
+noise which sets them off on another phase.  Each phase jump shows up as
+a spike on the discriminator output.  The narrower the bandwidth of the
+filters, the longer the spike and interspike intervals. Thus one needs
+an IF bandwidth considerably wider than the sample rate.
+
+	Your parity scheme is pretty good, but simple zero crosses (or
+crossings of the long term mean value of the waveform) aren't bad
+either.   Many years ago I suggested, half seriously, that simply taking
+a suitable cheap Radio Shack audio transformer and stepping the speaker
+output of a cheap FM radio tuned between stations to around 15 volts and
+shoving it directly into the CD or DSR input of a standard PC serial
+port would work as a quicky hardware noise source (this was before the
+near universality of soundcards on PCs).   The serial port pins 
+incorperate a threshold comparitor in the RS-232/423 receiver chips
+which would act to convert the noise to a string of 1s and 0s  that
+could be sampled by reading the DSR value occasionally. Or one could use
+the DSR interrupt and record the time the zero crossing occurred and use
+this time stamp as a random (poisson distributed) value.
+
+> 
+> I always thought listening to static was a suspicious activity.
+> 
+	My wife thinks so...
+
+
+
+-- 
+	Dave Emery N1PRE,  die@die.com  DIE Consulting, Weston, Mass. 
+PGP fingerprint = 2047/4D7B08D1 DE 6E E1 CC 1F 1D 96 E2  5D 27 BD B0 24 88 C3 18
+
+
+
+
+

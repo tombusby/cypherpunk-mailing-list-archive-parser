@@ -1,0 +1,44 @@
+From: Hal Finney <hal@rain.org>
+Date: Mon, 11 Nov 1996 10:39:52 -0800 (PST)
+To: meriman@amaonline.com
+Subject: Re: Rarity: Crypto question enclosed
+Message-ID: <199611111636.IAA31569@crypt>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sun, 10 Nov 1996, David K. Merriman wrote:
+>
+> My simple question is regarding key/certificate distribution:
+> 
+>         Is there any particular reason that such can't be accomplished via 
+> on-line lists, and made available via a service on a port, using standard 
+> (textual) commands, like mail and such are now?
+
+There are a few things available or in the works right now.
+
+Most of the PGP key servers respond to WWW requests already.  You connect
+to them on a port, the HTTP port, send some standard textual commands
+following the HTTP protocol, and get the requested PGP keys back in text
+form.  How does this differ from what you were thinking of?
+
+Other proposals, including Ron Rivest's SDSI, envision an environment where
+most people make their own keys available via a URL.  Certificates would
+have this URL in them and you could check it to make sure the key has not
+expired or been revoked.  Then the only problem is distributing the URL...
+
+John Gilmore's SWAN project is working to put keys into Domain Name System
+(DNS) databases.  He has sample code which will get keys dynamically via
+DNS calls, and DNS servers are now available which will support the new
+data types necessary.  You can actually get his own key right now from
+toad.com via this method.  This is a binary protocol rather than a textual
+one but could be a good way to do it.
+
+So I think you are right that on-the-fly key grabbing is the direction
+in which things are moving, replacing large local databases of keys.
+
+Hal
+
+
+
+

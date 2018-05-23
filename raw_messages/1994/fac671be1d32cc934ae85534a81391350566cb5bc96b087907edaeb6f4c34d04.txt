@@ -1,0 +1,100 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 4 Feb 94 23:40:06 PST
+To: cypherpunks@toad.com
+Subject: Re: Magic Money Digicash System
+Message-ID: <199402050738.XAA07723@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+From: fb@cyberg.win.net (Francis Barrett)
+>  > Magic Money is a digital cash system designed for use over
+>  > electronic mail.
+> This is the neatest thing I have read in a long time.  Where can I get
+> one?
+
+FTP to csn.org, cd to /mpj, read the file README.MPJ which will tell you
+a directory to switch to, do that, cd to pgp-tools (or pgp_tools, or
+pgptools, I forget which), and get magicmny.zip.  Then unzip and build it.
+
+> A few questions.  Since the client which generates the proto-coins is
+> under the control of the consumer, the bank has no way of making sure
+> that he is not running his own code, or that the RNG he is using is
+> cryptographically strong, or even that he is not distributing modified
+> client programs to other users.
+
+None of these things should cause major problems.  At worst useless coins
+would be generated.  Initially, users might send their coins in right away
+to confirm that they are OK until they get some confidence in the program.
+
+> How does the bank deal with collisions in the 16 byte values of coins?
+
+This will practially never happen if they are chosen randomly.  Bad
+randomness could produce coins which match ones which have already been
+spent (if somehow your RNG got into exactly the same state as someone
+else's), so they would be valueless.  I think the program makes you
+initialize a random file before using it, so just make sure you put
+something random there!
+
+> What if the user picks the numeric values for the server to sign in a
+> way which leaks information about the banks private key?  RSA is much
+> more secure when signing random-esque data, like a message digest,
+> than it is when signing numbers provided to it by some outside party.
+
+I don't think there are any values you can sign which would give away a
+private key.  Even signing "1" or "2" should be safe, I think, since the
+secret key is the size of the modulus.
+
+I ftp'd a paper recently mentioned on imp-interest (on "anonymous
+credit cards") which claimed that new cash could be generated from sets
+of old cash in Chaum's scheme.  I don't believe this, and the ref was
+to a paper "in preparation" by the authors.  I'll try sending them
+email to ask about this.
+
+> Similarly, how can the consumer trust the bank's representation that
+> money has already been spent?  Surely the bank should be required to
+> publish a list of cancelled coins and timestamps with a running MD5
+> hash periodically for inspection by the unwashed masses.
+
+Here is how this problem would arise.  Alice has some cash, which she
+sends to Bob to buy something.  Bob sends it to the bank to be verified
+and turned into fresh cash before he will send the goods to Alice.  But
+the bank says the cash has been spent before, and Bob reports this to
+Alice.  Alice insists that she has never spent this cash before.
+
+Now, this is like a mystery story.  Who is telling the truth?  Maybe Alice
+is lying.  Maybe the bank is lying.  Maybe they are both telling the truth
+and someone broke in and stole Alice's cash while she was sleeping, copying
+it from her computer and spending it before she could.
+
+Ignoring that last possibility for a minute, it is basically Alice's word
+against the bank's.  In general, in situations like this, we often go by
+the reputation of the parties involved.  If the bank really is cheating,
+there will be lots of other people like Alice, people with good reputations,
+who are making similar charges.  This will make people stop trusting the
+bank.  On the other hand, if Alice is cheating, this is probably not the first
+time.  In time she will get a reputation for being untrustworthy.
+
+The idea of publishing lists of used coins is interesting but I'm not sure
+it helps.  Double-spending could easily occur close together in time, between
+publication of lists.  A cheating bank could claim a coin had been spent
+just before the actual coin came in.
+
+> What do you do about lost messages from the server to the client.
+> Once coins have been recorded as spent, they cannot be redeemed again.
+> Yet the mail message containing the new coins may have been lost in
+> transit.
+
+The server should re-transmit the message if it does not arive.  We
+discussed this a while back and it appears safe for everyone in these
+protocols to re-transmit messages freely if the other person claims
+never to have gotten them.  Even if they are lying, what is the harm -
+you are just sending them information they already have.
+
+Good questions.
+
+Hal
+
+
+
+

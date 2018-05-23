@@ -1,0 +1,125 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 9 Oct 1997 06:55:48 +0800
+To: whgiii@invweb.net
+Subject: access to storage keys, NOT comms keys! (Re: What's really in PGP 5.5?)
+In-Reply-To: <199710081815.OAA20071@users.invweb.net>
+Message-ID: <199710082122.WAA01574@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+[made a few snips to the CC line, still Cc of cypherpunks]
+
+William Geiger <whgiii@invweb.net> writes:
+>    at 11, Adam Back <aba@dcs.ex.ac.uk> said:
+> >1. to allow access to important material lost in the mail system in the
+> >event that an employee is hit by a bus
+> 
+> >Argument 1 seems pretty flimsy to me.  I reiterate my comment in an
+> >earlier post: who in their right mind keeps their _only_ copy of ultra
+> >valuable company information bouncing around in the email system?  Did
+> >those arguing for this position not notice that sometimes email gets lost
+> >in transit?
+> 
+> Well lets take the flip side of this: Who in their right mind encrypts
+> ultra valuable company information and then leaves the plain text on their
+> computer?? 
+
+Lots of people.  See, what goes over a public network in the clear is
+much more vulnerable than what sits on your disk.  I encrypt
+communicated copies of things which aren't encrypted on the disk
+myself.  I suspect you do too.
+
+But, more to the point, my argument was that keys should have
+segregated uses.  One key for storage, another for receiving encrypted
+emails.  I wasn't saying that you wouldn't encrypt your archived sent
+& received email.  I _was_ arguing that a better way to archive email
+securely is to encrypt it with a separate storage key.
+
+> I have an outbox full of encrypted messages that are encrypted
+> to both the recipient and to my key (Encrypt-To-Self Option). 
+
+Bad move dude.
+
+See you might have a 100 bit entropy passphrase, but the recipient
+might have a password of "fred".  You've conveniently archived all
+your email, and you've left it decryptable by a hodge podge of other
+people with unknown level of care about your level security.
+
+Say perhaps fred deleted the email after reading, even though he has a
+poor passphrase.  You have just screwed your own security.
+
+Similar problem if it is you that has a passphrase of "william".  I
+won't thank you when the feds decrypt your email to me, thanks to a
+you having a poor passphrase.  (Not that I'm suggesting you do).
+
+If your email archives are encrypted with storage keys, you avoid all
+these problems, and avoid GAK arguments at the same time.
+
+> If you are going through the trouble of encryption why would you
+> want to leave plain text lying around??? One needs to remember that
+> e-mail is not just communication but communication *and* storage.
+
+Nope.  Email is communication.  Archived email is storage.  Use
+communication keys for communicated email, and storage keys for
+encrypting archived email.
+
+This is a very important point, and I can't fathom why so many people
+who are otherwise on the ball are not getting it.  If you don't escrow
+any communication keys, but do escrow storage keys, the GAKkers don't
+get what they want, and you get all the functionality you need.  They
+actually have to break into premises, and take disks, and supoena
+keys.
+
+Right?  Simple enough isn't it?
+
+> >2. to allow management to spot check the emails being sent and received
+> >
+> >A less GAK friendly way to implement it, and a more secure way would
+> >be to archive for a while the session keys. The security advantage
+> >being that the email doesn't go out with the session key encrypted
+> >to 2 long term public key encryption keys.
+>
+> I have seen no evidence that encrypting to multiple recipients is any less
+> secure than encrypting to one. 
+
+Of course it's less secure.  It's less secure almost by definition.
+
+Lets say you have your communications encrypted with only your key,
+and there is a small probability call it p1 that your key is
+compromised (key board sniffer virus, hidden video cam, typing
+passphrase whilst on phone (yes?), whatever). 
+
+Well if you encrypt to another key, say a corporate escrow key, there
+is an additional chance, call it probability p2, that your security
+can be blown by the corporate key being compromised.  So long as the
+p2 is greater than 0, which I'm sure you'll agree it is, however
+small, then you have less security by using multiple encryption.
+
+> If there are serious security implications in doing so then it
+> affects *all* versions of PGP and not just 5.5.  I find it odd that
+> this issue is only now being brought up with 5.5 and never mentioned
+> with previous versions.
+
+I've been arguing against using encrypt-to-self for ages.  It simply
+makes me cringe when people send me email which is encrypt to self.
+
+> One thing I would like to see added to this set-up is secret sharing of
+> the corporate private key. [details elided]
+
+Sounds like a good idea.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

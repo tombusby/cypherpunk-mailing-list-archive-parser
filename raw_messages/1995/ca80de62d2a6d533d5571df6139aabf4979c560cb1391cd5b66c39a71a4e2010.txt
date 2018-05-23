@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 28 Aug 95 14:33:05 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSL trouble
+Message-ID: <199508282130.OAA17500@ix5.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Several people have suggested random keyspace selection instead of servers.
+The problem is that there's a high probability that the search will fail to
+find the correct key.  If you split the keyspace into n segments, and randomly
+select k of them, the probability of failure p = ((n-1)/n)**k ; for k=n, 
+p approaches 1/e (.367) as n becomes large, and 10 is close enough to large
+that you don't gain much by having independent groups that agree not to overlap
+in their own 10% of the keyspace.  For k=2n (random-searching the space
+about twice),
+the probability of failure is still e**-2, about 13%.  You need a
+coordinated search.
+
+>Why not just have the brutes pick a slave at random?  
+>Of course, you need to give them a complete list of slaves to choose from. 
+
+That more or less works, assuming you can distribute the list of slaves
+along with the code; you still hit the slaves' DNS servers unless you
+also distribute IP addresses for the slaves to use (which is probably fine
+as long as people get the addresses beforehand.)
+You could get fancy and have a DNS server hand out slave addresses round-robin
+for a dummy address slave.cracker.org.
+
+The main failure mode seems to have been misconfigured clients grabbing the
+single-threaded server for a long time; it may be worth using a multi-threaded
+server, or alternatively a single-threaded server that has a fast timeout 
+for how long it will talk to a client.
+
+I gather there was some protection in the code against dishonest clients,
+but a malicious attack would be to falsely ACK large portions of
+the search space (especially the portion containing the real answer,
+if the attacker knows it).  
+#---
+#                                Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

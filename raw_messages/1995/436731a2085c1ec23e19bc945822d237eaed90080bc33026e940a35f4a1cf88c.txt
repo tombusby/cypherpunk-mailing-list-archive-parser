@@ -1,0 +1,56 @@
+From: lmccarth@cs.umass.edu (L. McCarthy)
+Date: Mon, 17 Jul 95 22:47:11 PDT
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: Stego Standards Silly ? (
+In-Reply-To: <8AD5238.000300015F.uuout@famend.com>
+Message-ID: <9507171402.AA22064@cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Monster@FAmend.Com writes:
+>   Not obvious at all. You encrypt and sign as usual, stego the resultant
+> output, and perhaps include in the stego routines some kind of CRC or
+> hash if you like. But the point is that the signature still works to
+> indicate whether the message was tampered with or not.
+> 
+>   If we posit a MITM, he can tamper with cyphertext =or= stegotext, but
+> he can't defeat the signature. I would recieve a GIF which my stego
+> software would turn into a file that PGP would puke on, telling me that
+> Someone Is Messing With My Mail.
+
+Sure -- for most message passing applications, tampering in transit would
+also lead to noticeably corrupted cleartext, when the stegoed ciphertext
+is decrypted. Again, PGP pukes, or perhaps Stealth PGP gives me something
+obliterated when it decrypts. See my comments below, however.
+
+>   I would not, of course, be able to reveal this fact directly. However,
+> I could ask my correspondent to re-send the GIF, and when it comes out
+> different in EVERY SINGLE LSB, I have proof of tampering.
+
+Well, you could do that regardless of what is or isn't stegoed into the
+carrier image. I'm arguing that perhaps the govt. (or whomever) will be
+far less sympathetic to such in-stego-channel evidence of doctoring. 
+
+I still see an obstacle to this approach, though. If we want to try to
+foil traffic analysis, then we need people routinely to dispatch ghost
+messages. Some of these should go to people with whom the sender is not trying
+to communicate. When Karen gets a GIF in the mail, she needs to decide whether
+its LSBs are significant (semantically speaking :) or not. If they decrypt
+into something meaningful, QED; if not, what to do ?  "Sufficiently
+advanced communication is indistinguishable from noise" is a double-edged
+sword, after all. Establishing that communication is really being attempted
+is trickier under these conditions.
+
+I think I need to clarify my threat model. I'm positing a scenario in which
+transmission of ciphertext and stegoed anything is illegal, but transmission
+and use of "conspicuous" digital signatures is legal. Furthermore, the govt.
+sanitizes the LSBs of digital images for our protection, perhaps distorting
+a mean of X% of the LSBs of a mean of Y% of transmitted images. Out-of-stego-
+channel checksummation would IMHO be crucial in such a situation.  
+
+-Futplex <futplex@pseudonym.com>   "A kiss and a hug and a couple of f*cks: 
+                                    being in love really sucks" -Meryn Cadell
+
+
+

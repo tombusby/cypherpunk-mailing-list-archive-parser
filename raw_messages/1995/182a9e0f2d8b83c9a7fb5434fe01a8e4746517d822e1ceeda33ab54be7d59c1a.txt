@@ -1,0 +1,47 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 10 Oct 95 17:37:40 PDT
+To: benny@SIRIUS.COM (Thomas Gorman)
+Subject: Re: Netscape Crack
+Message-ID: <199510110036.RAA10457@ix2.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 04:30 PM 10/10/95 -0700, benny@SIRIUS.COM (Thomas Gorman) wrote:
+>I'm a bit new to the Crypto Field but I know enough.  I heard that the
+>Cypherpunks ran a brute force attack on Netscape's 40-Bit code but I still
+>don't know how those two guys in Berkeley broke the 40-bit in just a few
+>minutes.  Can someone on this list explain it to me?  Thanks.
+
+Netscape uses a random session key, which feeds that 40-bit encryption.
+How does it get a random session key without bothering the user to type
+in random numbers?  By using the sources of randomness available to it,
+like the system clock and process id.  Well, since you know when a message was
+sent, you know what time it was (to the second), and there aren't very many
+possible values of microseconds available.  There also aren't a lot of possible
+processids, especially when you can run a process on the machine or convince
+sendmail into telling you.  So instead of having 2^40 numbers to brute-force,
+there were fewer than 2^30, often more like 2^20.  That's pretty fast.
+
+The third crack was to notice that Netscape isn't very careful with array bounds
+(in true C fashion), allowing you to push stuff on the stack by handing it a URL
+with a very long name.  If you're careful, you can put interesting stuff on the
+stack, so it does more than just crash in an ugly fashion.
+
+However, three's a charm, and it's now time to Hack Microsoft, especially since
+Microsoft has been saying bad things about Netscape, when almost every
+encryption
+product in a Microsoft tool is wimpy beyond repair, and when their newest and
+niftiest stuff also has 40-bit keys for export versions, with out even as
+much salt
+as Netscape used.
+#---
+#                                       Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0664 Pager/Voicemail 1-408-787-1281
+#---
+
+
+
+
+

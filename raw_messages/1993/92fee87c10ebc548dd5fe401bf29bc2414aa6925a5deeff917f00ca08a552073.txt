@@ -1,0 +1,49 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Tue, 23 Feb 93 19:00:22 PST
+To: cypherpunks@toad.com
+Subject: anonymous return addresses
+In-Reply-To: <9302231856.AA13893@toad.com>
+Message-ID: <9302240257.AA03919@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Re: options for anonymous return
+
+Marc writes:
+>  1. Remailer memorizes a pseudonym.  
+
+>  2. The anonymous message includes a cryptographic "stamped
+	self-addressed envelope" which contains a layered list of
+	remailer addresses encrypted at each layer.  
+
+>  3. The reply to an anonymous message can be posted in a public place
+	encrypted for a key known only to the sender.
+
+>Have I missed any important methods?
+
+A variant of (1) greatly increases the security.  Have the remailer
+memorize an anonymous return address of type (2).  The information
+that is contained in a remailer then, per pseudonym, is
+
+  a.  the pseudonym
+  b.  the address of the next remailer to use
+  c.  a block of stuff to be prepended to the outgoing mail.  Presumably
+        this is forwarding instructions for the next remailer.  It would
+	also be encrypted with the public key of the next remailer.
+
+Thus, even if the whole pseudonym mapping list were compromised, it
+would only reveal a list of sites to try and compromise next.  And at
+some point the private remailer keys have to be compromised as well,
+since all the remailing instruction are encrypted with them.
+
+This system can also be chained, creating "routing pseudonyms" on
+various remailers and encrypted instructions pointing one pseudonym to
+another.
+
+Eric
+
+
+
+
+

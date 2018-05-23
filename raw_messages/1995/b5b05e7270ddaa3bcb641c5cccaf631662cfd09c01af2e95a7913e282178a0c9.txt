@@ -1,0 +1,49 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Sat, 11 Nov 1995 05:50:02 +0800
+To: Phil Karn <karn@qualcomm.com>
+Subject: Re: Photuris Primality verification needed
+Message-ID: <199511090913.BAA08368@ix.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 07:47 PM 11/8/95 -0800, you wrote:
+>>Including the provision for the 512 bit prime is *HARMFUL* and
+>>*DANGEROUS*.  Export control is not really an issue here, because if
+>>companies in the United States cannot provide secure networking,
+>>there are other companies in the world that can.
+>
+>You've convinced me. I remove my proposal to include a recommended 512-bit
+>modulus. The smallest standard modulus will remain 1024-bits.
+
+If speed is really a concern, you could do a 640 or 768 bit modulus
+("Hey, back when we wrote that, everybody assumed 640 would be enough for
+everybody!"), or alternatively, let people use 512-bit private modulus values -
+they're still short, but they're not a target if everybody's got their own
+(which also means that popular applications shouldn't ship with a
+built-in 512-bit prime; if Windows 97 did that, it'd be about the same
+as putting it in the spec, so really short primes should probably require
+user-generation, which may contradict the desire to use short numbers
+to save time.)
+
+One question is how to conveniently let the standard offer negotiation for
+the modulus length and value without adding a lot of handshake steps
+        -> WILL MODLENGTH 512PRIV 768 1024 1024ALT 2048
+        <- DO MODLENGTH 512PRIV
+        -> WILL MODULUS
+8758432798573409875098347509834750983745098348584395984357908347509843750984
+3750983
+        <- 404 HEY, THAT'S NOT A STRONG PRIME!
+
+
+
+#--
+#				Thanks;  Bill
+# Bill Stewart, Freelance Information Architect, stewarts@ix.netcom.com
+# Phone +1-510-247-0663 Pager/Voicemail 1-408-787-1281
+
+
+
+
+
+

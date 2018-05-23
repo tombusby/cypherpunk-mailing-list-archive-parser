@@ -1,0 +1,49 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Wed, 24 Jul 1996 10:54:40 +0800
+To: Jerome Tan <jti@i-manila.com.ph>
+Subject: Re: Decrypt Unix Password File
+In-Reply-To: <01BB78C7.358738E0@ip73.i-manila.com.ph>
+Message-ID: <Pine.LNX.3.94.960723121315.230B-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Tue, 23 Jul 1996, Jerome Tan wrote:
+
+> How can I decrypt Unix password file?
+
+You can't decrypt a password file.  The password is hashed by using the
+password as a DES key, and encrypting a string of 8 NULs 25 times.  The
+E-tables of the DES algorithm are permutated according to the twelve-bit salt
+which is encoded in the first two characters of the hashed password field.
+The E-tables are permutated by swapping the entries N and N+24 if the Nth bit
+of the salt value is 1.  A salt value of 0 will result in straight DES being
+used 25 times.  This is the only salt value that can't be used in the UNIX
+password file.
+
+A program like Crack will use a dictionary attack to crack a password file.
+It's available at ftp://ftp.funet.fi/pub/security.
+
+- -- Mark
+
+PGP encrypted mail prefered
+Key fingerprint = d61734f2800486ae6f79bfeb70f95348
+http://www.voicenet.com/~markm/  
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMfT77bZc+sv5siulAQGPpwP/R93/3Z4o14CYeYNZOBa0kK7tArcDAP12
+bWG1pw0pW0FZDbWg12LOz8xZbvAiSe88sNQhuzs8b8GwS71yzhGDwCMRFGjIealE
+xiUch7b6qnE9w9H7gV80nxcVTS/sRzEqYxjhT8JRU9YalS5CvzVo1ciTSj28xDs7
+e62HYbBpTKI=
+=E0Wh
+-----END PGP SIGNATURE-----
+
+
+
+

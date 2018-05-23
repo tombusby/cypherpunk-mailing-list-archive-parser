@@ -1,0 +1,33 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Sun, 29 Jan 95 17:57:14 PST
+To: nzook@bga.com
+Subject: Re:  Why encrypt intra-remailernet.
+Message-ID: <199501300156.RAA29144@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Of course it was Chaum himself in his 1981 paper (which I think is available
+from the CP FTP site) who described the duplicate-message attack.  I don't
+see that inter-remailing encryption helps much, because the attacker can
+still notice that whenever they inject message A, _something_ goes to
+Bob.  The real solution, as Chaum pointed out, is that the remailer must
+reject duplicate messages, even when separated by days.  Doing this without
+keeping a database of all messages ever sent is left as an exercise.
+
+Another aspect worth mentioning is that message splitting can make the
+kinds of statistical correlations that Wei Dai was looking at more of
+a danger.  It's one thing if I send a message along with thousands of
+other people, and Bob gets a message along with everyone else.  But if I
+send 10 messages and Bob gets 10 from that batch, that fact alone can
+help to link us up.  So splitting my big message into 10 standard ones
+isn't that great if they're all sent at once.  Ideally you'd want to
+dribble them out at some standard rate, a rate at which you always send
+a message whether you have something to send or not.  But this may introduce
+unacceptable latency.
+
+Hal
+
+
+
+

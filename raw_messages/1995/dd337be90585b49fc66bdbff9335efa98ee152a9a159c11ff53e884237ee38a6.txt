@@ -1,0 +1,99 @@
+From: jml@wizard.synapse.net
+Date: Sun, 15 Jan 95 18:03:44 PST
+To: cypherpunks@toad.com
+Subject: interesting problem with remailers
+Message-ID: <199501160203.VAA07586@sentinel.synapse.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I need a good dependable cypherpunk style anomymous remailer. So I have been 
+experimenting with a few.
+I have discovered a rather curious problem. I have sent test messages to 
+homer@rahul.net. These test messages read as follows:
+
+::
+Request-Remailing-To: myname@mydonain
+Subject: Test
+
+this is line1
+this is line2
+this is line3
+this is line4
+this is line5
+this is line6
+
+I have encrypted this message with the public key of homer@rahul.net using the 
+pgp -ea command (for armour). This yields something like:
+
+-----BEGIN PGP MESSAGE----
+version 2.6.2
+
+blahblahblah
+blah blah
+blah blah etc.....
+------END PGP MESSAGE---
+
+I have then put
+::
+Encrypted: PGP
+<blank line>
+ 
+at the beginning of the message and send it with Eudora PC 1.4.
+Now curiously enough the message that I received back from homer@rahul is the 
+following:
+
+*************************************************************
+To: myname@mysite
+From: nobody@rahul.net
+Subject: Test
+Remailed-By: A Free Zone Remailer V1.2 <homer@rahul.net>
+Complaints-To: Homer Wilson Smith <homer@rahul.net>
+X-Comments: 
+X-Comments:       finger homer@rahul.net for instructions.
+X-Comments: 
+X-Comments: Unauthorized or illegal use of this remailer, especially
+X-Comments: for spamming the internet or posting copyright violations
+X-Comments: will be prosecuted to the fullest extent of the law.
+X-Comments: Homer Wilson Smith  (607) 277-0959, Fax: (607) 277-8913
+X-Comments:                FULL HEADER LOGGING IS: ON
+
+This is line1
+this is line3
+this is line5
+*************************************************************
+
+No this is line2
+no this is line4
+no this is line6
+
+I am unable to explain this. Obviously the message must be recieved intact by 
+the remailer because being encrypted with PGP if it were corrupt in anyway it 
+would simply not decode properly and I would get no reply whatsoever. Now 
+before somebody says that the trouble is at my site, I also have an account on
+CI$ (compuserve). The same thing happens to message I received there. So 
+obviously it cannot be my site. Unless I am doing something that somehow tells 
+the remailer to only remail one line out of two. (?????)
+And this problem is not only with homer@rahul. Other remailers do the same.
+I know that it most be something that I am doing but it escapes me what. Again 
+it must receive the PGP message correctly. I am stumped....
+If anybody can help explain this little mystery, it would be most appreciated.
+
+Please reply here at cypherpunks@toad.com and also forward to
+wizard@alpha.c2.org (to see if it works)
+
+Thanks all
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.6.2
+
+mQCNAy8X2ZIAAAEEALbeB9136vtAk/FOOb8a1rYv7OWAVJZMiWs/CI1Hla9iUxBj
+hv+KM1rK31cygbk2/y38cZFQupgP34/0HkLKXsl5bP7vifXi5JzyNpeOmYT3Cr/E
+FqyWRFUo6dyp7AVm23ryZGZAM2qfcdXaslEqWAD3PczAnQ34vKhVa3SvpHjhAAUR
+tAZ3aXphcmQ=
+=syn9
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+
+
+

@@ -1,0 +1,49 @@
+From: Christopher Steel - Java Design Center McLean VA <Chris.Steel@East.Sun.COM>
+Date: Wed, 28 Oct 1998 07:44:12 +0800
+To: "RedRook" <cypherpunks@toad.com
+Subject: Re: Using a password as a private key.
+Message-ID: <199810272300.SAA22409@hutch.East.Sun.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Why not encrypt the private key with a 128 bit symmetric key (created from the hash of a username and paasword)
+and store on a keyserver, along with the public key?
+That way, you don't have to store it yourself locally, you get it off the keyserver.
+I wrote a keyserver that does just that.  In addition, it also verifies ies the user before returning the key.
+It requires the user to encrypt a known string with a separate password.
+The encrypted string is sent to the keyserver, encrypted with the keyserver's public key.
+Seems rather safe. Anyone disagree?
+
+-Chris
+
+P.S. I might not use it for military purposes, but for company email...
+
+"RedRook" <redrook@yahoo.com> wrote:
+>Date: Tue, 27 Oct 1998 13:53:07 -0800 (PST)
+>&#130;&#130;&#130;&#130;Assymetic crypto systems such as
+>Diffie-Hellman, El-Gamel, and DSS, allow the private key to be a
+>randomly chosen number. &#130;But, as a cute hack, instead of using a
+>random number, for the private key, you could use a hash of the User
+>Name, and a password. 
+>
+>Doing so allows the users to generate their private key on demand.
+>They don't have to store the private key, and if they want to work on
+>a another computer, they don't need to bring along a copy.&#130;
+>Has any one tried this? Is there existing software that does this? Any
+>comments on the security of such a scheme? &#130;
+>The only draw back that I can think of is the potential lack of
+>randomness in the key. If the user chooses a bad password, it would be
+>possible to brute force the public key.&#130;
+>Harv.&#130;&#130;RedRook@yahoo.com&#130;&#130;&#130;&#130;&#130;&#130;&#130;&#130;
+>_________________________________________________________
+>DO YOU YAHOO!?
+>Get your free @yahoo.com address at http://mail.yahoo.com
+>
+
+
+
+
+
+

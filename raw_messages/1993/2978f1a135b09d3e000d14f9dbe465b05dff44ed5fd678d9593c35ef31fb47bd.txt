@@ -1,0 +1,85 @@
+From: catalyst@netcom.com (Scott Collins)
+Date: Mon, 25 Oct 93 18:50:41 PDT
+To: cypherpunks@toad.com
+Subject: Re: Apple, AOCE, and key pair security
+Message-ID: <9310260144.AA15492@newton.apple.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+- From the MacWeek article:
+
+  >validity. To get your own digital signature from RSA, you take a form to
+  >a notary public, who verifies your identity, notarizes the information
+  >on the form, and then mails the form to RSA.
+
+The form contains your name, address, etc, and a printout of your public key.
+
+
+  >Based on the notary
+  >public's authority to say you are who you claim to be, you eventually
+  >receive a disk in the mail with your personal electronic signature.
+
+_Not_.  The disk contains a PEM style certificate, authenticating your
+public key.  On your local machine, where you generated your private key,
+is a file (your private key) called a signer.  This file is your private
+key + software to make it sign things, so the whole thing is a self
+contained application -- but it refused to function until you bind it to a
+certificate.
+
+
+  >Your
+  >electronic signature has a two-year expiration date, and includes some
+  >verification information.
+
+Certificate, not signature, just like RSA has been trying to sell them all
+along.
+
+
+  >If someone wants to make sure your signature
+  >is valid, he or she contacts the issuing authority listed in the
+  >certificate.
+
+Wrong again.  Validation occurs locally because an entire chain of
+certificates is provided in the signature
+
+
+  >There will be issuing authorities other than RSA. For
+  >example, Apple Computer's security department plans to issue signatures
+  >to all Apple employees with employee badges."
+
+Not signatures, certificates.
+
+All key generation takes place locally.  RSA does not generate the keys. 
+These articles are a woeful misrepresentation by over simplification.  I
+will happily provide clarification to the authors if they call me.
+
+If anyone wants, I will demonstrate this software at the next Bay Area
+cypherpunks meeting.
+
+
+Scott Collins         | "Few people realize what tremendous power there
+                      |  is in one of these things."     -- Willy Wonka
+......................|................................................
+BUSINESS.   voice:408.862.0540  fax:974.6094   collins@newton.apple.com
+Apple Computer, Inc.   5 Infinite Loop, MS 305-2B   Cupertino, CA 95014
+.......................................................................
+PERSONAL.   voice/fax:408.257.1746    1024:669687   catalyst@netcom.com
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3
+
+iQCVAgUBLMw0nSmBKTQiZpaHAQFWOwQAqnD+C7cO0XDzCrbh7hxjzTSDEhbbtxZZ
+B4+dXNghqSSI24c+T8FZC/gwBIhDq4Q1z0iEml2d84VcFZoHdLJL2Vi803go179E
+86uwlggClAPVT+vhqE/LG7NrOC7+r8gTBk5S4gi5fX4hCkMQXdjcNOaWvgQ/slOF
+XbH+g4vjhF8=
+=Kn0e
+-----END PGP SIGNATURE-----
+
+
+
+
+

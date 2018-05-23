@@ -1,0 +1,51 @@
+From: catalyst@netcom.com (Scott Collins)
+Date: Thu, 30 Sep 93 04:16:37 PDT
+To: Mike Ingle <MIKEINGLE@delphi.com>
+Subject: Re: Active Eavesdropping of Clipper
+Message-ID: <9309301111.AA04034@newton.apple.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Mike Ingle quotes Matt Blaze (and I paraphrase):
+
+  >[...] so the procedure for placing a secure call is to recognize
+  >each other's voice in the clear mode, go secure, and read the hash
+  >value to each other [...] you have to rely on prior knowledge of each
+  >other's voice. [...]
+
+This is out of band WRT the encryption engine.  Note that it can be used
+exactly like an asymmetric encryption key for authentication.  You know the
+other persons signature/voice in advance and it is hard for an attacker to
+reproduce it.
+
+
+  >[an attacker could] trick you into saying some numbers, digitally record
+  >them, and then rearrange them and play them back.
+
+The 'replay' attack.  Of course you always make the other person say the
+hash _and_ some (never reused?) data in a lump (re: my earlier post --
+concatenate your challenge data with their a^x before signing) for
+instance: "Bob, please sing me the hash to the tune of 'Raindrops Keep
+Fallin' on My Head'" (Security can be fun).
+
+
+  >Or introduce enough line noise so the person couldn't recognize your
+  >voice, and read the fake key
+
+Signature not valid.  Sorry Bob, I'll have to call you back.  That is, _if_
+it's really you.
+
+
+Scott Collins         | "Few people realize what tremendous power there
+                      |  is in one of these things."     -- Willy Wonka
+......................|................................................
+BUSINESS.   voice:408.862.0540  fax:974.6094   collins@newton.apple.com
+Apple Computer, Inc.   5 Infinite Loop, MS 305-2B   Cupertino, CA 95014
+.......................................................................
+PERSONAL.   voice/fax:408.257.1746    1024:669687   catalyst@netcom.com
+
+
+
+
+

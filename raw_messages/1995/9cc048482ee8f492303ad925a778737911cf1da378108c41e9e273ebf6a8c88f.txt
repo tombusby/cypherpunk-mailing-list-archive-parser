@@ -1,0 +1,44 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Fri, 1 Sep 95 07:52:59 PDT
+To: "Robert A. Rosenberg" <hal9001@panix.com>
+Subject: Re: O.J. ObCrypto: Fuhrman's Folly Fans Fakery Fears...
+In-Reply-To: <v02130506ac6c253a5e59@[166.84.254.3]>
+Message-ID: <9509011452.AA15088@l-slide.MIT.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I do not think that PGP 2.x can easily (ie: Automatically) use one key for
+> Signing and another for Encrypting a Message (it does both at the same time
+> if you ask). If I "Clear Sign" a message and then Encrypt it, then I get
+> the result but I'm not sure if doing the decrypt on such a message will
+> automatically spot the signature and verify it (as would occur with a E+S
+> pass).
+
+Sure it can, and I know people who do.  Here is what you do:
+
+1) Generate two keys.  First generate your encryption key, then
+generate your signature key.  This way, your signature key will be
+placed first in your secret keyring, and it will be used by default.
+Alternatively, you could use two (slightly) different userIDs on the
+keys and put something in your config.txt
+
+2) Extract the keys in reverse order into a single keyfile and then
+distribute that keyfile to people.  This way, when it gets added to
+other people's keyrings, the encryption key will be placed first, and
+that will be used by default.
+
+3) Proceed to use PGP normally.  When you sign a message, it will find
+the signature key first and use that.  When someone wants to encrypt
+to you, they will find the encryption key first.  When verifying the
+signature or trying to decrypt the message, it uses the keyID to
+determine which key was used, so order does not matter.
+
+The only problem is that if someone re-orders their keyring then this
+will no longer work.  E.g., if the keys are added in the wrong order.
+
+-derek
+
+
+
+

@@ -1,0 +1,36 @@
+From: pstemari@fsp.fsp.com (Paul Ste. Marie)
+Date: Tue, 6 Dec 94 20:54:41 PST
+To: bshantz@spry.com
+Subject: GUCAPI (Grand Unified Crypto API)
+In-Reply-To: <9412062142.AA08621@homer.spry.com>
+Message-ID: <9412070454.AA12355@fsp.fsp.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I would be interested in seeing something like this implemented, but I 
+> question whether it will be a hit as an industry standard.  Generic API's 
+> really haven't gone over well for things in the past.  (Except the class 
+> libraries for major C++ compilers.  MFC, OWL, etc.)
+> The design has to be robust before you start coding.  
+
+Something like this should be fairly reasonable to implement in C++.
+The basic concept would be to have a single public abstract class with
+a static method that takes a protocol name and returns a pointer to an
+encryption engine object that implements that protocol.  The actual
+classes could either register themselves with the base class
+statically at link time or dynamically via DLL's or equivalent and an
+OS dependent config utility.
+
+The biggest question to my mind is how to handle key management and
+whether the engines should require blocks of an appropriate size (eg
+encrypt(size_t blksize, const char *inbuf, char *outbuf)) or act as
+pumps with user-specified data sources and sinks (eg encrypt(istream&
+input, ostream& output)).
+
+	Paul
+
+
+
+
+

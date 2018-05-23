@@ -1,0 +1,50 @@
+From: trollins@interactive.visa.com (Tom Rollins)
+Date: Sat, 31 Aug 1996 01:14:47 +0800
+To: Wyntermute@worldnet.att.net (Justin Card)
+Subject: Re: Elliptic Curve Y**2 = x**3 + a * x**2 + b
+In-Reply-To: <3225228C.4290@worldnet.att.net>
+Message-ID: <199608301402.KAA25385@rootboy.interactive.visa.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Justin Card wrote:
+> I can't remember the elliptic curve system well, but if the parameters
+> of the curve are not standard for everyone (which I am afraid they are)
+> one method is to pick the point first, then solve for the a & b.
+> 
+> If this is not the case, finding the square root may be nice or tricky.
+> 
+> if p=3 mod 4, then the sqrt is
+> X^(P+1) mod P, where X is the number you are trying to find the sqrt
+> of.  It can be extended to X=5(mod 8) and a few others, but I'm not sure
+> how.  There is also a form for X=1 mod 4,but I can't find reference to
+> it. Hope this helps
+
+A security issue is selecting an elliptic curve whose order (number
+of points on the elliptic curve) is divisible by a large prime number.
+
+I still have to implement this selection process and thus will have
+my a and b selections driven by this analysis.
+
+There also could be some bandwidth savings when transmitting an
+elliptic curve point to transmitt just the x and the sign bit of y
+and let the receiver reconstruct the actual y value.
+
+The choice for prime p could have overall speed benefits by selecting
+a p=3 mod 4 that makes the math simpler. This was also in Wei Dai's
+ModularSquareRoot C++ code "if(p%4 == 3) return a_exp_b_mod_c(a, (p+1)/4, p);"
+
+-tom
+                
+
+
+
+
+-- 
+Tom Rollins   <trollins@interactive.visa.com>
+
+
+
+
+

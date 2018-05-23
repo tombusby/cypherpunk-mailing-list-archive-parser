@@ -1,0 +1,75 @@
+From: smb@research.att.com
+Date: Sun, 18 Jul 93 21:23:53 PDT
+To: jpp@markv.com
+Subject: Re: Diffie-Hellman Weakness Weakness
+Message-ID: <9307190420.AA18807@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	   If you compare the digital interceptor, to the voice interceptor,
+	 fairly, you will see they are in equally strong positions.
+
+	   When I am phoneing a person I know, I am automatically checking the
+	 `signature' of their voice.  The other party on the line might be able
+	 to convince me they have a cold, but I hope I will have enough wisdom
+	 to postpone discussing the March 15th assassination plot untill the
+	 cold clears up.
+
+	   So we should compare a voice interceptor on a channel where the two
+	 people don't know each other's voice to the unsigned digital
+	 interceptor.  In this case, the interceptor can claim to one party to
+	 be the other party, and remain undetected.  This is the Diffe-Helman
+	 weakness.
+
+	   Alternatively we should compare the voice interceptor on a channel
+	 where the two people do know each other's voice to the signed digital
+	 interceptor.  In this case, the interceptor will either be detected
+	 should some minimal authentication and verification be tried, or the
+	 interceptor will be unable to even listen in.  The weakness remains
+	 here, but it has been patched over with authentication, and signed
+	 verification of the channel key.  This is the Diffe-Helman weakness
+	 weakness.
+
+	   The (potential) interceptor is the reason why we must be so very
+	 carefull when validating other people's public keys.  I know there is
+	 no interceptor between me and the people who's keys I sign.  If I can
+	 be sure of no interceptors between one of them, and the person I wish
+	 to speak to, then I will be able to establish a secure channel.
+
+The AT&T Telephone Security Device (you know, the beast with the Clipper
+chip...) has a display that shows a few digits of a hash of the key.
+Each party reads off some of it to the other; the idea is that an
+intruder won't be able to spoof a voice in real-time.
+
+For data connections, have a look at
+
+@article{interlock,
+   author = {Ronald L. Rivest and Adi Shamir},
+   journal = {Communications of the ACM},
+   number = {4},
+   pages = {393--395},
+   title = {How to Expose an Eavesdropper},
+   volume = {27},
+   year = {1984}
+}
+
+The idea is to send half of an encrypted block.  You then await a
+half-block from the far side, at which point you send your other
+half, and listen for the far side's other half.  The idea is that
+since one can't decrypt a half-block, the intruder in the middle
+can't send a fraudulent one.
+
+Depending on how this scheme (known as the ``Interlock Protocol'')
+is used, it may be vulnerable to attack.  Davies and Price, in their
+(excellent) book ``Security for Computer Networks'', suggest sending
+passwords that way.  But Mike Merritt and I showed how to attack
+that scheme under certain circumstances.  (Details to appear in
+IEEE Transactions on Information Theory.)
+
+
+		--Steve Bellovin
+
+
+
+

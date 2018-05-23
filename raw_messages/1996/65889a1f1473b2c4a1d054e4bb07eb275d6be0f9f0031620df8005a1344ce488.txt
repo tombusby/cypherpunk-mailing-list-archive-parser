@@ -1,0 +1,79 @@
+From: Jeff Weinstein <jsw@netscape.com>
+Date: Wed, 24 Jul 1996 22:48:29 +0800
+To: Raph Levien <s_levien@research.att.com>
+Subject: Re: Netscape
+In-Reply-To: <v02120d1dae1a1186fd2e@[192.0.2.1]>
+Message-ID: <31F4C7AB.18C6@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Raph Levien wrote:
+> 
+> Jeff Weinstein wrote:
+> >
+> > Lucky Green wrote:
+> > >
+> > > At 13:38 7/22/96, Tom Weinstein wrote:
+> > >
+> > > >Yes, and that's what we're trying to do.  Get strong crypto in the hands
+> > > >of as many people as we can.  I can hardly wait until we get S/MIME in.
+> > >
+> > > What will Netscape do to about the 40bit RC-2 default and the signatures on
+> > > the outside of the encryption envelope design flaws in S/MIME? I can't
+> > > imagine Netscape releasing software that has these two properties.
+> >
+> >   If you know that the recipient can read a message encrypted with
+> > 3DES, IDEA, or RC2-128, then you can send the message using one of
+> > these strong algorithms.  Given that you need someones public key
+> > to send them a message, there are several obvious ways to transmit
+> > information about what algorithms they accept along with it.
+> 
+>    Yes, we all know that. But which one will Netscape actually _do_?
+> 
+>    If there's one thing we've learned from PGP, it's that configuration
+> and per-user key management are killers. The reason why I'm so excited
+> about Netscape is that you guys have the _possibility_ to really get
+> strong crypto to the masses. Whether you really do that or not is in
+> your hands.
+> 
+>    I've made a proposal for solving the 40-bit protocol failure in
+> S/MIME. There are other proposals out there too, with various strengths
+> and weaknesses. The main advantage of mine is that it requires no
+> additional infrastructure - i.e. VeriSign does not have to start
+> including algorithm preferences in the DigitalID's they distribute.
+
+  I don't like the fact that your proposal ties the size of the
+bulk encryption key to the size of the public modulus.  There
+are legitimate reasons why someone might choose to have a 512
+bit modulus even though they prefer longer bulk encryption keys.
+Your heuristic would be a good fallback in the absence of more
+reliable information.  
+
+  There is another method that does not require verisign or other
+CAs to add key size extensions to their certs.  We can define
+a new authenticated attribute that gets included in Signed-Data
+and Signed-And-Enveloped-Data messages that indicates the
+user's key size and algorithm preference.  This has the advantage
+that the preference is selected and signed by the user.  This
+method was discussed at the S/MIME meeting in January at the
+RSA Crypto conference.  I'm a bit surprised that it never
+got into the Implementation Guide.  I'll make sure that
+we bring it up on the smime list again.
+
+  What we finally implement will probably be a combination of
+the three methods, with the user's selection taking precedence
+over the CAs selection, which takes precedence over the
+heuristic based on modulus size.
+
+	--Jeff
+
+-- 
+Jeff Weinstein - Electronic Munitions Specialist
+Netscape Communication Corporation
+jsw@netscape.com - http://home.netscape.com/people/jsw
+Any opinions expressed above are mine.
+
+
+
+

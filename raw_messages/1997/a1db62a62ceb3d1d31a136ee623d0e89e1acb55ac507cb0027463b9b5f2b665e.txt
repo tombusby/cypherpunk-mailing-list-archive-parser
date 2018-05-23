@@ -1,0 +1,137 @@
+From: Kent Crispin <kent@songbird.com>
+Date: Tue, 13 May 1997 14:23:43 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: key recovery vs data backup
+In-Reply-To: <19970511024334.53652@bywater.songbird.com>
+Message-ID: <19970512230928.46454@bywater.songbird.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, May 12, 1997 at 11:28:19AM +0200, Alan Barrett wrote:
+> On Sun, 11 May 1997, Kent Crispin wrote:
+> > In the multiple recipient case, therefore, the master 
+> > key is potentially used quite frequently, and hence much more 
+> > exposed.  There are many other differences: I won't try to go into 
+> > detail here.
+> 
+> Good point.
+> 
+> I happen to think that using the master key to decrypt documents is better
+> practice than using the master key to obtain copies of other keys, but I
+> can see both sides of this argument.
+
+Your secretary of many years changes her passphrase, then forgets it. 
+She has literally thousands of documents encrypted under that key. 
+You tell her "There was a memo I put out two years ago -- we
+formulated a quote for them, and *I need that number*." So you call in
+the company security officer to decrypt all those documents, which 
+are filed in several different places?  Contrast this with just 
+restoring the key.
+
+[...]
+
+> You are repeating your fallacy of assuming that the key safe (KS) case has
+> one policy for all users and the multiple recipients (MR) case has
+> different policies for different users.  The truth is that the two issues
+> (which model to use, and how many different policies to make visible to
+> the users' software) are orthogonal.  You can have KS with a different key
+> safe for each user, and you can have MR with the same extra recipients for
+> each user.
+
+The models I have assumed are: KS -- a single keysafe and multiple 
+clients; MR -- a single master key generating point, and multiple 
+clients.  In the KS model all the clients talk to a single server, 
+and there is no policy issue.  In the MR case, if there is a single 
+master key there is no policy issue that impacts the clients, but if 
+there are multiple master keys then different clients are configured 
+differently, according to the policy, and that configuration is 
+controlled centrally.
+
+I confess that I hadn't considered the case of multiple keysafes in
+the same organization -- and for very large organizations you might
+want to do that.  But the whole point of a keysafe is that you
+concentrate expense protecting the keysafe, and, in practice, it seems
+to me, the boundaries between keysafe domains (to coin a term) would
+be pretty well defined.  And, the only policy issue for KS clients is 
+which keysafe to talk to.  This is pretty much fixed at installation 
+time. 
+
+> > Sigh.  The situations are really quite different.  In the KS
+> > case the policy never impacts the software; in the MR case I don't 
+> > think you can avoid it.
+> 
+> Sigh.  The same fallacy again.
+> 
+> In the KS case, the software must know which key safe to use and how to
+> secure and authenticate access to the key safe.
+> 
+> In the MR case, the software must know which extra recipients to add, and
+> the corresponding public keys.
+> 
+> In both cases, the software is affected to some minimum extent.  In both
+> cases, you can choose to make the software more complex by adding more
+> policy knowledge.  In neither case are you forced to add more than the
+> minimum amount of policy information to the software.
+
+You *could* design a system with multiple distributed keysafes, 
+perhaps in an effort to minimize exposure, but I think this would be 
+the worst of both worlds.
+
+> > > > Access to the key-safe is critical, of course, but it can be made very
+> > > > secure -- a special-purpose piece of hardware that requires passwords
+> > > > from n out of m key czars before access is granted, for example.
+> > > > Or the contents of the key safe can be encrypted via keys escrowed
+> > > > through a secret sharing mechanism
+> > > 
+> > > The same problems and solutions apply in both the CAK case and in the
+> > > "corporate key as extra crypto recipient" case.
+> > 
+> > Not at all. The corporate master key is used to decrypt documents in the 
+> > MR case; in the KS case the master key is used to get to the key 
+> > database.
+> 
+> What I meant was, you can make n-of-m hardware stuff for both cases.
+> Surely you don't disagree with that?
+
+I don't disagree that you *could* do it.  I think it unlikely that you
+would do it for the multiple recipient case.  I believe that in the MR
+case the master key(s) (especially if there are multiple master keys)
+would use exactly the same encryption algorithm as the normal
+encryption case.  That is the obvious, straightforward way to do it. 
+If you use another encryption algorithm for the master then you have a
+whole raft of other problems to deal with.
+
+And it would be crazy to require the presence of N people to decrypt 
+any file with the master key -- consider the case of your secretary...
+
+> > >   - With CAK, every time a user creates a new key, the user's software
+> > >     needs to talk to teh key safe.  This needs a secure channel, which
+> > >     raises further authentication problems (how does the user know that
+> > >     he's not talking to a fake key safe).  These don't arise in the
+> > >     non-CAK case.
+> > 
+> > Not so.  You have to exactly the same issue -- how does the user find 
+> > out the master key to encrypt to?
+> 
+> Finding out which key to encrypt to in the MR case is analagous to finding
+> out which key safe to talk to in the KS case.  Securing and authenticating
+> the channel to the key safe in the KS case is an extra issue that does not
+> have a counterpart in the MR case.
+
+??  How do you know that the channel through which you get the master 
+key in the MR case is secure?  You surely don't just pull it off the 
+net.  It's signed?  Then the problem just recurses -- how do you know 
+the signature is good?  This is exactly the problem you have 
+contacting the keysafe.
+
+-- 
+Kent Crispin				"No reason to get excited",
+kent@songbird.com			the thief he kindly spoke...
+PGP fingerprint:   B1 8B 72 ED 55 21 5E 44  61 F4 58 0F 72 10 65 55
+http://songbird.com/kent/pgp_key.html
+
+
+
+
+

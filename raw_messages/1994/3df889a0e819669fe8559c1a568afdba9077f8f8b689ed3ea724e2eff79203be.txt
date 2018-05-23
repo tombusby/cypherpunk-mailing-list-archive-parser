@@ -1,0 +1,66 @@
+From: rishab@dxm.ernet.in
+Date: Thu, 15 Dec 94 12:38:59 PST
+To: cypherpunks@toad.com
+Subject: On criticizing SSL, and insecure transport layers
+Message-ID: <gate.owZeXc1w165w@dxm.ernet.in>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+kipp@mcom.com:
+> Is [SSL] insecure? If so, how?
+> 
+> Is there some cipher techonology that it absolutely must support? If
+> so, which one? why?
+
+While I'm not going to say anything about SSL's qualities as a secure 
+transport layer as such (I've not looked at it carefully enough) I think 
+that the criticisms are on larger issues.
+
+1. Standards - the reinventing the wheel criticism; if other methods for
+more or less the same thing exist (and swIPe source has been around for all
+to test to their hearts' content) why try a new one? This point seems to have
+mutated into general criticism of NCom's attitude to / knowledge of IETF
+proceedings and the technology
+
+2. Security - the basic insecurity of _any_ transport layer. "If Netscape
+had to come up with a new secure protocol, why did they choose the transport
+layer?" The transport layer is insecure because: it is less under the control
+of a user, it happens 'automagically'; it is at a lower level and so generally
+implemented by central authorities - sysadmins etc, and does not suit the
+web of trust model (nor does X.509) which is much better outside 
+dictatorships; it is provided by the telco or net service provider who, as 
+I suggested earlier, are prone to arm-twisting by the authorities, whether
+by legislation, or while 'cooperating'.
+
+Transport layer security does not provide data authentication, it only
+provides server authentication; nor does it provide data security and privacy
+between users, it only provides network security.
+
+To rebut Kipp's favourite justification, insecure transmission of passwords:
+transport layer security does _not_ improve password security/privacy, but
+only ensures that once a plaintext password is received by the transport
+layer, usually at a service provider, then it will not be intercepted. Secure
+transmission of passwords could (but as far as I know is not widely) be 
+implemented at the client level, through DH handshaking or something, which
+would ensure a completely secure and _private_ transaction.
+
+Transport layer security is nice because it is conveniently automatic and
+transparent, but it can lead to a false sense of security for precisely that
+reason.
+
+Of course these are quintessentially Cypherpunk objections. A bank, or
+Singapore, would be quite comfortable with such a system for internal networks.
+
+
+"We know everything about you that we need to know" - Coleta Brueck, IRS
+-----------------------------------------------------------------------------
+Rishab Aiyer Ghosh                                "In between the breaths is
+rishab@dxm.ernet.in                                  the space where we live"
+rishab@arbornet.org                                        - Lawrence Durrell
+Voice/Fax/Data +91 11 6853410  
+Voicemail +91 11 3760335                 H 34C Saket, New Delhi 110017, INDIA  
+
+
+
+

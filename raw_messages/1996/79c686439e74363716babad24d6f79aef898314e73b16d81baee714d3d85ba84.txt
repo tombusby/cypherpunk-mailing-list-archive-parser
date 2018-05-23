@@ -1,0 +1,42 @@
+From: lmccarth@cs.umass.edu
+Date: Sun, 10 Mar 1996 01:38:28 +0800
+To: cypherpunks@toad.com (Cypherpunks Mailing List)
+Subject: Re: key cert. distrib. and management (Was: A brief comparison of email encryption protocols)
+In-Reply-To: <199603011603.IAA16596@slack.lne.com>
+Message-ID: <199603012228.RAA21541@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+[I've changed the Subject: because this now has very little to do with
+email encryption protocols]
+
+Eric Murray writes:
+> Finally, a question:  should the keyserver be able to serve
+> keys in a way that is secure from a MITM attack, or can it depend
+> on the certificate chain in the key certificate itself to
+> validate the key certificate?  I think it can, but I am not
+> sure, 
+
+The certificate should be able to stand on its own. Anyone can already feed
+arbitrary certificate data to you via the keyserver, just by submitting it to
+the keyserver in the usual way. 
+
+However, a MITM can mount some denial-of-service
+attacks by removing sigs. from a cert., or substituting some certs. for
+others, or stopping the delivery of some certs. If the keyserver signs
+responses by default, then an ordinary active attacker (non-MITM) couldn't
+do DoS at finer granularity than the scope of each signed piece.
+
+> so perhaps someone smarter than I can explain why, or why not.
+
+Disclaimer: My decision to reply to your message should in no way be 
+construed as implying a judgment on my part about our relative intelligence :)
+
+-Lewis	"You're always disappointed, nothing seems to keep you high -- drive 
+	your bargains, push your papers, win your medals, fuck your strangers;
+	don't it leave you on the empty side ?"  (Joni Mitchell, 1972)
+
+
+
+

@@ -1,0 +1,35 @@
+From: pgut001@cs.auckland.ac.nz
+Date: Sat, 30 Mar 1996 19:11:04 +0800
+To: cypherpunks@toad.com
+Subject: Re: trouble with idea.c from cryptl99.zip
+Message-ID: <199603300350.PAA14507@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tall men in dark suits made Jack Mott <thecrow@iconn.net> write:
+ 
+>Hey, I downloaded the crypto lib 'cryptl99.zip' from one of the crypto web
+>sites, I got IDEA.C to compile, but it doesn't seem to encrypt.
+>
+>[...]
+>       memcpy(YY, XX, 8);
+>       for (l = 0; l < BLOCKS; l++)
+>               ideaCipher(YY, YY, EK); /* repeated encryption */
+>       memcpy(ZZ, YY, 8);
+>       for (l = 0; l < BLOCKS; l++)
+>               ideaCipher(ZZ, ZZ, DK); /* repeated decryption */
+ 
+Arrgghh!!! That defeats the whole purpose of the library, which is to provide a
+standard interface to many different algorithms.  If you use the routine the
+way it's meant to be used (via initCryptContext(), etc) it'll work fine.
+ 
+BTW the reason it isn't encrypting is that by the looks of it you're not
+calling the IDEA key schedule code.
+ 
+Peter.
+ 
+
+
+
+

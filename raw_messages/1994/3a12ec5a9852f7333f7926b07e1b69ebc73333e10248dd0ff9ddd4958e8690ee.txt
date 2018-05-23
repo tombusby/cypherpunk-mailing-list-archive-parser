@@ -1,0 +1,54 @@
+From: "Ian Farquhar" <ianf@sydney.sgi.com>
+Date: Mon, 12 Dec 94 16:46:00 PST
+To: cypherpunks@toad.com
+Subject: Re: Time to exhaustively break 40-bit RC4?
+In-Reply-To: <199412122330.PAA29185@netcom20.netcom.com>
+Message-ID: <9412131131.ZM13269@wiley.sydney.sgi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Dec 12,  3:30pm, Raph Levien wrote:
+> The key schedule operation in RC4 does 256 "swap" operations. Let's
+> say it takes four instructions to do each swap. So, it's 2000
+> instructions per key. A one-MIPS processor can search 500 keys a
+> second. There are about 30 million seconds in a year, so that's 15
+> billion keys a year. 40 bits is a trillion keys, so it works out to 66
+> years, which is well within the Pentium-style accuracy of the
+> calculations I've done.
+
+No, because as you're doing an exhaustive keysearch, you can "pipeline"
+the key generation process in software.  Each key requires 256 swaps,
+certainly, but there are only two swaps difference between the key
+for "0000000000" and "0000000001" (assuming a 40 bit key).  If you
+recursively generate keys, then you can generate successive keys
+like this:
+
+1. Copy the keystate from iteration n-1 (keep the partial keystates
+   on a stack).
+2. Do the swap for this portion of the key, and for 255 out of 256
+   keys, you will have a new one in 2 swaps.
+
+(In reality, it would be faster to undo the last swap rather than copying
+the key, and keeping the swaps on a stack rather than the keystate on
+a stack.  These are implementation issues I haven't given a huge amount
+of thought to as yet.)
+
+Unless there is some hidden complexity which I have overlooked - in which
+case I will be delighted to stand corrected - this will produce a key
+fast enough to allow an average workstation to search the 40-bit keyspace
+using a known plaintext attack in a couple of hours or less.  If this is
+the case, 40-bit RC4 might as well be crypt(1), and 48-bit RC4 looks
+pretty shakey too.
+
+I was planning to code this over the xmas break, dependent on whatever
+other commitments fall on me during that period.  I realised it was possible
+a couple of months ago after pondering ways of parallelising the RC4 key
+generation process in hardware.
+
+						Ian.
+
+
+
+
+

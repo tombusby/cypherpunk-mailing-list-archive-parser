@@ -1,0 +1,97 @@
+From: "Timothy C. May" <tcmay@got.net>
+Date: Sun, 20 Oct 1996 09:35:51 -0700 (PDT)
+To: cypherpunks@toad.com
+Subject: Smartcard Torture
+In-Reply-To: <199610200950.CAA15117@dfw-ix5.ix.netcom.com>
+Message-ID: <v03007800ae9010eed060@[207.167.93.63]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 2:41 AM -0700 10/20/96, Bill Stewart wrote:
+>At 04:45 PM 10/18/96 -0700, John Gilmore <gnu@toad.com> wrote:
+>>Note that this attack requires physical access to the DES chip, to
+>>stress it so it will fail.  It works great against "tamper-proof"
+>>devices such as smart cards.  It doesn't work against encryption
+>>happening at any distance from the attacker (e.g. across the network).
+>
+>It's probably most useful for defeating attempts to force smart cards
+>on the public as the government's solution to Key Recovery
+>(e.g. Clipper 4 fails, so after the election they come out with Clipper 5
+>or the Anti-Terrorism Airplane Traveller's License Smartcard.)
+
+I think Bill just hit on a VIP (Very Important Point).
+
+In most _legitimate_ uses of a smart card, e.g., where one is using it to
+store one's own data (passwords, so one doesn't have to remember long
+strings), there is essentially nothing to be gained by thwarting or
+subverting the card. After all, _you_ programmed it, so you can program it
+again, and again.
+
+However, in the application Bill described, the Anti-Terrorism Airplane
+Traveller's License Smartcard, this is a credential issued by some
+government, giving one their permission to do something, to be someplace,
+etc. There is a very high incentive for some holders of these cards to
+thwart or subvert the intent of these credentials. A market will likely
+develop wherein people bring in their identity cards to be "twiddled in the
+cyclotron."
+
+In other words, for applications where the smartcard is basically a "memory
+aid," the holder has no incentive to twiddle the card and every incentive
+to stop others from getting ahold of it for twiddling. But for applications
+in which the smartcard is _holding someone else's data_ (cash, permissions,
+etc.), and the card holder wishes to change the data, he has every
+incentive to try to break the encryption and all the time in the world to
+do it. He could coax (I think of it as "smartcard torture") the card into
+generating the 200 or so pairs Biham and Shamir cite over a period of many
+days, even.
+
+There are some defenses, for the card issuers, that I think are reasonable.
+(I haven't read the Biham-Shamir paper yet, so I don't know if they
+discussed defenses.) One obvious defense against twiddling is to have the
+issuing authority digitally sign some of the data in the card, just as
+lottery tickets have a digital hash/signature of the actual number printed
+on the back.
+
+(Lottery tickets are the canonical example of something that are easy to
+forge--even with special ticket paper (and it doesn't look very special to
+me, certainly not as special as a currency note), a forger has a lot of
+time (months or more) to carefully forge a ticket with the winning number
+on it. And the payoff can be enormous. Given that a relatively high
+percentage of winning tickets are never redeemed (are lost or forgotten),
+this would seem to be a winning approach. However, the number printed on
+the face of the ticket is digitally hashed/signed by a secret key and the
+resulting number is printed on the _back_ of the ticket (at least in
+California, and I presume nearly everywhere). Unless the forger knows the
+hashing key he cannot forge a valid ticket. If public key methods are used,
+verification of the hash/signature can of course be done locally, even at
+the local 7-11, with the secret key safely locked in a vault under several
+levels of protection.)
+
+(Local color note: Scientific Games, the leading printer of lottery
+tickets, has a major facility--possibly the main facility--a few ridges
+away from me, in Gilroy, I hear. I've also heard that John Koza, of genetic
+programming fame, made his fortune in this business before going to
+Stanford. Don't know if he was connected to Scientific Games.)
+
+--Tim May
+
+
+"The government announcement is disastrous," said Jim Bidzos,.."We warned IBM
+that the National Security Agency would try to twist their technology."
+[NYT, 1996-10-02]
+We got computers, we're tapping phone lines, I know that that ain't allowed.
+---------:---------:---------:---------:---------:---------:---------:----
+Timothy C. May              | Crypto Anarchy: encryption, digital money,
+tcmay@got.net  408-728-0152 | anonymous networks, digital pseudonyms, zero
+W.A.S.T.E.: Corralitos, CA  | knowledge, reputations, information markets,
+Higher Power: 2^1,257,787-1 | black markets, collapse of governments.
+"National borders aren't even speed bumps on the information superhighway."
+
+
+
+
+
+
+
+

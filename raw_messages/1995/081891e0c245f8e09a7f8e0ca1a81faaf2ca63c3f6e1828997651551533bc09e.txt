@@ -1,0 +1,55 @@
+From: Eric Young <eay@mincom.oz.au>
+Date: Tue, 28 Nov 1995 01:39:42 +0800
+To: Jyri Kaljundi <jk@digit.ee>
+Subject: Re: Cypherpunk Certification Authority
+In-Reply-To: <Pine.SOL.3.91.951127180832.25120B-100000@sun.digit.ee>
+Message-ID: <Pine.SOL.3.91.951128030744.19145A-100000@orb>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Mon, 27 Nov 1995, Jyri Kaljundi wrote:
+> What software there is available (preferably non-commercial) to become a 
+> CA? Is for example the SSLeay package enough?
+
+I'm just making a quick comment on this point.  The current SSLeay setup, 
+I would say no.  You can do it but you need to write more stuff to do it 
+correctly.  It is a bit of an evil cludge.
+
+The next version should be able to do this (I hope, depending on time).
+The next version has (will have) several different ways to 'retrieve'
+certificates which can be added via an run time API (the application can
+'push' new methods into the library during startup). I will probably not
+have time to put in a 'socket' based certificate server but it should be
+simple enough for this to be written by other people. It should also be
+simple enough for other people to write some routines that conform to the
+API so that the netscape DB files can be accessed by SSLeay (along with
+the current SSLeay 'hash directories' and the socket based lookup (if it
+gets put in)). 
+
+The most importaint change is that I will support CRL if they are 
+present and probably generate an 'warning' if there is no CRL.  I still 
+need to write a simple application to do a basic 'keep track of issued 
+certificates' and generate a CRL if required.  The library routines to 
+write a CA are present, they just need to be glued to a simple database 
+(which I will probably do in my demo case via ascii files in directories).
+
+This version will also hopefully support the concept of selecting a 
+certificate/private key from a set of certificates, attempting to pick a 
+certificate that is in the same 'tree' as another certificate.
+
+This concept of multiple certificates for a person is useful for
+SSLtelnet, so that each 'host domain' can issue it's own certificates (and
+keep track of it's own CRL).  To let some-one login, just issue them with
+a 'certificate' for that 'host domain'. 
+
+eric
+--
+Eric Young                  | Signature removed since it was generating
+AARNet: eay@mincom.oz.au    | more followups than the message contents :-)
+
+
+
+
+

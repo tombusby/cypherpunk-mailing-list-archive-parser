@@ -1,0 +1,82 @@
+From: Hal <74076.1041@CompuServe.COM>
+Date: Sun, 17 Jan 93 20:48:33 PST
+To: CYPHERPUNKS <CYPHERPUNKS@TOAD.COM>
+Subject: Return envelopes.
+Message-ID: <930118044221_74076.1041_DHJ53-1@CompuServe.COM>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I looked at Eric Messick's improved ideas for remailing with digital
+postage, and they look pretty good.  I think it's especially good that
+Eric has been able to show that anonymous addresses can be used by
+more than one person without being incriminating.
+
+But there is still an attack which they are vulnerable to, which Eric
+mentions.  The "Pneed" field of the anonymous address has information
+about the postage amounts which will be needed by each remailer in
+the chain.  (But it doesn't reveal which specific remailers to use,
+of course.)  It also has public keys to encrypt these amounts with,
+which are matched by secret keys hidden in the encrypted address.
+
+But the remailers themselves each see their corresponding postage secret
+keys as they process the message.  This means that they know which
+envelope was used to send each message.  That means that each remailer
+can find out if it is part of a given anonymous address, and it can
+find out what remailers are before and after it in the chain.  It is
+especially unnerving that the last remailer in the chain can learn
+this information, as it will see your true address.  The one consolation
+is that it won't _know_ that it is the last remailer in the chain,
+so it won't realize that it has actually broken the code and is seeing
+the true correspondance between the anonymous address and the real
+address.
+
+But if most anonymous addresses only go through no more than a handful
+of remailers, say 10, then that remailer must figure that it has at
+least a 10% chance of having "broken" your address.  This degree of
+information is more than I would like to have revealed about my anonymous
+address.
+
+Based on this, I would be inclined to use non-postage-charging remailers.
+But even the non-postage remailers have the same flaw using Eric's
+protocol.  Each remailer sees the "clear text" of the message M being
+passed along.  If a remailer sent the message in the first place, it
+created M, so if it then sees message M come through later, it again
+knows the correspondance between an anonymous address and its own
+forwarding activities.
+
+Chaum's scheme avoided this problem by having M get encrypted at each
+point.  Using Eric's notation, an anonymous address might be:
+
+Addr: &Z, z, z(&R, r, A, r(junk))
+
+The new addition is A, a random conventional key.  Z gets sent:
+
+To: &Z
+Addr: z(z(&R, r, A, r(junk)), pad)
+Message: z(M, pad)
+
+This is just like Eric's example.  What Z sends is:
+
+To: &R
+Addr: r(r(junk), pad)
+Message: r(A(M), pad)
+
+The new feature is that Z encrypted M with A as it passed through.
+In this case we only had a one-step anonymous address, but if there
+were more than one step, each would use a different conventional key
+A, B, C, ....  This way even a remailer which created M wouldn't
+recognize it when it passed through after at least one step.
+
+Using this idea along with Eric's idea of random padding and double
+encryption at each step, we have multiple-use return addresses for
+which no information can be learned at any point about the correspondence
+between anonymous and real addresses, as long as the return addresses
+use at least two hops.
+
+Hal
+
+
+
+
+

@@ -1,0 +1,109 @@
+From: Vipul Ved Prakash <vipul@pobox.com>
+Date: Tue, 27 Aug 1996 10:24:51 +0800
+To: cypherpunks@toad.com (Cypherpunks)
+Subject: Nuke attack? No, bug in DNS! (fwd)
+Message-ID: <199605160122.BAA00187@fountainhead.net>
+MIME-Version: 1.0
+Content-Type: text
+
+
+I think this is the main cause of all strange things happening on the
+net for last few days. 
+
+Vipul
+
+Rishab A. Ghosh Wrote : 
+> Was I the only one nuked by the DNS/BIND crash yesterday? I hope
+> I've not been automatically unsubscribed from the list. As not
+> everyone here reads c.p.tcp-ip.d I've attached Karl Denninger's
+> analysis. For those who were luckily immune, my ISP (best.com) like
+> many others, had it's DNS crash for _local_ domain names (belonging
+> to the ISP and customers like me) through most of yesterday. No,
+> not a virus, but bad DNS records "floating around" as Karl puts it,
+> that happened to expose a bug in the latest version of BIND.
+> 
+> So much for immunity to nuclear war!
+> 
+> Rishab
+> 
+> > From: karl@MCS.COM (Karl Denninger)
+> > Newsgroups: comp.protocols.tcp-ip.domains
+> > Subject: SERIOUS PROBLEM WITH DNS SERVERS AND BAD RECORDS - Rev 4.9.4
+> > Date: 23 Aug 1996 10:10:39 -0500
+> > Organization: MCSNet Ops, Chicago, IL
+> > Message-ID: <4vkhlf$u4@Jupiter.mcs.net>
+> > 
+> > CAUTION!
+> > 
+> > There are a series of bad nameserver records floating around on the net
+> > which are blowing up BIND versions 4.9.4 (REL and T5B) and possibly other
+> > releases as well.  
+> > 
+> > This has been VERIFIED to be impacting multiple ISPs and their DNS servers.
+> > 
+> > We are shutting off updates from ANY DNS server which presents bogus data,
+> > which stops it from killing our code, but is of no help to the large number
+> > of domains which are presumably rendered unreachable.
+> > 
+> > At present, this list is:
+> > 
+> > bogusns 204.94.129.65 158.43.192.7
+> > ;
+> > bogusns 199.3.12.2 38.241.98.5 199.71.224.105 206.215.3.10
+> > bogusns 134.75.30.253 198.41.0.4 128.63.2.53 198.41.0.4
+> > bogusns 206.66.184.11 206.66.104.37
+> > ;
+> > bogusns 163.173.128.6 163.173.128.254 200.6.39.1 192.33.4.12 128.174.36.254
+> > bogusns 129.79.1.9 128.174.5.58
+> > 
+> > 
+> > All of these have presented at least one malformed record to us in the 
+> > last two hours!
+> > 
+> > Folks, if you run one of these servers, start tracking down the problem on
+> > your end.   If this is bad cached data, THOSE AFFECTED MUST FLUSH IT
+> > AS SOON AS POSSIBLE TO TRY TO PREVENT PROPAGATION.
+> > 
+> > This problem started as an isolated set of incidents yesterday, and is now
+> > spreading like wildfire.
+> > 
+> > The actual bad data appears to be a domain name being returned in an 
+> > authority record which is of the form "domain.com<tab>com".  We have not
+> > yet caught a bad returned record in a debug file; that is being attempted
+> > now.
+> > 
+> > When this goes through "dn_expand" in the BIND code, it causes memory
+> > arena corruption and subsequent failure to resolve VALID zones which you 
+> > are authoritative for.  First signs are reports of "corrupted authority data"
+> > if you are using "dig" to check zones which you hold authority records for.
+> > 
+> > We are working on a way to "harden" the code against this kind of junk data,
+> > but until we can get one deployed our defense is to shut down communication
+> > from those who are presenting us the garbage.
+> > 
+> > PLEASE CHECK YOUR NAMESERVERS OUT AND TAKE NECESSARY STEPS YOURSELF!  This
+> > is a serious problem which has the possibility of melting significant parts
+> > of the Internet infrastructure.
+> > 
+> > --
+> > --
+> > Karl Denninger (karl@MCS.Net)| MCSNet - The Finest Internet Connectivity
+> > http://www.mcs.net/~karl     | T1 from $600 monthly; speeds to DS-3 available
+> > 			     | 23 Chicagoland Prefixes, 13 ISDN, much more
+> > Voice: [+1 312 803-MCS1 x219]| Email to "info@mcs.net" WWW: http://www.mcs.net/
+> > Fax:   [+1 312 248-9865]     | Home of Chicago's only FULL Clarinet feed!
+> > 
+> > 
+> > -- 
+> >  bryant durrell                             http://www.innocence.com/~durrell
+> >         durrell@innocence.com              http://www.innocence.com/fengshui
+> >         durrell@bofh.net                  http://www.innocence.com/shadowfist
+> >  big black nemesis parthenogenesis no one move a muscle as the dead come home
+> > 
+> 
+> 
+
+
+
+
+

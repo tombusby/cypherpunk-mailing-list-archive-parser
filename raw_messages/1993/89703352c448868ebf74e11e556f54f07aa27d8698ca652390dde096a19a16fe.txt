@@ -1,0 +1,89 @@
+From: Nickey MacDonald <i6t4@jupiter.sun.csd.unb.ca>
+Date: Tue, 9 Mar 93 14:04:46 PST
+To: cypherpunks list <cypherpunks@toad.com>
+Subject: Questions about PGP 2.2 compilation messages
+Message-ID: <Pine.3.05.9303091730.A12744-d100000@jupiter>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Sorry for the large size of this post, but I want to make sure I'm not the
+only one who has seen this...
+
+This is a log of my compilation of PGP 2.2 on a Sun4...  There are some
+warnings that don't look that serious, by should there be any warnings at
+all?  (I'd prefer the docs mentioned them if they're supposed to be
+there...  but I didn't see any mention in any of the docs...)
+
+--- Log Starts ---
+jupiter [/tmp/i6t4/pgp/pgp22/src] {i6t4.50}% make sun4cc
+cd unproto && make
+`cpp' is up to date.
+make all CC=cc LD=cc OBJS_EXT=sparc.o \
+CFLAGS="-Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32"
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  pgp.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  crypto.c
+"crypto.c", line 910: warning: & before array or function: ignored
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  keymgmt.c
+"keymgmt.c", line 471: warning: statement not reached
+"keymgmt.c", line 478: warning: statement not reached
+"keymgmt.c", line 490: warning: statement not reached
+"keymgmt.c", line 497: warning: statement not reached
+"keymgmt.c", line 508: warning: statement not reached
+"keymgmt.c", line 516: warning: statement not reached
+"keymgmt.c", line 519: warning: statement not reached
+"keymgmt.c", line 524: warning: statement not reached
+"keymgmt.c", line 529: warning: statement not reached
+"keymgmt.c", line 534: warning: statement not reached
+"keymgmt.c", line 538: warning: statement not reached
+"keymgmt.c", line 587: warning: statement not reached
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  fileio.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  mdfile.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  more.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  armor.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  mpilib.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  mpiio.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  genprime.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  rsagen.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  random.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  idea.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  passwd.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  md5.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  system.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  language.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  getopt.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  keyadd.c
+"keyadd.c", line 760: warning: statement not reached
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  config.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  keymaint.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  charset.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zbits.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zdeflate.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zfile_io.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zglobals.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zinflate.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zip.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zipup.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  ztrees.c
+cc -Qpath unproto -O -DUNIX -DHIGHFIRST -DIDEA32  -target sun4 -c  zunzip.c
+as  -sparc -o sparc.o sparc.s
+cc -o pgp pgp.o crypto.o keymgmt.o fileio.o  mdfile.o more.o armor.o mpilib.o mp
+
+iio.o  genprime.o rsagen.o random.o idea.o passwd.o  md5.o system.o language.o g
+
+etopt.o keyadd.o  config.o keymaint.o charset.o zbits.o zdeflate.o zfile_io.o zg
+
+lobals.o  zinflate.o zip.o zipup.o ztrees.o zunzip.o sparc.o
+--- Log Ends ---
+
+Anyone care to comment?
+
+---
+Nick MacDonald               | NMD on IRC
+i6t4@jupiter.sun.csd.unb.ca  | PGP 2.1 Public key available via finger
+
+
+
+
+
+

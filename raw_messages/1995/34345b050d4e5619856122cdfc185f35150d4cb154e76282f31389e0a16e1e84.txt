@@ -1,0 +1,43 @@
+From: "Perry E. Metzger" <perry@imsi.com>
+Date: Sat, 11 Feb 95 22:16:29 PST
+To: Hal <hfinney@shell.portal.com>
+Subject: Re: Does PGP scale well?
+In-Reply-To: <199502120105.RAA20992@jobe.shell.portal.com>
+Message-ID: <9502120616.AA18409@snark.imsi.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Hal says:
+> I was just reading RFC1034 about DNS, and one thing I noted was that
+> there is a "reverse lookup" feature.  This allows you to go from,
+> say, 156.151.1.101 to portal.com.  This problem seems similar in
+> some ways to the key lookup problem since you have a relatively
+> unstructured number and you want to use it as a lookup key.
+> 
+> According to the RFC, if you want to know what host machine is at
+> address 156.151.1.101, you do a lookup of 156.151.1.101.IN-ADDR.ARPA.
+
+No, you got that wrong. You do a lookup on 101.1.151.156.IN-ADDR.ARPA
+-- note the component reversal. The reversal is very key.
+
+> The RFC did not make it very clear how this is done.  Does this use a
+> "flat" database?
+
+No. Its fully distributed. The fact that networks are assigned in
+heirarchical chunks should explain how its done, and why the bytes get
+reversed for the lookup. As an example, MIT owns network 18, which is
+to say that all MIT addresses are 18.XXX.XXX.XXX, and 18.IN-ADDR.ARPA
+is a server at MIT. MIT may have sub-servers beyond that level, but
+DNS makes us oblivious to this.
+
+For IPv6, the reverse lookup is going to be segregated at the nybble
+boundaries rather than at the byte boundaries because of CIDR style
+classless allocation. The domain will be IP6.INT rather than IN-ADDR.ARPA
+
+Perry
+
+
+
+

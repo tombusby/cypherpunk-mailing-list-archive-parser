@@ -1,0 +1,99 @@
+From: Ian Farquhar <ifarqhar@laurel.ocs.mq.edu.au>
+Date: Thu, 14 Jul 94 15:43:31 PDT
+To: mab@crypto.com (Matt Blaze)
+Subject: Re: Idle question...
+In-Reply-To: <199407141208.IAA09141@crypto.com>
+Message-ID: <199407142236.AA20666@laurel.ocs.mq.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>>>BTW, the algorithm leaked, it was not reverse engineered.  I do not expect
+>>>SKIPJACK to leak, as it's distribution would be VERY limited, even within
+>>>the NSA and chip houses.  Even A5 was reputed to be known to only 2 or 3
+>>>people within Motorola.
+
+>>How many have access to the masks?
+
+An interesting question.  Presumably the companies are obliged to use
+internal security procedures on the masks.  Let's face it: Motorola
+manufactures a lot of other chips which contain sensitive implementation
+details anyway, so they should be able to insure that the masks stay
+relatively private.
+
+You might also like to consider this.  I would expect an average chip
+which implements the GSM protocols to contain 100K-500K transistors,
+probably as a CMOS gate array with some standard cells.  The A5 cipher could
+conservatively implemented in about 500 transistors.  Assuming that
+Motorola maintains reasonable control and security over the masks on the
+fab line, it is going to be extremely difficult for anyone to recover
+the cipher's algorithm.  Besides, have you ever tried to figure out an
+algorithm from a gate array?!  Insanity lies down that path. :)
+
+A much more viable technique would be to decap it and use electron
+microscopy to recover the algorithm.  Obviously this possibility
+was factored into the design of A5.
+
+Matt Blaze wrote:
+>According
+>to NSA, "part of the algorithm", probably including the configuration
+>tables for the S-boxes, is burned in to the chips in the secure
+>vault during the classified escrow programming session.  See my
+>February comp.risks post, "Notes on Key Escrow Meeting with NSA",
+>for more details.  (I think it's available somewhere in the
+>ftp.eff.org archive.)
+
+The technology used to implement this is ViaLink (Ref: Computer Design,
+Jan 93, pp. 28-30).  It's an antifuse (ie. OC till blown) technology,
+which buries an amorphous silicon fuse between two layers of metal.
+The cell which forms part of this fuse is known as a VROM cell.
+A blown VROM cell is inspectionally identical to an unblown cell (it
+is conjectured.)  It is not visually inspectable certainly, and the
+blown fuse has the same X-ray diffractive index as an unblown cell.
+There are reportedly also procedures used to defeat EM analysis of the
+running chip.
+
+The s-boxes would certainly be implemented in VROM cells, and it is
+also quite conceivable that these fuse cells are also used as crossbar
+connects across busses (thus even hiding the information flow from
+module to module).  One suggestion has even been that the implementations
+may include unused modules to confuse any inspection, which would be an
+amusing diversion.
+
+Anyway, as Matt said, the chip is programmed in the SCIF, during which
+time the two keys and unit serial number are also established (in VROM).
+
+Originally this technology was claimed to require a $40 million/6 year
+reverse engineering effort.  Recently that seems to have fallen to
+$1 million/1 year.  Matt's followup to the post he refers to 
+does cast some doubt over the technique's ability to resist destructive 
+reverse engineering (in which the chip is not expected to survive).
+It is certainly conceivable, for example, that if an attacker was to expose 
+the lower-layer conductors, physical connections into and out of the VROM 
+cells could determine their state and reconstruct the algorithm.
+
+BTW, this is my current list of known facts and rumors about SKIPJACK
+(_not_ Clipper, just the algorithm).  Has anyone got anything to add?
+
+* 64 bit "electronic codebook" block cipher, 80 bit key. (Disclosed)
+* Can use all four FIPS-81 modes of operation. (Disclosed)
+* 32 rounds.  All rounds non-linear. (Disclosed)
+* Not suceptible to differential cryptanalysis. (Claimed in the Interim report)
+* Classified "Secret". (Disclosed)
+* Part of a NSA suite of "Type 1" algorithms.  Such algorithms are suitable
+  "for protecting all levels of classied data."  SKIPJACK, however, is only
+  certified for unclassified/sensitive data. (Disclosed)
+* Design commenced in 1987, based on algorithms circa 1980 or so. (Disclosed)
+* No correlation observable between the output and input/key bits. (Claimed)
+* No known weak keys found. (Claimed in interim report)
+* SKIPJACK does not feature DES's complementation property. (Interim report)
+* SKIPJACK incorporates design features found in algorithms which are
+  used to protect classified information. (Interim Report)
+* Contains 16 S-boxes (rumor attributed to Dorothy Denning.  Unverified.)
+
+Anyone got anything else to add?
+
+							Ian.
+
+
+

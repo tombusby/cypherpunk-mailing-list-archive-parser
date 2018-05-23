@@ -1,0 +1,857 @@
+From: Jim Choate <ravage@ssz.com>
+Date: Sun, 11 Jan 1998 09:26:35 +0800
+To: cypherpunks@ssz.com (Cypherpunks Distributed Remailer)
+Subject: LUC Public Key Crypto...
+Message-ID: <199801110150.TAA15260@einstein.ssz.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Hi,
+
+In the process of doing some research on Gauss I stumbled across this...
+
+
+    ____________________________________________________________________
+   |                                                                    |
+   |      Those who make peaceful revolution impossible will make       |
+   |      violent revolution inevitable.                                |
+   |                                                                    |
+   |                                          John F. Kennedy           |
+   |                                                                    |
+   |                                                                    | 
+   |            _____                             The Armadillo Group   |
+   |         ,::////;::-.                           Austin, Tx. USA     |
+   |        /:'///// ``::>/|/                     http://www.ssz.com/   |
+   |      .',  ||||    `/( e\                                           |
+   |  -====~~mm-'`-```-mm --'-                         Jim Choate       |
+   |                                                 ravage@ssz.com     |
+   |                                                  512-451-7087      |
+   |____________________________________________________________________|
+
+
+Forwarded message:
+
+>    Dr. Dobb's Web Site
+>    
+>                           LUC PUBLIC-KEY ENCRYPTION
+>                                        
+>    
+>    
+>    A secure alternative to RSA
+>    
+>    Peter Smith
+>    
+>    Peter has worked in the computer industry for 15 years as a
+>    programmer, analyst, and consultant and has served as deputy editor of
+>    Asian Computer Monthly. Peter's interest in number theory led to the
+>    invention of LUC in 1991. He can be reached at 25 Lawrence Street,
+>    Herne Bay, Auckland, New Zealand.
+>    
+>    
+>      _________________________________________________________________
+>    
+>    According to former NSA director Bobby Innman, public-key cryptography
+>    was discovered by the National Security Agency in the early seventies.
+>    At the time, pundits remarked that public-key cryptography (PKC) was
+>    like binary nerve gas--it was potent when two different substances
+>    were brought together, but quite innocuous in its separate parts.
+>    Because the NSA promptly classified it, not much was known about PKC
+>    until the mid-seventies when Martin Hellman and Whitfield Diffie
+>    independently came up with the notion and published papers about it.
+>    
+>    Traditional cryptographic systems like the venerable Data Encryption
+>    Standard (DES) use the same key at both ends of a message
+>    transmission. The problem of ensuring correct keys leads to such
+>    expensive expedients as distributing the keys physically with trusted
+>    couriers. Diffie and Hellman (and the NSA) had the idea of making the
+>    keys different at each end. In addition to encryption, they envisioned
+>    this scheme would also lead to a powerful means of source
+>    authentication known as digital signatures.
+>    
+>    RSA, developed in 1977, was the first reliable method of source
+>    authentication. The RSA approach (patented in the early eighties)
+>    initiated intense research in "number theory," one of the most
+>    recondite areas of mathematics. Although C.F. Gauss studied this topic
+>    in the early 1800s (referring to it then as "higher arithmetic"), very
+>    little real progress has been made in solving the problem of factoring
+>    since then. The means available today are essentially no better than
+>    exhaustive searching for prime factors. In terms of intractability
+>    theory, however, no one has yet proved that the problem is
+>    intractable, although researchers believe it to be so.
+>    
+>    
+>    
+> The RSA Algorithm
+> 
+>    
+>    
+>    RSA works by raising a message block to a very large power, then
+>    reducing this modulo N, where N (the product of two large prime
+>    numbers) is part of the key. Typical systems use an N of 512 bits, and
+>    the exponent to which blocks are raised in decryption is of the same
+>    order. An immediate problem in implementing such a system is the
+>    representation and efficient manipulation of such large integers.
+>    (Standard microprocessors don't really have the power to handle normal
+>    integer sizes and functions; even numeric coprocessors are inadequate
+>    when integers of this size are involved.)
+>    
+>    RSA has dominated public-key encryption for the last 15 years as
+>    research has failed to turn up a reliable alternative--until the
+>    advent of LUC. Based on the same difficult mathematical problem as
+>    RSA, LUC uses the calculation of Lucas functions instead of
+>    exponentiation. (See text box entitled, "How the Lucas Alternative
+>    Works.")
+>    
+>    Because we're working in the area of mathematics, we can formally
+>    prove that LUC is a true alternative to RSA. Furthermore, we can show
+>    that a cipher based on LUC will be at least as efficient. More
+>    importantly, we can show that LUC is a stronger cipher than RSA. The
+>    reason is that under RSA, the digital signature of a product is the
+>    product of the signatures making up the product; in mathematical
+>    terms, M{e}L{e}=(ML){e}. This opens RSA to a cryptographic attack
+>    known as adaptive chosen-message forgery. Ironically, this is outlined
+>    in a paper co-authored by Ron Rivest (the "R" in RSA). LUC is not
+>    multiplicative and therefore not susceptible to this attack. Using
+>    Lucas functions, V[e](M,1)V[e](L,1) is not equal to V[e](ML,1). In
+>    other words, the use of exponentiation leads to RSA being
+>    multiplicative in this way, while LUC's use of Lucas functions avoids
+>    this weakness.
+>    
+> Choosing the Algorithms
+> 
+>    
+>    
+>    Lucas functions have been studied mainly in relation to primality
+>    testing, and it was to these sources we turned when researching
+>    efficient algorithms for implementing LUC. For given parameters, the
+>    Lucas functions give rise to two series, U[n] and V[n]. The first
+>    algorithm (see Listing One, page 90) calculated both, even though we
+>    were only interested in V[n]. It was only in a paper on factoring
+>    integers that we found a means of calculating V[n] alone (see Listing
+>    Two, page 90). The pseudocode examples show that both algorithms have
+>    two phases: The work done when the current bit is a 0 is half the work
+>    necessary when the current bit is a 1.
+>    
+>    More Details.
+>    
+>    Typically, in systems like LUC the exponent used for encryption is a
+>    much smaller integer than that used for decryption. A commonly chosen
+>    encryption exponent is the prime number 65,537. This is a good choice
+>    for fast encryption as all but 2 of the 17 bits are 0s. We have no
+>    such control over the decryption exponent, but there is a way of
+>    halving the work, and thus, of introducing a limited degree of
+>    parallelism into the calculation.
+>    
+>    Since LUC is a public-key cryptosystem, we can always assume that the
+>    possessor of the private decrypting keys knows the two primes (p and
+>    q) which make up the modulus, N. Consequently, we can reduce the
+>    exponent and message with respect to the two primes, in each case at
+>    least halving the amount of work. At the end of the calculation with
+>    respect to the primes, we bring the results together to produce the
+>    final plain text (see Listing Three, page 90).
+>    
+> Large-integer Arithmetic
+> 
+>    
+>    
+>    There's really only one source of information about large-integer
+>    arithmetic: Knuth's The Art of Computer Programming. We found that
+>    almost every time we referred to his book, we came up with some new
+>    angle or way of tweaking some extra performance out of our code.
+>    
+>    We decided to represent the large integers as 256-byte arrays, with
+>    the low byte giving the length (in bytes) of the integer. For
+>    instance, the 8-byte hexadecimal number 1234567890ABCDEF would appear
+>    in a file view as 08 EF CD AB 90 78 56 34 12. These arrays became a
+>    Pascal-type har (for hexadecimal array). We can store integers of over
+>    600 decimal digits in our hars, but because the hars must be able to
+>    hold the results of a multiplication, we are limited to manipulating
+>    integers up to 300 decimal digits in length.
+>    
+>    Implementation of addition, subtraction, and multiplication went quite
+>    smoothly; implementation of division took more effort. (We took
+>    comfort in not being the first to encounter problems with division.
+>    Lady Ada Lovelace, the first computer programmer, said, "I am still
+>    working at some most entangled notations of division, but see my way
+>    through them at the expense of heavy labor, from which I shall not
+>    shrink as long as my head can bear it.") We tried various methods,
+>    including one based on Newton which calculated the inverse of the
+>    divisor and then multiplied. (See Knuth's discussion.) We finally
+>    opted for Knuth's Algorithm D, despite his warning that it contained
+>    possible discontinuities. At that stage, we were working on a 16-bit
+>    80286 PC; see Listing Four, page 90.
+>    
+>    Of course there was much more than the division routine to consider,
+>    but we found that it was the critical routine in terms of getting LUC
+>    to run at a reasonable speed. Once we had upgraded to an 80386, we
+>    converted to a full 32-bit implementation. The assembler code for the
+>    division (still Algorithm D) is given in Listing Five (page 91).
+>    Although space constraints prevent a complete presentation of the
+>    code, suffice to say that we have been able to achieve a
+>    signing/decryption speed on a modulus of 512 bits of over 200 bits per
+>    second (33-MHz 80386, 0 wait states).
+>    
+> Other Issues
+> 
+>    
+>    
+>    Central to any cryptographic system are keys. In LUC, if an adversary
+>    is able to find p and q, the prime factors of modulus N, then all
+>    messages sent with N can be either read in the case of encryption or
+>    forged in the case of signing.
+>    
+>    Since the days of Gauss, research on factoring has come up with
+>    various so-called "aleatoric" methods of factoring some numbers. These
+>    methods are like cures for poison ivy: numerous, and occasionally
+>    efficacious. One old method, found by Pierre Fermat, is very quick at
+>    factoring some types of composite numbers. If N is the product of two
+>    primes which are close together, then it can be easily factored. For
+>    example, if p=1949, and q=1951, then N=3802499. Taking the square root
+>    of N, we find that it is approximately 1949.999. Adding 1 to the
+>    integral part of this (giving 1950), we square this, giving 3802500.
+>    If we now subtract N from this square, we get a difference of 1, which
+>    is the square of itself. This means that N has been expressed as the
+>    difference of two squares. As we learned in high school, x{2}-y{2} =
+>    (x-y)(x+y), and so we obtain the two factors.
+>    
+>    Fermat's method works whenever the ratio of the factors is close to an
+>    integer. (Note that the ratio is close to 1 in the above discussion.)
+>    This attack, as cryptographers call methods used to break a cipher,
+>    has to be guarded against in generating the modulus N.
+>    
+>    Another guard is that neither (p + 1) and (q + 1) nor (p - 1) and (q -
+>    1) should be made up of small prime factors. There are many other
+>    guards of varying degrees of importance, but the entire area needs
+>    consideration depending on the level of security required, and how
+>    long the keys are meant to last.
+>    
+>    The basic idea behind LUC is that of providing an alternative to RSA
+>    by substituting the calculation of Lucas functions for that of
+>    exponentiation. While Lucas functions are somewhat more complex
+>    mathematically than exponentiation, they produce superior ciphers.
+>    
+>    This substitution process can be done with systems other than the RSA.
+>    Among these are the Hellman-Diffie-Merkle key exchange system (U.S.
+>    Patent number 4,200,770), the El Gamal public-key cryptosystem, the El
+>    Gamal digital signature, and the recently proposed Digital Signature
+>    Standard (DSS), all of which use exponentiation.
+>    
+>    The nonmultiplicative aspect of Lucas functions carries over, allowing
+>    us to produce alternatives to all these. In the case of the DSS, Lucas
+>    functions allow us to dispense with the one-way hashing cited (but not
+>    specified) in the draft standard.
+>    
+>    A New Zealand consortium has been set up to develop and license
+>    systems based on LUC, which is protected by a provisional patent. For
+>    more information, contact me or Horace R. Moore, 101 E. Bonita, Sierra
+>    Madre, California 91024.
+>    
+> References
+> 
+>    
+>    
+>    Athanasiou, Tom. "Encryption Technology, Privacy, and National
+>    Security." MIT Technology Review (August/September, 1986).
+>    
+>    Diffie, W. and M.E. Hellman. "New Directions in Cryptography." IEEE
+>    Transactions on Information Theory (November, 1976).
+>    
+>    El Gamal, Taher. "A Public Key Cryptosystem and a Signature Scheme
+>    Based on Discrete Logarithms." IEEE Transactions on Information Theory
+>    (July, 1985).
+>    
+>    Gauss, C.F. "Disquisitiones Arithmeticae," Article 329.
+>    
+>    Goldwasser, S., S. Micali, and R. Rivest. "A Digital Signature Scheme
+>    Secure Against Adaptive Chosen Message Attack." SIAM J. COMPUT (April,
+>    1988).
+>    
+>    Kaliski, Burton S., Jr. "Multiple-precision Arithmetic in C." Dr.
+>    Dobb's Journal (August, 1992).
+>    
+>    Knuth, D.E. The Art of Computer Programming: Volume II: Semi-Numerical
+>    Algorithms, second edition. Reading, MA: Addison-Wesley, 1981.
+>    
+>    Schneier, Bruce. "Untangling Public Key Cryptography." Dr. Dobb's
+>    Journal (May, 1992).
+>    
+>    Williams, H.C. "A p + 1 method of factoring." Mathematics of
+>    Computation (vol. 39, 1982).
+>    
+> How the Lucas Alternative Works
+> 
+>    
+>    
+>    As with RSA encryption, use of the Lucas alternative involves two
+>    public keys: N and e. The number N is assumed to be the product of two
+>    large (odd) prime numbers, p and q. Encryption and decryption of a
+>    message is achieved using Lucas sequences, which may be defined as
+>    shown in Example 1. Note that P and Q are integers.
+>    
+>    If a message P is to be sent, it is encoded as the residue P1 modulo N
+>    of the eth term of the Lucas sequence V[n](P,1), and then transmitted.
+>    The receiver uses a secret key d (based on the prime factorization of
+>    N) to decode the received message P1, by taking the residue modulo N
+>    of the dth term of the Lucas sequence V[n](P1,1). The secret key d is
+>    determined so that V[d](V[e](P,1),1) = P modulo N, ensuring the
+>    decryption of the received message P1 as P. The existence of such a
+>    key d is based on the following theorem.
+>    
+> Theorem
+> 
+>    
+>    
+>    Suppose N is any odd positive integer, and P is any positive integer,
+>    such as P{2}-4 is coprime to N. If r is the Lehmer totient function of
+>    N with respect to D = P{2}-4 (see Example 2), then V[mr+1](P,1)=P
+>    modulo N for every positive integer m. The condition that P{2}-4 be
+>    coprime to N is easily checked, as P{2}-4=(P+2)(P-2). Also, because
+>    V[d](V[e](P,1),1)=V[de](P,1), according to Example 4(e), the key d may
+>    simply be chosen so that de=1 modulo r.
+>    
+> The Lehmer Totient Function
+> 
+>    
+>    
+>    Suppose P and Q are integers, and a and b are the zeros of X{2}-Px+Q
+>    (so that P = a+b while Q = ab). Also, let D be the discriminant of
+>    x{2}-Px+Q. That is, D = P{2}-4Q = (a-b){2}.
+>    
+>    The Lucas sequences U[n] = U[n] (P,Q) and V[n] = V[n] (P,Q) are
+>    defined for n = 0,1,2, and so on by the equation in Example3.
+>    
+>    In particular, U[0] = 0, U[1] = 1, and then U[n+1] = PU[n] - QU[n-1]
+>    (for n = 1,2,3,...), while V[0] = 2, V[1] = P, and similarly V[n+1]=
+>    PV[n]-QV[n-1] (for n = 1,2,3,...). These sequences satisfy a number of
+>    identities, including the following which may be simply obtained from
+>    the definitions in Example 4.
+>    
+>    Next, suppose N is any positive integer, and let r be the Lehmer
+>    totient function of N with respect to D = P{2}-4Q, defined the same
+>    way as in the statement of the theorem. In the special case where N is
+>    an odd prime p, the Lehmer totient function of p with respect to D is
+>    the number given by the equation in Example 5(a). In this case, the
+>    Lucas-Lehmer theorem states that if p does not divide Q then the
+>    equation in Example 5(b) holds true.
+>    
+> Example of LUC
+> 
+>    
+>    
+>    Let N = pxq = 1949x2089=4071461, and P = 11111, which equals the
+>    message to encrypt/decrypt. The public keys will be e and N; the
+>    private key will be d. First, calculate r, the Lehmer totient function
+>    of P with respect to N. To do this we need to calculate the Legendre
+>    of p and q. Let D = p{2}-4; then (D/1949) =-1 and (D/2089)=-1 are the
+>    two Legendre values. Hence r is the least common multiple of 1949 + 1
+>    and 2089 + 1; see Example 6(a). Choosing e = 1103 for our public key,
+>    we use the Extended Euclidean Algorithm to find the secret key d, by
+>    solving the modular equation ed = 1 mod r. d turns out to equal 24017.
+>    
+>    To encrypt the message 11111, we make the calculation shown in Example
+>    6(b). To decrypt the encrypted message, we calculate as in Example
+>    6(c). --P.S.
+>    
+> 
+> _LUC PUBLIC-KEY ENCRYPTION_
+> by Peter Smith
+> 
+> 
+> [LISTING ONE]
+> 
+> { To calculate Ve(P,1) modulo N }
+>  Procedure LUCcalc;
+>  {Initialise}
+>  BEGIN
+>  D := P*P - 4; ut := 1; vt := P; u := ut; v := vt;
+>  If not odd(e) then BEGIN u := 0; v := 2; END;
+>  e := e div 2;
+>  {Start main}
+>  While e > 0 do
+>    BEGIN
+>    ut := ut*vt mod N; vt := vt*vt mod N;
+>    If vt < 3 then vt := vt + N;
+>    vt := vt - 2;
+>    If odd(e) then
+>      BEGIN
+>      c := (ut*v + u*vt) mod N;
+>      v := (vt*v + D*u*ut) mod N;
+>      If odd(v) then v := v + N; v := v/2;
+>      If odd(c) then c := c + N; u := c/2;
+>      END;
+>    e := e div 2;
+>    END;
+>  END;    {LUCcalc}
+> 
+> { The required result is the value of v.}
+> 
+> 
+> 
+> 
+> 
+> 
+> [LISTING TWO]
+> Pseudocode for calculating Lucas Functions
+> 
+> Procedure wiluc  {   V = V(M) Mod N, the Mth Lucas number(P,1) }
+> Var
+>                     V,Vb,P,Vf,N,M,NP, Vd, Vf : LargeInteger ;
+>                     carry, high_bit_set      : boolean ;
+>                     bz                        : word ;
+>   BEGIN
+>   Va := 2 ;   { V[0] }  Vb = P ;   { V[1] }
+>   NP := N - P; bz := bits(M) -1 ; { test bits from high bit downwards }
+>   For j := 1 to bz do
+>       BEGIN
+>       Vc := Vb * Vb; Vf = Vc ; If Vf < 2 then Vf := Vf + N
+>       Vf := Vf - 2; Vd := Va * Vb
+>       {  Vc := V, Vd := V*Vb, Vf := V-2}
+>      If high_bit_set Then
+>           BEGIN
+>           Vb := P * Vc; If Vb < Vd then Vb := Vb + N; Vb := Vb - Vd;
+>           If Vb < P then Vb := Vb + N; Vb := Vb - P; Va := Vf
+>           END ;
+>      Else BEGIN { "even" ie high bit not set }
+>           Va := Vd; If Va < P then Va := Va + N; Va := Va - P;
+>           Vb := Vf;
+>           END ;
+>      High_bit_set := next_bit_down(M);
+>      {This boolean function determines the setting of the next bit down}
+>      Va := Va Mod N; Vb := Vb Mod N
+>      END ; { for j to bz }
+> END ; {wiluc}
+> 
+> 
+> 
+> 
+> 
+> 
+> [LISTING THREE]
+> 
+> { Pseudocode for splitting decryption/signing over p and q
+>   (N = p*q) }
+> Procedure hafluc ( var s,p,q,m,e : LargeInteger ; qix : word ) ;
+> var                            ep,emq,
+>                                temp,pi,qi,
+>                                b,n,pa,qa : LargeInteger ;
+> 
+> { This procedure applies only to decipherment and signing, where the primes
+>   making up the modulus N ( = p * q) are known (or can be easily deduced,
+>   since both keys are known). Applying it allows us to halve the amount of
+>   work. Encipherment is usually done with a small key - standard is 65537. }
+>   Begin
+>   Qpr (pa,qa,p,q,m,qix ) ; {} {assumes qix already calculated }
+>   ep  = e ;              ep  = ep  Mod pa
+>   emq = e ;   emq  = emq Mod qa
+>   mp  = m ;    mp  = mp Mod p
+>   mq  = m ;    mq  = mq Mod q
+>   wiluc(q2,mq,emq,q) ;        wiluc(p2,mp,ep,p) ;
+>   if p2 < q2 then
+>       Begin
+>       temp = q         q  = p    p  = temp
+>       temp = q2        q2 = p2   p2 = temp
+>       End ;
+>   temp = p2   temp = temp - q2
+>   n = p * q
+> { Solve with Extended Euclidean algorithm qi = 1/q Mod p. The algorithm
+> for the Extended Euclidean calculation can be found in Knuth. }
+>   r = temp * p
+>   r = r mod N
+>   s = r * qi
+>   s = s Mod n
+>   s = s + p2
+> End ; { hafluc }
+> Procedure SignVerify ;
+>   Begin
+>   h4 = 4
+>   p = large prime...
+>   q = large prime...
+>   n = p * q
+>   bz := bits(n) ;
+>     {write(cf,'  generate 4 keysets (d,e)  for p1,q1') ;}
+> {
+>       qix table for T[qix]
+>      Convention for qix
+>  This calculation is explained below.
+>    Lehmer totient      qix   Legendre values for p  and   q
+>    i.e. T[qix] = LCM
+>    (p - 1),(q - 1)     1                         1        1
+>    (p - 1),(q + 1)     2                         1       -1
+>    (p + 1),(q - 1)     3                        -1        1
+>    (p + 1),(q + 1)     4                        -1       -1
+>     e = encryption key,  small prime eg 65537
+>     mu = message as large integer less than n
+>     Solve e * d[qix] = 1 Mod T[qix] using Extended Euclidean Algorithm
+>     where T[qix] is lcm(p1,q1), the Lehmer totient function of N
+>     with repect to mu, according to the above table.
+>     This gives 4 possible values of d, the decryption/signing key.
+>     The particular value used depends on the message mu, as follows:
+>     Let D = mu2 - 4. Calculate the Legendre values of D with respect to
+>     both p and q. This value is -1 if D is a quadratic non-residue of
+>     p (or q), and equal to 1 if D is a quadratic residue of p (or q).
+>     N.B. This part is the most difficult part of LUC! Take care.
+> 
+>     Signing (Deciphering):
+>     hafluc (a,pu,qu,mu,d,qix)
+> 
+>     Verifying (Enciphering):
+>     Use Wiluc.
+> End.
+> 
+> 
+> 
+> 
+> 
+> 
+> [LISTING FOUR]
+> 
+> Algorithm D in 32-bit Intel assmbler
+> Author: Christopher T. Skinner
+> Short version of Mod32.Txt with scalings just as comments
+>                Modulus routine for Large Integers
+>                         u = u Mod v
+> Based on:
+> D.E.Knuth  The Art of Computer Programming
+>            Vol 2 Semi-Numerical Algorithms 2ed 1981
+>            Algorithm D page 257
+> We use a Pascal Type called "har" ( for "hexadecimal array")
+> Type
+>             har = Array[0..255] of byte ;
+> Var         u,v : har ;
+> Note that u[0] is the length of u and that the
+> integer begins in u[1]
+> It is desirable that u[1] is on a double word boundary.
+> 
+> ; Turbo Pascal Usage:      ( Turbo Pascal v6.0)
+> ; {$L Mod32a}   { contains mod32 far }
+> ; {$F+}   { far pointers }
+> ; procedure Mod32 ( var u,v : har ) ;
+> ; Turbo Assembler code: (TASM v2.01)--requires 32-bit chip ie 386 or 486
+> ; nb FS and GS can be used as temporary storage. Don't try to use them as
+> ; segment registers because Windows 3.0 restricts their allowed range, even
+> ; after you have finished out of Windows. You will hang for sure, unless you
+> ; have used a well-behaved protected-mode program to reset them, or cold boot.
+> 
+> Data    Segment Word Public Use16
+>     vdz     dw ?        ; size  v    words
+>     va  dd ?            ;     hi dword v
+>     vb  dd ?            ; 2nd     "    v
+>     vi  dw ?        ; ^v[1]
+>         savdi   dw ?            ; used in addback
+> Data    EndS
+> 
+> Code    Segment Word Public  Use16
+>     Assume  cs:Code, ds:Data ,es:Nothing
+>         Public  mod32
+> ; Pascal Parameters:
+> u   Equ DWord Ptr ss:[bp+10]      ; Parameter 1 of 2   (far)
+> v       Equ DWord Ptr ss:[bp+ 6]      ; parameter 2 of 2
+> uof     equ word ptr  ss:[bp+10]
+> vinof   equ word ptr  ss:[bp+ 6]
+> 
+> mod32   Proc    far
+>     push bp
+>     mov  bp,sp
+>         push di
+>         push si
+>         push ds          ; save the DS
+> 
+>         ; Before using Mod32 check that:
+>         ;     v > 0
+>         ;     v < u         u <= 125 words
+>         ;     v[0] is a multiple of 4   and at least 8
+>         ;     v[top] >= 80h           (may need to scale u & v)
+>         ;     make u[0] = 0 Mod 4     (add 1..3 if required)
+> domod:
+>         ; now point to our v
+>         mov ax,seg v
+>         mov ds,ax
+>         assume ds:Data
+>         mov si, offset v
+>         cld
+>         assume es:Nothing
+>     xor ah,ah
+>     mov al,es:[di]   ; ax = size of u in bytes    "uz"
+>     mov cx,ax        ; cx = uz
+>     mov bx,ax        ; bx = uz
+>     mov al,[si]
+>     mov dx,ax    ; dx  = size v bytes
+>     shr ax,2
+>     mov vdz,ax   ; vdz    "     dwords   vz = 0 mod 4
+>     sub bx,dx        ; bx = uz - vz  difference in bytes
+>     mov ax,bx        ; ax = uz - vz
+>     sub ax,3     ; ax = uz - vz - 3     ->  gs
+>     sub cx,3     ; cx =  uz - 3
+>     add cx,di        ; cx = ^top dword u
+>     add ax,di
+>     mov gs,ax    ; gs = ^(uz-vz-3)  u start   (by -4  down to 1)
+>         inc di
+>         mov fs,di    ; fs = uf = ^u[1] , end point
+>     inc si
+>     mov vi,si    ; vi = ^v[1]
+>     add si,dx
+>     mov eax,[si-4]
+>     mov va,eax   ;  va = high word of v
+>     mov eax,[si-8]
+>     mov vb,eax       ;  vb = 2nd highest word v
+>     mov di,cx    ; set di to ut , as at bottom of loop
+> d3:
+>     mov edx,es:[di]  ; dx is current high dword of u
+>     sub di,4
+>         mov eax,es:[di]  ; ax is current 2nd highest dword of u
+>     mov ecx,va
+>     cmp edx,ecx
+>     jae  aa          ; if high word u is 0 , never greater than
+>     div ecx      ;          mov ebx,eax
+>         mov esi,edx  ; si = rh
+>     jmp short ad     ; Normal route -- -- -- -- -->
+> aa:     mov eax,0FFFFFFFFh
+>     mov edx,es:[di]  ; 2nd highest wrd u
+>     jmp short ac
+> ab: mov eax,ebx      ; q2
+>     dec eax
+>     mov edx,esi      ;  rh
+> ac: mov ebx,eax      ; q3
+>     add edx,ecx
+>     jc d4        ; Knuth tests overflow,
+>     mov esi,edx
+> ; normal route:
+>  ad:
+>         mul vb       ; Quotient by 2nd digit of divisor
+>     cmp edx,esi  ; high word of product : remainder
+>     jb  d4           ; no correction to quot, drop thru to mulsub
+>         ja  ab           ; nb unsigned use ja/b not jg/l
+>     cmp eax,es:[di-4] ; low word of product : 3rd high of u
+>     ja  ab
+> d4:          ; Multiply & subtract * * * * * * *
+>     mov cx,gs
+>     mov di,cx    ; low start pos in u for subtraction of q * v
+>         sub cx,4
+>         mov gs,cx
+>         xor ecx,ecx
+>     Mov  cx,vdz  ; word count for q * v
+>         mov  si,vi   ; si points to v[1]
+>         xor ebp,ebp      ; carry 14Oct90 bp had problems in mu-lp
+>         even
+> ;    ** ** ** ** **  **  **  **
+> ba:     lodsd        ; eax <- ds[si]
+>     mul ebx      ; dx:ax contains product   carry set if dx > 0
+>         add eax,ebp
+>         adc edx,0
+>     sub es:[di],eax
+>         adc edx,0
+>         mov ebp,edx
+>         add di,4
+>     loop ba      ; dec cx , jmp if not 0
+> ; .. .. .. . .. .. . .. .. . .. . . ..
+>         sub es:[di],edx
+>         jnc d7
+> 
+>     mov si,vi    ;  add back (rare)
+>         mov savdi,di
+>     mov di,gs
+>         add di,4
+>     clc
+>     mov cx,vdz
+> bb:     lodsd        ; eax = ds[si]   si + 2
+>     adc es:[di],eax
+>         inc di
+>         inc di
+>         inc di
+>         inc di
+>         loop bb
+>         xor eax,eax
+>         mov es:[di],eax
+>         mov di,savdi
+>         ; test with:
+>         ; 1,00000000,00000000,00000001/ 80000000,00000000,00000001
+> d7:
+>     mov bx,fs     ; fs ^u[1]
+>         mov ax,gs     ; gs = current u start position
+>     cmp ax,bx     ; current - bottom
+>     jb d8
+>         sub di,4
+>     jmp d3
+> d8:
+> ; here we would scale u down if it had been scaled up
+> quex:                 ; quick exit if v < u
+>         cld              ; just in case
+>         pop ds
+>         pop si
+>         pop di
+>         pop bp
+>     ret 8       ; 2 pointers = 4 words = 8 bytes
+> mod32   EndP        ;
+> Code    Ends
+>     End
+> 
+> 
+> 
+> 
+> 
+> [LISTING FIVE]
+> 
+> Algorithm D in 16-bit Intel assembler
+> Author: Christopher T. Skinner
+>    mod16.txt 21 Au8 92     16 bit modulus
+> ; divm  Modulus
+> Data    Segment Word Public
+>     vwz     dw ?        ; size  v    words
+>     va  dw ?            ;     hi word v
+>     vb  dw ?            ; 2nd    "    v
+>     vi  dw ?        ; ^v[1]
+>     uf  dw ?        ; ^u[3]
+>     uz  dw ?            ; size u byte
+>     vz  dw ?             ;   "   v  "
+>     ua      dw ?        ; ^( u[0] + uz - vz -1 ) , mul sub start
+>     ut  dw ?            ; ^ u[topword]
+>     qh      dw ?
+>     uzofs   dw ?        ; ttt
+>     vzofs   dw ?        ; ttt
+> Data    EndS
+> Code    Segment Word Public
+>     Assume  cs:Code, ds:Data
+>         Public  diva
+> 
+> u   Equ DWord Ptr [bp+10]       ; ES:DI
+> v       Equ DWord Ptr [bp+6]        ; DS:SI
+>     ; NB v Must be Global, DS based...
+> diva    Proc    far
+>     push bp
+>     mov  bp,sp
+>         push ds
+>     cld     ; increment lodsw in mulsub
+>     lds si,v
+>         les di,u
+>     xor ah,ah
+>     mov al,es:[di]  ; ax = uz size of u in bytes N.B. uz is not actually used
+>     mov cx,ax       ; cx = uz
+>     mov bx,ax       ; bx = uz
+>     mov al,ds:[si]
+>     mov dx,ax   ; dx  = size v bytes
+>     shr ax,1
+>     mov vwz,ax  ; vwz    "     words
+>     sub bx,dx       ; bx = uz - vz  difference in bytes
+>     mov ax,bx       ; ax = uz - vz
+>     dec ax      ; ax = uz - vz - 1     ->  ua
+>     dec cx      ; cx =  uz - 1
+>     add cx,di       ; cx = ^top word u
+>     mov ut,cx   ; ut = ^top word u
+>     add ax,di
+>     mov ua,ax   ; ua = ^(uz-vz-1)  u start   (by -2  down to 1)
+>         inc di
+>     mov uf,di   ; uf = ^u[1] , end point
+>     inc si
+>     mov vi,si   ; vi = ^v[1]
+>     add si,dx
+>     mov ax,ds:[si-2]
+>     mov va,ax   ;  va = high word of v
+>     mov ax,ds:[si-4]
+>     mov vb,ax       ;  vb = 2nd highest word v
+>     mov di,cx   ; set di to ut , as at bottom of loop
+> d3:
+>     mov dx,es:[di]          ; dx is current high word of u
+>     dec di
+>     dec di
+>     mov ut,di
+>         mov ax,es:[di]        ; ax is current 2nd highest word of u
+>     mov cx,va
+>     cmp dx,cx
+>     jae  aa   ;if high word u is 0 , never greater than
+>     div cx          ;
+>         mov qh,ax
+>         mov si,dx       ; si = rh
+>     jmp ad          ; Normal route -- -- -- -- -->
+> aa:     mov ax,0FFFFh
+>     mov dx,es:[di]      ; 2nd highest wrd u
+>     jmp ac
+> ab: mov ax,qh
+>     dec ax
+>     mov dx,si       ;  rh
+> ac: mov qh,ax
+>     add dx,cx
+>     jc d4           ; Knuth tests overflow,
+>     mov si,dx
+> ad:     mul vb          ; Quotient by 2nd digit of divisor
+>     cmp dx,si       ; high word of product : remainder
+>     jb  d4          ; no correction to quot, drop thru to mulsub
+>         ja  ab          ; nb unsigned use ja/b not jg/l
+>     cmp ax,es:[di-2]    ; low word of product : 3rd high of u
+>     ja  ab
+> d4:         ; Multiply & subtract * * * * * * *
+>     mov bx,ua
+>     mov di,bx   ; low start pos in u for subtraction of q * v
+>     dec bx
+>     dec bx      ;
+>     mov ua,bx
+>     Mov  cx,vwz ; word count for q * v
+>         mov  si,vi  ; si points to v[1]
+>     mov bx,qh
+>         xor bp,bp
+> ;    ** ** ** ** **  **  **  **
+> ba:     lodsw       ; ax <- ds[si]   si + 2  preserve carry over mul ?
+>     mul bx      ; dx:ax contains product   carry set if dx > 0
+>     add dx,bp
+>         xor bp,bp
+>     sub es:[di],ax
+>     inc di
+>     inc di
+>     sbb es:[di],dx
+>     rcl bp,1
+>     loop ba     ; dec cx , jmp if not 0
+> ; .. .. .. . .. .. . .. .. . .. . . ..
+>         rcr bp,1
+>         jnc d7
+> 
+>     mov si,vi   ;  add back (rare)
+>     mov di,ua
+>        inc di
+>     inc di
+>     clc
+>     mov cx,vwz
+> bb:    lodsw        ; ax = ds[si]   si + 2
+>     adc es:[di],ax
+>     inc di
+>     inc di
+>     loop bb
+>     mov cx,ut
+>     add cx,4
+>     sub cx,di
+>     shr cx,1        ; word length of u
+> bc:    mov Word Ptr es:[di],0
+>        inc di
+>     inc di
+>        loop bc  ;
+>     dec di      ;
+>     dec di      ;
+>     clc
+> d7:
+>     mov ax,uf
+>     cmp ua,ax
+>     jb d8
+>     dec di      ; New these are suspicious, with an add back and a
+>     dec di      ; New
+>     jmp d3
+> d8:
+>              cld   ; just in case
+>        pop ds
+>     pop bp
+>     ret 8       ; 2 pointers = 4 words = 8 bytes ???
+> diva    EndP        ;
+> Code    Ends
+>     End
+> 
+>    
+>      _________________________________________________________________
+>    
+>    Copyright &copy; 1998, Dr. Dobb's Journal
+>    Dr. Dobb's Web Site Home Page -- Top of This Page
+>    
+> 
+
+
+
+
+

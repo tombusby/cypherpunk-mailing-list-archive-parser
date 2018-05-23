@@ -1,0 +1,58 @@
+From: Andy Dustman <andy@neptune.chem.uga.edu>
+Date: Tue, 6 Jan 1998 00:15:12 +0800
+To: Bill Stewart <bill.stewart@pobox.com>
+Subject: Re: PGP-out-only vs. hashcash aware remailers?
+In-Reply-To: <3.0.3.32.19980104120940.00722cdc@popd.ix.netcom.com>
+Message-ID: <Pine.LNX.3.94.980105104829.6085O-100000@neptune.chem.uga.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Sun, 4 Jan 1998, Bill Stewart wrote:
+
+> If you modify your remailer to only _output_ PGP-encrypted messages,
+> you get hashcash-equivalence, and cut abuse substantially.
+> The cost is limiting recipients to pgp users (plus known exceptions),
+> but it's tough to spam people when you need to look up their PGP key
+> and encrypt to it (at least you'll only get spams for high-tech stuff),
+> and it's tougher for random abusers to abuse people since most targets
+> don't have PGP keys, and a mailbox full of PGP junk is less annoying
+> to most people than a mailbox full of human-readable hate mail.
+> In particular, it's harder to send death threats to politicians
+> if they don't have published PGP keys.
+> 
+> Is this a feature that makes sense?
+
+It makes some sense. It's similar to what I proposed a few weeks ago with
+"casual" remailers. The smart middleman portion of coerce does something
+similar: If it looks like a PGP message (has the "BEGIN PGP MESSAGE" 
+line), it doesn't chain through a random remailer but delivers directly.
+I'm not sure if anyone is actually using this, though (perhaps
+tea/mccain). What you seem to be proposing is sending non-encrypted
+messages to /dev/null. That may yet be an option if things get bad, but I
+don't think they are that bad yet. It does seem to achieve, in part, the
+goals of hashcash (although it generally takes longer to generate
+hashcash, depending on the collision length required). 
+
+> How would you implement it?
+
+You are correct that there are easy ways to spoof PGP messages well enough
+to fool a simple parser. One way around this would be to pipe any apparent
+PGP messages (start and end easily detected) through PGP to de-armor only. 
+A couple problems: PGP (2.6.x) doesn't seem to have an option to only
+de-armor; a sophisticated spoofer could make the armor verify correctly
+anyway by generating the correct CRC (trivial if you know what you're
+doing). So it seems sensible to only consider some simple safeguards and
+not worry about actually decoding the armor. 
+
+Andy Dustman / Computational Center for Molecular Structure and Design
+For a great anti-spam procmail recipe, send me mail with subject "spam".
+Append "+spamsucks" to my username to ensure delivery.  KeyID=0xC72F3F1D
+Encryption is too important to leave to the government. -- Bruce Schneier
+http://www.athens.net/~dustman mailto:andy@neptune.chem.uga.edu   <}+++<
+
+
+
+
+

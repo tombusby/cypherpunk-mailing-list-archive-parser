@@ -1,0 +1,42 @@
+From: Raph Levien <raph@kiwi.cs.berkeley.edu>
+Date: Thu, 28 Dec 1995 21:02:46 +0800
+To: cypherpunks@toad.com
+Subject: Re: Only accepting e-mail from known parties
+In-Reply-To: <qJoRgD2w165w@bwalk.dm.com>
+Message-ID: <199512280151.RAA25092@kiwi.cs.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Dr. Dimitri Vulis wrote:
+> I suggest to the kind folks working on PGP 3 that there should be a
+> standard protocol to include within the signed portion the information
+> on when and for whom this text is written: i.e. the list of e-mail
+> recipients and/or Usenet newsgroups, which could be easily compared
+> with the RFC 822/1036 headers of an e-mail/Usenet article. Perhaps
+> there could be a new option for PGP to look _outside_ the signed block
+> and match the headers with what's inside the block. E.g., suppose the
+> signature block says: this text was written by alice@zog.org, posted
+> to alt.sex and alt.sex.banal and e-mailed to bob@masons.com. Suppose
+> PGP is asked to check the signature in a file that purports to be a
+> e-mail or a Usenet article and has some headers before the signed
+> portion. If there is a list of To: recipients, and it includes someone
+> other than the recipients listed within the signed block; or if there
+> is a Newsgroups: header, and it includes newsgroups not listed within
+> the signed portion; then the input is bogus. For compatibility with
+> the existing software, if the signed block doesn't include this info,
+> then this checking should't be done, of course.
+
+In fact, the security multiparts standard (RFC 1848) includes a
+provision for signing the headers as well as the body of a message.
+The security multiparts can be used with PGP, and there is even an
+Internet Draft for it (draft-elkins-pem-pgp-02.txt), but there is not
+yet consensus for adopting this as a standard on the pgp-mime mailing
+list. Perhaps your example can be used to argue one the advantages of
+the security multiparts approach.
+
+Raph
+
+
+
+

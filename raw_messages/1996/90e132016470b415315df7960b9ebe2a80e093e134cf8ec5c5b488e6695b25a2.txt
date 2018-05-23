@@ -1,0 +1,61 @@
+From: Don Gaffney <gaffney@emba.uvm.edu>
+Date: Thu, 18 Jan 96 06:36:28 PST
+To: pgut01@cs.auckland.ac.nz
+Subject: Re: A WfW security curiosity (possibly another security hole)
+In-Reply-To: <199601180314.QAA19064@cs26.cs.auckland.ac.nz>
+Message-ID: <Pine.3.89.9601180955.G9122-0100000@griffin.emba.uvm.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Thu, 18 Jan 1996 pgut01@cs.auckland.ac.nz wrote:
+
+> When WfW is installed, it creates a file in the Windows directory called
+> WFWSYS.CFG.  This is a standard Windows password file and may be decrypted with
+> the password "23skidoo" (note that this is lowercase, since it's passed to the
+> .PWL-handling code at a level which bypasses the usual password case smashing.
+> The mangled 32-bit form which is passed to the RC4 key setup routine is { 0x67,
+> 0x6F, 0xE3, 0x81 }).
+>  
+> WFWSYS.CFG seems to be mostly identical for the few copies I could get to, and
+> WfW networking won't work without it.  Decrypting the file doesn't seem to give
+> anything useful, the string "SYSTEM" and what looks like a few 8 or 16-numbers. 
+> I don't know enough about how WfW networking works, but my (very vague) guess
+> is that it contains some sort of cookie to uniquely ID each machine for
+> resource sharing over a network.  If it does then it it's (yet another) pretty
+> serious security hole, since it's encrypted with a fixed password and seems to
+> be mostly identical over multiple machines.  OTOH it may be something to do
+> with serial numbers so you can't install the same copy of WfW on multiple
+> machines on a LAN.
+>  
+> Can anyone shed more light on it?
+>  
+> Peter.
+>  
+> 
+
+This is the file used by admincfg.exe (on WFW3.11 disk 8). This file
+contains "security" settings, such as whether or not to cache passwords
+on disk (*.PWL files). 
+
+There is no feature in WFW to prevent use of one copy on multiple
+machines on a lan.
+
+In terms of security, yes, the whole of Windows Networking is a bad joke.
+
+(An interesting aside, it is possible to get a WfW "security" error
+on start-up by having subst drives - weird, eh?)
+
+_____________________________________________________________________
+Don Gaffney
+Engineering, Mathematics & Business Administration Computer Facility
+University of Vermont
+237 Votey Building
+Burlington, VT  05405
+(802) 656-8490
+Fax: (802) 656-8802
+
+
+
+
+

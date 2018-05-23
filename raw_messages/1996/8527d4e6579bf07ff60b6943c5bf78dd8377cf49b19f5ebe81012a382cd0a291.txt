@@ -1,0 +1,67 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Tue, 23 Jul 1996 17:33:55 +0800
+To: cypherpunks@toad.com
+Subject: Re: Brute-forcing DES
+In-Reply-To: <ae19b23816021004520c@[205.199.118.202]>
+Message-ID: <199607230633.XAA19801@netcom20.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+"Peter Trei" <trei@process.com> writes:
+
+ > Sadly, after further calculation, I'm not so sure if it's
+ > doable just yet.
+
+...
+
+ > The fastest general purpose, freely available des
+ > implementation I'm aware of is libdes. by Eric Young. With
+ > this, I can do a set_key in 15.8 us, and an ecb_encrypt in
+ > 95 us/block. That adds up to about 9,000 keytests/sec (this
+ > is on a 90 MHz P5, running NT).
+
+What you really want to do to sweep the DES keyspace is to
+"schedule" the input and output block you are testing, performing
+any static operations, and do only enough computation to see that
+a given key fails.  Special purpose assembler to do this
+particular function would probably run faster than any algorithm
+which could also be employed to encrypt data.
+
+ > What will make this brute doable, if not now, then in the
+ > near future?
+
+ > 1. Faster Processors
+
+ > 2. More processors.
+
+ > 3. More interest
+
+4. Better code.
+
+This is actually a problem I plan to analyze someday. Looking at
+single DES as a function of the key bits with the input and
+output fixed.  This can be viewed as a boolean function, whose
+result depends upon whether the given key works to map the input
+onto the output.  Viewing this function as a composition of
+single bit operations and optimizing it would perhaps lead to
+insights on how best to compute it on a typical 32 bit CPU with
+the usual collection of operations.
+
+A messy little project, but probably one worth doing if I get
+some free time.
+
+Single DES is certainly ripe for a spectacular public failure.  A
+little analytic work could bring breaking it within range of
+available computing power.  If you are going to use regular
+encryption code to brute force the keyspace, then it probably is
+just a tad beyond reach at this point.
+
+--
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+
+

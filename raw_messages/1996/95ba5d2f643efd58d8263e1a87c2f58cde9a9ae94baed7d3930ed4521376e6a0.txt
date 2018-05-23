@@ -1,0 +1,33 @@
+From: frantz@netcom.com (Bill Frantz)
+Date: Wed, 14 Feb 1996 05:33:08 +0800
+To: cypherpunks@toad.com
+Subject: Re: Using /dev/random for PGP key generation? Be Wary
+Message-ID: <199602130446.UAA15045@netcom7.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 10:56 AM 2/12/96 -0500, rngaugp@alpha.c2.org wrote:
+>...
+>I am unsure about using my modification, together with these drivers
+>that are not connected to a real hardware RNG. In what way would the use
+>of these drivers' methods of gathering entropy be superior to PGP's
+>method of getting entropy from keyboard timing? If you choose to do
+>something like this, you should think carefully and make a careful study
+>of the code.
+
+If there are no common-mode sources, xoring two streams will not reduce the
+entropy.  If you use PGP's keyboard timings for one stream, and (e.g.) disk
+drive randomness for the other, the output of the xor of the two streams
+should have at least as much entropy as the best of the two.
+
+However, I would be worried if /dev/random and PGP were both using keyboard
+timings to generate entropy.
+
+Bill
+
+
+
+
+
+

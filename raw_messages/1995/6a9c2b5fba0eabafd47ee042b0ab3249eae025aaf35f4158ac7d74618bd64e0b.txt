@@ -1,0 +1,77 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Wed, 30 Aug 95 23:35:47 PDT
+To: don@cs.byu.edu
+Subject: Re: SSL search attack
+In-Reply-To: <199508302142.PAA00178@wero>
+Message-ID: <"swan.cl.cam.:108150:950831063347"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Problem is, though, if *each* segment is shuffled, or shuffled in groups
+> of 10 or 25 or 50 or what? brutessl is designed for sequential search
+> through a block of segments. I was pulling down blocks of up to 40 segments 
+> each, for each machine I was running. Of course, with brloop running I
+> won't be in such a bind (I have yet to see that it really works though..)
+> but still it also represents a coding problem as to handing out sequential
+> segments within shuffled blocks.
+
+My view is that IFF this becomes a problem, I'll do something to fix it.
+I can do it in the server (under my control) after a complete scan has been
+completed without finding the key.
+
+It may mean you only get smaller blocks, but IFF we get that far, tough !
+
+> Hey, by the way Piete, is there gonna be a ego list (rankings) like there
+> was with the RC4? 
+
+Err -- look on http://www.brute.cl.cam.ac.uk/brute/ -- follow CRACKED and then
+look at:
+
+	Credits are available as plain text and as a table (needs a browser
+	which supports tables !).
+
+"plain text" is <PRE> while "table" needs a fancy browser.
+
+
+PS: I am working on beloop and brclient still, based on comments.
+    brclient now uses early binding on the project, reducing traffic.
+    brloop now has -h and -i flags, and a "-a" flag to create a .brloop.rc
+    If allowed, it will log allocated and ACKed keys
+    I have a "Local CPU Farm" slave server available
+    Kevin <kwang@blackbox.punk.net> is working on a central server to "rsh"
+	work to local CPUs.
+    I am against pre-fetching of the next chunk, as I believe it should not be
+	necessary (I'll review that after Hal3) and it tends to increase NOACKs
+
+
+BTW: you make the 1% (of the TOTAL keyspace) cut :-)
+
+              Credits for the CRACK of Hal's Second Challenge (plain) (p1 of 3)
+
+            CREDITS FOR THE CRACK OF HAL'S SECOND CHALLENGE (PLAIN)
+
+   Note that thet %age is the percentage of the complete address space.
+
+   This data is also available as a table for users with a suitable
+   browser.
+
+%age  ACKs NoAs ACK/n ID
+===== ==== ==== ===== ======================
+8.498 5569 1572 0.780 jshekter@alias.com
+2.182 1430  454 0.759 pjw@dcs.ed.ac.uk
+1.892 1240    8 0.994 jelson@jhu.edu
+1.587 1040  386 0.729 martin@mrrl.lut.ac.uk
+1.437  942  412 0.696 bal@mit.edu
+1.375  901    0 1.000 rkel02@cs.auckland.ac.nz
+1.367  896   51 0.946 nathanw@mit.edu
+1.294  848  567 0.599 cwe@it.kth.se
+1.083  710  879 0.447 floeff@mathematik.uni-stuttgart.de
+1.044  684   42 0.942 aba@dcs.ex.ac.uk
+1.025  672    0 1.000 bande@lut.fi
+1.003  657  214 0.754 don@cs.byu.edu
+0.891  584  254 0.697 droelke@aud.alcatel.com
+
+
+
+

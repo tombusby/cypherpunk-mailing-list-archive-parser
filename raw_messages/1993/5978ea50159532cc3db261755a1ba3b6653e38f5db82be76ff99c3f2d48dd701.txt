@@ -1,0 +1,47 @@
+From: collins@newton.apple.com (Scott Collins)
+Date: Fri, 18 Jun 93 10:57:41 PDT
+To: TO1SITTLER@APSICC.APS.EDU (Kragen Sittler)
+Subject: Re: xor w/prbs
+Message-ID: <9306181746.AA15078@newton.apple.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+While the pseudo-random bit sequence algorithm used in the Computer Shopper
+article is weak, it is important to note that the article is on the right
+track.  However, a one time pad based on PRBS is only as secure as the PRBS
+itself.  If the author did not state this, he was remiss.
+
+There *are* cryptographically strong pseudo-random bit generators.  A one
+time pad based on a CSPRBS would be as secure as the underlying 'hard'
+problem.  For example, Blum and Micali's paper "How to Generate
+Cryptographically Strong Sequences of Pseudo-Random Bits" (Nov. 84 SIAM),
+details a scheme based on the discrete log problem.
+
+Essentially, this system is based on selecting bits from successive
+exponentiations of a seed.  If you could guess the next bit to be selected,
+without knowing the seed, you could reverse this into an algorithm to solve
+the discrete log problem.
+
+The Blum and Micali paper also references a paper by Shamir (which I have
+not read) called "On the generation of cryptographically strong
+pseudo-random sequences" 8th International Colloquium on Automata,
+Languages and Programming, Lecture Notes in Coputer Science, 62,
+Spring-Verlag, New York, 1981.  The difference being that the Shamir scheme
+generates *numbers* while the Blum/Micali scheme generates *bits*.
+
+I try never to label anyone a moron until I am sure their stupidity is not
+just my failure to communicate.
+
+Scott Collins              | "Few people realize what tremendous power
+                           |  there is in one of these things."
+                           |                            -- Willy Wonka
+......................................................................
+Apple Computer, Inc.       |     phone: 408 862-0540(v), 974-6094(f)
+1 Infinite Loop, MS 301-2C | AppleLink: SCOTTCOLLINS
+Cupertino, CA 95014        |  internet: collins@newton.apple.com
+
+
+
+
+

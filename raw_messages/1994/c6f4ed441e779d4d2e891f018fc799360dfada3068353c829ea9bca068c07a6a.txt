@@ -1,0 +1,51 @@
+From: Jef Poskanzer <jef@ee.lbl.gov>
+Date: Tue, 1 Mar 94 13:27:15 PST
+To: Derek Atkins <warlord@mit.edu>
+Subject: Re: low-overhead encrypted telnet
+Message-ID: <9403012126.AA09307@hot.ee.lbl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>1) Kerberos *does* work between corporate entities.
+
+In practice, no, it doesn't.  This is not a technical problem,
+but it's nevertheless quite real.  You will never see inter-realm
+Kerberos set up at places line netcom, because netcom's sysadmins
+have better things to do than manage secret keys for every
+organization that wants to connect.  Only a system with completely
+automated configuration and operation has a chance.
+
+>2) Using your example, a user on host A telnets to host B, and from
+>host B they telnet to host C, if the A<->B link is encrypted, then so
+>long as the user trusts host B, then A<->C is secure as well (assuming
+>B<->C is encrypted).
+
+Yes, of course, if the A<->B link is encrypted then subsequent logins
+are secure.  The point is to find a way to secure those logins *without*
+full encryption of the A<->B link.
+
+>3) Just encrypting from client->server will not necessarily reduce the
+>load on the server.
+
+In practice, almost all of the time, it will.
+
+>Also, doing something like DES is really not a
+>very high CPU operation, IMHO.
+
+Personally I agree with this.  Most sysadmins will not.
+
+>4) Charon, which is based upon Kerberos, was developed exactly for
+>this type of problem: you want to authenticate securely over links
+>which may not otherwise be secure, but you trust the CPU in front of
+>you!  The paper describing Charon is available via anonymous ftp:
+>	ftp://toxicwaste.mit.edu/pub/charon/thesis.ps.Z
+
+I'll check this out, but if it's based on Kerberos it's probably
+useless for the reasons mentioned above.
+---
+Jef
+
+
+
+

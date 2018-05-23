@@ -1,0 +1,38 @@
+From: "John A. Limpert" <johnl@radix.net>
+Date: Tue, 12 Sep 95 07:32:41 PDT
+To: "thad@hammerhead.com>
+Subject: RE: 64 bit crypto
+Message-ID: <01BA80F9.97A820A0@dialin18.annex1.radix.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+<code deleted>
+
+>Then the prepare_key routine would take much much longer.
+>
+>The idea is that a 64 bit crypto routine can be arbitrarily
+>secure against brute-forcing, if you are willing to pay a
+>runtime penalty every time you use it.
+
+My thought was that there might be shortcuts that the attacker
+could use to compute the permutation of the state array in less time.
+
+I wrote a small test program to look for cycles and weak keys in the
+65536 iteration permutation. I assumed a 40 bit key. One weak key
+was found, 0x0101010101, that produces a 255 iteration cycle.
+375 randomly chosen keys were tested and no cycles were found.
+
+There ought to be a faster way to compute the permutation with
+a more analytical approach. My skepticism tells me that nothing
+is a replacement for more key bits.
+
+In a semi-related question, why don't we see Feistel systems with
+larger numbers of rounds? Would a modified DES with 256 rounds be
+any more secure than standard DES?
+
+
+
+
+
+

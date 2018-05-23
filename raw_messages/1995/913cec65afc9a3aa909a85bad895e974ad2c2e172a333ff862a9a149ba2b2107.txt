@@ -1,0 +1,54 @@
+From: iagoldbe@csclub.uwaterloo.ca (Ian Goldberg)
+Date: Mon, 4 Dec 95 11:09:11 PST
+To: cypherpunks@toad.com
+Subject: How to steal ecash (was: Questions/Comments on ecash protocol)
+In-Reply-To: <199512012222.OAA18230@netcom14.netcom.com>
+Message-ID: <49vgvh$i7a@calum.csclub.uwaterloo.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <199512030127.RAA03496@cory.EECS.Berkeley.EDU>,
+Ian Goldberg  <iang@cory.EECS.Berkeley.EDU> wrote:
+>Since the payer_code is not supposed to be sent around, how is it sent to
+>the bank in order to cancel a payment?  The document says "This allows him
+>to cancel the payment (deposit in his account)...", which seems to indicate
+>that a cancellation is just a deposit (made out to someone else), accompanied
+>by an appropriate payer_code.  It is important that an eavesdropper not
+>be able to ever see the payer_code that corresponds to a payment, or
+>else she could present both to the bank and say "cancel this payment",
+>and get the money "back".
+
+After reading the responses to my questions/comments, it seems that, if
+Charlie (the customer) wants to cancel a payment, his ecash client sends
+a copy of the payment, including the payer_code field (which evidently was
+not in the original payment), to the mint.  The mint accepts the payment
+because the payer_code was supplied.  However, the payer_code is sent
+_in the clear_.
+
+Thus: How to steal ecash:
+
+This method can be used by Mitch, an active eavesdropper, though all he really
+needs to be able to do is selectively remove or delay packets in transit.
+
+Mitch taps either his target, or, better yet, the mint, and watches for
+deposits to the mint that have the payer_code filled in (a cancelled payment).
+He delays that packet, and sends the identical deposit to the mint himself
+(with his own userID in the userhdr, of course).  The mint, being unable
+to know who withdrew the coin originally, has no reason to believe it wasn't
+Mitch, and so happily deposits the money "back" in Mitch's account.
+Mitch is then free to release the delay on the original packet, and
+Charlie's deposit fails (as the coin has already been deposited).
+
+So:  do I win
+anything?   :-)
+
+Disclaimer: Don't do this.  Then again, is it illegal to copy ecash?  I doubt
+  it's considered counterfeiting.  What about creating ecash out of thin air
+  (say I had a magic factoring box (like a quantum computer (well, not yet)))?
+
+   - Ian "IANAL, but IAA security-wise net.citizen..."
+
+
+
+

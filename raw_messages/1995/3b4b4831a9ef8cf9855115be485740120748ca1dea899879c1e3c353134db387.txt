@@ -1,0 +1,39 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Tue, 15 Aug 95 06:52:43 PDT
+To: cypherpunks@toad.com
+Subject: Use of the IV in DES & stuffing the first block w/ random stuff
+Message-ID: <JAA01935.199508151352@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I have recently started writing a small pair of encription and
+decription programs.  I was planning of gennerating the key by
+taking the MD5 of the text password supplied by the user.
+
+Seeing that I have 64 bits left over (MD5 gives me 128 bits, single
+DES needs 56, tripple DES needs 168 - so I have a bit over 64 bits
+left in both cases), is there anything useful that I could do with
+them?
+
+Does setting the IV (normally left at zero) buy me anything?
+
+Does craming it into the first data block help protect me from
+known plaintext attacks?  (I was going to use CBC so unless they
+know the first block they can't use a known plaintext attack,
+right?)
+
+Or am I better off putting the extra 64 bits of "key" into the IV,
+and gennerating a strong random number to stuff in the first block
+- since the decoder can just ignore that block anyway.
+
+(or should I ignore the IV, and stuffing random crud in the first
+block?)
+
+I don't recall Applyed Crypto. addressing these issues, but if I
+just managed to forget can someone remind me what chapter I need
+to re-read?
+
+
+
+

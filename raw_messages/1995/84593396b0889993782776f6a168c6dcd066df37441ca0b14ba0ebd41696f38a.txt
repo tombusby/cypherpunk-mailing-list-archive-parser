@@ -1,0 +1,41 @@
+From: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Date: Thu, 24 Aug 95 14:37:03 PDT
+To: Thomas Grant Edwards <tedwards@src.umd.edu>
+Subject: Re: brloop not working
+In-Reply-To: <Pine.SUN.3.91.950824172125.22646D-100000@thrash.src.umd.edu>
+Message-ID: <"swan.cl.cam.:239560:950824213618"@cl.cam.ac.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Ah, found the problem.  where is that "-" coming from??? [Linux]
+
+brloop in the shell variable "cmd".
+
+#:10: the actual command to do the work ....
+cmd="${cmd-$brclient -dklLt$type|(read a;nice -20 $brute$type - \$a)|(read a;
+echo '     '\$a 1>&2; echo \$a) |$brclient -AlLt$type}"
+
+> ++ nice -20 brutessl - 2977 d42f 1
+> usage: brutessl [-q] <filename> <checksum> <start segment> <no of segments>
+>        brutessl [-q] -r <filename> [<no of segments>]
+>        brutessl [-q] -t [<hours>[:<minutes>]]
+> 
+> I've stopped it until I can get that fixed.  brclient is way huge now...I 
+> can't see how to get rid of the "-".
+
+"-" is the name of the <filename> -- it's a unix convention for "stdin".
+brutessl 1.0 was incompatible with bruterc4 -- that was the reason for
+releasing brutessl 1.01
+
+If you are stuck with brutessl 1.0, fix cmd to be
+
+#:10: the actual command to do the work ....
+cmd="${cmd-$brclient -dklLt$type|(read a;nice -20 $brute$type -- - \$a)|(read a;
+echo '     '\$a 1>&2; echo \$a) |$brclient -AlLt$type}"
+
+i.e. prefix the "-" with "-- "
+
+
+
+

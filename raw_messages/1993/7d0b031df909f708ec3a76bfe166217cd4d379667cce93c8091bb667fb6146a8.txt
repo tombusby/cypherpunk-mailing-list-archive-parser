@@ -1,0 +1,42 @@
+From: smb@research.att.com
+Date: Fri, 18 Jun 93 10:04:10 PDT
+To: Brad Huntting <huntting@glarp.com>
+Subject: Re: fast des
+Message-ID: <9306181704.AA15365@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 
+	 > Run your plaintext through compress first; remove the compress
+	 > header; then encrypt. Compression will screw up character frequencie
+	s
+	 > (and use all eight bits) enough to make automated detection of a
+	 > successfully-broken encryption really darn hard. Especially if you
+	 > keep changing compression technology each message.
+
+	 Most encryption scheams use cypher block chaining or some other
+	 mechanism where a change in one block will affect every block to
+	 come after it, no?
+
+	 Given this, would inserting a block of random data at the begining
+	 of the datastream help?
+
+
+Probably not.  The DES-crackers are already going to be looking at a
+couple of blocks, because in general, the cryptanalyst won't know the IV.
+But not knowing it only affects your ability to decrypt the very next block;
+you can still get the one after it.
+
+The decrypt equation for CBC mode is
+
+	P[n] <- D(C[n]) xor C[n-1]
+
+That is, without knowing the IV -- C[0] -- you can't recover P[1].
+But P[2] depends only on C[2] and C[1].  If P[1] is random garbage,
+you've actually made life a bit easier -- the block they can't recover
+isn't important.
+
+
+
+

@@ -1,0 +1,69 @@
+From: Scott Brickner <sjb@universe.digex.net>
+Date: Sat, 4 Nov 1995 21:17:46 +0800
+To: Sten Drescher <dreschs@mpd.tandem.com>
+Subject: Re: censored? corrected [Steve Pizzo cited in The Spotlight]
+In-Reply-To: <199511022000.OAA09507@galil.austnsc.tandem.com.>
+Message-ID: <199511032037.PAA13172@universe.digex.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Sten Drescher writes:
+>sameer <sameer@c2.org> said:
+>> 	The US govt. doesn't run the root nameservers, nor are all the
+>> root nameservers within US jurisdiction.
+>
+>	Granted, the US Govt doesn't run the US-based root servers.
+>But, if an Internet 'Decency' law was passed, they certainly could try
+>to threaten the US-based root server maintainers to make the cascading
+>threats.  And, as I understand the way DNS resolution works, address
+>requests go down to your root domain then up from the other root domain,
+>i.e., for me to find out what c2.org's address is, my system requests
+>from:
+>NS mpd.tandem.com
+>NS tandem.com
+>NS com
+>NS org
+>
+>If this is correct, if the com NS has the entry for the org NS, I won't
+>be able to resolve those names.  Of course, explicit IP addresses and
+>/etc/hosts entries would still work.
+
+It isn't correct.  First, your host is immediately looking for a
+namserver for c2.org, by querying it's configured default server (say,
+piaget.mpd.tandem.com) for it.  If the server already has the answer
+cached, it's returned immediately.  If not, a bit in the query tells it
+whether the client wants it to find the answer or return an "I don't
+know" answer -- most want it to find an answer.
+
+Piaget.mpd.tandem.com probably already knows enough to bypass queries
+to the tandem.com and com domains, since it's probably already resolved
+at least one org query.  It can then go directly to a server for org to
+get the c2.org information the client requested.
+
+The other confused point you have is that there isn't just *one* server
+for org.  There are at least a dozen interchangeable root nameservers
+which handle all of com, org, edu, net, mil, gov, and the country
+domains (us, uk, de, etc).
+
+It's been a matter of policy for quite some time now that to register a
+sub-domain under one of the top level domains (i.e., to register c2.org
+under org) you must demonstrate two accessible nameservers for the new
+domain.  I note, for example, that mpd.tandem.com has *four*
+nameservers.
+
+To eliminate "tandem.com" from the DNS, all of the dozen or more root
+nameservers, which are in different jurisdictions, must be
+compromised.  Even then, sub-domains of the top level generally offer
+very long expiration periods for cached data.  It could be years before
+the data left the cache from some of the second level servers, assuming
+they stayed up that long.
+
+It would almost certainly be long enough to get a judge to slap an
+injunction against the action.
+
+Once again, the net interprets censorship as damage and routes around it.
+
+
+
+

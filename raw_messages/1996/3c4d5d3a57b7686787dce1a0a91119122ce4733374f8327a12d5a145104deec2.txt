@@ -1,0 +1,78 @@
+From: nelson@crynwr.com
+Date: Fri, 7 Jun 1996 18:29:57 +0800
+To: cypherpunks@toad.com
+Subject: Re: Multiple Remailers at a site?
+In-Reply-To: <19960604232157.2053.qmail@ns.crynwr.com>
+Message-ID: <19960607042143.11138.qmail@ns.crynwr.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+nelson@crynwr.com writes:
+ > Scott Brickner writes:
+
+ >  > The "to" and "from" values that the traffic analyst will be using
+ >  > are the IP addresses in the packets.  It doesn't matter whether
+ >  > mixmaster, cypherpunks, or penet remailers are used, they still use
+ >  > IP addresses.
+ > 
+ > Sure *does* matter.  There's no computationally feasible way to
+ > associate one mixmaster message with another.  The only way you can
+ > get a clue is by analyzing who sends mail into and out of the
+ > mixmaster system.  If both of your endpoints are within the mixmaster
+ > system, you have no entering or exiting mail to analyze.  It doesn't
+ > matter if the mixmaster remailers are on the same or different systems.
+
+Scott indicates, in private mail, that he needs another, clearer,
+explanation.  Okay, here goes:
+
+A is sender, B is recipient, M is mixmaster remailer network, W is
+watcher.
+
+A Mixmaster system (there can be more than one, although there is
+currently only one published Mixmaster system of remailers) acts as a
+single node for the purposes of traffic analysis.  Imagine, if you
+will, a remailer that everyone trusts implicitly.  Why would you need
+any other remailers??  All W can see is incoming mixmaster messages
+(lets you identify A), and outgoing ASCII messages (lets you identify
+B).  If W can correlate traffic between A and B, he does it by
+watching what happens between A and B, not being privy to the
+internals of M.
+
+Now obviously there is no single trustable M.  So, you create many Ms,
+who move traffic between themselves.  Let's assume that only one of
+them is trustable (M') and happens to be used by A to send a message
+to B.  W STILL doesn't know what happens inside M' and has no more
+information about the correlation between the message sent by A and
+the message received by B than in the first case.
+
+Do you see now, Scott?  Adding mixmasters doesn't need to make traffic
+analysis harder (it does, but it doesn't need to).  It makes finding
+an M that you trust easier.  And to that end, it doesn't matter if
+those mixmasters are all running on the same host or not.
+
+Now, my point about increased security by sender and/or receiver
+running a Mixmaster remailer is that W has an easy time identifying A
+and B because he can see that A sends a mixmaster message, and B
+receives an ASCII message from a mixmaster remailer.  If either A or B
+is running a mixmaster, W is denied knowledge that A or B even exists.
+He MUST assume that anyone running a remailer is receiving or sending
+some or all of the messages.  Message counting (looking for a delta
+implying an internally received or transmitted message) is no help.
+Since mixmaster happily ignores bogus messages, I could receive a
+message, fill its packets with junk, send them one or more hops, and
+let someone *else* be under suspicion of having received a message.
+
+As an aside, the TLAs *are* looking for A's and B's.  They spend
+millions of dollars a year on telephone traffic analysis.  We MUST
+assume that they would spend tens of thousands of dollars a year on
+email traffic analysis.
+
+-russ <nelson@crynwr.com>    http://www.crynwr.com/~nelson
+Crynwr Software   | Crynwr Software sells packet driver support | PGP ok
+11 Grant St.      | +1 315 268 1925 voice | It's no mistake to err on
+Potsdam, NY 13676 | +1 315 268 9201 FAX   | the side of freedom.
+
+
+
+

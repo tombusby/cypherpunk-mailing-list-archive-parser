@@ -1,0 +1,41 @@
+From: Ben Holiday <ncognito@gate.net>
+Date: Sun, 10 Mar 1996 21:55:30 +0800
+To: cypherpunks@toad.com
+Subject: TCP/IP Stego (was CU-SeeMe)
+Message-ID: <Pine.A32.3.91.960307010925.29850B-100000@seminole.gate.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+It seems to me that it would be possible to squeeze one bit of subliminal 
+data into each tcp packet if you were willing to sacrifice a few cpu 
+cycles in the process:
+ 
+A tcp header contains quite a bit of useful information.. but most of it 
+wouldnt be easily manipulated (by me) to get a bit. You cant very well 
+alternate the port number you are using, or change the packet sequence 
+numbers. However, the tcp protocol forces each tcp header to contain a 
+'checksum' field.. which is (more or less) the sum of all the octets in 
+the packet. This is used as error correction for the protocol. It 
+shouldn't be too difficult to force TCP to fiddle with the data in the 
+packet a bit to force the checksum to be a particular sort of thing (i.e. 
+even or odd number) .. 0 for even and 1 for odd would get us our one 
+bit of data per packet. 
+
+I may be wrong, but im pretty certain that you could hack your client (an 
+ftp client would be a good choice since it can easily be made to receive 
+vast numbers of packets without attracting attention) and leave the basic 
+tcp/ip stack untouched.  If your client figured out what sort of packet 
+needed to be sent to get the right bit before passing it to the tcp stack 
+then voila you have a subliminal channel.
+
+Of course there are alot of other ways to go about it, im sure.. 
+
+
+Benji
+
+
+
+
+

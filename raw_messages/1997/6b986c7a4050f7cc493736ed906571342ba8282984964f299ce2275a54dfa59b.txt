@@ -1,0 +1,79 @@
+From: David Honig <honig@otc.net>
+Date: Wed, 24 Dec 1997 01:04:17 +0800
+To: "Johnson, Michael P (Mike)" <honig@otc.net>
+Subject: RE: Question on CFB variant with c[i-N]
+In-Reply-To: <c=US%a=_%p=Stortek%l=LSV-MSG06-971222182205Z-86290@lsv-bridge.stortek.com>
+Message-ID: <3.0.5.32.19971223085211.007d1b50@otc.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 11:22 AM 12/22/97 -0700, Johnson, Michael P (Mike) wrote:
+>>David Honig <honig@otc.net> wrote:
+>>At 06:46 PM 12/20/97 -0700, Johnson, Michael P (Mike) wrote:
+>>>>
+>>>>
+>>>>>>              cfb    Ciphertext feeback mode
+>>>>>>                     c[i] = f1(K, c[i-1]) ^ p[i]
+>>>>>>                     p[i] = f1(K, c[i-1]) ^ c[i]
+>>>>
+>>>
+>>>
+>>>Suppose instead of c[i-1] you use c[i-N] where N is say 10. 
+>>>How would you prove that this has no security implications?
+>>>That 10-way interleaved cfb streams are security-equivalent to
+>>>a single cfb stream interleaved with the immediately previous block?
+>
+>That would make it harder to get the process started, since you would
+>need 10 initialization vector blocks instead of 1, so it would bloat
+>your messages more.
+>
+>How about this mode:
+>    c[i] = e(K1, e(k2, c[i-1]) ^ p[i-1]) ^ p[i]
+>    p[i] = e(K1, e(k2, c[i-1]) ^ p[i-1]) ^ p[i]
+>
+>The feedback possibilities are literally endless. The analysis of the
+>effects on security, speed, error propagation, etc., are left as an
+>exercise for the reader. <grin>
+
+
+In case you think I came up with this question
+with the goal of proposing a stronger form of feedback:
+
+I did not; I am not qualified to attempt such a thing. (Also, my intuition
+matches Bruce's, there's no cryptostrength difference). Instead, the question
+came up in an implementation context, where I wanted to know whether the 
+more knowledgable community would seriously question such a variant on 
+a well-known feedback mode if it were necessary in this implementation.
+
+Thanks
+
+
+
+
+
+
+------------------------------------------------------------
+      David Honig                   Orbit Technology
+     honig@otc.net                  Intaanetto Jigyoubu
+
+"Windows 95 is a technologically complex product that is best left alone by
+the government..."
+ ---MSFT Atty B. Smith
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

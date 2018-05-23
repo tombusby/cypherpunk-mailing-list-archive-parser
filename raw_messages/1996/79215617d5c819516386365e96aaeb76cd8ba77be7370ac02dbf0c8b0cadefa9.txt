@@ -1,0 +1,56 @@
+From: "David E. Smith" <dsmith@midwest.net>
+Date: Wed, 22 May 1996 13:53:40 +0800
+To: tcmay@got.net (Timothy C. May)
+Subject: Re: Long-Lived Remailers
+Message-ID: <199605212215.RAA13102@cdale1.midwest.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+An NSA operative with the code name 'tcmay@got.net' wrote...
+> Let's call the first site "Alice" and the emanation site "Bob."
+> 
+> That is, all messages sent to the persistent site Alice appear to come from
+> the site Bob.
+> 
+> The Church of Clams can simply send messages addressed to themselves
+> through the Alice remailer and see immediately that they appear to come
+> from Bob.
+
+Unless Alice will automatically rotate between some random set
+of Bob1, Bob2, Bob3... It also wouldn't be too difficult
+to set up a message that goes through several points before
+emerging at a randomly-chosen exitpoint, including a
+completely independent remailer.
+
+Actually, there's an Idea.  Set up a single address; use added
+headers in the style of:
+
+::
+Remailers-To-Chain: 7
+Remailers-To-Avoid: remailer@nsa.gov
+Final-Destination: tcmay@got.net
+
+Each remailer could construct a message that decrements the
+remailers counter, preserving the other headers.  The
+usual caveat on encrypting at each step would apply; but since
+remailers' pubkeys are available, that's a trivial concern.
+
+A lot more could be done with this general concept.  One immediate
+problem is that the frontend address is a target, even though
+it can't be obviously connected to any objectionable messages.
+Packet sniffing is always a concern, etc etc...
+
+Flame away.
+
+dave
+
+----  David Smith  Box 324  Cape Girardeau MO USA  63702
+http://www.prairienet.org/~dsmith  dsmith@prairienet.org
+Reality is only for those lacking in true imagination...
+Send mail w/'send pgp-key' in subject for PGP public key
+
+
+
+

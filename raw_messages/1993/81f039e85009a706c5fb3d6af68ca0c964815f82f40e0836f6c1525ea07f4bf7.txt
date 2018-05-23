@@ -1,0 +1,33 @@
+From: Eric Fogleman <Eric.Fogleman@analog.com>
+Date: Tue, 9 Mar 93 17:32:26 PST
+To: i6t4@jupiter.sun.csd.unb.ca
+Subject: Re: Questions about PGP 2.2 compilation messages
+Message-ID: <9303100125.AA10660@ack.adstest.analog.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Nickey,
+
+I recently compiled _pgp2.1_ on my sun4 and had a similar problem...  I
+got a binary that seemed to work, but I got a list of warnings.
+
+In my case, the program actually had a bug in it; it was trying to
+compare an unsigned character variable (8 bits) for maximum path length
+to 256 (nine bits) as defined in the source code.  I asked around on
+the list and I got the same sort of responses you did...
+
+I ended up redefining and changing the compare statement to make the
+compiler happy and still get the intended code...
+
+So, pgp may not be entirely bug free...  The sun4 compiler may be more
+conscientious about flagging things.  I'd suggest looking through the
+source to see if there's something simple.  In my case, it was.
+
+Let me know how you fare; I'll be going through the same thing shortly...
+
+Eric Fogleman
+
+
+
+

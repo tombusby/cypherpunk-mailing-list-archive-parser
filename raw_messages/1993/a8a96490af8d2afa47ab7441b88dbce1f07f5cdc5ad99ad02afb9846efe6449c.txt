@@ -1,0 +1,64 @@
+From: eichin@cygnus.com (Mark Eichin)
+Date: Thu, 3 Jun 93 16:38:58 PDT
+To: cypherpunks@toad.com
+Subject: [comp.os.linux.announce] New loop devices, even with DES encryption
+Message-ID: <9306032338.AA19180@cygnus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+If you actually want to see the linux loopback code I mentioned,
+here's the real announcement.					_Mark_
+
+------- Start of forwarded message -------
+From: almesber@nessie.cs.id.ethz.ch (Werner Almesberger)
+Newsgroups: comp.os.linux.announce
+Subject: New loop devices, even with DES encryption
+Keywords: loop devices, DES, mount regular files
+Date: 1 Jun 93 20:13:47 GMT
+Followup-To: comp.os.linux
+Organization: Swiss Federal Institute of Technology (ETH), Zurich, CH
+
+Version 0 of the new loop devices patch is in
+
+    tsx-11.mit.edu:/pub/linux/BETA/loop
+and nic.funet.fi:/pub/OS/Linux/BETA/loop
+
+The files are:
+
+lo.0.tar.z	The loop devices patch
+des.0.tar.z	DES-encryption for the kernel
+
+Note: If you're FTPing from outside the U.S. or Canada, please get the
+      DES patch from nic.funet.fi, because of the well-known US export
+      restrictions.
+
+(DES encryption is optional. The loop devices also work without it.)
+
+Loop devices give you the ability to mount file systems from regular
+files. Additionally, you can use them to have more than one file system
+on one partition and to have transparent on-line encryption of all your
+data.
+
+The loop devices patch is relative to ALPHA 0.99pl10, but it'll
+probably work with 0.99pl9 and 0.99pl10 too. The DES patch should work
+with any recent kernel.
+
+This is a new implementation of loop devices by Theodore Ts'o, I'm just
+maintaining the code. Unlike my old loop devices, which are also in some
+versions of SLS, the new loop devices will continue to work after
+variable block sizes are added to the kernel.
+
+The DES code is derived from Eric Young's DES library. I originally
+wanted to use UFC crypt, but its memory requirements make it a bit
+difficult to handle. Maybe later.
+
+- Werner
+-- 
+   _________________________________________________________________________
+  / Werner Almesberger, ETH Zuerich, CH      almesber@nessie.cs.id.ethz.ch /
+ /_IFW_A44__Tel._+41_1_254_7213__________________almesber@bernina.ethz.ch_/
+------- End of forwarded message -------
+
+
+

@@ -1,0 +1,75 @@
+From: stig@netcom.com (Stig)
+Date: Sat, 19 Jun 93 14:20:28 PDT
+To: cypherpunks@toad.com
+Subject: Trimmed down pgp.hlp
+Message-ID: <9306192120.AA10808@netcom.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I edited down the pgp.hlp file so that it's more readable (for me anyway).
+In case you think that the help file is less than helpful, just replace it.
+
+PGP maintainers:  please add this (or an even more concise version) to the
+pgp distribution...contrib directory is fine.
+
+	Stig
+
+------------
+Here's a quick summary of PGP v2.2 commands.
+
+pgp ciphertextfile [-o plaintextfile]		decrypt or verify signature
+
+pgp -e textfile her_userid			encrypt file w/ pubkey
+pgp -e textfile userid1 userid2 userid3		multiple recipients
+pgp -s textfile [-u your_userid]		sign plaintext file
+pgp -es textfile her_userid [-u your_userid]	sign, then encrypt
+
+pgp -c textfile			traditional symmetric cipher only
+
+KEY MANAGEMENT:
+
+pgp -kg				generate your own unique key pair
+pgp -ka keyfile [keyring]	add new key(s) to your keyrings	
+
+pgp -kx userid keyfile [keyring]	extract (copy) a key from a keyring
+pgp -kxa userid keyfile [keyring]	same, except it's ascii
+
+pgp -kv[v] [userid] [keyring] 	view the contents of your public ring
+pgp -kvc [userid] [keyring]	view the "fingerprint" of a public key
+
+pgp -kc [userid] [keyring] 	check signatures of public keys
+
+pgp -ke userid [keyring]	edit userid/pass-phrase for your keypair
+pgp -ke userid [keyring]	edit the trust parameters for a public key
+
+pgp -kr userid [keyring]	remove a key (or userid) from your pubring
+
+pgp -ks her_userid [-u your_userid] [keyring]	sign/certify a public key
+pgp -krs userid [keyring]	remove selected signatures from a pubkey
+
+pgp -kd your_userid		revoke your key & issue compromise certificate
+pgp -kd userid			disable or reenable a key on your pubring
+
+ESOTERIC USAGES:
+
+pgp -d ciphertextfile		decrypt message and leave its signature 
+pgp -sb textfile [-u your_userid]	create signature separate from textfile
+pgp -b ciphertextfile		detach signature from a signed message
+
+OTHER FLAGS 
+	-a (ascii)	produce ascii radix-64 output suitable for email
+	-m (more)	read in more mode, force reading in more mode
+	-w (wipe)	erase plaintext after encrypting
+	-f (filter)	input from stdin and output to stdout
+	-t (text)	when encrypting, treat input as ascii text
+	-p		when decrypting, recover original filename
+
+	Ex: pgp -feast her_userid <inputfile >outputfile
+
+/* Jonathan Stigelman, Stig@netcom.com, PGP public key by finger  */
+/* fingerprint = 32 DF B9 19 AE 28 D1 7A  A3 9D 0B 1A 33 13 4D 7F */
+
+
+
+

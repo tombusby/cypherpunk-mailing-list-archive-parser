@@ -1,0 +1,40 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 5 Mar 1996 13:29:44 +0800
+To: cypherpunks@toad.com
+Subject: Re: A brief comparison of email encryption protocols
+Message-ID: <199603040715.XAA13853@ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 08:03 AM 3/1/96 -0800, Eric Murray <ericm@lne.com> wrote:
+>Suggestions?  maybe key:/pgp/slack.lne.com/ericm/key/asc?
+
+>Finally, a question:  should the keyserver be able to serve
+>keys in a way that is secure from a MITM attack, or can it depend
+>on the certificate chain in the key certificate itself to
+>validate the key certificate?  I think it can, but I am not
+>sure, so perhaps someone smarter than I can explain why, or why not.
+
+Web of trust is clearly the way to go, but it helps to have both.
+1) You need Web of Trust anyway
+2) You may have multiple signatures, by people other than the keyserver;
+        issues like "Company X Authorizes Key NNN for purchase up to $D"
+        are outside the scope of keyservers.
+3) If the keyserver managers _want_ to sign the key, they can.
+4) It's much more convenient to run a non-trusted keyserver;
+        there's a lot less security paranoia required,
+        and enough less work that more people will run them.
+
+On the other hand, sending signed responses from the keyserver 
+is clearly valuable.  The big MITM risk is for revoked keys;
+the MITM may be able to block transmission of the revocation
+notice or, for Certificate Revocation List models like X.509, the CRL,
+and send an old key.  Having the MITM sign and timestamp the response
+reduces the risk that an old self-revoked key will get through.
+
+
+
+
+
+

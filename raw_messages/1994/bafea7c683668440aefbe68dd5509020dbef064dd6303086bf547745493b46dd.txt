@@ -1,0 +1,40 @@
+From: Jim choate <ravage@wixer.bga.com>
+Date: Tue, 1 Mar 94 06:46:13 PST
+To: cypherpunks
+Subject: Re: standard for steganography?
+In-Reply-To: <199403010523.VAA00389@mail.netcom.com>
+Message-ID: <9403011446.AA21798@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I have played w/ stego some and w/ the present resolutions of images I dont
+find the images have enough complexity to really hide a message of a useable
+length, unless you break it up into several images.
+
+I use a function to measure the complexity of a image based on adjacent bit
+changes. The more complex an image the more bit changes. I measure it thus:
+
+# of adjacent bit changes in image/ # of bits in image = complexity
+
+if the complexity is too low or too high (this is counter intuitive) then you
+can't hide a message. Consider an image w/ only a few bit flippings, any
+message that is inserted will cause the visual image to be distorted in a
+noticable way (unless it is truely expressionistic). Now consider a image w/
+every other bit flipped (maximum complexity) which is in effect a
+checkerboard. Any bits that get flipped change the pattern to a less complex
+one (ie the checkerboard is broken up). Also you have to consider the effects
+on edges and the standard deviation inherant in using anti-aliasing. This
+will cause bits on the edge to be switched incorrectly for the algorith in
+use. Since it is a trivial problem to measure the sd for various graphics
+packages this makes a nifty test bed for finding imbedding images. Blank or
+mono-chromatic areas also show the same type of errors.
+
+I am still working on it and hope to find an error in there somewhere but so
+far no go.
+
+
+
+
+
+

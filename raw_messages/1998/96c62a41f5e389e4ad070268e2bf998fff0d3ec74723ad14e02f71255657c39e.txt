@@ -1,0 +1,57 @@
+From: Anonymous <nobody@replay.com>
+Date: Sat, 19 Sep 1998 23:59:34 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: CHALLENGE? Toto/signature attack w. unpublished public key
+Message-ID: <199809200502.HAA08667@replay.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> > In addition it has to be that n is the right length based on the "s"
+> > padding.  This limits it to an 8 bit range, in this case 1024-1031
+> > bits.
+> 
+> The constraint I gave was that log(n) = 1024.  Bear in mind that the
+> msbyte of s = 0x08, so we know that n > s, and I think we know that n
+> < 2^1024 also based on the s padding from the signature. So based on
+> this n would be in the range 1020 - 1024 bits, right?
+
+Actually there is somewhat more flexibility than this.  You made up the
+padding, it didn't come from the file, did it?  You could add perhaps 1
+more byte of FF without stretching credibility too extremely.  Then n
+could be 1020 - 1032 bits.  It's too bad that s started out so small
+(assuming the "true" n was 1024 bits).
+
+> > If you make n be a product of a bunch of small primes, so that you
+> > can make signatures with it, then a third party can detect this and
+> > know it is bogus.
+> 
+> He has to factor your n to determine that it is bogus though?  This
+> would imply that he had more compute than you do.  (Not unreasonable
+> threat model mind).
+
+But didn't YOU have to factor n also?  That's what you showed, originally,
+a large s^e which you factored down to get some small factors and a big
+one.  If you manage to get a prime factorization you can combine factors
+to get your n.  But it won't be any harder for him to factor than it was
+for you.
+
+> Resources available: one low end pentium based linux PC? :-) Just that
+> the attack is clearly feasible is interesting though a demonstration
+> would be perhaps more convincing to less technically aware IRS people.
+> The biggest resource overhead is implementing that lot though, unless
+> there exist packages or libraries which already do most of it for you.
+
+The discrete log algorithm is similar to quadratic sieve and other modern
+factoring algorithms.  You do multiple factorizations of other numbers
+and combine them to generate the desired relationships.  The difference
+is that the factor base is not just the primes, it uses special numbers.
+
+There was a break a few years ago of the discrete log modulus being
+used by Sun's RPC.  This was something like 200-300 bits.  Maybe that
+discrete log code could be obtained from the authors.
+
+
+
+

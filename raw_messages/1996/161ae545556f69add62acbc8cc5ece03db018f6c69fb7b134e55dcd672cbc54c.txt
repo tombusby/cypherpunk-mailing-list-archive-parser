@@ -1,0 +1,87 @@
+From: "Perry E. Metzger" <perry@piermont.com>
+Date: Wed, 17 Apr 1996 23:23:37 +0800
+To: rick hoselton <hoz@univel.telescan.com>
+Subject: Re: why compression doesn't perfectly even out entropy
+In-Reply-To: <199604162331.TAA22836@linet02.li.net>
+Message-ID: <199604170012.UAA00724@jekyll.piermont.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+rick hoselton writes:
+> At 05:34 PM 4/16/96 -0400, Perry E. Metzger wrote:
+> 
+> >> ...it is possible ... for Hamlet to appear out of a random number generato
+r,
+> 
+> >> But even if it came from a completely random source, it would 
+> >> still make a bad one-time pad.
+> 
+> >No it wouldn't. 
+> 
+> Are you sure you want to claim that the text of Hamlet would make 
+> a good key for a one-time pad?
+
+If the text of Hamlet were produced by a truly random number
+generator, then it would make a fine one time pad. A cryptanalyst
+seeing patterns in it would have no way of knowing that the patterns
+were caused by the input being "Hamlet" -- he would have no way to
+demonstrate that just because the first five hundred words of the key
+appear to have been "Hamlet" that the rest would be -- and indeed,
+there would be far more cases where the rest wouldn't be. If, on the
+other hand, what you are doing is using books as keys for ciphers,
+then "Hamlet" is a very poor one.
+
+> >There is a tiny but nonzero probability that xoring
+> >your one time pad with your text will result in a cyphertext equal to,
+> >say, the Bible. Big deal. 
+> 
+> Most unusual, and you're right, its inconsequential.  But if you use the 
+> text of Hamlet or the text of the Bible for your KEY to a one-time-pad,
+> you're very likely to get broken.
+
+IF you are using a one time pad system that truly has a random source
+of keying material, AND the 1 in 2^1460536 event of the key being
+Hamlet occurred, THEN no, you aren't likely to get broken. Note that
+the probability of having this happen is astronomically low, but then
+again, the probability of ANY given one time pad being generated is
+astronomically low. If you are just picking books off the shelf and
+playing one time pad with them, yes, you are correct, you will likely
+be broken.
+
+> >If the key is really random, the
+> >cryptanalyst has no way to tell what the underlying text was.
+> 
+> But that silly cryptanalyst might not know that you got Hamlet from 
+> your random number generator.  He might think you copied it out of a 
+> book!  Then, Hamlet stops being a random number.  The context changes.
+
+I don't think you are considering this clearly.
+
+It is far, far more probable for the cryptanalyst, thinking the
+key was "Hamlet", to get out a plausible but totally bogus text, than
+it is for the key to actually be "Hamlet". Of course, it is also far,
+far more probable for you to be stupid than for a random number
+generator to put out "Hamlet", but if you go around getting rid of
+RNGs that produce "Hamlet" or anything close, you have in theory given
+information to the attacker that gives them a slightly better chance
+of attacking you since your pads are no longer purely random.
+
+The reason all this isn't stupid to discuss and actually has some
+importance is just this fact. If you build a system that discards
+things that "don't look like they have enough entropy" (which certain
+people around here have proposed), you are giving the cryptanalyst a
+very strong piece of information about the key, so your key is no
+longer totally unpredictable. An irony, but something important to
+keep in mind. Every once in a while (once in every four billion bits,
+or so) your random number generator will put out 32 1's in a row if it
+is functioning properly. Any given small segment of the output of a
+good RNG might not look "random", but "random" isn't a property of a
+given number -- it is the property of the infinite sequence itself.
+
+Perry
+
+
+
+

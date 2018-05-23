@@ -1,0 +1,60 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Fri, 10 Dec 93 16:39:38 PST
+To: jel@sutro.SFSU.EDU
+Subject: dithering, repudiable steganography
+In-Reply-To: <9312010302.AA05375@russian.SFSU.EDU>
+Message-ID: <199312110036.QAA00882@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I am not sure that your explanation of "granulation noise" and
+dithering are quite correct. You showed how a low-amplitude sine wave
+is quantized by the sampling process, but quantization errors are
+unavoidable in any digital recording system, with or without
+dithering.
+
+Here's another way to look at dithering. Let's say that I want to
+represent a very low frequency audio signal ("low frequency" with
+respect to the sampling rate). Let's assume further that over a period
+of several samples, this signal has a relatively constant value of,
+say, .25 microvolts in a system with 1 microvolt quantizing steps. If
+I fed this into an ideal A/D converter, it would round it to the
+closest representable level, i.e., 0 volts. And it would do so for
+every sample, resulting in an constant error of .25 microvolts each
+time.
+
+But suppose I add some analog noise to the signal before I sample it.
+The analog noise I generate will be a uniformly distributed random
+voltage between +.5 and -.5 microvolts. Now the resulting signal will
+range uniformly between +.75 and -.25 microvolts. If it's between +.5
+and +.75 microvolts, the A/D converter will round it to 1 microvolt;
+if it's between -.25 and +.5 microvolts, it will round it to zero. The
+first case will happen 25% of the time, and the second will happen 75%
+of the time.
+
+Now if you average the resulting samples using enough precision for
+the sum, viola -- you get an average of .25 microvolts, instead of
+zero. This is exactly what happens at the ear after the D/A
+reconstruction process, if you turn the volume up high enough to hear
+what's happening.  Sure, there's still noise, but at least the average
+signal value is correct.
+
+So one purpose of dithering is to better represent low-frequency, low
+amplitude information. The effect on complex signals is to turn the
+quantization noise that would otherwise occur in narrow frequency
+bands (and be quite audible) and spread it out as constant, low level
+white noise over the whole audio band, which is much less objectionable.
+
+Dithering is important only when the original analog source material
+is *very* clean. In most cases, the background noise in the room and
+the noise generated in the low level microphone preamps is much more
+than one LSB, so the signal is "self dithering".
+
+Phil
+
+
+
+
+
+

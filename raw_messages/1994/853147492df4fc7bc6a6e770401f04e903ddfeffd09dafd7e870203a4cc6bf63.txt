@@ -1,0 +1,53 @@
+From: p.v.mcmahon.rea0803@oasis.icl.co.uk
+Date: Thu, 11 Aug 94 16:34:33 PDT
+To: cypherpunks@toad.com
+Subject: Re: Problem in draft FIPS `CRYPTOGRAPHIC SERVICE CALLS'
+Message-ID: <9408112335.AA27774@getafix.oasis.icl.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+
+
+
+> Have you been following the IETF's GSS-API work?
+
+Yes - and implemented a GSS-API mechanism.
+
+The relationship between GSS-API and a general crypto interface is
+contentious - as the interfaces to "export" a key for a remote principal
+(cf ExportKey and PubExportKey in the draft FIPS) resemble the GSS-API
+context initiation interface (cf gss_init_sec_context in RFC 1509), but
+have more assumptions about the possible KM (key management) protocols
+than GSS-API - or at least only make explicit provision for X9.17,
+D-H, and RSA.
+GSS-API has been implemented over Kerberos, DASS, KryptoKnight, DCE1.1,
+SESAME, and possibly others I haven't heard of. Also, discussions for
+an extension of GSS-API to layer over PEM/PGP were kicked off at the last
+IETF to enable mail-enabled applications to be linked in to easily consume
+authentication and key management services. Hence GSS-API is somewhat
+proven to be KM-mechanism-independent.
+
+There is a potential relationship between this export/import class of
+interface and the IPSEC packet format (now - or soon to be? - documented),
+and ongoing IETF IPSEC WG discussions re KM.
+Specifically, it would be helpful for fast implementations (in both senses)
+if as much of the processing of IP security could potentially be handed off
+to hardware-implemented routines via common KM-mechanism-independent and
+algorithm-independent interfaces (which, based on the NIST proposal
+primitives, would be [Pub]ExportKey/[Pub]ImportKey, Encipher/Decipher, and
+GenerateDAC/VerifyDAC).
+If the right interfaces are standardised in h/w crypto, perhaps little other
+than negotiation and SAID handling need usually be in software.
+
+Piers
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+From: "Mark M." <markm@voicenet.com>
+Date: Fri, 5 Apr 1996 15:08:39 +0800
+To: cypherpunks@toad.com
+Subject: Re: Using crypt()
+In-Reply-To: <199604041747.MAA11669@ops.internic.net>
+Message-ID: <Pine.LNX.3.92.960404174853.4227B-100000@gak>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Thu, 4 Apr 1996, Eric Eden wrote:
+
+> I'm testing a encryption program that includes use of crypt().
+> (I know its not the strongest scheme.)  Here's the problem:
+>
+> We ask users to e-mail us an encrypted password derived form the
+> crypt() utility when they set up an account.  When they want to
+> change information related to the account, we ask them to e-mail the
+> cleartext of the encrypted password.  The program then checks to see
+> if the cleartext matches the original encrypted password. If so, their
+> information is automatically updated.
+>
+> The only problem is when users mistakenly supply cleartext initially,
+> they can never update their information because the program isn't
+> smart enough to realize that the user was submitting cleartext instead
+> of an encrypted password when setting up their account.
+>
+> Is there any way to check and see if the text the user
+> supplies initially has been encrypted or is cleartext?
+
+The only way I can think of is if the text that the user supplies is not 13
+characters long and contains characters not used in crypt(3) base64 encoding,
+then the text is definitely not a hashed password.  This would catch nearly
+all cleartext passwords, although there is a little room for error.  FYI, the
+characters used for base64 encoding are [0-9],[A-Z],[a-z],'/', and '.'.
+
+- -- Mark
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+markm@voicenet.com              | finger -l for PGP key 0xf9b22ba5
+http://www.voicenet.com/~markm/ | bd24d08e3cbb53472054fa56002258d5
+"The concept of normalcy is just a conspiracy of the majority" -me
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.3
+Charset: noconv
+
+iQCVAwUBMWRTIbZc+sv5siulAQGf3AP+LfrlTrpvQgFju2k5yOyUTAxHDGxjHWFg
+9M32OU1/Lsj9DtVk/WJBqBmy3SfHJ0ZdppZlxsrT4eywTUaqeg+dOxrQ/WPMPz8c
+smNykbfmVvzdiwFn4pQJ4/mPiSzFOSz3vshgMnZHzum6SpQ1+Hd4WYPD0Qcsc83q
+5SKrfDRfVSs=
+=IgUR
+-----END PGP SIGNATURE-----
+
+
+
+
+

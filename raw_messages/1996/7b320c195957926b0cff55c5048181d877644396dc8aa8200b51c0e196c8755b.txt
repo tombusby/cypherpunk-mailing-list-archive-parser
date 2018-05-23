@@ -1,0 +1,84 @@
+From: Jim Miller <jim@suite.suite.com>
+Date: Tue, 24 Sep 1996 17:35:18 +0800
+To: steve@edmweb.com
+Subject: Re: really undetectable crypto made somewhat practical
+In-Reply-To: <Pine.BSF.3.91.960918231937.568B-100000@bitbucket.edmweb.com>
+Message-ID: <9609240307.AA02627@suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> I'm on FCPUNX instead of regular Cypherpunks, so please
+> excuse me if I'm a little behind the thread.
+>
+Few on the cypherpunk list replied to my post, so you didn't miss  
+anything important.
+
+
+> Instead of hashing just the word in an effort to get stego
+> bits, you could hash a key along with the word. In order to
+> get the intended hash you would need to know the key. Since
+> you're probably hashing a whole block of 512 bits (or
+> whatever's specified in the algorithm) appending a key
+> should not affect the speed of the system. I'm certain
+> that this would increase the security, possibly enough
+> that you wouldn't need to use a regular encryption
+> algorithm (but I wouldn't bet on it).
+>
+
+I like your suggestion, although not for the reason you suggested it  
+(although your use is a good idea, too). The use of keyed hashes solves  
+one of the problems I saw with my scheme.  The main problem I saw with my  
+scheme was that it might be possible to detect that an innocuous message  
+was conveying a hidden encrypted message by analyzing the statistical  
+properties of the relevant hash bits.
+
+Problem:
+
+If the words in a message are chosen so some of their hash bits (say, 4  
+bits per hash) combine to form an encrypted message, then those combined  
+hash bits would be suspiciously cryptographically random, whereas the  
+combined hash bits of a message that was not created for the purpose of  
+conveying an encrypted message would not necessarily be cryptographically  
+random.  It is conceivable that a program could be written that uses  
+this difference to test if a message is conveying a hidden encrypted  
+message.
+
+Solution:
+
+Rather than using an unkeyed hash, which gives Eve the ability to  
+generate the relevant block of combined hash bits and test them for  
+certain properties, use a keyed hash.  Since Eve does not know the key  
+used to hash the words in the message, she will not be able to generate  
+the relevant block of combined hash bits and will not be able to perform  
+meaningful analysis of the properties of those bits.
+
+
+Further analysis:
+
+By hashing words and then using only the first 4 hash bits, what you are  
+really doing is sorting all words into 16 groups.  Group 0 consists of  
+all words whose first four hash bits are 0000, group 1 consists of all  
+words whose first four hash bits are 0001, ..., group 15 consists of all  
+words whose first four hash bits are 1111.
+
+If a message is constructed by selecting words so their first 4 hash  
+bits combine to form an encrypted message, then, if the message is long  
+enough or you send enough messages, you will probably select words  
+"evenly" from each of the 16 word groups.  However, I can think of no  
+reason to assume the distribution of group selections would be "even" for  
+normal messages.  Maybe, by some weird fluke, normal messages are mostly  
+constructed from words in groups 1, 3, 4, 9, and 14, for example.
+
+By using a keyed hash, your not stuck using a fixed set of word groups.   
+A different hash key will sort the words into different groups.  Hash  
+keys effectively prevent Eve from knowing which words in your message  
+came from which groups, thus preventing her from determining if words  
+were chosen "evenly" from each group.
+
+Jim_Miller@suite.com
+
+
+
+

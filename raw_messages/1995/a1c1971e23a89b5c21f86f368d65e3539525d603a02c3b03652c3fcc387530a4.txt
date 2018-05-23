@@ -1,0 +1,158 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Sun, 12 Feb 95 18:19:13 PST
+To: cypherpunks@toad.com
+Subject: Re: Factoring - State of the Art and Predictions
+In-Reply-To: <m0rdnqt-000k5xC@mailbox.mcs.com>
+Message-ID: <199502130218.SAA00223@netcom3.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+schneier@chinet.chinet.com writes:
+
+ > ((Comments are appreciated.  -Bruce))
+
+Ok.
+
+[Nice historical presentation of factoring snipped]
+
+ > A new factoring algorithm has taken over from the quadratic
+ > sieve: the general number field sieve. In 1989
+ > mathematicians would have told you that the general number
+ > field sieve would never be practical.
+
+ > In 1992 they would have told you that it was practical, but
+ > only faster than the quadratic sieve for numbers greater
+ > than 130-150 digits or so. Today it is known to be faster
+ > than the quadratic sieve for numbers well below 116 digits.
+
+ > The general number field sieve can factor a 512-bit number
+ > over 10 times faster than the quadratic sieve.
+
+The GNFS situation is a little bit more complicated than that.
+Today's factoring algorithms work by finding distinct square
+roots of the same quadratic residue modulo the number to be
+factored.  Each such discovery yields an approximately 50% chance
+of factoring the number using Euclid's GCD algorithm.
+
+Since searching directly for a congruence of squares would be
+grossly inefficient, one sieves for relations involving arbitrary
+powers of numbers from a set called the "factor base", and after
+collecting an overdetermined number of such relations, finds
+their null space modulo two in huge matrix operation.  This
+yields a relation whose powers are all even, from which a
+congruence of squares may be constructed in an obvious manner.
+
+Most popular factoring methods including NFS, GNFS, and numerous
+flavors of QS utilize this general scheme, and differ only in the
+numbers to which they are applicable and in the methods that they
+use to fish for relations in more densely populated mathematical
+waters.
+
+GNFS uses a particularly cute trick, which is to express the
+number being factored as a polynomial with small coefficients,
+evaluated at a small argument.  On can then construct a
+homomorphism from a ring of algebraic integers into Z/nZ. This
+permits sieving to be conducted in a particularly efficient
+fashion.
+
+Finding such a polynomial, unfortunately, is a far from
+straightforward task.  Current state of the art is to start with
+a guess, and flog it to death on a workstation for several days,
+attempting some sort of stepwise refinement.  Although the
+problem is mathematically rich, no systematic method currently
+exists to pick the "best" polynomial, and the problem of doing so
+may be of a difficulty comparable to factoring.
+
+The speed with which GNFS runs and the degree to which it
+outperforms QS is extremely sensitive to the polynomial chosen,
+so the blanket statement that GNFS outperforms QS by a factor of
+10 on 512 bit numbers is in my opinion, a bit of an
+oversimplification.
+
+GNFS is one of the most complicated computer algorithms to be
+constructed, sieving and factoring simultaneously in both a ring
+of algebraic integers and in Z/nZ. The algorithm has been known
+to experience "cycle explosions" in which unexpectly large
+amounts of raw data are produced from relatively small numbers.
+It is certainly not something that can be regularly run in
+"production mode" and it requires a skilled operator (currently
+its creator) to help it coast smoothly through its various
+stages.
+
+I don't think GNFS is going to be available in shrink-wrapped
+form for quite some time. :)
+
+ > A related algorithm, the special number field sieve, can
+ > already factor numbers of a certain specialized
+ > form--numbers not generally used for cryptography--must
+ > faster than the general number field sieve can factor
+ > general numbers of the same size.
+
+NFS and GNFS are essentially the same algorithm.  NFS is simply a
+special case where a particularly simple polynomial is known,
+Z[a] is a unique factorization domain, and some other nice
+algebraic properties are present.  In the case of a general
+integer, and a more complex polynomial, some things get messier.
+
+ > It is not unreasonable to assume that the general number
+ > field sieve can be optimized to run this fast; it is
+ > possible that the NSA already knows how to do this.
+
+I think this is unlikely.  The difference in speed is due to the
+fact that NFS only factors specially chosen simple numbers, and
+GNFS factors anything.  That is not something that is likely to
+be optimized away.
+
+Also, I think we make far to much of the magical ability of the
+NSA to do things.  At the present point in time, most of the
+cryptomathematical expertise in the world is external to the NSA.
+The NSA didn't invent GNFS, or for that matter, public key
+cryptography.
+
+ > Making predictions beyond the near future is even more
+ > foolish. Who knows what kind of advances in computing,
+ > networking, and mathematics are going to happen by 2020?
+ > However, if you look at the broad picture, in every decade
+ > we can factor numbers twice as long as in the previous
+ > decade.
+
+GNFS probably represents the final step in the evolution of the
+"combination of congruences" factoring methods.  Further
+refinements would probably be such complicated algorithms as to
+be inpractical to program.
+
+Additional improvements in our ability to break RSA will probably
+come via some new factoring scheme that we are presently unaware
+of, or via a method of computing the inverse of the encryption
+permutation used by RSA which does not require explicit formation
+of the factors of the modulus.
+
+ >          Table 5:  Long-range factoring predictions
+
+ >          Year     Key length (in bits)
+ >          1995     1024
+ >          2005     2048
+ >          2015     4096
+ >          2025     8192
+ >          2035     16,384
+ >          2045     32,768
+
+I think factoring technology may reach its "Omega Point" long
+before 2045.  Twenty years from now, we might be able to factor
+anything.  I think predictions past ten years are pure
+speculation.
+
+ > There is always the possibility that an advance in
+ > factoring will surprise me as well, but I think that
+ > unlikely.
+
+I expect to be surprised by an advance in factoring momentarily.
+You are far too pessimistic. :)
+
+-- 
+     Mike Duvos         $    PGP 2.6 Public Key available     $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+

@@ -1,0 +1,70 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Thu, 3 Dec 1998 21:10:50 +0800
+To: pgut001@cs.auckland.ac.nz
+Subject: Re: open-pgp / s/mime interoperability
+In-Reply-To: <91222019014234@cs26.cs.auckland.ac.nz>
+Message-ID: <199812031239.MAA01783@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Peter Gutmann writes:
+> >open-pgp public keys aren't based on X.509 keys, so I would've thought
+> >s/mime implementation would barf on them.  
+> 
+> Actually S/MIME *could* support the use of PGP keys, but there's a field
+> (the SubjectKeyIdentifier) missing from the CMS SignerInfo which prevents
+> this.  
+
+Surely this in itself should be a compelling argument for inclusion of
+the SubjectKeyIdentifier?  If it allows conversion of PGP keys into
+S/MIME X.509 keys.
+
+On the subject of whether one could get a PGP key to convert into an
+X.509 key such that it would function in the X.509 / S/MIME world, I'm
+not sure that much can be transferred into the S/MIME world.
+
+I think the public key parameters (actual bigints will transfer.  I am
+less confident about certification transferring (third party
+signatures and self signatures on public keys).  The reason I am
+unsure about this is that what is signed is not codified in ASN.1 in
+such a way that it would be ignored as an extension, but still hashed
+by an S/MIME implementation to obtain the same hash.  Or perhaps more
+that it would cause an S/MIME implementation to complain of a
+corrupted certificate, even though the contents could theoretically be
+hashed to get the same hash for signature verification.
+
+Or, more specifically, how could a PGP certificate (self signed, or
+signed by someone in your web of trust) be transferred into X.509 such
+that the message digest of the signed information would be the same.
+
+Where a PGP certificate includes
+
+0       1       CTB for secret-key-encrypted (signed) packet
+1       2       16-bit (or maybe 8-bit) length of packet
+3       1       Version byte, may affect rest of fields that follow.
+                (=2) for PGP versions <= 2.5
+                (=3) for PGP versions >= 2.6
+4       1       Length of following material that is implicitly included 
+                in MD calculation (=5).
+5       1       Signature classification field (see below). 
+                Implicitly append this to message for MD calculation.
+6       4       32-bit timestamp of when signature was made.  
+                Implicitly append this to message for MD calculation.
+10      8       64-bit Key ID
+18      1       Algorithm byte for public key scheme (RSA=0x01).  
+                --Algorithm byte affects field definitions that follow.
+19      1       Algorithm byte for message digest (MD5=0x01).
+20      2       First 2 bytes of the Message Digest inside the 
+                RSA-encrypted integer, to help us figure out if we 
+                used the right RSA key to check the signature.
+
+All of these fields are non meaningful for an ASN.1 parser.
+
+Adam
+
+
+
+

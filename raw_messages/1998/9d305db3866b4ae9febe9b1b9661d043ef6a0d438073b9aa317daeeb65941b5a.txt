@@ -1,0 +1,36 @@
+From: pgut001@cs.auckland.ac.nz (Peter Gutmann)
+Date: Sat, 28 Nov 1998 12:09:52 +0800
+To: cypherpunks@cyberpass.net
+Subject: Re: open-pgp / s/mime interoperability
+Message-ID: <91222019014234@cs26.cs.auckland.ac.nz>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+>: there is no reason why you can't have PGP
+>: messages backed by X.509 certificates, and it is trivial to use S/MIME
+>: with OpenPGP certificates.  I'm planning on writing a short
+>: informational RFC on how to do it once we all get RFC numbers for our
+>: respective systems.
+
+>open-pgp public keys aren't based on X.509 keys, so I would've thought
+>s/mime implementation would barf on them.  
+
+Actually S/MIME *could* support the use of PGP keys, but there's a field
+(the SubjectKeyIdentifier) missing from the CMS SignerInfo which prevents
+this.  This is rather inconsistent, because the same field is present in
+the RecipientInfo.  I'm currently arguing in favour of adding it to 
+SignerInfo on the basis that any argument against it would also apply to
+RecipientInfo.  Not sure whether it'll work though - a couple of list
+members seem convinced that exactly the same thing which is currently in
+RecipientInfo won't work if used in SignerInfo.
+
+Peter.
+
+
+
+
+

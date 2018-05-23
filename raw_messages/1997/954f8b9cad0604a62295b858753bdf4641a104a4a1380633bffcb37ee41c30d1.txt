@@ -1,0 +1,176 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Mon, 20 Oct 1997 05:58:35 +0800
+To: fabrice@math.Princeton.EDU
+Subject: Re: Security flaws introduced by "other readers" in CMR
+In-Reply-To: <19971019143216.59535@math.princeton.edu>
+Message-ID: <199710191954.UAA05161@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Fabrice Planchon <fabrice@math.Princeton.EDU> writes:
+> > >
+> > > http://www.lemonde.fr/multimedia/sem4297/textes/act42972.html
+> > > 
+> > Do they actually mention PGP software, or OpenPGP standard?  Or just
+> > the general principle?
+> 
+> They do: the title is "Le programme PGP se range", which I unfortunatly
+> have know idea of how to translate. And then, they say (I loosely
+> translate, my english is better than our MISTY friend's, but not perfect
+> ;-)
+> 
+> [translation of discussion of pgp5.5]
+>
+> So, I certainly agree with you that the proGAK have won, or will. As
+> long as they don't enforce the current laws, as an individual I don't
+> care. But I fear, as you do, that as soon as you have things like pgp
+> 5.5 which are available, they will start saying "use this or go to jail".
+
+There is a precedent for this of sorts in France.  You probably recall
+that prior to the netscape 40 bit breaks, there were 3 versions of
+netscape:
+
+- 128 bit US only non-exportable
+- 40 bit exportable
+- no SSL at all -- French version
+
+After Damien Doligez hit the headlines with his first break of 40 bit
+SSL, and the other breaks had similar headlines, the French
+authorities noticed -- "oh," they thought, "if those cypherpunks can
+break it, so can DGSE" -- I understood that from that point on they
+allowed 40 bit SSL netscape browsers in France.  (At least someone
+reported about this on list).  That Damien himself is French and was
+working at a researcher at INRIA(?) of all places only adds to the
+irony.  (That Damien had a his PGP key at the bottom of his web page
+which must have attracted 100,000s of hits after that also is somewhat
+amusing, illegal PGP usage, and no one said a word).
+
+Anyway, my perhaps rude jibe to Jonathan Seybold, PGP Inc's chairman a
+few days back that PGP should "make a sales pitch to French DGSE" was
+not so far off after all.
+
+Course there is still the export problem.  Perhaps eventually the NSA
+and DGSE/SCSSI, CESG/GCHQ will come to some kind of reciprocal
+agreement, and then there will be another export exemption in the US
+following on from the 56 bit DES exemption for companies which can
+demonstrate they are working to a 2 year schedule to have key escrow
+built in.
+
+Or perhaps some european competitor will provide pgp5.5 compatible
+software to them (with support for multiple CMR keys, something not
+yet in pgp5.5, but already accepted without problem, and planned I
+gather for the next major release).
+
+> > But, the simple fact is that I think PGP Inc have not evaluated these
+> > indirect implications for GAK politics.  This means I think that they
+> > have pure intentions.  Unfortunately these pure intentions do not help
+> > us if the effect is as I fear: that the result helps the GAKkers to
+> > some significant amount.
+> 
+> I think, but I might be wrong, that they have at least to reasons, which
+> have already be given:
+> -first, what they did was somehow "easy" (don't jump on me, I don't
+> write code !!) to implement within the existing code. This is reflected
+> by what W.Geiger said, that anything pgp5.5 does he could do with
+> scripts in the old version. Or at least a good part of it.
+
+This is true, it could be done largely with multiple recipient feature
+in 2.x.  Bill Stewart and William Geiger and I think PGP's Jon Callas
+pointed this out.
+
+However I think that:
+
+a) this is no excuse to actually _implement_ it!
+
+b) PGP implementing this kind of thing encourages others to do so
+also as they could become the defacto standards setter (particularly
+with this almost certainly going in OpenPGP standard, and PGP defining
+the semantics of the CMR either in or outside the standard to be what
+they have done in pgp5.5)
+
+c) it sets out the design work for other companies less scrupulous
+companies such as TIS, etc. to interoperate marginally more smoothly
+with pgp installed base when they implement something even worse
+compatible with OpenPGP.
+
+d) the alternative I proposed, or especially Tims alternative are even
+simpler if anything to implement
+
+> -second, they don't know what will happen in 12 months, so they cover
+> their asses. I hope this isn't true, but it's a matter of personnal
+> opinion more than anything else.
+
+Monty Cantsin said this.  I said similar things also, and got shouted
+out by PGP Inc people for being rude.
+
+I don't think so, I hope not anyway.
+
+> As I said before, I guess they did it this way by lazyness more than
+> anything else. I think your solution requires more thinking, new code,
+> and all that sort of things. More brain demanding, in some sense (and
+> time consuming, whereas their solution is ready, works, can be sold,
+> makes the compagny make profits, and so on). 
+
+It seems somewhat fair enough if it was much more difficult to do that
+this might be difficult to acheive within their budget and user
+delivery date demands, etc.
+
+But, Tim's proposal to store in clear seems easy enough.
+
+My alternative on top of that is merely to encrypt the mail folder
+with pgp -c; they've got all the technology sitting there.  It is only
+a simple scripting task.  If I was William Geiger I would say that you
+could knock that up over the week end in a few scripts.  I expect I
+could too :-) (eg. if I knew emacs elisp, I reckon it would be easy
+enough to decrypt the mailbox prior to use, and re-encrypt after use.
+Or to do the same on a per message basis after decryption, or for all
+messages encrypted or not.  Perhaps I'll have a go at getting Pat
+Lopresti to add this for mailcrypt.el v3.5).
+
+The task isn't any harder for them.
+
+It is not a technical objection, or at least I have seen no technical
+objections so far.
+
+I think it is purely a privacy objection: they have worked out some
+privacy preserving principles, and to enforce them they have come up
+with this approach.  The message snooping dangers seem to have been
+overlooked, or considered unavoidable trade-offs to achieve their
+privacy objectives.  They are simply wrong in this regard.
+
+> So, arguing with political
+> arguments doesn't stand a chance against a market driven compagny, be it
+> PGP with all its reputation capital. Everybody should concentrate on
+> technical issues, and several of these have been pointed out, by you and
+> others.
+
+Political arguments stand a better chance with PGP Inc than with most
+any other company ... but of course there are limits.
+
+> This is, of course, purely a storage issue. And I like the idea (Bill
+> Stewart's ?) of implementing a mechanism which would simply "weaken" the
+> storage key, so that if it's lost, you can recover the missing part by
+> brute force. 
+
+I think Bill's point was more that you would make recovery harder.
+That is you have two ways into the messages: your passphrase, and some
+recovery information (a second copy of your private key).  He
+suggested that you miss off some bits, to discourage companies from
+abusing what was meant to be a disaster recovery system being used as
+a storage recovery system.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

@@ -1,0 +1,39 @@
+From: nobody@hidden.net (Anonymous)
+Date: Tue, 20 May 1997 11:21:57 +0800
+To: cypherpunks@cyberpass.net
+Subject: Remailer messages of variable length
+Message-ID: <199705200305.UAA09291@jefferson.hidden.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+To complicate traffic analysis Sender can add a padding to his message
+before encrypting it for some remailer in chain. So that the
+message is shortened after decryption and stripping of pseudo headers.
+It can be done with a dummy header lines:
+
+##
+Padding: fjx6zRURnnK1DV4CdL7gbHpnUiV1KbbRf5HatXiaD+ZPtH0 ...
+
+Also, for a length increment a remailer may understand commands like:
+
+##
+Pad-length: 1K
+Pad-encrypt-for: remailer@replay.com
+
+It will then add the 'Padding:' header and re-encrypt the message with
+the appropriate remailer's public key. The next remailer in chain will see
+the padding and will try do decrypt the message twice...
+
+If stealth crypto is used, a random padding can be simply attached to the
+end of the message.
+
+Also, the remailer by itself can decide to increase a message length to
+cover some rare big messages.
+
+---
+
+
+
+
+

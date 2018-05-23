@@ -1,0 +1,60 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Wed, 25 Sep 1996 07:35:00 +0800
+To: pgut001@cs.auckland.ac.nz
+Subject: Re: Transforming variable-length to fixed keys
+In-Reply-To: <84345225525232@cs26.cs.auckland.ac.nz>
+Message-ID: <199609241547.QAA00089@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Peter Guttmann <pgut001@cs.auckland.ac.nz> writes on cpunks:
+> I posted this to sci.crypt recently but the response to it was rather
+> underwhelming, so I thought I'd repost it here to see if anyone has any
+> comments on it.  What it is is a scheme for transforming arbitrary user keys
+> (typically a long passphrase) into a fixed-length key for a particular
+> algorithm.  This has the following properties:
+
+> 1. The user key 'userKey' is transformed into an algorithm-specific key 'key'
+>    using a number of 'iterations' of a hash algorithm 'hash()'.
+>
+> 2. The transformation is strongly serialized so that any form of attack
+>    involving parallelization or precomputation isn't possible.
+
+If the speed of your key generation is an issue, you could do
+something like:
+
+   key[] = { 0 };
+   const int nhashes = 4;
+   typedef void (*hashfnptr)(byte*, byte*, int);
+	/* array of hash functions */
+   hashfnptr hash[ nhashes ] = { md5, sha1, haval, ... };
+
+   state = hash[ 0 ]( algorithm, mode, parameters, userKey );
+
+   for count = 1 to iterations
+      for length = 1 to keyLength (in hash_output_size blocks)
+		/* selecting a hash function based on the state */
+         state = hash[ state % nhashes ]( state );
+         key[ length ] = hash[ state % nhashes]( state, userKey );
+
+This provides more expense in hardware for the same expense in
+software, so for the same CPU time you get more hardware expense, and
+could reduce the iterations for the same security.
+
+`nhashes' determined by the number of digest algorithms you consider
+trustworthy.
+
+(They need hardware for `nhashes' different digest algorithms).
+
+You need to do something about resolving the differing output and
+state sizes.
+
+Probably speed isn't an issue though.
+
+Adam
+
+
+
+

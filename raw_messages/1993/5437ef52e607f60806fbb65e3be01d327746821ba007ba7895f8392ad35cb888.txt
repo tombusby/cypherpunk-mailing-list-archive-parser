@@ -1,0 +1,78 @@
+From: meyer <wixer!wixer.bga.com!meyer@cactus.org>
+Date: Wed, 26 May 93 20:59:27 PDT
+To: cypherpunks@toad.com
+Subject: Data Insecurity Packages, etc.
+Message-ID: <9305270314.AA05215@wixer>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Clark Reynard writes:
+
+>Indeed.  There were a pair of papers in Cryptologia a few years ago
+>on ``Data Insecurity'' packages.  The author cryptanalyzed a number
+>of different PC-based crypto packages, and contrasted that with
+>the glowing advertising copy...
+
+This may or may not be one of those papers:
+Martin Kochanski: "A Survey of Data Insecurity Packages"
+in Deavours et al., Cryptology, pp. 195 - 209.
+
+None of the encryption methods analyzed by Kochanski were particularly
+complex, even though it did take skill to crack most of them.  It
+turns out that in each case the encryption algorithm used is fairly
+easy to state (in, say, half a page).
+
+Perry Metzger writes:
+
+>Correct me if I'm wrong, but from what I understand, "Dolphin Encrypt"
+>does not use any well examined crypto system -- its something that you
+>guys, without any cryptography credentials, cooked up. On that basis,
+>why should we care about it? Most crypto systems that amateurs come up
+>with are pathetic to say the least, and strong systems, like
+>triple-DES and IDEA, are widely available.
+
+So far the DE method has not been well-examined, except by its
+developers (who have spent years on this).  I took a step toward
+public examination of the method by posting the natural language
+description here on cypherpunks a few weeks ago. (Anyone who missed
+it can get it from me.)  This description has been available in the
+manual for a year now, for anyone who cared to purchase the product.
+It has also been examined by four cryptologists (professional and/or
+credentialed) not involved in its development, and it was ridiculed
+by none of them.
+
+As I said, the complete details are in the C code, which is
+available at present to anyone who purchases the library, and which
+will be made public sometime down the road.
+
+Of course, any crypto system must be made available to public
+examination before it can be judged strong or otherwise.  If I
+didn't think the DE encryption method was strong I wouldn't be
+making it public.  Just because we have DES and IDEA doesn't mean we
+should be satisfied with them only.  The first task of a cryptanalyst
+is to discover what method of encryption was used. If that is known
+(and solving this problem itself may be non-trivial) then
+cryptanalysis may proceed either by (i) a study of patterns in the
+ciphertext or (ii) a thorough study of the encryption method used.
+Statistical tests have not revealed any patterns in DE-encrypted
+ciphertext so far.  We'll see whether analysis of the DE method by
+others reveals any flaws.  Until then I'm reminded of the saying:
+"Those who can, do; those who can't, criticise."
+
+This brings up an interesting question: what charactersistics, if
+any, do different encryption methods produce in ciphertext?  From a
+study of several large samples of ciphertext produced by a
+particular encryption method, what clues might there be to the
+identity of the encryption method used?  I'd like to hear if anyone
+knows of any published work which addresses this question.  Since
+DES in electronic code book mode (which is considered insecure)
+encrypts 8-byte chunks which are independent of each other, it's
+entirely possible that the ciphertext can be identified as the
+product of DES-ECB.
+
+
+
+
+

@@ -1,0 +1,80 @@
+From: Jim choate <ravage@bga.com>
+Date: Sun, 19 Jun 94 08:03:58 PDT
+To: pfarrell@netcom.com (Pat Farrell)
+Subject: Re: your mail
+In-Reply-To: <199406182254.PAA22537@netcom3.netcom.com>
+Message-ID: <199406191503.KAA01497@zoom.bga.com>
+MIME-Version: 1.0
+Content-Type: text
+
+
+> 
+> The Prime Assumption: White noise due to molecular motion is truly random.  
+> Noise generated in a carbon resistor or zener diode is white noise.  
+> 
+> Is this true, cryptographically speaking?
+>
+What you want is a Gunn diode oscillator w/ feedback.
+
+> 1.A a device would use a cheap noisy carbon resistor and a
+> rude, crude, noisy amplifier to amplify the noise generated 
+> by the resistor.  
+>
+Just remember to keep the temperature of the devices constant, semi-
+conductors have a temperature dependancy which would allow them to monitor
+the data and  possibly determine the gain of the amp and hence approx.
+how much noise energy and sprectrum thereof it was contributing. Check
+into Boltzmanns Constant applications to black body radiation.
+
+> 1.B. A zener diode may make a "louder" noise and require a cheaper 
+> amplifier.
+>
+I am not shure that a zener would produce any more  noise than a standard
+diode. 
+              
+There might even be less noise because the design parameters are more tightly
+controlled on a zener than standard diodes.
+
+> 1.C How about if we take the hiss that you find between stations on an 
+> FM receiver, and digitize them through a PC soundcard? 
+>
+I actually like this idea a lot.                                  
+
+> that nobody wants to put 9 volt batteries in this thing and 
+> have to remember to turn it off when they are finished using 
+> their computers.   
+>
+How about using the lines on the serial port for power?
+
+> should it  contain a switch to cut it in and out as needed and 
+> free up the port? This sounds like an A-B switch. 
+>
+How about a dongle? 
+
+> 
+> 4. How secure should the device itself be? Bruce's wonderful _Applied 
+> Cryptography_ talks about OS Virtual Memory managers writing out keys 
+> to disk without the user/programmer knowing, which is a serious 
+> potential problem. We have that same problem with the random number 
+> that this device generates. Wose, it wouldn't be hard for a `bad guy' 
+> to write a TSR that constantly reads the random port, and records
+> the numbers in parallel with whatever wants to use it for real. 
+>
+If they have this close access to your hardware then you have a more 
+serious problem.
+
+> While I'd like to think that I really control my PC, once you get 
+> networking TSRs, smartdrv, APSI drivers, CDROM and Soundcard drivers, 
+> HIMEM, etc. loaded, do you really _know_ that they are your friends? 
+> Is this a real problem?
+>
+I would suggest getting some of virus source out there and take a look
+at how the detectors watch system activity for fishy writes. Should not
+be hard to load another TSR which watchdogs the system for any bogus
+or un-authorized reads from the device. Just pass all system calls through
+the TSR to access the device.
+
+
+
+
+

@@ -1,0 +1,42 @@
+From: Andrew Loewenstern <andrew_loewenstern@il.us.swissbank.com>
+Date: Fri, 8 Sep 95 09:55:01 PDT
+To: trollins@hns.com (Tom Rollins)
+Subject: Re: Scientology tries to break PGP - and fails?
+Message-ID: <9509081654.AA03407@ch1d157nwk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Tom Rollins writes:
+>  If this is the file that the Co$ is trying to crack, then what the
+>  is being asked for is a pass phrase that can be handed to the Co$
+>  that will pass the PGP valid key check and still not decrypt the
+>  data to anything usefull.
+
+Well, I don't have the PGP 'conventional' encryption format memorized, but  
+there is probably a constant after the IV that is prepended to the data.  The  
+constant is used to determine if the key is correct.  Since the conventional  
+encryption runs in CFB mode and there is a full block of random IV at the  
+beginning of the file, it is extremely unlikely that a key could be found  
+that would properly decrypt only the first two blocks while leaving the rest  
+unreadable...
+
+>  If Larry Wollersheim does have the valid key.  It would be a simpler
+>  process to know what fake key to use and work it backwards through
+>  the MD5 to arrive at an ascii string to produce the fake key.
+
+Not really.  Even if you could find an IDEA key that would produce the  
+desired output it would be hard to find a passphrase that would produce that  
+key when hashed.  One of the properties of one-way hash functions is that it  
+is difficult to find a plaintext that produces a given hash.  Hence the term  
+'one-way'....  Even if you did find a passphrase (which, if MD5 is strong,  
+would require something like 2^64 operations), it would likely be long, have  
+8-bit chars, and would be impossible to type in.  It would be tough to  
+convince anyone that it was the real passphrase.
+
+
+andrew
+
+
+
+

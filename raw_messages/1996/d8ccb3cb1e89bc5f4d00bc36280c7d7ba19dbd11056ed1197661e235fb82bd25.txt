@@ -1,0 +1,56 @@
+From: JonWienke@aol.com
+Date: Tue, 9 Apr 1996 08:38:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: Spinners and compression functions
+Message-ID: <960408150007_186997947@emout06.mail.aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I received this via private email, and have been asked by the sender to post
+to cpunks.
+
+>Subj:	Re: Spinners and compression functions
+>Date:	96-04-08 12:49:29 EDT
+>From:	eli+@GS160.SP.CS.CMU.EDU
+>Sender:	eli+@GS160.SP.CS.CMU.EDU
+>To:	JonWienke@aol.com
+>
+>In article
+><+cmu.andrew.internet.cypherpunks+clNRbLm00UfAE109Nf@andrew.cmu.edu> you
+>write:
+>>Run the spinner output through a PKZip type compression
+>>function, and then seed a PRNG with the output from that.  This would
+>provide
+>>a means of gauging the amount of entropy that has been fed into the PRNG,
+>>(count the bytes output from the compression function) which will allow the
+>>program to disallow any output from the PRNG until a sufficient amount of
+>>entropy has been fed into it.
+>
+>If pkzip were a perfect compressor (which doesn't exist), this would
+>work well.  What you're doing is measuring entropy with respect to
+>pkzip's model of the input language, which can be arbitrarily far off
+>from the entropy you'd get with a more powerful model.  This means
+>that an attacker who understands the video retrace (or whatever) can
+>get an edge on you.  You really can't tell if data is random by
+>looking at it -- for example, Nisan published a generator based on
+>universal hash functions that provably passes all space-bounded tests,
+>which most statistical tests are.
+>
+>Compressing the data probably won't hurt (*probably*, and assuming you
+>take the header off!).  But Unix compress won't make data look
+>statistically random, and I doubt pkzip will either.  Neither one will
+>give you a useful estimate of the entropy in the data stream.  You
+>have to guess that yourself, and then use a strong hash function to
+>get it down to that point.
+>
+>-- 
+>. Eli Brandt                                        usual disclaimers .
+>. eli+@cs.cmu.edu                                  PGP key on request .
+>. violation of 18 U.S.C. 1462:                                  "fuck".
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+From: don@cs.byu.edu
+Date: Thu, 31 Aug 95 04:24:22 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSL search attack
+Message-ID: <199508311118.FAA00515@wero>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+>So T.C.May is the same person as "Lance"?
+Hey, I wanna be Lance tooooooo. Can I be Lance? Can I?
+
+
+From: Jiri Baum <jirib@sweeney.cs.monash.edu.au>
+
+>Each client could pick a segment at random, check it and then broadcast
+>a NAK. Other clients would then know that the segment in question has
+>been done, and avoid picking it in the future. If you are worried about
+
+That opens it wide open to someone NAKing the keyspace where the key is.
+If we're going to involve a server, might as well do the sequential job
+and make it fast.
+
+
+From: monty.harder@famend.com (MONTY HARDER)
+
+TC> * For opportunistic attacks on keys in challenges, the odds are 95% that a
+TC> key will be found with only twice the total effort (or time) using a
+TC> totally random method of picking up keyspace to search.
+
+>  The odds can be improved somewhat by scaling the granularity of the
+>sweep to the size of the sweep. (Align larger chunks on large-chunk
+>boundaries, eliminating the chance of overlap with other large chunks.)
+
+Some kind of step (ie, round-down) function performed on the random (I
+vote we call it a dart) output, with the size of the step based on the how
+many segments at once you want to search? Seems to me that all your doing 
+is searching an X segment area around where the dart hit. In order to
+get any kind of boundry, you have to scale the allowed segment blocks, by 
+powers of two, for example, or something, so everyone knows where the 
+borders are. Its a nice thought but I don't see that it's necessary.
+
+If, on the other hand, sequential searchers plow through half of the
+keyspace while a "random crew" throws darts at the other half, everyone
+can participate how they wish. And if the keyserver gets deep-six'd by a
+Denial of Service attack (or just swamped), everyone can just switch into
+random mode and shotgun the keyspace. (Maybe even avoiding what's already 
+been sequentially-searched)
+
+Don
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQB1AwUBMEWZ6MLa+QKZS485AQGg3AMApFhrOBURkmwJQ699IkBhlZao6ynLe4pW
+8eJllDAutliFdzGWA/PYHrfYsO8Dl9IOYrzFCmdNJY5urON3/IeOv5eEGqGkc/N6
+3ZaKR4FIBk8jk0u6QGxi/iRfPfSa62gp
+=it70
+-----END PGP SIGNATURE-----
+<don@cs.byu.edu>           fRee cRyPTo!   jOin the hUnt or BE tHe PrEY
+PGP key - http://bert.cs.byu.edu/~don     or PubKey servers (0x994b8f39)
+  June 7&14, 1995: 1st amendment repealed.  Death threats ALWAYS pgp signed
+* This user insured by the Smith, Wesson, & Zimmermann insurance company *
+
+
+
+

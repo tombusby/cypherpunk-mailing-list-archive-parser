@@ -1,0 +1,149 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Wed, 15 Oct 1997 02:42:53 +0800
+To: frantz@netcom.com
+Subject: Re: proposal: commercial data recovery
+In-Reply-To: <v0300780cb06943af6a1f@[207.94.249.37]>
+Message-ID: <199710141811.TAA04798@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Bill Frantz <frantz@netcom.com> writes:
+> At 2:37 AM -0700 10/14/97, Adam Back wrote:
+> >...
+> >2. second crypto recipients on encrypted communications are not
+> >   used to allow access to third parties who are not messaging
+> >   recipients manually selected by the sender
+> >...
+> >
+> >Included in 2) is the principle of not re-transmitting over
+> >communication channels keys or data re-encrypted to third parties
+> >after receipt -- that is just structuring -- and violates design
+> >principle 2.
+> 
+> This requirement tries to enforce something which can not be enforced by
+> technical means.  That is, when you send another person some data, there is
+> no technical way you can prevent them from using it however they want.  For
+> example, a user can always program his filters (given something like
+> procmail) to send decrypted data anywhere he wants.
+
+I agree with that statement entirely.
+
+The principle has deeper meaning than your point.  It acknowledges
+that there are limits to what can be done to enforce things in
+software.  What it argues is that you should enforce what you can
+where this helps you to make your software less useful to GAKkers
+without modifications.  So if this means that the GAKkers can't use
+your software with out getting you to re-write it, or without making
+the modifications themselves this is good because fielded systems have
+intertia.  It takes time and costs money to make software updates,
+doubly so where people will be hostile to those updates.  People who
+would otherwise not care about GAK will suddenly "care" because they
+are too lazy to update their system, or becaues the update will cost
+them money.
+
+
+Btw. Lest it is not clear, when I say "should" in this discussion of
+the anti-GAK protocol design process I mean "should" according to my
+CDR or "anti-GAK" protocol design principles.  If following these
+principles causes you to have non functioning or unsaleable designs,
+and when this occurs you should still try to violate as few of the
+design principles as possible.
+
+
+So for your .procmail filter example: what the principle says is that
+you should make it as non-automatable as possible in your software to
+do this redirection in electronic form.  The danger about automated
+redirection in electronic form is that there will be a nice little box
+saying for you to type: "recovery@lazarus", where lazarus is the
+address of the recovery machine on your LAN, but then the GAKkers can
+pass laws and all the people who bought your software will be
+automatically able to comply by filling in that box with
+"thoughtpolice@nsa.gov"; alternately the GAKkers may buy your software
+for re-sale in Iraq and then fill in the field with or
+"thoughtpolice@mil.iq", with the result that Iraqis.
+
+So for example with your .procmail example: the email client should
+decrypt the traffic with short lived keys to provide forward secrecy,
+and re-encrypt the plaintext for storage in your mail folder with a
+recoverable key (presuming you want corporate data recovery of your
+mail folder in case your dog chews your smart card key token).
+
+Forwarding of email at the .procmail level won't help the GAKkers in
+this case because the email is still encrypted; and the anti-GAK
+protocol design principles state that the encrypted message should be
+encrypted to one recipient only: you.
+
+The anti-GAK design principles also mean that you should offer no
+tools to decrypt from the command line.  This ensures that GAKkers
+will be hindered from using software provided by you to cobble
+together a GAK system, without writing and distributing software
+themselves.
+
+Think of the CDR or anti-GAK software principles as attempting to
+codify your natural predilections as a GAK hating protocol designer.
+They codify how best to design your software to hinder GAKkers.
+
+
+Clearly the GAKkers can pass a law saying that you must manually
+forward each of your emails after decryption to them, but if the
+software provides no easy way to automate this process they are asking
+the impossible if there are 10 million US citizens using the software.
+
+Contrast this to PGP Inc's CMR design where all that is required is a
+change to one field for completely automated over the wire key word
+searches.
+
+> N.B. I applaud Adam's direction of building the data recovery businesses
+> need without helping 3rd parties engage in undetected snooping.  Keeping
+> the decryption keys (if data is not stored in the clear) near the
+> legitimate copies seems to be a useful step in this direction.
+
+I like your locality point.
+
+It is something I had not earlier considered had more than binary
+meaning (communicated or not ever communicated).  However it does.
+The Frantz corollary to the anti-GAK protocol design principles is
+then:
+
+i)  recovery information should be kept as close to the data as possible
+
+ii) if recovery information is moved it should in preference not be
+    transferred using over communications networks, and should
+    not be transferred automatically by the software without requiring
+    human interaction.
+
+
+You can see that this design principle leads to some at first
+apparently absurd requirements, but actually they are all sensible and
+pertinent.  If the software requires user interaction to transmit
+recovery information this means therefore that it should not be
+possible with the software as is to write automatic scripts; this
+contributes to the uselessness of the software to the GAKkers.
+
+Of course there are ways around everything (eg. scripting software
+which allows mouse and keyboard actions to be automated); but we are
+trying to avoid easy cobbling together actions by the GAKkers allowing
+them to convert our software designed under anti-GAK principles into
+one which can then becomes automated GAK system.
+
+
+Also clearly there is some user intelligence required in the design
+process to work out functionalities it is worth forgoing where it
+comes to this by comparing their potential value to the GAKker against
+the ergonomic or utility advantage to the user.
+
+Adam
+-- 
+Now officially an EAR violation...
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

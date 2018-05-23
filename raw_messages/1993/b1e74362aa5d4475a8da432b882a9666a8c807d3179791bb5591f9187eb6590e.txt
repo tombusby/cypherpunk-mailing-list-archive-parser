@@ -1,0 +1,87 @@
+From: Matthew J Ghio <mg5n+@andrew.cmu.edu>
+Date: Tue, 5 Oct 93 15:25:10 PDT
+To: jpinson@fcdarwin.org.ec
+Subject: Re: Need Suggestions for Random Numbers
+In-Reply-To: <9310051201.aa27619@pay.pay.ecua.net.ec>
+Message-ID: <oggTBZu00awJIEOqNB@andrew.cmu.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+jpinson@fcdarwin.org.ec writes:
+
+> I am working on a PC implementation of a one-time pad cipher, and
+> am trying to develop a way to produce an "acceptable" random file
+> to be xor'd with the plaintext.
+
+My favorite is the fibbonachi (sp?) series.  You've probably seen this
+before: The series begins with the first two numbers being ones, and
+each number after if being the sum of the two preceeding numbers. 
+Therefore, we have:
+
+1,1,2,3,5,8,13,21,34,55,89,144,233...
+
+Taking modulo 10, we get:
+
+1,1,2,3,5,8,3,1,4,5,9,4,3,7,0,7,7,4,1,5,6,1,7,8,5,3,8,1,9,0,9,9,8...
+
+Which gives a fairly random distribution of numbers from 0 to 9.  You
+can take a different mod value to adjust the range of numbers produced. 
+This will eventually repeat (in the mod 10 example example I believe it
+will repeat after around 60 numbers - you'll never be able to get all
+possible combinations, for example 0,0 is not possible) but the
+distribution is fairly random.  Increasing the randomness, (and the
+legnth before it will repeat) is easy.  For example if you make the
+series the sum of the first two of the last five numbers you get (modulo
+10 for simplicity):
+
+1,1,1,1,1,2,2,2,2,3,4,4,4,5,7,8,8,9,2,5,6,7,1,7,1,3,8...
+
+Although this starts off slowly, the randomness picks up, and this will
+generate a series which will go for thousands of digits without
+repeating.  By the way, I don't reccomend adding more than two numbers
+together to get the next number in the series.  If you try adding three,
+four, or more numbers together, it causes the series to increase faster,
+which causes it to reach the point where it repeats sooner, plus it
+complicates your software and slows down the computation.
+
+Anyway, if after extending the series, it's still not random enough, try
+this: Change your program so that after it adds the first two numbers,
+it looks at the third number.  If this third number is greater, less
+than, or equal to some arbritrary value, add the fourth number to the
+first two and then uses that as the next digit in the series.  This will
+greatly increase the random effect.  This makes an excellent cipher, as
+you can generate different series based on what substitutions you make
+in the series.  Of course, your ideas about randomizing further by
+combining random noise files is good, just be careful when using xor,
+because you could end up cancelling out the beginnings of your serieses,
+(since all these series begin with 1,1, xoring them would give you
+zeros.)  Of course also try changing the initial conditions of the
+fibbonachi series, just be sure you don't use something that will lock
+the series (such as 5,5 which will produce 5,5,0,5,5,0,5,5,0...) 
+Re-encrypting the noise file is also a good idea, multiplying each byte
+by three and then doing a mod 256 works well for these purposes.
+
+> (I remember some years back someone demonstrated the Apple II
+> random number generator was flawed by converting the random
+> numbers to screen coordinates and "painting" the screen.  No
+> matter how long you ran the program, certain areas of the screen
+> were never filled in. In other words, certain numbers were never
+> generated.)
+
+Well, I've programmed on Apple II computers for years, and there were
+two very common systems used for random number generation.  Applesoft
+Basic simply read bytes in the ROM and used them as random numbers. 
+6502 code looks pretty random when you're just looking at the numeric
+opcodes and data.  The other popular thing to do was to read the video
+count.  This works best when your program is interacting with a human,
+because people don't always respond to prompts in exactly the same
+amount of time every time, so the position the video circuitry was
+scanning would be different almost every time the program was run.  This
+method works best for providing a seed for a series generator like the
+ones described above.  If your computer has a clock, just read the time,
+and that will have the same random effect.
+
+
+
+

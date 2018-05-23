@@ -1,0 +1,63 @@
+From: "Josh M. Osborne" <stripes@va.pubnix.com>
+Date: Mon, 28 Aug 95 14:07:52 PDT
+To: Piete Brooks <Piete.Brooks@cl.cam.ac.uk>
+Subject: Re: SSL trouble
+In-Reply-To: <"swan.cl.cam.:216660:950828181616"@cl.cam.ac.uk>
+Message-ID: <RAA13233.199508282105@garotte.va.pubnix.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In message <"swan.cl.cam.:216660:950828181616"@cl.cam.ac.uk>, Piete Brooks writ
+[...]
+>PS1: PERL gurus: Anyone know how to test whether there is input waiting on a
+>     file handle ? I know about seeing if there is data waiting for the next
+>     sysread type read, but not on the next <SERVE> type read. Ideas ?
+
+I don't think there is one.  I would just use select() on FD, and then
+a subrutine much like this:
+
+sub syswrite {
+    local($FH, $buf) = @_;
+
+    local($len, $offset, $wlen) = (length($buf), 0, 0);
+
+    while($len) {
+        $wlen = syswrite($FH, $buf, $len, $offset);
+        die "Bad write $FH: $!" if (!defined($FH));
+
+        $offset += $len;
+        $len -= $wlen;
+    }
+}
+
+
+Actually if you can use perl5 for the server (I assume this is the
+server code you are worrying about) I have code that deals with
+I/O from multiple sockets at once and drives an independant state
+machine for each socket.
+
+>PS2: PERL gurus: I fixed the SGI Challenge problem by HACKing it -- as I
+>     thought it was a probleb with stdio in and out on the same socket.
+>     The perl mand page warns:
+>	If  your  stdio  requires an seek or eof between reads and
+>	writes on  a  particular  stream,  so  does  perl.   (This
+>	doesn't apply to sysread() and syswrite().)
+>     so I change the one "print SERVE" line to a "syswrite(SERVE" and that
+>     fixed it. However, does anyone know the "correct" way to use stdio for I/
+>O?
+
+For bi-directional pipes I tend to use sysread/syswrite anyway, but
+you could just sprinkle "seek(SERVE, 0, 1)" liberally through the
+code.
+
+>PS3: I'd like to get the raw date in brloop (a sh script). In perl I'd just
+>     use "time", and I can't see a way to get "date +" to yield the raw time.
+>     I could use "date=`perl -e 'print time'`" but that seems OTT, and perl
+>     may not be on teh users PATH. Any suggestions ?
+
+"date '+%s'" does it under BSDI, but I'm not sure how portable it is.
+
+
+
+

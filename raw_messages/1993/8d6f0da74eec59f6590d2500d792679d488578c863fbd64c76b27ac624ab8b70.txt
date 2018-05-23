@@ -1,0 +1,75 @@
+From: pat@tstc.edu (Patrick E. Hykkonen)
+Date: Tue, 17 Aug 93 07:30:18 PDT
+To: cypherpunks@toad.com
+Subject: Re: Tax Evasion and SASE.
+Message-ID: <9308171425.AA05425@tstc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> The example given (someone soliciting an act of questionable legality)
+> is a perfect application for the SASE remailer that I've been
+> developing.  I presented it at a phys-meeting a few months back, and
+> have been working on coding it sporadically since then.
+
+I was thinking about this just yesterday...
+
+> The idea is that you have an address block that encodes the
+> information on how to get a message to you.  This is like a self
+> addressed envelope.  The envelope can specify multiple hops through
+> remailers, but is encrypted in layers so only the next hop is revealed
+> at each remailer.
+
+However, rather than rewrite an entire mailer system from scratch, might 
+I propose that we ad an extra command to the cypherpunks remailers that
+would allow a person to tell the remailer NOT to throw away the the 
+header information.
+
+This would allow a person to create an encrypted block to put at 
+the top of their message telling the remailer to pass all header
+information through to the recipient.
+
+Example:
+
+::
+Remailer-Command: Header-Intact
+
+::
+Request-Remailing-To: pat@tstc.edu
+
+The user encrypts this whole block and tells the remote user to put this 
+at the header of thier reply message.
+
+Example:
+
+== place at the top of your message text and remove this line ==
+
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: 2.2
+
+hEwCKlkQ745WINUBAf0f5D1bOXX333w08UAU5jVP5WeDblGnlD7Cwx9Q0fxwZcG6
+sm+8f1S4zU8AIn0j6Dfmt8i7+BOcdFfjXmscU+oXpgAAAFse+dms+6BMBntqJh56
+q4DBpHq6aMTJH1AT0nolOOnAOTxtPmSpolkKFYyXVbwKk0W8q9PpmX0PDBeodoGY
+hi2BtkXRMTW9bzbzRLE6Q0YoOsWVOxLKx8FM2M/T
+=ciKz
+-----END PGP MESSAGE-----
+
+== place message text below this line and remove this line ==
+
+In effect, a self-addressed envelope.  Half of the functionality
+is available in the remailers currently.
+
+-- 
+"I'm not being irrational, I just know to much."  - Tim Allen
+--
+Pat Hykkonen, N5NPL                     Texas State Technical College at Waco
+Internet: {pat,postmaster,root}@tstc.edu       Instructional Network Services
+Packet: N5NPL@WD5KAL.#CENTX.TX.USA.NA        3801 Campus Dr.  Waco, Tx  76705
+Public keys available! ** 1984 + 10 **     V:(817) 867-4830  F:(817) 799-2843
+
+
+
+

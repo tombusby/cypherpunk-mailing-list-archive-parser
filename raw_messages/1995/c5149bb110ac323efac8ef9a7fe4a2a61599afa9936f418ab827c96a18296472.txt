@@ -1,0 +1,35 @@
+From: GreggMan@aol.com
+Date: Thu, 12 Oct 95 08:50:35 PDT
+To: rah@shipwright.com
+Subject: Re: PC disk wipe software
+Message-ID: <951012115021_122212260@mail06.mail.aol.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In a message dated 95-10-09 12:34:33 EDT, you write:
+
+>>PC Tools has a wipe program that will either wipe individual files, or
+>>wipe all unallocated diskspace. It also allows you to choose the level
+>>of wipe (single overwrite, multiple, etc).
+>
+>There has been considerable discussion on the MCIP list about how most
+>*Mac* programs that purport to do this, like Burn, for example, leave stuff
+>over in disk blocks. My understanding is that this is not a trivial
+>problem, and it occurs in MUSH-DOS as well....
+>
+>Cheers,
+>Bob Hettinga
+>
+>
+
+Actually not a problem for mess-DOS: just overwrite to the next multiple of
+the allocation unit size. Trivial indeed.  What you must *not* do is just
+write to the end of current file ... you have to extend.  Good idea too is to
+flush file buffers/reset disk subsystem before the next file writes so that
+buffer garbage doesn't get stuck in at end of last sector(s) of new files.
+
+
+
+
+

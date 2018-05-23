@@ -1,0 +1,24 @@
+From: David_A Wagner <daw@CS.Berkeley.EDU>
+Date: Wed, 20 Sep 95 17:18:06 PDT
+To: cypherpunks@toad.com
+Subject: Re: NYT on Netscape Crack
+Message-ID: <199509202353.QAA20322@guaymas.CS.Berkeley.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In article <9509201034.AA10521@prakinf.tu-ilmenau.de> you write:
+> Is it a good idea to use different (unrelated!) seeded PRNG's for the
+> challenge data (which can be seen by sniffing) and the masterkey (which
+> should never leave out of client's memory?
+
+No.
+
+If the master key PRNG is poorly seeded, this is still exploitable:
+for instance, there is a lot of redundancy in most plaintext, and
+this can be used to check each candidate key value.
+
+Just use a cryptographically secure PRNG seeded with enough entropy.
+
+
+

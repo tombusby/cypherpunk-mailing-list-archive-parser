@@ -1,0 +1,67 @@
+From: Ray Arachelian <sunder@escape.com>
+Date: Thu, 3 Aug 95 08:48:35 PDT
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: building libraries
+In-Reply-To: <199507310521.WAA08413@ix4.ix.netcom.com>
+Message-ID: <Pine.BSD/.3.91.950803113122.12078M-100000@escape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Sun, 30 Jul 1995, Bill Stewart wrote:
+
+> If you did everything in an RSAREF-compatible manner, that would help;
+> I think somebody outside the US has written an RSAREF-clone.
+> Some problems include building programs that have generic-callout hooks
+> instead of crypto-specific hooks (so that they don't get bitten by ITAR),
+> while still maintaining reasonable efficiency and convenience.
+
+One way to achieve this is to provide multi-layered generic "compression" 
+hooks which get called in this manner:
+
+ Compress[x](char *bufferin, size_t insize, char *bufferout, size_t *osize);
+
+Then you chain several of these by alternating the in/out buffers, say 
+something like this:
+
+ for (i=0; i<MAXCOMPRESSORS; i+=2)
+ {
+  Compress[i](buffer1,size1,buffer2,&size2);
+  Compress[i+1](buffer2,size2,buffer1,&size1);
+ }
+
+To decompress, you'd do something like this:
+
+ for (i=MAXCOMPRESSORS-1; i; i-=2)
+ {
+  Decompress[i+1](buffer2,size2,buffer1,&size1);
+  Decompress[i](buffer1,size1,buffer2,&size2);
+ }
+
+This lets you set up a chain of compressors, each compressing the output 
+of the previous levels.  And what you do is allow these compressors to be 
+external to the program!  (If one or more of those should be hooks to 
+encrypt, well, hey, that's just a 'bug' ;-)
+
+Basically this does C1(C2(C3(C4...CN(text)))))...) to compress the output of 
+the previous compressors.  I would reccomend that the last in the set be 
+the encryptors or else all the other compressors would fail. :-)
+
+Now, would >THAT< be exportable?
+
+=================================================================93=======
+ + ^ + |  Ray Arachelian | Amerika: The land of the Freeh. | \-_    _-/  |
+  \|/  |sunder@escape.com| Where day by day, yet another   |  \  --  /   |
+<--+-->|                 | Constitutional right vanishes.  |6 _\-  -/_  6|
+  /|\  |    Just Say     |                                 |----\  /---- | 
+ + v + | "No" to the NSA!| Jail the censor, not the author!|     \/      |
+=======/---------------------------------------------------------VI------/
+      /  I watched and weeped as the Exon bill passed, knowing that yet /
+     / another freedom vanished before my eyes.  How soon before we see/
+    /a full scale dictatorship in the name of decency? While the rest /
+   /of_the_world_fights_FOR_freedom,_our_gov'ment_fights_our_freedom_/
+
+
+
+
+

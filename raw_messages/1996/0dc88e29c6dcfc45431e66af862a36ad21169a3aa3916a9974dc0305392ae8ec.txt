@@ -1,0 +1,33 @@
+From: Tom Weinstein <tomw@netscape.com>
+Date: Sat, 30 Mar 1996 19:08:01 +0800
+To: Rich Graves <llurch@networking.stanford.edu>
+Subject: Re: Netscape 2.01 fixes server vulnerabilities by breaking the client...
+In-Reply-To: <Pine.SUN.3.92.960329011606.6636A-100000@elaine19.Stanford.EDU>
+Message-ID: <315C8FCB.2781@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Rich Graves wrote:
+> 
+> Now I suppose they'll want me to fix all the pages where I do a finger
+> with a gopher://host:79/0user Any chance this nonfix can be unfixed?
+> 
+> This nonfix was applied to the UNIX and Win32 versions; I haven't
+> checked the other platforms.
+
+It may be unpleasant, but it's a fact that there was a real security
+hole here.  There is a well known buffer overrun bug in finger that a
+lot of people inside firewalls haven't fixed.  Using gopher: URLs
+in IMG tags it was possible to do nasty things.  We tried to err on
+the side of permissivity, but finger was one port we just couldn't
+allow.  Yes, it sucks.  So does someone reaching through your firewall
+and running commands as root.
+
+-- 
+Sure we spend a lot of money, but that doesn't mean | Tom Weinstein
+we *do* anything.  --  Washington DC motto          | tomw@netscape.com
+
+
+
+

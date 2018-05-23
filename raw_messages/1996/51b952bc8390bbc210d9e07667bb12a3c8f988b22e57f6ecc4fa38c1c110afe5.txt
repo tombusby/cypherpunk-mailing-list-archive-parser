@@ -1,0 +1,41 @@
+From: Blake Coverett <blake@bcdev.com>
+Date: Wed, 25 Dec 1996 20:18:04 -0800 (PST)
+To: "cypherpunks@toad.com>
+Subject: RE: [NOT NOISE] Microsoft Crypto Service Provider API
+Message-ID: <01BBF2B9.DBC67AB0@bcdev.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> Not quite.  The API comes with a program SIGN.EXE that will create a
+> "debugging signature" for your CSP, and a new ADVAPI32.DLL, described as
+> a "Modified advapi32.dll to load providers that are signed with
+> sign.exe."  So the patch point is a bit more accessable than inside the
+> kernel.  Maybe the "Modified advapi32.dll" should find its way offshore?
+
+Even better than exporting the hacked advapi32.dll, compare the it 
+with the original one.  I'd bet good money that the only difference is
+the contents of the RC_DATA/#102 resource attached to the image.
+(It's useful to note that the advapi32.dll from versions of NT before
+CryptoAPI doesn't have any RC_DATA resources.)
+
+And to think MS was good enough to provide an UpdateResource 
+API that I haven't yet had a good reason to use.
+
+> Interestingly enough, CSP signatures are held in the registry instead of
+> the binary, necessitating some install procedure for a given CSP.  Not
+> to start rumors, but NT 4.0 does use threads to watch some registry
+> entries that control the version (workstation/server).  Not much of a
+> stretch to imagine a thread that tracks (reports?) changes to
+
+Nope, a little experimentation shows you can change those entries
+while the system is running to your hearts contents.  Try temporarily
+renaming the signature key of the base provider.
+
+regards,
+-Blake
+
+
+
+
+

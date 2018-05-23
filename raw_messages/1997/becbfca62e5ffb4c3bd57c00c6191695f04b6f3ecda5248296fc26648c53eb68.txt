@@ -1,0 +1,45 @@
+From: Tom Weinstein <tomw@netscape.com>
+Date: Sun, 13 Apr 1997 22:13:34 -0700 (PDT)
+To: Bill Stewart <stewarts@ix.netcom.com>
+Subject: Re: SSL weakness affecting links from pa
+In-Reply-To: <3.0.1.32.19970411230142.00643490@popd.ix.netcom.com>
+Message-ID: <3351BCD2.218886E6@netscape.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Bill Stewart wrote:
+> 
+> Thanks for the pointer to MS's security site; there's a lot of
+> good information there.
+> 
+> I was highly unimpressed with Microsoft's Response:
+>         "It's Not A Security Flaw"
+>         "But Everybody Important Works Around It"
+>         "And we're fixing it in the next release"
+> without providing much detail about what's going on.
+> It does indicate what to look into to avoid it when writing web pages,
+> but it doesn't say how to avoid it when entering your credit card
+> number into a web page, or what to look for as a non-programmer user.
+
+I basically agree with Microsoft.  It works as specified, and everyone
+should know that handling sensitive form posts via GET is a bad idea.
+
+That said, there is certainly some merit to the argument that HTTP's
+"Referer:" is a privacy violation.  Therefore, we've added a preference
+to Communicator that allows you to turn it off.  Because of the late
+date there will be no UI, but if you are concerned about it, you can go
+into your prefs.js file (preferences.js on unix) and turn it off by
+adding the line:
+
+user_pref("network.sendRefererHeader", false);
+
+This will be available starting in beta 4.
+
+-- 
+You should only break rules of style if you can    | Tom Weinstein
+coherently explain what you gain by so doing.      | tomw@netscape.com
+
+
+
+

@@ -1,0 +1,47 @@
+From: Andy Brown <asb@nexor.co.uk>
+Date: Tue, 1 Aug 95 02:17:47 PDT
+To: cypherpunks@toad.com
+Subject: Re: a hole in PGP
+In-Reply-To: <9508010120.AA07073@all.net>
+Message-ID: <Pine.SOL.3.91.950801100122.1688D-100000@eagle.nexor.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+On Mon, 31 Jul 1995, Dr. Frederick B. Cohen wrote:
+
+> A reasonable response.  My question is: Why do you think that the key
+> generation algorithm used by PGP is secure? Specifically, how do we know
+> there is no subtle back door that reduces the problem of testing the
+> typical key space to a solvable problem in today's technology?
+
+Well I told you that I verified the results of the key generation in PGP 
+by testing the primality of p and q and the validity of the key by 
+testing ed = 1 mod (p-1)(q-1).  That bit works, period.
+
+You seem to be in some doubt about the random starting point for the prime
+searching.  Entropy for the random number generator is collected from the
+user's keystrokes and is mixed into the random pool.  PGP is very careful
+about how much entropy it attaches to one keystroke and makes sure that
+the user is prompted to press more keys if it thinks it has not got
+enough.  The random pool is itself stirred periodically by using MD5 to
+"encrypt" it.  This encryption is made strictly one way by using the first
+64 bytes of the pool as the key, these 64 bytes are destroyed after use. 
+
+Now, amongst other times the pool is stirred both before and after use.  
+So, recovering any given state of the pool (i.e. finding the random 
+starting point for a prime search) has to be equivalent to reversing the 
+MD5 transform.  There is no known way to do this.
+
+
+- Andy
+
++-------------------------------------------------------------------------+
+| Andrew Brown  Internet <asb@nexor.co.uk>  Telephone +44 115 952 0585    |
+| PGP (2048/9611055D): 69 AA EF 72 80 7A 63 3A  C0 1F 9F 66 64 02 4C 88   |
++-------------------------------------------------------------------------+
+
+
+
+
+

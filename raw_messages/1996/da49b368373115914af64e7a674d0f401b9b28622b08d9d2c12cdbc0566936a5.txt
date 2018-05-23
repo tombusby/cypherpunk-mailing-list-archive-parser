@@ -1,0 +1,65 @@
+From: peter.allan@aeat.co.uk (Peter M Allan)
+Date: Sat, 14 Sep 1996 01:56:56 +0800
+To: cypherpunks@toad.com
+Subject: really (?) undetectable crypto
+Message-ID: <9609131255.AA26331@clare.risley.aeat.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+
+ >  Jim_Miller@suite.com wrote on CP:
+ >  
+ >  Most everybody on the list is familiar with the technique of hiding  
+ >  encrypted messages in the LSBs of image files.  Personally, I would not  
+ >  use such a technique because don't I believe it's really undetectable.  I  
+ >  assume, without proof, that the LSBs of images files have statistical  
+ >  properties that are sufficiently different from encrypted data that a  
+ >  clever person could determine whether or not an image file contained an  
+ >  imbedded encrypted message.
+ >  
+
+Not to mention 7 out of 8 bits may reveal the image to be a library one
+your enemy has access to.  The changes will betray the stego.
+Your own scanned snapshots may be safer from this point of view.
+
+ >  Fortunately, there are other steganographic techniques that, I believe,  
+ >  are undetectable.  The trick is to hide your encrypted bits in other  
+ >  encrypted bits.
+ >  
+ >  trick #1)   Let's say you want to send a short encrypted message via a  
+ >  communications channel that only allows cleartext messages with optional  
+ >  MD5 message hashes.  You can construct cleartext messages, via  
+ >  trial-and-error, such that the first 4 or 8 bits (or more, if you have the  
+ >  time) of the MD5 hash match the first 4 or 8 bits of your encrypted  
+ >  message.
+ >  
+ >  Since the bits in an MD5 message hash are presumably cryptographically  
+ >  random, there should be no way to tell if some of the bits combine to make  
+ >  an encrypted message.
+
+What about Walter making insignificant changes to the cleartext and
+replacing the hash with the new hash?   Because you are using an unkeyed
+hash (and not a sig) he can do that and foul up the stegomessage (not
+that he'll yet be sure there is one).
+
+ >  trick #2)  Let's say you are allowed to use 40 bit encryption, but nothing  
+ >  stronger.  As in trick #1, you can pre-compute plaintext messages such  
+ >  that the first 4 or 8 of the bits in the output of the government-approved  
+ >  40 bit encrypted data match the first 4 or 8 bits of your hidden encrypted  
+ >  message.
+ >  
+
+Walter can still play silly spooks with your stego if he breaks the 40-bit encryption.
+
+The cyphertext/plaintext ratio looks like getting really huge too.  Your messages
+must all arrive, and retain the right order.  
+
+
+ -- Peter Allan    peter.allan@aeat.co.uk
+
+
+
+

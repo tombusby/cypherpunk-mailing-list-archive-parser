@@ -1,0 +1,38 @@
+From: Pierre Uszynski <pierre@shell.portal.com>
+Date: Sun, 18 Sep 94 21:45:29 PDT
+To: cypherpunks@toad.com
+Subject: Re: privacy in Unix environment
+Message-ID: <199409190445.VAA19813@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> From: chen@intuit.com (Mark Chen)
+> 
+> > I'm looking for some kind of utility that will allow script files
+> > to be run, to spawn off processes, but will wipe out environment
+> > and "ps" info from being read. i.e. imagine that the commands
+> > being called must shield their arguments and environment from [ps].
+> 
+> Perl might be a good alternative.  You get to perform fairly
+> high-level functions without spawning additional shells.
+
+Perl lets you manipulate files and directories, and perform functions
+like 'sort' and all the pattern matching you would expect (and more)
+without leaving the language. It also provides the hooks to change the
+apparent command name when you run an external command (ps will see
+that name). But Perl does not let you mask the arguments of such a
+command, at least not that I know of.  I'd say, for whatever you get to
+write, don't pass arguments on the command line, but in files or
+through pipes, and for what you can't control, work with meaningless
+temporary file names:  arg1, arg2, arg3...  Before, and after you are
+done, change the file names to the real thing using Perl scripts.
+
+As for command line switches... I have no idea.
+
+Pierre.
+pierre@shell.portal.com
+
+
+
+

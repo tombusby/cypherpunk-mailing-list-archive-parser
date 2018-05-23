@@ -1,0 +1,39 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Thu, 19 May 94 21:00:01 PDT
+To: cypherpunks@toad.com
+Subject: Re: D-H key exchange - how does it work?
+Message-ID: <199405200401.VAA24444@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+The problem with "strong" primes, primes for which (p-1)/2 is prime, is
+that they are hard to find.  It takes hours and hours of searching to find
+a 1024 bit strong prime on a workstation.  Granted, you don't need to change
+very often perhaps, but some people would like to change every day.  They
+may need a dedicated prime-searching machine to do that.
+
+(The best way I know to find strong primes is to find a prime q and then
+check 2q+1 for primality.  Finding 1024 bit primes takes a long time, and
+the chances that 2q+1 is prime is very low.)
+
+It's much easier to find a "strongish" prime, one for which (p-1)/k is
+prime, where k is on the order of 100 or so.  Take your prime q in the above
+and try kq+1 for k=2,4,6,....  This only takes a few minutes after you find
+q.
+
+The question is, how good are strongish primes?  What fraction of elements
+of the group will have short periods, given that p-1 has a pretty small
+number of prime factors?
+
+Also, given a strong or strongish prime, are the chances that
+g^x has a small period good enough that it makes sense to check for that
+case?  Any event whose chances are smaller than your computer making a
+mistake is generally not worth checking for.
+
+Hal
+
+
+
+
+

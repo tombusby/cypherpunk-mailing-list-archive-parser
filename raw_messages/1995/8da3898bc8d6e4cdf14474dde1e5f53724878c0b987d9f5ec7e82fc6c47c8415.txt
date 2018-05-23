@@ -1,0 +1,60 @@
+From: monty.harder@famend.com (MONTY HARDER)
+Date: Sat, 29 Jul 95 09:16:20 PDT
+To: CYPHERPUNKS@toad.com
+Subject: Universal Password System?
+Message-ID: <8AE21FE.0003000281.uuout@famend.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+  I was thinking some more (look out, this could be dangerous) about the
+concept of using some kind of H(challenge+password) system to keep
+passwords away from ____(your threat model here)____, when it hit me
+that we could devise a standard password system, which would allow Joe
+Schmoe to have a single password for all of his interactions with
+puters.
+
+  Ideally, Joe would need a "smart card" or PDA with IR link (this could
+even be the proverbial Windows Watch) that would not need to keep the
+actual passphrase at all (but would insure against a compromised system
+recording keystrokes) that would keep the pubkeys of all systems with
+which he has accounts. It would also need to be able to display in
+decimal and hex for systems without the IR link.
+
+  When he is making connections to a new system, the system will give
+him its S and RSA or other public key K, so that the smart card can
+compute K( H(S+P) ), and send that as the password. To the system, Q =
+K"( K( H(S+P) ) ) =is= the password, but Joe only needs to remember P
+for everything.
+
+  From then on, logons will include the system sending S and a
+non-reproducible challenge <C,D,....> (where C is iterated
+less-frequently and D is time.of.day) and the smart card responding with
+K( H( D + H(C+Q) ) ). As you may recall, the idea of the multi-part
+challenge was so as to allow the admin of the system to store Q
+remotely, and keep C -of-the-day and H(C+Q) for each user on the system
+itself. With appropriate safeguards (a physical switch on the case of
+the system which kills the NVRAM chip with the key for the secure file
+system, this would seem to be Pretty Secure.
+
+  The system is extensible, allowing further nesting of challenge parts
+within the hash/concatenation function, so that layers of security can
+be used, if anyone can find an application for them. The basic principle
+of the master passphrase for all uses would make it easier to get Joe to
+use one that he can remember, without giving up anything to corrupt
+administrators (I have a hell of a time remembering all the passwords
+for every system, and must let the comm program remember them,
+protecting it with another password.  Messy.)
+
+  Comments?
+
+
+
+ * Tribble: *   Punk Tribble: Y    Tribble Contortionist: &
+---
+ * Monster@FAmend.Com *    
+
+
+
+

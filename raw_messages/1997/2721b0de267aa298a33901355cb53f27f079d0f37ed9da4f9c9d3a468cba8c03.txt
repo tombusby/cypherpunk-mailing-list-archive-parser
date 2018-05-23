@@ -1,0 +1,38 @@
+From: Rick Smith <smith@sctc.com>
+Date: Tue, 7 Jan 1997 14:46:56 -0800 (PST)
+To: vin@shore.net (Vin McLellan)
+Subject: Re: Relative Strength of 40-bit Crypto Implementations
+Message-ID: <199701072242.QAA01888@shade.sctc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+: 	A client asked me today about where he could find evidence of the
+: relative strength of different encryption algorithms, when all are
+: restricted to 40-bit keys.  He assumed dot-Gov was going to restrict his
+: export product to the 40-bit limit, but he wanted to provide the strongest
+: security he could within that limitation.
+
+There is a tiny technical wrinkle here -- the simpleminded approach is
+to use a 40 bit secret key appended to a constant, the smarter
+approach is to use some disclosed random data that, combined with 40
+secret bits, produces a much longer key. It's like the salt in Unix
+passwords.  The simple approach can allow an attacker to use a
+dictionary attack. The smarter approach means that the algorithm's
+full key length gets used.
+
+So, for example, you have 128 bit RC4 in which 88 bits are random but
+disclosed while the remaining 40 bits are still secret.
+
+The only practical problem is disclosure of the extra random bits,
+which the government expects the software to do. This is one of the
+uses of the big chunks of random data that host exchange in SSL V3.
+In earler SSLs they built the disclosed bits right into the protocol,
+an explicit field for disclosing part of the key.
+
+Rick.
+smith@sctc.com          secure computing corporation
+
+
+
+

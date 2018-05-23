@@ -1,0 +1,83 @@
+From: kipp@warp.mcom.com (Kipp E.B. Hickman)
+Date: Mon, 12 Dec 94 16:33:34 PST
+To: cypherpunks@toad.com
+Subject: Re: Clarification of my remarks about Netscape
+In-Reply-To: <9412122118.AA11047@snark.imsi.com>
+Message-ID: <9412130027.AA17715@warp.mcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+In article <199412122229.OAA05451@jobe.shell.portal.com>, you write:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> 
+> "Perry E. Metzger" <perry@imsi.com> writes:
+> 
+> >HTTP, like SMTP, is only a transport for underlying documents. The
+> >underlying documents are the things people wish to secure, not the
+> >transport layer.  By securing only the transport, you make it possible
+> >for people to get pages that are forged, although they can be sure of
+> >what machine delivered them (which isn't significant). Your system is,
+> >for instance, useless in a proxy HTTP daemon environment.
+> 
+> I was going to say that an SSL-aware proxy daemon could play "man in
+> the middle" and pass through the SSL handshaking messages which occur
+> at connection time, so that the user client could authenticate the
+> remote server, then communicate using a key shared with that server but
+> which the proxy would not know.
+> 
+> But that won't work with SSL, I guess.  The SSL handshaking goes on
+> before any message data has been exchanged; in particular, before the
+> URL is sent to the proxy to tell it what server to connect to.  (Hiding
+> URL's is one of the features of SSL.) So in fact with SSL the only
+> authentication possible is between proxy and user, and then between
+> proxy and remote server.  There doesn't seem to be a place in the
+> protocol where the user could authenticate the remote server and create
+> a key which would not be known to the proxy.  This does seem to be a
+> deficiency.
+
+First, let me clarify slightly. The only place where a problem occurs
+currently is if the server is attempting to authenticate the client.
+Because the proxy agent cannot reliably act as an agent for a client,
+it cannot properly answer a servers authentication requests.
+
+I can imagine several solutions to this thorny problem:
+
+1. Client connects securely to a proxy agent using SSL. Upon
+   establishment of the secure connection, the request is transmitted to
+   the proxy. If the request is to a secure document (the proxy can tell
+   by examining the URL) (and the client can tell), then the client
+   re-enters the SSL handshake protocol from the start and the proxy
+   agent turns into a data forwarder ala sockd.
+
+   This is technically a change to the proxy protocol, but requires no
+   change to the SSL protocol. Of course, to teach proxies about security
+   requires *some* change...
+
+2. The client connects insecurly to a proxy agent using current
+   methods. The client requests a secure document. The proxy agent
+   connects to the secure server using SSL and attempts to act as the
+   client's agent in the transaction. Note that the user must consider
+   this an insecure connection, and trust it only as far as she/he trusts
+   the proxy server.
+
+   Most of the time, the proxy will work. However, when client authentication
+   is performed, the proxy fails as it should. If one were to construct a
+   "trusted" proxy, then in theory it could perform the client authentication,
+   acting as an agent for the client. However, this seems kinda scary to me,
+   so I can't say I recommend it. To do this would require the client to
+   transmit its authentication information to the proxy agent, which seems
+   like a really bad idea.
+
+3. SSL has a notion of a "security escape" of which there are currently no
+   applications. One could define a security escape to allow enveloping of
+   the authentication information needed by the final server so that the
+   client can properly respond to authentication requests. I haven't thought
+   this thru yet.
+
+
+
+
+
+

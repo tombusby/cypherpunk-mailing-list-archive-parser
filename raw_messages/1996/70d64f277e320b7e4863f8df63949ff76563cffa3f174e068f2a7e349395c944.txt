@@ -1,0 +1,45 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Tue, 17 Sep 1996 13:44:18 +0800
+To: cypherpunks@toad.com
+Subject: Re: forward secrecy in mixmaster
+Message-ID: <199609170326.UAA18494@dfw-ix7.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+At 06:29 PM 9/12/96 +0000, paul@fatmans.demon.co.uk wrote:
+>Stewart>  I think they chose a strong prime (form p = 2q+1, q prime),
+...
+>Strong primes are no longer of any benefit for cryptographic 
+>applications.
+
+You're probably right, for today's factoring techniques.
+For a key you're only planning to use for the next couple of years,
+you can pretty much ignore strong primes, unless you're stuck with
+512-bit keys, in which case you need to glean any crumbs you can.
+But for a value that needs to last a long time, such as a 
+Diffie-Hellman modulus that's going to be a default value in a standard,
+and which you're only going to generate once anyway, it makes sense
+to generate a strong prime in case factoring methods that are
+affected by it become popular again in the future.  It also makes sense
+to turn loose a bunch of people using different primality tests
+just in case somebody gets lucky (e.g. crank the test long enough that
+the probability of non-primality is 10**-9 or 10**-12 instead of just 10**-6.
+
+>Implementing strong primes won`t make your code any less secure, it 
+>will just take longer to create the keys and won`t gain you any 
+>security, all the big boys are using elliptic curve factoring methods 
+>now so you really have nothing to gain.
+
+Do Generalized Number Field Sieve and its friends count as
+elliptic curve methods?
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	
+# You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+
+
+
+
+

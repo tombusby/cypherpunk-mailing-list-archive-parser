@@ -1,0 +1,80 @@
+From: Johnathan Corgan <jcorgan@aeinet.com>
+Date: Thu, 27 Jul 95 09:20:10 PDT
+To: Tatu Ylonen <ylo@cs.hut.fi>
+Subject: Re: Encrypting block driver for Linux...need some advice
+In-Reply-To: <199507261756.UAA13722@shadows.cs.hut.fi>
+Message-ID: <Pine.LNX.3.91.950727090405.104B-100000@comet.aeinet.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+On Wed, 26 Jul 1995, Tatu Ylonen wrote:
+
+> How about using the md5 hash of the block number combined with some
+> secret data; e.g, the md5 hash of the passphrase reversed (I would not
+> want to use the password directly, as that might help in breaking the
+> key; on the other hand, md5 of block number alone is not good because
+> there is a very limited number of blocks (and the attacker knows which
+> block is being attacked)).
+
+I guess my question is how does knowing the IV affect the security of CBC? 
+I assumed that it only needed to be different for each block so that
+identical plaintext encrypts to different ciphertext for different blocks.
+
+> You might also want to support other algorithms, particularly IDEA
+> (but beware, IDEA is patented and causes problems for commercial use -
+> non-commercial use should be free).  Another algorithm to support
+> might be Blowfish.
+
+Yes, I plan on it.  Originally, I just grabbed RSAREF for a quick and dirty
+drop in.
+
+> Could you describe the implementation a little?  Does it use the nfs
+> interface, or is it somewhere in the kernel file system code?  Or
+> kernel block device code?  (User-level NFS servers may involve
+> difficult security issues)
+
+The software is a block device driver.  To use it, a user will run an
+executable that will pass a filespec and key to the driver.  The driver then
+translates calls to its block interface into calls to lseek/read/write on
+the underlying inode.  Data is d(e)ncrypted on the fly during this process.
+
+The user can then do anything you would normally do with a block
+device--make a file system on it, tar files to it, use it for swap.  If the
+provided filespec is actually located remotely, and is accessed via NFS,
+SMB, or some other network protocol, then the benefit is that only
+ciphertext is passed on the wire.
+
+I'm stuck on figuring the the proper permissions for the device special
+file, the attachment executable, and how to deal with one user attaching the
+filespec to the driver, but allowing some predefined user list have access. 
+All potential users of the driver need to have rw permission to it, but in
+practice, the kernel module should only honor block read/write calls make by
+authorized user processes.
+
+I guess I need to step back and look a what types of threat models I should
+address, and go from there.  That, and get a good book on Unix security :)
+
+==
+Johnathan Corgan       "For the first time in history, it is possible to
+jcorgan@aeinet.com      have absolute privacy over arbitrary distances."
+PGP Key Fingerprint:    4F 28 69 B8 76 2E 42 3E  8B 4C 12 BB 3A 43 D4 07
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQEVAwUBMBfKaelPfVlQ1n99AQF7+gf+I+BV1EVPQhrT7FEygT7f8PC29kZuSseU
+/qDlVbBrwHfzXOMgEBEkG214p9Xv1cPFQ+IlGglo321/92pxZdModA45oM3cG1ic
+hv8oZ+KWIL6twhKX7M3aw5tYOBTTGcdyNqEosnntE1/eAnSEPaQgt8VLyoNBjSFN
+64FZvTtR7G8O2HL26SYS1PzhEl3aPRdKv3Qw+kgu1xW+VLC5DcJs34/f1Nta6xBu
+gFH9mfZZg4Y4VAMMyvQN+JAm7EmmIiCWAypqnwUt0SCgnpYub2EOfoKQOJ7e5hl5
+9qcaLzeJsHpLGybcfT6cSEKjJ+b9MdTXrHQRPPdr2ZehcmyVSSLA7A==
+=G47N
+-----END PGP SIGNATURE-----
+
+
+
+

@@ -1,0 +1,54 @@
+From: TO1SITTLER@APSICC.APS.EDU (Kragen Sittler)
+Date: Fri, 16 Jul 93 08:08:19 PDT
+To: cypherpunks@toad.com
+Subject: steganography
+Message-ID: <930716090336.7b8@APSICC.APS.EDU>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+In a previous message, which my VMS newsreader is too stupid to remember and
+can just barely quote, an Evil Genius For A Better Tomorrow, mike@egfabt.org,
+
+says he thinks that xor'ing 'x' over a message would help to hide the fact that
+it is cyphertext.
+Problem: If someone is looking for encrypted information, IDEALLY we would like
+steganographically for it to be unconditionally impossible to determine that a
+file is cyphertext w/o the key.  (It is of course only computationally
+infeasible to guess the key, if we pick our cryptosystem right.)
+
+The suggestions that the Evil Genius makes could easily be defeated with an hour
+or two of programming using pieces of PGP's source, or ripem, or a little piece
+of software designed to tell whether a file is Dolphin Encrypted or Mailsafed.
+The resulting program could check hundreds of database files easily, probably
+in almost exactly the time required for an open, a single disk access, and a
+close on each file.
+
+For a steganographically strong code, the cyphertext must not be recognizable
+to its home program.  This means, among other things, no CRC's, no MD5's, etc,
+intended to assure data integrity.  This means no delimiter-structured files.
+(I think--I'm not absolutely sure on this one.)  Every field in the file must
+be either fixed-length or have a number somewhere in it
+(in a format indistinguishable from the rest of the cyphertext) which tells its
+length.  And every field, individually, must not be recognizable as something
+unusual. (For instance, no sending of large prime numbers in the clear, as they
+are very unlikely to appear in a random file.)
+
+The foregoing "field" stuff has to do with things like PGP, which have a
+message cyphertext, encrypted with a session key, and a session key, encrypted
+with a PKC, in the same message. (Possible several cyphertexts of the session
+key.)
+
+Oh, and it would be nice, though not essential, if a corruption in the file
+made it completely, rather than partially, nonsense when decrypted.  This way
+you can't have a file with no use to the recipient used as evidence against
+them.
+
+The important qualifications seem to rule out any crypto package in current
+widespread use, don't they?
+
+Kragen, an ignorant crypto-wannabe
+
+
+
+

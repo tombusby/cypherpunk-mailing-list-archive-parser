@@ -1,0 +1,79 @@
+From: loki@obscura.com (Lance Cottrell)
+Date: Wed, 13 Sep 95 11:35:04 PDT
+To: cypherpunks@toad.com
+Subject: Re: Mixmaster posting poll
+Message-ID: <ac7cd3c3030210044820@[137.110.24.250]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think that I am not being clear enough about what I want to do.
+
+Back when I started running remailers, I was using a machine with no local
+news software at all. Rather than compile a bunch of software just to allow
+the "Anon-Post-To:" command to work, I hacked the scripts to automatically
+send those messages to a mail2news gateway. Mixmaster now has a similar built
+in anonymous posting ability. If you have inews on your machine, then Mixmaster
+can build the "Newsgroups:" header and send the message to inews.
+But what if you are running Mixmaster and you don't have inews but you want
+to support posting? The answer is to have Mixmaster put together a message
+to send to a mail2news gateway for it to post.
+
+When I look at the currently available public mail2news gateways, I see that
+two standards already exist. The first is the group.name@gateway.
+The other is mail2news@gateway with a "Newsgroups:" header.
+
+It is easy for me to have mixmaster take the request for anonymous posting,
+and build the appropriate message for whichever kind of gateway I want to use.
+
+I only want to support one of them. The question is, which one should I
+support? Which are there more of. Which are there likely to be more of in the
+future.
+
+I seem to recall that someone on this list wrote some mail2news software,
+Who was it and which standard did it follow (if either). Has anyone installed
+it? Is anyone else planning to install it. I will install a gateway when I
+get my T1 (in a couple of months).
+
+
+        -Lance
+
+At 8:35 AM 9/13/95, Rich Salz wrote:
+>>       If the form alt.usenet.group@remailer.com was used, wouldn't the
+>> system running the remailer have to have an alias defined for each and
+>> every newsgroup that it plans on handling?
+>
+>No.  Sites running sendmail, for example, could set up rules that
+>just knew the top-level hierarchies and fed those into a special
+>"mailer" that gatewayed them.
+>
+>My opinion is that making any names well-known is a bad idea, and
+>that attaching special semantics to "mail2news@xxx" is a real bad
+>idea.  Instead, just send the message to the specified recipient
+>and let do whatever magic needs to be done.
+>
+>If mixmaster wants to function as a mail/news gateway, it should
+>do something special when it sees the Newsgroups header -- process
+>the message and feed it into rnews, presumably.
+>
+>I guess, but not yet having read the code do not know, that this is
+>cleaner and more easily extensible (or removable).
+>        /r$
+
+----------------------------------------------------------
+Lance Cottrell   loki@obscura.com
+PGP 2.6 key available by finger or server.
+Mixmaster, the next generation remailer, is now available!
+http://obscura.com/~loki/Welcome.html or FTP to obscura.com
+
+"Love is a snowmobile racing across the tundra.  Suddenly
+it flips over, pinning you underneath.  At night the ice
+weasels come."
+                        --Nietzsche
+----------------------------------------------------------
+
+
+
+
+
+

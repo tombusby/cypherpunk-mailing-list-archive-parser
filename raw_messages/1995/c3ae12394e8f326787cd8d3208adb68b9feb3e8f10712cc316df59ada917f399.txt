@@ -1,0 +1,42 @@
+From: hallam@w3.org
+Date: Mon, 18 Sep 95 12:59:21 PDT
+To: cypherpunks@toad.com
+Subject: Re: Netscape's random numbers
+In-Reply-To: <v01510100ac836b357d90@[206.1.161.4]>
+Message-ID: <9509181958.AA11906@zorch.w3.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>Before we go to the news, perhaps we should demonstrate the exploitation of
+>this hole. It would certainly make selling this story a whole lot easier.
+
+In the first place it is a bit late for that. The problem is all over the net 
+already. Expect press coverage tommorow or Wednesday. Secondly I would prefer a 
+solution.
+
+
+Random number generation and maintenance is a whole lot harder than RFC 1750 
+makes out. Although that RFC has some usefull ideas it does not provide a 
+blueprint fora secure ergodicity management facility.
+
+When I wrote code for Shen I was very carefull in the use I made of the output 
+of the ergodicity manager. In particular correlation is a major concern. If a 
+pseudo random output is exposed it must not predjudice other random values.
+
+Consider the class of attacks where Mallet receives a message from Alice and 
+uses the knowledge of his random number to discover the random number used in 
+Alice's later message to Bob.
+
+I always use hash functions as a "one way trap" to ensure that values cannot be 
+reverse engineered to discover the internal state of the random number 
+generator. I am also careful to erase all internal state before exiting the 
+program. 
+
+
+	Phill Hallam-Baker
+
+
+
+

@@ -1,0 +1,54 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 17 Nov 1997 08:17:00 +0800
+To: cypherpunks@toad.com
+Subject: RAM disks for temp files?
+In-Reply-To: <199711160027.BAA16314@basement.replay.com>
+Message-ID: <3.0.3.32.19971116125402.007134ec@popd.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+At 01:27 AM 11/16/1997 +0100, Anonymous wrote:
+>> (Hint, temporary files all over the place.)
+>  For you old farts who have not been out in the real world for a
+>while, you should make note of the fact that the price of memory
+>has dropped, and it is now feasible to implement RAM disks to
+>store temporary files.
+
+I was using RAM disks on my 386 machines with Win3.1.
+Now that I've got faster machines with more RAM,
+I'm running Win95 and can't find a ramdisk program - 
+does anybody know where to find one?
+
+On Unix, you _could_ do things with temp files,
+but it usually made much more sense to structure your programs
+to use pipes, which means there's no temp file and only
+a few KB of RAM buffering in between each program.
+PGP's DOS heritage doesn't encourage this sort of programming,
+though the new design for one-pass processing may have
+made it either possible or unnecessary.
+
+On machines with real operating systems, designing a 
+ramdisk includes deciding whether to make it virtual memory
+that might get swapped if necessary, or nail it into RAM.
+Since RAMdisks are usually intended for increasing speed,
+it usually makes more sense to let the vm manager decide
+what pages to page out and what pages not to,
+but obviously if you're using it for security that's different.
+
+SunOS had the /tmpfs file system design which let you
+get hybrid behavior - temp files stay in RAM until
+they need to get swapped out to disk, and most programs
+delete them before that ever happens - really speeds up compiles.
+>From a cryptographic standpoint, it's not ideal, since occasionally
+your files would end up on disk, but they'd usually be safe.
+				Thanks! 
+					Bill
+Bill Stewart, stewarts@ix.netcom.com
+Regular Key PGP Fingerprint D454 E202 CBC8 40BF  3C85 B884 0ABE 4639
+
+
+
+
+

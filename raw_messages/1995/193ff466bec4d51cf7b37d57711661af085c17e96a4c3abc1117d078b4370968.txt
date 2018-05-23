@@ -1,0 +1,71 @@
+From: futplex@pseudonym.com (Futplex)
+Date: Fri, 6 Oct 95 12:38:54 PDT
+To: privsoft@ix.netcom.com (Steve)
+Subject: Re: Graphic encryption
+In-Reply-To: <199510061517.IAA10725@ix5.ix.netcom.com>
+Message-ID: <199510061938.PAA16649@thor.cs.umass.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Steve O. writes:
+> I am currently working for a company that has a graphic encryption 
+> product called PrivaSoft. 
+[...]
+> Also if any of ya'll are famillar with graphic encryption, I am looking 
+> for opinions as to its strengths / weaknesses.
+
+Funny you should ask. A week or so ago someone mentioned PrivaSoft's fax
+encryption software here. The promotional material we saw mentions two points
+about the product which I believe were seen as bad omens by many of us on the 
+cypherpunks list. To wit:
+
+(1) PrivaSoft uses a proprietary encryption algorithm
+
+Cryptanalysis is a challenging task. Comparatively little is known about how
+to prove, in some formal sense, that any given cryptographic algorithm is
+strong. Most people in the field have reached the conclusion that the test of
+time is the best true measure of the cryptographic strength of an algorithm.
+Until plenty of people have pounded on the algorithm, you can't really have
+much confidence about it.
+
+Moe concretely: If you believe your algorithm is strong, then you have no
+reason to fear an expert review, and should in fact welcome it. On the other
+hand, if you won't reveal your algorithm, we have little basis for trusting
+our confidential data to it. 
+
+(2) PrivaSoft has been approved for export by the U.S. Govt.
+
+As you probably know, the U.S. Government restricts the export of strong
+cryptography (using the ITARs), with some notable exceptions for bankers
+and authentication-only deployments. PrivaSoft isn't selling strictly to
+banks, and attempts to protect confidentiality. Ergo, the government doesn't
+think you're using strong cryptography. 
+
+Case in point: the separate U.S. and international versions of Netscape 
+Navigator. The exportable version uses the RC4 algorithm (as part of the SSL
+protocol) with an effective key length of 40 bits, while the domestic version
+uses 128 bits. Some people here made the news a short while ago with a 
+concrete demonstration of the inadequacy of the shorter key length. That was
+proof-of-concept for an idea already fairly well-accepted in cryptographic
+circles.
+
+PrivaSoft looks worse than the int'l. version of Navigator. At
+least with the browser, Netscape had levelled with everyone up front and
+used a reasonably well-known published algorithm. Thus we had good reason to
+believe it provides a non-trivial level of security. The C'punks Key
+Cracking Ring showed just what it takes to cross that line. But we have
+absolutely _no_ evidence that PrivaSoft does anything hard to break at all.
+
+Bottom line: you have to release the specs. of your algorithm, to a panel
+of experts under NDAs or (preferably) to the public, to convince us that 
+PrivaSoft offers us real security.
+
+[I highly recommend Schneier's _Applied Cryptography_, 2nd edition due RSN
+from Wiley & Sons, as a comprehensive reference guide if you're thinking
+seriously about these issues. ISBN 0-471-59756-2]
+
+-Futplex <futplex@pseudonym.com>
+
+
+

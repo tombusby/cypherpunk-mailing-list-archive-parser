@@ -1,0 +1,46 @@
+From: Karl Lui Barrus <klbarrus@owlnet.rice.edu>
+Date: Mon, 17 Jan 94 09:03:29 PST
+To: cypherpunks@toad.com
+Subject: RSA: low exponent
+Message-ID: <9401171702.AA17894@arcadien.owlnet.rice.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+[concerning a low RSA modulus]
+
+I haven't had a chance to look at Matt's post very much...
+
+Actually, I beleive the largest concern over using a small modulus is
+if you encrypt a message to multiple recipients (i.e. an identical
+message to several people)
+
+This then leaves you open to the "low modulus attack" (how
+appropriately named :-) as described by Judith Moore in her paper
+"Protocol Failures in Cryptosystems".  This paper also appears in the
+Simmons big book on Crypto.
+
+Basically, the message can be reconstructed with the Chinese Remainder
+Theorem (I beleive, it's been a while since I worked through it).
+
+To prevent this, random bits should be appended to change the message
+for each person.
+
+Karl Barrus
+klbarrus@owlnet.rice.edu
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLTrElYOA7OpLWtYzAQEtdgQAm5OO+b3LxsmKtzYWNNFHEAaqkuEG4soZ
+28SgCRFDpgKuov56GPVu/8Nl+zLS3H8LuEQg2KxFWT5zns/Rt/rlIo5o5Wp8KeXM
+ZxxzYd8K6x3zvplzE0G5kJMtJii4wUBPwP8m8kZQQFzSnRv86+MQAa9kGy0wb+tm
+P4LrmVoZeq8=
+=t9rg
+-----END PGP SIGNATURE-----
+
+
+
+

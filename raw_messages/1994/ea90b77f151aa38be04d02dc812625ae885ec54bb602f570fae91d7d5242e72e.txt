@@ -1,0 +1,32 @@
+From: smb@research.att.com
+Date: Fri, 4 Feb 94 17:39:57 PST
+To: hughes@ah.com (Eric Hughes)
+Subject: Re: CERT advisory
+Message-ID: <9402050138.AA04593@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 >The big issue, in my mind, is how the ftpd is going to get the key
+	 >to unlock the *system's* private key... Do you compile it into the
+	 >code?  Should ftpd ask for it when it comes up? 
+
+	 Since active interception is not nearly so easy as passive listening,
+	 it would be appropriate to use a Diffie-Hellman key exchange in this
+	 situation.  This protocol has no persistent private keys, so the issue
+	 of keeping a private key around securely is not an issue.
+
+But you still have to type a password to a command that itself could
+have been compromised.  (Not that D-H wouldn't be a tremendous help,
+of course.)
+
+All of the hand-held authenticators I'm familiar with require that
+the host -- or a dedicated, trusted, security server -- keep a secret
+key per user.  That's not a great idea.  Bellcore's S/Key doesn't,
+but I don't know of any hardware devices that implement it.  Another
+possibility would be hand-held digital signature boxes that could sign
+a random challenge from the host.
+
+
+
+

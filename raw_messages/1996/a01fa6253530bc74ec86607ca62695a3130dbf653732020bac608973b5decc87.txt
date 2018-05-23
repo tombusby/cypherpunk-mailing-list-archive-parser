@@ -1,0 +1,62 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 15 Feb 1996 23:11:10 +0800
+To: aba@atlas.ex.ac.uk
+Subject: Re: Stealth PGP work
+In-Reply-To: <10100.9602141537@dart.dcs.exeter.ac.uk>
+Message-ID: <199602141830.NAA02458@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I presume he means stealth, and the functionality that it provides, as
+
+I'm not familiar with the exact details of what stealth does, which is
+why I asked for more details.  The problem is that PGP API, when
+decrypting a message, keys off the PGP packet types in order to
+operate.  If stealth can work outside of PGP 2.6.2, then it should be
+possible to add it on to PGP 3, theoretically.
+
+>   I raised this question myself to
+> the pgp3 development team some time ago, and the reply I got was
+> essentially that it would still be possible to have as an add-on, so
+> there was no need to clutter the pgp3 functionality.
+
+And in some ways this is true.  The PGP API does allow for add-ons.
+I'll explain what I mean later in this message.  Then again, I don't
+know to whom you spoke.  The "PGP 3 development team" has changed a
+lot over the last couple years.  At this point, for all practical
+purposes, there only two people on the team.
+
+> However, if you provide an API call to unarmor with out decrypting,
+> and a call to decrypt with out uncompressing, etc then a call to test
+> for a particular user id on the assumption that it is addressed to
+> that user id and is an encrypted message would fit in a similar way?
+
+It is not implemented directly in this manner, but it is possible to
+get this functionality.  The application will get a callback at which
+point it can direct the PGP library.  For example, if you want to
+dearmor but not decrypt, when you get to the encryption part you tell
+it not to continue and to just output the encrypted block.
+
+Basically, the PGP Message Processing API is based on a pipeline
+model.  You have a bunch of pipeline modules that are connected, and
+each module performs some transformation on the data.  For example,
+you have a text module that goes into a literal module which goes into
+a signature module which goes into an encryption module which then
+goes into an armor module.  To add stealth, you just add a stealth
+module in there.  However I can tell you now that we are not working
+on such a module for the PGP 3.0 release.
+
+I'll hopefully have the API Spec and Programmer's Guide in a state
+where I can let others see it in the near future.  But since I'm going
+to be off the net for about a week or two at the end of the month, it
+might have to wait until March unless a miracle happens in the next
+week.
+
+I hope this helps.
+
+-derek
+
+
+
+

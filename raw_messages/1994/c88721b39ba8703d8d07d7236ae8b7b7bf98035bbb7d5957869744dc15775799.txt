@@ -1,0 +1,58 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Wed, 13 Apr 94 23:36:39 PDT
+To: cypherpunks@toad.com
+Subject: Remailer reply addresses
+Message-ID: <199404140637.XAA24792@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Graham's suggestion about automatic remailer reply chains reminded me of
+a simpler system which I would like to see.
+
+Suppose one site, somewhere, would create new mail addresses upon request,
+and map them to encrypted remailer chain blocks.  (These are nested remailer
+requests, where the outer layer is encrypted for the first remailer and tells
+it where to send the message, the next layer is encrypted for the 2nd remailer
+and tells it where to send, and so on.  No remailer sees anything more than
+where it is sending the message and where it received it from.)  A new account
+is created which maps, say, to a file which has one of these "anonymous return
+addresses" in it.  Any mail incoming for that address simply gets sent to the
+remailer in the file, with the ARA stuck in front of it.
+
+This is not complicated software.  I wrote a Bourne/Korn shell script which
+does the whole thing in a dozen lines.  What is needed is a sendmail hack to
+allow mail to addresses in a specified form (say anxxxxx) to be piped to this
+script.  I don't have a machine where I can do this.
+
+If such a site were running, then I could create an ARA block and send it to
+that site (via a remailer, of course).  The site would make me a new address
+and return it via the ARA.  That new address would be my pseudonym.
+
+Now, when I want to send something pseudonymously, I just stick a "Reply-To"
+into the outgoing headers of the message as it leaves the last remailer.  The
+remailer-chain-creation script can easily be modified to do this.  The
+Reply-To points at the address I got back from the pseudonym server site.
+
+With this software I could do something which cannot be done today.  I could
+send mail to which someone could hit "r" to reply, and receive that reply,
+without any one person knowing my pseudonym.  This is not that much to ask
+for!  I'd say it is the bare minimum for the use of pseudonyms on the net,
+yet we don't have it, after all this time.  And look how close we are to
+being able to do it.
+
+With this basic system in place, some of Graham's ideas about time-limited
+or use-limited pseudonyms could be applied as well.  Other extensions people
+have suggested would have the pseudonym server hold messages in inboxes until
+people trigger a dump to a freshly created anonymous address.  A lot of things
+are possible.
+
+But we should walk before we run.  Right now I don't feel that we are even
+crawling yet.
+
+Hal
+
+
+
+
+

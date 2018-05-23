@@ -1,0 +1,44 @@
+From: Adam Shostack <adam@homeport.org>
+Date: Mon, 15 Jul 1996 05:38:39 +0800
+To: mcarpent@mailhost.tcs.tulane.edu
+Subject: Re: Execution of signed scripts received by e-mail
+In-Reply-To: <199607141042.FAA01300@Dusk.obscure.net>
+Message-ID: <199607141903.OAA20371@homeport.org>
+MIME-Version: 1.0
+Content-Type: text
+
+
+Matt Carpenter wrote:
+
+| If I am reading the procmail docs correctly, then the following recipe
+| should create a lockfile called 'emscrypt.lock' which will prevent more than
+| one instance of the script from being run at a time
+| 
+| :0:emscrypt
+| ^ Subject.*SQUEAMISH OSSIFRAGE
+| |/PATH/emscrypt
+| 
+| I agree it would be better if emscrypt used its own locks on the timestamp
+| files.  However, it is my understanding (someone please correct me if I am
+| wrong) that there is no simple way to provide file locking in Perl that is
+| portable across the various flavours of Unix (see the descriptions of the
+| fcntl and flock functions on p. 144-145 of the Camel book).  So I haven't
+| tried to implement locking from within emscrypt yet.  Of course, if these
+| functions are available on the majority of machines (anyone?) then I should
+| probably use them.
+
+	procmail includes a program called lockfile, which is based on
+its thorough as hell lock mechanism tests.  If you're calling from
+procmail, you might decide to require lockfile.
+
+Adam
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+					               -Hume
+
+
+
+
+

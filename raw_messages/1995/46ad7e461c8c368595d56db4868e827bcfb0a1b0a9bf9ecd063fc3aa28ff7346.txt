@@ -1,0 +1,62 @@
+From: hallam@w3.org
+Date: Sat, 26 Aug 95 10:59:28 PDT
+To: cypherpunks@toad.com
+Subject: Re: SSL trouble
+In-Reply-To: <9508261034.AA15406@couchey.inria.fr>
+Message-ID: <9508261758.AA25920@zorch.w3.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+There are more effective solutions than simple random search, these have been 
+known in the distributed processing arena for years.
+
+What you effectivelly have is a farmed solution to a problem with a high degree 
+of trivial parallelism. Farms always suffer from the server bottleneck problem. 
+The alternative is to use a multifarm, its a bit complicated to explain bu the 
+essence is that you distribute the farmming mechanism. The most extreeme example 
+of this is to have every slave also act as a master for some part of the problem. 
+Since the bandwidth/processing ratio is unfavourable it would be better to have a 
+small but non trivial (5-10) number of master controllers.
+
+
+The basic principles are to leverage pipelined parallelism, a slave does not 
+simply ask for a chunk of keyspace, process it, return results and ask for the 
+next chunk. Instead overlap work packages, give them more than one to work at at 
+once so that the system does not suspend waiting on the server.
+
+Size the chunks adaptively, the more keyspace a processor works through the more 
+packets it is given at once.
+
+Use integrity checks to ensure that the slaves are acting properly. One method of 
+doing this is to keep secret part of the known plaintext (say 16 bits). A slave 
+is required to report _all_ matches in the range to the master. Slaves who report 
+a statistically low number of matches may be considered suspicious. It is a 
+simple matter to allocate part of that keyspace to another processor for a 
+double-check.
+
+	[Its so obvious I'll apply for a patent on that technique]
+
+Another usefull technique is to require the slave to checksum some collateral 
+result from the calculation mix. Then if its simply braindead software it can be 
+detected.
+
+When running a multi-master farm it is important to realise that the slaves serve 
+all the masters, not just a single one. Masters can distribute work chunks 
+amongst themselves in larger chunks, as chunks are completed this is communicated 
+to the other workers.
+
+If we used the Web as a substrate for this work the control software could then 
+be used for other related tasks requiring large scale parallel processing on 
+networked workstations.  This was one of the original applications I looked at 
+back in 1992 when I was doing an awful lot of this type of work.
+
+
+		Phill Hallam-Baker
+
+
+
+
+
+

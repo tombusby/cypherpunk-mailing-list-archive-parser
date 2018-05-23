@@ -1,0 +1,47 @@
+From: karn@qualcomm.com (Phil Karn)
+Date: Wed, 11 Aug 93 12:16:59 PDT
+To: perobich@ingr.com
+Subject: Secure voice software issues
+In-Reply-To: <199308101603.AA28136@poboy.b17c.ingr.com>
+Message-ID: <9308111916.AA03336@servo>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>The reason behind my original proposal of a system that could use PGP
+>keyrings is thus: let's say that I want to call you. I tell my
+>cryptophone to call "Phil Karn", so it looks up your public key and
+>uses it to encrypt my side's session key, then signs the encrypted
+>version with my public key.
+
+You're creating an unnecessary vulnerability here. By using RSA to
+encrypt the session key, all of your past conversations would be
+compromised if your RSA secret key were ever revealed.
+
+True, this is already the case for PGP-encrypted messages which are
+usually sent over unidirectional mail channels. There you can't
+really do much better.
+
+Voice calls are different, as the availability of a two-way path lets
+you do things much more securely. If you generate a session key with
+DH and use PGP/RSA *only to sign the exchanges*, not to encrypt the
+session key, then even if your RSA secret key is later compromised, it
+would not compromise those session keys that had already been created,
+used and destroyed.
+
+This is a very powerful feature! Consider the profound effect it would
+have on the whole topic of "rubber hose cryptanalysis", either in its
+pure unadulterated form (blackmail, torture, death threats) or in its
+"legal" form (being compelled to divulge an encryption key that could
+be used against you, despite the 5th amendment). Session keys could be
+created, authenticated, used and destroyed without the user ever
+having to know them, or even having any way to recreate them after the
+fact despite knowledge of the RSA secret key that was used to
+authenticate them.
+
+Phil
+
+
+
+
+

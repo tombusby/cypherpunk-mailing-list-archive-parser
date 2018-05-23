@@ -1,0 +1,48 @@
+From: db@Tadpole.COM (Doug Barnes)
+Date: Mon, 12 Dec 94 23:50:25 PST
+To: lcottrell@popmail.ucsd.edu (Lance Cottrell)
+Subject: Re: Broadcasts - addressing
+In-Reply-To: <ab12ebe2020210040f62@[137.110.24.249]>
+Message-ID: <9412130749.AA14735@tadpole.tadpole.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> I am not completely clear on what sort of communication you are trying to
+> protect, and what your threat model is.
+
+Let's say that agent-in-place X posts to his controller whenever
+something of political significance happens in Foobarvia. A clever
+traffic analyst will notice that a certain key posts to alt.anonymous
+(or contributes to the pool, whatever it is) whenever something big 
+happens in Foobarvia. Conclusions can be drawn -- there is a PGP-using 
+spy in Foobarvia! By carefully limiting access to news tidbits, they
+can use process of elimination to find the spy. (In reality, it could 
+be much more mundane -- every time Peggy Sue tells Mary Beth a secret, 
+there is a post by the same keyid, etc.)
+
+However, if you use a public-key encryption scheme that doesn't store
+the key-id on the outside of the packet (or store it at all), then you
+are at liberty to identify the packets for decryption by the target
+recipient however you want. I've suggested an approach using tokens,
+which make all the messages from agent-in-place X unlinkable to one
+another (thus hindering the detection of the aforementioned pattern),
+while still allowing the recipient to sniff for them efficiently.
+
+> 
+> Are you worried about an attacker noticing that an anonymous ID is getting a lot
+> of messages? If you are using PGP and a message pool, any attacker can decrypt
+> all the messages, and see which correspond to which key, and therefor to which
+> anonymous ID. The only way around this is to use private key crypto. If you are
+> doing that, then you can also use a shared secret to generate a stream of one
+> use message IDs.
+
+Clearly this involves using something other than vanilla PGP, or
+running some post- and pre- processing to delete and then add back
+in the key-id. The mandatory external presence of the key-id has
+always been less than optimal, IMHO.
+
+
+
+

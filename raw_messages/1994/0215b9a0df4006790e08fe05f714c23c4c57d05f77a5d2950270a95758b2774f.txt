@@ -1,0 +1,69 @@
+From: remailer@merde.dis.org (remailer bogus account)
+Date: Mon, 7 Feb 94 22:50:42 PST
+To: cypherpunks@toad.com
+Subject: PGP Tools Debugging
+Message-ID: <9402080648.AA17257@merde.dis.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+>> Pr0duct Cypher
+>  Warlord
+
+>>I've got the code written to check the whole coin, and I found another
+>>subtle bug caused by precision setting. Since setting precision does not
+>>seem to affect the speed of the decryption (I think the mpi library sets
+>>it internally during modexp) I'm just going to fix it at maximum
+>>and leave it there. Tomorrow I will strip out all of these damn things.
+
+>Yea, MPI lets the precision.  This is not a bug -- the MPI library
+>needs to know how big the number is.  (The bug is that its done in a
+>global variable and not as a part of the number internally, but thats
+>a different matter).  The reason it needs to know is so that it
+>doesn't need to perform large operations for small numebers.  For
+>example, there is no reason to perform a 1024-bit modexp when you are
+>dealing with 384-bit numbers!
+
+The bug was in my code, not in mpilib, but the need to set precision can
+be a real pain. I've been plagued by intermittent bugs caused by mpis not
+being completely cleared or fully calculated out. Since modexp does it
+automatically, I'm just going to set it to max. If you or someone else with
+both types of machines wants to fix that, feel free. I don't have the
+means to do so, and it's been my experience that writing code you can't
+test is a waste of time.
+
+>FYI: I have both big-endian and little-endian machines at my disposal.
+>Also, I was having problems building PGP Tools under mips-ultrix --
+>you have some global variables in ptd that you expect from time.h
+>which don't exist.  In particular, timezone and daylight.
+
+PTD is a kludge. There are no similar dependencies in the library itself.
+PTD was just written as needed to test the rest of the library, and was not
+intended to be a usable application. You can either put in #ifdefs for your
+machine, or set up another module with the needed globals. I just wanted to
+code around the need for timezone stuff and get the test code working.
+
+I've got another version of PGP Tools ready which removes most of the
+set_precision stuff, and a version of Magic Money which checks the whole
+coin when it receives it. There are a few more changes for Magic Money,
+but I should be mailing out soon. Someone wrote that they had success with
+a big-endian machine - whew! and thanks for testing it.
+
+                                             Pr0duct Cypher
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.3a
+
+iQCVAgUBLVcQUsGoFIWXVYodAQEiQQP/Tsm/AIi+zNJ5YIzPfaEjzeSyyi4pwLTp
+ZYzo88FyBBrayFpt+CkSdlatnOVu7EwyHcNBgh8Z3LJeffOcI8Wiw9WPO9v0vqHj
+yE35Yq9rFfBnTjQuZ3uNnb03l1G0XfyG2AyuYer3Y4shEKwO/6DgYr4b5K9Y2Wqc
+p8qpWGwUC6I=
+=itBc
+-----END PGP SIGNATURE-----
+
+
+
+

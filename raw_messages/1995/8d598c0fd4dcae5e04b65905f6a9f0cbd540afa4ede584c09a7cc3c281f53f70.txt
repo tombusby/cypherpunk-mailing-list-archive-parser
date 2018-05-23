@@ -1,0 +1,41 @@
+From: droelke@rdxsunhost.aud.alcatel.com (Daniel R. Oelke)
+Date: Fri, 1 Sep 95 05:27:47 PDT
+To: hal9001@panix.com
+Subject: Re: SSL search attack
+Message-ID: <9509011225.AA20540@spirit.aud.alcatel.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+> I see nothing wrong with the concept of being allocated an initial chunk
+> and having the scan software attempt to ACK it when 50% of it has been
+> searched. A successful ACK would allow the releasing of a new chunk (in
+> response) equal in size to the returned chunk. A failure of the Server to
+> accept the ACK would trigger a retry at set intervals (such as 75% and 100%
+> or 60/70/80/90/100%) until the Server responds. Thus the scanner is always
+> in possession of a Full Sized Chuck to scan (so long as the Server accepts
+> an ACK before the 100% done mark) and temporary failures will not stop the
+> process of a scanner as currently happens.
+> 
+
+The only way this can work is if the server is told it is a 50%/75%/etc
+size ACK, and then latter the server is ACKed for the full 100%. 
+
+Why?  Because what happens if the client dies immediately after doing 
+the ACK - maybe only 51% of that space has been searched, yet 
+the server has already seen an ACK for it.
+
+
+IMO - a % ACK is to much complexity and extra work on the server,
+which is already having trouble keeping up.
+
+Dan
+------------------------------------------------------------------
+Dan Oelke                                  Alcatel Network Systems
+droelke@aud.alcatel.com                             Richardson, TX
+
+
+
+
+

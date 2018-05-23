@@ -1,0 +1,43 @@
+From: smb@research.att.com
+Date: Wed, 16 Jun 93 08:15:48 PDT
+To: cypherpunks@toad.com
+Subject: Re: fast des
+Message-ID: <9306161515.AA12958@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+	 how fast is fast des these days?  (i have measured over 2 mbps
+	 on decent workstations.)
+
+	 i was in a meeting today attended by someone from nsa who said
+	 that 2.4 gbps des chips exists today.  (he got real silent after
+	 blurting this out.  hmm.)
+
+	 2.4 gbps is 37.5 million des per sec.
+
+	 it is probably not much challenge to put together a 65,536 element
+	 machine, which would run at 2.5 trillion des per sec.  if i have my
+	 arithmetic right, this could exhaustively test the space of 56 bit
+	 keys in about eight hours.
+
+I don't know of any 2.4 gbps DES chips, but DEC has built a 1 gbps
+chip.  They've even published a technical report on it, though I don't
+have the number handy.  But there's more to know than simply the raw
+speed.
+
+First of all, most real DES chips -- i.e., those designed for
+encryption, rather than brute-force cryptanalysis -- are optimized for
+encrypting large blocks of data.  Key-loading is a different operation,
+and that might not go nearly as fast.  Any hardware assists (i.e., DMA)
+would be for the data, not for the next key to use on the same block of
+data.
+
+Second, what does this chip cost?  If it costs, say, 10x what the DEC
+chip costs, it's not cost-effective; you can build your DES-cracker
+more cheaply with the slower chips.  (The DEC TR gave cost figures for
+DES-cracking...)
+
+
+
+

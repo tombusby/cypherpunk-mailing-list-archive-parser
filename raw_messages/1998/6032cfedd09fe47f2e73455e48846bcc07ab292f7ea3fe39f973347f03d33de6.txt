@@ -1,0 +1,137 @@
+From: "Trei, Peter" <ptrei@securitydynamics.com>
+Date: Wed, 22 Jul 1998 15:19:14 -0700 (PDT)
+To: "'cypherpunks@toad.com>
+Subject: Thoughts on the demise of DES
+Message-ID: <D104150098E6D111B7830000F8D90AE8017928@exna02.securitydynamics.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+Well, I'm a happy camper. Single DES is dead as a
+credible cipher. I feel *very* vindicated.
+
+I called for the hit, RSA bankrolled it, and the
+EFF pulled the trigger. DESChall and
+Distributed.net did severe damage, but the Deep
+Crack machine was the fatal blow.
+
+While the possiblity of bruting DES has been
+discussed at various times in and out of cpunks
+for years (for example, see Adam Back's message
+of 17 August 1995), my involvement started 22 July
+1996, when I proposed a DES crack as a follow on
+to the previous autumn's RC4-40 attack:
+
+------------------------------
+
+>Subject: Re: Borders *are* transparent
+>Date: Mon, 22 Jul 1996 10:32:47 -6 
+[...]
+>Any one up for a distributed brute force attack on
+>single DES? My back-of-the-envelope calculations
+>and guesstimates put this on the hairy edge of
+>doability (the critical factor is how many
+>machines can be recruited - a non-trivial cash
+>prize would help).
+
+>Peter Trei
+>trei@process.com
+---------------------------
+
+This got a flurry of responses, mostly positive,
+including some in which Matt Blaze announced his
+intention to build a hardware DES cracker.
+
+-----------
+
+Later that day, I had run some more numbers:
+
+>Subject: Re: Brute Force DES 
+>From: "Peter Trei" <trei@process.com> 
+>Date: Mon, 22 Jul 1996 16:55:17 -6 
+>[...]
+
+>The fastest general purpose, freely available des
+>implementation I'm aware of is libdes. by Eric
+>Young. With this, I can do a set_key in 15.8 us,
+>and an ecb_encrypt in 95 us/block. That adds up to
+>about 9,000 keytests/sec (this is on a 90 MHz P5,
+>running NT).
+
+[...]
+---------------
+
+This looked much too slow, and discussion trailed
+off. I was still interested, and grabbed some x386
+assembler by Phil Karn, and worked on optimizing
+it for the Pentium.
+
+It worked well. A few months later:
+
+http://infinity.nus.edu.sg/cypherpunks/dir.96.09.26-96.10.02/msg00567.html
+
+>Subject: Can we kill single DES? 
+>     From: "Peter Trei" <trei@process.com> 
+>     Date: Tue, 1 Oct 1996 16:27:18 -6 
+
+>[...]
+>Unlike many cypherpunks, I actually write code
+>(:-). I took Phil Karn's DES386 as a starting
+>point, and modified it to run effiiciently on the
+>Pentium. The code I've written will run 14 round
+>DES (all that is required for a key test app) at
+>254,000 crypts/sec on a 90 MHz Pentium.
+>[...]
+
+I had managed a better than 25x speedup. My
+biggest innovation was a new method of producing
+key schedules, which when applied for key search
+purposes was a hundred times faster than the
+canonical method [Perry doubled the speed by
+suggesting the use of Gray codes.]
+
+Later that month, I wrote to Jim Bidzos at RSA,
+suggesting a DES challenge, using my prototype's
+speed to demonstrate feasibility.  He was
+interested, and the Symmetric Key Challenges were
+born.
+
+Soon other programmers (notably Svend Mikkelsen in
+Dennmark) substantially improved on my speed - by
+better optimization, and by clever shortcuts which
+allowed earlier rejection of bad keys. A major
+innovation was use of Eli Biham's 'bitslice'
+algorithm, which tested large blocks of keys in
+parallel. The speed of his initial implementation
+was doubled by the work of Matthew Kwan in
+Australia and Andrew Meggs, et. al. at
+distributed.net.
+
+By the end of the latest challenge, the fastest
+software search engines had speeds (in clock
+cycles per test) well over 100x as fast as my
+original 10,000 cycle/key estimate.
+
+Here's one more quote from the archives:
+
+>From: "Peter Trei" <trei@process.com> 
+>Date: Fri, 7 Jun 1996 12:55:24 -6 
+[...]
+>Prediction: By the millenium, we'll have made
+>single DES look about as silly as 40 bit RC4 is
+>today.
+
+Written well before I started to think about a DES
+crack, this, at least, has come true.
+
+Peter Trei
+ptrei@securitydynamics.com
+
+Disclaimer: This has nothing to do with my work
+at my employer.
+
+
+
+
+

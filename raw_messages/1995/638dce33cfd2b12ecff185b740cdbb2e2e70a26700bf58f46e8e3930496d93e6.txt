@@ -1,0 +1,30 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Mon, 25 Sep 95 12:53:39 PDT
+To: "David J. Bianco" <bianco@itribe.net>
+Subject: Re: SSL Man-in-the-middle
+In-Reply-To: <199509251247.IAA27297@gatekeeper.itribe.net>
+Message-ID: <Pine.SOL.3.91.950925124443.359B-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I can confirm that, at least up to 1.2, netscape navigator does not do any 
+validation beyond checking the signer of the certificate. 
+
+Exactly - the trust model used in Navigator 1.1N requires you to trust 
+every single owner of a valid certificate. Getting hold of any key is 
+vastly easier than having to obtain a specific key; in the worst case, 
+you just buy your own - SSL exchanges are repudiable, and a few simple 
+tricks can make sure you cerificiate doesn't show up in the "Document 
+Information" dialog box. Or, since there are is CRLing, accidentaly lose 
+you private key, notify verisni and get a revocation. 
+
+To detect the attack without using either a modified client, or a nice
+proxy that checks for you, you must do packet-tracing on all SSL
+connections, regenerate the exchange, and then review each exchange to
+look for suspicious certificates. 
+
+
+
+
+

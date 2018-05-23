@@ -1,0 +1,69 @@
+From: dlv@bwalk.dm.com (Dr.Dimitri Vulis KOTM)
+Date: Wed, 2 Apr 1997 21:33:05 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Re: remailer spam throttle
+In-Reply-To: <199703301545.QAA03183@server.test.net>
+Message-ID: <wkik5D30w165w@bwalk.dm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+(I'm behing in responding to e-mail)
+
+> > 4. What if the LEA's decide to find out how K, L are generated?
+>
+> Random pool like PGP, it's one way and the pool has more bits than the
+> key material the Feds have anyway.  /dev/urandom is nice.
+
+Not sure how LEA's work in the U.K., but here in the U.S. they just
+might be interested in figruing out the state of the machine when
+/dev/whatever was read.  Besides, someone might just use the lc
+rand in the C library and init it with srand(time(NULL)*pid()) -
+making it worth the while to figure out what the pid might be like.
+(Wasn't that the basis of one of thw early attacks on Netscape?)
+I say, eschew any protocol that involves generating a pesudo-radom
+key, and then discarding it. What if the LEAs want to examine your
+hard disk to see how thoroughly it's been discarded?
+
+> > It may be hard to prove a negative to a LEO who doesn't know what
+> > the hell you're talking about. You have a file in your spool that
+> > was encrypted with a key that your program generated, but now you
+> > no longer have the key? Well, tell us how the key was generated.
+>
+> I think you're arguing for your discard all policy :-)
+
+Yes. You don't have your own domain, so you can't possibly imagine
+the kind of idiots that have been getting on the 'net in the last
+few years.
+
+By the way: if Alice sends Carol an e-mail via Bob's remailer,
+and Bob's remailer uses a third party database to see if Carol
+accepts e-mail (such as a key server) then Alice can determine
+whether Carol accepts anonymous e-mail.
+
+Say, Carol is a journalist and Alice is a whistleblower. Alice
+first sends a ping, which causes Bob's remailer to send Carol
+a form letter  explaining how to unblock herself. Alice checks
+the database until (hopefully) she sees that Carol accepts
+e-mail, then she sends her whatever.
+
+> btw if you're interested to fix the keyserver so that it requires an
+> ack to a ping with a nonce, someone at MIT has a fast PGP key database
+> / web key server which isn't using PGPs linear lookup.  You can find a
+> link to it from Brian LaMachia's keyserver page.
+>
+> Another snazzy thing to do to the keyserver would be to have it obtain
+> a timestamp signature on your key (from a third party time stamping
+> service, of which there are several) and include that too.
+
+Sigh - I wish. I'm behind on a bunch of projects, including the great
+spambot. Thanks for the info anyway.
+
+---
+
+Dr.Dimitri Vulis KOTM
+Brighton Beach Boardwalk BBS, Forest Hills, N.Y.: +1-718-261-2013, 14.4Kbps
+
+
+
+

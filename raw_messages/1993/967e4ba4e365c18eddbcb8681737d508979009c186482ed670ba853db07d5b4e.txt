@@ -1,0 +1,51 @@
+From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+Date: Sun, 11 Jul 93 15:08:06 PDT
+To: jpp@markv.com
+Subject: Re: Secure comm program, Sockets + LINK
+In-Reply-To: <9307102248.aa04285@hermix.markv.com>
+Message-ID: <9307112208.AA20350@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> 
+>    From: Timothy Newsham <newsham@wiliki.eng.hawaii.edu>
+> 
+>    I assume you're talking about the link program I wrote.
+> 
+> Yes, I was talking about your program Link.  
+> 
+>    If so:   I never really considered the RSA exchange as authentication
+>    although it can be thought of that way I guess.
+> 
+> Right.  The only person who can participate (on one side) of the
+> exchange is the one with the private key which matches the other
+> side's public key.  This does provide a weak level of authentication.
+> (An opponent can record 'authentication' sequences, and replay them
+> later.  For this to be usefull, the opponent will have to have
+> discovered the session key which is/was being selected by the
+> sequence.)
+
+This is a matter of perspective.  You are thinking of the matching
+keys as being 'public' and 'private'.  You can also think of them
+both being half of a key, both being unknown to any third parties.
+In such a case the mere possession of a matching key is a type of
+authentication.   This because you only gave out one half to a
+specific person in a private way, and you kept the other half for
+yourself.
+
+This is half way true in the sense of my link program but not
+totally true, because both halves were generated on one machine
+and one half transmitted (probably over an insecure channel) to
+the remote.  This second key is secure in that it only got transfered
+once and then exists in only one place that may be secure.  It is
+insecure in that it might have been observed in that window of
+vulnerability.  
+
+Why is it that you want both sides to authenticate, btw?
+In the case of a human<->human connection?
+I can definitely add authentication (two way).
+
+
+
+

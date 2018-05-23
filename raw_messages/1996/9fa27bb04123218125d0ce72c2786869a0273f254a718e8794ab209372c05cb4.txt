@@ -1,0 +1,37 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 14 Mar 1996 08:48:30 -0500
+To: matthew@itconsult.co.uk (Matthew Richardson)
+Subject: Re: PGP reveals the key ID of the recipient of encrypted msg
+In-Reply-To: <3146910b.90015235@itconsult.co.uk>
+Message-ID: <199603131602.LAA29467@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+> I believe that provided all your keys are in your secret keyring, PGP
+> will automatically pick the correct one for you.
+
+Unfortunately, PGP 2.6.2 will do this only if the PGP message has
+proper keyIDs.  It finds the proper key by matching the keyID in the
+PGP message to the keyIDs in the secret keyring.  If you remove the
+keyIDs from the message (as stealth does), PGP 2.6.2 cannot find the
+secret key to use.
+
+One fix would be to have PGP (say, PGP3 ;) try all the keys on your
+secret keyring if the keyID in the message is 0.  In other words, you
+can pseudo-stealth a message by leaving off the keyID and PGP3 would
+attempt all the secret keys.  If one worked, you'd be able to read it.
+This doesn't solve the whole problem of stealth; you still know that
+what you have is a PGP message, and even that it is an encrypted
+message, but you do not know to whom it has been encrypted.  The nice
+thing about this approach is that this works for multiple recipients,
+too!
+
+NOTE: while the PGP3 API should be able to handle this case, I do not
+know if support for this feature will be implemented in PGP 3.0
+
+-derek
+
+
+
+

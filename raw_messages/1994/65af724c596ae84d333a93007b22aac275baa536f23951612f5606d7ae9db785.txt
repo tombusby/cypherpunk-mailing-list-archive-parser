@@ -1,0 +1,55 @@
+From: koontzd@lrcs.loral.com (David Koontz )
+Date: Fri, 3 Jun 94 11:31:18 PDT
+To: perry@imsi.com
+Subject: Re: Faster way to deescrow Clipper
+Message-ID: <9406031829.AA19412@io.lrcs.loral.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>From: "Perry E. Metzger" <perry@imsi.com>
+>
+>Mike Ingle says:
+>
+>An interesting idea.
+>
+>> The LEAF would look good unless you tried to decrypt the
+>> session key. The wrong-IV problem would remain. The NSA should have
+>> designed the Clipper so that, if the IV was wrong, the chips would not
+>> accept the LEAF.
+>
+>That can't be done, I'm afraid. Its way to difficult to distinguish a
+>bad IV from line noise nuking the first block of your CBC
+>conversation.
+
+I used to work on NSA cryptographic equipment.  One of characteristic of
+a system designed to use crypto is the ability to detect crypto sync.
+
+If you have access to the control program (which you would if faking
+LEAFS), you would tend to throw out the first block.  The difficulty is
+that the DE (distant end) ain't necessarily smart enough to do so (assuming
+it has not been modified), and is more than likely looking for a passed data
+value (typically a sync symbol) to determine the state of crypto
+synchronization.  Were the system consuming data from the enciphered link
+properly prepped, it is possible that it would ignore garbage (Assuming the
+damaged decrypted first block did not contain the sync), while awaiting
+a synchronization indicator.
+
+Most duplex crypto systems use some variant of End Around Prep (EAP),
+where the receive data path is used to determine whether crypto synch is
+acheived by looking for a constant mark or space, or idle character.  When
+the receiver does not provide the proper value the transmit side is knocked
+down, the DE receive notices and restarts its transmit.  A data value is
+passed through the loop to tell the system to go to operate mode.   Such
+functions are generally predicated on having crypto  - and the data system for
+which it provides a link, separate.
+
+The point being that a communications system that you can't modify
+both ends of may not be able to accept a garbled first block.  Not to mention
+that OFB is probably a lot more prevalent for voice applications.
+
+
+
+
+
+

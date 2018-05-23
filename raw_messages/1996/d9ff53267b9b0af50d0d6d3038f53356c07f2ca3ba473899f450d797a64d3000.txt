@@ -1,0 +1,43 @@
+From: "Deranged Mutant" <WlkngOwl@UNiX.asb.com>
+Date: Sat, 9 Mar 1996 19:33:27 +0800
+To: coderpunks@toad.com
+Subject: ANNOUNCE: NOISE.SYS v0.4.9-Beta /dev/random driver for DOS syste
+Message-ID: <199603080838.DAA11325@UNiX.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+The latest version of NOISE.SYS (0.4.9) should be available "real 
+soon now" at ftp.elf.stuba.sk in the ??/security directory [I don't 
+remember the exact path...].
+
+It should also be available at the ftp.wimsey.com and ftp.funet.fi 
+sites soon.
+
+NOISE.SYS is a /dev/random driver for DOS systems, similar to the 
+random.c implementation for Linux and FreeBSD.  It sets up two 
+devices, "random" and "urandom" which return streams of crypto- 
+quality random bytes based on fast timings from the keyboard IRQ, 
+disk access, Windows 3.x message broadcasts, mouse movement, and cpu 
+clock drift, with some experimental kluges to sample the audio card 
+input [to be improved in future versions].  The raw samples are mixed 
+using a polynomial function and then hashed using SHA-1.  Entropy 
+estimation is based on arithmetic coding schemes and how often 
+samples recur, rather than on the sample deltas themselves.
+
+The source is included (in 386 assembler) and is relatively easy to 
+modify and experiment with [plenty of comments and macros].
+
+
+
+
+Rob. 
+
+---
+Send a blank message with the subject "send pgp-key" (not in
+quotes) to <WlkngOwl@unix.asb.com> for a copy of my PGP key.
+
+
+
+

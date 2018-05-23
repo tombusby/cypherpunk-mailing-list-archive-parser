@@ -1,0 +1,80 @@
+From: mskala@burnaby.csc.UVic.CA
+Date: Thu, 23 Oct 1997 05:03:17 +0800
+To: Mike <Michael.Johnson@mejl.com>
+Subject: Re: SMTP Encryption Extension
+In-Reply-To: <3.0.3.32.19971022073807.0099dcb0@localhost>
+Message-ID: <Pine.A41.3.96.971022133446.13424A-100000@burnaby.csc.UVic.CA>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Wed, 22 Oct 1997, Mike wrote:
+> >> Which leads to another idea, couldn't we encrypt SMTP by running it over
+> >> SSL as a web server cgi? If 99% of Internet traffic is web browsing and we
+> >You don't need to run it through a CGI.  There's a port defined for
+> >SMTP-over-SSL:
+> 
+> Sure, but the idea here was hiding email to defeat traffic analysis. Ssmtp
+> would raise alarms in any snopper but https would seem like business as
+
+Well, that wasn't *my* idea.  My idea was to hide the contents of mail
+from totally passive attackers, and to do it with NO participation or
+training from the end users, MINIMAL participation and effort from the
+sysadmin, and transparent compatibility (minus security, of course) with
+standard mail systems.  I claim that this combination of goals is worth
+pursuing; I recognize that there are systems which provide better
+security, but it's at the cost of some of my other goals.
+
+You want to defeat traffic analysis, use remailers.  You want security
+against active attacks, use PGP (or equivalent).  If you want these things
+to be really easy, you'll be stuck with talking only to systems you know
+support whatever application you're using.
+
+A significant advantage of an encryption extension to SMTP is that it
+requires no prior coordination between the two ends of a link.  I don't
+have to know whether the destination system supports encrypted SMTP, and I
+don't need to try connecting to the "secure mail" port and then fall back
+to regular mail every time I connect to a system I haven't been introduced
+to.  I just have to watch for the encryption extension in the list of
+extensions that current SMTP mailers already exchange when they connect to
+each other.
+
+My threat model is that the NSA is tapping thousands of people's lines;
+what can we do to make that impractical?
+
+> A significant threat to online privacy comes from passive attackers,
+> because you can't do anything about them. If you have an active attacker,
+> you can analyze his moves and fix the bugs he uses to break root, but a
+> passive attack is difficult to even detect before it's too late and your
+> romantic conversations are headline news.
+
+Solutions like PGP won't see much use beyond people who care about
+privacy, and at the moment there aren't enough of those.  But if encrypted
+SMTP is installed on *systems*, then all mail between such systems becomes
+protected from purely passive wiretapping.  Yes, it can still be
+traffic-analysed, but only on the level of "this system sent this much
+mail to that system", not "this user sent this much mail to that user".
+ 
+It can still be intercepted by an active attack - if the NSA can fool my
+TCP into thinking it's talking to mail.aol.com, then all my mail to
+mail.aol.com is readable by NSA (unless the protocol gets elaborated to do
+more sophisticated key management than just exchanging public keys at the
+start of the session, but that quickly requires user involvement and I
+want to avoid that).
+
+However, can the NSA afford to do DNS spoofing on a grand scale?  They
+might do it for one system if they want to get that system's mail in
+particular, but if you've got the NSA singling you out, you had better be
+using PGP anyway. I'm sure they can't do an active attack on thousands of
+ordinary people at a time, just in case we might be doing something
+interesting.  I'm also not sure that traffic analysis on ordinary
+people is really going to produce any particularly damaging
+information.  They *can* afford simple passive wiretaps on a large scale. 
+
+(Substitute your favorite scary organization for "NSA" if you prefer...)
+
+
+
+
+

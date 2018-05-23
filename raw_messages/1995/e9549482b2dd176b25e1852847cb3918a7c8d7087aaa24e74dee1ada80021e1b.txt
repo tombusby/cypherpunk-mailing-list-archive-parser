@@ -1,0 +1,71 @@
+From: Scott Brickner <sjb@austin.ibm.com>
+Date: Thu, 31 Aug 95 10:30:38 PDT
+To: jirib@cs.monash.edu.au
+Subject: Re: SSL search attacks
+In-Reply-To: <199508310926.TAA18041@sweeney.cs.monash.edu.au>
+Message-ID: <9508311728.AA16306@ozymandias.austin.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Jiri Baum writes
+>> *coordinated* attack on the key.  We've established that there is a 1/e
+>> cost factor in removing the central server.  I just threw out these
+>...
+>
+>Wouldn't it be possible to reduce the cost?
+>
+>Each client could pick a segment at random, check it and then broadcast
+>a NAK. Other clients would then know that the segment in question has
+>been done, and avoid picking it in the future. If you are worried about
+>collisions, one could also have IGRAB, which would advise others that
+>someone is working on a segment (you can still collide, but not so
+>often).
+
+This only reduces the cost if everyone is playing fair.  In practice,
+it will usually *increase* the cost.  A denial of service attack can be
+mounted by the owner of the key just by anonymously NAKing the segment
+with the key.  Then you have to search the *whole* keyspace, fail to
+find it, and start over with a new strategy.
+
+>One advantage is that it is not necessary to have a central infinitely
+>trusted server. (Nothing personal, but bogus server is an attack.)
+
+An attack on what?  The overall model here is that someone presents
+the world at large with a problem to solve.  Someone else volunteers
+to coordinate the effort by providing a server.  Providing a bogus
+server is an attack in the sense that it wastes the CPU cycles of
+the clients, but they're junk cycles anyway.  It's kind of like the
+issue about being "unable to participate" because the group effort
+ignores the efforts of random searchers.  Those searchers *aren't*
+participating, and not ignoring them opens the server to attack.
+An "effort" coordinated by a bogus server is no effort at all.
+
+My point is that the "random" efforts are no different than everyone
+working on the problem independently, each picking a random place to
+start and going sequentially from there.
+
+>NAKs and IGRABs would be weighted by the trust accorded to the entity
+>that originated them.
+
+This is similar to what I outlined yesterday afternoon.  Let unsolicited
+NAKs and IGRABs represent adjustments to the probability that a segment
+is assigned to a client *inside* the group.  Invalid unsolicited NAKs
+don't destroy the current search, they only slow it down slightly ---
+but less than a fully random effort.
+
+>Notes:
+>  * the NAKs could be sent by e-mail, thus allowing badly connected
+>and/or anonymous entities to participate.
+
+This could be done in any case.  It just slows down the effective search
+rate of the e-mail participants.
+
+This might be an argument in favor of requesting more space as you get
+near the end of your current space, though.  When the communications
+latency starts to approach the segment search time, you cut down your
+waiting time by prefetching work.
+
+
+
+

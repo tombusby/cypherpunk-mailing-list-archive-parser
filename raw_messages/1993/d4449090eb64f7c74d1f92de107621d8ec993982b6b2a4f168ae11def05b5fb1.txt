@@ -1,0 +1,54 @@
+From: cme@ellisun.sw.stratus.com (Carl Ellison)
+Date: Wed, 6 Oct 93 08:15:15 PDT
+To: cypherpunks@toad.com
+Subject: Re: Strong PRNGs
+Message-ID: <9310061511.AA21028@ellisun.sw.stratus.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>Message-Id: <9310061432.AA16969@snark.lehman.com>
+>Subject: Re: Strong PRNGs 
+>Date: Wed, 06 Oct 1993 10:32:26 -0400
+>From: "Perry E. Metzger" <pmetzger@lehman.com>
+
+
+
+>Carl Ellison says:
+>> I  can think of two:
+>> 
+>> 1.	a long-period PRNG (like subtract-with-carry) feeding a
+>> 	cryptographically strong hash function (perhaps triple-DES
+>> 	in ECB  mode with both key nad input taken from the PRNG
+>> 	and output becoming the new PRNG output);
+>
+>What would the point of using this for a one time pad be, though? Why
+>not just use triple-DES and be done with the bulk and complexity?
+
+I'm not advocating it as a replacement for triple-DES.  I was answering
+a question.
+
+I have many uses for random numbers and none of them is XOR encryption.
+
+However, I can even see a point for using this for XOR encryption [I prefer
+not to call anything using a PRNG One-Time-Pad].  I can see two points,
+even:
+
+1.	You might have traffic which operates in very high speed bursts
+	(faster than your triple-DES can go) but for which the average
+	throughput is well within the speed of your triple-DES.  So, you
+	keep your PRNG/DES grinding and building a buffer of bytes to be
+	used, then you use them at high speed during the burst.
+
+
+2.	Knuth's Algorithm M (from someone else) mixes two PRNG streams and
+	the result is stronger than either of the two sources.  I haven't
+	read the paper he references, so I don't know how much stronger,
+	but if there's any strength to be gained, someone might want to use
+	it.
+
+ - Carl
+
+
+
+

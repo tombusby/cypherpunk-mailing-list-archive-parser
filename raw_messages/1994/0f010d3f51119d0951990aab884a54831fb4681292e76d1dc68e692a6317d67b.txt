@@ -1,0 +1,63 @@
+From: hughes@ah.com (Eric Hughes)
+Date: Sat, 26 Feb 94 07:25:08 PST
+To: cypherpunks@toad.com
+Subject: DH Exchange Code / Magic Money comments
+In-Reply-To: <9402260715.AA18185@merde.dis.org>
+Message-ID: <9402261516.AA00865@ah.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>To use DH, we need a modulus n and a generator g. Unlike an RSA modulus,
+>which is a product of two primes, a DH modulus must be prime. (n-1)/2 must
+>also be prime. 
+
+I know I recommended this characteristic for the modulus (and I got it
+from Burt Kaliski).  Nevertheless, (n-1)/2 doesn't _have_ to be prime,
+it's just much easier to prove that your generator actually is a
+generator.  In fact, half the elements in such a ring are
+multiplicative generators.  The algorithm to find moduli is simple,
+even if it does take a long time.
+
+There are faster ways of looking for moduli. One method is to take a
+candidate prime and try to factor n-1, if you can.  (If you can't,
+give up and go on.)  If you get a few small factors and one large
+probable prime factor, then you can still look for known generators.
+The candidate must first be relatively prime to the modulus.  Then one
+checks that the candidate raised to each of the factors is not 1.
+There are fewer generators in such moduli, but the moduli are easier
+to find.
+
+The security of the modulus to a precomputation attack is equal to the
+size of its largest prime factor, so while the second method is
+ever-so-slightly less secure with the same modulus size, the effective
+security can be made the same by increasing the modulus size of the
+second method.
+
+>This makes the moduli slightly painful to find, but they can
+>be reused indefinitely. 
+
+Be careful about saying "indefinite".  It's not true in the long run,
+so far as we can tell now.  As computational power increases, so also
+do the lengths required to prevent attacks.
+
+Remember, that every crypto system has a sunset after which there will
+be enough computation available to read past traffic, if recorded.  No
+cryptosystem is good forever.  One always needs to figure out just how
+long one wants one ciphertext to be secure.
+
+Or is that a sunrise? ...
+
+(I pass over arguments about physical limitations of computation, not
+because I think they are wrong, but because I'm not convinced that we
+know enough to know we're asking the right questions.  Plus these
+arguments do not yield key sizes that are yet practical to implement.)
+
+And lastly, you can trust a thousand-bit modulus p where (p-1)/2 is
+also prime.  Go ahead and use it.
+
+Eric
+
+
+
+

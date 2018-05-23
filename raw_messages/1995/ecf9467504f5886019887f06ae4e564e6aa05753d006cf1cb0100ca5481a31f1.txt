@@ -1,0 +1,78 @@
+From: daw@quito.CS.Berkeley.EDU (David A Wagner)
+Date: Thu, 19 Oct 95 17:25:14 PDT
+To: cypherpunks@toad.com
+Subject: Re: The NSA Visits Compendium
+Message-ID: <199510200023.UAA03295@book.hks.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In article <Pine.SOL.3.91.951017102059.25411F-100000@eagle.nexor.co.uk>,
+Andy Brown <asb@nexor.co.uk> wrote:
+> On Mon, 16 Oct 1995, Peter Wayner wrote:
+> 
+> > [...]
+> > The most interesting thing that he mentioned was thatthe company had to 
+> > guarantee that the data would never be encrypted sequentially by two 
+> > _different_ algorithms. Apparently double encryption by 40-bit RC-4 was 
+> > okay, but using different algorithms was verboten.
+> 
+> Very interesting indeed.  With RC4 the bulk of the time is in key setup, 
+> so if they could do two setups in parallel then the total time to search 
+> a double-encrypted 40 bit keyspace would not be that great.
+> 
+
+Hold on -- was the NSA rep talking about double encryption
+*with two different independent keys*, or talking about double
+encryption with the same key?
+
+Somehow I doubt the latter: for starters, double encryption
+with the same key with a stream cipher is generally a Bad Idea.
+(Remember Robert Morris's suggestion to ``always look for
+plaintext?'') <grin>
+
+In any event, double encryption with the same key is never
+gonna be much more secure than single encryption, because it
+doesn't increase the key space.
+
+
+But if the NSA ref was allowing RC4 double encryption *with
+two different independent secret keys*, then this *is* interesting!
+There are well-known meet-in-the-middle attacks on double
+encryption (with independent keys); but the standard one
+requires lots of storage (2^40 storage -- this can't be
+precomputed if you use 88 extra non-secret salt bits in the
+key like SSL); a less well-known more recent attack doesn't
+need the storage, but takes a bit longer (probably a few
+hundred times longer) than brute force search of single
+encryption.  van Oorschot & Wiener have a paper on this subject.
+
+So did you use a SSL-like construction with lots of non-secret
+salt bits in the key?
+
+If not, then the 2^40 bytes of storage could be precomputed,
+and I'd guess that this NSA position might mean that the NSA
+has some Exabytes full of precomputed RC4 output for all possible
+40 bit keys. :-)
+
+Curious,
+Dave Wagner
+- ---
+[This message has been signed by an auto-signing service.  A valid signature
+means only that it has been received at the address corresponding to the
+signature and forwarded.]
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+Comment: Gratis auto-signing service
+
+iQBEAwUBMIbr9SoZzwIn1bdtAQGWOAF0DdBaTogLiH0QDSxjAI8iGeiXFLnPg8pT
+2H0cv6rcSSo+23lqB3zZw3UP4uHGeZk=
+=3KwF
+-----END PGP SIGNATURE-----
+
+
+
+

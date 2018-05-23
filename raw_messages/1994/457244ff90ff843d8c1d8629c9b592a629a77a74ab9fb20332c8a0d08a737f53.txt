@@ -1,0 +1,74 @@
+From: ghio@cmu.edu (Matthew Ghio)
+Date: Wed, 15 Jun 94 21:28:45 PDT
+To: cypherpunks@toad.com
+Subject: Remailer reorder and delay
+Message-ID: <9406160427.AA11767@toad.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I added a reorder and delay feature to my remailer <ghio@kaiwan.com>
+
+Here's how to use it.  Add a header Latent-Time: with the time (in HH:MM:SS
+format).  You must 24 hour time, no AM/PM accepted.  The seconds are optional
+and may be omitted.  Example:
+
+> To: ghio@kaiwan.com
+> Subject: Anonymous Mail
+> From: punk@crypto.com
+>
+> ::
+> Anon-To: cypherpunks@toad.com
+> Latent-Time: 00:00:00
+>
+> This message will be sent to cypherpunks at midnite pacific daylight time.
+
+You can also have it delayed a certain amount of time.  To do this, put a plus
+before the time.  Example:
+
+> To: ghio@kaiwan.com
+> Subject: Anonymous Mail
+> From: me@my.domain.com
+>
+> ::
+> Anon-To: recipient@site
+> Latent-Time: +01:30
+>
+> This message will be delivered one hour and thirty minutes after it is
+> received by ghio@kaiwan.com.
+
+Random reordering is possible by adding r to the time.
+
+> To: ghio@kaiwan.com
+> Subject: Hello tentacle
+> From: detweiler@tmp.com
+>
+> ::
+> Anon-To: medusa@pseudospoof.com
+> Latent-Time: 18:00:00r
+>
+> This message will be delivered at random, but no later than 6 PM pacific
+> standard time.
+
+
+> To: ghio@kaiwan.com
+> Subject: Exterminate PGP
+> From: sternlight@netcom.com
+>
+> ::
+> Anon-To: alt.security.pgp@nic.funet.fi
+> Latent-Time: +04:00:00r
+>
+> This meaningless drivel will be delivered at random, sometime within the
+> next four hours.
+
+
+The longest delay time possible is 24 hours.  Don't expect on the minute
+delivery - there are many things beyond my control which can delay mail.
+"Anon-To" and "Latent-Time" do not need to go in the body of the message;
+they may be placed in the headers if your mailer supports it.
+Let me know if you have any questions or problems.
+
+
+
+

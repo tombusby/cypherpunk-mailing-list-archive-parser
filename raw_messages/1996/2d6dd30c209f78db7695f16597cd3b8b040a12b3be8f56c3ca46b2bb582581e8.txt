@@ -1,0 +1,47 @@
+From: "Deranged Mutant" <WlkngOwl@UNiX.asb.com>
+Date: Mon, 22 Apr 1996 14:06:01 +0800
+To: coderpunks@toad.com
+Subject: A better entropy estimation method for random.c/noise.sys?
+Message-ID: <199604220324.XAA09211@unix.asb.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+I've been hacking with the hashing method used in noise.sys and 
+decided to throw it away, since it did more to overestimate the 
+entropy.
+
+Until I find something better an xor-checksum of the ast N samples 
+seems to do fine. Alternating samples generate no entropy and samples 
+with periods <= N seem to generate less than 1 bit per sample.
+
+The method (in pseudo-code) is as follows:
+
+  delta = abs( LastSample - sample )
+  LastSample = sample
+
+  hash ^= delta  /* until I can think of a better hashing algorithm */
+  swap delta, lastNtable[ indexNtable ]
+  indexNtable = (indexNtable+1) mod N
+  hash ^= delta
+
+  t = counter /* counts the number of samples so far */
+  counter++
+  swap t, lastseen[ hash & (TABLESIZE-1) ]
+  diff = lastseen[ hash & (TABLESIZE-1) ] - t
+
+  if diff<=N, assume no entropy (or fractional entropy?)
+  otherwise return log2(diff)
+
+
+Comments?
+Rob. 
+
+---
+Send a blank message with the subject "send pgp-key"
+to <WlkngOwl@unix.asb.com> for a copy of my PGP key.
+
+
+
+

@@ -1,0 +1,26 @@
+From: Simon Spero <ses@tipper.oit.unc.edu>
+Date: Sun, 14 Jan 1996 05:38:04 +0800
+To: cypherpunks@toad.com
+Subject: RSA accellerators on ISA/PCI cards?
+Message-ID: <Pine.SOL.3.91.960113125755.22437B-100000@chivalry>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Does anybody have any recommendations for a good RSA accellerator 
+available on an ISA/PCI card? I'm looking for something that can be used 
+with numerous public/private keys, though the ability to have one 
+tamperproof key would be a bonus.
+
+Thanks
+Simon
+----
+(defun modexpt (x y n)  "computes (x^y) mod n"
+  (cond ((= y 0) 1) 	((= y 1) (mod x n))
+	((evenp y) (mod (expt (modexpt x (/ y 2) n) 2) n))
+	(t (mod (* x (modexpt x (1- y) n)) n))))
+
+
+
+
+

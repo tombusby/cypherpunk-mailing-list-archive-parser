@@ -1,0 +1,107 @@
+From: roy@sendai.cybrspc.mn.org (Roy M. Silvernail)
+Date: Wed, 6 Jul 94 22:18:22 PDT
+To: cypherpunks@toad.com
+Subject: Re: Counting bits
+In-Reply-To: <9407070147.AA11105@prism.poly.edu>
+Message-ID: <940706.224045.2s5.rusnews.w165w@sendai.cybrspc.mn.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In list.cypherpunks, rarachel@prism.poly.edu writes:
+
+> 
+> Why bother when you can simply do an eight line function?
+> 
+> int bitcount(char b)
+> {
+> register int retval=0;
+> 
+>  if (a & 1) retval++;
+>  if (a & 2) retval++;
+>  if (a & 4) retval++;
+>  if (a & 8) retval++;
+>  if (a & 16) retval++;
+>  if (a & 32) retval++;
+>  if (a & 64) retval++;
+>  if (a & 128) retval++; 
+> 
+> return retval;
+> }
+> 
+> This function, (if you have a decent compiler) will be turned into about 32
+> instructions at most.
+
+Just for entertainment value, I clipped your function and compiled it
+with Turbo C++ 1.01 in default (ANSI C) mode.  Here's the .asm code
+produced (comments and setup code edited for brevity)
+
+_bitcount	proc	near
+	push	bp
+	mov	bp,sp
+	push	si
+	mov	dl,byte ptr [bp+4]
+	xor	si,si
+	test	dl,1
+	je	short @1@74
+	inc	si
+@1@74:
+	test	dl,2
+	je	short @1@122
+	inc	si
+@1@122:
+	test	dl,4
+	je	short @1@170
+	inc	si
+@1@170:
+	test	dl,8
+	je	short @1@218
+	inc	si
+@1@218:
+	test	dl,16
+	je	short @1@266
+	inc	si
+@1@266:
+	test	dl,32
+	je	short @1@314
+	inc	si
+@1@314:
+	test	dl,64
+	je	short @1@362
+	inc	si
+@1@362:
+	test	dl,128
+	je	short @1@410
+	inc	si
+@1@410:
+	mov	ax,si
+	jmp	short @1@434
+@1@434:
+	pop	si
+	pop	bp
+	ret	
+_bitcount	endp
+
+Your estimate was a little short.  I count 35 instructions. :-)
+- -- 
+Roy M. Silvernail --  roy@sendai.cybrspc.mn.org will do just fine, thanks.
+          "Does that not fit in with your plans?"
+                      -- Mr Wiggen, of Ironside and Malone (Monty Python)
+        PGP 2.3a public key available upon request (send yours)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLht6nBvikii9febJAQELawP9GFgXQ8HMKoiIWgRDH6oLYxHfz8XMsKEN
+I3BXCpqwe35ADBP6ah8vgEWfifOJMIlduR02u8RV/Zz4ROC0kRBrJPw/Gk7R3gd5
+uoUlqUgjZQAmqNcBE84hTHqxnLmSKJJb3nygYVZ8fhA6Fhn0BJ/6hpRuAGazN3B0
+SVznWIhxpmQ=
+=tPEz
+-----END PGP SIGNATURE-----
+
+
+
+
+

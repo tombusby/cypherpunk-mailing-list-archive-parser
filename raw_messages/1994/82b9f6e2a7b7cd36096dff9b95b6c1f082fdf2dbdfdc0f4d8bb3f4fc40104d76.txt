@@ -1,0 +1,69 @@
+From: Derek Atkins <warlord@MIT.EDU>
+Date: Thu, 1 Dec 94 18:43:09 PST
+To: lmccarth@ducie.cs.umass.edu
+Subject: Re: public accounts / PGP / passphrases
+In-Reply-To: <199412020218.VAA06287@bb.hks.net>
+Message-ID: <9412020242.AA10706@toxicwaste.media.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+To: lmccarth@ducie.cs.umass.edu
+cc: cypherpunks@toad.com
+Subject: Re: public accounts / PGP / passphrases 
+
+> Could someone please elaborate on the foolishness of using PGP with a 
+> passphrase on a public machine (as I do) ?  Am I wrong in thinking that my
+> secret key is useless to an intruder until she guesses my passphrase ?  I
+> have no net access except via an account on a public machine, so I'm not
+> about to start storing my secret key elsewhere, but I'll change my passphrase
+> to <null> if it's irrelevant anyway.  I just reviewed the PGP docs a bit and
+> Phil says "Nobody can use your secret key file without this pass phrase.",
+> which seems to contradict what many people on the list have said.
+
+For someone to use your secret key, they need two things:
+	1) Access to your secring.pgp file, and
+	2) Your passphrase
+
+On a public system, 1) is easy (relatively speaking).  2) is more
+difficult, but someone could theoretically listen in to the line
+anywhere between your keyboard and the CPU.  What do you know about
+what's going on on the other end of the phone line?
+
+My rule of thumb (for me) is to only use PGP when I have direct
+control over everything between the keyboard on which I am typing, and
+the CPU on which PGP is running. 
+
+This doesn't mean that you _can't_ run PGP on a public machine.  It
+also doesn't mean that you _shouldn't_, either.  It is a matter of
+security -- how secure do you want your key to be.  If you really
+don't mind it being insecure, you might as well generate a 384-bit key
+(which has been proven by RSA-129 to be insecure to an amateur attack).
+
+What do you use to contact your public machine?  Do you dial in from
+home?  What kind of machine do you have at home?  You might consider
+running PGP at home if that is at all possible.
+
+It would be nice to integrate PGP into terminal emulators, too, like
+kermit or seyon or red ryder or whatever, so that you could easily use
+PGP locally to sign/encrypt things on the remote end.  Wishful
+thinking, I guess...
+
+Does this help?
+
+- -derek
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6.2
+
+iQBuAwUBLt6Jjjh0K1zBsGrxAQEo+ALFEwLyrvYtScjSWOPVhwdFT9SByDCRYset
+5H/1tupjC3M1RFINVj80sxMFZT4kdvKj2IR6dMbKzbFaqVFw7lAWPhF6Yfwk2q6O
+gWhx+G3VrJoRm4gEHNFIVMA=
+=DKmQ
+-----END PGP SIGNATURE-----
+
+
+
+

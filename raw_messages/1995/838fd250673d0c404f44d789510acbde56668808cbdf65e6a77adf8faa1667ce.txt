@@ -1,0 +1,65 @@
+From: Matt Blaze <mab@crypto.com>
+Date: Fri, 11 Aug 95 14:58:24 PDT
+To: cypherpunks@toad.com
+Subject: Still more "S-1" foolishness
+Message-ID: <199508112206.SAA27354@crypto.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Here's a table of where the expanded key schedule bits come from
+(I think - this could be wrong, I had to tweek some of the output
+by hand).  Note that some key bytes are used much more often, and
+in more positions, than others, but every key byte does at least
+end up being used as input to each F eventually (but not always to
+each "target" byte).
+
+Sorry for the opaque notation; this reads best when used in conjunction
+with Colin's cool graph that he posted to sci.crypt last night.
+
+-matt
+
+
+
+   |    | G0   G1  F+0  F+1  F+2  F+3   (function input)
+   bytes| 4    5    2    3    0    1    (mixed with byte #)
+rou|enc-| all  all R+6L R+6H R+7L R+7H  (output affects)
+nd |rypt| 0    1    2    3    4    5    (key schedule byte #)
+ # |ed  |LLHH LLHH LLHH LLHH LLHH LLHH  (posn of orig key byte in sched byte)
+======================================
+ 0  76   5954 9538 5495 4851 8515 5151
+ 1  54   1510 5194 1051 0415 4171 1717
+ 2  32   7176 1750 7617 5071 0737 7373
+ 3  10   3732 7316 3273 1637 6393 3939
+ 4  67   9398 3972 9739 7293 2959 9595
+ 5  54   5954 9538 5495 4851 8515 5151
+ 6  32   1510 5194 1051 0415 4171 1717
+ 7  10   7176 1750 7617 5071 0737 7373
+ 8  76   3732 7316 3273 1637 6393 3939
+ 9  54   9398 3972 9739 7293 2959 9595
+10  32   5954 9538 5495 4851 8515 5151  (original key bytes used)
+11  10   1510 5194 1051 0415 4171 1717
+12  76   7176 1750 7617 5071 0737 7373
+13  54   3732 7316 3273 1637 6393 3939
+14  32   9398 3972 9739 7293 2959 9595
+15  10   5954 9538 5495 4851 8515 5151
+16  76   1510 5194 1051 0415 4171 1717
+17  54   7176 1750 7617 5071 0737 7373
+18  32   3732 7316 3273 1637 6393 3939
+19  10   9398 3972 9739 7293 2959 9595
+20  76   5954 9538 5495 4851 8515 5151
+21  54   1510 5194 1051 0415 4171 1717
+22  32   7176 1750 7617 5071 0737 7373
+23  10   3732 7316 3273 1637 6393 3939
+24  76   9398 3972 9739 7293 2959 9595
+25  54   5954 9538 5495 4851 8515 5151
+26  32   1510 5194 1051 0415 4171 1717
+27  10   7176 1750 7617 5071 0737 7373
+28  76   3732 7316 3273 1637 6393 3939
+29  54   9398 3972 9739 7293 2959 9595
+30  32   5954 9538 5495 4851 8515 5151
+31  10   1510 5194 1051 0415 4171 1717
+
+
+
+

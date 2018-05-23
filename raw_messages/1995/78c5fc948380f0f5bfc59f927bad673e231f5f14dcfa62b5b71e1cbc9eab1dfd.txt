@@ -1,0 +1,51 @@
+From: Ray Cromwell <rjc@clark.net>
+Date: Fri, 22 Sep 95 01:20:30 PDT
+To: cypherpunks@toad.com
+Subject: Netscape Server Attacks
+Message-ID: <199509220820.EAA12405@clark.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+No, calmdown,  I haven't found a hole in the server yet, but if you
+want to win some T-Shirts, here's some potential avenues to try. I've
+been messing with these, and maybe some other c'punk can find
+one that will work.
+
+1) buffer overflow attacks in the HTTP request header
+
+Example: The HTTP/1.0 full request has an "If-Modified-Since" header
+which takes a date string. If Netscape assumes this string is not going
+to be longer than a certain width....
+Look for ways to attack the HTTP request headers. See
+http://www.w3.org/pub/WWW/Protocols/HTTP1.0/draft-ietf-http-spec.html
+
+CGI attacks
+2)Shell metacharacters, or extremely long paths, may lead the way to
+executing arbitrary shell commands on the server.
+3) Overflow the URL in a CGI GET by using too many form variables in
+the response. 
+
+
+Server attacking client
+4) use the Location: redirection header to send a long domain
+5) use Location: redirection or Refresh: to load up file:localfile
+   You can force the browser to load up any arbitrary file the user
+   has access to local to his client
+  Example:     Refresh: 1 file:config.sys
+
+6) send back a page with an EXTREME number of Motif HTML FORM widgets
+in a <FORM>. E.g. send back 10,000 radio buttons.
+
+
+Happy Hunting,
+-Ray
+
+
+
+   
+
+
+
+

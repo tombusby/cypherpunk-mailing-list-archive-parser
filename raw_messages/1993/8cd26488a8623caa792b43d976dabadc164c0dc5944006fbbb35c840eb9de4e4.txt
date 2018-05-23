@@ -1,0 +1,30 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Mon, 1 Mar 93 08:07:18 PST
+To: cypherpunks@toad.com
+Subject: anon.penet.fi hacking
+In-Reply-To: <9303010721.aa25945@penet.penet.FI>
+Message-ID: <9303011604.AA11556@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>> 	Body-Termination-Regex: ^--$
+
+Julf writes:
+
+>Ok... Now.. Show me the regex that strips anything starting with '--',
+>such as '-----------------------------', except a PGP boundary line...
+
+OK.  It's a mess.  The backslash means line continuance.  Remember that
+concatenation binds higher that alternation (|).
+
+^--...([^B]|B[^E]|BE[^G]|BEG[^I]|BEGI[^N]|BEGIN[^ ]|BEGIN [^P]|BEGIN P[^G]\
+|BEGIN PG[^P])
+
+Eric
+
+
+
+
+

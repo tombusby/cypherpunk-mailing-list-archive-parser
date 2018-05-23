@@ -1,0 +1,60 @@
+From: Rick Busdiecker <rfb@lehman.com>
+Date: Sun, 12 Jun 94 10:29:27 PDT
+To: Jim choate <ravage@bga.com>
+Subject: Re: Remailer REORDER not DELAY
+In-Reply-To: <199406112253.RAA05183@zoom.bga.com>
+Message-ID: <9406121728.AA24306@fnord.lehman.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I think that there's a reasonable compromise in here somewhere.  It
+might even address some other concerns that people could have about
+the costs of running remailers, e. g. storing a zillion messages for
+24 hours.
+
+How about something like this:
+   
+ - The remailer is configured by its maintener with a maximum
+   desireable time delay and a maximum desireable message queue size.
+   People who do not like the values selected are free to shop
+   elsewhere :-)
+ - When a message arrives, it is assigned a latest output time based
+   on the time that it is received, the remailers maximum desireable
+   time delay and a random factor.
+ - When the remailer's message queue size is greater its maximum
+   desireable size, the message due to be sent next is sent regardless
+   of its latest output time.
+ - When a message's latest output time arrives, it is sent regardless
+   of the remailers message queue size.
+
+You might even want to have some other remailer configuration
+parameters, like:
+ - a maximum number of messages sent out during some arbitrary time
+   interval (message/minute, e. g.)
+ - a minimum interval between messages being sent.
+These two examples might force the queue size to be considerably
+larger than its maximum desired size during usage peaks.
+
+None of this addresses a situation where a single message is received
+during an arbitrarily long time period, although none of the other
+proposals addresses that situation.  Although I can imagine how Mallet
+might abuse this if he coudl control the remailer's net connection,
+personally, I don't think that it's a problem that merits much
+consideration.  In the absense of a suitably powerful Mallet or other
+serious networking problems, it's likely that such a situation is just
+an indication that the remailer isn't very popular.
+
+BTW, what possible benefit is there to knowing that a particular
+message was sent by a particular remailer?  As a recipient, should I
+`trust' a remailer more than I trust, say, a digitial signature from
+the sender?  Could someone describe a situation where this would
+provide useful information?  In other words, why *not* simply encode
+with the recepient's public key and restrict the usage of the
+remailer's private to decoding incoming messages?
+
+			Rick
+
+
+
+

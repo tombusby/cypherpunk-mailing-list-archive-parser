@@ -1,0 +1,45 @@
+From: Nathan Loofbourrow <loofbour@cis.ohio-state.edu>
+Date: Thu, 19 Oct 95 06:49:05 PDT
+To: die@die.com
+Subject: Re: DalSemi: Add-Only Memory for Storage of Digital Cash (fwd)
+In-Reply-To: <9510190432.AA04434@pig.die.com>
+Message-ID: <199510191346.JAA10841@colon.cis.ohio-state.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+ > 	Perhaps someone with more semiconductor physics background
+ > can correct me, but my understanding is that some kinds of nuclear
+ > radiation can be used to erase OTP EPROMS.   I suppose this might damage
+ > the crystal lattice badly enough to render the device useless in
+ > some bit positions or reduce data retention time a lot, but I sure
+ > wouldn't bet any security on devices out there not being 
+ > arbitrarily reprogrammable (thus using bits to represent digital
+ > coins in a wallet that get reset when they are spent is not a
+ > good idea).
+
+You might want to take a look at the paper I mentioned, then: I
+believe that irradiation of the OTP EPROM to return all bits to "ones"
+is too blunt a tool to do you any good. A virgin EPROM has a value of
+zero in the suggested scheme. And, as mentioned, flipping random sets
+of bits is strongly likely to get you caught.
+
+Note also that the encoding is strongly tied to the laser-etched serial
+number on the chip, so replay attacks between two different chips --
+i.e. copying a fully loaded chip to a virgin chip -- won't work.
+
+However, it does open up the scheme to replay attacks, if you can load
+the chip with value, spend it, irradiate it, and then successfully
+reprogram the chip with the exact same values you recorded.
+
+Good point.
+
+I seem to remember PROMs actually undergoing physical, rather than
+electrical, state changes (that were presumably nonreversible). Am I
+recalling old technology, or am I just plain mistaken?
+
+nathan
+
+
+
+

@@ -1,0 +1,80 @@
+From: Rich Salz <rsalz@osf.org>
+Date: Sat, 6 Jan 1996 08:57:38 +0800
+To: cypherpunks@toad.com
+Subject: http://www.rsa.com/rsalabs/cryptobytes/
+Message-ID: <9601051755.AA04835@sulphur.osf.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+FYI.
+
+---------- Begin Forwarded Message ----------
+From: <Jueneman@gte.com>
+Message-ID: <30ED605E-00000001@wotan.gte.com>
+Date: Fri, 05 Jan 1996 12:31:08 EST
+Subject: Recent cryptographic findings
+To: ietf-pkix@tandem.com
+
+For those who may not have seen it, the most recent issue of CryptoBytes (Vol1, 
+No. 3) put out by RSA Laboratories has a wealth of information in it.  I have 
+not had the time to fully digest the importance of all of the articles, but in 
+the first one Adi Shamir has proposed an "unbalanced RSA" variant of RSA which 
+"makes it possible to increase the modulus size from 500 bits to 5,000 bits 
+without any speed penalty."
+
+Another article discusses means of deliberately constructing collisions (due to 
+Hans Dobbertin of the German Information Security Agency) when using MD4, and 
+concludes that "where MD4 is in use, it should be replaced." So far, at least, 
+it appears that MD5, RIPEMD, and SHA-1 would resist this kind of attack, but a 
+certain amount of nervousness might be in order.
+
+(Hugo Krawczyk of IBM Research and I considered some of these possibilities in 
+conjunction with work we did on the SEPP protocol, which uses a salted hash 
+function  as a means of confirming the knowledge of a secret to a third party 
+without having to use encryption. We were concerned that collisions might be 
+possible, and also that it might be possible to partially reverse a hash 
+function and glean at least information about the message that was being 
+hashed, (the credit card number) in the case of a very short message. We ended 
+up proposing a combination 140-bit hash function which includes both MD5 and 
+SHA-1, assuming that it would be much more difficult to break both algorithms 
+than just one. I will post the analysis to this list in a subsequent message.)
+
+Finally, Burt Kalisky provides a compendium of some of the possible attacks 
+against RSA, and discusses simple and practical countermeasures.
+
+It seems to me that the most important of the various attacks involve the 
+encryption and decryption of small messages. Since small messages are 
+frequently generated for key exchange and for signature purposes, it is 
+important that we consider these issues carefully. In particular, the use of 
+pseudo-random padding for both encryption (a la the Bellare-Rogaway Optimal 
+Asymmetric Encryption Padding) seems very beneficial, and padding is also 
+important in the signature block.
+
+This group certainly ought to examine these issues very carefully, and we 
+should probably give serious consideration to adopting OAEP for message 
+encryption and key exchange. I believe we should also give serious 
+consideration to a increased length message digest function such as SHA-1, and 
+perhaps incorporate the use of multiple message digest algorithms for 
+particularly important signatures , e.g., CA certificates.
+
+The back issues of CryptoBytes are available at 
+http://www.rsa.com/rsalabs/cryptobytes/.
+
+
+Bob
+
+----------------------------
+Robert R. Jueneman
+GTE Laboratories
+1-617-466-2820 Office
+
+"The opinions expressed are my own, and may or may not
+reflect the official position of GTE, if any."
+
+----------- End Forwarded Message -----------
+
+
+
+
+

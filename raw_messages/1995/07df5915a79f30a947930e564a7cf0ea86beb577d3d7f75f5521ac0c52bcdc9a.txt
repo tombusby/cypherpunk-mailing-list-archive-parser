@@ -1,0 +1,127 @@
+From: Nathan Zook <nzook@bga.com>
+Date: Sun, 6 Aug 95 18:51:07 PDT
+To: solman@MIT.EDU
+Subject: Re: RSA has been proved correct
+In-Reply-To: <9508050806.AA22214@ua.MIT.EDU>
+Message-ID: <Pine.3.89.9508061931.B8642-0100000@maria.bga.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+On Sat, 5 Aug 1995 solman@MIT.EDU wrote:
+
+> Tim quoth:
+> 
+> |> I was reading the logic programming/theorem proving chapter of my new
+> |> Russell and Norvig book on AI, and came across something I once knew about
+> |> but had forgotten: the Boyer-Moore theorem prover was applied to the RSA
+> |> algorithm and the correctness of it was verified. Correctness in the sense
+> |> of showing that outputs match formal specs, for all inputs.
+> 
+> |> The paper is: Boyer, R.S and Moore, J.S. (1984). Proof checking the RSA
+> |> public key encryption algorithm, "American Mathematical Monthly,"
+> |> 91(3):181-189.
+> 
+> Given the enormous difficulty of ensuring security in a world of
+> ubiquitous distributed computing, I'm as big a fan as any of formal
+> methods. But Tim's post hammers home the big fault of formal methods:
+> the possibility that people will come to rely upon them. I have
+> paranoid visions of people finally accepting formal methods in a decade
+> or so, and then becoming dependent on them... forgeting the enormous
+> potential for error that will always exist in such systems.
+> 
+> If somebody told me that intentionally letting a few violent criminals
+> free each year is a good idea because it would keep me on my toes, I
+> would think that person is an idiot. But I'm not entirely convinced that
+> it is a bad idea to avoid formal methods because they could breed
+> complacency.
+> 
+> Cheers,
+> 
+> JWS
+
+The problem is that these "formal methods" are themselves unproved and, 
+in the general sense, unprovable.  Using a computer program to verify RSA 
+is like using number theory to verify some proof in set theory--you may 
+succede, but so what?  The RSA algorithm works because of some basic (and 
+not quite so basic) facts of number theory.  Number theory is assumed in 
+the design of computers, of processors, of operating systems, and of 
+programs.
+
+To put the question succinctly, would you trust a theorem "prover" to 
+verify its own accuracy?
+
+
+The RSA algorithm:
+
+Select primes p and q  and an exponenet e, such that gcd(e,p-1) = 
+gcd(e,q-1) = 1.  (In practice, we would want log_2(q) << e >> log_2(p).
+Publish e and pq.  Find d_1, d_2 such that d_1 and d_2 are inverses of e 
+in Z_p-1 and Z_q-1 respectively.  A message Y (from 0 to pq-1) is 
+transformed into X = Y^e mod qp.  When you recieve a message X, let X_1 = 
+X mod p and X_2 = X mod q.  Let Y_1 = X_1^d_1 mod p and Y_2 = X_2^d_2 mod 
+q.  Use the Chinese Remainder Theorem to find Z (from 0 to pq-1) such 
+that Z = Y_1 mod p1 and Z = Y_2 mod p2.
+
+Theorem: Z = Y.
+Pf:
+Let p_1 = p and p_2 = q
+a) Observe that in F_p_i, (Y^e)^d_i = Y^(e*d_i) = Y^(r*(p-1)+1) = 
+        Y^((p-1)*r) * Y= (Y^(p-1))^r * Y = 1^r * Y = Y.
+
+b)  There exist p,q,e triples.
+  If we let the order of our selection be p,e,q then we observe that we are
+  free in our selection of p, and that our selection of e is not very 
+  constrained.  ((p-1/)2 +- 1 being obvious examples).  We then observe 
+  than any arithmatic progression of integers which does not obviously 
+  consist entirely of composites must contain an infinite number of 
+  primes, and observe that the condition that gcd(q-1,e) = 1 defines just 
+  such a progression.
+  
+c) The d's can be found
+  See Euclid's Algorithm
+
+c) Z_pq is the (ring) direct sum of Z_p and Z_q
+
+QED
+
+(Observe that the Chinese Remainder Theorem works on arbitrary ring direct 
+sums.)
+
+
+Why this excercise?  Because not _one_ of the cited theorems is modern.  
+The only thing in this proof unknown to Fermat, Galios, Euclid, and the 
+Middle Age Chinese is that bit about arithmatic progressions and primes, 
+which may have been known to Fermat or Euclid.  If I am informed that a 
+theorem "prover" has "verified" this theorem, then I am led to believe 
+that the "prover" is not obviously broken.  My confidence (as an 
+algorithm--this is a separate issue from decryption resistance) in RSA has 
+_NOTHING_ to do with what some theorem "prover" may or may not have to 
+say about it.  Such statements serve only to inform that these "provers" 
+are broken (if they don't like it), or that they concievably do "verify" 
+proofs (if they do).
+
+OTOH, the theorems and axiom systems corresponding to these theorem 
+"provers" are very complex, and quite subtle at points.  Plug in the 
+lastest attempt at Fermat's Last (as opposed to his Little) theorem, and 
+tell me if its good.  Do the classification of finite groups.  I know, 
+there is a 125-page attempt at the Poincare' conjecture.  Try it.  If 
+these "provers" find heretofore unobserved flaws, THEN I'll concede that 
+they would be useful tools in mathematics--in uncovering flaws.  But they 
+_still_ don't "prove" that these theorems are correct.  They only 
+convince themselves.  But convincing me that I should believe them 
+involves convincing me that there has been no failure in the program--at 
+any of the levels I've previously discussed.  And, by the way, this is why 
+the general mathematical community is still suspicious of the 4-color 
+theorem.  In fact, the orginal "proof" contained a number of flaws.  
+All discovered were all easily patched, but the fact that they existed in 
+the first place means that we have no reason to believe that something 
+subtle is yet to be discovered.
+
+Nathan
+
+
+
+

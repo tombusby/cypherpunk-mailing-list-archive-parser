@@ -1,0 +1,86 @@
+From: roy@sendai.cybrspc.mn.org (Roy M. Silvernail)
+Date: Mon, 4 Jul 94 15:58:11 PDT
+To: tcmay@netcom.com (Timothy C. May)
+Subject: Re: Question for PGP Gurus
+In-Reply-To: <199407041851.LAA17276@netcom5.netcom.com>
+Message-ID: <940704.170829.5q1.rusnews.w165w@sendai.cybrspc.mn.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+In list.cypherpunks, tcmay:
+
+> PGP gurus, 
+> 
+> I don't follow the ins and outs of PGP very closely, and I can't find
+> anything on this directly in my archived articles.
+> 
+> Someone has told me that pre-MIT versions of PGP may have compromised
+> security because "the session key is hashed solely from the
+> plaintext."
+> 
+> Is this true? What's the significance? Is there any weakness?
+
+It's not true.  The MD5 hash of the plaintext is used as a part of the
+overall session key generation, if available.  Here's a comment from
+~/pgp23/src/crypto.c:
+
+    /*  Now we have to generate a random session key and IV.
+        As part of this computation, we use the MD5 hash of the
+        current file, if it has previously been obtained due to a
+        signing operation.  If it has not been obtained, we hash
+        the first 2K (for efficiency reasons) for input into
+        the key generatrion process.  This is to ensure that
+        capturing a randseed.bin file will not allow reconstruction
+        of subsequent session keys without knowing the message
+        that was encrypted.  (A session key only protects a
+        single message, so it is reasonable to assume that an
+        opponent trying to obtain a session key is trying to
+        obtain, and thus is ignorant of, the message it encrypts.)
+
+        This is not perfect, but it's an improvement on how session
+        keys used to be generated, and can be changed in future
+        without compatibility worries.
+    */
+
+The hash of the current file is combined with the contents of
+randseed.bin.  Looks like the hash value is being used to gain a few
+bits of entropy that can't be recovered from randseed.bin alone.
+
+Checking the 2.6 code, I find the MD5 of the current file is used in the
+random session key generation, but slightly differently:
+
+ * The MD5 of the current file is used to "prewash" the random numbers,
+ * to make it more difficult for an attacker to predict the output.
+
+If the key were solely hashed from the plaintext, that could make for
+some known-plaintext attacks.  But since a new session key is used each
+time, there doesn't seem to be much value in it.  As it is, I don't see
+a problem with the session key generation using the file hash as a part
+of its entropy.
+
+Then again, could an IDEA session key be recovered by a known-plaintext
+attack?  If so, could a known-plaintext attack then be made against RSA?
+(for that matter, is RSA vulnerable at all to known-plaintext attack?)
+- -- 
+    Roy M. Silvernail       |  #include <stdio.h>            | PGP 2.3 public
+roy@sendai.cybrspc.mn.org   |  main(){                       | key available
+                            |  int x=486;                    | upon request
+                            |  printf("Just my '%d.\n",x);}  | (send yours)
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQCVAwUBLhiMeRvikii9febJAQH/GQP8C/fNNkxlhz1vMnyNbyxdT9UeMUKrE4I8
+bmyfWYSV9RxBQZR6OA2tU2hUWiX5Yvycn/IYYmxYbFEkio1zDSRuhit3svB1LPQY
+lzBhkaf+Uqjl7zx5HFD7ON+0kjr8D01r4g+HQceQwep4jOWTXZ/OZKas/aiOqhH7
+Pv08H0BEpps=
+=ZtUN
+-----END PGP SIGNATURE-----
+
+
+
+
+

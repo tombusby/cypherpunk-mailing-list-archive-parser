@@ -1,0 +1,36 @@
+From: Cynthia Brown <cynthb@sonetis.com>
+Date: Sat, 23 Aug 1997 05:16:41 +0800
+To: Patrick Oonk <patrick@atro.pine.nl>
+Subject: Re: Picketing with packets enhanced version
+In-Reply-To: <199708221937.VAA05218@atro.pine.nl>
+Message-ID: <Pine.BSD/.3.91.970822162821.7303B-100000@mrburns.iosphere.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+On Fri, 22 Aug 1997, Patrick Oonk wrote:
+
+> There were several problems. One of it still remains, 
+> it does not resolve FDQN's, so you have to use IP-numbers in
+> the hosts file.
+
+Suggested mod:
+
+---snip---
+# diff -e picket.orig.pl picket.pl
+55,57d
+50c
+     if ($host =~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
+       $ipaddr = inet_aton( $host ) ||
+         die "inet_aton: invalid IP address $host";
+       }
+     else {
+       $ipaddr = (gethostbyname($host))[4] ||
+         die "gethostbyname: hostname $host not found";
+       }
+
+
+
+
+

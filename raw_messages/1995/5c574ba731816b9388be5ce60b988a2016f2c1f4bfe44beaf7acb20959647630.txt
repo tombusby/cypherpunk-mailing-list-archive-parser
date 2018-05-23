@@ -1,0 +1,51 @@
+From: Adam Shostack <adam@bwh.harvard.edu>
+Date: Sun, 5 Feb 95 12:25:05 PST
+To: sdw@lig.net (Stephen D. Williams)
+Subject: Re: The SKRONK protocols (version 0.6)
+In-Reply-To: <m0rb7Za-0009tFC@sdwsys>
+Message-ID: <199502052024.PAA21302@bwh.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Stephen D Williams wrote:
+
+| > THE SKRONK MAP DAEMON
+| > 
+| > A skronk map daemon is a UDP service that tells what skronked services are
+| > available from a site, and what alternate TCP server port numbers they
+| > use.
+| 
+| UDP won't get through most firewalls.
+| 
+| Build in support for non-transparent firewalls (ie: telnet gatekeeper,
+| c sys port).
+| 
+| Handle getting access to skronked protocols by using the standard telnet
+| port and logging in as 'skronk' to get access to a service multiplexer.
+| 
+| Just some suggestions to deal with realities of availability.
+
+	I was going to say some similar things about firewalls, but
+then decided that Strick is doing the right thing.  If the firewall
+wants to offer skronk'd services, it can respond to the UDP packet,
+and offer up services, presumably through relays.
+
+	The relay/proxy programs for these protocols already exist.
+So you can reuse them to carry encrypted traffic through your
+firewall.  Why build a new set of proxies that have to be checked for
+correctness?
+
+	Of course, letting encrypted traffic through your firewall
+will upset those people who thought they can virus/porn scan at the
+firewall.  Such scanners are almost always broken anyway.
+
+Adam
+
+
+-- 
+"It is seldom that liberty of any kind is lost all at once."
+						       -Hume
+
+
+

@@ -1,0 +1,66 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Tue, 20 Oct 1998 04:42:50 +0800
+To: fisherm@tce.com
+Subject: Re: 2 questions: Prime Numbers and DES
+In-Reply-To: <2C396693FBDED111AEF60000F84104A721C02B@indyexch_fddi.indy.tce.com>
+Message-ID: <199810191956.UAA08549@server.eternity.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+> Steve Benjamin writes:
+> >2.  Is there an implentation of DES in perl?  I didn't see a link to one
+> >on the export-a-sig page.  If not perl, is there one for DOS?  I'm
+> >looking for a bare bones one, not something with tons of features
+> >and a GUI.  A perl or dos version of the unix "des" program would be
+> >preferable.
+> 
+> CPAN (the Comprehensive Perl Archive Network),
+> <URL:http://www.perl.com/CPAN/>, is your friend -- use it.  (Look under
+> "Authentication, Security and Encryption" -- there are 3 versions of DES
+> listed, along with an interface to SSLeay, which includes DES as one of its
+> algorithms).
+
+Steve Reid wrote an RSA key generator in perl and dc.  See:
+
+	http://sea-to-sky.net/~sreid/rsagen.txt
+
+I am not sure about the security of the keygeneration algorithm.  Ron
+Rivest suggested it as a hack to more easily generate keys on the
+coderpunks list I think a year or so back, when Steve was discussing
+easier ways to generate valid RSA keys.  But I am not sure if such
+keys are hard to factor or not.  Perhaps one should ask Rivest before
+using it, you'll have to check the archives for Rivest's comments,
+unless you can understand the alogirthm from Steve's code.
+
+Also you asked about DES, here's a compact perl version of DES (not on
+my web page, must have forgotten to add it), by John Allen:
+
+#!/bin/perl -s-- DES in perl5
+$/=" ";sub u{$_=<DATA>;s/\s//g;map{-33+ord}/./g}$"='';$[=1;@S=map{[u]}1..8;@I=
+u;@F=u;@C=(split//,unpack B64,pack H16,$k.0 x16)[u];@D=splice@C,29;@p=u;$_=11 .
+2222221 x2;for$l(/./g){map{push@$_,splice@$_,1,$l}\@C,\@D;$K[++$i]="@{[(@C,@D)
+[@p]]}"}@E=u;@P=u;%a=map{unpack(B8,chr$_),$_}0..63;while(read STDIN,$b,8){@L=(
+split//,unpack B64,$b."\0"x7)[@I];@R=splice@L,33;for$i(1..16){$i=17-$i if$d;@t
+=@R[@E];$j=1;$n=0;for(($K[$i]^"@t"|0 x48)=~/.{6}/g){($n<<=4)+=${$S[$j++]}[$a{
+"00$_"}+1]};@t=(split//,unpack B32,pack N,$n)[@P];@X=split//,"@L"^"@t"|0 x32;
+@L=@R;@R=@X}print pack B64,join'',(@R,@L)[@F]}__END__~printunpacku,'$2F%P:```'
+/!%0.("%#/0#,.)"$++''--,&**&!$()%0"-/))#.%'*#",(0&-,*$(/$++!&'!. 0$".)%/('0,#$
+)%/*-(!#".+-'!*&,+&!./)(+,"+$%0.%"#&,)'-('-*!$&#/0* +.!(*!/*'$$%0'&+"#.)-&(/,-
+%,#0)"."'+%.*!)'0*$)!(,%"0#/-$&,+&/#(- (..)/,$&!''0*!+$"%#()#&-,"-+%/0*+$'0*!!
+'-+,"(..)0*"%$&/,&-#()#%/ #/-,%#"-(%+(,.'")&&!$00+.$!*/)*'%,#)"-,(+"./(#).0'*0
+-!&*'+$%!&/$ -+"0+%0#*(#-'*)&!'."$.%//!(,&$,)*%/$0#&-#*)&-0$+(,!/%"+("'.!,)'. 
+%.,!#,/(0%!*)".+$/-$*&(-&#+0')"'"'%,,..)-"$%(+/(+*0&'!)0!/&#*$#- ."#0).%)'+0$,
+("%+-*&$'/,&!!/-*(#(#,"%/"(*%-+/)#.!0'-+*.!0$$&&'), [SKC;3+#]UME=5-%_WOG?7/'aY
+QIA91)ZRJB:2*"\TLD<4,$^VNF>6.&`XPH@80( I)Q1Y9aAH(P0X8`@G'O/W7_?F&N.V6^>E%M-U5]
+=D$L,T4\<C#K+S3[;B"J*R2Z: ZRJB:2*"[SKC;3+#\TLD<4,$]UME`XPH@80(_WOG?7/'^VNF>6.&
+=5-% /2,9"&$=0'6+84-%;)1(<5.#JU@FPX?ITNBQMRHYCVOKSE>A A"#$%&%&'()*)*+,-.-./012
+12345656789:9:;<=>=>?@A" 1(56>-=2"08;&3@+#)9/A<$*4.?'7,%:
+
+Adam
+
+
+
+

@@ -1,0 +1,37 @@
+From: jim@bilbo.suite.com (Jim Miller)
+Date: Mon, 29 Nov 93 20:02:06 PST
+To: cypherpunks@toad.com
+Subject: Re: Cryptosplit 2.0
+Message-ID: <9311300356.AA15067@bilbo.suite.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+>If I remember coorectly it's KerberosV uses an MD5 hash of /dev/mem.
+
+I'm pretty familiar with the most recent iteration of Kerberos V  
+(pre-release beta 3).  There is no mention of /dev/mem in any of the  
+Kerberos V source code files.
+
+As best as I can tell,  all DES keys and random numbers used by Kerberos  
+are ultimately derived from pass-phrases.
+
+The random DES keys produced by the Kerberos administration utilities are  
+derived from the KDC master key and some other info (not /dev/mem).  The  
+KDC master key is derived from a pass-phrase.
+
+All random numbers used inside the Kerberos runtime library are derived  
+from the user's or server's secret DES key.  A user's secret key is  
+derived from the user's pass-phase.  A server's secret key is derived from  
+a pass-phrase or generated automagically by the Kerberos administration  
+utilities mention above.
+
+(all this is assuming you are using the DES encryption option)
+
+Jim_Miller@suite.com
+
+
+
+
+

@@ -1,0 +1,138 @@
+From: Jim Choate <ravage@EINSTEIN.ssz.com>
+Date: Thu, 13 Feb 1997 11:22:48 -0800 (PST)
+To: cypherpunks@toad.com
+Subject: distributed mailing list architecture (fwd)
+Message-ID: <199702131929.NAA04666@einstein>
+MIME-Version: 1.0
+Content-Type: text
+
+
+
+Forwarded message:
+
+> Date: Fri, 7 Feb 1997 20:11:15 GMT
+> From: Adam Back <aba@dcs.ex.ac.uk>
+> Subject: distributed mailing list architecture
+
+> Igor Chudov <ichudov@algebra.com> writes:
+> > I'd suggest a simplier solution: to connect each server with a couple,
+> > or maybe three, other servers. This scheme is rather robust, does not
+> > consume too much CPU time and bandwidth, and is easy to implement.
+> 
+> I'm not sure what the architecture you are suggesting is, but this is
+> what I suggest as the simplest to set up.
+
+I envision it to look like a fishnet.
+
+> Have one main majordomo.
+
+There should be no "one main" anything on this project.
+
+> You subscribe to the main majordomo request address, and it forwards
+> your subscription request to a random mail-exploder.
+> 
+> You unsubscribe to the main majordomo request address, and it forwards
+> your subscription to all the mail-exploders request addresses
+> (unsubscribe traffic is low anyway, keeping track of who is subscribed
+> where at the main major domo doesn't seem worth it).
+> 
+> Each person who wishes to run an exploder is subscribed (manually) to
+> the main majordomo.
+> 
+> You submit articles to the main majordomo, and it sends copies of the
+> articles to it's subscribers (the mail-exploders).
+> 
+> The mail-exploders send mail to the address on their subscriber lists.
+> 
+> (John Gilmore suggested this architecture, as a simpler alternative).
+
+Simpler? Hardly.
+
+With the remailer chain proposal we could have a working remailer network
+up in a couple of more days. What you propose will take weeks to write
+and debug code and then follow it through.
+
+No, this approach is neither simple or efficient.
+
+What I call a fishnet toplogy is much cleaner. Each node only has to
+filter messages where it was in the source chain. Easy to do with procmail,
+if you look at the first example on the man page, eg how to dump to
+dev/null, you find a perfect example of what procmail needs to do. It does
+not need to know who else is on the network (as in a star) and its traffic
+consists of one copy of each incoming instead of n copies from each of
+the 'star' remailers plus the outgoing from the local subscribers. A easy
+protocol can be arranged so that if the downstream remailer breaks it
+subscribes to the next one in the chain, again easy to do with just a few
+lines of code...
+
+
+  If (bounce count of next site expires)
+    {
+       subscribe backup feed
+    }
+  If (next site returns)
+    {
+       unsubscribe backup feed
+    }
+
+
+
+As to the actual architecture:
+
+
+                      A --> D
+                     ^ \   ^ \
+                    /   v /   v
+                   C <-- B <-- E
+                         ^
+                         |
+                         v
+                         N  (mail-news gateway)
+
+
+Again, several nice features are:
+
+  *  Can be gotten up from a stock majordom/procmail install in a
+     trivial manner
+
+  *  Site only has to filter mail from itself
+
+  *  It only has to keep up with two sites in the network instead
+     of many (support for limited scope and anonymity)
+
+  *  Each site gets a critical feed from only 1 other site so traffic of
+     duplicates is a minimum
+
+  *  Except for sites on the boundary of the net every site has two
+     places to send its output, adding to robustness, if we allow
+     the edges to wrap (eg torus) then no sites have less than 2
+     other sites to send traffic to.
+
+  *  Supports various levels of encryption or authentication on a link
+     by link basis, not forcing all members to submint to a general
+     architecture
+
+  *  Scales easily, something the star model does not do since hub
+     machines must grow at a rate dependant on the total number of
+     remailers in the chain this equates to mullah and lots of it
+     should the network take off
+
+  *  The actual number of machines in a given chain is flexible, I
+     would guess the number should match a plane tiling figure,
+     triangle (n=3), squares (n=4), or hexagons (n=6)
+
+  *  Traffic analysis and sync floods are harder to impliment in this
+     architecture than a star or hub based network
+
+  *  Supports 'little' machines and operators who are not guru's
+     or have deep pockets
+
+
+                                                   Jim Choate
+                                                   CyberTects
+                                                   ravage@ssz.com
+
+
+
+
+

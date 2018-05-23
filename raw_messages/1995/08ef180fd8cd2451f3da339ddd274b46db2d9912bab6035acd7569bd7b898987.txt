@@ -1,0 +1,62 @@
+From: Hal <hfinney@shell.portal.com>
+Date: Fri, 6 Jan 95 20:32:28 PST
+To: cypherpunks@toad.com
+Subject: Re:  Can someone verify this conjecture for me?
+Message-ID: <199501070433.UAA16429@jobe.shell.portal.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+
+From: nelson@crynwr.com (Russell Nelson)
+> 
+> I'd like to make sure I understand how a digital mix works.  I've read
+> Chaum's paper on it, but hey, there's a reason why I don't have a Phd
+> in spite of having all the coursework done.
+> 
+> It seems like it solves two separate problems: 1) foiling traffic
+> analysis, and 2) foiling a cheater remailer.  The problems are
+> separate, really, because if you really, really trust the remailer (as
+> many people do Julf), then 2) isn't a problem.  All you need to do is
+> solve 1.  Or, you can solve 1) by using a single remailer.  A
+> necessary but not sufficient step to foil traffic analysis is to strip
+> headers.
+
+My take on the paper is that he first presents the "mix", or remailer, as
+a method of foiling traffic analysis.  Then he extends this to the
+"cascade", or chain of remailers, which does not improve traffic analysis
+resistence but as you say provides some immunity against a bad operator.
+
+> If you trust any one remailer, then you needn't bother using any other
+> ones (assuming that remailer has enough traffic, delay, mixing, etc to
+> foil traffic analysis).  There's no real difference between using a
+> set (N>1) of trusted remailers and using only one, because you can
+> consider the set of remailers to be a single remailer from the point
+> of view of traffic analysis.
+
+There are other differences which may be relevant in practice.  One is
+bandwidth.  With a Chaumian cascade of N remailers you get N times the
+bandwidth used, as well as increased latency through the remailer
+network.
+
+One thing that is not often appreciated in Chaum's paper is that at least
+in his first description of the cascade, the assumption is that all users
+use the same sequence of remailers in the same order.  We OTOH usually assume
+a different model, where the different possible paths are chosen with
+some distribution and randomness.  I posted an analysis of some of the
+impacts of this difference a few months ago.
+
+Hal
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAwUBLw4ZXhnMLJtOy9MBAQGjtwIA7tlEMnKPqUAVqAMSmK6EE6eaOlzhqeLL
+hsHXhNJajyZQjF6osybGSYJ00UBhRkbAxUOtjY4MNf6oMrb9fKRxGg==
+=A3oZ
+-----END PGP SIGNATURE-----
+
+
+
+

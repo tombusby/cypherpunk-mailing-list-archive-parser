@@ -1,0 +1,71 @@
+From: Eric Hughes <hughes@soda.berkeley.edu>
+Date: Wed, 2 Jun 93 07:12:49 PDT
+To: cypherpunks@toad.com
+Subject: Software infrastructure
+In-Reply-To: <9306020704.AA01148@soda.berkeley.edu>
+Message-ID: <9306021446.AA14130@soda.berkeley.edu>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Let me clarify the discussion here about PC terminal software.  There
+are two distinctions I'd like to make.
+
+The first distinction is between a terminal program and a mail/news
+reader.  Terminal access is necessary so that all functions of the
+dialup service which are not mail/news can still be accessed.  An
+integrated mail/news reader is desirable because this is a primary
+activity of many users.  Ideally, you want both.
+
+The second distinction is between stream and file encryption.If you
+want to encrypt the underlying channel, you need a stream cipher and a
+D-H key exchange.  If you want file encryption, you want a block
+cipher and public keys for communications.
+
+These two distinctions are correlated.  The terminal nature of such
+software requires support for stream encryption.  The mail nature of
+such software requires file encryption.  PGP is a file encryptor, not
+a stream encryptor.  You can't use PGP for the terminal line; you can
+you it for email.
+
+>As Eric indicates, the issue is not so much building encryption into the
+>program but rather of having _hooks_ by which extra functionality can be
+>added.  
+
+One useful discussion would be to examine just what hooks are
+desirable.  The capability 'encryption' is too broad; one needs to
+specify just what variety and what purpose is desired.
+
+Re: dealing with mail software intended for humans.
+>The result is that the mail program you are running on the host computer
+>may do some munging on the PGP message, like inserting "Press RETURN for
+>next page" or perhaps some terminal control characters.
+
+It is for exactly reasons like this that one of the hooks should be an
+ability to specify how one gets one's mail.  For Unix, I would suggest
+POP, as Paul Ferguson has mentioned.  For online services like
+compuserve, aol, etc., a separate protocol which spoofs their mail
+readers into sending you your mail en masse could be written.
+
+This also implies the existence of offline mail readers.
+
+>Plus, this only deals with the message-receiving problem, not the sending
+>problem.
+
+Trying to spoof a whole mail system on a terminal seems doomed.
+Offline readers are the way to go.
+
+>Then for outgoing mail you'd like to be able to drop into a user-defined
+>editor which is run with a command line causing his file to be saved to
+>some temp file name.  
+
+What editor you use is another hook.  I use Desqview, and I love to be
+able to spoof Desqview into spoofing my editor (which is _always_
+running) into editing my reply.  So the hook has to be a bit more
+flexible that running an executable.
+
+Eric
+
+
+
+

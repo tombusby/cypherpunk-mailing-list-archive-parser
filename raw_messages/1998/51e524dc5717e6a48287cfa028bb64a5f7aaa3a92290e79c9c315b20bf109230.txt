@@ -1,0 +1,44 @@
+From: Martin Minow <minow@pobox.com>
+Date: Tue, 27 Oct 1998 05:38:24 +0800
+To: "David R. Conrad" <drc@adni.net>
+Subject: Re: Java applet security, exportability, Jon Postel haiku
+In-Reply-To: <Pine.LNX.4.05.9810260937040.10525-100000@darwin.adni.net>
+Message-ID: <v03102803b25a73d9df69@[17.202.40.158]>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+A few Java comments on David Conrad's <drc@adni.net> questions:
+
+>
+>As they go through the data entry process I collect bits of entropy from
+>mouse and keyboard events in a java.security.SecureRandom object.
+
+Java 1.1 lets you attach event handlers to every user-interaction
+class. For example, you can watch mouse movement, mouse entry
+and exit into your components, and character entry in all text fields.
+You might try adding handlers and capturing mouse position and
+the system clock. Each event, by itself, won't give you much
+entropy (and, of course, they are highly correlated event-to-event),
+but you should be able to get a bit or two from each event.
+
+>
+>... I was flabbergasted when I found out that jdk
+>1.0 had no printing API and so our applet, if it should allow users to
+>print, must be a 1.1 applet, and very few browsers have 1.1 support
+
+Java 1.1 is real, and support is becoming available on all platforms.
+The lack of a printing API in Java 1.0 was probably a good thing:
+printing is hard to get right, especially in a cross-platform environment,
+and waiting for a more mature AWT will avoid compatibility issues.
+Since your customers use a browser, why not display the data and
+have the browser handle the printing?
+
+Martin Minow
+minow@pobox.com
+
+
+
+
+

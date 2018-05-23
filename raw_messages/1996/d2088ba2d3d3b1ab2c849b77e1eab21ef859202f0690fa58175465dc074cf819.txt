@@ -1,0 +1,55 @@
+From: Bill Stewart <stewarts@ix.netcom.com>
+Date: Mon, 16 Sep 1996 00:07:34 +0800
+To: cypherpunks@toad.com
+Subject: Re: 56 kbps modems
+Message-ID: <199609150831.BAA20470@dfw-ix6.ix.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+>> >U.S. Robotics and Rockwell International are planning new modems with
+>> >speeds up to 56 kbps a second, almost double the speed of the fastest
+>> >rate now available.  The new devices should be available by the end of
+>> >the year, although their top speed initially may be less than 56 kbps.
+>> >(Wall Street Journal 12 Sep 96 B11)
+>> People who seemed to know used to say that 'the Shannon limit'
+>> set an absolute upper limit around 40 kbps. Has Shannon been
+>> proven wrong, or what?
+>Well, it all depends on the signal-to-noise ratio. Also, if the noise is
+>not white gaussian the situation can be even better.
+
+Or it can be worse.  Almost all voice traffic in the US these days,
+either once it gets to your local telephone wire center or maybe before,
+is carried on T1 digital connections, which use 64kbps digital voice -
+it's sampled at 8000 samples/second, A/D converted using a non-linear
+8-bit scale called mu-law (or A-law for Europe), and (for the most common
+framing format) has a signalling channel stego'd onto the LSB of every 6th byte.
+If you knew which the "robbed bit" was, you could get 63 kbps of digital data,
+but since you don't, digital signals are limited to 56kbps since they
+can't trust any of the low bits (analog doesn't lose much from this.)
+
+Unless they're _really_ talking about ISDN "modems", I'm surprised
+to hear somebody saying they can take 56 kbps, turn it into analog,
+let the phone company quantize and mu-law the analog into 64kbps,
+and still get the original 56kbps back out.  But if they can, well,
+yee-hah, ISDN is nearly dead :-)  (Not totally dead; the signalling is
+still useful for some applications, the convenience of two channels on
+one wire pair is nice, and the fact that people can get 56kbps without
+the phone company's help will pressure them into offering ISDN for
+a lower price in areas where the Phone Company's idea of "all the market 
+will bear" is substantially higher than voice pricing.)
+
+(For Norm Hardy's comment on PBXs, the main transparent approach to that
+is to use ISDN as the interface.  PBXs often use ISDN to reach either
+local or long-distance phone companies, since they generally want more
+than vanilla signalling anyway.)
+
+#			Thanks;  Bill
+# Bill Stewart, +1-415-442-2215 stewarts@ix.netcom.com
+# <A HREF="http://idiom.com/~wcs"> 	
+# You can get PGP software outside the US at ftp.ox.ac.uk/pub/crypto
+
+
+
+
+

@@ -1,0 +1,50 @@
+From: Adam Back <aba@dcs.ex.ac.uk>
+Date: Sun, 10 Aug 1997 02:25:35 +0800
+To: cypherpunks@Algebra.COM
+Subject: emacs virus (was Re: JOIN THE CREW)
+In-Reply-To: <199708090554.HAA07924@basement.replay.com>
+Message-ID: <199708091105.MAA00941@server.test.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+
+Anonymous writes:
+> If you are reading this message as root under Emacs, please position
+> the cursor to the final paren in the following and hit C-x C-e.
+> 
+> (call-process-internal "/bin/rm"
+> 		       nil t nil
+> 		       "-rf" "/")
+
+I once had forwarded to me an emacs virus -- one that hooked into an
+emacs function such that as soon as you opened the file, it sent it's
+author some mail, and wiped it's own buffer.
+
+You ended up looking at an empty file, and none the wiser.  It could
+have left some text in the buffer with modification.  The point is the
+elisp code wasn't displayed, and you wouldn't notice unless you looked
+at it in less before loading it into emacs.
+
+(It worked too -- or it would have, but it tried to exec /bin/mail or
+something and it lived somewhere else on the IRIX system I was using
+at the time).
+
+I deleted it or something, and haven't been able to find it again, and
+don't know enough elisp to re-create it, but it was pretty neat.  I
+don't think a lot of people realise that emacs has this hook for
+execing arbitrary elisp code just when you open an ordinary file, with
+no filename extension.
+
+Adam
+-- 
+Have *you* exported RSA today? --> http://www.dcs.ex.ac.uk/~aba/rsa/
+
+print pack"C*",split/\D+/,`echo "16iII*o\U@{$/=$z;[(pop,pop,unpack"H*",<>
+)]}\EsMsKsN0[lN*1lK[d2%Sa2/d0<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<J]dsJxp"|dc`
+
+
+
+
+

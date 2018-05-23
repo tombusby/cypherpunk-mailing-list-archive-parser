@@ -1,0 +1,96 @@
+From: mpd@netcom.com (Mike Duvos)
+Date: Fri, 25 Feb 94 12:55:19 PST
+To: cypherpunks@toad.com
+Subject: Compiling Magic Money Under BC++ 3.1 IDE
+Message-ID: <199402252056.MAA21889@mail.netcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+Earlier this morning I grabbed the latest version of Magic Money
+from csn.org and compiled it under the Borland C++ 3.1 IDE. Since
+the Borland C compiler is one of the more paranoid ones around, I
+thought I would briefly list the things I had to do in order to
+get zero warnings and zero errors.
+
+The sources I started with were MGMNY10E.ZIP and PGPTL10C.ZIP.
+
+After #defining MSDOS you will find that it is a good idea to
+#include <stdlib.h> in almost every module.  This prototypes
+quite a few of the commonly used functions which would otherwise
+cause the compiler to complain.  A few modules will require
+<mem.h>, <string.h>, and <time.h> since they call functions in
+these modules which are not in <stdio.h> or <stdlib.h>.
+
+The C library function "randomize" is defined in <stdlib.h>. This
+conflicts with the Magic Money function of the same name which
+initializes the MD5 based RNG used to generate coin ids. I
+changed the name of the Magic Money one to "random_init".
+
+There is no prototype for pgp_randombyte.  Since this function
+returns "byte", not "int", this could be painful on any compiler
+which treats these types of function returns differently.
+Complete prototypes for (*output) and (*lookup) need to be
+provided in the function header of pgp_check_sigs and also for a
+different function pointer (*output) used in PGPKGEN.
+
+The Borland compiler always warns on "if (a=b)" because it
+assumes the user mistyped "if (a==b)".  To get rid of the
+warning, you have to say "if (0!=(a=b)) which is optomized out by
+the compiler.  This occurs in a number of places, including the
+macro for multiplication mod 65537 in idea.c.
+
+There is a reference to an undefined pgp_pubkey in fifo.c which
+goes away if you #include "pgptools.h".  You then also have to
+toss in "mpilib.h" and "md5.h" to make "pgptools.h" happy.
+
+It appears that mpilib.c has been persuaded to compile the UPTON
+modmult instead of the SMITH modmult.  Unfortunately, there are a
+few modules which fail to #include the definition of UPTON and
+still call stage_smith_modulus and smith_modmult.  Sticking in a
+#define to UPTON at the top of "mpilib.h" fixes this.
+
+The conditional code which allows prior definition of external
+versions of mp_setp, mp_addc, mp_subb, mp_smul, and mp_rotl
+written in assembly language for some strange reason causes the
+compiler to generate externals to _P_SETP, _P_ADDC, _P_SUBB,
+_P_SMUL, and _P_ROTL instead of _mp_setp, _mp_addc, _mp_subb,
+_mp_smul, and _mp_rotl in modules which reference these routines.
+It does not seem to have this effect in mpilib.c where these
+routines are defined.  Deleting the corresponding #ifdefs cures
+this.
+
+The compiler correctly points out that pgp_extract_rsa never uses
+the variable "pk" passed to it.  At the cost of a few machine
+cycles, you can silence the compiler by putting "pk=pk" as the
+first executable statement in this function.
+
+The function pgp_randombyte hashes a variable "time" without
+first initializing its value.  It might be nice to change "time"
+to "timestamp" and do a "time(&timestamp) unless it was the
+authors intention to utilize uninitialized memory.  If the server
+is executed more than one time within a second, it can generate
+indentical random values.  This could be a problem when
+batch-processing mail. Including a fast timer register in the MD5
+hash in addition to the time of day in seconds would likely
+eliminate this risk.
+
+The program uses "safemalloc" and "mm_safeopen" to access memory
+and files, but does a very large number of "fread" and "fwrite"
+calls without checking to see if they completed successfully.  A
+"safefread" and "safefwrite" might be a good idea so the server
+does not continue happily on as the hash file fills up the disk.
+
+I was thinking I might put the DOS executables for Magic Money in
+my FTP directory, in case anyone wants to play with them but
+doesn't wish to compile them from source.  Send me some mail if
+you would like me to do this.
+
+
+-- 
+     Mike Duvos         $    PGP 2.3a Public Key available    $
+     mpd@netcom.com     $    via Finger.                      $
+
+
+
+

@@ -1,0 +1,140 @@
+From: jito@netcom.com (Joichi Ito)
+Date: Fri, 28 Jan 94 09:52:18 PST
+To: cypherpunks@toad.com (Cypherpunks List)
+Subject: Re: Quantum cryptography
+Message-ID: <9401281749.AA23308@iikk.inter.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+I'm taking the liberty of forwarding this note here because email to
+jdblair@rogue.cas.muohio.EDU bounces so I couldn't thank John or ask for
+permission. It was the only reply I got, but I think it is really
+interesting so...
+
+ - Joi
+
+
+>From: jdblair@rogue.cas.muohio.EDU (John Blair)
+>Message-Id: <9401280824.AA08537@ rogue >
+>Subject: Re: Quantum cryptography
+>To: jito@netcom.com (Joichi Ito)
+>Date: Fri, 28 Jan 1994 03:24:41 -0500 (EST)
+>In-Reply-To: <9401280501.AA02095@iikk.inter.net> from "Joichi Ito" at Jan 28,
+>94 02:00:22 pm
+>X-Comment: The enlightened man is one with the subject. -Mumon
+>X-Mailer: ELM [version 2.4 PL21]
+>Mime-Version: 1.0
+>Content-Type: text/plain; charset=US-ASCII
+>Content-Transfer-Encoding: 7bit
+>Content-Length: 3259      
+>
+>> 
+>> Does anyone know how quantum cryptography works?
+>> 
+>>  - Joi
+>> 
+>> 
+>> --
+>> true name:                 <Joichi Ito>
+>> closest email address:     <jito@netcom.com>
+>> closest fax number:        <+81-3-5454-7218>
+>> current physical location: <Tokyo>
+>> travel path:               <.>
+>> mosaic home page:          http://iikk.inter.net/
+>> --
+>> finger jito@netcom.com for PGP Public Key, RIPEM Public Key
+>> --
+>> 
+>
+>Joi,
+>
+>Chances are you're recieving a lot of answers to this, but here's one anyways.
+>
+>This comes from:  Schneier, Bruce, _Applied Cryptography_, pp 408-410,
+>John Wiley & Sons, Inc, New York.  pp 408-410
+>
+>Quantum cryptography relies on the property that one cannot know the
+>position and the velocity of a particle at the same time to prevent
+>evesdropping.  Any evesdropper will neccessarily disturb the message in a
+>detectable way.  Experimental quatum cryptography relies on polarized light.
+>
+>If a pulse of horizontally polarized photons is sent through a
+>horizontally polarized filter, 100% of the light gets through.  Pass it
+>through a filter 45 degrees off, and each partical has a 50% chance of
+>making it through, and no chance of making it through a filter 90 degrees off.
+>
+>1) Alice sends Bob a string of photon pulses.  Each of the pulses is
+>randomly polarized in one of four directions: horizontal, vertical,
+>left-diagonal, and right-diagonal.
+>
+>For example, Alice sends Bob:  ||/--\-|-/
+>
+>2) Bob has a polarization detector.  He can set his detector to measure
+>horizontal and vertical polarization, or he can set his detector to
+>measure diagonal polarization.  He can't do both; quantum mechanics won't
+>let him.  Measuring one destroys any possibility of measuring the other. 
+>So, he sets his detectosr at random, for example:  x++xxx+x++
+>
+>When Bob sets the detector correctly, he records the correct answer.  The
+>rest of the time, he gets a random result.  Say he gets: ||/--\-|-/
+>
+>3) Bob, over an insecure channel, tells Alice what settings he used.
+>
+>4) Alice tells Bob which settings were correct.  In this example, 2,6,7,9.
+>
+>5) Alice and Bob keep only those settings that were correct.  In this
+>example, they keep:  *|***\-*-*
+>
+>According to a pre-arranged code, such as 1 = horizontal and
+>left-diagonal, and 0 = vertical and right-diagonal, they have sent the
+>bits: 0011
+>
+>Alice will need to send 2n pulses for every bit transmitted, since Bob
+>will be correct 50% of the time, on the average.  These bits can be taken
+>as the key to a conventional algorithm, or enough can be sent to generate
+>a one-time pad.
+>
+>6) Alice and Bob compare a few bits in their strings.  If there are
+>discrepancies, they know they are being bugged.  If there are none, they
+>discard the bits they used for comparison and use the rest.
+>
+>
+>For a good overview (according to Schneier) see:
+>
+>C. H. Bennet, G. Brassard, and N. D. Mermin, "Quantum Cryptography,"
+>Scientific American, v. 68, n. 5, 3 Feb 1992, pp. 557-559
+>
+>C. Zimmer, "Perfect Gibberish," Discover, v. 13, n. 12, Dec 1992, pp. 92-99.
+>
+>
+>Schneier says British Telecom has used this system to send bits over a 10km
+>fiber-optic link.
+>
+>see:
+>W. Brown, "A Quantum Leap in Secret Communications," New Scientist, n.
+>1585, 30 Jan 1993, p. 21.
+>
+>
+>Hope this made sense.  Its really quite amazing to think about.
+>-john.
+>
+>
+
+
+--
+true name:                 <Joichi Ito>
+closest email address:     <jito@netcom.com>
+closest fax number:        <+81-3-5454-7218>
+current physical location: <Tokyo>
+travel path:               <.>
+mosaic home page:          http://iikk.inter.net/
+--
+finger jito@netcom.com for PGP Public Key, RIPEM Public Key
+--
+
+
+
+
+
+

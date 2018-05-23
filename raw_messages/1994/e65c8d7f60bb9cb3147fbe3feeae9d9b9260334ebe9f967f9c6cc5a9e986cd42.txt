@@ -1,0 +1,39 @@
+From: "Dr. D.C. Williams" <dcwill@ee.unr.edu>
+Date: Thu, 29 Sep 94 20:42:46 PDT
+To: galkaiti@bigcat.missouri.edu (Gregory A. Alkaitis)
+Subject: Re: PGP hole
+In-Reply-To: <Pine.3.89.9409292248.A17207-0100000@bigcat>
+Message-ID: <199409300340.UAA15324@python>
+MIME-Version: 1.0
+Content-Type: text/plain
+
+
+
+> If you would, please send perhaps a breif "digest" of the thread.  (Or 
+> the entire thing, if that's easier.)
+
+The whole thread is much too long to post (and besides, it has nothing to
+do with bikinis or Fabio  ;-) ). The gist of the problem seems to be
+that a signed cleartext message can be altered by adding spoofed text
+right after the BEGIN PGP SIGNED MESSAGE line. If the spoofed text is
+separated from the original text by a blank line or even a tab, PGP
+reports that the signature is good in spite of the added text.
+
+Apparently, the output file is a faithful version of the
+original message, but users who don't check that file might believe 
+that the spoofed text was a part of the original message. I have
+not personally tried this yet, but the thread is full of comments
+from people who have, including some people who originally didn't
+believe it but later confirmed the existence of the problem themselves.
+
+The bug seems to be present in all versions (even the ViaCrypt versions
+have this problem). It has been reported as a bug to the MIT pgp-keepers.
+
+Caveat emptor.
+
+
+=D.C. Williams	<dcwill@ee.unr.edu>
+
+
+
+
