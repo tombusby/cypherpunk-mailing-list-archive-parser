@@ -89,7 +89,7 @@ def insert_into_db(conn, message):
         message._raw_date,
         message._from,
         message._to,
-        message._subject.decode('utf-8').encode('utf-8'),
+        unicode(message._subject.decode('utf-8')),
         message._reply_to
     ])
     conn.commit()
