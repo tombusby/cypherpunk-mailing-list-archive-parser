@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from email.parser import Parser
+import os
+import glob
 import re
 import sqlite3
 import dateutil.parser
@@ -55,6 +57,13 @@ class EmailMessage(object):
         offset_1970 = parsed_date.strftime("%s")
         # Times are an hour out, don't know why, added an hour to compensate
         return (60 * 60) + int(offset_1970) - int(tzoffset)
+
+
+def clean_the_slate(conn):
+    for f in glob.glob('raw_messages/199*/*'):
+        os.remove(f)
+    conn.cursor().execute("DELETE FROM messages;")
+    conn.commit()
 
 
 def get_messages():
@@ -150,14 +159,36 @@ def fix_weird_1999_dates_between_92_and_97(conn):
     conn.commit()
 
 
+def fix_genuine_1999_dates(conn):
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM `messages` WHERE `raw_date` LIKE '%1999%'")
+    for row in cursor.fetchall():
+        os.rename(
+            "raw_messages/{}/{}.txt".format(row[2], row[0]),
+            "raw_messages/1999/{}.txt".format(row[0])
+        )
+    sql = """
+        UPDATE
+            `messages`
+        SET
+            `file_year` = 1999
+        WHERE
+            `raw_date` LIKE '%1999%'
+    """
+    conn.cursor().execute(sql)
+    conn.commit()
+
+
 def main():
     conn = sqlite3.connect('database.db')
+    clean_the_slate(conn)
     for message in get_messages():
         insert_into_db(conn, message)
         write_message_to_file(message)
     conn.commit()
     mark_replies_with_no_parent(conn)
     fix_weird_1999_dates_between_92_and_97(conn)
+    fix_genuine_1999_dates(conn)
     conn.close()
 
 
