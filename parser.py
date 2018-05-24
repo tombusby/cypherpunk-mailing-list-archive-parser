@@ -119,12 +119,45 @@ def write_message_to_file(message):
         f.write(message._raw_text)
 
 
+def mark_replies_with_no_parent(conn):
+    sql = """
+        UPDATE
+            `messages`
+        SET
+            `no_parent` = 1
+        WHERE
+            `reply_to` IS NOT NULL
+            AND `reply_to` NOT IN (
+                SELECT `message_id` FROM `messages`
+            );
+    """
+    conn.cursor().execute(sql)
+    conn.commit()
+
+
+def fix_weird_1999_dates_between_92_and_97(conn):
+    sql = """
+        UPDATE
+            `messages`
+        SET
+            `raw_date` = NULL,
+            `date` = NULL
+        WHERE
+            `file_year` < 1998
+            AND `raw_date` LIKE "%1999%"
+    """
+    conn.cursor().execute(sql)
+    conn.commit()
+
+
 def main():
     conn = sqlite3.connect('database.db')
     for message in get_messages():
         insert_into_db(conn, message)
         write_message_to_file(message)
     conn.commit()
+    mark_replies_with_no_parent(conn)
+    fix_weird_1999_dates_between_92_and_97(conn)
     conn.close()
 
 
