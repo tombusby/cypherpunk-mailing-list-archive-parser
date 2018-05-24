@@ -36,7 +36,7 @@ class EmailMessage(object):
             'MST': -25200,
             'MDT': -21600,
             'PST': -28800,
-            'PPE': -28800,
+            'PPE': -25200,
             'PDT': -25200,
         }
         try:
