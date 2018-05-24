@@ -129,6 +129,9 @@ def write_message_to_file(message):
 
 
 def mark_replies_with_no_parent(conn):
+    # The OR condition's messages have reply_tos to non-unique message IDs
+    # Also, it's clear by looking at the subjects of the reply_tos and the
+    # message_ids they correspond to, they're all orphans.
     sql = """
         UPDATE
             `messages`
@@ -138,6 +141,16 @@ def mark_replies_with_no_parent(conn):
             `reply_to` IS NOT NULL
             AND `reply_to` NOT IN (
                 SELECT `message_id` FROM `messages`
+            )
+            OR `reply_to` IN (
+                SELECT
+                    `message_id`
+                FROM
+                    `messages`
+                GROUP BY
+                    `message_id`
+                HAVING
+                    count(`message_id`) > 1
             );
     """
     conn.cursor().execute(sql)
