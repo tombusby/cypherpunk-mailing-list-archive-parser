@@ -138,9 +138,11 @@ def mark_replies_with_no_parent(conn):
         SET
             `no_parent` = 1
         WHERE
-            `reply_to` IS NOT NULL
-            AND `reply_to` NOT IN (
-                SELECT `message_id` FROM `messages`
+            (
+                `reply_to` IS NOT NULL
+                AND `reply_to` NOT IN (
+                    SELECT `message_id` FROM `messages`
+                )
             )
             OR `reply_to` IN (
                 SELECT
@@ -174,11 +176,18 @@ def fix_weird_1999_dates_between_92_and_97(conn):
 
 def fix_genuine_1999_dates(conn):
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM `messages` WHERE `raw_date` LIKE '%1999%'")
+    cursor.execute("""
+        SELECT
+            `file_year`, `message_hash`
+        FROM
+            `messages`
+        WHERE
+            `raw_date` LIKE '%1999%'
+    """)
     for row in cursor.fetchall():
         os.rename(
-            "raw_messages/{}/{}.txt".format(row[2], row[0]),
-            "raw_messages/1999/{}.txt".format(row[0])
+            "raw_messages/{}/{}.txt".format(row[0], row[1]),
+            "raw_messages/1999/{}.txt".format(row[1])
         )
     sql = """
         UPDATE
@@ -192,6 +201,55 @@ def fix_genuine_1999_dates(conn):
     conn.commit()
 
 
+def calculate_thread_roots(conn):
+    sql = """
+        UPDATE
+            `messages`
+        SET
+            `thread_root` = `message_hash`
+        WHERE
+            `reply_to` IS NULL
+            OR `no_parent` = 1;
+    """
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    affected_rows = -1
+    i = 0
+    while affected_rows:
+        i += 1
+        print "Calculating thread_roots, iteration: {}".format(i)
+        sql = """
+            UPDATE
+                `messages`
+            SET
+                `thread_root` = (
+                    SELECT
+                        `thread_root`
+                    FROM
+                        `messages` AS `messages2`
+                    WHERE
+                        `messages2`.`message_id` = `messages`.`reply_to`
+                )
+            WHERE
+                `reply_to` IN (
+                    SELECT
+                        `message_id`
+                    FROM
+                        `messages`
+                    WHERE
+                        `thread_root` IS NOT NULL
+                )
+                AND `no_parent` IS NULL
+                AND `thread_root` IS NULL
+        """
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        affected_rows = cursor.rowcount
+        print "Affected Rows:", affected_rows
+    conn.commit()
+
+
 def main():
     conn = sqlite3.connect('database.db')
     clean_the_slate(conn)
@@ -202,6 +260,7 @@ def main():
     mark_replies_with_no_parent(conn)
     fix_weird_1999_dates_between_92_and_97(conn)
     fix_genuine_1999_dates(conn)
+    calculate_thread_roots(conn)
     conn.close()
 
 
