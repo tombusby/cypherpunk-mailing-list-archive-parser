@@ -36,7 +36,7 @@ class EmailMessage(object):
             'MST': -25200,
             'MDT': -21600,
             'PST': -28800,
-            'PPE': -25200,
+            'PPE': -25200,  # See note in README.md
             'PDT': -25200,
         }
         try:
@@ -69,7 +69,7 @@ def clean_the_slate(conn):
 def get_messages():
     stringbuffer = ""
     for n in range(1992, 1999):
-        print n
+        print "Reading messages from year:", n
         with open("cryptome/cyp-{}.txt".format(n)) as f:
             for line in f:
                 if re.match("From cypherpunks\@MHonArc.venona", line):
@@ -218,7 +218,7 @@ def calculate_thread_roots(conn):
     i = 0
     while affected_rows:
         i += 1
-        print "Calculating thread_roots, iteration: {}".format(i)
+        print "Calculating thread_roots, iteration: ", i
         sql = """
             UPDATE
                 `messages`
