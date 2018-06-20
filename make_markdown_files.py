@@ -2,6 +2,7 @@
 import json
 import glob
 import os
+import re
 from datetime import datetime
 
 
@@ -49,7 +50,6 @@ Raw Date: {}<br>
 ## Thread
 
 {}
-
 {}
 """
 
@@ -72,9 +72,28 @@ month_name_map = [
 
 def escape_chevrons(text):
     if text:
-        return text.replace('<', '\\<').replace('>', '\\>')
+        return text.encode('utf-8').replace('<', '\\<').replace('>', '\\>')
     else:
         return "_N/A_"
+
+
+def make_back_to_links(thread):
+    def get_months(months, message):
+        parsed_date = datetime.utcfromtimestamp(message['date'])
+        months.add((parsed_date.year, parsed_date.month))
+        for child in message['children']:
+            get_months(months, child)
+        return months
+    months = get_months(set(), thread)
+    link_text = ""
+    for year, month in sorted(months):
+        link_text += "+ Return to [{} {}](/archive/{}/{})\n".format(
+            month_name_map[month - 1],
+            year,
+            year,
+            str(month).zfill(2)
+        )
+    return link_text
 
 
 def create_message_pages(thread, message=None):
@@ -93,15 +112,15 @@ def create_message_pages(thread, message=None):
         o.write(message_page_template.format(
             parsed_date.date().isoformat(),
             message["subject"].encode('utf-8'),
-            message["from"].encode('utf-8'),
+            escape_chevrons(message["from"]),
             escape_chevrons(message["to"]),
             message["message_hash"],
             escape_chevrons(message["message_id"]),
             escape_chevrons(message["reply_to"]),
             parsed_date.strftime('%Y-%m-%d %H:%M:%S UTC'),
-            message["raw_date"],
+            message["raw_date"].encode('utf-8'),
             raw_message,
-            "_BACK TO TODO_",
+            make_back_to_links(thread),
             thread_tree
         ))
     for child in message["children"]:
@@ -110,20 +129,20 @@ def create_message_pages(thread, message=None):
 
 def make_thread_list_item(message, offset, show_link=True):
     def make_link(subject, parsed_date, message_hash):
-        return "[{}](/years/{}/{})".format(
-            subject.encode('utf-8'),
+        return "[{}](/archive/{}/{})".format(
+            subject,
             parsed_date.strftime('%Y/%m'),
             message_hash
         )
     parsed_date = datetime.utcfromtimestamp(message['date'])
     if show_link:
         subject = make_link(
-            message['subject'],
+            message['subject'].encode('utf-8'),
             parsed_date,
             message['message_hash']
         )
     else:
-        subject = message['subject']
+        subject = message['subject'].encode('utf-8')
     return "{}+ {} ({}) - {} - _{}_\n".format(
         "  " * offset,
         parsed_date.date().isoformat(),
@@ -150,21 +169,23 @@ def make_markdown_thread(thread):
 
 
 def main():
-    # for filename in glob.glob('json_months/199*/*.json'):
-    for filename in glob.glob('json_months/1992/*.json'):
+    for filename in glob.glob('json_months/199*/*.json'):
+    # for filename in glob.glob('json_months/1992/*.json'):
         if "unknown" in filename:
             continue  # ############### HANDLE THIS LATER
         with open(filename) as f:
             threads = json.loads(f.read())
-        parsed_date = datetime.utcfromtimestamp(threads[0]['date'])
-        if not os.path.exists("threads_test/{}/".format(parsed_date.year)):
-            os.makedirs("threads_test/{}/".format(parsed_date.year))
-        with open('threads_test/{}.md'.format(
-            parsed_date.strftime('%Y/%m')
+        matches = re.match("json_months/([0-9]+)/([0-9]+).json", filename)
+        year, month = matches.group(1), matches.group(2)
+        if not os.path.exists("threads_test/{}/".format(year)):
+            os.makedirs("threads_test/{}/".format(year))
+        with open('threads_test/{}/{}.md'.format(
+            year,
+            month.zfill(2)
         ), 'w') as o:
             o.write(file_header.format(
-                month_name_map[parsed_date.month - 1],
-                parsed_date.year
+                month_name_map[int(month) - 1],
+                year
             ))
             for thread in threads:
                 o.write(make_markdown_thread(thread))

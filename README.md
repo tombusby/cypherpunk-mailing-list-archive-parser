@@ -2,3 +2,4 @@
 + There are some posts dated Tue Sep 07 12:36-57 that crop up in 92-96. These all have the same message-ID (one that indicates the message ID isn't found). As such I'll be categorising them in as "messages with unknown date/time" in the year whose archive they're from.
 + There are some posts from the first few days of Jan 1999 in the 1998 archive. I believe these are genuinely dated and will archive them as such.
 + There appear to be messages from the Extropians@gnu.ai.mit.edu / extropians@extropy.org mailing list mixed in too, but they all appear relevant to the cypherpunk mailing list, so I'll be leaving them in place.
++ I used `for f in raw_messages/199*/*.txt; do iconv -f utf-8 -t utf-8 -c $f > $f-2; mv $f-2 $f; done` to clean up the encoding issues before using `./make_markdown_files.py`
