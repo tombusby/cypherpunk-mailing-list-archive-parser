@@ -18,7 +18,7 @@ with the raw date because of the time difference with UTC time._
 
 _Ordering by UTC time ensures true chronological ordering._
 
-# Threads
+## Threads
 
 """
 
@@ -96,7 +96,7 @@ def create_message_pages(thread, message=None):
     with open("raw_messages/{}/{}.txt".format(
         message['file_year'], message["message_hash"]
     )) as f:
-        raw_message = f.read()
+        raw_message = "{% raw  %}" + f.read() + "{% endraw %}"
     with open("{}/{}.md".format(path, message["message_hash"]), "w") as o:
         o.write(message_page_template.format(
             message_date,
@@ -154,7 +154,7 @@ def make_markdown_thread_tree(message, message_hash=None, offset=0):
 
 def make_markdown_thread(thread):
     create_message_pages(thread)
-    return "## {}\n{}".format(
+    return "### {}\n{}".format(
         thread['subject'].encode('utf-8'),
         make_markdown_thread_tree(thread)
     )
