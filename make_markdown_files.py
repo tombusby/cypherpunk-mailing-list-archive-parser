@@ -81,17 +81,9 @@ def create_message_pages(thread, message=None):
     if not message:
         message = thread
     parsed_date = datetime.utcfromtimestamp(message['date'])
-    path = "emails_test/{}/{}/".format(
-        parsed_date.year,
-        str(parsed_date.month).zfill(2)
-    )
+    path = "emails_test/{}/".format(parsed_date.strftime('%Y/%m'))
     if not os.path.exists(path):
         os.makedirs(path)
-    message_date = "{}-{}-{}".format(
-        parsed_date.year,
-        str(parsed_date.month).zfill(2),
-        str(parsed_date.day).zfill(2)
-    )
     thread_tree = make_markdown_thread_tree(thread, message["message_hash"])
     with open("raw_messages/{}/{}.txt".format(
         message['file_year'], message["message_hash"]
@@ -99,14 +91,14 @@ def create_message_pages(thread, message=None):
         raw_message = "{% raw  %}" + f.read() + "{% endraw %}"
     with open("{}/{}.md".format(path, message["message_hash"]), "w") as o:
         o.write(message_page_template.format(
-            message_date,
+            parsed_date.date().isoformat(),
             message["subject"].encode('utf-8'),
             message["from"].encode('utf-8'),
             escape_chevrons(message["to"]),
             message["message_hash"],
             escape_chevrons(message["message_id"]),
             escape_chevrons(message["reply_to"]),
-            "_UTC DATETIME TODO_",
+            parsed_date.strftime('%Y-%m-%d %H:%M:%S UTC'),
             message["raw_date"],
             raw_message,
             "_BACK TO TODO_",
@@ -118,10 +110,9 @@ def create_message_pages(thread, message=None):
 
 def make_thread_list_item(message, offset, show_link=True):
     def make_link(subject, parsed_date, message_hash):
-        return "[{}](/years/{}/{}/{})".format(
+        return "[{}](/years/{}/{})".format(
             subject.encode('utf-8'),
-            parsed_date.year,
-            str(parsed_date.month).zfill(2),
+            parsed_date.strftime('%Y/%m'),
             message_hash
         )
     parsed_date = datetime.utcfromtimestamp(message['date'])
@@ -133,11 +124,9 @@ def make_thread_list_item(message, offset, show_link=True):
         )
     else:
         subject = message['subject']
-    return "{}+ {}-{}-{} ({}) - {} - _{}_\n".format(
+    return "{}+ {} ({}) - {} - _{}_\n".format(
         "  " * offset,
-        parsed_date.year,
-        str(parsed_date.month).zfill(2),
-        str(parsed_date.day).zfill(2),
+        parsed_date.date().isoformat(),
         message['raw_date'],
         subject,
         message['from'].encode('utf-8').replace('<', '\\<').replace('>', '\\>')
@@ -170,9 +159,8 @@ def main():
         parsed_date = datetime.utcfromtimestamp(threads[0]['date'])
         if not os.path.exists("threads_test/{}/".format(parsed_date.year)):
             os.makedirs("threads_test/{}/".format(parsed_date.year))
-        with open('threads_test/{}/{}.md'.format(
-            parsed_date.year,
-            str(parsed_date.month).zfill(2)
+        with open('threads_test/{}.md'.format(
+            parsed_date.strftime('%Y/%m')
         ), 'w') as o:
             o.write(file_header.format(
                 month_name_map[parsed_date.month - 1],
