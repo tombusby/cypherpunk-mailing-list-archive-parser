@@ -27,7 +27,7 @@ def populate_months(rows):
     return months
 
 
-def build_threads(cursor, months):
+def build_threads(conn, months):
     def make_dict(row):
         return {
             'message_hash': row[0],
@@ -35,12 +35,12 @@ def build_threads(cursor, months):
             'file_year': row[3],
             'date': row[4],
             'raw_date': row[5],
-            'from': row[6],
-            'to': row[7],
-            'subject': row[8],
-            'reply_to': row[9],
-            'no_parent': row[10],
-            'children': build_tree(make_dict, cursor, row[2])
+            'from': row[7],
+            'to': row[8],
+            'subject': row[9],
+            'reply_to': row[10],
+            'no_parent': row[11],
+            'children': build_tree(make_dict, conn, row[2])
         }
     for year in months.keys():
         for month in months[year].keys():
@@ -48,6 +48,7 @@ def build_threads(cursor, months):
             for thread_root in months[year][month]:
                 sql = "SELECT * FROM `messages` WHERE `message_hash` = ?;"
                 try:
+                    cursor = conn.cursor()
                     cursor.execute(sql, [thread_root])
                     row = cursor.fetchone()
                     threads_in_month.append(make_dict(row))
@@ -59,9 +60,10 @@ def build_threads(cursor, months):
                 f.write(json.dumps(threads_in_month))
 
 
-def build_tree(make_dict, cursor, message_id):
+def build_tree(make_dict, conn, message_id):
     sql = "SELECT * FROM `messages` WHERE `reply_to` = ? ORDER BY `date` ASC;"
     children = []
+    cursor = conn.cursor()
     for row in cursor.execute(sql, [message_id]):
         children.append(make_dict(row))
     return children
@@ -71,7 +73,7 @@ def main():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     months = populate_months(get_message_rows(cursor))
-    build_threads(cursor, months)
+    build_threads(conn, months)
     conn.close()
 
 
