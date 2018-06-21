@@ -170,7 +170,6 @@ def make_markdown_thread(thread):
 
 def main():
     for filename in glob.glob('json_months/199*/*.json'):
-    # for filename in glob.glob('json_months/1992/*.json'):
         if "unknown" in filename:
             continue  # ############### HANDLE THIS LATER
         with open(filename) as f:
