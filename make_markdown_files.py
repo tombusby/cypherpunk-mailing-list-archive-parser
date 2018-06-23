@@ -27,9 +27,12 @@ _Ordering by UTC time ensures true chronological ordering._
 author_file_header = """\
 ---
 layout: default
+email_from: {}
+sender_id: {}
+messages: {}
 ---
 
-# {} ({} posts)
+# {} ({} {})
 
 _Be aware that many list participants used multiple email addresses \
 over their time active on the list. As such this page may not contain \
@@ -263,7 +266,11 @@ def build_author_indices():
         with open('authors_test/{}.md'.format(author['sender_id']), 'w') as o:
             o.write(author_file_header.format(
                 author['from'].encode('utf-8'),
-                author['count']
+                author['sender_id'],
+                author['count'],
+                author['from'].encode('utf-8'),
+                author['count'],
+                "posts" if author['count'] > 1 else "post"
             ))
             for thread in author['threads']:
                 o.write(make_markdown_thread(thread))
@@ -271,7 +278,7 @@ def build_author_indices():
 
 
 def main():
-    # build_threads_by_month()
+    build_threads_by_month()
     build_author_indices()
 
 
