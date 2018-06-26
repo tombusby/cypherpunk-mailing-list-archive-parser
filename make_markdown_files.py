@@ -4,6 +4,7 @@ import glob
 import os
 import re
 from datetime import datetime
+import sqlite3
 
 
 month_file_header = """\
@@ -70,6 +71,21 @@ Raw Date: {}<br>
 
 {}
 {}
+"""
+
+
+author_index_template = """\
+---
+layout: default
+permalink: /authors/
+---
+
+# Authors by Number of Posts (Highest First)
+
+_Be aware that many list participants used multiple email addresses over \
+their time active on the list. As such an email address page may not contain \
+all threads available for that person._
+
 """
 
 
@@ -275,6 +291,28 @@ def build_author_indices():
             for thread in author['threads']:
                 o.write(make_markdown_thread(thread))
                 o.write("\n")
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    sql = """
+        SELECT
+            `from`,
+            `sender_id`,
+            count(*) AS `messages`
+        FROM
+            `messages`
+        GROUP BY
+            `sender_id`
+        ORDER BY
+            `messages` DESC;
+    """
+    with open('author_index/authors.md', 'w') as o:
+        o.write(author_index_template)
+        for row in cursor.execute(sql):
+            o.write("+ [{}](/author/{}) - _{} posts_\n".format(
+                row[0].encode('utf-8'),
+                row[1],
+                row[2],
+            ))
 
 
 def main():
