@@ -28,9 +28,8 @@ _Ordering by UTC time ensures true chronological ordering._
 author_file_header = """\
 ---
 layout: default
-email_from: {}
 sender_id: {}
-messages: {}
+post_count: {}
 ---
 
 # {} ({} {})
@@ -147,7 +146,7 @@ def make_back_to_links(thread):
     link_text += "\n"
     for sender_id, email_from in sorted(authors):
         link_text += "+ Return to \"[{}](/author/{})\"\n".format(
-            email_from.encode('utf-8'),
+            email_from.encode('utf-8').replace('@', '<span>@</span>'),
             sender_id
         )
     return link_text
@@ -178,7 +177,7 @@ def create_message_pages(thread, message=None):
         o.write(message_page_template.format(
             iso_date,
             message["subject"].encode('utf-8'),
-            escape_chevrons(message["from"]),
+            escape_chevrons(message["from"]).replace('@', '<span>@</span>'),
             escape_chevrons(message["to"]),
             message["message_hash"],
             escape_chevrons(message["message_id"]),
@@ -281,10 +280,9 @@ def build_author_indices():
             author = json.loads(f.read())
         with open('authors_test/{}.md'.format(author['sender_id']), 'w') as o:
             o.write(author_file_header.format(
-                author['from'].encode('utf-8'),
                 author['sender_id'],
                 author['count'],
-                author['from'].encode('utf-8'),
+                author['from'].encode('utf-8').replace('@', '<span>@</span>'),
                 author['count'],
                 "posts" if author['count'] > 1 else "post"
             ))
@@ -308,8 +306,8 @@ def build_author_indices():
     with open('author_index/authors.md', 'w') as o:
         o.write(author_index_template)
         for row in cursor.execute(sql):
-            o.write("+ [{}](/author/{}) - _{} posts_\n".format(
-                row[0].encode('utf-8'),
+            o.write("+ [{}](/authors/{}/) - _{} posts_\n".format(
+                row[0].encode('utf-8').replace('@', '<span>@</span>'),
                 row[1],
                 row[2],
             ))
