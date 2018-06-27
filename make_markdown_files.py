@@ -145,7 +145,7 @@ def make_back_to_links(thread):
         )
     link_text += "\n"
     for sender_id, email_from in sorted(authors):
-        link_text += "+ Return to \"[{}](/author/{})\"\n".format(
+        link_text += "+ Return to \"[{}](/authors/{})\"\n".format(
             email_from.encode('utf-8').replace('@', '<span>@</span>'),
             sender_id
         )
