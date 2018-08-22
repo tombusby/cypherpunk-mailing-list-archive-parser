@@ -3,3 +3,8 @@
 + There are some posts from the first few days of Jan 1999 in the 1998 archive. I believe these are genuinely dated and will archive them as such.
 + There appear to be messages from the Extropians@gnu.ai.mit.edu / extropians@extropy.org mailing list mixed in too, but they all appear relevant to the cypherpunk mailing list, so I'll be leaving them in place.
 + I used `for f in raw_messages/199*/*.txt; do iconv -f utf-8 -t utf-8 -c $f > $f-2; mv $f-2 $f; done` to clean up the encoding issues before using `./make_markdown_files.py`
+
+TODO:
+
++ Throw away prototype scripts and build a proper, deterministic start-to-finish program which will can take the .txt archives to the directory-strucuted JSON files without any intervention.
++ Take the 2000-2016 archives and parse them into the same format.
